@@ -115,13 +115,6 @@ have copyrights, but that's not true. There are certain distinctions between ope
 source and public domain softwares. As the initial developer, OmicronLab still retains 
 all copyrights of the project. 
 
-Q: Can OmicronLab  release the code under a different (possibly commercial type) license later?
-A: Yes. Since OmicronLab has the original copyright, they can do it for their own code, 
-and not for any contributions from others. 
-
-Be informed that we don't have any intension to go commercial. If we had, we wouldn't 
-release our code! This Q&A has been added only to show what MPL permits.
-
 Q: Can I use the MPL code in commercial software? If yes, am I obligated to credit the author?
 A: Yes, you can use the MPL code in any commercial software. Since you have to include the MPL 
 code, the credit is included in the license header. While not required, it is also customary to credit 
