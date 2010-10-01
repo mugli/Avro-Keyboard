@@ -1,0 +1,2 @@
+{$Define BetaVersion} 
+{.$Define PortableOn} 

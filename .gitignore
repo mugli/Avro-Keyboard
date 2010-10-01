@@ -1,0 +1,53 @@
+*.~*
+*.adt
+*.bdsdeploy
+*.bdsgroup
+*.bpg
+*.dcl
+*.groupproj
+*.dcp
+*.dcpil
+*.dcu
+*.gif
+*.jpg
+*.bmp
+*.psd
+*.dcuil
+*.ddp
+*.dof
+*.dpc
+*.dpl
+*.ico
+*.dproj
+*.drc
+*.dsk
+*.dsm
+*.identcache
+*.local
+*.map
+*.mts
+*.rsm
+*.bpl
+*.cbk
+*.cfg
+*.dcl
+*.exe
+*.xml
+*__history
+*.elf
+Keyboard and Spell checker/ProjectDefines.inc
+Keyboard and Spell checker/*/ProjectDefines.inc
+Keyboard and Spell checker/*/*/ProjectDefines.inc
+Keyboard and Spell checker/Profiling/
+Layout Editor/ProjectDefines.inc
+Layout Editor/*/ProjectDefines.inc
+Skin Designer/ProjectDefines.inc
+Skin Designer/*/ProjectDefines.inc
+Unicode to ascii converter/ProjectDefines.inc
+Unicode to ascii converter/*/ProjectDefines.inc
+__history/
+Data/
+DCU/
+Portable Edition/
+Source Archive/
+Standard edition/

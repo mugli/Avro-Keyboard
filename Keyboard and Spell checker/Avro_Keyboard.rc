@@ -1,0 +1,31 @@
+MAINICON ICON "E:\Drive 1\Bangla\Avro Keyboard\Keyboard and Spell checker\Avro.ico"
+1 VERSIONINFO
+FILEVERSION 5,0,3,0
+PRODUCTVERSION 5,0,3,0
+FILEFLAGSMASK 0x3FL
+FILEFLAGS 0x00L
+FILEOS 0x4L
+FILETYPE 0x1L
+FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+         BLOCK "040904E4"
+         BEGIN
+              VALUE "CompanyName", "OmicronLab\0"
+              VALUE "FileDescription", "Avro Keyboard - UNICODE compliant Open source Bangla typing software for Windows\0"
+              VALUE "FileVersion", "5.0.3.0\0"
+              VALUE "InternalName", "Avro Keyboard\0"
+              VALUE "LegalCopyright", "C OmicronLab. All rights reserved.\0"
+              VALUE "LegalTrademarks", "Avro Keyboard\0"
+              VALUE "OriginalFilename", "Avro Keyboard\0"
+              VALUE "ProductName", "Avro Keyboard\0"
+              VALUE "ProductVersion", "5.0.3.0\0"
+              VALUE "Comments", "Avro Keyboard - UNICODE compliant Open source Bangla typing software for Windows\0"
+         END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+         VALUE "Translation", 0x0409, 1252
+    END
+END
