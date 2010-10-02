@@ -1021,12 +1021,18 @@ Begin
                     ImageList1.GetIcon(14, ICN)
                Else
                     ImageList1.GetIcon(20, ICN);
+
+               Tray.Hint := 'Avro Keyboard.' + #13 + 'Running Bangla Keyboard Mode.' + #13 +
+                    'Press ' + ModeSwitchKey + ' to switch to System default.';
           End
           Else If CurrentMode = SysDefault Then Begin
                If IsWin2000 = True Then
                     ImageList1.GetIcon(19, ICN)
                Else
                     ImageList1.GetIcon(21, ICN);
+
+               Tray.Hint := 'Avro Keyboard.' + #13 + 'Running System default Keyboard Mode.' + #13 +
+                    'Press ' + ModeSwitchKey + ' to switch to Bangla.';
           End;
           Tray.Icon := ICN;
           ICN.Free;
@@ -1448,12 +1454,18 @@ Begin
                ImageList1.GetIcon(14, ICN)
           Else
                ImageList1.GetIcon(20, ICN);
+
+          Tray.Hint := 'Avro Keyboard.' + #13 + 'Running Bangla Keyboard Mode.' + #13 +
+               'Press ' + ModeSwitchKey + ' to switch to System default.';
      End
      Else If KeyLayout.KeyboardMode = SysDefault Then Begin
           If IsWin2000 = True Then
                ImageList1.GetIcon(19, ICN)
           Else
                ImageList1.GetIcon(21, ICN);
+
+          Tray.Hint := 'Avro Keyboard.' + #13 + 'Running System default Keyboard Mode.' + #13 +
+               'Press ' + ModeSwitchKey + ' to switch to Bangla.';
      End;
 
 
