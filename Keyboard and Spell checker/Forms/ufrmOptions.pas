@@ -56,71 +56,80 @@ Type
           Button_Cancel: TButton;
           Button_Help: TButton;
           CategoryTree: TTreeView;
-          General_Panel: TPanel;
-          GroupBox1: TGroupBox;
-          checkStartUp: TCheckBox;
-          CheckShowSplash: TCheckBox;
-          Label2: TLabel;
-          optStartupUIMode_TopBar: TRadioButton;
-          optStartupUIMode_Tray: TRadioButton;
-          optStartupUIMode_Last: TRadioButton;
-          Label3: TLabel;
-          optTopBarXButton_Close: TRadioButton;
-          optTopBarXButton_Minimize: TRadioButton;
-          optTopBarXButton_ShowMenu: TRadioButton;
-          Interface_Panel: TPanel;
-          checkTopBarTransparent: TCheckBox;
-          Captionl_Transparency: TLabel;
-          TrackBar_Transparency: TTrackBar;
-          GroupBox2: TGroupBox;
-          Label5: TLabel;
-          comboSkin: TComboBox;
-          Label6: TLabel;
-          ScrollBox1: TScrollBox;
-          SkinPreviewPic: TImage;
-          cmdDownloadSkin: TButton;
-          KeyboardMode_Panel: TPanel;
-          Locale_Panel: TPanel;
-          CheckEnableLocaleChange: TCheckBox;
-          Label8: TLabel;
-          optLocaleIND: TRadioButton;
-          optLocaleBD: TRadioButton;
-          optLocaleAS: TRadioButton;
-          AvroPhonetic_Panel: TPanel;
-          GroupBox3: TGroupBox;
-          CheckShowPrevWindow: TCheckBox;
-          Label_PhoneticTypingMode: TLabel;
-          optPhoneticMode_Dict: TRadioButton;
-          optPhoneticMode_Char: TRadioButton;
-          optPhoneticMode_OnlyChar: TRadioButton;
-          CheckRememberCandidate: TCheckBox;
-          AvroMouse_Panel: TPanel;
-          GroupBox5: TGroupBox;
-          optAvroMouseKeyboardMode_NoChange: TRadioButton;
-          optAvroMouseKeyboardMode_Change: TRadioButton;
+          butEditCustomDict: TButton;
+          CheckAddNewWords: TCheckBox;
+          ScrollBox2: TScrollBox;
           FixedLayout_Panel: TPanel;
           GroupBox6: TGroupBox;
-          optTypingStyle_Modern: TRadioButton;
           Label10: TLabel;
+          Label11: TLabel;
+          optTypingStyle_Modern: TRadioButton;
           chkOldReph: TCheckBox;
           chkVowelFormat: TCheckBox;
           CheckChandraPosition: TCheckBox;
           optTypingStyle_Old: TRadioButton;
-          Label11: TLabel;
           CheckNumPadBangla: TCheckBox;
+          KeyboardMode_Panel: TPanel;
+          GroupBox4: TGroupBox;
+          Label7: TLabel;
+          comboFunctionKeys: TComboBox;
+          Locale_Panel: TPanel;
+          Label8: TLabel;
+          CheckEnableLocaleChange: TCheckBox;
+          optLocaleIND: TRadioButton;
+          optLocaleBD: TRadioButton;
+          optLocaleAS: TRadioButton;
+          ButtonInstallLocale: TButton;
+          General_Panel: TPanel;
+          Label3: TLabel;
+          GroupBox1: TGroupBox;
+          Label2: TLabel;
+          checkStartUp: TCheckBox;
+          CheckShowSplash: TCheckBox;
+          optStartupUIMode_TopBar: TRadioButton;
+          optStartupUIMode_Tray: TRadioButton;
+          optStartupUIMode_Last: TRadioButton;
+          optTopBarXButton_Close: TRadioButton;
+          optTopBarXButton_Minimize: TRadioButton;
+          optTopBarXButton_ShowMenu: TRadioButton;
+          CheckUpdate: TCheckBox;
+          Interface_Panel: TPanel;
+          Captionl_Transparency: TLabel;
           Label_Transparency: TLabel;
+          checkTopBarTransparent: TCheckBox;
+          TrackBar_Transparency: TTrackBar;
+          GroupBox2: TGroupBox;
+          Label5: TLabel;
+          Label6: TLabel;
+          comboSkin: TComboBox;
+          ScrollBox1: TScrollBox;
+          SkinPreviewPic: TImage;
+          cmdDownloadSkin: TButton;
+          ccmdAboutSkin: TButton;
+          AvroMouse_Panel: TPanel;
+          GroupBox5: TGroupBox;
+          optAvroMouseKeyboardMode_NoChange: TRadioButton;
+          optAvroMouseKeyboardMode_Change: TRadioButton;
+          AvroPhonetic_Panel: TPanel;
+          GroupBox3: TGroupBox;
+          Label_PhoneticTypingMode: TLabel;
+          Label1: TLabel;
+          Label4: TLabel;
+          CheckShowPrevWindow: TCheckBox;
+          optPhoneticMode_Dict: TRadioButton;
+          optPhoneticMode_Char: TRadioButton;
+          optPhoneticMode_OnlyChar: TRadioButton;
+          CheckRememberCandidate: TCheckBox;
+          CheckTabBrowsing: TCheckBox;
+          Label9: TLabel;
+          Label12: TLabel;
+          GroupBox7: TGroupBox;
           CheckAutoCorrect: TCheckBox;
           cmdAutoCorrect: TButton;
-          GroupBox4: TGroupBox;
-          comboFunctionKeys: TComboBox;
-          Label7: TLabel;
-          ccmdAboutSkin: TButton;
-          ButtonInstallLocale: TButton;
-          CheckUpdate: TCheckBox;
-    butEditCustomDict: TButton;
-    CheckAddNewWords: TCheckBox;
-    Label1: TLabel;
-    Label4: TLabel;
+          CheckEnableJoNukta: TCheckBox;
+          CheckPipeToDot: TCheckBox;
+          Label13: TLabel;
+          Label14: TLabel;
           Procedure FormCreate(Sender: TObject);
           Procedure CategoryTreeClick(Sender: TObject);
           Procedure FormClose(Sender: TObject; Var Action: TCloseAction);
@@ -230,6 +239,7 @@ End;
 }
 
 {===============================================================================}
+
 Procedure TfrmOptions.butEditCustomDictClick(Sender: TObject);
 Begin
      { TODO : Incomplete }
@@ -396,6 +406,7 @@ Begin
           optPhoneticMode_OnlyChar.Enabled := True;
           CheckRememberCandidate.Enabled := True;
           CheckAddNewWords.Enabled := True;
+          CheckTabBrowsing.Enabled := True;
      End
      Else Begin
           Label_PhoneticTypingMode.Enabled := False;
@@ -404,6 +415,7 @@ Begin
           optPhoneticMode_OnlyChar.Enabled := False;
           CheckRememberCandidate.Enabled := False;
           CheckAddNewWords.Enabled := False;
+          CheckTabBrowsing.Enabled := False;
      End;
 
 End;
@@ -487,47 +499,6 @@ Begin
 
      {Arrange Panels}
 
-     Interface_Panel.Top := CategoryTree.Top;
-     AvroMouse_Panel.Top := CategoryTree.Top;
-     General_Panel.Top := CategoryTree.Top;
-     KeyboardMode_Panel.Top := CategoryTree.Top;
-     Locale_Panel.Top := CategoryTree.Top;
-     AvroPhonetic_Panel.Top := CategoryTree.Top;
-     FixedLayout_Panel.Top := CategoryTree.Top;
-
-     Interface_Panel.Left := CategoryTree.Left + CategoryTree.Width + 10;
-     AvroMouse_Panel.Left := CategoryTree.Left + CategoryTree.Width + 10;
-     General_Panel.Left := CategoryTree.Left + CategoryTree.Width + 10;
-     KeyboardMode_Panel.Left := CategoryTree.Left + CategoryTree.Width + 10;
-     Locale_Panel.Left := CategoryTree.Left + CategoryTree.Width + 10;
-     AvroPhonetic_Panel.Left := CategoryTree.Left + CategoryTree.Width + 10;
-     FixedLayout_Panel.Left := CategoryTree.Left + CategoryTree.Width + 10;
-
-     Interface_Panel.Width := Self.Width - CategoryTree.Width - 20;
-     AvroMouse_Panel.Width := Self.Width - CategoryTree.Width - 20;
-     General_Panel.Width := Self.Width - CategoryTree.Width - 20;
-     KeyboardMode_Panel.Width := Self.Width - CategoryTree.Width - 20;
-     Locale_Panel.Width := Self.Width - CategoryTree.Width - 20;
-     AvroPhonetic_Panel.Width := Self.Width - CategoryTree.Width - 20;
-     FixedLayout_Panel.Width := Self.Width - CategoryTree.Width - 20;
-
-     Interface_Panel.Height := CategoryTree.Height;
-     AvroMouse_Panel.Height := CategoryTree.Height;
-     General_Panel.Height := CategoryTree.Height;
-     KeyboardMode_Panel.Height := CategoryTree.Height;
-     Locale_Panel.Height := CategoryTree.Height;
-     AvroPhonetic_Panel.Height := CategoryTree.Height;
-     FixedLayout_Panel.Height := CategoryTree.Height;
-
-     Interface_Panel.BevelKind := bknone {bkTile};
-     AvroMouse_Panel.BevelKind := bknone {bkTile};
-     General_Panel.BevelKind := bknone {bkTile};
-     KeyboardMode_Panel.BevelKind := bknone {bkTile};
-     Locale_Panel.BevelKind := bknone {bkTile};
-     AvroPhonetic_Panel.BevelKind := bknone {bkTile};
-     FixedLayout_Panel.BevelKind := bknone {bkTile};
-
-
      //Bring General_Panel to Top
      General_Panel.Visible := True;
      FixedLayout_Panel.Visible := False;
@@ -537,6 +508,39 @@ Begin
      General_Panel.Visible := False;
      AvroMouse_Panel.Visible := False;
      Interface_Panel.Visible := False;
+
+     Interface_Panel.Top := 0;
+     AvroMouse_Panel.Top := 0;
+     General_Panel.Top := 0;
+     KeyboardMode_Panel.Top := 0;
+     Locale_Panel.Top := 0;
+     AvroPhonetic_Panel.Top := 0;
+     FixedLayout_Panel.Top := 0;
+
+     Interface_Panel.Left := 0;
+     AvroMouse_Panel.Left := 0;
+     General_Panel.Left := 0;
+     KeyboardMode_Panel.Left := 0;
+     Locale_Panel.Left := 0;
+     AvroPhonetic_Panel.Left := 0;
+     FixedLayout_Panel.Left := 0;
+
+     Interface_Panel.Width := Self.Width - CategoryTree.Width - 20;
+     AvroMouse_Panel.Width := Self.Width - CategoryTree.Width - 20;
+     General_Panel.Width := Self.Width - CategoryTree.Width - 20;
+     KeyboardMode_Panel.Width := Self.Width - CategoryTree.Width - 20;
+     Locale_Panel.Width := Self.Width - CategoryTree.Width - 20;
+     AvroPhonetic_Panel.Width := Self.Width - CategoryTree.Width - 20;
+     FixedLayout_Panel.Width := Self.Width - CategoryTree.Width - 20;
+
+     Interface_Panel.BevelKind := bknone {bkTile};
+     AvroMouse_Panel.BevelKind := bknone {bkTile};
+     General_Panel.BevelKind := bknone {bkTile};
+     KeyboardMode_Panel.BevelKind := bknone {bkTile};
+     Locale_Panel.BevelKind := bknone {bkTile};
+     AvroPhonetic_Panel.BevelKind := bknone {bkTile};
+     FixedLayout_Panel.BevelKind := bknone {bkTile};
+
 
      CategoryTree.Items[0].Selected := True;
 
@@ -722,6 +726,7 @@ Begin
           optPhoneticMode_OnlyChar.Enabled := True;
           CheckRememberCandidate.Enabled := True;
           CheckAddNewWords.Enabled := True;
+          CheckTabBrowsing.Enabled := True;
      End
      Else Begin
           Label_PhoneticTypingMode.Enabled := False;
@@ -730,6 +735,7 @@ Begin
           optPhoneticMode_OnlyChar.Enabled := False;
           CheckRememberCandidate.Enabled := False;
           CheckAddNewWords.Enabled := False;
+          CheckTabBrowsing.Enabled := False;
      End;
 
      If PhoneticMode = 'DICT' Then
@@ -750,6 +756,21 @@ Begin
           CheckAddNewWords.Checked := True
      Else
           CheckAddNewWords.Checked := False;
+
+     If TabBrowsing = 'YES' Then
+          CheckTabBrowsing.Checked := True
+     Else
+          CheckTabBrowsing.Checked := False;
+
+     If PipeToDot = 'YES' Then
+          CheckPipeToDot.Checked := True
+     Else
+          CheckPipeToDot.Checked := False;
+
+     If EnableJoNukta = 'YES' Then
+          CheckEnableJoNukta.Checked := True
+     Else
+          CheckEnableJoNukta.Checked := False;
 
 
      //=========================================================
@@ -842,7 +863,7 @@ Begin
           DefaultUIMode := 'LASTUI';
 
      If checkUpdate.Checked = True Then
-         AvroUpdateCheck := 'YES'
+          AvroUpdateCheck := 'YES'
      Else
           AvroUpdateCheck := 'NO';
 
@@ -923,6 +944,23 @@ Begin
           AddToPhoneticDict := 'YES'
      Else
           AddToPhoneticDict := 'NO';
+
+     If CheckTabBrowsing.Checked = True Then
+          TabBrowsing := 'YES'
+     Else
+          TabBrowsing := 'NO';
+
+     If CheckPipeToDot.Checked = True Then
+          PipeToDot := 'YES'
+     Else
+          PipeToDot := 'NO';
+
+     If CheckEnableJoNukta.Checked = True Then
+          EnableJoNukta := 'YES'
+     Else
+          EnableJoNukta := 'NO';
+
+
 
      //=========================================================
      // Avro Mouse Options

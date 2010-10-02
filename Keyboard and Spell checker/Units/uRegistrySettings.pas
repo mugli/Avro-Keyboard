@@ -85,6 +85,9 @@ Var
      PhoneticMode             : String;
      SaveCandidate            : String;
      AddToPhoneticDict        : String;
+     TabBrowsing              : String;
+     PipeToDot                : String;
+     EnableJoNukta            : String;
 
 
      //Input Locale Settings
@@ -189,6 +192,9 @@ Begin
      PhoneticMode := UpperCase(XML.GetValue('PhoneticMode', 'CHAR'));
      SaveCandidate := UpperCase(XML.GetValue('SaveCandidate', 'YES'));
      AddToPhoneticDict := UpperCase(XML.GetValue('AddToPhoneticDict', 'YES'));
+     TabBrowsing := UpperCase(XML.GetValue('TabBrowsing', 'YES'));
+     PipeToDot := UpperCase(XML.GetValue('PipeToDot', 'YES'));
+     EnableJoNukta := UpperCase(XML.GetValue('EnableJoNukta', 'NO'));
 
 
      //Input Locale Settings
@@ -265,6 +271,9 @@ Begin
      XML.SetValue('PhoneticMode', PhoneticMode);
      XML.SetValue('SaveCandidate', SaveCandidate);
      XML.SetValue('AddToPhoneticDict', AddToPhoneticDict);
+     XML.SetValue('TabBrowsing', TabBrowsing);
+     XML.SetValue('PipeToDot', PipeToDot);
+     XML.SetValue('EnableJoNukta', EnableJoNukta);
 
      //Input Locale Settings
      XML.SetValue('ChangeInputLocale', ChangeInputLocale);
@@ -347,6 +356,9 @@ Begin
           PhoneticMode := UpperCase(REG.ReadStringDef('PhoneticMode', 'CHAR'));
           SaveCandidate := UpperCase(REG.ReadStringDef('SaveCandidate', 'YES'));
           AddToPhoneticDict := UpperCase(REG.ReadStringDef('AddToPhoneticDict', 'YES'));
+          TabBrowsing := UpperCase(REG.ReadStringDef('TabBrowsing', 'YES'));
+          PipeToDot := UpperCase(REG.ReadStringDef('PipeToDot', 'YES'));
+          EnableJoNukta := UpperCase(REG.ReadStringDef('EnableJoNukta', 'NO'));
 
           //Input Locale Settings
           ChangeInputLocale := UpperCase(REG.ReadStringDef('ChangeInputLocale', 'Yes'));
@@ -429,6 +441,9 @@ Begin
           REG.WriteString('PhoneticMode', PhoneticMode);
           REG.WriteString('SaveCandidate', SaveCandidate);
           REG.WriteString('AddToPhoneticDict', AddToPhoneticDict);
+          REG.WriteString('TabBrowsing', TabBrowsing);
+          REG.WriteString('PipeToDot', PipeToDot);
+          REG.WriteString('EnableJoNukta', EnableJoNukta);
 
           //Input Locale Settings
           REG.WriteString('ChangeInputLocale', ChangeInputLocale);
@@ -517,6 +532,9 @@ Begin
      //Avro Phonetic Settings
      If Not ((PhoneticAutoCorrect = 'YES') Or (PhoneticAutoCorrect = 'NO')) Then PhoneticAutoCorrect := 'YES';
      If Not ((ShowPrevWindow = 'YES') Or (ShowPrevWindow = 'NO')) Then ShowPrevWindow := 'YES';
+     If Not ((TabBrowsing = 'YES') Or (TabBrowsing = 'NO')) Then TabBrowsing := 'YES';
+     If Not ((PipeToDot = 'YES') Or (PipeToDot = 'NO')) Then PipeToDot := 'YES';
+     If Not ((EnableJoNukta = 'YES') Or (EnableJoNukta = 'NO')) Then EnableJoNukta := 'NO';
 
      //Input Locale Settings
      If Not ((ChangeInputLocale = 'YES') Or (ChangeInputLocale = 'NO')) Then ChangeInputLocale := 'YES';

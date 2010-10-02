@@ -77,7 +77,6 @@ Type
           Procedure ProcessSpace(Var Block: Boolean);
           Procedure ParseAndSend;
           Procedure ParseAndSendNow;
-          Procedure ProcessTab(Var Block: Boolean);
           Procedure ProcessEnter(Var Block: Boolean);
           Procedure DoBackspace(Var Block: Boolean);
           Procedure MyProcessVKeyDown(Const KeyCode: Integer;
@@ -226,10 +225,10 @@ Begin
           PhoneticCache[i].Results := TWideStringList.Create;
      End;
 
-    // If IsWinVistaOrLater Then
-          DetermineZWNJ_ZWJ := ZWJ;
-   //  Else
-   //       DetermineZWNJ_ZWJ := ZWNJ;
+     // If IsWinVistaOrLater Then
+     DetermineZWNJ_ZWJ := ZWJ;
+     //  Else
+     //       DetermineZWNJ_ZWJ := ZWNJ;
 
 End;
 
@@ -438,8 +437,8 @@ Begin
      For I := StartCounter To EndCounter Do Begin
           rList[i] := WideReplaceStr(rList[i], b_R + ZWNJ + b_Hasanta + b_Z,
                b_r + DetermineZWNJ_ZWJ + b_Hasanta + b_Z);
-         { rList[i] := WideReplaceStr(rList[i], b_R + ZWJ + b_Hasanta + b_Z,
-               b_r + DetermineZWNJ_ZWJ + b_Hasanta + b_Z); }
+          { rList[i] := WideReplaceStr(rList[i], b_R + ZWJ + b_Hasanta + b_Z,
+                b_r + DetermineZWNJ_ZWJ + b_Hasanta + b_Z); }
      End;
 End;
 
@@ -550,7 +549,12 @@ Begin
                End;
 
           VK_OEM_5: Begin               // key \|
-                    If var_IfTrueShift = True Then AddStr('.`'); {New dot!}
+                    If var_IfTrueShift = True Then Begin
+                         If PipeToDot = 'YES' Then
+                              AddStr('.`') {New dot!}
+                         Else
+                              AddStr('|');
+                    End;
                     If var_IfTrueShift = False Then AddStr('\');
                     Block := True;
                     Exit;
@@ -997,7 +1001,7 @@ Begin
           //  End;
      End;
 
-     If (PhoneticMode = 'ONLYCHAR') or (ShowPrevWindow = 'NO') Then Begin
+     If (PhoneticMode = 'ONLYCHAR') Or (ShowPrevWindow = 'NO') Then Begin
           If (TempBanglaText1 <> TempBanglaText2) Then Begin
                If FAutoCorrect Then
                     frmPrevW.SelectItem(EscapeSpecialCharacters(TempBanglaText1))
@@ -1017,9 +1021,9 @@ Begin
                     WStringList.Assign(PhoneticCache[Length(Middle_Main_T)].Results);
                     AddSuffix(Middle_Main_T, WStringList);
                     SimilarSort(TempBanglaText2, WStringList);
-                    AbbText :='';
+                    AbbText := '';
                     AbbText := Abbreviation.CheckConvert(Middle_Main_T);
-                    If AbbText <> '' Then WStringList.Add(AbbText);   
+                    If AbbText <> '' Then WStringList.Add(AbbText);
                     PadResults(Starting_Ignoreable_T, Ending_Ignorable_T, WStringList);
                End
                Else Begin
@@ -1030,7 +1034,7 @@ Begin
                     AddToCache(Middle_Main_T, WStringList);
                     AddSuffix(Middle_Main_T, WStringList);
                     SimilarSort(TempBanglaText2, WStringList);
-                    AbbText :='';
+                    AbbText := '';
                     AbbText := Abbreviation.CheckConvert(Middle_Main_T);
                     If AbbText <> '' Then WStringList.Add(AbbText);
                     PadResults(Starting_Ignoreable_T, Ending_Ignorable_T, WStringList);
@@ -1141,14 +1145,6 @@ End;
 
 {===============================================================================}
 
-Procedure TE2BCharBased.ProcessTab(Var Block: Boolean);
-Begin
-     ResetDeadKey;
-     Block := False;
-End;
-
-{===============================================================================}
-
 Function TE2BCharBased.ProcessVKeyDown(Const KeyCode: Integer;
      Var Block: Boolean): WideString;
 Var
@@ -1182,9 +1178,26 @@ Begin
                Exit;
           End
           Else If KeyCode = VK_TAB Then Begin
-               ProcessTab(Block);
-               ProcessVKeyDown := '';
-               Exit;
+               If TabBrowsing = 'YES' Then Begin
+                    If (frmPrevW.List.Count > 1) And (EnglishT <> '') Then Begin
+                         Block := True;
+                         frmPrevW.SelectNextItem;
+                         UpdateCandidateOption;
+                         Exit;
+                    End
+                    Else Begin
+                         ResetDeadKey;
+                         Block := False;
+                         ProcessVKeyDown := '';
+                         Exit;
+                    End;
+               End
+               Else Begin
+                    ResetDeadKey;
+                    Block := False;
+                    ProcessVKeyDown := '';
+                    Exit;
+               End;
           End
           Else If KeyCode = VK_RETURN Then Begin
                ProcessEnter(Block);

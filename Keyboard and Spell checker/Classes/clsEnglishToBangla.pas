@@ -93,7 +93,8 @@ Implementation
 Uses
      uAutoCorrect,
      BanglaChars,
-     WindowsVersion;
+     WindowsVersion,
+     uRegistrySettings;
 
 { TEnglishToBangla }
 
@@ -240,7 +241,7 @@ Begin
 
      //As is support
      If AutoCorrect = True Then Begin
-          If Dict.HasKey(EnglishT) = True Then Begin  
+          If Dict.HasKey(EnglishT) = True Then Begin
                If EnglishT = Dict.item[EnglishT] Then Begin
                     Convert := EnglishT;
                     exit;
@@ -542,7 +543,12 @@ Begin
      If Cnv('jh', b_JH) = True Then Exit; //Jh
      If Cnv('jj', b_J + b_Hasanta + b_J) = True Then Exit; //J+J
      If Cnv('j', b_J) = True Then Exit; //J
-     If Cnv('J', b_J + b_Nukta) = True Then Exit; //J+Nukta
+     If EnableJoNukta = 'YES' Then Begin
+          If Cnv('J', b_J + b_Nukta) = True Then Exit; //J+Nukta
+     End
+     Else Begin
+          If Cnv('J', b_J) = True Then Exit; //J+Nukta
+     End;
 End;
 
 {===============================================================================}

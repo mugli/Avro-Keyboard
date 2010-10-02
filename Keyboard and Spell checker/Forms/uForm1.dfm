@@ -125,7 +125,7 @@ object AvroMainForm1: TAvroMainForm1
     Left = 8
     Top = 224
     Bitmap = {
-      494C01011C009400A40010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011C009400A80010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000008000000001002000000000000080
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1739,7 +1739,7 @@ object AvroMainForm1: TAvroMainForm1
         OnClick = EnableAutoCorrect1Click
       end
       object ManageAutoCorrectentries1: TMenuItem
-        Caption = 'Manage Auto Correct entries...'
+        Caption = 'Edit/Import Auto Correct entries...'
         OnClick = ManageAutoCorrectentries1Click
       end
     end
@@ -1886,7 +1886,7 @@ object AvroMainForm1: TAvroMainForm1
           OnClick = EnableAutoCorrect1Click
         end
         object ManageAutoCorrectentries2: TMenuItem
-          Caption = 'Manage Auto Correct entries...'
+          Caption = 'Edit/Import Auto Correct entries...'
           OnClick = ManageAutoCorrectentries1Click
         end
       end
