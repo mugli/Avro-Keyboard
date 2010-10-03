@@ -272,6 +272,9 @@ Procedure TfrmOptions.Button_ApplyClick(Sender: TObject);
           r1, g1, b1          : Byte;
           r2, g2, b2          : Byte;
      Begin
+          Application.ProcessMessages;
+          Sleep(100);
+          Application.ProcessMessages;
           clrStart := ColorToRgb(Control.Font.Color);
           clrEnd := ColorToRGb(Control.Color);
 
@@ -297,7 +300,7 @@ Procedure TfrmOptions.Button_ApplyClick(Sender: TObject);
                Else If (b1 < b2) Then
                     Inc(b1);
                If ((dwIndex Mod 10) = 0) Then Begin
-                    Sleep(50);
+                    Sleep(40);
                     Control.Font.Color := RGB(r1, g1, b1);
                     Application.ProcessMessages;
                End;
