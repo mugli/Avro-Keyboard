@@ -65,7 +65,9 @@ Type
           Label_Update: TLabel;
           MemoLicense: TMemo;
           LabelViewCredit: TLabel;
-    Image2: TImage;
+          Image2: TImage;
+          Label3: TLabel;
+          EditDataDirectory: TEdit;
           Procedure FormClose(Sender: TObject; Var Action: TCloseAction);
           Procedure FormCreate(Sender: TObject);
           Procedure tmrScrollTimer(Sender: TObject);
@@ -79,6 +81,8 @@ Type
           Procedure LabelViewCreditClick(Sender: TObject);
           Procedure FormActivate(Sender: TObject);
           Procedure FormPaint(Sender: TObject);
+          Procedure EditDataDirectoryClick(Sender: TObject);
+
 
      Private
           { Private declarations }
@@ -137,6 +141,13 @@ End;
 
 {===============================================================================}
 
+Procedure TfrmAbout.EditDataDirectoryClick(Sender: TObject);
+Begin
+     EditDataDirectory.SelectAll;
+End;
+
+{===============================================================================}
+
 Procedure TfrmAbout.FormActivate(Sender: TObject);
 Begin
 
@@ -160,7 +171,7 @@ Begin
      self.Width := shape1.Width;
      self.Height := shape1.Height;
      pbScrollBox.Canvas.Font.Name := 'Courier New';
-     pbScrollBox.Canvas.Font.Color:=clMaroon;
+     pbScrollBox.Canvas.Font.Color := clMaroon;
      lblText.Caption := Credit.text;
      TheY := pbScrollBox.ClientHeight;
      pbScrollBox.Canvas.Brush.Style := bsSolid;
@@ -171,6 +182,7 @@ Begin
      LabelVersion.Caption := Version.AsString{$IFDEF BetaVersion} + ' BETA'{$ENDIF}{$IFDEF PortableOn} + ' (Portable)'{$ENDIF};
      Version.Free;
      Label_Update.Left := LabelVersion.Left + LabelVersion.Width + 10;
+     EditDataDirectory.Text := GetAvroDataDir;
 
 End;
 

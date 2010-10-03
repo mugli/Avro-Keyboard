@@ -4944,8 +4944,8 @@ object frmAbout: TfrmAbout
     Caption = '5.0.0.1 (Portable)'
   end
   object Label4: TLabel
-    Left = 178
-    Top = 259
+    Left = 177
+    Top = 257
     Width = 71
     Height = 13
     Caption = 'Copyright '#169
@@ -4973,15 +4973,15 @@ object frmAbout: TfrmAbout
     OnClick = Label_LicenseClick
   end
   object Label8: TLabel
-    Left = 330
-    Top = 259
+    Left = 329
+    Top = 257
     Width = 115
     Height = 13
     Caption = 'All Rights Reserved.'
   end
   object Label_OmicronLab: TLabel
-    Left = 252
-    Top = 259
+    Left = 251
+    Top = 257
     Width = 72
     Height = 13
     Cursor = crHandPoint
@@ -5184,6 +5184,13 @@ object frmAbout: TfrmAbout
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       00000000}
+  end
+  object Label3: TLabel
+    Left = 178
+    Top = 289
+    Width = 87
+    Height = 13
+    Caption = 'Data directory:'
   end
   object MemoLicense: TMemo
     Left = 178
@@ -6415,6 +6422,18 @@ object frmAbout: TfrmAbout
     TabOrder = 1
     Visible = False
     WordWrap = False
+  end
+  object EditDataDirectory: TEdit
+    Left = 271
+    Top = 286
+    Width = 242
+    Height = 21
+    BevelEdges = []
+    BevelInner = bvNone
+    BevelOuter = bvNone
+    ReadOnly = True
+    TabOrder = 3
+    OnClick = EditDataDirectoryClick
   end
   object tmrScroll: TTimer
     Enabled = False
