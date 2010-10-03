@@ -54,7 +54,6 @@ Type
           ButtonPanel: TPanel;
           Button_OK: TButton;
           Button_Cancel: TButton;
-          Button_Help: TButton;
           CategoryTree: TTreeView;
           butEditCustomDict: TButton;
           CheckAddNewWords: TCheckBox;
@@ -130,6 +129,9 @@ Type
           CheckPipeToDot: TCheckBox;
           Label13: TLabel;
           Label14: TLabel;
+          Button_Apply: TButton;
+          Button_Help: TButton;
+          LabelStatus: TLabel;
           Procedure FormCreate(Sender: TObject);
           Procedure CategoryTreeClick(Sender: TObject);
           Procedure FormClose(Sender: TObject; Var Action: TCloseAction);
@@ -149,6 +151,7 @@ Type
           Procedure ccmdAboutSkinClick(Sender: TObject);
           Procedure ButtonInstallLocaleClick(Sender: TObject);
           Procedure CheckAddNewWordsClick(Sender: TObject);
+          Procedure Button_ApplyClick(Sender: TObject);
      Private
           { Private declarations }
           //Procedure SetTabOrder;
@@ -254,6 +257,61 @@ Begin
           Execute_Something_With_APP_Admin('/LOCALE /V', Application.ExeName)
      Else
           InstallLocale;
+End;
+
+{===============================================================================}
+
+Procedure TfrmOptions.Button_ApplyClick(Sender: TObject);
+
+     Procedure FadeOut(Control: TLabel);
+
+     Var
+          clrStart            : COLORREF;
+          clrEnd              : COLORREF;
+          dwIndex             : Integer;
+          r1, g1, b1          : Byte;
+          r2, g2, b2          : Byte;
+     Begin
+          clrStart := ColorToRgb(Control.Font.Color);
+          clrEnd := ColorToRGb(Control.Color);
+
+          r1 := GetRValue(clrStart);
+          g1 := GetGValue(clrStart);
+          b1 := GetBValue(clrStart);
+          r2 := GetRValue(clrEnd);
+          g2 := GetGValue(clrEnd);
+          b2 := GetBValue(clrEnd);
+
+          For dwIndex := 0 To 255 Do Begin
+
+               If (r1 > r2) Then
+                    Dec(r1)
+               Else If (r1 < r2) Then
+                    Inc(r1);
+               If (g1 > g2) Then
+                    Dec(g1)
+               Else If (g1 < g2) Then
+                    Inc(g1);
+               If (b1 > b2) Then
+                    Dec(b1)
+               Else If (b1 < b2) Then
+                    Inc(b1);
+               If ((dwIndex Mod 10) = 0) Then Begin
+                    Sleep(50);
+                    Control.Font.Color := RGB(r1, g1, b1);
+                    Application.ProcessMessages;
+               End;
+          End;
+          Application.ProcessMessages;
+     End;
+Begin
+     Self.SaveSettings;
+     AvroMainForm1.RefreshSettings;
+
+     LabelStatus.Font.Color := clGreen;
+     LabelStatus.Visible := True;
+     FadeOut(LabelStatus);
+     LabelStatus.Visible := False;
 End;
 
 {===============================================================================}

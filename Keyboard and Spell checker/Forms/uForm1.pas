@@ -606,7 +606,7 @@ End;
 
 Procedure TAvroMainForm1.Exit1Click(Sender: TObject);
 Begin
-     ExitApp;
+     Self.Close;
 End;
 
 Procedure TAvroMainForm1.ExitApp;
@@ -642,7 +642,6 @@ Begin
 
      If Assigned(Topbar) Then Topbar.Close;
      If Assigned(frmPrevW) Then frmPrevW.Close;
-     Self.Close;
      Application.Terminate;
 
 End;

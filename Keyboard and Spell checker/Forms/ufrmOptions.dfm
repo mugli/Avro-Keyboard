@@ -8,7 +8,7 @@ object frmOptions: TfrmOptions
   ClientWidth = 588
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
-  Font.Color = clWindowText
+  Font.Color = clBtnText
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
@@ -166,6 +166,15 @@ object frmOptions: TfrmOptions
       Font.Style = [fsBold]
       ParentFont = False
     end
+    object Button_Help: TButton
+      Left = 493
+      Top = 13
+      Width = 75
+      Height = 25
+      Caption = 'Help'
+      TabOrder = 0
+      OnClick = Button_HelpClick
+    end
   end
   object ButtonPanel: TPanel
     Left = -3
@@ -175,8 +184,22 @@ object frmOptions: TfrmOptions
     BevelKind = bkTile
     BevelOuter = bvNone
     TabOrder = 2
+    object LabelStatus: TLabel
+      Left = 11
+      Top = 16
+      Width = 87
+      Height = 13
+      Caption = 'Settings saved!'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clGreen
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      Visible = False
+    end
     object Button_OK: TButton
-      Left = 409
+      Left = 334
       Top = 16
       Width = 75
       Height = 25
@@ -186,7 +209,7 @@ object frmOptions: TfrmOptions
       OnClick = Button_OKClick
     end
     object Button_Cancel: TButton
-      Left = 503
+      Left = 415
       Top = 16
       Width = 75
       Height = 25
@@ -195,14 +218,14 @@ object frmOptions: TfrmOptions
       TabOrder = 1
       OnClick = Button_CancelClick
     end
-    object Button_Help: TButton
-      Left = 16
+    object Button_Apply: TButton
+      Left = 496
       Top = 16
       Width = 75
       Height = 25
-      Caption = 'Help'
+      Caption = 'Apply'
       TabOrder = 2
-      OnClick = Button_HelpClick
+      OnClick = Button_ApplyClick
     end
   end
   object CategoryTree: TTreeView
