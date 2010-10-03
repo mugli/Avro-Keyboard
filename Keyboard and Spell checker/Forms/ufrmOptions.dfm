@@ -699,7 +699,7 @@ object frmOptions: TfrmOptions
           Width = 280
           Height = 21
           Style = csDropDownList
-          ItemHeight = 0
+          ItemHeight = 13
           TabOrder = 0
           OnChange = comboSkinChange
         end
@@ -785,11 +785,11 @@ object frmOptions: TfrmOptions
       object Label13: TLabel
         Left = 48
         Top = 479
-        Width = 327
+        Width = 338
         Height = 13
         Caption = 
-          '(Quick tip: Enable if your keyboard doesn'#39't has NumPad to type d' +
-          'ot.'
+          '(Quick tip: Enable if your keyboard doesn'#39't have NumPa-d to type' +
+          ' dot.'
       end
       object Label14: TLabel
         Left = 101

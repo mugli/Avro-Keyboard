@@ -69,13 +69,6 @@ Type
           Popup_Help: TPopupMenu;
           Popup_Main: TPopupMenu;
           Popup_Tools: TPopupMenu;
-          UseModernStyleTyping1: TMenuItem;
-          UseOldStyleTyping1: TMenuItem;
-          N1: TMenuItem;
-          EnableOldStyleRephInModernTypingStyle1: TMenuItem;
-          AutomaticVowelFormatingInModernTypingStyle1: TMenuItem;
-          AutomaticallyfixChandrapositionInModernTypingStyle1: TMenuItem;
-          EnableBanglainNumberPadInFixedkeyboardLayouts1: TMenuItem;
           AvroPhonetic1: TMenuItem;
           EnableAutoCorrect1: TMenuItem;
           ManageAutoCorrectentries1: TMenuItem;
@@ -246,7 +239,6 @@ Type
           InternetCheck: TTimer;
           Spellcheck1: TMenuItem;
           N41: TMenuItem;
-          N42: TMenuItem;
           Spellcheck2: TMenuItem;
           Spellcheck3: TMenuItem;
           N43: TMenuItem;
@@ -257,18 +249,10 @@ Type
           Aboutcurrentskin2: TMenuItem;
           UnicodetoBijoytextconverter1: TMenuItem;
           ools1: TMenuItem;
-          UseModernStyleTyping2: TMenuItem;
-          UseOldStyleTyping2: TMenuItem;
-          N45: TMenuItem;
-          EnableOldStyleRephInModernTypingStyle2: TMenuItem;
-          AutomaticVowelFormatingInModernTypingStyle2: TMenuItem;
-          AutomaticallyfixChandrapositionInModernTypingStyle2: TMenuItem;
-          EnableBanglainNumberPadInFixedkeyboardLayouts2: TMenuItem;
           N46: TMenuItem;
           AvroPhonetic2: TMenuItem;
           EnableAutoCorrect2: TMenuItem;
           ManageAutoCorrectentries2: TMenuItem;
-          N47: TMenuItem;
           UnicodetoBijoytextconverter2: TMenuItem;
           KeyboardLayoutEditorBuildcustomlayouts2: TMenuItem;
           SkinDesignerDesignyourownskin2: TMenuItem;
@@ -280,6 +264,22 @@ Type
           iComplexInstallcomplexscriptsupportinWindows1: TMenuItem;
           FontFixerSetdefaultBanglafont2: TMenuItem;
           iComplexInstallcomplexscriptsupportinWindows2: TMenuItem;
+          FixedKeyboardLayout1: TMenuItem;
+          UseModernStyleTyping1: TMenuItem;
+          UseOldStyleTyping1: TMenuItem;
+          N1: TMenuItem;
+          EnableOldStyleRephInModernTypingStyle1: TMenuItem;
+          AutomaticVowelFormatingInModernTypingStyle1: TMenuItem;
+          AutomaticallyfixChandrapositionInModernTypingStyle1: TMenuItem;
+          EnableBanglainNumberPadInFixedkeyboardLayouts1: TMenuItem;
+          FixedKeyboardLayout2: TMenuItem;
+          UseModernStyleTyping2: TMenuItem;
+          UseOldStyleTyping2: TMenuItem;
+          N44: TMenuItem;
+          EnableOldStyleRephInModernTypingStyle2: TMenuItem;
+          AutomaticVowelFormatingInModernTypingStyle2: TMenuItem;
+          AutomaticallyfixChandrapositionInModernTypingStyle2: TMenuItem;
+          EnableBanglainNumberPadInFixedkeyboardLayouts2: TMenuItem;
           Procedure FormKeyDown(Sender: TObject; Var Key: Word; Shift: TShiftState);
           Procedure FormCreate(Sender: TObject);
           Procedure AvroPhoneticEnglishtoBangla3Click(Sender: TObject);
@@ -1306,13 +1306,20 @@ Begin
           EnableBanglainNumberPadInFixedkeyboardLayouts1.Enabled := False;
           EnableBanglainNumberPadInFixedkeyboardLayouts2.Enabled := False;
 
-          AvroPhonetic1.Enabled := True;
-          AvroPhonetic2.Enabled := True;
           EnableAutoCorrect1.Enabled := True;
           EnableAutoCorrect2.Enabled := True;
           ManageAutoCorrectentries1.Enabled := True;
           ManageAutoCorrectentries2.Enabled := True;
 
+
+          If ShowPrevWindow = 'NO' Then
+               UnloadWordDatabase
+          Else Begin
+               If PhoneticMode = 'ONLYCHAR' Then
+                    UnloadWordDatabase
+               Else
+                    LoadWordDatabase;
+          End;
      End
      Else Begin
           UseModernStyleTyping1.Enabled := True;
@@ -1348,13 +1355,12 @@ Begin
           EnableBanglainNumberPadInFixedkeyboardLayouts1.Enabled := True;
           EnableBanglainNumberPadInFixedkeyboardLayouts2.Enabled := True;
 
-          AvroPhonetic1.Enabled := False;
-          AvroPhonetic2.Enabled := False;
           EnableAutoCorrect1.Enabled := False;
           EnableAutoCorrect2.Enabled := False;
           ManageAutoCorrectentries1.Enabled := False;
           ManageAutoCorrectentries2.Enabled := False;
 
+          UnloadWordDatabase;
      End;
 
      If AutomaticallyFixChandra = 'NO' Then Begin
@@ -1386,15 +1392,6 @@ Begin
           TopBar.TransparencyTimer.Enabled := True
      Else
           TopBar.TransparencyTimer.Enabled := False;
-
-     If ShowPrevWindow = 'NO' Then
-          UnloadWordDatabase
-     Else Begin
-          If PhoneticMode = 'ONLYCHAR' Then
-               UnloadWordDatabase
-          Else
-               LoadWordDatabase;
-     End;
 
 
      If AvroUpdateCheck = 'YES' Then

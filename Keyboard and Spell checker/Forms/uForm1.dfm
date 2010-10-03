@@ -127,7 +127,7 @@ object AvroMainForm1: TAvroMainForm1
     Left = 8
     Top = 224
     Bitmap = {
-      494C01011C00B800BC0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011C00B800C00010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000008000000001002000000000000080
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1471,7 +1471,7 @@ object AvroMainForm1: TAvroMainForm1
       Caption = '-'
     end
     object Spellcheck1: TMenuItem
-      Caption = 'Spell check...'
+      Caption = 'Spell checker...'
       ImageIndex = 24
       ShortCut = 16502
       OnClick = Spellcheck1Click
@@ -1690,60 +1690,10 @@ object AvroMainForm1: TAvroMainForm1
     Left = 208
     Top = 16
     object Spellcheck2: TMenuItem
-      Caption = 'Spell check...'
+      Caption = 'Spell checker...'
       ImageIndex = 24
       ShortCut = 16502
       OnClick = Spellcheck1Click
-    end
-    object N42: TMenuItem
-      Caption = '-'
-    end
-    object UseModernStyleTyping1: TMenuItem
-      Caption = 'Use "Modern Style Typing" in fixed keyboard layouts'
-      Checked = True
-      RadioItem = True
-      OnClick = UseModernStyleTyping1Click
-    end
-    object UseOldStyleTyping1: TMenuItem
-      Caption = 'Use "Old Style Typing" in fixed keyboard layouts'
-      RadioItem = True
-      OnClick = UseOldStyleTyping1Click
-    end
-    object N1: TMenuItem
-      Caption = '-'
-    end
-    object EnableOldStyleRephInModernTypingStyle1: TMenuItem
-      Caption = 'Enable "Old Style Reph" (In Modern Typing Style)'
-      OnClick = EnableOldStyleRephInModernTypingStyle1Click
-    end
-    object AutomaticVowelFormatingInModernTypingStyle1: TMenuItem
-      Caption = 'Enable "Automatic Vowel Forming" (In Modern Typing Style)'
-      OnClick = AutomaticVowelFormatingInModernTypingStyle1Click
-    end
-    object AutomaticallyfixChandrapositionInModernTypingStyle1: TMenuItem
-      Caption = 
-        'Automatically fix "Chandrabindu" position (In Modern Typing Styl' +
-        'e)'
-      OnClick = AutomaticallyfixChandrapositionInModernTypingStyle1Click
-    end
-    object EnableBanglainNumberPadInFixedkeyboardLayouts1: TMenuItem
-      Caption = 'Enable Bangla in NumberPad (In Fixed keyboard Layouts)'
-      OnClick = EnableBanglainNumberPadInFixedkeyboardLayouts1Click
-    end
-    object N4: TMenuItem
-      Caption = '-'
-    end
-    object AvroPhonetic1: TMenuItem
-      Caption = 'Avro Phonetic'
-      ImageIndex = 8
-      object EnableAutoCorrect1: TMenuItem
-        Caption = 'Enable Auto Correct'
-        OnClick = EnableAutoCorrect1Click
-      end
-      object ManageAutoCorrectentries1: TMenuItem
-        Caption = 'Edit/Import Auto Correct entries...'
-        OnClick = ManageAutoCorrectentries1Click
-      end
     end
     object N3: TMenuItem
       Caption = '-'
@@ -1784,6 +1734,56 @@ object AvroMainForm1: TAvroMainForm1
       OnClick = iComplexInstallcomplexscriptsupportinWindows1Click
     end
     object N5: TMenuItem
+      Caption = '-'
+    end
+    object AvroPhonetic1: TMenuItem
+      Caption = 'Avro Phonetic Options'
+      ImageIndex = 8
+      object EnableAutoCorrect1: TMenuItem
+        Caption = 'Enable Auto Correct'
+        OnClick = EnableAutoCorrect1Click
+      end
+      object ManageAutoCorrectentries1: TMenuItem
+        Caption = 'Edit/Import Auto Correct entries...'
+        OnClick = ManageAutoCorrectentries1Click
+      end
+    end
+    object FixedKeyboardLayout1: TMenuItem
+      Caption = 'Fixed Keyboard Layout Options'
+      object UseModernStyleTyping1: TMenuItem
+        Caption = 'Use "Modern Style Typing" in fixed keyboard layouts'
+        Checked = True
+        RadioItem = True
+        OnClick = UseModernStyleTyping1Click
+      end
+      object UseOldStyleTyping1: TMenuItem
+        Caption = 'Use "Old Style Typing" in fixed keyboard layouts'
+        RadioItem = True
+        OnClick = UseOldStyleTyping1Click
+      end
+      object N1: TMenuItem
+        Caption = '-'
+      end
+      object EnableOldStyleRephInModernTypingStyle1: TMenuItem
+        Caption = 'Enable "Old Style Reph" (In Modern Typing Style)'
+        OnClick = EnableOldStyleRephInModernTypingStyle1Click
+      end
+      object AutomaticVowelFormatingInModernTypingStyle1: TMenuItem
+        Caption = 'Enable "Automatic Vowel Forming" (In Modern Typing Style)'
+        OnClick = AutomaticVowelFormatingInModernTypingStyle1Click
+      end
+      object AutomaticallyfixChandrapositionInModernTypingStyle1: TMenuItem
+        Caption = 
+          'Automatically fix "Chandrabindu" position (In Modern Typing Styl' +
+          'e)'
+        OnClick = AutomaticallyfixChandrapositionInModernTypingStyle1Click
+      end
+      object EnableBanglainNumberPadInFixedkeyboardLayouts1: TMenuItem
+        Caption = 'Enable Bangla in NumberPad (In Fixed keyboard Layouts)'
+        OnClick = EnableBanglainNumberPadInFixedkeyboardLayouts1Click
+      end
+    end
+    object N4: TMenuItem
       Caption = '-'
     end
     object Options1: TMenuItem
@@ -1834,7 +1834,7 @@ object AvroMainForm1: TAvroMainForm1
       Caption = '-'
     end
     object Spellcheck3: TMenuItem
-      Caption = 'Spell check...'
+      Caption = 'Spell checker...'
       ImageIndex = 24
       ShortCut = 16502
       OnClick = Spellcheck1Click
@@ -1845,56 +1845,6 @@ object AvroMainForm1: TAvroMainForm1
     object ools1: TMenuItem
       Caption = 'Tools'
       ImageIndex = 11
-      object UseModernStyleTyping2: TMenuItem
-        Caption = 'Use "Modern Style Typing" in fixed keyboard layouts'
-        Checked = True
-        RadioItem = True
-        OnClick = UseModernStyleTyping1Click
-      end
-      object UseOldStyleTyping2: TMenuItem
-        Caption = 'Use "Old Style Typing" in fixed keyboard layouts'
-        RadioItem = True
-        OnClick = UseOldStyleTyping1Click
-      end
-      object N45: TMenuItem
-        Caption = '-'
-      end
-      object EnableOldStyleRephInModernTypingStyle2: TMenuItem
-        Caption = 'Enable "Old Style Reph" (In Modern Typing Style)'
-        OnClick = EnableOldStyleRephInModernTypingStyle1Click
-      end
-      object AutomaticVowelFormatingInModernTypingStyle2: TMenuItem
-        Caption = 'Enable "Automatic Vowel Forming" (In Modern Typing Style)'
-        OnClick = AutomaticVowelFormatingInModernTypingStyle1Click
-      end
-      object AutomaticallyfixChandrapositionInModernTypingStyle2: TMenuItem
-        Caption = 
-          'Automatically fix "Chandrabindu" position (In Modern Typing Styl' +
-          'e)'
-        OnClick = AutomaticallyfixChandrapositionInModernTypingStyle1Click
-      end
-      object EnableBanglainNumberPadInFixedkeyboardLayouts2: TMenuItem
-        Caption = 'Enable Bangla in NumberPad (In Fixed keyboard Layouts)'
-        OnClick = EnableBanglainNumberPadInFixedkeyboardLayouts1Click
-      end
-      object N46: TMenuItem
-        Caption = '-'
-      end
-      object AvroPhonetic2: TMenuItem
-        Caption = 'Avro Phonetic'
-        ImageIndex = 8
-        object EnableAutoCorrect2: TMenuItem
-          Caption = 'Enable Auto Correct'
-          OnClick = EnableAutoCorrect1Click
-        end
-        object ManageAutoCorrectentries2: TMenuItem
-          Caption = 'Edit/Import Auto Correct entries...'
-          OnClick = ManageAutoCorrectentries1Click
-        end
-      end
-      object N47: TMenuItem
-        Caption = '-'
-      end
       object UnicodetoBijoytextconverter2: TMenuItem
         Caption = 'Unicode to Bijoy text converter'
         ImageIndex = 25
@@ -1931,6 +1881,56 @@ object AvroMainForm1: TAvroMainForm1
         OnClick = iComplexInstallcomplexscriptsupportinWindows1Click
       end
       object N48: TMenuItem
+        Caption = '-'
+      end
+      object AvroPhonetic2: TMenuItem
+        Caption = 'Avro Phonetic Options'
+        ImageIndex = 8
+        object EnableAutoCorrect2: TMenuItem
+          Caption = 'Enable Auto Correct'
+          OnClick = EnableAutoCorrect1Click
+        end
+        object ManageAutoCorrectentries2: TMenuItem
+          Caption = 'Edit/Import Auto Correct entries...'
+          OnClick = ManageAutoCorrectentries1Click
+        end
+      end
+      object FixedKeyboardLayout2: TMenuItem
+        Caption = 'Fixed Keyboard Layout Options'
+        object UseModernStyleTyping2: TMenuItem
+          Caption = 'Use "Modern Style Typing" in fixed keyboard layouts'
+          Checked = True
+          RadioItem = True
+          OnClick = UseModernStyleTyping1Click
+        end
+        object UseOldStyleTyping2: TMenuItem
+          Caption = 'Use "Old Style Typing" in fixed keyboard layouts'
+          RadioItem = True
+          OnClick = UseOldStyleTyping1Click
+        end
+        object N44: TMenuItem
+          Caption = '-'
+        end
+        object EnableOldStyleRephInModernTypingStyle2: TMenuItem
+          Caption = 'Enable "Old Style Reph" (In Modern Typing Style)'
+          OnClick = EnableOldStyleRephInModernTypingStyle1Click
+        end
+        object AutomaticVowelFormatingInModernTypingStyle2: TMenuItem
+          Caption = 'Enable "Automatic Vowel Forming" (In Modern Typing Style)'
+          OnClick = AutomaticVowelFormatingInModernTypingStyle1Click
+        end
+        object AutomaticallyfixChandrapositionInModernTypingStyle2: TMenuItem
+          Caption = 
+            'Automatically fix "Chandrabindu" position (In Modern Typing Styl' +
+            'e)'
+          OnClick = AutomaticallyfixChandrapositionInModernTypingStyle1Click
+        end
+        object EnableBanglainNumberPadInFixedkeyboardLayouts2: TMenuItem
+          Caption = 'Enable Bangla in NumberPad (In Fixed keyboard Layouts)'
+          OnClick = EnableBanglainNumberPadInFixedkeyboardLayouts1Click
+        end
+      end
+      object N46: TMenuItem
         Caption = '-'
       end
       object Options2: TMenuItem

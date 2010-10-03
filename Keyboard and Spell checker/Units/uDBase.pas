@@ -60,7 +60,7 @@ Procedure LoadOneDatabase(FileName: String; Var Arr: TAnsiStringList; Var HArr: 
 
 Var
      FDatabase                : TDISQLite3Database;
-     FDatabaseLoaded          : Boolean;
+     FDatabaseLoaded, FDatabaseLoading: Boolean;
 
 
      W_A                      : TAnsiStringList;
@@ -214,111 +214,115 @@ End;
 
 Procedure UnloadWordDatabase;
 Begin
-     If FDatabaseLoaded = False Then exit;
+     If (not FDatabaseLoading) and FDatabaseLoaded Then Begin
 
-     W_A.Clear;
-     FreeAndNil(W_A);
-     W_AA.Clear;
-     FreeAndNil(W_AA);
-     W_I.Clear;
-     FreeAndNil(W_I);
-     W_II.Clear;
-     FreeAndNil(W_II);
-     W_U.Clear;
-     FreeAndNil(W_U);
-     W_UU.Clear;
-     FreeAndNil(W_UU);
-     W_RRI.Clear;
-     FreeAndNil(W_RRI);
-     W_E.Clear;
-     FreeAndNil(W_E);
-     W_OI.Clear;
-     FreeAndNil(W_OI);
-     W_O.Clear;
-     FreeAndNil(W_O);
-     W_OU.Clear;
-     FreeAndNil(W_OU);
+          FDatabaseLoading := True;
+
+          W_A.Clear;
+          FreeAndNil(W_A);
+          W_AA.Clear;
+          FreeAndNil(W_AA);
+          W_I.Clear;
+          FreeAndNil(W_I);
+          W_II.Clear;
+          FreeAndNil(W_II);
+          W_U.Clear;
+          FreeAndNil(W_U);
+          W_UU.Clear;
+          FreeAndNil(W_UU);
+          W_RRI.Clear;
+          FreeAndNil(W_RRI);
+          W_E.Clear;
+          FreeAndNil(W_E);
+          W_OI.Clear;
+          FreeAndNil(W_OI);
+          W_O.Clear;
+          FreeAndNil(W_O);
+          W_OU.Clear;
+          FreeAndNil(W_OU);
 
 
-     W_B.Clear;
-     FreeAndNil(W_B);
-     W_BH.Clear;
-     FreeAndNil(W_BH);
-     W_C.Clear;
-     FreeAndNil(W_C);
-     W_CH.Clear;
-     FreeAndNil(W_CH);
-     W_D.Clear;
-     FreeAndNil(W_D);
-     W_Dh.Clear;
-     FreeAndNil(W_Dh);
-     W_Dd.Clear;
-     FreeAndNil(W_Dd);
-     W_Ddh.Clear;
-     FreeAndNil(W_Ddh);
-     W_G.Clear;
-     FreeAndNil(W_G);
-     W_Gh.Clear;
-     FreeAndNil(W_Gh);
-     W_H.Clear;
-     FreeAndNil(W_H);
-     W_J.Clear;
-     FreeAndNil(W_J);
-     W_Jh.Clear;
-     FreeAndNil(W_Jh);
-     W_K.Clear;
-     FreeAndNil(W_K);
-     W_Kh.Clear;
-     FreeAndNil(W_Kh);
-     W_L.Clear;
-     FreeAndNil(W_L);
-     W_M.Clear;
-     FreeAndNil(W_M);
-     W_N.Clear;
-     FreeAndNil(W_N);
-     W_NGA.Clear;
-     FreeAndNil(W_NGA);
-     W_NYA.Clear;
-     FreeAndNil(W_NYA);
-     W_Nn.Clear;
-     FreeAndNil(W_Nn);
-     W_P.Clear;
-     FreeAndNil(W_P);
-     W_Ph.Clear;
-     FreeAndNil(W_Ph);
-     W_R.Clear;
-     FreeAndNil(W_R);
-     W_Rr.Clear;
-     FreeAndNil(W_Rr);
-     W_Rrh.Clear;
-     FreeAndNil(W_Rrh);
-     W_S.Clear;
-     FreeAndNil(W_S);
-     W_Sh.Clear;
-     FreeAndNil(W_Sh);
-     W_Ss.Clear;
-     FreeAndNil(W_Ss);
-     W_T.Clear;
-     FreeAndNil(W_T);
-     W_Th.Clear;
-     FreeAndNil(W_Th);
-     W_Tt.Clear;
-     FreeAndNil(W_Tt);
-     W_Tth.Clear;
-     FreeAndNil(W_Tth);
-     W_Y.Clear;
-     FreeAndNil(W_Y);
-     W_Z.Clear;
-     FreeAndNil(W_Z);
-     W_Khandatta.Clear;
-     FreeAndNil(W_Khandatta);
+          W_B.Clear;
+          FreeAndNil(W_B);
+          W_BH.Clear;
+          FreeAndNil(W_BH);
+          W_C.Clear;
+          FreeAndNil(W_C);
+          W_CH.Clear;
+          FreeAndNil(W_CH);
+          W_D.Clear;
+          FreeAndNil(W_D);
+          W_Dh.Clear;
+          FreeAndNil(W_Dh);
+          W_Dd.Clear;
+          FreeAndNil(W_Dd);
+          W_Ddh.Clear;
+          FreeAndNil(W_Ddh);
+          W_G.Clear;
+          FreeAndNil(W_G);
+          W_Gh.Clear;
+          FreeAndNil(W_Gh);
+          W_H.Clear;
+          FreeAndNil(W_H);
+          W_J.Clear;
+          FreeAndNil(W_J);
+          W_Jh.Clear;
+          FreeAndNil(W_Jh);
+          W_K.Clear;
+          FreeAndNil(W_K);
+          W_Kh.Clear;
+          FreeAndNil(W_Kh);
+          W_L.Clear;
+          FreeAndNil(W_L);
+          W_M.Clear;
+          FreeAndNil(W_M);
+          W_N.Clear;
+          FreeAndNil(W_N);
+          W_NGA.Clear;
+          FreeAndNil(W_NGA);
+          W_NYA.Clear;
+          FreeAndNil(W_NYA);
+          W_Nn.Clear;
+          FreeAndNil(W_Nn);
+          W_P.Clear;
+          FreeAndNil(W_P);
+          W_Ph.Clear;
+          FreeAndNil(W_Ph);
+          W_R.Clear;
+          FreeAndNil(W_R);
+          W_Rr.Clear;
+          FreeAndNil(W_Rr);
+          W_Rrh.Clear;
+          FreeAndNil(W_Rrh);
+          W_S.Clear;
+          FreeAndNil(W_S);
+          W_Sh.Clear;
+          FreeAndNil(W_Sh);
+          W_Ss.Clear;
+          FreeAndNil(W_Ss);
+          W_T.Clear;
+          FreeAndNil(W_T);
+          W_Th.Clear;
+          FreeAndNil(W_Th);
+          W_Tt.Clear;
+          FreeAndNil(W_Tt);
+          W_Tth.Clear;
+          FreeAndNil(W_Tth);
+          W_Y.Clear;
+          FreeAndNil(W_Y);
+          W_Z.Clear;
+          FreeAndNil(W_Z);
+          W_Khandatta.Clear;
+          FreeAndNil(W_Khandatta);
 
-     Suffix_Spell.Clear;
-     FreeAndNil(Suffix_Spell);
-     Suffix.Clear;
-     FreeAndNil(Suffix);
+          Suffix_Spell.Clear;
+          FreeAndNil(Suffix_Spell);
+          Suffix.Clear;
+          FreeAndNil(Suffix);
 
-     FDatabaseLoaded := False;
+          FDatabaseLoaded := False;
+          FDatabaseLoading := False;
+     End;
 
      {$IFNDEF SpellChecker}
      AvroMainForm1.TrimAppMemorySize;
@@ -329,8 +333,8 @@ End;
 
 Procedure LoadWordDatabase;
 Begin
-     If FDatabaseLoaded = True Then exit;
-
+     If FDatabaseLoaded Or FDatabaseLoading Then exit;
+     FDatabaseLoading := True;
 
      FDatabase := TDISQLite3Database.Create(Nil);
      Try
@@ -392,13 +396,12 @@ Begin
 
                FDatabase.Close;
 
-               FDatabaseLoaded := True;
-
-
                {$IFNDEF SpellChecker}
                AvroMainForm1.TrimAppMemorySize;
                {$ENDIF}
 
+               FDatabaseLoaded := True;
+               FDatabaseLoading := False;
           Except
                On E: Exception Do Begin
                     Application.MessageBox(Pchar('Cannot load Avro database!' + #10 + '' + #10 + '-> Make sure ''Database.db3'' file is present in ' + GetAvroDataDir + ' folder, or' + #10 + '-> ''Database.db3'' file is not corrupt.' + #10 + '' + #10 + 'Reinstalling Avro Keyboard may solve this problem.' + #10 + 'You may contact OmicronLab (http://www.omicronlab.com/forum/) for free support.'), 'Avro Keyboard', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
@@ -444,6 +447,7 @@ Initialization
        functionality. See also sqlite3_shutdown() below.}
      sqlite3_initialize;
      FDatabaseLoaded := False;
+     FDatabaseLoading := False;
 
 Finalization
      { Deallocate any resources that were allocated by
