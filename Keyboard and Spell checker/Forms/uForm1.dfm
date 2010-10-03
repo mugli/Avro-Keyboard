@@ -63,6 +63,7 @@ object AvroMainForm1: TAvroMainForm1
   Position = poDesigned
   Visible = True
   OnClose = FormClose
+  OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   PixelsPerInch = 96

@@ -1271,7 +1271,7 @@ Begin
      Try
           Try
                tmpList := TStringList.Create;
-               tmpList.Add('// Avro Phonetic Candidate Selection Options');
+               tmpList.Add('// Avro Phonetic Candidate Selection Options (Do not remove this line)');
                For I := 0 To CandidateDict.Count - 1 Do Begin
                     tmpList.Add(CandidateDict.GetKeyByIndex(I) + ' ' + CandidateDict.GetItemByIndex(I));
                End;

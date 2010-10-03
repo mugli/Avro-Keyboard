@@ -344,6 +344,7 @@ Type
           Procedure FontFixerSetdefaultBanglafont1Click(Sender: TObject);
           Procedure iComplexInstallcomplexscriptsupportinWindows1Click(
                Sender: TObject);
+          Procedure FormCloseQuery(Sender: TObject; Var CanClose: Boolean);
      Private
           { Private declarations }
           Window: TStringDictionary;
@@ -641,7 +642,6 @@ Begin
 
      If Assigned(Topbar) Then Topbar.Close;
      If Assigned(frmPrevW) Then frmPrevW.Close;
-     { TODO : Do the same for all other forms before final build}
      Self.Close;
      Application.Terminate;
 
@@ -660,6 +660,13 @@ Begin
      Action := caFree;
 
      AvroMainForm1 := Nil;
+End;
+
+Procedure TAvroMainForm1.FormCloseQuery(Sender: TObject;
+     Var CanClose: Boolean);
+Begin
+     ExitApp;
+     CanClose := True;
 End;
 
 Procedure TAvroMainForm1.FormCreate(Sender: TObject);

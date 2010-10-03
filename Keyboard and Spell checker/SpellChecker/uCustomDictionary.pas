@@ -85,7 +85,7 @@ Begin
      TempList := TWideStringList.Create;
      TempList.Assign(SpellCustomDict);
      TempList.Sorted := False;
-     TempList.Insert(0, '// Custom Bangla Dictionary for Avro Spell Checker');
+     TempList.Insert(0, '// Custom Bangla Dictionary for Avro Spell Checker (Do not remove this line)');
      Try
         TempList.SaveToFile(GetAvroDataDir + 'CustomSpellingDictionary.dat');
      Except
