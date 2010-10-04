@@ -1187,6 +1187,7 @@ Begin
      If (ShowOutputwarning <> 'NO') And (OutputIsBijoy = 'YES') Then Begin
           CheckCreateForm(TfrmEncodingWarning, frmEncodingWarning, 'frmEncodingWarning');
           frmEncodingWarning.ShowModal;
+          RefreshSettings;
      End;
 
      Application.ProcessMessages;
