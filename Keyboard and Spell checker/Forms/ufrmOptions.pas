@@ -132,6 +132,11 @@ Type
           Button_Apply: TButton;
           Button_Help: TButton;
           LabelStatus: TLabel;
+          GlobalOutput_Panel: TPanel;
+          optOutputUnicode: TRadioButton;
+          optOutputANSI: TRadioButton;
+          CheckWarningAnsi: TCheckBox;
+          LabelHideTimer: TTimer;
           Procedure FormCreate(Sender: TObject);
           Procedure CategoryTreeClick(Sender: TObject);
           Procedure FormClose(Sender: TObject; Var Action: TCloseAction);
@@ -152,6 +157,9 @@ Type
           Procedure ButtonInstallLocaleClick(Sender: TObject);
           Procedure CheckAddNewWordsClick(Sender: TObject);
           Procedure Button_ApplyClick(Sender: TObject);
+          Procedure optOutputANSIMouseUp(Sender: TObject; Button: TMouseButton;
+               Shift: TShiftState; X, Y: Integer);
+          Procedure LabelHideTimerTimer(Sender: TObject);
      Private
           { Private declarations }
           //Procedure SetTabOrder;
@@ -179,7 +187,8 @@ Uses
      WindowsVersion,
      uForm1,
      uLocale,
-     u_Admin;
+     u_Admin,
+     ufrmEncodingWarning;
 
 Const
      Show_Window_in_Taskbar   = True;
@@ -262,59 +271,13 @@ End;
 {===============================================================================}
 
 Procedure TfrmOptions.Button_ApplyClick(Sender: TObject);
-
-     Procedure FadeOut(Control: TLabel);
-
-     Var
-          clrStart            : COLORREF;
-          clrEnd              : COLORREF;
-          dwIndex             : Integer;
-          r1, g1, b1          : Byte;
-          r2, g2, b2          : Byte;
-     Begin
-          Application.ProcessMessages;
-          Sleep(100);
-          Application.ProcessMessages;
-          clrStart := ColorToRgb(Control.Font.Color);
-          clrEnd := ColorToRGb(Control.Color);
-
-          r1 := GetRValue(clrStart);
-          g1 := GetGValue(clrStart);
-          b1 := GetBValue(clrStart);
-          r2 := GetRValue(clrEnd);
-          g2 := GetGValue(clrEnd);
-          b2 := GetBValue(clrEnd);
-
-          For dwIndex := 0 To 255 Do Begin
-
-               If (r1 > r2) Then
-                    Dec(r1)
-               Else If (r1 < r2) Then
-                    Inc(r1);
-               If (g1 > g2) Then
-                    Dec(g1)
-               Else If (g1 < g2) Then
-                    Inc(g1);
-               If (b1 > b2) Then
-                    Dec(b1)
-               Else If (b1 < b2) Then
-                    Inc(b1);
-               If ((dwIndex Mod 10) = 0) Then Begin
-                    Sleep(40);
-                    Control.Font.Color := RGB(r1, g1, b1);
-                    Application.ProcessMessages;
-               End;
-          End;
-          Application.ProcessMessages;
-     End;
 Begin
      Self.SaveSettings;
      AvroMainForm1.RefreshSettings;
 
      LabelStatus.Font.Color := clGreen;
      LabelStatus.Visible := True;
-     FadeOut(LabelStatus);
-     LabelStatus.Visible := False;
+     LabelHideTimer.Enabled := true;
 End;
 
 {===============================================================================}
@@ -355,6 +318,7 @@ Begin
                     AvroPhonetic_Panel.Visible := False;
                     AvroMouse_Panel.Visible := False;
                     FixedLayout_Panel.Visible := False;
+                    GlobalOutput_Panel.Visible := False;
                End;
           1: Begin
                     Interface_Panel.Visible := True;
@@ -366,6 +330,7 @@ Begin
                     AvroPhonetic_Panel.Visible := False;
                     AvroMouse_Panel.Visible := False;
                     FixedLayout_Panel.Visible := False;
+                    GlobalOutput_Panel.Visible := False;
                End;
           2: Begin
                     KeyboardMode_Panel.Visible := True;
@@ -377,6 +342,7 @@ Begin
                     AvroPhonetic_Panel.Visible := False;
                     AvroMouse_Panel.Visible := False;
                     FixedLayout_Panel.Visible := False;
+                    GlobalOutput_Panel.Visible := False;
                End;
           3: Begin
                     Locale_Panel.Visible := True;
@@ -388,6 +354,7 @@ Begin
                     AvroPhonetic_Panel.Visible := False;
                     AvroMouse_Panel.Visible := False;
                     FixedLayout_Panel.Visible := False;
+                    GlobalOutput_Panel.Visible := False;
                End;
           4: Begin
                     AvroPhonetic_Panel.Visible := True;
@@ -399,6 +366,7 @@ Begin
                     //AvroPhonetic_Panel.Visible:=False;
                     AvroMouse_Panel.Visible := False;
                     FixedLayout_Panel.Visible := False;
+                    GlobalOutput_Panel.Visible := False;
                End;
           5: Begin
                     AvroMouse_Panel.Visible := True;
@@ -410,6 +378,7 @@ Begin
                     AvroPhonetic_Panel.Visible := False;
                     //AvroMouse_Panel.Visible:=False;
                     FixedLayout_Panel.Visible := False;
+                    GlobalOutput_Panel.Visible := False;
                End;
           6: Begin
                     FixedLayout_Panel.Visible := True;
@@ -421,6 +390,19 @@ Begin
                     AvroPhonetic_Panel.Visible := False;
                     AvroMouse_Panel.Visible := False;
                     //FixedLayout_Panel.Visible:=False;
+                    GlobalOutput_Panel.Visible := False;
+               End;
+          7: Begin
+                    GlobalOutput_Panel.Visible := True;
+
+                    General_Panel.Visible := False;
+                    Interface_Panel.Visible := False;
+                    KeyboardMode_Panel.Visible := False;
+                    Locale_Panel.Visible := False;
+                    AvroPhonetic_Panel.Visible := False;
+                    AvroMouse_Panel.Visible := False;
+                    FixedLayout_Panel.Visible := False;
+                    //GlobalOutput_Panel.Visible:=False;
                End;
      End;
 
@@ -569,6 +551,7 @@ Begin
      General_Panel.Visible := False;
      AvroMouse_Panel.Visible := False;
      Interface_Panel.Visible := False;
+     GlobalOutput_Panel.Visible := False;
 
      Interface_Panel.Top := 0;
      AvroMouse_Panel.Top := 0;
@@ -577,6 +560,7 @@ Begin
      Locale_Panel.Top := 0;
      AvroPhonetic_Panel.Top := 0;
      FixedLayout_Panel.Top := 0;
+     GlobalOutput_Panel.Top := 0;
 
      Interface_Panel.Left := 0;
      AvroMouse_Panel.Left := 0;
@@ -585,6 +569,7 @@ Begin
      Locale_Panel.Left := 0;
      AvroPhonetic_Panel.Left := 0;
      FixedLayout_Panel.Left := 0;
+     GlobalOutput_Panel.Left := 0;
 
      Interface_Panel.Width := Self.Width - CategoryTree.Width - 20;
      AvroMouse_Panel.Width := Self.Width - CategoryTree.Width - 20;
@@ -593,6 +578,7 @@ Begin
      Locale_Panel.Width := Self.Width - CategoryTree.Width - 20;
      AvroPhonetic_Panel.Width := Self.Width - CategoryTree.Width - 20;
      FixedLayout_Panel.Width := Self.Width - CategoryTree.Width - 20;
+     GlobalOutput_Panel.Width := Self.Width - CategoryTree.Width - 20;
 
      Interface_Panel.BevelKind := bknone {bkTile};
      AvroMouse_Panel.BevelKind := bknone {bkTile};
@@ -601,6 +587,7 @@ Begin
      Locale_Panel.BevelKind := bknone {bkTile};
      AvroPhonetic_Panel.BevelKind := bknone {bkTile};
      FixedLayout_Panel.BevelKind := bknone {bkTile};
+     GlobalOutput_Panel.BevelKind := bknone;
 
 
      CategoryTree.Items[0].Selected := True;
@@ -626,6 +613,13 @@ Begin
           End;
      End;
 
+End;
+
+{===============================================================================}
+
+Procedure TfrmOptions.LabelHideTimerTimer(Sender: TObject);
+Begin
+     LabelStatus.Visible := False;
 End;
 
 {===============================================================================}
@@ -880,8 +874,48 @@ Begin
           CheckNumPadBangla.Checked := False;
 
 
+     //Global output settings
+     If OutputIsBijoy = 'NO' Then Begin
+          optOutputUnicode.Checked := True;
+          optOutputANSI.Checked := False;
+     End
+     Else Begin
+          optOutputANSI.Checked := True;
+          optOutputUnicode.Checked := False;
+     End;
+
+     If ShowOutputwarning = 'YES' Then
+          CheckWarningAnsi.Checked := True
+     Else
+          CheckWarningAnsi.Checked := False;
+
+End;
+
+{===============================================================================}
 
 
+Procedure TfrmOptions.optOutputANSIMouseUp(Sender: TObject;
+     Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+Begin
+     If ShowOutputwarning <> 'NO' Then Begin
+          CheckCreateForm(TfrmEncodingWarning, frmEncodingWarning, 'frmEncodingWarning');
+          frmEncodingWarning.ShowModal;
+
+
+          If OutputIsBijoy = 'NO' Then Begin
+               optOutputUnicode.Checked := True;
+               optOutputANSI.Checked := False;
+          End
+          Else Begin
+               optOutputANSI.Checked := True;
+               optOutputUnicode.Checked := False;
+          End;
+
+          If ShowOutputwarning = 'YES' Then
+               CheckWarningAnsi.Checked := True
+          Else
+               CheckWarningAnsi.Checked := False;
+     End; 
 End;
 
 {===============================================================================}
@@ -1058,6 +1092,16 @@ Begin
           NumPadBangla := 'NO';
 
 
+     //Global output settings
+     If optOutputUnicode.Checked = True Then
+          OutputIsBijoy := 'NO'
+     Else
+          OutputIsBijoy := 'YES';
+
+     If CheckWarningAnsi.Checked = True Then
+          ShowOutputwarning := 'YES'
+     Else
+          ShowOutputwarning := 'NO';
 
      uRegistrySettings.SaveSettings;
 End;

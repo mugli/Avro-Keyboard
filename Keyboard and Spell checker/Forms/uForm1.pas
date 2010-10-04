@@ -300,6 +300,12 @@ Type
           UseVerticalLinePipekeytotypeDot2: TMenuItem;
           TypeJoNuktawithShiftJ2: TMenuItem;
           N49: TMenuItem;
+          OutputasUnicodeRecommended1: TMenuItem;
+          OutputasANSIAreyousure1: TMenuItem;
+          N50: TMenuItem;
+          N51: TMenuItem;
+          OutputasUnicodeRecommended2: TMenuItem;
+          OutputasANSIAreyousure2: TMenuItem;
           Procedure FormKeyDown(Sender: TObject; Var Key: Word; Shift: TShiftState);
           Procedure FormCreate(Sender: TObject);
           Procedure AvroPhoneticEnglishtoBangla3Click(Sender: TObject);
@@ -373,6 +379,8 @@ Type
           Procedure Remembermychoiceamongsuggestions1Click(Sender: TObject);
           Procedure UseVerticalLinePipekeytotypeDot1Click(Sender: TObject);
           Procedure TypeJoNuktawithShiftJ1Click(Sender: TObject);
+          Procedure OutputasUnicodeRecommended1Click(Sender: TObject);
+          Procedure OutputasANSIAreyousure1Click(Sender: TObject);
      Private
           { Private declarations }
           Window: TStringDictionary;
@@ -452,7 +460,8 @@ Uses
      uDBase,
      SkinLoader,
      u_VirtualFontInstall,
-     uComplexLNotify;
+     uComplexLNotify,
+     ufrmEncodingWarning;
 
 
 {===============================================================================}
@@ -1029,13 +1038,19 @@ Begin
                sLocale := GetForeignLocale(hforewnd);
 
           If CurrentMode = bangla Then Begin
-               If ChangeInputLocale = 'YES' Then ChangeLocaleToBangla(hforewnd);
+               If (ChangeInputLocale = 'YES') Then
+                    If OutputIsBijoy <> 'YES' Then
+                         ChangeLocaleToBangla(hforewnd);
+
                Window.Add(IntToStr(hforewnd), 'B:' + sLocale);
                MyCurrentKeyboardMode := bangla;
           End
           Else If CurrentMode = SysDefault Then Begin
                If Window.HasKey(IntToStr(ParentHwnd)) = True Then
-                    If ChangeInputLocale = 'YES' Then ChangeLocalToAny(hforewnd, StrToInt(sLocale));
+                    If ChangeInputLocale = 'YES' Then
+                         If OutputIsBijoy <> 'YES' Then
+                              ChangeLocalToAny(hforewnd, StrToInt(sLocale));
+
                Window.Add(IntToStr(hforewnd), 'S:' + sLocale);
                MyCurrentKeyboardMode := SysDefault;
           End;
@@ -1047,13 +1062,17 @@ Begin
                sLocale := MidStr(Window.Item[IntToStr(hforewnd)], 3, Length(Window.Item[IntToStr(hforewnd)]));
                Window.Item[IntToStr(hforewnd)] := 'B:' + sLocale;
                MyCurrentKeyboardMode := bangla;
-               If ChangeInputLocale = 'YES' Then ChangeLocaleToBangla(hforewnd);
+               If ChangeInputLocale = 'YES' Then
+                    If OutputIsBijoy <> 'YES' Then
+                         ChangeLocaleToBangla(hforewnd);
           End
           Else If CurrentMode = SysDefault Then Begin
                sLocale := MidStr(Window.Item[IntToStr(hforewnd)], 3, Length(Window.Item[IntToStr(hforewnd)]));
                Window.Item[IntToStr(hforewnd)] := 'S:' + sLocale;
                MyCurrentKeyboardMode := SysDefault;
-               If ChangeInputLocale = 'YES' Then ChangeLocalToAny(hforewnd, StrToInt(sLocale));
+               If ChangeInputLocale = 'YES' Then
+                    If OutputIsBijoy <> 'YES' Then
+                         ChangeLocalToAny(hforewnd, StrToInt(sLocale));
                {Experimental!!!!!!!!}
                {We have changed the locale back in System Language Mode
                now delete Window Data to record new locale info}
@@ -1165,6 +1184,10 @@ Begin
      Else
           InternetCheck.Enabled := False;
 
+     If (ShowOutputwarning <> 'NO') And (OutputIsBijoy = 'YES') Then Begin
+          CheckCreateForm(TfrmEncodingWarning, frmEncodingWarning, 'frmEncodingWarning');
+          frmEncodingWarning.ShowModal;
+     End;
 
      Application.ProcessMessages;
      If ShowSplash = 'YES' Then Begin
@@ -1291,6 +1314,24 @@ Begin
      Execute_Something(ExtractFilePath(Application.ExeName) + 'open_type_font_list.htm');
 End;
 
+Procedure TAvroMainForm1.OutputasANSIAreyousure1Click(Sender: TObject);
+Begin
+     If ShowOutputwarning <> 'NO' Then Begin
+          CheckCreateForm(TfrmEncodingWarning, frmEncodingWarning, 'frmEncodingWarning');
+          frmEncodingWarning.ShowModal;
+     End
+     Else
+          OutputIsBijoy := 'YES';
+
+     RefreshSettings;
+End;
+
+Procedure TAvroMainForm1.OutputasUnicodeRecommended1Click(Sender: TObject);
+Begin
+     OutputIsBijoy := 'NO';
+     RefreshSettings;
+End;
+
 Procedure TAvroMainForm1.Overview1Click(Sender: TObject);
 Begin
      OpenHelpFile(24);
@@ -1366,7 +1407,7 @@ Begin
           Remembermychoiceamongsuggestions2.Enabled := False;
      End;
 
-     
+
      If LowerCase(MyCurrentLayout) = 'avrophonetic*' Then Begin
           UseModernStyleTyping1.Enabled := False;
           UseModernStyleTyping2.Enabled := False;
@@ -1572,6 +1613,20 @@ Begin
           InternetCheck.Enabled := True
      Else
           InternetCheck.Enabled := False;
+
+
+     If OutputIsBijoy = 'YES' Then Begin
+          OutputasANSIAreyousure1.Checked := True;
+          OutputasANSIAreyousure2.Checked := True;
+          OutputasUnicodeRecommended1.Checked := False;
+          OutputasUnicodeRecommended2.Checked := False;
+     End
+     Else Begin
+          OutputasUnicodeRecommended1.Checked := True;
+          OutputasUnicodeRecommended2.Checked := True;
+          OutputasANSIAreyousure1.Checked := False;
+          OutputasANSIAreyousure2.Checked := False;
+     End;
 
 
      SaveUISettings;

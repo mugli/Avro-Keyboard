@@ -44,7 +44,7 @@ Uses
 
 Const
      NumberOfVisibleHints     : Integer = 2;
-     OutputIsBijoy            : String = 'YES';
+
 
 Var
      DontShowComplexLNotification: String;
@@ -112,6 +112,10 @@ Var
      LayoutViewerPosX         : String;
      LayoutViewerPosY         : String;
      LayoutViewerSize         : String;
+
+     //Global Output settings
+     OutputIsBijoy            : String;
+     ShowOutputwarning        : String;
 
 
 
@@ -218,6 +222,10 @@ Begin
      LayoutViewerPosY := UpperCase(XML.GetValue('LayoutViewerPosY', '0'));
      LayoutViewerSize := UpperCase(XML.GetValue('LayoutViewerSize', '60%'));
 
+     //Global Output settings
+     OutputIsBijoy := UpperCase(XML.GetValue('OutputIsBijoy', 'No'));
+     ShowOutputwarning := UpperCase(XML.GetValue('ShowOutputwarning', 'Yes'));
+
      XML.Free;
 
 End;
@@ -295,6 +303,10 @@ Begin
      XML.SetValue('LayoutViewerPosY', LayoutViewerPosY);
      XML.SetValue('LayoutViewerSize', LayoutViewerSize);
 
+
+     //Global Output settings
+     XML.SetValue('OutputIsBijoy', OutputIsBijoy);
+     XML.SetValue('ShowOutputwarning', ShowOutputwarning);
 
 
      XML.SaveXMLData;
@@ -380,6 +392,9 @@ Begin
           LayoutViewerPosY := UpperCase(REG.ReadStringDef('LayoutViewerPosY', '0'));
           LayoutViewerSize := UpperCase(REG.ReadStringDef('LayoutViewerSize', '60%'));
 
+          //Global Output settings
+          OutputIsBijoy := UpperCase(REG.ReadStringDef('OutputIsBijoy', 'No'));
+          ShowOutputwarning := UpperCase(REG.ReadStringDef('ShowOutputwarning', 'Yes'));
 
      End;
 
@@ -465,6 +480,10 @@ Begin
           REG.WriteString('LayoutViewerPosX', LayoutViewerPosX);
           REG.WriteString('LayoutViewerPosY', LayoutViewerPosY);
           REG.WriteString('LayoutViewerSize', LayoutViewerSize);
+
+          //Global Output settings
+          REG.WriteString('OutputIsBijoy', OutputIsBijoy);
+          REG.WriteString('ShowOutputwarning', ShowOutputwarning);
 
      End;
 
@@ -554,6 +573,11 @@ Begin
      If Not (StrToInt(LayoutViewerPosX) > 0) Then LayoutViewerPosX := '0';
      If Not (StrToInt(LayoutViewerPosY) > 0) Then LayoutViewerPosX := '0';
      //If Not ((StrToInt(LayoutViewerSize) > 50) And (RightStr(LayoutViewerSize, 1) = '%')) Then LayoutViewerSize := '60%';
+
+
+     //Global Output settings
+     If Not ((OutputIsBijoy = 'YES') Or (OutputIsBijoy = 'NO')) Then OutputIsBijoy := 'NO';
+     If Not ((ShowOutputwarning = 'YES') Or (ShowOutputwarning = 'NO')) Then ShowOutputwarning := 'YES';
 
      { Done : Validate locale settings here }
      If IsWinVistaOrLater = True Then Begin

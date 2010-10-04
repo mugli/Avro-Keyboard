@@ -5,7 +5,7 @@ object frmOptions: TfrmOptions
   BorderStyle = bsSingle
   Caption = 'Customize Avro Keyboard...'
   ClientHeight = 396
-  ClientWidth = 588
+  ClientWidth = 585
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clBtnText
@@ -244,7 +244,7 @@ object frmOptions: TfrmOptions
     OnEnter = CategoryTreeClick
     OnKeyUp = CategoryTreeKeyUp
     Items.NodeData = {
-      0107000000270000000000000000000000FFFFFFFFFFFFFFFF00000000000000
+      0108000000270000000000000000000000FFFFFFFFFFFFFFFF00000000000000
       0007470065006E006500720061006C002B0000000000000000000000FFFFFFFF
       FFFFFFFF00000000000000000949006E00740065007200660061006300650033
       0000000000000000000000FFFFFFFFFFFFFFFF00000000000000000D4B006500
@@ -255,7 +255,9 @@ object frmOptions: TfrmOptions
       65007400690063002D0000000000000000000000FFFFFFFFFFFFFFFF00000000
       000000000A4100760072006F0020004D006F0075007300650033000000000000
       0000000000FFFFFFFFFFFFFFFF00000000000000000D46006900780065006400
-      20004C00610079006F00750074007300}
+      20004C00610079006F00750074007300330000000000000000000000FFFFFFFF
+      FFFFFFFF00000000000000000D47006C006F00620061006C0020006F00750074
+      00700075007400}
   end
   object butEditCustomDict: TButton
     Left = 596
@@ -286,6 +288,224 @@ object frmOptions: TfrmOptions
     HorzScrollBar.Visible = False
     BorderStyle = bsNone
     TabOrder = 5
+    object AvroPhonetic_Panel: TPanel
+      Left = 4
+      Top = 2
+      Width = 430
+      Height = 532
+      BevelKind = bkTile
+      BevelOuter = bvNone
+      TabOrder = 6
+      object Label13: TLabel
+        Left = 48
+        Top = 479
+        Width = 338
+        Height = 13
+        Caption = 
+          '(Quick tip: Enable if your keyboard doesn'#39't have NumPa-d to type' +
+          ' dot.'
+      end
+      object Label14: TLabel
+        Left = 101
+        Top = 495
+        Width = 285
+        Height = 26
+        Caption = 
+          'Disable if you want to use Vertical Line/Pipe symbol to type Mat' +
+          'hematical Equations for example)'
+        WordWrap = True
+      end
+      object GroupBox3: TGroupBox
+        Left = 8
+        Top = 5
+        Width = 401
+        Height = 348
+        Caption = 'Preview Window and Typing Mode'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 0
+        object Label_PhoneticTypingMode: TLabel
+          Left = 16
+          Top = 48
+          Width = 111
+          Height = 13
+          Caption = 'Suggestion options:'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object Label1: TLabel
+          Left = 56
+          Top = 83
+          Width = 314
+          Height = 26
+          Caption = 
+            '(Avro selects first dictionary suggestion automatically. Charact' +
+            'er mode is still available as option)'
+          WordWrap = True
+        end
+        object Label4: TLabel
+          Left = 56
+          Top = 134
+          Width = 332
+          Height = 26
+          Caption = 
+            '(Avro selects character mode automatically. Dictionary hints are' +
+            ' also shown if available)'
+          WordWrap = True
+        end
+        object Label9: TLabel
+          Left = 48
+          Top = 256
+          Width = 314
+          Height = 52
+          Caption = 
+            '(Quick Tip: If you use Tab key for other purposes like moving be' +
+            'tween cells in a spreadsheet program or in a table or in a datab' +
+            'ase application and still want to enable this option, you can pr' +
+            'ess Esc key first to close preview window.)'
+          WordWrap = True
+        end
+        object Label12: TLabel
+          Left = 56
+          Top = 196
+          Width = 287
+          Height = 26
+          Caption = 
+            '(Note: If any autocorrect entry is found, suggestion list will s' +
+            'till show up)'
+          WordWrap = True
+        end
+        object CheckShowPrevWindow: TCheckBox
+          Left = 16
+          Top = 23
+          Width = 145
+          Height = 17
+          Caption = 'Show Preview Window'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 0
+          OnClick = CheckShowPrevWindowClick
+        end
+        object optPhoneticMode_Dict: TRadioButton
+          Left = 32
+          Top = 67
+          Width = 366
+          Height = 19
+          Caption = 'Dictionary Mode is Default in suggestions'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 1
+          WordWrap = True
+        end
+        object optPhoneticMode_Char: TRadioButton
+          Left = 32
+          Top = 116
+          Width = 366
+          Height = 20
+          Caption = 'Character Mode is Default in suggestions'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 2
+          WordWrap = True
+        end
+        object optPhoneticMode_OnlyChar: TRadioButton
+          Left = 32
+          Top = 167
+          Width = 345
+          Height = 25
+          Caption = 
+            'Use classic Avro Phonetic only, don'#39't show any dictionary sugges' +
+            'tion'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 3
+          WordWrap = True
+        end
+        object CheckRememberCandidate: TCheckBox
+          Left = 16
+          Top = 323
+          Width = 281
+          Height = 17
+          Caption = 'Remember my choice when multiple hints are available.'
+          TabOrder = 4
+        end
+        object CheckTabBrowsing: TCheckBox
+          Left = 16
+          Top = 236
+          Width = 361
+          Height = 17
+          Caption = 
+            'Use Tab key to browse through suggestions just like Down Arrow k' +
+            'ey.'
+          TabOrder = 5
+        end
+      end
+      object GroupBox7: TGroupBox
+        Left = 8
+        Top = 359
+        Width = 401
+        Height = 56
+        Caption = 'Auto correct options'
+        TabOrder = 1
+        object CheckAutoCorrect: TCheckBox
+          Left = 16
+          Top = 26
+          Width = 145
+          Height = 17
+          Caption = 'Enable Auto-correction'
+          TabOrder = 0
+        end
+        object cmdAutoCorrect: TButton
+          Left = 192
+          Top = 18
+          Width = 198
+          Height = 25
+          Caption = 'Edit/Import Auto correct entries...'
+          TabOrder = 1
+          OnClick = cmdAutoCorrectClick
+        end
+      end
+      object CheckEnableJoNukta: TCheckBox
+        Left = 24
+        Top = 428
+        Width = 163
+        Height = 17
+        Caption = 'Type Jo+Nukta with Shift+J'
+        TabOrder = 2
+      end
+      object CheckPipeToDot: TCheckBox
+        Left = 24
+        Top = 456
+        Width = 223
+        Height = 17
+        Caption = 'Type Dot (.) with Vertical Line/Pipe Key (|)'
+        TabOrder = 3
+      end
+    end
     object FixedLayout_Panel: TPanel
       Left = 2
       Top = 0
@@ -774,223 +994,58 @@ object frmOptions: TfrmOptions
         end
       end
     end
-    object AvroPhonetic_Panel: TPanel
-      Left = 4
+    object GlobalOutput_Panel: TPanel
+      Left = -2
       Top = 2
-      Width = 430
-      Height = 532
+      Width = 431
+      Height = 282
       BevelKind = bkTile
       BevelOuter = bvNone
-      TabOrder = 6
-      object Label13: TLabel
-        Left = 48
-        Top = 479
-        Width = 338
-        Height = 13
-        Caption = 
-          '(Quick tip: Enable if your keyboard doesn'#39't have NumPa-d to type' +
-          ' dot.'
-      end
-      object Label14: TLabel
-        Left = 101
-        Top = 495
-        Width = 285
-        Height = 26
-        Caption = 
-          'Disable if you want to use Vertical Line/Pipe symbol to type Mat' +
-          'hematical Equations for example)'
-        WordWrap = True
-      end
-      object GroupBox3: TGroupBox
-        Left = 8
-        Top = 5
-        Width = 401
-        Height = 348
-        Caption = 'Preview Window and Typing Mode'
+      TabOrder = 7
+      object optOutputUnicode: TRadioButton
+        Left = 23
+        Top = 29
+        Width = 228
+        Height = 17
+        Caption = 'Output as Unicode (Recommended)'
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
+        Font.Color = clBtnText
         Font.Height = -11
         Font.Name = 'Tahoma'
-        Font.Style = []
+        Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 0
-        object Label_PhoneticTypingMode: TLabel
-          Left = 16
-          Top = 48
-          Width = 111
-          Height = 13
-          Caption = 'Suggestion options:'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = [fsBold]
-          ParentFont = False
-        end
-        object Label1: TLabel
-          Left = 56
-          Top = 83
-          Width = 337
-          Height = 39
-          Caption = 
-            '(Avro selects first dictionary suggestion automatically. Charact' +
-            'er mode is still available as option)'
-          WordWrap = True
-        end
-        object Label4: TLabel
-          Left = 56
-          Top = 134
-          Width = 332
-          Height = 26
-          Caption = 
-            '(Avro selects character mode automatically. Dictionary hints are' +
-            ' also shown if available)'
-          WordWrap = True
-        end
-        object Label9: TLabel
-          Left = 48
-          Top = 256
-          Width = 314
-          Height = 52
-          Caption = 
-            '(Quick Tip: If you use Tab key for other purposes like moving be' +
-            'tween cells in a spreadsheet program or in a table or in a datab' +
-            'ase application and still want to enable this option, you can pr' +
-            'ess Esc key first to close preview window.)'
-          WordWrap = True
-        end
-        object Label12: TLabel
-          Left = 56
-          Top = 196
-          Width = 287
-          Height = 26
-          Caption = 
-            '(Note: If any autocorrect entry is found, suggestion list will s' +
-            'till show up)'
-          WordWrap = True
-        end
-        object CheckShowPrevWindow: TCheckBox
-          Left = 16
-          Top = 23
-          Width = 145
-          Height = 17
-          Caption = 'Show Preview Window'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentFont = False
-          TabOrder = 0
-          OnClick = CheckShowPrevWindowClick
-        end
-        object optPhoneticMode_Dict: TRadioButton
-          Left = 32
-          Top = 67
-          Width = 366
-          Height = 19
-          Caption = 'Dictionary Mode is Default in suggestions'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = [fsBold]
-          ParentFont = False
-          TabOrder = 1
-          WordWrap = True
-        end
-        object optPhoneticMode_Char: TRadioButton
-          Left = 32
-          Top = 116
-          Width = 366
-          Height = 20
-          Caption = 'Character Mode is Default in suggestions'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = [fsBold]
-          ParentFont = False
-          TabOrder = 2
-          WordWrap = True
-        end
-        object optPhoneticMode_OnlyChar: TRadioButton
-          Left = 32
-          Top = 167
-          Width = 345
-          Height = 25
-          Caption = 
-            'Use classic Avro Phonetic only, don'#39't show any dictionary sugges' +
-            'tion'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = [fsBold]
-          ParentFont = False
-          TabOrder = 3
-          WordWrap = True
-        end
-        object CheckRememberCandidate: TCheckBox
-          Left = 16
-          Top = 323
-          Width = 281
-          Height = 17
-          Caption = 'Remember my choice when multiple hints are available.'
-          TabOrder = 4
-        end
-        object CheckTabBrowsing: TCheckBox
-          Left = 16
-          Top = 236
-          Width = 361
-          Height = 17
-          Caption = 
-            'Use Tab key to browse through suggestions just like Down Arrow k' +
-            'ey.'
-          TabOrder = 5
-        end
       end
-      object GroupBox7: TGroupBox
-        Left = 8
-        Top = 359
-        Width = 401
-        Height = 56
-        Caption = 'Auto correct options'
-        TabOrder = 1
-        object CheckAutoCorrect: TCheckBox
-          Left = 16
-          Top = 26
-          Width = 145
-          Height = 17
-          Caption = 'Enable Auto-correction'
-          TabOrder = 0
-        end
-        object cmdAutoCorrect: TButton
-          Left = 192
-          Top = 18
-          Width = 198
-          Height = 25
-          Caption = 'Edit/Import Auto correct entries...'
-          TabOrder = 1
-          OnClick = cmdAutoCorrectClick
-        end
-      end
-      object CheckEnableJoNukta: TCheckBox
-        Left = 24
-        Top = 428
-        Width = 163
+      object optOutputANSI: TRadioButton
+        Left = 23
+        Top = 61
+        Width = 228
         Height = 17
-        Caption = 'Type Jo+Nukta with Shift+J'
+        Caption = 'Output as ANSI (Experimental)'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBtnText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 1
+        OnMouseUp = optOutputANSIMouseUp
+      end
+      object CheckWarningAnsi: TCheckBox
+        Left = 23
+        Top = 127
+        Width = 228
+        Height = 17
+        Caption = 'Show warning in ANSI mode.'
         TabOrder = 2
       end
-      object CheckPipeToDot: TCheckBox
-        Left = 24
-        Top = 456
-        Width = 223
-        Height = 17
-        Caption = 'Type Dot (.) with Vertical Line/Pipe Key (|)'
-        TabOrder = 3
-      end
     end
+  end
+  object LabelHideTimer: TTimer
+    Enabled = False
+    Interval = 2000
+    OnTimer = LabelHideTimerTimer
+    Left = 296
+    Top = 16
   end
 end

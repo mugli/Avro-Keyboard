@@ -127,7 +127,7 @@ object AvroMainForm1: TAvroMainForm1
     Left = 8
     Top = 224
     Bitmap = {
-      494C01011C00B800CC0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011C00B800D00010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000008000000001002000000000000080
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1698,6 +1698,19 @@ object AvroMainForm1: TAvroMainForm1
     object N3: TMenuItem
       Caption = '-'
     end
+    object OutputasUnicodeRecommended1: TMenuItem
+      Caption = 'Output as Unicode (Recommended)'
+      RadioItem = True
+      OnClick = OutputasUnicodeRecommended1Click
+    end
+    object OutputasANSIAreyousure1: TMenuItem
+      Caption = 'Output as ANSI (Are you sure?)'
+      RadioItem = True
+      OnClick = OutputasANSIAreyousure1Click
+    end
+    object N50: TMenuItem
+      Caption = '-'
+    end
     object UnicodetoBijoytextconverter1: TMenuItem
       Caption = 'Unicode to Bijoy text converter'
       ImageIndex = 25
@@ -1886,6 +1899,19 @@ object AvroMainForm1: TAvroMainForm1
     object ools1: TMenuItem
       Caption = 'Tools'
       ImageIndex = 11
+      object OutputasUnicodeRecommended2: TMenuItem
+        Caption = 'Output as Unicode (Recommended)'
+        RadioItem = True
+        OnClick = OutputasUnicodeRecommended1Click
+      end
+      object OutputasANSIAreyousure2: TMenuItem
+        Caption = 'Output as ANSI (Are you sure?)'
+        RadioItem = True
+        OnClick = OutputasANSIAreyousure1Click
+      end
+      object N51: TMenuItem
+        Caption = '-'
+      end
       object UnicodetoBijoytextconverter2: TMenuItem
         Caption = 'Unicode to Bijoy text converter'
         ImageIndex = 25
