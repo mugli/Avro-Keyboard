@@ -280,6 +280,26 @@ Type
           AutomaticVowelFormatingInModernTypingStyle2: TMenuItem;
           AutomaticallyfixChandrapositionInModernTypingStyle2: TMenuItem;
           EnableBanglainNumberPadInFixedkeyboardLayouts2: TMenuItem;
+          ShowPreviewWindow1: TMenuItem;
+          Dictionarymodeisdefault1: TMenuItem;
+          Charactermodeisdefault1: TMenuItem;
+          Classicphoneticnohint1: TMenuItem;
+          UseTabforBrowsingSuggestions1: TMenuItem;
+          N45: TMenuItem;
+          N47: TMenuItem;
+          Remembermychoiceamongsuggestions1: TMenuItem;
+          UseVerticalLinePipekeytotypeDot1: TMenuItem;
+          TypeJoNuktawithShiftJ1: TMenuItem;
+          ShowPreviewWindow2: TMenuItem;
+          Dictionarymodeisdefault2: TMenuItem;
+          Charactermodeisdefault2: TMenuItem;
+          Classicphoneticnohint2: TMenuItem;
+          UseTabforbrowsingsuggestions2: TMenuItem;
+          Remembermychoiceamongsuggestions2: TMenuItem;
+          N42: TMenuItem;
+          UseVerticalLinePipekeytotypeDot2: TMenuItem;
+          TypeJoNuktawithShiftJ2: TMenuItem;
+          N49: TMenuItem;
           Procedure FormKeyDown(Sender: TObject; Var Key: Word; Shift: TShiftState);
           Procedure FormCreate(Sender: TObject);
           Procedure AvroPhoneticEnglishtoBangla3Click(Sender: TObject);
@@ -345,6 +365,14 @@ Type
           Procedure iComplexInstallcomplexscriptsupportinWindows1Click(
                Sender: TObject);
           Procedure FormCloseQuery(Sender: TObject; Var CanClose: Boolean);
+          Procedure ShowPreviewWindow1Click(Sender: TObject);
+          Procedure Dictionarymodeisdefault1Click(Sender: TObject);
+          Procedure Charactermodeisdefault1Click(Sender: TObject);
+          Procedure Classicphoneticnohint1Click(Sender: TObject);
+          Procedure UseTabforBrowsingSuggestions1Click(Sender: TObject);
+          Procedure Remembermychoiceamongsuggestions1Click(Sender: TObject);
+          Procedure UseVerticalLinePipekeytotypeDot1Click(Sender: TObject);
+          Procedure TypeJoNuktawithShiftJ1Click(Sender: TObject);
      Private
           { Private declarations }
           Window: TStringDictionary;
@@ -519,12 +547,24 @@ Begin
      RefreshSettings;
 End;
 
+Procedure TAvroMainForm1.Charactermodeisdefault1Click(Sender: TObject);
+Begin
+     PhoneticMode := 'CHAR';
+     RefreshSettings;
+End;
+
 Procedure TAvroMainForm1.CheckupdateforAvroKeyboard1Click(Sender: TObject);
 Begin
      Updater.Check;
      AvroUpdateLastCheck := Now;
 End;
 
+
+Procedure TAvroMainForm1.Classicphoneticnohint1Click(Sender: TObject);
+Begin
+     PhoneticMode := 'ONLYCHAR';
+     RefreshSettings;
+End;
 
 Procedure TAvroMainForm1.ComplexLanguageNotify;
 
@@ -568,6 +608,12 @@ End;
 Procedure TAvroMainForm1.CustomizingAvroKeyboard1Click(Sender: TObject);
 Begin
      OpenHelpFile(25);
+End;
+
+Procedure TAvroMainForm1.Dictionarymodeisdefault1Click(Sender: TObject);
+Begin
+     PhoneticMode := 'DICT';
+     RefreshSettings;
 End;
 
 Procedure TAvroMainForm1.Docktotop1Click(Sender: TObject);
@@ -1306,6 +1352,26 @@ Begin
           EnableBanglainNumberPadInFixedkeyboardLayouts1.Enabled := False;
           EnableBanglainNumberPadInFixedkeyboardLayouts2.Enabled := False;
 
+
+          ShowPreviewWindow1.Enabled := True;
+          ShowPreviewWindow2.Enabled := True;
+          Dictionarymodeisdefault1.Enabled := True;
+          Dictionarymodeisdefault2.Enabled := True;
+          Charactermodeisdefault1.Enabled := True;
+          Charactermodeisdefault2.Enabled := True;
+          Classicphoneticnohint1.Enabled := True;
+          Classicphoneticnohint2.Enabled := True;
+          UseTabforBrowsingSuggestions1.Enabled := True;
+          UseTabforBrowsingSuggestions2.Enabled := True;
+          Remembermychoiceamongsuggestions1.Enabled := True;
+          Remembermychoiceamongsuggestions2.Enabled := True;
+          UseVerticalLinePipekeytotypeDot1.Enabled := True;
+          UseVerticalLinePipekeytotypeDot2.Enabled := True;
+          TypeJoNuktawithShiftJ1.Enabled := True;
+          TypeJoNuktawithShiftJ2.Enabled := True;
+
+
+
           EnableAutoCorrect1.Enabled := True;
           EnableAutoCorrect2.Enabled := True;
           ManageAutoCorrectentries1.Enabled := True;
@@ -1355,12 +1421,122 @@ Begin
           EnableBanglainNumberPadInFixedkeyboardLayouts1.Enabled := True;
           EnableBanglainNumberPadInFixedkeyboardLayouts2.Enabled := True;
 
+          ShowPreviewWindow1.Enabled := False;
+          ShowPreviewWindow2.Enabled := False;
+          Dictionarymodeisdefault1.Enabled := False;
+          Dictionarymodeisdefault2.Enabled := False;
+          Charactermodeisdefault1.Enabled := False;
+          Charactermodeisdefault2.Enabled := False;
+          Classicphoneticnohint1.Enabled := False;
+          Classicphoneticnohint2.Enabled := False;
+          UseTabforBrowsingSuggestions1.Enabled := False;
+          UseTabforBrowsingSuggestions2.Enabled := False;
+          Remembermychoiceamongsuggestions1.Enabled := False;
+          Remembermychoiceamongsuggestions2.Enabled := False;
+          UseVerticalLinePipekeytotypeDot1.Enabled := False;
+          UseVerticalLinePipekeytotypeDot2.Enabled := False;
+          TypeJoNuktawithShiftJ1.Enabled := False;
+          TypeJoNuktawithShiftJ2.Enabled := False;
+
+
           EnableAutoCorrect1.Enabled := False;
           EnableAutoCorrect2.Enabled := False;
           ManageAutoCorrectentries1.Enabled := False;
           ManageAutoCorrectentries2.Enabled := False;
 
           UnloadWordDatabase;
+     End;
+
+     If ShowPrevWindow = 'YES' Then Begin
+          ShowPreviewWindow1.Checked := True;
+          ShowPreviewWindow2.Checked := True;
+
+          Dictionarymodeisdefault1.Enabled := True;
+          Dictionarymodeisdefault2.Enabled := True;
+          Charactermodeisdefault1.Enabled := True;
+          Charactermodeisdefault2.Enabled := True;
+          Classicphoneticnohint1.Enabled := True;
+          Classicphoneticnohint2.Enabled := True;
+          UseTabforBrowsingSuggestions1.Enabled := True;
+          UseTabforBrowsingSuggestions2.Enabled := True;
+          Remembermychoiceamongsuggestions1.Enabled := True;
+          Remembermychoiceamongsuggestions2.Enabled := True;
+     End
+     Else Begin
+          ShowPreviewWindow1.Checked := False;
+          ShowPreviewWindow2.Checked := False;
+
+          Dictionarymodeisdefault1.Enabled := False;
+          Dictionarymodeisdefault2.Enabled := False;
+          Charactermodeisdefault1.Enabled := False;
+          Charactermodeisdefault2.Enabled := False;
+          Classicphoneticnohint1.Enabled := False;
+          Classicphoneticnohint2.Enabled := False;
+          UseTabforBrowsingSuggestions1.Enabled := False;
+          UseTabforBrowsingSuggestions2.Enabled := False;
+          Remembermychoiceamongsuggestions1.Enabled := False;
+          Remembermychoiceamongsuggestions2.Enabled := False;
+     End;
+
+     If PhoneticMode = 'DICT' Then Begin
+          Dictionarymodeisdefault1.Checked := True;
+          Dictionarymodeisdefault2.Checked := True;
+          Charactermodeisdefault1.Checked := False;
+          Charactermodeisdefault2.Checked := False;
+          Classicphoneticnohint1.Checked := False;
+          Classicphoneticnohint2.Checked := False;
+     End
+     Else If PhoneticMode = 'CHAR' Then Begin
+          Dictionarymodeisdefault1.Checked := False;
+          Dictionarymodeisdefault2.Checked := False;
+          Charactermodeisdefault1.Checked := True;
+          Charactermodeisdefault2.Checked := True;
+          Classicphoneticnohint1.Checked := False;
+          Classicphoneticnohint2.Checked := False;
+     End
+     Else If PhoneticMode = 'ONLYCHAR' Then Begin
+          Dictionarymodeisdefault1.Checked := False;
+          Dictionarymodeisdefault2.Checked := False;
+          Charactermodeisdefault1.Checked := False;
+          Charactermodeisdefault2.Checked := False;
+          Classicphoneticnohint1.Checked := True;
+          Classicphoneticnohint2.Checked := True;
+     End;
+
+     If SaveCandidate = 'YES' Then Begin
+          Remembermychoiceamongsuggestions1.checked := True;
+          Remembermychoiceamongsuggestions2.checked := True;
+     End
+     Else Begin
+          Remembermychoiceamongsuggestions1.checked := False;
+          Remembermychoiceamongsuggestions2.checked := False;
+     End;
+
+     If TabBrowsing = 'YES' Then Begin
+          UseTabforBrowsingSuggestions1.checked := True;
+          UseTabforBrowsingSuggestions2.checked := True;
+     End
+     Else Begin
+          UseTabforBrowsingSuggestions1.checked := False;
+          UseTabforBrowsingSuggestions2.checked := False;
+     End;
+
+     If PipeToDot = 'YES' Then Begin
+          UseVerticalLinePipekeytotypeDot1.checked := True;
+          UseVerticalLinePipekeytotypeDot2.checked := True;
+     End
+     Else Begin
+          UseVerticalLinePipekeytotypeDot1.checked := False;
+          UseVerticalLinePipekeytotypeDot2.checked := False;
+     End;
+
+     If EnableJoNukta = 'YES' Then Begin
+          TypeJoNuktawithShiftJ1.checked := True;
+          TypeJoNuktawithShiftJ2.checked := True;
+     End
+     Else Begin
+          TypeJoNuktawithShiftJ1.checked := False;
+          TypeJoNuktawithShiftJ2.checked := False;
      End;
 
      If AutomaticallyFixChandra = 'NO' Then Begin
@@ -1404,6 +1580,17 @@ Begin
 
 
 
+End;
+
+Procedure TAvroMainForm1.Remembermychoiceamongsuggestions1Click(
+     Sender: TObject);
+Begin
+     If SaveCandidate = 'YES' Then
+          SaveCandidate := 'NO'
+     Else
+          SaveCandidate := 'YES';
+
+     RefreshSettings;
 End;
 
 Procedure TAvroMainForm1.ResetAllWindowLocale;
@@ -1486,6 +1673,16 @@ Begin
      End;
 
      SaveUISettings;
+End;
+
+Procedure TAvroMainForm1.ShowPreviewWindow1Click(Sender: TObject);
+Begin
+     If ShowPrevWindow = 'YES' Then
+          ShowPrevWindow := 'NO'
+     Else
+          ShowPrevWindow := 'YES';
+
+     RefreshSettings;
 End;
 
 Procedure TAvroMainForm1.SkinDesignerDesignyourownskin1Click(Sender: TObject);
@@ -1608,6 +1805,15 @@ Begin
      Application.ProcessMessages;
 End;
 
+Procedure TAvroMainForm1.TypeJoNuktawithShiftJ1Click(Sender: TObject);
+Begin
+     If EnableJoNukta = 'YES' Then
+          EnableJoNukta := 'NO'
+     Else
+          EnableJoNukta := 'YES';
+     RefreshSettings;
+End;
+
 Procedure TAvroMainForm1.UnicodetoBijoytextconverter1Click(
      Sender: TObject);
 Begin
@@ -1632,6 +1838,26 @@ End;
 Procedure TAvroMainForm1.UserForum1Click(Sender: TObject);
 Begin
      Execute_Something('http://www.omicronlab.com/go.php?id=3');
+End;
+
+Procedure TAvroMainForm1.UseTabforBrowsingSuggestions1Click(
+     Sender: TObject);
+Begin
+     If TabBrowsing = 'YES' Then
+          TabBrowsing := 'NO'
+     Else
+          TabBrowsing := 'YES';
+     RefreshSettings;
+End;
+
+Procedure TAvroMainForm1.UseVerticalLinePipekeytotypeDot1Click(
+     Sender: TObject);
+Begin
+     If PipeToDot = 'YES' Then
+          PipeToDot := 'NO'
+     Else
+          PipeToDot := 'YES';
+     RefreshSettings;
 End;
 
 Procedure TAvroMainForm1.WindowCheckTimer(Sender: TObject);

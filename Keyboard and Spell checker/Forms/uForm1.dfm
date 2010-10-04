@@ -127,7 +127,7 @@ object AvroMainForm1: TAvroMainForm1
     Left = 8
     Top = 224
     Bitmap = {
-      494C01011C00B800C00010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011C00B800C40010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000008000000001002000000000000080
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1739,6 +1739,47 @@ object AvroMainForm1: TAvroMainForm1
     object AvroPhonetic1: TMenuItem
       Caption = 'Avro Phonetic Options'
       ImageIndex = 8
+      object ShowPreviewWindow1: TMenuItem
+        Caption = 'Show Preview Window'
+        OnClick = ShowPreviewWindow1Click
+      end
+      object Dictionarymodeisdefault1: TMenuItem
+        Caption = 'Dictionary mode is default in suggestion'
+        RadioItem = True
+        OnClick = Dictionarymodeisdefault1Click
+      end
+      object Charactermodeisdefault1: TMenuItem
+        Caption = 'Character mode is default in suggestion'
+        RadioItem = True
+        OnClick = Charactermodeisdefault1Click
+      end
+      object Classicphoneticnohint1: TMenuItem
+        Caption = 'Classic phonetic (no suggestion)'
+        RadioItem = True
+        OnClick = Classicphoneticnohint1Click
+      end
+      object UseTabforBrowsingSuggestions1: TMenuItem
+        Caption = 'Use Tab for browsing suggestions'
+        OnClick = UseTabforBrowsingSuggestions1Click
+      end
+      object Remembermychoiceamongsuggestions1: TMenuItem
+        Caption = 'Remember my choice among suggestions'
+        OnClick = Remembermychoiceamongsuggestions1Click
+      end
+      object N45: TMenuItem
+        Caption = '-'
+      end
+      object UseVerticalLinePipekeytotypeDot1: TMenuItem
+        Caption = 'Use Vertical Line/Pipe key (|) to type Dot (.)'
+        OnClick = UseVerticalLinePipekeytotypeDot1Click
+      end
+      object TypeJoNuktawithShiftJ1: TMenuItem
+        Caption = 'Type Jo+Nukta with Shift+J'
+        OnClick = TypeJoNuktawithShiftJ1Click
+      end
+      object N47: TMenuItem
+        Caption = '-'
+      end
       object EnableAutoCorrect1: TMenuItem
         Caption = 'Enable Auto Correct'
         OnClick = EnableAutoCorrect1Click
@@ -1886,6 +1927,47 @@ object AvroMainForm1: TAvroMainForm1
       object AvroPhonetic2: TMenuItem
         Caption = 'Avro Phonetic Options'
         ImageIndex = 8
+        object ShowPreviewWindow2: TMenuItem
+          Caption = 'Show Preview Window'
+          OnClick = ShowPreviewWindow1Click
+        end
+        object Dictionarymodeisdefault2: TMenuItem
+          Caption = 'Dictionary mode is default in suggestion'
+          RadioItem = True
+          OnClick = Dictionarymodeisdefault1Click
+        end
+        object Charactermodeisdefault2: TMenuItem
+          Caption = 'Character mode is default in suggestion'
+          RadioItem = True
+          OnClick = Charactermodeisdefault1Click
+        end
+        object Classicphoneticnohint2: TMenuItem
+          Caption = 'Classic phonetic (no suggestion)'
+          RadioItem = True
+          OnClick = Classicphoneticnohint1Click
+        end
+        object UseTabforbrowsingsuggestions2: TMenuItem
+          Caption = 'Use Tab for browsing suggestions'
+          OnClick = UseTabforBrowsingSuggestions1Click
+        end
+        object Remembermychoiceamongsuggestions2: TMenuItem
+          Caption = 'Remember my choice among suggestions'
+          OnClick = Remembermychoiceamongsuggestions1Click
+        end
+        object N42: TMenuItem
+          Caption = '-'
+        end
+        object UseVerticalLinePipekeytotypeDot2: TMenuItem
+          Caption = 'Use Vertical Line/Pipe key (|) to type Dot (.)'
+          OnClick = UseVerticalLinePipekeytotypeDot1Click
+        end
+        object TypeJoNuktawithShiftJ2: TMenuItem
+          Caption = 'Type Jo+Nukta with Shift+J'
+          OnClick = TypeJoNuktawithShiftJ1Click
+        end
+        object N49: TMenuItem
+          Caption = '-'
+        end
         object EnableAutoCorrect2: TMenuItem
           Caption = 'Enable Auto Correct'
           OnClick = EnableAutoCorrect1Click

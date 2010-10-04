@@ -775,7 +775,7 @@ object frmOptions: TfrmOptions
       end
     end
     object AvroPhonetic_Panel: TPanel
-      Left = -1
+      Left = 4
       Top = 2
       Width = 430
       Height = 532
@@ -817,9 +817,9 @@ object frmOptions: TfrmOptions
         object Label_PhoneticTypingMode: TLabel
           Left = 16
           Top = 48
-          Width = 75
+          Width = 111
           Height = 13
-          Caption = 'Typing Mode:'
+          Caption = 'Suggestion options:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
@@ -830,11 +830,11 @@ object frmOptions: TfrmOptions
         object Label1: TLabel
           Left = 56
           Top = 83
-          Width = 319
-          Height = 26
+          Width = 337
+          Height = 39
           Caption = 
-            '(Avro selects first dictionary hint automatically. Character mod' +
-            'e is still available as option)'
+            '(Avro selects first dictionary suggestion automatically. Charact' +
+            'er mode is still available as option)'
           WordWrap = True
         end
         object Label4: TLabel
@@ -889,7 +889,7 @@ object frmOptions: TfrmOptions
           Top = 67
           Width = 366
           Height = 19
-          Caption = 'Dictionary Mode is Default.'
+          Caption = 'Dictionary Mode is Default in suggestions'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
@@ -904,7 +904,7 @@ object frmOptions: TfrmOptions
           Top = 116
           Width = 366
           Height = 20
-          Caption = 'Character Mode is Default.'
+          Caption = 'Character Mode is Default in suggestions'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
@@ -919,7 +919,9 @@ object frmOptions: TfrmOptions
           Top = 167
           Width = 345
           Height = 25
-          Caption = 'Use classic Avro Phonetic only, don'#39't show any dictionary hint.'
+          Caption = 
+            'Use classic Avro Phonetic only, don'#39't show any dictionary sugges' +
+            'tion'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
