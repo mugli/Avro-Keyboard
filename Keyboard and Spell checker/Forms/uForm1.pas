@@ -834,7 +834,7 @@ Begin
           Result := True
      Else If (IsFormLoaded('TopBar') = True) And (lngHWND = TopBar.Handle) Then
           Result := True
-     //Photoshop drag window exception
+               //Photoshop drag window exception
      Else If GetWindowClassName(lngHWND) = 'PSDocDragFeedback' Then
           Result := True
      Else
@@ -1335,7 +1335,38 @@ Begin
           EnableBanglainNumberPadInFixedkeyboardLayouts2.Checked := True;
      End;
 
+     If ShowPrevWindow = 'YES' Then Begin
+          ShowPreviewWindow1.Checked := True;
+          ShowPreviewWindow2.Checked := True;
 
+          Dictionarymodeisdefault1.Enabled := True;
+          Dictionarymodeisdefault2.Enabled := True;
+          Charactermodeisdefault1.Enabled := True;
+          Charactermodeisdefault2.Enabled := True;
+          Classicphoneticnohint1.Enabled := True;
+          Classicphoneticnohint2.Enabled := True;
+          UseTabforBrowsingSuggestions1.Enabled := True;
+          UseTabforBrowsingSuggestions2.Enabled := True;
+          Remembermychoiceamongsuggestions1.Enabled := True;
+          Remembermychoiceamongsuggestions2.Enabled := True;
+     End
+     Else Begin
+          ShowPreviewWindow1.Checked := False;
+          ShowPreviewWindow2.Checked := False;
+
+          Dictionarymodeisdefault1.Enabled := False;
+          Dictionarymodeisdefault2.Enabled := False;
+          Charactermodeisdefault1.Enabled := False;
+          Charactermodeisdefault2.Enabled := False;
+          Classicphoneticnohint1.Enabled := False;
+          Classicphoneticnohint2.Enabled := False;
+          UseTabforBrowsingSuggestions1.Enabled := False;
+          UseTabforBrowsingSuggestions2.Enabled := False;
+          Remembermychoiceamongsuggestions1.Enabled := False;
+          Remembermychoiceamongsuggestions2.Enabled := False;
+     End;
+
+     
      If LowerCase(MyCurrentLayout) = 'avrophonetic*' Then Begin
           UseModernStyleTyping1.Enabled := False;
           UseModernStyleTyping2.Enabled := False;
@@ -1443,37 +1474,6 @@ Begin
           ManageAutoCorrectentries2.Enabled := False;
 
           UnloadWordDatabase;
-     End;
-
-     If ShowPrevWindow = 'YES' Then Begin
-          ShowPreviewWindow1.Checked := True;
-          ShowPreviewWindow2.Checked := True;
-
-          Dictionarymodeisdefault1.Enabled := True;
-          Dictionarymodeisdefault2.Enabled := True;
-          Charactermodeisdefault1.Enabled := True;
-          Charactermodeisdefault2.Enabled := True;
-          Classicphoneticnohint1.Enabled := True;
-          Classicphoneticnohint2.Enabled := True;
-          UseTabforBrowsingSuggestions1.Enabled := True;
-          UseTabforBrowsingSuggestions2.Enabled := True;
-          Remembermychoiceamongsuggestions1.Enabled := True;
-          Remembermychoiceamongsuggestions2.Enabled := True;
-     End
-     Else Begin
-          ShowPreviewWindow1.Checked := False;
-          ShowPreviewWindow2.Checked := False;
-
-          Dictionarymodeisdefault1.Enabled := False;
-          Dictionarymodeisdefault2.Enabled := False;
-          Charactermodeisdefault1.Enabled := False;
-          Charactermodeisdefault2.Enabled := False;
-          Classicphoneticnohint1.Enabled := False;
-          Classicphoneticnohint2.Enabled := False;
-          UseTabforBrowsingSuggestions1.Enabled := False;
-          UseTabforBrowsingSuggestions2.Enabled := False;
-          Remembermychoiceamongsuggestions1.Enabled := False;
-          Remembermychoiceamongsuggestions2.Enabled := False;
      End;
 
      If PhoneticMode = 'DICT' Then Begin

@@ -83,10 +83,9 @@ Const
      KEYEVENTF_UNICODE        : Integer = $4;
 
      {===========================================================================}
-{$Hints Off}
+
 Function IfIgnorableModifierKey(Const KeyCode: Integer): Boolean;
 Begin
-Result:=False;
      Case KeyCode Of
           VK_LWIN, VK_LSHIFT, VK_LCONTROL, VK_LMENU, VK_PACKET, VK_NUMLOCK,
                VK_CAPITAL, VK_MENU, VK_CONTROL, VK_SHIFT, VK_RWIN, VK_RSHIFT,
@@ -96,7 +95,7 @@ Result:=False;
           Result := False;
      End;
 End;
-{$Hints On}
+
 
 {===============================================================================}
 
@@ -449,6 +448,19 @@ Begin
      If LeftCtrlKeyDown = True Then SendInput_Down(VK_LCONTROL);
      // If GeneralCtrlKeyDown = True Then SendInput_Down(VK_CONTROL);
 End;
+
+
+//------------------------------------------------------------------------------
+
+Initialization
+     //Alter states
+     RightAlterKeyDown        :=False;
+     LeftAlterKeyDown         :=False;
+     GeneralAlterKeyDown      :=False;
+     //Control states
+     RightCtrlKeyDown         :=False;
+     LeftCtrlKeyDown          :=False;
+     GeneralCtrlKeyDown       :=False;
 
 End.
 

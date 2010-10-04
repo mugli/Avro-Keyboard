@@ -36,21 +36,27 @@ Interface
 Uses
      classes,
      sysutils,
-     StrUtils;
+     StrUtils,
+     clsUnicodeToBijoy2000 ;
 
 Const
-     TrackL                   = 10;
+     TrackL                   = 100;
 
      //Skeleton of Class TGenericLayoutModern
 Type
      TGenericLayoutModern = Class
      Private
+          Bijoy: TUnicodeToBijoy2000;
           LastChar: WideString;
           DeadKey: Boolean;
           DeadKeyChars: WideString;
           DetermineZWNJ_ZWJ: WideString;
           LastChars: Array[1..TrackL] Of WideString;
+          PrevBanglaT, NewBanglaText: WideString;
 
+          Procedure InternalBackspace(KeyRepeat: Integer = 1);
+          Procedure DoBackspace(Var Block: Boolean);
+          Procedure ParseAndSendNow;
           Function InsertKar(Const sKar: WideString): WideString;
           Function InsertReph: WideString;
           Procedure DeleteLastCharOneStep;
@@ -66,6 +72,7 @@ Type
 
      Public
           Constructor Create;           //Initializer
+          Destructor Destroy; Override; //Destructor
 
           Function ProcessVKeyDown(Const KeyCode: Integer; Var Block: Boolean): WideString;
           Procedure ProcessVKeyUP(Const KeyCode: Integer; Var Block: Boolean);
@@ -126,6 +133,8 @@ Begin
      DetermineZWNJ_ZWJ := ZWJ;
      // Else
       //     DetermineZWNJ_ZWJ := ZWNJ;
+
+     Bijoy := TUnicodeToBijoy2000.Create;
 End;
 
 {===============================================================================}
@@ -170,6 +179,43 @@ Begin
      LastChar := LastChars[1];
 End;
 
+{===============================================================================}
+
+Destructor TGenericLayoutModern.Destroy;
+Begin
+     FreeAndNil(Bijoy);
+
+     Inherited;
+End;
+
+{===============================================================================}
+
+Procedure TGenericLayoutModern.DoBackspace(Var Block: Boolean);
+Var
+     BijoyNewBanglaText       : WideString;
+Begin
+
+     If (Length(PrevBanglaT) - 1) <= 0 Then Begin
+
+          If OutputIsBijoy <> 'YES' Then Begin
+               If (Length(NewBanglaText) - 1) >= 1 Then
+                    Backspace(Length(NewBanglaText) - 1);
+          End
+          Else Begin
+               BijoyNewBanglaText := Bijoy.Convert(NewBanglaText);
+               If (Length(BijoyNewBanglaText) - 1) >= 1 Then
+                    Backspace(Length(BijoyNewBanglaText) - 1);
+          End;
+
+          ResetDeadKey;
+          Block := False;
+     End
+     Else Begin
+          Block := True;
+          InternalBackspace;
+          //ParseAndSendNow;
+     End;
+End;
 
 {===============================================================================}
 
@@ -177,8 +223,7 @@ Function TGenericLayoutModern.InsertKar(Const sKar: WideString): WideString;
 Begin
      If AutomaticallyFixChandra = 'YES' Then Begin
           If LastChar = b_Chandra Then Begin
-               Backspace;
-               DeleteLastCharOneStep;
+               InternalBackspace;
                InsertKar := sKar + b_Chandra;
           End
           Else
@@ -247,8 +292,7 @@ Begin
                          For J := i Downto 1 Do
                               TmpStr := TmpStr + LastChars[J];
 
-                         Backspace(i);
-                         DeleteLastCharSteps_Ex(i);
+                         InternalBackspace(i);
                          InsertReph := b_R + b_Hasanta + TmpStr;
                          Exit;
                     End;
@@ -256,8 +300,7 @@ Begin
                Else Begin
                     For J := i Downto 1 Do
                          TmpStr := TmpStr + LastChars[J];
-                    Backspace(i);
-                    DeleteLastCharSteps_Ex(i);
+                    InternalBackspace(i);
                     InsertReph := b_R + b_Hasanta + TmpStr;
                     Exit;
                End;
@@ -265,6 +308,21 @@ Begin
 
      End;
 End;
+
+{===============================================================================}
+
+
+Procedure TGenericLayoutModern.InternalBackspace(KeyRepeat: Integer);
+Begin
+     If KeyRepeat <= 0 Then KeyRepeat := 1;
+     If KeyRepeat > TrackL Then KeyRepeat := TrackL;
+
+
+     NewBanglaText := Midstr(PrevBanglaT, 1, Length(PrevBanglaT) - KeyRepeat);
+     DeleteLastCharSteps_Ex(KeyRepeat);
+
+End;
+
 {$HINTS ON}
 {===============================================================================}
 
@@ -365,73 +423,64 @@ Begin
                     DeadKey := False;
           End;
 
+
           If LastChar = b_Hasanta Then Begin
                If CharForKey = b_AAkar Then Begin
-                    Backspace;
-                    DeleteLastCharOneStep;
+                    InternalBackspace;
                     MyProcessVKeyDown := b_AA;
                     DeadKey := True;
                     Exit;
                End
                Else If CharForKey = b_Ikar Then Begin
-                    Backspace;
-                    DeleteLastCharOneStep;
+                    InternalBackspace;
                     MyProcessVKeyDown := b_I;
                     DeadKey := True;
                     Exit;
                End
                Else If CharForKey = b_IIkar Then Begin
-                    Backspace;
-                    DeleteLastCharOneStep;
+                    InternalBackspace;
                     MyProcessVKeyDown := b_II;
                     DeadKey := True;
                     Exit;
                End
                Else If CharForKey = b_Ukar Then Begin
-                    Backspace;
-                    DeleteLastCharOneStep;
+                    InternalBackspace;
                     MyProcessVKeyDown := b_U;
                     DeadKey := True;
                     Exit;
                End
                Else If CharForKey = b_UUkar Then Begin
-                    Backspace;
-                    DeleteLastCharOneStep;
+                    InternalBackspace;
                     MyProcessVKeyDown := b_UU;
                     DeadKey := True;
                     Exit;
                End
                Else If CharForKey = b_RRIkar Then Begin
-                    Backspace;
-                    DeleteLastCharOneStep;
+                    InternalBackspace;
                     MyProcessVKeyDown := b_RRI;
                     DeadKey := True;
                     Exit;
                End
                Else If CharForKey = b_Ekar Then Begin
-                    Backspace;
-                    DeleteLastCharOneStep;
+                    InternalBackspace;
                     MyProcessVKeyDown := b_E;
                     DeadKey := True;
                     Exit;
                End
                Else If CharForKey = b_OIkar Then Begin
-                    Backspace;
-                    DeleteLastCharOneStep;
+                    InternalBackspace;
                     MyProcessVKeyDown := b_OI;
                     DeadKey := True;
                     Exit;
                End
                Else If CharForKey = b_Okar Then Begin
-                    Backspace;
-                    DeleteLastCharOneStep;
+                    InternalBackspace;
                     MyProcessVKeyDown := b_O;
                     DeadKey := True;
                     Exit;
                End
                Else If CharForKey = b_OUkar Then Begin
-                    Backspace;
-                    DeleteLastCharOneStep;
+                    InternalBackspace;
                     MyProcessVKeyDown := b_OU;
                     DeadKey := True;
                     Exit;
@@ -442,6 +491,8 @@ Begin
                     Exit;
                End;
           End;
+
+
 
           Case KeyCode Of
                VK_RETURN: Begin
@@ -462,6 +513,11 @@ Begin
                          Block := False;
                          DeadKey := True;
                          ResetLastChar;
+                         MyProcessVKeyDown := '';
+                         Exit;
+                    End;
+               VK_BACK: Begin
+                         DoBackspace(Block);
                          MyProcessVKeyDown := '';
                          Exit;
                     End;
@@ -538,6 +594,62 @@ End;
 
 {===============================================================================}
 
+Procedure TGenericLayoutModern.ParseAndSendNow;
+Var
+     I, Matched, UnMatched    : Integer;
+     BijoyPrevBanglaT, BijoyNewBanglaText: WideString;
+Begin
+     Matched := 0;
+
+     If OutputIsBijoy <> 'YES' Then Begin
+          {Output to Unicode}
+          If PrevBanglaT = '' Then Begin
+               SendKey_Char(NewBanglaText);
+               PrevBanglaT := NewBanglaText;
+          End
+          Else Begin
+               For I := 1 To Length(PrevBanglaT) Do Begin
+                    If MidStr(PrevBanglaT, I, 1) = MidStr(NewBanglaText, i, 1) Then
+                         Matched := Matched + 1
+                    Else
+                         Break;
+               End;
+               UnMatched := Length(PrevBanglaT) - Matched;
+
+               If UnMatched >= 1 Then Backspace(UnMatched);
+               SendKey_Char(MidStr(NewBanglaText, Matched + 1, Length(NewBanglaText)));
+               PrevBanglaT := NewBanglaText;
+          End;
+
+     End
+     Else Begin
+          {Output to Bijoy}
+          BijoyPrevBanglaT := Bijoy.Convert(PrevBanglaT);
+          BijoyNewBanglaText := Bijoy.Convert(NewBanglaText);
+
+          If BijoyPrevBanglaT = '' Then Begin
+               SendKey_Char(BijoyNewBanglaText);
+               PrevBanglaT := NewBanglaText;
+          End
+          Else Begin
+               For I := 1 To Length(BijoyPrevBanglaT) Do Begin
+                    If MidStr(BijoyPrevBanglaT, I, 1) = MidStr(BijoyNewBanglaText, i, 1) Then
+                         Matched := Matched + 1
+                    Else
+                         Break;
+               End;
+               UnMatched := Length(BijoyPrevBanglaT) - Matched;
+
+               If UnMatched >= 1 Then Backspace(UnMatched);
+               SendKey_Char(MidStr(BijoyNewBanglaText, Matched + 1, Length(BijoyNewBanglaText)));
+               PrevBanglaT := NewBanglaText;
+          End;
+
+     End;
+End;
+
+{===============================================================================}
+
 Function TGenericLayoutModern.ProcessVKeyDown(Const KeyCode: Integer;
      Var Block: Boolean): WideString;
 Var
@@ -564,16 +676,11 @@ Begin
           SetLastChar(m_Str);
      End;
 
-     If m_Block Then Begin
-          Block := True;
-          //DebugPrint "PrcessVKeyDown Returns:" & WhichBanglaChar(m_Str)
-          ProcessVKeyDown := m_Str;
-     End
-     Else Begin
-          Block := False;
-          ProcessVKeyDown := m_Str;
-     End;
+     NewBanglaText := NewBanglaText + m_Str;
+     ParseAndSendNow;
 
+     Block := m_Block;
+     ProcessVKeyDown := '';
 End;
 
 {===============================================================================}
@@ -612,6 +719,8 @@ Begin
           LastChars[i] := ' ';
 
      LastChar := ' ';
+     PrevBanglaT := '';
+     NewBanglaText := '';
 End;
 
 {===============================================================================}

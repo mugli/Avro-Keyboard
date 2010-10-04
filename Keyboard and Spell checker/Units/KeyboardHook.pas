@@ -130,7 +130,7 @@ Begin
 
 
 
-          {$REGION 'Error fixex'}
+          {$REGION 'Error fixes'}
           //----------------------------------------------
           //Ignore injected keys
           //----------------------------------------------
@@ -141,7 +141,6 @@ Begin
                     lParam);
                Exit;
           End;
-
 
           //----------------------------------------------
           //Don't Prcess VK_Packet
@@ -173,17 +172,22 @@ Begin
           {$REGION 'Control and alter key management for AltGr support'}
           If (AvroMainForm1.GetMyCurrentKeyboardMode = Bangla) And (lowercase(AvroMainForm1.GetMyCurrentLayout) <> 'avrophonetic*') Then Begin
 
-               //Alt+BAckspace problem fix
+
+            {   //Alt+BAckspace problem fix
                If kbdllhs.vkCode = VK_BACk Then Begin
-                    If RightAlterKeyDown = False Then SendInput_Up(VK_RMENU);
-                    If LeftAlterKeyDown = False Then SendInput_Up(VK_LMENU);
-                    If GeneralAlterKeyDown = False Then SendInput_Up(VK_MENU);
-                    LowLevelKeyboardProc := CallNextHookEx(HookRetVal,
-                         nCode,
-                         wParam,
-                         lParam);
-                    Exit;
-               End;
+                    If RightAlterKeyDown Or LeftAlterKeyDown Or GeneralAlterKeyDown Then Begin
+                         If RightAlterKeyDown Then SendInput_Up(VK_RMENU);
+                         If LeftAlterKeyDown Then SendInput_Up(VK_LMENU);
+                         If GeneralAlterKeyDown Then SendInput_Up(VK_MENU);
+
+                         LowLevelKeyboardProc := CallNextHookEx(HookRetVal,
+                              nCode,
+                              wParam,
+                              lParam);
+
+                         Exit;
+                    End;
+               End;     }
 
 
                //'----------------------------------------------
@@ -291,6 +295,7 @@ Begin
 
           End;                          {Bangla mode and fixed keyboard layout}
           {$ENDREGION}
+
 
           {$REGION 'Keyboard layout management'}
           If (wParam = 257) Or (wParam = 261) Then Begin //Key Up
@@ -480,7 +485,7 @@ Begin
           Else If (wParam = 256) Or (wParam = 260) Then Begin //KeyDown
                If (kbdllhs.vkCode = VK_F7) And (IfTrueShift = False) And (IfControl = True) And (IfAlter = False) Then Begin
                     { DONE : Launch spell checker }
-                    AvroMainForm1.Spellcheck1Click(nil);
+                    AvroMainForm1.Spellcheck1Click(Nil);
                     ShouldBlock := True;
                     Goto ExitHere;
                End;

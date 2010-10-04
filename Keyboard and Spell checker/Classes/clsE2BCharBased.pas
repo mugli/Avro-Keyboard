@@ -350,12 +350,26 @@ End;
 {===============================================================================}
 
 Procedure TE2BCharBased.DoBackspace(Var Block: Boolean);
+Var
+     BijoyNewBanglaText       : WideString;
 Begin
-     If Length(EnglishT) - 1 <= 0 Then Begin
+
+     If (Length(EnglishT) - 1) <= 0 Then Begin
+
+          If OutputIsBijoy <> 'YES' Then Begin
+               If (Length(NewBanglaText) - 1) >= 1 Then
+                    Backspace(Length(NewBanglaText) - 1);
+          End
+          Else Begin
+               BijoyNewBanglaText := Bijoy.Convert(NewBanglaText);
+               If (Length(BijoyNewBanglaText) - 1) >= 1 Then
+                    Backspace(Length(BijoyNewBanglaText) - 1);
+          End;
+
           ResetDeadKey;
           Block := False;
      End
-     Else If Length(EnglishT) - 1 > 0 Then Begin
+     Else If (Length(EnglishT) - 1) > 0 Then Begin
           Block := True;
           EnglishT := LeftStr(EnglishT, Length(EnglishT) - 1);
           ParseAndSend;
@@ -1109,7 +1123,7 @@ End;
 Procedure TE2BCharBased.ParseAndSendNow;
 Var
      I, Matched, UnMatched    : Integer;
-     BijoyPrevBanglaT, BijoyNewBanglaText: String;
+     BijoyPrevBanglaT, BijoyNewBanglaText: WideString;
 Begin
      Matched := 0;
 
