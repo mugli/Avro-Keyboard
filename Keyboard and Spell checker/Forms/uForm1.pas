@@ -826,19 +826,17 @@ End;
 
 Function TAvroMainForm1.IgnorableWindow(Const lngHWND: HWND): Boolean;
 Begin
-     Result := False;
      //System tray
      If (lngHWND = FindWindow('Shell_TrayWnd', Nil)) Or
           (lngHWND = FindWindowEx(FindWindow('Shell_TrayWnd', Nil), 0, 'TrayNotifyWnd', Nil)) Then
           Result := True
      Else If lngHWND = Self.Handle Then
           Result := True
-     Else If (IsFormLoaded('TopBar') = True) Then Begin
-          If (lngHWND = TopBar.Handle) Then
-               Result := True
-          Else
-               Result := False;
-     End
+     Else If (IsFormLoaded('TopBar') = True) And (lngHWND = TopBar.Handle) Then
+          Result := True
+     //Photoshop drag window exception
+     Else If GetWindowClassName(lngHWND) = 'PSDocDragFeedback' Then
+          Result := True
      Else
           Result := False;
 End;
@@ -1867,7 +1865,6 @@ Var
 Begin
 
      hforewnd := GetForegroundWindow;
-
      If hforewnd = 0 Then Exit;
      If IsWindow(hforewnd) = False Then exit; {Experimental use}
 
@@ -1876,6 +1873,8 @@ Begin
 
      If IgnorableWindow(hforewnd) = True Then Exit;
      If hforewnd = LastWindow Then exit;
+
+
 
      //window z-order has been changed
      //==================================
