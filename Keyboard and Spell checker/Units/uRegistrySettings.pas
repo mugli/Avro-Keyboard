@@ -44,6 +44,7 @@ Uses
 
 Const
      NumberOfVisibleHints     : Integer = 2;
+     OutputIsBijoy            : String = 'YES';
 
 Var
      DontShowComplexLNotification: String;

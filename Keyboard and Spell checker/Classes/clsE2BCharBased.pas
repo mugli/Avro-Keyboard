@@ -42,7 +42,8 @@ Uses
      clsPhoneticRegExBuilder,
      WideStrings,
      cDictionaries,
-     clsAbbreviation;
+     clsAbbreviation,
+     clsUnicodeToBijoy2000;
 
 Const
      Max_EnglishLength        = 50;
@@ -62,6 +63,7 @@ Type
           Parser: TEnglishToBangla;
           RegExBuilder: TEnglishToRegEx;
           Abbreviation: TAbbreviation;
+          Bijoy: TUnicodeToBijoy2000;
           EnglishT: AnsiString;
           PrevBanglaT: WideString;
           BlockLast: boolean;
@@ -215,6 +217,7 @@ Begin
      Inherited;
      Parser := TEnglishToBangla.Create;
      Abbreviation := TAbbreviation.Create;
+     Bijoy := TUnicodeToBijoy2000.Create;
      RegExBuilder := TEnglishToRegEx.Create;
      WStringList := TWideStringList.Create;
      CandidateDict := TStringDictionary.Create;
@@ -327,6 +330,7 @@ Var
 Begin
      WStringList.Clear;
      FreeAndNil(WStringList);
+     FreeAndNil(Bijoy);
      FreeAndNil(Parser);
      FreeAndNil(RegExBuilder);
      FreeAndNil(Abbreviation);
@@ -1105,25 +1109,54 @@ End;
 Procedure TE2BCharBased.ParseAndSendNow;
 Var
      I, Matched, UnMatched    : Integer;
+     BijoyPrevBanglaT, BijoyNewBanglaText: String;
 Begin
      Matched := 0;
 
-     If PrevBanglaT = '' Then Begin
-          SendKey_Char(NewBanglaText);
-          PrevBanglaT := NewBanglaText;
+     If OutputIsBijoy <> 'YES' Then Begin
+          {Output to Unicode}
+          If PrevBanglaT = '' Then Begin
+               SendKey_Char(NewBanglaText);
+               PrevBanglaT := NewBanglaText;
+          End
+          Else Begin
+               For I := 1 To Length(PrevBanglaT) Do Begin
+                    If MidStr(PrevBanglaT, I, 1) = MidStr(NewBanglaText, i, 1) Then
+                         Matched := Matched + 1
+                    Else
+                         Break;
+               End;
+               UnMatched := Length(PrevBanglaT) - Matched;
+
+               If UnMatched >= 1 Then Backspace(UnMatched);
+               SendKey_Char(MidStr(NewBanglaText, Matched + 1, Length(NewBanglaText)));
+               PrevBanglaT := NewBanglaText;
+          End;
+
      End
      Else Begin
-          For I := 1 To Length(PrevBanglaT) Do Begin
-               If MidStr(PrevBanglaT, I, 1) = MidStr(NewBanglaText, i, 1) Then
-                    Matched := Matched + 1
-               Else
-                    Break;
-          End;
-          UnMatched := Length(PrevBanglaT) - Matched;
+          {Output to Bijoy}
+          BijoyPrevBanglaT := Bijoy.Convert(PrevBanglaT);
+          BijoyNewBanglaText := Bijoy.Convert(NewBanglaText);
 
-          If UnMatched >= 1 Then Backspace(UnMatched);
-          SendKey_Char(MidStr(NewBanglaText, Matched + 1, Length(NewBanglaText)));
-          PrevBanglaT := NewBanglaText;
+          If BijoyPrevBanglaT = '' Then Begin
+               SendKey_Char(BijoyNewBanglaText);
+               PrevBanglaT := NewBanglaText;
+          End
+          Else Begin
+               For I := 1 To Length(BijoyPrevBanglaT) Do Begin
+                    If MidStr(BijoyPrevBanglaT, I, 1) = MidStr(BijoyNewBanglaText, i, 1) Then
+                         Matched := Matched + 1
+                    Else
+                         Break;
+               End;
+               UnMatched := Length(BijoyPrevBanglaT) - Matched;
+
+               If UnMatched >= 1 Then Backspace(UnMatched);
+               SendKey_Char(MidStr(BijoyNewBanglaText, Matched + 1, Length(BijoyNewBanglaText)));
+               PrevBanglaT := NewBanglaText;
+          End;
+
      End;
 End;
 

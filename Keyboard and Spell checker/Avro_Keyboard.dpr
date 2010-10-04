@@ -87,7 +87,8 @@ uses
   uCommandLineFunctions in 'Units\uCommandLineFunctions.pas',
   ufrmConflict in 'Forms\ufrmConflict.pas' {frmConflict},
   uFrmSplash in 'Forms\uFrmSplash.pas' {frmSplash},
-  clsAbbreviation in 'Classes\clsAbbreviation.pas';
+  clsAbbreviation in 'Classes\clsAbbreviation.pas',
+  clsUnicodeToBijoy2000 in '..\Unicode to ascii converter\clsUnicodeToBijoy2000.pas';
 
 Var
      Mutex                    : THandle;
