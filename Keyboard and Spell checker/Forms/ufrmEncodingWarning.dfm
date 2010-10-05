@@ -66,12 +66,12 @@ object frmEncodingWarning: TfrmEncodingWarning
   object Label2: TLabel
     Left = 56
     Top = 55
-    Width = 384
+    Width = 357
     Height = 39
     Caption = 
       'Avro will not be able to convert ANSI to Unicode, if you need th' +
-      'at later. You have to use a 3rd part converter, which may or may' +
-      ' not be 100% accurate!'
+      'at later. You have to use a third party converter, which may or ' +
+      'may not be 100% accurate!'
     WordWrap = True
   end
   object Image1: TImage
@@ -129,7 +129,7 @@ object frmEncodingWarning: TfrmEncodingWarning
   object Label3: TLabel
     Left = 56
     Top = 100
-    Width = 383
+    Width = 357
     Height = 26
     Caption = 
       'Never ever use ANSI in web sites, databases and where you need t' +
@@ -139,7 +139,7 @@ object frmEncodingWarning: TfrmEncodingWarning
   object Label4: TLabel
     Left = 56
     Top = 140
-    Width = 381
+    Width = 344
     Height = 26
     Caption = 
       'Avro doesn'#39't install any required font for ANSI mode. If you don' +
@@ -150,8 +150,8 @@ object frmEncodingWarning: TfrmEncodingWarning
   object Label5: TLabel
     Left = 56
     Top = 180
-    Width = 381
-    Height = 26
+    Width = 376
+    Height = 13
     Caption = 
       'This is an outdated technology for writing Bangla, kept in Avro ' +
       'experimentally.'
@@ -160,7 +160,7 @@ object frmEncodingWarning: TfrmEncodingWarning
   object Label6: TLabel
     Left = 56
     Top = 212
-    Width = 384
+    Width = 341
     Height = 26
     Caption = 
       'We don'#39't provide any support regarding problems in this mode. If' +
@@ -392,8 +392,8 @@ object frmEncodingWarning: TfrmEncodingWarning
   object Label8: TLabel
     Left = 56
     Top = 248
-    Width = 384
-    Height = 17
+    Width = 182
+    Height = 13
     Caption = 'Input locale will not work in this mode.'
     WordWrap = True
   end

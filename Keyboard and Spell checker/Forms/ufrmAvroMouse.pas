@@ -45,7 +45,8 @@ Uses
      Dialogs,
      StdCtrls,
      Buttons,
-     ExtCtrls;
+     ExtCtrls,
+     clsUnicodeToBijoy2000;
 
 Type
      TfrmAvroMouse = Class(TForm)
@@ -185,6 +186,7 @@ Type
           Procedure FormCreate(Sender: TObject);
      Private
           { Private declarations }
+          Bijoy: TUnicodeToBijoy2000;
           Procedure TypeIt(Const tStr: WideString);
           Procedure DetectLeftClickOnTitleBar(Var Msg: TWMNCLButtonDown); Message WM_NCLBUTTONDOWN;
           Procedure DetectRightClickOnTitleBar(Var Msg: TWMNCLButtonDown); Message WM_NCRBUTTONDOWN;
@@ -327,18 +329,19 @@ Begin
      Action := caFree;
 
      frmAvroMouse := Nil;
+     FreeAndNil(Bijoy);
 End;
 
 Procedure TfrmAvroMouse.FormCreate(Sender: TObject);
 Begin
      Try
-               If (StrToInt(AvroMousePosX) > Screen.Width) Or (StrToInt(AvroMousePosX) < 0) Then
-                    AvroMousePosX := '0';
-               If (StrToInt(AvroMousePosY) > Screen.Height) Or (StrToInt(AvroMousePosY) < 0) Then
-                    AvroMousePosY := '0';
+          If (StrToInt(AvroMousePosX) > Screen.Width) Or (StrToInt(AvroMousePosX) < 0) Then
+               AvroMousePosX := '0';
+          If (StrToInt(AvroMousePosY) > Screen.Height) Or (StrToInt(AvroMousePosY) < 0) Then
+               AvroMousePosY := '0';
 
-               Self.Top := StrToInt(AvroMousePosX);
-               Self.Left := StrToInt(AvroMousePosY);
+          Self.Top := StrToInt(AvroMousePosX);
+          Self.Left := StrToInt(AvroMousePosY);
      Except
           On E: Exception Do Begin
                AvroMousePosX := '0';
@@ -347,16 +350,23 @@ Begin
                Self.Left := 0;
           End;
      End;
+     Bijoy := TUnicodeToBijoy2000.Create;
 End;
 
 Procedure TfrmAvroMouse.TypeIt(Const tStr: WideString);
 Begin
-     If AvroMouseChangeModeLocale = 'YES' Then Begin
-          If AvroMainForm1.GetMyCurrentKeyboardMode <> bangla Then
-               AvroMainForm1.ToggleMode;
-     End;
+     If OutputIsBijoy = 'YES' Then Begin
+          SendKey_Char(Bijoy.Convert(tStr));
+     End
+     Else Begin
 
-     SendKey_Char(tStr);
+          If AvroMouseChangeModeLocale = 'YES' Then Begin
+               If AvroMainForm1.GetMyCurrentKeyboardMode <> bangla Then
+                    AvroMainForm1.ToggleMode;
+          End;
+
+          SendKey_Char(tStr);
+     End;
 
 End;
 
