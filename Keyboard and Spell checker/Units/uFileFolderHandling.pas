@@ -47,6 +47,8 @@ Uses
      classes;
 
 Function GetAvroDataDir(): String;
+Function GetDllFolder: String;
+Function GetDllFullPath: String;
 
 Function MyCopyFile(Const SourceFile, DestinationFile: String; Overwrite: Boolean = False): Boolean;
 Function MyMoveFile(Const SourceFile, DestinationFile: String; Overwrite: Boolean = False): Boolean;
@@ -85,10 +87,36 @@ Const
 
      {===============================================================================}
 
+Function GetDllFullPath: String;
+Var
+     TheFileName              : Array[0..MAX_PATH] Of char;
+Begin
+     FillChar(TheFileName, sizeof(TheFileName), #0);
+     GetModuleFileName(hInstance, TheFileName, sizeof(TheFileName));
+     Result := TheFileName;
+End;
+
+{===============================================================================}
+
+Function GetDllFolder: String;
+Var
+     TheFileName              : Array[0..MAX_PATH] Of char;
+Begin
+     FillChar(TheFileName, sizeof(TheFileName), #0);
+     GetModuleFileName(hInstance, TheFileName, sizeof(TheFileName));
+     Result := ExtractFilePath(TheFileName);
+End;
+
+{===============================================================================}
+
 Function GetAvroDataDir(): String;
 Begin
      {$IFDEF PortableOn}
+     {$IFNDEF SpellCheckerDll}
      Result := ExtractFilePath(Application.ExeName);
+     {$ELSE}
+     Result := GetDllFolder;
+     {$ENDIF}
      {$ELSE}
      Result := GetCommonApplicationData + 'Avro Keyboard\';
      {$ENDIF}

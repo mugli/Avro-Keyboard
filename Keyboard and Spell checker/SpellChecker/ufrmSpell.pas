@@ -45,7 +45,8 @@ Uses
      StdCtrls,
      TntStdCtrls,
      ComCtrls,
-     TntComCtrls;
+     TntComCtrls,
+     clsMemoParser;
 
 Type
      TfrmSpell = Class(TForm)
@@ -100,6 +101,7 @@ Type
      Private
           { Private declarations }
 
+
           //File handling
           fFileName: String;
           MemoChanged: Boolean;
@@ -109,8 +111,16 @@ Type
           Procedure ShowOpenDialog;
           Procedure ShowSaveDialog;
 
+
+          {MemoParser events}
+          Procedure MP_WordFound(CurrentWord: WideString);
+          Procedure MP_CompleteParsing;
+          Procedure MP_PositionConflict;
+          Procedure MP_TotalProgress(CurrentProgress: Integer);
+
      Public
           { Public declarations }
+          MP: TMemoParser;
           CheckingSpell: Boolean;
           {Procedure ClipboardCopyPaste;}
          { Procedure ShowMe;}
@@ -121,27 +131,87 @@ Type
 Var
      frmSpell                 : TfrmSpell;
 
+
+
+
+     ///////////////////////////////////////////////////////////////////////////////////
+     //AvroSpell.dll functions
+     ///////////////////////////////////////////////////////////////////////////////////
+
+Procedure InitSpell; Stdcall; external 'AvroSpell.dll' name 'InitSpell';
+Procedure RegisterCallback(mCallback: Pointer); Stdcall; external 'AvroSpell.dll' name 'RegisterCallback';
+Function IsWordPresent(Wrd: PWideChar; Var SAction: Integer): Boolean; Stdcall; external 'AvroSpell.dll' name 'IsWordPresent';
+Function WordPresentInChangeAll(Wrd: PWideChar): Boolean; Stdcall; external 'AvroSpell.dll' name 'WordPresentInChangeAll';
+Procedure GetCorrection(Wrd: PWideChar); Stdcall; external 'AvroSpell.dll' name 'GetCorrection';
+Procedure SetWordPosInScreen(xPoint, yPoint: Integer); Stdcall; external 'AvroSpell.dll' name 'SetWordPosInScreen';
+Procedure HideSpeller; stdcall; external 'AvroSpell.dll' name 'HideSpeller';
+Procedure ShowOptions; stdcall; external 'AvroSpell.dll' name 'ShowOptions';
+Procedure ShowAbout; stdcall; external 'AvroSpell.dll' name 'ShowAbout';
+Procedure ForgetChangeIgnore; stdcall; external 'AvroSpell.dll' name 'ForgetChangeIgnore';
+Procedure UnloadAll; stdcall; external 'AvroSpell.dll' name 'UnloadAll';
+///////////////////////////////////////////////////////////////////////////////////
+
+Procedure Callback(Wrd: PWideChar; CWrd: PWideChar; SAction: Integer); stdcall;
+
 Implementation
 
 {$R *.dfm}
 Uses
-     ufrmSpellPopUp,
-     uCustomDictionary,
-     uDBase,
-     HashTable,
      KeyboardFunctions,
      VirtualKeyCode,
      strutils,
      uRegistrySettings,
-     uWindowHandlers,
-     ufrmSpellOptions,
-     ufrmAbout;
+     uWindowHandlers;
 
 Const
      Show_Window_in_Taskbar   = True;
 
+Const
+     SA_Default               : Integer = 0;
+     SA_Ignore                : Integer = 1;
+     SA_Cancel                : Integer = -1;
+     SA_IgnoredByOption       : Integer = 2;
+     SA_ReplaceAll            : Integer = 3;
 
-     {===============================================================================}
+Procedure Callback(Wrd: PWideChar; CWrd: PWideChar; SAction: Integer); Stdcall;
+Begin
+     If SAction = SA_Cancel Then Begin  {User clicked cancel}
+          ForgetChangeIgnore;
+          frmSpell.Progress.Visible := False;
+          frmSpell.CheckingSpell := False;
+          Exit;
+     End
+     Else If (SAction = SA_Default) Or (SAction = SA_ReplaceAll) Then Begin
+          frmSpell.MP.ReplaceCurrentWord(CWrd, Wrd);
+     End;
+     frmSpell.Mp.BeginPursing;
+End;
+
+{===============================================================================}
+
+Procedure TfrmSpell.MP_WordFound(CurrentWord: WideString);
+Var
+     DummySAction             : Integer;
+     PT                       : TPoint;
+Begin
+     If Not IsWordPresent(PWideChar(CurrentWord), DummySAction) Then Begin
+
+          If WordPresentInChangeAll(PWideChar(CurrentWord)) Then
+               GetCorrection(PWideChar(CurrentWord))
+          Else Begin
+               GetCorrection(PWideChar(CurrentWord));
+               mp.SelectWord;
+               MEMO.SetFocus;
+               GetCaretPos(Pt);
+               Pt := MEMO.ClientToScreen(Pt);
+               SetWordPosInScreen(Pt.X, Pt.Y);
+          End;
+     End
+     Else
+          Mp.BeginPursing;
+End;
+
+{===============================================================================}
 
 Procedure TfrmSpell.Clearall1Click(Sender: TObject);
 Begin
@@ -277,10 +347,9 @@ Begin
           AvroPadState := 'NORMAL';
 
      SaveSettings;
+     UnloadAll;
+     FreeAndNil(MP);
 
-
-     SaveSpellCustomDict;
-     UnloadWordDatabase;
      Action := caFree;
      frmSpell := Nil;
 End;
@@ -317,10 +386,10 @@ End;
 
 Procedure TfrmSpell.FormCreate(Sender: TObject);
 Begin
-     InitSpellCustomDict;
      CheckingSpell := False;
      New1Click(Nil);
-
+     InitSpell;
+     RegisterCallback(@Callback);
      LoadSettings;
 
      Self.Height := StrToInt(AvroPadHeight);
@@ -348,7 +417,11 @@ Begin
      Self.Show;
      ForceForegroundWindow(handle);
 
-
+     MP := TMemoParser.Create;
+     Mp.OnTotalProgress := MP_TotalProgress;
+     mp.OnWordFound := MP_WordFound;
+     mp.OnCompleteParsing := MP_CompleteParsing;
+     Mp.OnPositionConflict := MP_PositionConflict;
 End;
 
 {===============================================================================}
@@ -360,10 +433,46 @@ End;
 
 {===============================================================================}
 
+Procedure TfrmSpell.MP_CompleteParsing;
+Begin
+     Application.MessageBox('Spelling check is complete.', 'Avro Bangla Spell Checker', MB_OK + MB_ICONEXCLAMATION + MB_DEFBUTTON1 + MB_APPLMODAL);
+     ForgetChangeIgnore;
+     Progress.Visible := False;
+     CheckingSpell := False;
+End;
+
+{===============================================================================}
+
+Procedure TfrmSpell.MP_PositionConflict;
+Begin
+     HideSpeller;
+
+
+     Application.MessageBox('Document has been modified above the current spell checking position.' + #10 +
+          '' + #10 + '' + #10 + 'Avro Pad will resume spell checking from the beginning.',
+          'Avro Pad', MB_OK +
+          MB_ICONEXCLAMATION +
+          MB_DEFBUTTON1 +
+          MB_APPLMODAL);
+
+     MP.ResetAll;
+     CheckingSpell := False;
+     Startspellchek1Click(Nil);
+End;
+
+{===============================================================================}
+
+Procedure TfrmSpell.MP_TotalProgress(CurrentProgress: Integer);
+Begin
+     Progress.Position := CurrentProgress;
+     Application.ProcessMessages;
+End;
+
+{===============================================================================}
+
 Procedure TfrmSpell.N5Click(Sender: TObject);
 Begin
-     Application.CreateForm(TfrmAbout, frmAbout);
-     frmAbout.ShowModal;
+     ShowAbout;
 End;
 
 {===============================================================================}
@@ -602,31 +711,21 @@ End;
 
 Procedure TfrmSpell.Spellcheckoptions1Click(Sender: TObject);
 Begin
-     CheckCreateForm(TfrmSpellOptions, frmSpellOptions, 'frmSpellOptions');
-     frmSpellOptions.ShowModal;
+     ShowOptions;
 End;
 
 {===============================================================================}
 
 Procedure TfrmSpell.Startspellchek1Click(Sender: TObject);
 Begin
+     If CheckingSpell Then exit;
+
      CheckingSpell := True;
 
      Progress.Visible := True;
-     Memo.ReadOnly := True;
-     Application.CreateForm(TfrmSpellPopUp, frmSpellPopUp);
-     Try
-          frmSpellPopUp.ShowModal;
-     Except
-          On E: Exception Do Begin
-               //Nothing
-          End;
-     End;
      Progress.Position := 0;
-     Progress.Visible := False;
-     Memo.ReadOnly := False;
-
-     CheckingSpell := False;
+     mp.ResetAll;
+     mp.BeginPursing;
 End;
 
 {===============================================================================}

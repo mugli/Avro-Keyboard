@@ -33,6 +33,7 @@ Uses
      cDictionaries;
 
 Var
+     FCustomDictLoaded        : Boolean;
      SpellCustomDict          : TWideStringList;
      SpellIgnoreDict          : TWideStringList;
      SpellChangeDict          : TStringDictionary;
@@ -52,6 +53,9 @@ Procedure InitSpellCustomDict;
 Var
      TempList                 : TWideStringList;
 Begin
+     If FCustomDictLoaded Then exit;
+
+
      TempList := TWideStringList.Create;
 
      SpellCustomDict := TWideStringList.Create;
@@ -76,6 +80,7 @@ Begin
 
      SpellChangeDict := TStringDictionary.Create;
      SpellChangeDict.DuplicatesAction := ddIgnore;
+     FCustomDictLoaded := True;
 End;
 
 Procedure SaveSpellCustomDict;
@@ -87,7 +92,7 @@ Begin
      TempList.Sorted := False;
      TempList.Insert(0, '// Custom Bangla Dictionary for Avro Spell Checker (Do not remove this line)');
      Try
-        TempList.SaveToFile(GetAvroDataDir + 'CustomSpellingDictionary.dat');
+          TempList.SaveToFile(GetAvroDataDir + 'CustomSpellingDictionary.dat');
      Except
           On E: Exception Do Begin
                //Nothing
@@ -104,21 +109,27 @@ Begin
 
      SpellChangeDict.Clear;
      FreeAndNil(SpellChangeDict);
+
+     FCustomDictLoaded := False;
 End;
 
 Function WordPresentInCustomDict(Const w: WideString): Boolean;
-var
-Dummy:Integer;
-begin
-    Result:=SpellCustomDict.Find(w,Dummy);
-end;
+Var
+     Dummy                    : Integer;
+Begin
+     Result := SpellCustomDict.Find(w, Dummy);
+End;
 
 Function WordPresentInIgnoreDict(Const w: WideString): Boolean;
-var
-Dummy:Integer;
-begin
-    Result:=SpellIgnoreDict.Find(w,Dummy);
-end;
+Var
+     Dummy                    : Integer;
+Begin
+     Result := SpellIgnoreDict.Find(w, Dummy);
+End;
 
+//------------------------------------------------------------------------------
+
+Initialization
+     FCustomDictLoaded := False;
 End.
 

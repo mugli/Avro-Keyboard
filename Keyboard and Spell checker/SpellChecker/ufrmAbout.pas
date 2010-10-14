@@ -102,6 +102,7 @@ Begin
      Version := TFileVersion.Create();
      LabelVersion.Caption := Version.AsString{$IFDEF BetaVersion} + ' BETA'{$ENDIF}{$IFDEF PortableOn} + ' (Portable)'{$ENDIF};
      Version.Free;
+     self.Caption:='About Avro Spell Checker';
 End;
 
 {===============================================================================}

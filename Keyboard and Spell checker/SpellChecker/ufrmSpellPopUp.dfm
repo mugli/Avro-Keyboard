@@ -3,7 +3,7 @@ object frmSpellPopUp: TfrmSpellPopUp
   Top = 0
   BorderIcons = []
   BorderStyle = bsSingle
-  Caption = 'Bangla Spell Check'
+  Caption = 'Avro Spell Check'
   ClientHeight = 282
   ClientWidth = 421
   Color = clBtnFace
@@ -52,6 +52,7 @@ object frmSpellPopUp: TfrmSpellPopUp
   OldCreateOrder = False
   OnClose = FormClose
   OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel

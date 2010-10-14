@@ -76,6 +76,9 @@ Type
 
 Implementation
 
+Uses
+     uFileFolderHandling;
+
 {===============================================================================}
 
 Constructor TFileVersion.Create(Const AFileName: String = '');
@@ -83,8 +86,11 @@ Begin
      Inherited Create;
 
      If AFileName = '' Then
-          FFileName := ExtractFilePath(Application.ExeName) +
-               ExtractFileName(Application.ExeName)
+          {$IFNDEF SpellCheckerDll}
+          FFileName := Application.ExeName
+               {$ELSE}
+          FFileName := GetDllFullPath
+               {$ENDIF}
      Else
           FFileName := AFileName;
 
@@ -183,3 +189,4 @@ End;
 {===============================================================================}
 
 End.
+

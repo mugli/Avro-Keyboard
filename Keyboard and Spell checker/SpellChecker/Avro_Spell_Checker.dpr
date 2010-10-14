@@ -25,52 +25,31 @@
   =============================================================================
 }
 
-program Avro_Spell_Checker;
+Program Avro_Spell_Checker;
 
 uses
   Forms,
   clsMemoParser in 'clsMemoParser.pas',
-  clsPhoneticRegExBuilder_Spell in 'clsPhoneticRegExBuilder_Spell.pas',
-  clsReversePhonetic in 'clsReversePhonetic.pas',
-  clsSpellPhoneticSuggestionBuilder in 'clsSpellPhoneticSuggestionBuilder.pas',
-  Hashing in 'Hashing.pas',
-  HashTable in 'HashTable.pas',
-  Phonetic_RegExp_Constants_Spell in 'Phonetic_RegExp_Constants_Spell.pas',
   uClipboard in 'uClipboard.pas',
-  uCustomDictionary in 'uCustomDictionary.pas',
   ufrmSpell in 'ufrmSpell.pas' {frmSpell},
-  ufrmSpellOptions in 'ufrmSpellOptions.pas' {frmSpellOptions},
-  ufrmSpellPopUp in 'ufrmSpellPopUp.pas' {frmSpellPopUp},
-  uRegExPhoneticSearch_Spell in 'uRegExPhoneticSearch_Spell.pas',
-  uSimilarSort_Spell in 'uSimilarSort_Spell.pas',
-  uSpellEditDistanceSearch in 'uSpellEditDistanceSearch.pas',
   BanglaChars in '..\Units\BanglaChars.pas',
-  PCRE in '..\Units\PCRE.pas',
-  pcre_dll in '..\Units\pcre_dll.pas',
-  cDictionaries in '..\Units\cDictionaries.pas',
-  cUtils in '..\Units\cUtils.pas',
-  cTypes in '..\Units\cTypes.pas',
-  cArrays in '..\Units\cArrays.pas',
-  cStrings in '..\Units\cStrings.pas',
   uFileFolderHandling in '..\Units\uFileFolderHandling.pas',
   KeyboardFunctions in '..\Units\KeyboardFunctions.pas',
   VirtualKeyCode in '..\Units\VirtualKeyCode.pas',
-  uDBase in '..\Units\uDBase.pas',
   uRegistrySettings in 'uRegistrySettings.pas',
   uWindowHandlers in '..\Units\uWindowHandlers.pas',
   nativexml in '..\Units\nativexml.pas',
-  ufrmAbout in 'ufrmAbout.pas' {frmAbout},
   clsFileVersion in '..\Classes\clsFileVersion.pas',
   clsRegistry_XMLSetting in 'clsRegistry_XMLSetting.pas',
   WindowsVersion in '..\Units\WindowsVersion.pas';
 
 {$R *.res}
 
-begin
-  Application.Initialize;
-  Application.MainFormOnTaskbar := True;
-  Application.Title := 'Avro Spell Checker';
-  LoadWordDatabase;
-  Application.CreateForm(TfrmSpell, frmSpell);
+Begin
+     Application.Initialize;
+     Application.MainFormOnTaskbar := True;
+     Application.Title := 'Avro Spell Checker';
+     Application.CreateForm(TfrmSpell, frmSpell);
   Application.Run;
-end.
+End.
+

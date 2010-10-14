@@ -435,9 +435,6 @@ Begin
      BuildOneHashTable(Arr, HArr);
 
      Stmt.Free;
-
-     Application.ProcessMessages;
-
 End;
 
 //------------------------------------------------------------------------------

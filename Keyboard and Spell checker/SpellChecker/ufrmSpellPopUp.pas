@@ -41,7 +41,6 @@ Uses
      Dialogs,
      StdCtrls,
      TntStdCtrls,
-     clsMemoParser,
      ComCtrls,
      clsSpellPhoneticSuggestionBuilder,
      widestrings;
@@ -78,92 +77,215 @@ Type
           Procedure ListDblClick(Sender: TObject);
           Procedure CheckLessPrefferedClick(Sender: TObject);
           Procedure But_OptionsClick(Sender: TObject);
+          Procedure FormShow(Sender: TObject);
      Private
           { Private declarations }
-          MP: TMemoParser;
-          PhoneticSug: TPhoneticSpellSuggestion;
 
-          //Suggestions by various methods
-          PhoneticResult: TWideStringList;
-          FuzzyResult: TWideStringList;
-          OtherResult: TWideStringList;
-          DetermineZWNJ_ZWJ: WideString;
 
-          Procedure ShowSuggestion(FullResult: Boolean);
-
-          Function CanIgnoreByOption(W: WideString): Boolean;
-          Function SplitSuggestion(w: widestring): WideString;
-          Procedure MP_WordFound(CurrentWord: WideString);
-          Procedure MP_CompleteParsing;
-          Procedure Suggest;
-          Function UnicodeDeNormalize(Const W: WideString): WideString;
-          Procedure MP_TotalProgress(CurrentProgress: Integer);
      Public
           { Public declarations }
+          Procedure ShowSuggestion(FullResult: Boolean);
      End;
+
+Type
+     TCallback = Procedure(Wrd: PWideChar; CWrd: PWideChar; SAction: Integer); stdcall;
+
+Var
+     Callback                 : TCallback;
 
 Var
      frmSpellPopUp            : TfrmSpellPopUp;
+     //Suggestions by various methods
+     PhoneticSug              : TPhoneticSpellSuggestion;
+     PhoneticResult           : TWideStringList;
+     FuzzyResult              : TWideStringList;
+     OtherResult              : TWideStringList;
+
+     DetermineZWNJ_ZWJ        : WideString;
+     //
+     WordNotFound, WordSelected: WideString;
+
+Const
+     SA_Default               : Integer = 0;
+     SA_Ignore                : Integer = 1;
+     SA_Cancel                : Integer = -1;
+     SA_IgnoredByOption       : Integer = 2;
+     SA_ReplaceAll            : Integer = 3;
+
+     Procedure MoveToOptimumPos(T_X, T_Y: Integer);
+
 
 Implementation
 
 {$R *.dfm}
 Uses
-     ufrmSpell,
-     HashTable,
      uCustomDictionary,
-     uSpellEditDistanceSearch,
      widestrutils,
      BanglaChars,
      uSimilarSort_Spell,
-     PCRE,
-     PCRE_DLL,
      StrUtils,
-     uWindowHandlers,
      ufrmSpellOptions,
      uRegistrySettings,
-     WindowsVersion,
-     uDBase;
+     uWindowHandlers;
+
+
+     Procedure MoveToOptimumPos(T_X, T_Y: Integer);
+
+     Function ValidPosition(f_Point: TPoint): Boolean;
+     Var
+          hTaskBar            : THandle;
+          RTaskBar, RDummy, RWindow: TRect;
+     Begin
+          result := False;
+
+          //Get taskbar rectangle
+          hTaskbar := FindWindow('Shell_TrayWnd', Nil);
+          GetWindowRect(hTaskBar, RTaskBar);
+
+          //Get window rectangle with proposed position
+          RWindow.Top := f_Point.Y;
+          RWindow.Left := f_Point.X;
+          RWindow.Right := RWindow.Left + frmSpellPopUp.Width;
+          RWindow.Bottom := RWindow.Top + frmSpellPopUp.Height;
+
+          If IntersectRect(RDummy, RWindow, RTaskBar) Then
+               exit;
+
+          If (f_Point.X < 0) Or (f_Point.y < 0) Then
+               exit;
+
+          If (RWindow.Right > Screen.Width) Or (RWindow.Bottom > Screen.Height) Then
+               exit;
+
+          result := True;
+     End;
+
+Const
+     MinDistance              : Integer = 20;
+     WordWidth                : Integer = 50;
+     WordHeight               : Integer = 50;
+Var
+     RWord, RWindow, RDummy   : TRect;
+     Intersect                : Boolean;
+     PossiblePOS1, PossiblePOS2, PossiblePOS3, PossiblePOS4: TPoint;
+Begin
+     If (T_X < 0) Or (T_Y < 0) Then
+          exit;
+
+
+     //Check whether current position of Window hides the text
+     RWord.Left := T_X - MinDistance;
+     RWord.Top := T_Y - MinDistance;
+     RWord.Right := T_X + WordWidth + MinDistance;
+     RWord.Bottom := T_Y + WordHeight + MinDistance;
+
+     RWindow.Left := frmSpellPopUp.Left ;
+     RWindow.Top := frmSpellPopUp.Top ;
+     RWindow.Right := RWindow.Left + frmSpellPopUp.Width;
+     RWindow.Bottom := RWindow.Top + frmSpellPopUp.Height;
+
+     Intersect := IntersectRect(RDummy, RWindow, RWord);
+
+
+     If Not Intersect Then
+          exit;
+
+
+     //So, current position of Window hides the text, time to move it
+
+     //Calculate possible positions
+     PossiblePOS1.X := T_X;
+     PossiblePOS1.Y := T_Y - MinDistance - frmSpellPopUp.Height;
+
+     PossiblePOS2.X := T_X;
+     PossiblePOS2.Y := T_Y + MinDistance;
+
+     PossiblePOS3.X := T_X - MinDistance - frmSpellPopUp.Width;
+     PossiblePOS3.Y := T_Y;
+
+     PossiblePOS4.X := T_X + MinDistance;
+     PossiblePOS4.Y := T_Y;
+
+     If ValidPosition(PossiblePOS1) Then Begin
+          frmSpellPopUp.Left := PossiblePOS1.X;
+          frmSpellPopUp.Top := PossiblePOS1.Y;
+          exit;
+     End;
+
+     If ValidPosition(PossiblePOS2) Then Begin
+          frmSpellPopUp.Left := PossiblePOS2.X;
+          frmSpellPopUp.Top := PossiblePOS2.Y;
+          exit;
+     End;
+
+     If ValidPosition(PossiblePOS3) Then Begin
+          frmSpellPopUp.Left := PossiblePOS3.X;
+          frmSpellPopUp.Top := PossiblePOS3.Y;
+          exit;
+     End;
+
+     If ValidPosition(PossiblePOS4) Then Begin
+          frmSpellPopUp.Left := PossiblePOS4.X;
+          frmSpellPopUp.Top := PossiblePOS4.Y;
+          exit;
+     End;
+End;
+
 
 Procedure TfrmSpellPopUp.But_AddToDictClick(Sender: TObject);
 Begin
-     SpellCustomDict.Add(Edit_NotFound.Text);
-     mp.BeginPursing;
+     WordNotFound := Edit_NotFound.Text;
+     WordSelected := '';
+     SpellCustomDict.Add(WordNotFound);
+     Self.Hide;
+     callback(PWideChar(WordNotFound), PWideChar(WordSelected), SA_Ignore);
 End;
 
 Procedure TfrmSpellPopUp.But_CancelClick(Sender: TObject);
 Begin
-     Mp.PausePursing;
-     close;
+     WordNotFound := '';
+     WordSelected := '';
+     Self.Hide;
+     callback(PWideChar(WordNotFound), PWideChar(WordSelected), SA_Cancel);
 End;
 
 Procedure TfrmSpellPopUp.But_ChangeAllClick(Sender: TObject);
 Begin
-     mp.ReplaceCurrentWord(Edit_ChangeTo.Text, Edit_NotFound.Text);
-     SpellChangeDict.Add(utf8encode(Edit_NotFound.Text), utf8encode(Edit_ChangeTo.Text));
-     mp.BeginPursing;
+     WordNotFound := Edit_NotFound.Text;
+     WordSelected := Edit_ChangeTo.Text;
+     SpellChangeDict.Add(utf8encode(WordNotFound), utf8encode(WordSelected));
+     callback(PWideChar(WordNotFound), PWideChar(WordSelected), SA_ReplaceAll);
+     Self.Hide;
 End;
 
 Procedure TfrmSpellPopUp.But_ChangeClick(Sender: TObject);
 Begin
-     mp.ReplaceCurrentWord(Edit_ChangeTo.Text, Edit_NotFound.Text);
-     mp.BeginPursing;
+     WordNotFound := Edit_NotFound.Text;
+     WordSelected := Edit_ChangeTo.Text;
+     Self.Hide;
+     callback(PWideChar(WordNotFound), PWideChar(WordSelected), SA_Default);
 End;
 
 Procedure TfrmSpellPopUp.But_IgnoreAllClick(Sender: TObject);
 Begin
-     SpellIgnoreDict.Add(Edit_NotFound.Text);
-     mp.BeginPursing;
+     WordNotFound := Edit_NotFound.Text;
+     WordSelected := '';
+     SpellIgnoreDict.Add(WordNotFound);
+     Self.Hide;
+     callback(PWideChar(WordNotFound), PWideChar(WordSelected), SA_Ignore);
 End;
 
 Procedure TfrmSpellPopUp.But_IgnoreClick(Sender: TObject);
 Begin
-     mp.BeginPursing;
+     WordNotFound := Edit_NotFound.Text;
+     WordSelected := '';
+     Self.Hide;
+     callback(PWideChar(WordNotFound), PWideChar(WordSelected), SA_Ignore);
 End;
 
 Procedure TfrmSpellPopUp.But_OptionsClick(Sender: TObject);
 Begin
-     CheckCreateForm(TfrmSpellOptions, frmSpellOptions, 'frmSpellOptions');
+     frmSpellOptions := TfrmSpellOptions.Create(Nil);
      frmSpellOptions.ShowModal;
 
      If FullSuggestion = 'YES' Then
@@ -172,86 +294,6 @@ Begin
           CheckLessPreffered.Checked := False;
 End;
 
-Function TfrmSpellPopUp.CanIgnoreByOption(W: WideString): Boolean;
-Var
-     { DONE : Make these registry variable }
-     Spell_IgnoreNumbers, Spell_IgnoreAncient, Spell_IgnoreAssamese, Spell_IgnoreSingle: Boolean;
-
-     theRegex                 : IRegex;
-     theMatch                 : IMatch;
-     theLocale                : ansistring;
-     RegExOpt                 : TRegMatchOptions;
-     RegExCompileOptions      : TRegCompileOptions;
-
-     SearchStr                : AnsiString;
-     AnsiW                    : AnsiString;
-Begin
-     Result := False;
-     AnsiW := utf8encode(w);
-
-     If IgnoreNumber = 'YES' Then
-          Spell_IgnoreNumbers := True
-     Else
-          Spell_IgnoreNumbers := False;
-
-     If IgnoreAncient = 'YES' Then
-          Spell_IgnoreAncient := True
-     Else
-          Spell_IgnoreAncient := False;
-
-     If IgnoreAssamese = 'YES' Then
-          Spell_IgnoreAssamese := True
-     Else
-          Spell_IgnoreAssamese := False;
-
-     If IgnoreSingle = 'YES' Then
-          Spell_IgnoreSingle := True
-     Else
-          Spell_IgnoreSingle := False;
-
-
-     RegExOpt := [];
-     theLocale := 'C';
-     RegExCompileOptions := DecodeRegCompileOptions({PCRE_CASELESS Or}PCRE_UTF8);
-
-     If Spell_IgnoreSingle Then Begin
-          If Length(W) < 2 Then Begin
-               Result := True;
-               exit;
-          End;
-     End;
-
-     If Spell_IgnoreNumbers Then Begin
-          SearchStr := utf8encode('^.*[' + b_0 + b_1 + b_2 + b_3 + b_4 + b_5 + b_6 + b_7 + b_8 + b_9 + '].*$');
-          theRegex := Pcre.RegexCreate(SearchStr, RegExCompileOptions, theLocale);
-          theMatch := theRegex.Match(AnsiW, RegExOpt);
-          If theMatch.Success Then Begin
-               Result := True;
-               exit;
-          End;
-     End;
-
-     If Spell_IgnoreAssamese Then Begin
-          SearchStr := utf8encode('^.*[' + AssamRa + AssamVa + '].*$');
-          theRegex := Pcre.RegexCreate(SearchStr, RegExCompileOptions, theLocale);
-          theMatch := theRegex.Match(AnsiW, RegExOpt);
-          If theMatch.Success Then Begin
-               Result := True;
-               exit;
-          End;
-     End;
-
-     If Spell_IgnoreAncient Then Begin
-          SearchStr := utf8encode('^.*[' + b_Vocalic_L + b_Vocalic_LL + b_Vocalic_RR + b_Vocalic_RR_Kar + b_Vocalic_L_Kar + b_Vocalic_LL_Kar + b_Avagraha + b_LengthMark + b_RupeeMark + b_CurrencyNumerator1 + b_CurrencyNumerator2 + b_CurrencyNumerator3 + b_CurrencyNumerator4 + b_CurrencyNumerator1LessThanDenominator + b_CurrencyDenominator16 + b_CurrencyEsshar + '].*$');
-          theRegex := Pcre.RegexCreate(SearchStr, RegExCompileOptions, theLocale);
-          theMatch := theRegex.Match(AnsiW, RegExOpt);
-          If theMatch.Success Then Begin
-               Result := True;
-               exit;
-          End;
-     End;
-
-End;
 
 Procedure TfrmSpellPopUp.CheckLessPrefferedClick(Sender: TObject);
 Begin
@@ -265,70 +307,41 @@ Begin
      End;
 End;
 
-Procedure TfrmSpellPopUp.MP_WordFound(CurrentWord: WideString);
-Begin
-     CurrentWord := UnicodeDeNormalize(CurrentWord);
-
-     If CanIgnoreByOption(CurrentWord) = True Then exit;
-
-     If (WordPresent(CurrentWord) = False) And
-          (WordPresentInCustomDict(CurrentWord) = False) And
-          (WordPresentInIgnoreDict(CurrentWord) = False) Then Begin
-
-          If SpellChangeDict.HasKey(utf8encode(CurrentWord)) Then
-               mp.ReplaceCurrentWord(utf8decode(SpellChangeDict.Item[utf8encode(CurrentWord)]), Edit_NotFound.Text)
-          Else Begin
-               Mp.PausePursing;
-               Edit_NotFound.Text := CurrentWord;
-               mp.SelectWord;
-               Suggest;
-          End;
-
-     End;
-End;
-
 Procedure TfrmSpellPopUp.FormClose(Sender: TObject; Var Action: TCloseAction);
 Begin
-     FreeAndNil(MP);
-     FreeAndNil(PhoneticSug);
-     PhoneticResult.Clear;
-     FreeAndNil(PhoneticResult);
-     FuzzyResult.Clear;
-     FreeAndNil(FuzzyResult);
-     OtherResult.Create;
-     FreeAndNil(OtherResult);
-
      Action := caFree;
      frmSpellPopUp := Nil;
 End;
 
 Procedure TfrmSpellPopUp.FormCreate(Sender: TObject);
 Begin
-     MP := TMemoParser.Create;
-     PhoneticSug := TPhoneticSpellSuggestion.Create;
-     PhoneticResult := TWideStringList.Create;
-     FuzzyResult := TWideStringList.Create;
-     OtherResult := TWideStringList.Create;
-     Mp.OnTotalProgress := MP_TotalProgress;
-     mp.OnWordFound := MP_WordFound;
-     mp.OnCompleteParsing := MP_CompleteParsing;
+     DetermineZWNJ_ZWJ := ZWJ;
+     
+     TOPMOST(self.Handle);
+End;
 
-     If FullSuggestion = 'YES' Then
-          CheckLessPreffered.Checked := True
-     Else
+Procedure TfrmSpellPopUp.FormShow(Sender: TObject);
+Begin
+     self.Caption := 'Avro Spell Checker';
+
+     If FullSuggestion = 'YES' Then Begin
+          CheckLessPreffered.Checked := True;
+          ShowSuggestion(True);
+     End
+     Else Begin
           CheckLessPreffered.Checked := False;
+          ShowSuggestion(False)
+     End;
 
-    // If IsWinVistaOrLater Then
-          DetermineZWNJ_ZWJ := ZWJ ;
-    // Else
-     //     DetermineZWNJ_ZWJ := ZWNJ;
-
-
-     mp.BeginPursing;
+     List.ItemIndex := 0;
+     List.SetFocus;
+     ListClick(Nil);
 End;
 
 Procedure TfrmSpellPopUp.ListClick(Sender: TObject);
 Begin
+     If List.ItemIndex < 0 Then exit;
+
      If List.Items[List.ItemIndex] = 'More...' Then
           ShowSuggestion(True)
      Else If List.Items[List.ItemIndex] = 'No Suggestion' Then
@@ -353,18 +366,6 @@ Begin
                But_ChangeClick(Nil);
 End;
 
-Procedure TfrmSpellPopUp.MP_CompleteParsing;
-Begin
-     Application.MessageBox('Spelling check is complete.', 'Avro Bangla Spell Checker', MB_OK + MB_ICONEXCLAMATION + MB_DEFBUTTON1 + MB_APPLMODAL);
-     close;
-End;
-
-Procedure TfrmSpellPopUp.MP_TotalProgress(CurrentProgress: Integer);
-Begin
-     frmSpell.Progress.Position := CurrentProgress;
-     Application.ProcessMessages;
-End;
-
 Procedure TfrmSpellPopUp.ShowSuggestion(FullResult: Boolean);
 
      Function Fix_ZWNJ_ZWJ(inp: WideString): WideString;
@@ -373,9 +374,6 @@ Procedure TfrmSpellPopUp.ShowSuggestion(FullResult: Boolean);
      Begin
           retVal := WideReplaceStr(inp, b_R + ZWNJ + b_Hasanta + b_Z,
                b_r + DetermineZWNJ_ZWJ + b_Hasanta + b_Z);
-
-          {retVal := WideReplaceStr(inp, b_R + ZWJ + b_Hasanta + b_Z,
-               b_r + DetermineZWNJ_ZWJ + b_Hasanta + b_Z);  }
 
           Result := retVal;
      End;
@@ -450,6 +448,9 @@ Begin
                          list.Items.Add(Fix_ZWNJ_ZWJ(TempList[i]));
 
                     MoreNumber := TempList.Count;
+                    {SimilarSort resets dupIgnore property, set that again}
+                    TempList.Sorted := True;
+                    TempList.Duplicates := dupIgnore;
                     If FuzzyResult.Count > 0 Then Begin
                          For I := 0 To FuzzyResult.Count - 1 Do
                               TempList.Add(FuzzyResult[i]);
@@ -464,79 +465,6 @@ Begin
 
      TempList.Clear;
      FreeAndNil(TempList);
-End;
-
-Function TfrmSpellPopUp.SplitSuggestion(w: widestring): WideString;
-Var
-     I, Len                   : Integer;
-     part1, part2             : widestring;
-Begin
-     Result := '';
-     Len := Length(w);
-     I := 0;
-     Repeat
-          i := i + 1;
-          part1 := LeftStr(w, i);
-          part2 := MidStr(w, i + 1, len);
-
-          If (WordPresent(part1) = true) And (WordPresent(part2) = true) Then Begin
-               Result := part1 + ' ' + part2;
-               break;
-          End;
-
-
-     Until i > len;
-End;
-
-Procedure TfrmSpellPopUp.Suggest;
-Var
-     SplittedWord             : WideString;
-Begin
-     PhoneticResult.Clear;
-     FuzzyResult.Clear;
-     OtherResult.Clear;
-
-     //Bisharga to colon
-     If RightStr(Edit_NotFound.Text, 1) = b_bisharga Then Begin
-          If WordPresent(LeftStr(Edit_NotFound.Text, Length(Edit_NotFound.Text) - 1)) Then
-               OtherResult.Add(LeftStr(Edit_NotFound.Text, Length(Edit_NotFound.Text) - 1) + ':');
-     End
-     Else Begin
-          //Phonetic errors
-          PhoneticSug.BuildSuggestion(Edit_NotFound.Text, PhoneticResult);
-          //Suggestion from fuzzy search ("Substitution", "Insertion", "Deletion" errors)
-          SearchSuggestion(Edit_NotFound.Text, FuzzyResult, 1);
-     End;
-
-     //Splitted suggestion  (Words Joined?)
-     If (PhoneticResult.Count + FuzzyResult.Count) <= 0 Then Begin
-          SplittedWord := SplitSuggestion(Edit_NotFound.Text);
-          If SplittedWord <> '' Then
-               OtherResult.Add(SplittedWord);
-     End;
-
-
-     //Rest Transposition and OCR errors for next version
-     { TODO : transposition and OCR errors}
-
-     If CheckLessPreffered.Checked Then
-          ShowSuggestion(True)
-     Else
-          ShowSuggestion(False);
-
-     If List.Count > 0 Then Begin
-          List.ItemIndex := 0;
-          ListClick(Nil);
-     End;
-End;
-
-Function TfrmSpellPopUp.UnicodeDeNormalize(Const W: WideString): WideString;
-Begin
-     Result := W;
-     Result := widestrutils.WideReplaceStr(Result, b_B + b_Nukta, b_r);
-     Result := widestrutils.WideReplaceStr(Result, b_Dd + b_Nukta, b_Rr);
-     Result := widestrutils.WideReplaceStr(Result, b_Ddh + b_Nukta, b_Rrh);
-     Result := widestrutils.WideReplaceStr(Result, b_Z + b_Nukta, b_Y);
 End;
 
 Procedure TfrmSpellPopUp.Edit_ChangeToChange(Sender: TObject);
@@ -558,8 +486,6 @@ Begin
           If But_Change.Enabled Then
                But_ChangeClick(Nil);
 End;
-
-
 
 End.
 

@@ -40,13 +40,9 @@ Uses
      forms;
 
 Var
-     //Spellchecker options
-     IgnoreNumber             : String;
-     IgnoreAncient            : String;
-     IgnoreAssamese           : String;
-     IgnoreSingle             : String;
-     FullSuggestion           : String;
 
+
+     {$IFNDEF SpellCheckerDll}
      AvroPadHeight            : String;
      AvroPadWidth             : String;
      AvroPadTop               : String;
@@ -57,7 +53,14 @@ Var
      AvroPadWrap              : String;
 
      LastDirectory            : String;
-
+     {$ELSE}
+     //Spellchecker options
+     IgnoreNumber             : String;
+     IgnoreAncient            : String;
+     IgnoreAssamese           : String;
+     IgnoreSingle             : String;
+     FullSuggestion           : String;
+     {$ENDIF}
 
 Procedure LoadSettings;
 Procedure ValidateSettings;
@@ -109,13 +112,9 @@ Begin
      Reg := TMyRegistry.create;
      Reg.RootKey := HKEY_CURRENT_USER;
      If Reg.OpenKey('Software\OmicronLab\Avro Spell Checker', True) = True Then Begin
-          IgnoreNumber := UpperCase(REG.ReadStringDef('IgnoreNumber', 'Yes'));
-          IgnoreAncient := UpperCase(REG.ReadStringDef('IgnoreAncient', 'Yes'));
-          IgnoreAssamese := UpperCase(REG.ReadStringDef('IgnoreAssamese', 'Yes'));
-          IgnoreSingle := UpperCase(REG.ReadStringDef('IgnoreSingle', 'Yes'));
-          FullSuggestion := UpperCase(REG.ReadStringDef('FullSuggestion', 'No'));
 
 
+          {$IFNDEF SpellCheckerDll}
           AvroPadHeight := REG.ReadStringDef('AvroPadHeight', '314');
           AvroPadWidth := REG.ReadStringDef('AvroPadWidth', '507');
           AvroPadTop := REG.ReadStringDef('AvroPadTop', '50');
@@ -126,6 +125,13 @@ Begin
           AvroPadWrap := UpperCase(REG.ReadStringDef('AvroPadWrap', 'Yes'));
 
           LastDirectory := REG.ReadStringDef('LastDirectory', GetMyDocumentsFolder);
+          {$ELSE}
+          IgnoreNumber := UpperCase(REG.ReadStringDef('IgnoreNumber', 'Yes'));
+          IgnoreAncient := UpperCase(REG.ReadStringDef('IgnoreAncient', 'Yes'));
+          IgnoreAssamese := UpperCase(REG.ReadStringDef('IgnoreAssamese', 'Yes'));
+          IgnoreSingle := UpperCase(REG.ReadStringDef('IgnoreSingle', 'Yes'));
+          FullSuggestion := UpperCase(REG.ReadStringDef('FullSuggestion', 'No'));
+          {$ENDIF}
      End;
      Reg.Free;
 End;
@@ -139,12 +145,9 @@ Begin
      XML := TXMLSetting.Create;
      XML.LoadXMLData;
 
-     IgnoreNumber := UpperCase(XML.GetValue('IgnoreNumber', 'Yes'));
-     IgnoreAncient := UpperCase(XML.GetValue('IgnoreAncient', 'Yes'));
-     IgnoreAssamese := UpperCase(XML.GetValue('IgnoreAssamese', 'Yes'));
-     IgnoreSingle := UpperCase(XML.GetValue('IgnoreSingle', 'Yes'));
-     FullSuggestion := UpperCase(XML.GetValue('FullSuggestion', 'No'));
 
+
+     {$IFNDEF SpellCheckerDll}
      AvroPadHeight := XML.GetValue('AvroPadHeight', '314');
      AvroPadWidth := XML.GetValue('AvroPadWidth', '507');
      AvroPadTop := XML.GetValue('AvroPadTop', '50');
@@ -155,7 +158,13 @@ Begin
      AvroPadWrap := UpperCase(XML.GetValue('AvroPadWrap', 'Yes'));
 
      LastDirectory := XML.GetValue('LastDirectory', GetMyDocumentsFolder);
-
+     {$ELSE}
+     IgnoreNumber := UpperCase(XML.GetValue('IgnoreNumber', 'Yes'));
+     IgnoreAncient := UpperCase(XML.GetValue('IgnoreAncient', 'Yes'));
+     IgnoreAssamese := UpperCase(XML.GetValue('IgnoreAssamese', 'Yes'));
+     IgnoreSingle := UpperCase(XML.GetValue('IgnoreSingle', 'Yes'));
+     FullSuggestion := UpperCase(XML.GetValue('FullSuggestion', 'No'));
+     {$ENDIF}
      XML.Free;
 End;
 
@@ -168,14 +177,10 @@ Begin
      Reg := TMyRegistry.Create;
      Reg.RootKey := HKEY_CURRENT_USER;
      If Reg.OpenKey('Software\OmicronLab\Avro Spell Checker', True) = True Then Begin
+
+          {$IFNDEF SpellCheckerDll}
           REG.WriteString('AppPath', ExtractFileDir(Application.ExeName));
           REG.WriteString('AppExeName', ExtractFileName(Application.ExeName));
-
-          REG.WriteString('IgnoreNumber', IgnoreNumber);
-          REG.WriteString('IgnoreAncient', IgnoreAncient);
-          REG.WriteString('IgnoreAssamese', IgnoreAssamese);
-          REG.WriteString('IgnoreSingle', IgnoreSingle);
-          REG.WriteString('FullSuggestion', FullSuggestion);
 
           REG.WriteString('AvroPadHeight', AvroPadHeight);
           REG.WriteString('AvroPadWidth', AvroPadWidth);
@@ -187,7 +192,13 @@ Begin
           REG.WriteString('AvroPadWrap', AvroPadWrap);
 
           REG.WriteString('LastDirectory', LastDirectory);
-
+          {$ELSE}
+          REG.WriteString('IgnoreNumber', IgnoreNumber);
+          REG.WriteString('IgnoreAncient', IgnoreAncient);
+          REG.WriteString('IgnoreAssamese', IgnoreAssamese);
+          REG.WriteString('IgnoreSingle', IgnoreSingle);
+          REG.WriteString('FullSuggestion', FullSuggestion);
+            {$ENDIF}
 
      End;
      Reg.Free;
@@ -202,12 +213,9 @@ Begin
      XML := TXMLSetting.Create;
      XML.CreateNewXMLData;
 
-     XML.SetValue('IgnoreNumber', IgnoreNumber);
-     XML.SetValue('IgnoreAncient', IgnoreAncient);
-     XML.SetValue('IgnoreAssamese', IgnoreAssamese);
-     XML.SetValue('IgnoreSingle', IgnoreSingle);
-     XML.SetValue('FullSuggestion', FullSuggestion);
 
+
+     {$IFNDEF SpellCheckerDll}
      XML.SetValue('AvroPadHeight', AvroPadHeight);
      XML.SetValue('AvroPadWidth', AvroPadWidth);
      XML.SetValue('AvroPadTop', AvroPadTop);
@@ -218,7 +226,13 @@ Begin
      XML.SetValue('AvroPadWrap', AvroPadWrap);
 
      XML.SetValue('LastDirectory', LastDirectory);
-
+     {$ELSE}
+     XML.SetValue('IgnoreNumber', IgnoreNumber);
+     XML.SetValue('IgnoreAncient', IgnoreAncient);
+     XML.SetValue('IgnoreAssamese', IgnoreAssamese);
+     XML.SetValue('IgnoreSingle', IgnoreSingle);
+     XML.SetValue('FullSuggestion', FullSuggestion);
+     {$ENDIF}
 
      XML.SaveXMLData;
      XML.Free;
@@ -228,12 +242,7 @@ End;
 
 Procedure ValidateSettings;
 Begin
-     If Not ((IgnoreNumber = 'YES') Or (IgnoreNumber = 'NO')) Then IgnoreNumber := 'YES';
-     If Not ((IgnoreAncient = 'YES') Or (IgnoreAncient = 'NO')) Then IgnoreAncient := 'YES';
-     If Not ((IgnoreAssamese = 'YES') Or (IgnoreAssamese = 'NO')) Then IgnoreAssamese := 'YES';
-     If Not ((IgnoreSingle = 'YES') Or (IgnoreSingle = 'NO')) Then IgnoreSingle := 'YES';
-     If Not ((FullSuggestion = 'YES') Or (FullSuggestion = 'NO')) Then FullSuggestion := 'NO';
-
+     {$IFNDEF SpellCheckerDll}
      If Not (strtoint(AvroPadHeight) > 0) Then AvroPadHeight := '314';
      If Not (strtoint(AvroPadWidth) > 0) Then AvroPadWidth := '507';
      If Not (strtoint(AvroPadTop) > 0) Then AvroPadTop := '50';
@@ -244,7 +253,13 @@ Begin
      If Not (strtoint(AvroPadFontSize) > 0) Then AvroPadFontSize := '10';
      If Not ((AvroPadWrap = 'YES') Or (AvroPadWrap = 'NO')) Then AvroPadWrap := 'YES';
      If Not (DirectoryExists(LastDirectory)) Then LastDirectory := GetMyDocumentsFolder;
-
+     {$ELSE}
+     If Not ((IgnoreNumber = 'YES') Or (IgnoreNumber = 'NO')) Then IgnoreNumber := 'YES';
+     If Not ((IgnoreAncient = 'YES') Or (IgnoreAncient = 'NO')) Then IgnoreAncient := 'YES';
+     If Not ((IgnoreAssamese = 'YES') Or (IgnoreAssamese = 'NO')) Then IgnoreAssamese := 'YES';
+     If Not ((IgnoreSingle = 'YES') Or (IgnoreSingle = 'NO')) Then IgnoreSingle := 'YES';
+     If Not ((FullSuggestion = 'YES') Or (FullSuggestion = 'NO')) Then FullSuggestion := 'NO';
+     {$ENDIF}
 End;
 
 {===============================================================================}

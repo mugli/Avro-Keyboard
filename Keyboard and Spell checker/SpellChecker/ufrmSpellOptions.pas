@@ -72,7 +72,7 @@ Uses
 
 Procedure TfrmSpellOptions.ButtonCancelClick(Sender: TObject);
 Begin
-     ModalResult := mrCancel;
+     Self.Close;
 End;
 
 Procedure TfrmSpellOptions.ButtonOkClick(Sender: TObject);
@@ -102,8 +102,8 @@ Begin
      Else
           FullSuggestion := 'NO';
 
-
-     ModalResult := mrOk;
+     SaveSettings;
+     Self.Close;
 End;
 
 Procedure TfrmSpellOptions.FormClose(Sender: TObject;

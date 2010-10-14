@@ -35,6 +35,7 @@ Type
      TTotalProgress = Procedure(FCurrentProgress: Integer) Of Object;
      TWordFound = Procedure(FCurrentWord: WideString) Of Object;
      TCompleteParsing = Procedure Of Object;
+     TPositionConflict = Procedure Of Object;
 
 Type
      TMemoParser = Class
@@ -51,12 +52,14 @@ Type
           FTotalProgress: TTotalProgress;
           FWordFound: TWordFound;
           FCompleteParsing: TCompleteParsing;
+          FPositionComflict: TPositionConflict;
 
      Public
           Constructor Create;
           Procedure BeginPursing;
           Procedure PausePursing;
           Procedure SelectWord;
+          Procedure ResetAll;
           Procedure ReplaceCurrentWord(Const rWord: WideString; Const PrevWord: WideString);
 
           // event properties
@@ -66,6 +69,8 @@ Type
                Read FWordFound Write FWordFound;
           Property OnCompleteParsing: TCompleteParsing
                Read FCompleteParsing Write FCompleteParsing;
+          Property OnPositionConflict: TPositionConflict
+               Read FPositionComflict Write FPositionComflict;
      End;
 
 Implementation
@@ -83,11 +88,7 @@ Uses
 
 Constructor TMemoParser.Create;
 Begin
-     SelStart := 0;
-     SelLength := 0;
-     CurrentLine := 0;
-     LinePos := 0;
-     FStopPursing := False;
+     ResetAll;
      FTotalProgress := Nil;
      FWordFound := Nil;
      FCompleteParsing := Nil;
@@ -205,6 +206,10 @@ Begin
      FStopPursing := False;
      TotalLines := frmSpell.MEMO.Lines.Count - 1;
 
+     If CurrentLine > (TotalLines+1) Then Begin
+          If Assigned(FPositionComflict) Then FPositionComflict;
+          Exit;
+     End;  
 
      While CurrentLine <= TotalLines Do Begin
 
@@ -233,7 +238,7 @@ Begin
                               SelLength := length(CurrentWord);
                               FWordFound(CurrentWord);
                               CurrentWord := '';
-                              If FStopPursing = True Then exit;
+                              exit;
                          End;
                     End;
                End;
@@ -244,7 +249,7 @@ Begin
                     SelLength := length(CurrentWord);
                     FWordFound(CurrentWord);
                     CurrentWord := '';
-                    If FStopPursing = True Then exit;
+                    exit;
                End;
           End;
 
@@ -254,13 +259,18 @@ Begin
 
 
      If Assigned(FCompleteParsing) Then FCompleteParsing;
-
 End;
 
 Procedure TMemoParser.ReplaceCurrentWord(Const rWord: WideString; Const PrevWord: WideString);
 Begin
      frmSpell.MEMO.SelStart := frmSpell.MEMO.Perform(EM_LINEINDEX, CurrentLine, 0) + SelStart - 1;
      frmSpell.MEMO.SelLength := SelLength;
+
+     If frmSpell.MEMO.SelText <> PrevWord Then Begin
+          If Assigned(FPositionComflict) Then FPositionComflict;
+          Exit;
+     End;
+
      frmSpell.MEMO.SelText := rWord;
 
      If Length(rWord) < SelLength Then Begin
@@ -272,6 +282,15 @@ Begin
           SelLength := Length(rWord);
      End;
 
+End;
+
+Procedure TMemoParser.ResetAll;
+Begin
+     SelStart := 0;
+     SelLength := 0;
+     CurrentLine := 0;
+     LinePos := 0;
+     FStopPursing := False;
 End;
 
 Procedure TMemoParser.SelectWord;

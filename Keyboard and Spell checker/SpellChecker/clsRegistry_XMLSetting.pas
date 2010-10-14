@@ -143,11 +143,18 @@ End;
 {$HINTS Off}
 
 Function TXMLSetting.LoadXMLData(): Boolean;
+Var
+     SettingFileName          : String;
 Begin
      Result := False;
+     {$IFNDEF SpellCheckerDll}
+     SettingFileName := 'Spell Settings.xml';
+     {$ELSE}
+     SettingFileName := 'Spell dll Settings.xml';
+     {$ENDIF}
      Try
-          If FileExists(ExtractFilePath(Application.ExeName) + 'Spell Settings.xml') = True Then Begin
-               XML.LoadFromFile(ExtractFilePath(Application.ExeName) + 'Spell Settings.xml');
+          If FileExists(GetAvroDataDir + SettingFileName) = True Then Begin
+               XML.LoadFromFile(GetAvroDataDir + SettingFileName);
                Result := True;
           End
           Else
@@ -161,10 +168,17 @@ End;
 {===============================================================================}
 
 Procedure TXMLSetting.SaveXMLData;
+Var
+     SettingFileName          : String;
 Begin
      XML.XmlFormat := xfReadable;
+     {$IFNDEF SpellCheckerDll}
+     SettingFileName := 'Spell Settings.xml';
+     {$ELSE}
+     SettingFileName := 'Spell dll Settings.xml';
+     {$ENDIF}
      Try
-          Xml.SaveToFile(GetAvroDataDir + 'Spell Settings.xml');
+          Xml.SaveToFile(GetAvroDataDir + SettingFileName);
      Except
           On E: Exception Do Begin
                //Nothing
