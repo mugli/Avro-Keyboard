@@ -140,8 +140,8 @@ Var
 
 Procedure InitSpell; Stdcall; external 'AvroSpell.dll' name 'InitSpell';
 Procedure RegisterCallback(mCallback: Pointer); Stdcall; external 'AvroSpell.dll' name 'RegisterCallback';
-Function IsWordPresent(Wrd: PWideChar; Var SAction: Integer): Boolean; Stdcall; external 'AvroSpell.dll' name 'IsWordPresent';
-Function WordPresentInChangeAll(Wrd: PWideChar): Boolean; Stdcall; external 'AvroSpell.dll' name 'WordPresentInChangeAll';
+Function IsWordPresent(Wrd: PWideChar; Var SAction: Integer): LongBool; Stdcall; external 'AvroSpell.dll' name 'IsWordPresent';
+Function WordPresentInChangeAll(Wrd: PWideChar): LongBool; Stdcall; external 'AvroSpell.dll' name 'WordPresentInChangeAll';
 Procedure GetCorrection(Wrd: PWideChar); Stdcall; external 'AvroSpell.dll' name 'GetCorrection';
 Procedure SetWordPosInScreen(xPoint, yPoint: Integer); Stdcall; external 'AvroSpell.dll' name 'SetWordPosInScreen';
 Procedure HideSpeller; stdcall; external 'AvroSpell.dll' name 'HideSpeller';
@@ -347,7 +347,6 @@ Begin
           AvroPadState := 'NORMAL';
 
      SaveSettings;
-     UnloadAll;
      FreeAndNil(MP);
 
      Action := caFree;
@@ -388,7 +387,6 @@ Procedure TfrmSpell.FormCreate(Sender: TObject);
 Begin
      CheckingSpell := False;
      New1Click(Nil);
-     InitSpell;
      RegisterCallback(@Callback);
      LoadSettings;
 

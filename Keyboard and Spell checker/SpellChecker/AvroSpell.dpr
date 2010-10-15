@@ -219,7 +219,7 @@ End;
 
 {===============================================================================}
 
-Function IsWordPresent(Wrd: PWideChar; Var SAction: Integer): Boolean; Stdcall;
+Function IsWordPresent(Wrd: PWideChar; Var SAction: Integer): LongBool; Stdcall;
 Var
      mWrd                     : WideString;
 Begin
@@ -258,7 +258,7 @@ End;
 
 {===============================================================================}
 
-Function WordPresentInChangeAll(Wrd: PWideChar): Boolean; Stdcall;
+Function WordPresentInChangeAll(Wrd: PWideChar): LongBool; Stdcall;
 Var
      mWrd                     : WideString;
 Begin
@@ -387,11 +387,27 @@ Begin
      Initialized := False;
 End;
 
+
+
 {===============================================================================}
 {===============================================================================}
 {===============================================================================}
 {===============================================================================}
 
+Procedure DllMain(reason: integer);
+Var
+     buf                      : Array[0..MAX_PATH] Of char;
+     loader                   : String;
+Begin
+     Case reason Of
+          DLL_PROCESS_ATTACH: Begin
+                    InitSpell;
+               End;
+          DLL_PROCESS_DETACH: Begin
+                    UnloadAll;
+               End;
+     End;
+End;
 
 Exports
      InitSpell,
@@ -403,9 +419,11 @@ Exports
      HideSpeller,
      ShowOptions,
      ShowAbout,
-     ForgetChangeIgnore,
+     ForgetChangeIgnore ,
      UnloadAll;
 Begin
+   DllProc := @DllMain;
+   DllProc(DLL_PROCESS_ATTACH) ;
 
 End.
 

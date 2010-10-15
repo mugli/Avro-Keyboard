@@ -4,7 +4,7 @@ object frmSpellPopUp: TfrmSpellPopUp
   BorderIcons = []
   BorderStyle = bsSingle
   Caption = 'Avro Spell Check'
-  ClientHeight = 282
+  ClientHeight = 288
   ClientWidth = 421
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
