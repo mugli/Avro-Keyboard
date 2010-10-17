@@ -67,7 +67,8 @@ Implementation
 
 
 Uses
-     uRegistrySettings;
+     uRegistrySettings,
+     uWindowHandlers;
 {$R *.dfm}
 
 Procedure TfrmSpellOptions.ButtonCancelClick(Sender: TObject);
@@ -139,6 +140,8 @@ Begin
           CheckBoxFullSuggestion.Checked := True
      Else
           CheckBoxFullSuggestion.Checked := False;
+
+     TOPMOST(self.Handle);
 End;
 
 End.

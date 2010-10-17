@@ -74,7 +74,8 @@ Implementation
 
 Uses
      uFileFolderHandling,
-     clsFileVersion;
+     clsFileVersion,
+     uWindowHandlers;
 
 {$R *.dfm}
 
@@ -103,6 +104,7 @@ Begin
      LabelVersion.Caption := Version.AsString{$IFDEF BetaVersion} + ' BETA'{$ENDIF}{$IFDEF PortableOn} + ' (Portable)'{$ENDIF};
      Version.Free;
      self.Caption:='About Avro Spell Checker';
+     TOPMOST(self.Handle);
 End;
 
 {===============================================================================}

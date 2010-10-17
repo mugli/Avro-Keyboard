@@ -254,8 +254,8 @@ Begin
      WordNotFound := Edit_NotFound.Text;
      WordSelected := Edit_ChangeTo.Text;
      SpellChangeDict.Add(utf8encode(WordNotFound), utf8encode(WordSelected));
-     callback(PWideChar(WordNotFound), PWideChar(WordSelected), SA_ReplaceAll);
      Self.Hide;
+     callback(PWideChar(WordNotFound), PWideChar(WordSelected), SA_ReplaceAll);
 End;
 
 Procedure TfrmSpellPopUp.But_ChangeClick(Sender: TObject);

@@ -349,6 +349,8 @@ Begin
      SaveSettings;
      FreeAndNil(MP);
 
+     UnloadAll;
+     
      Action := caFree;
      frmSpell := Nil;
 End;
@@ -387,6 +389,7 @@ Procedure TfrmSpell.FormCreate(Sender: TObject);
 Begin
      CheckingSpell := False;
      New1Click(Nil);
+     InitSpell;
      RegisterCallback(@Callback);
      LoadSettings;
 
