@@ -92,7 +92,7 @@ object Form1: TForm1
     Height = 13
     Caption = 'Copyright '#169
   end
-  object MEMO1: TTntMemo
+  object MEMO1: TMemo
     Left = 8
     Top = 24
     Width = 554
@@ -107,7 +107,7 @@ object Form1: TForm1
     ScrollBars = ssVertical
     TabOrder = 0
   end
-  object MEMO2: TTntMemo
+  object MEMO2: TMemo
     Left = 8
     Top = 166
     Width = 554
@@ -121,7 +121,6 @@ object Form1: TForm1
     ParentFont = False
     ScrollBars = ssVertical
     TabOrder = 1
-    ExplicitHeight = 110
   end
   object Button1: TButton
     Left = 8

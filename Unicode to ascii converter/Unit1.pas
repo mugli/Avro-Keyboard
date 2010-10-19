@@ -42,15 +42,13 @@ Uses
      Forms,
      Dialogs,
      StdCtrls,
-     TntStdCtrls,
      clsUnicodeToBijoy2000,
-     ComCtrls,
-     TntComCtrls;
+     ComCtrls;
 
 Type
      TForm1 = Class(TForm)
-          MEMO1: TTntMemo;
-          MEMO2: TTntMemo;
+          MEMO1: TMemo;
+          MEMO2: TMemo;
           Label1: TLabel;
           Button1: TButton;
           Progress: TProgressBar;
