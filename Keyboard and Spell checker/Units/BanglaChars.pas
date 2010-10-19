@@ -50,9 +50,9 @@ Const
      {'''''''''''''''''''''''''''''''''''''''''''''''''''
      'Vowels
      '''''''''''''''''''''''''''''''''''''''''''''''''''}
-     b_Vocalic_L              : WideChar = #$98C;
-     b_Vocalic_LL             : WideChar = #$9E1;
-     b_Vocalic_RR             : WideChar = #$9E0;
+     b_Vocalic_L              : Char = #$98C;
+     b_Vocalic_LL             : Char = #$9E1;
+     b_Vocalic_RR             : Char = #$9E0;
      {'''''''''''''''''''''''''''''''''''''''''''''''''''
      ' End Vowels
      '''''''''''''''''''''''''''''''''''''''''''''''''''}
@@ -63,9 +63,9 @@ Const
      {'''''''''''''''''''''''''''''''''''''''''''''''''''
      'Vowels Signs (Kar/Matra)
      '''''''''''''''''''''''''''''''''''''''''''''''''''}
-     b_Vocalic_RR_Kar         : WideChar = #$9C4;
-     b_Vocalic_L_Kar          : WideChar = #$9E2;
-     b_Vocalic_LL_Kar         : WideChar = #$9E3;
+     b_Vocalic_RR_Kar         : Char = #$9C4;
+     b_Vocalic_L_Kar          : Char = #$9E2;
+     b_Vocalic_LL_Kar         : Char = #$9E3;
      {'''''''''''''''''''''''''''''''''''''''''''''''''''
      ' End Vowels Signs (Kar/Matra)
      '''''''''''''''''''''''''''''''''''''''''''''''''''}
@@ -76,9 +76,9 @@ Const
      {'''''''''''''''''''''''''''''''''''''''''''''''''''
      'Signs
      '''''''''''''''''''''''''''''''''''''''''''''''''''}
-     b_Nukta                  : WideChar = #$9BC;
-     b_Avagraha               : WideChar = #$9BD;
-     b_LengthMark             : WideChar = #$9D7;
+     b_Nukta                  : Char = #$9BC;
+     b_Avagraha               : Char = #$9BD;
+     b_LengthMark             : Char = #$9D7;
      {'''''''''''''''''''''''''''''''''''''''''''''''''''
      'End Signs
      '''''''''''''''''''''''''''''''''''''''''''''''''''}
@@ -88,14 +88,14 @@ Const
      {'''''''''''''''''''''''''''''''''''''''''''''''''''
      'Additional
      '''''''''''''''''''''''''''''''''''''''''''''''''''}
-     b_RupeeMark              : WideChar = #$9F2;
-     b_CurrencyNumerator1     : WideChar = #$9F4;
-     b_CurrencyNumerator2     : WideChar = #$9F5;
-     b_CurrencyNumerator3     : WideChar = #$9F6;
-     b_CurrencyNumerator4     : WideChar = #$9F7;
-     b_CurrencyNumerator1LessThanDenominator: WideChar = #$9F8;
-     b_CurrencyDenominator16  : WideChar = #$9F9;
-     b_CurrencyEsshar         : WideChar = #$9FA;
+     b_RupeeMark              : Char = #$9F2;
+     b_CurrencyNumerator1     : Char = #$9F4;
+     b_CurrencyNumerator2     : Char = #$9F5;
+     b_CurrencyNumerator3     : Char = #$9F6;
+     b_CurrencyNumerator4     : Char = #$9F7;
+     b_CurrencyNumerator1LessThanDenominator: Char = #$9F8;
+     b_CurrencyDenominator16  : Char = #$9F9;
+     b_CurrencyEsshar         : Char = #$9FA;
      {'''''''''''''''''''''''''''''''''''''''''''''''''''
      'End Additional
      '''''''''''''''''''''''''''''''''''''''''''''''''''}
@@ -111,16 +111,16 @@ Const
      {'==============================================================
      'Bangla Numbers
      '==============================================================}
-     b_0                      : WideChar = #$9E6;
-     b_1                      : WideChar = #$9E7;
-     b_2                      : WideChar = #$9E8;
-     b_3                      : WideChar = #$9E9;
-     b_4                      : WideChar = #$9EA;
-     b_5                      : WideChar = #$9EB;
-     b_6                      : WideChar = #$9EC;
-     b_7                      : WideChar = #$9ED;
-     b_8                      : WideChar = #$9EE;
-     b_9                      : WideChar = #$9EF;
+     b_0                      : Char = #$9E6;
+     b_1                      : Char = #$9E7;
+     b_2                      : Char = #$9E8;
+     b_3                      : Char = #$9E9;
+     b_4                      : Char = #$9EA;
+     b_5                      : Char = #$9EB;
+     b_6                      : Char = #$9EC;
+     b_7                      : Char = #$9ED;
+     b_8                      : Char = #$9EE;
+     b_9                      : Char = #$9EF;
      {'==============================================================
      'End Bangla Numbers
      '==============================================================}
@@ -131,27 +131,27 @@ Const
      {'==============================================================
      'Bangla Vowels and Kars
      '==============================================================}
-     b_A                      : WideChar = #$985;
-     b_AA                     : WideChar = #$986;
-     b_AAkar                  : WideChar = #$9BE;
-     b_I                      : WideChar = #$987;
-     b_II                     : WideChar = #$988;
-     b_IIkar                  : WideChar = #$9C0;
-     b_Ikar                   : WideChar = #$9BF;
-     b_U                      : WideChar = #$989;
-     b_Ukar                   : WideChar = #$9C1;
-     b_UU                     : WideChar = #$98A;
-     b_UUkar                  : WideChar = #$9C2;
-     b_RRI                    : WideChar = #$98B;
-     b_RRIkar                 : WideChar = #$9C3;
-     b_E                      : WideChar = #$98F;
-     b_Ekar                   : WideChar = #$9C7;
-     b_O                      : WideChar = #$993;
-     b_OI                     : WideChar = #$990;
-     b_OIkar                  : WideChar = #$9C8;
-     b_Okar                   : WideChar = #$9CB;
-     b_OU                     : WideChar = #$994;
-     b_OUkar                  : WideChar = #$9CC;
+     b_A                      : Char = #$985;
+     b_AA                     : Char = #$986;
+     b_AAkar                  : Char = #$9BE;
+     b_I                      : Char = #$987;
+     b_II                     : Char = #$988;
+     b_IIkar                  : Char = #$9C0;
+     b_Ikar                   : Char = #$9BF;
+     b_U                      : Char = #$989;
+     b_Ukar                   : Char = #$9C1;
+     b_UU                     : Char = #$98A;
+     b_UUkar                  : Char = #$9C2;
+     b_RRI                    : Char = #$98B;
+     b_RRIkar                 : Char = #$9C3;
+     b_E                      : Char = #$98F;
+     b_Ekar                   : Char = #$9C7;
+     b_O                      : Char = #$993;
+     b_OI                     : Char = #$990;
+     b_OIkar                  : Char = #$9C8;
+     b_Okar                   : Char = #$9CB;
+     b_OU                     : Char = #$994;
+     b_OUkar                  : Char = #$9CC;
      {'==============================================================
      'End Bangla Vowels and Kars
      '==============================================================}
@@ -162,47 +162,47 @@ Const
      {'==============================================================
      'Bangla Consonents
      '==============================================================}
-     b_Anushar                : WideChar = #$982;
-     b_B                      : WideChar = #$9AC;
-     b_Bh                     : WideChar = #$9AD;
-     b_Bisharga               : WideChar = #$983;
-     b_C                      : WideChar = #$99A;
-     b_CH                     : WideChar = #$99B;
-     b_Chandra                : WideChar = #$981;
-     b_D                      : WideChar = #$9A6;
-     b_Dd                     : WideChar = #$9A1;
-     b_Ddh                    : WideChar = #$9A2;
-     b_Dh                     : WideChar = #$9A7;
-     b_G                      : WideChar = #$997;
-     b_GH                     : WideChar = #$998;
-     b_H                      : WideChar = #$9B9;
-     b_J                      : WideChar = #$99C;
-     b_JH                     : WideChar = #$99D;
-     b_K                      : WideChar = #$995;
-     b_KH                     : WideChar = #$996;
-     b_L                      : WideChar = #$9B2;
-     b_M                      : WideChar = #$9AE;
-     b_N                      : WideChar = #$9A8;
-     b_NGA                    : WideChar = #$999;
-     b_Nn                     : WideChar = #$9A3;
-     b_NYA                    : WideChar = #$99E;
-     b_P                      : WideChar = #$9AA;
-     b_Ph                     : WideChar = #$9AB;
-     b_R                      : WideChar = #$9B0;
-     b_Rr                     : WideChar = #$9DC;
-     b_Rrh                    : WideChar = #$9DD;
-     b_S                      : WideChar = #$9B8;
-     b_Sh                     : WideChar = #$9B6;
-     b_Ss                     : WideChar = #$9B7;
-     b_T                      : WideChar = #$9A4;
-     b_Th                     : WideChar = #$9A5;
-     b_Tt                     : WideChar = #$99F;
-     b_Tth                    : WideChar = #$9A0;
-     b_Y                      : WideChar = #$9DF;
-     b_Z                      : WideChar = #$9AF;
-     AssamRa                  : WideChar = #$9F0;
-     AssamVa                  : WideChar = #$9F1;
-     b_Khandatta              : WideChar = #$9CE;
+     b_Anushar                : Char = #$982;
+     b_B                      : Char = #$9AC;
+     b_Bh                     : Char = #$9AD;
+     b_Bisharga               : Char = #$983;
+     b_C                      : Char = #$99A;
+     b_CH                     : Char = #$99B;
+     b_Chandra                : Char = #$981;
+     b_D                      : Char = #$9A6;
+     b_Dd                     : Char = #$9A1;
+     b_Ddh                    : Char = #$9A2;
+     b_Dh                     : Char = #$9A7;
+     b_G                      : Char = #$997;
+     b_GH                     : Char = #$998;
+     b_H                      : Char = #$9B9;
+     b_J                      : Char = #$99C;
+     b_JH                     : Char = #$99D;
+     b_K                      : Char = #$995;
+     b_KH                     : Char = #$996;
+     b_L                      : Char = #$9B2;
+     b_M                      : Char = #$9AE;
+     b_N                      : Char = #$9A8;
+     b_NGA                    : Char = #$999;
+     b_Nn                     : Char = #$9A3;
+     b_NYA                    : Char = #$99E;
+     b_P                      : Char = #$9AA;
+     b_Ph                     : Char = #$9AB;
+     b_R                      : Char = #$9B0;
+     b_Rr                     : Char = #$9DC;
+     b_Rrh                    : Char = #$9DD;
+     b_S                      : Char = #$9B8;
+     b_Sh                     : Char = #$9B6;
+     b_Ss                     : Char = #$9B7;
+     b_T                      : Char = #$9A4;
+     b_Th                     : Char = #$9A5;
+     b_Tt                     : Char = #$99F;
+     b_Tth                    : Char = #$9A0;
+     b_Y                      : Char = #$9DF;
+     b_Z                      : Char = #$9AF;
+     AssamRa                  : Char = #$9F0;
+     AssamVa                  : Char = #$9F1;
+     b_Khandatta              : Char = #$9CE;
      {'==============================================================
      'End Bangla Consonents
      '==============================================================}
@@ -213,27 +213,27 @@ Const
      {'==============================================================
      'Bangla Others
      '==============================================================}
-     b_Dari                   : WideChar = #$964;
-     b_Hasanta                : WideChar = #$9CD;
-     b_Taka                   : WideChar = #$9F3;
-     ZWJ                      : WideChar = #$200D;
-     ZWNJ                     : WideChar = #$200C;
+     b_Dari                   : Char = #$964;
+     b_Hasanta                : Char = #$9CD;
+     b_Taka                   : Char = #$9F3;
+     ZWJ                      : Char = #$200D;
+     ZWNJ                     : Char = #$200C;
      {'==============================================================
      'End Bangla Others
      '==============================================================}
      {$ENDREGION}
 
-Function IsVowel(Const strX: WideString): Boolean;
-Function IsPureConsonent(Const strX: WideString): Boolean;
-Function IsKar(Const strX: WideString): Boolean;
+Function IsVowel(Const strX: String): Boolean;
+Function IsPureConsonent(Const strX: String): Boolean;
+Function IsKar(Const strX: String): Boolean;
 
 Implementation
 
 {$HINTS Off}
 
-Function IsVowel(Const strX: WideString): Boolean;
+Function IsVowel(Const strX: String): Boolean;
 Var
-     WC                       : Widechar;
+     WC                       : Char;
 Begin
 
      Result := false;
@@ -277,9 +277,9 @@ End;
 
 {$HINTS Off}
 
-Function IsPureConsonent(Const strX: WideString): Boolean;
+Function IsPureConsonent(Const strX: String): Boolean;
 Var
-     WC                       : Widechar;
+     WC                       : Char;
 Begin
 
      Result := false;
@@ -332,10 +332,9 @@ End;
 
 {$HINTS Off}
 
-Function IsKar(Const strX: WideString): Boolean;
+Function IsKar(Const strX: String): Boolean;
 Var
-     // pWC                      : PWidechar;
-     WC                       : Widechar;
+     WC                       : Char;
 Begin
 
      Result := false;

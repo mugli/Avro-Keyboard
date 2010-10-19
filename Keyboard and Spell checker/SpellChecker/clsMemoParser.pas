@@ -33,7 +33,7 @@ Type
      //Event types
      //--------------------------------------------------------------
      TTotalProgress = Procedure(FCurrentProgress: Integer) Of Object;
-     TWordFound = Procedure(FCurrentWord: WideString) Of Object;
+     TWordFound = Procedure(FCurrentWord: String) Of Object;
      TCompleteParsing = Procedure Of Object;
      TPositionConflict = Procedure Of Object;
 
@@ -44,7 +44,7 @@ Type
           LinePos: Integer;
           SelStart: LongInt;
           SelLength: LongInt;
-          ValidChars_B: WideString;
+          ValidChars_B: String;
           FStopPursing: Boolean;
 
           //--------------------------------------------------------------
@@ -60,7 +60,7 @@ Type
           Procedure PausePursing;
           Procedure SelectWord;
           Procedure ResetAll;
-          Procedure ReplaceCurrentWord(Const rWord: WideString; Const PrevWord: WideString);
+          Procedure ReplaceCurrentWord(Const rWord: String; Const PrevWord: String);
 
           // event properties
           Property OnTotalProgress: TTotalProgress
@@ -80,7 +80,6 @@ Uses
      Banglachars,
      SysUtils,
      StrUtils,
-     WideStrUtils,
      Messages,
      Windows;
 
@@ -198,9 +197,9 @@ End;
 
 Procedure TMemoParser.BeginPursing;
 Var
-     LineText                 : WideString;
+     LineText                 : String;
      TotalLines               : Integer;
-     CurrentWord              : WideString;
+     CurrentWord              : String;
 Begin
      CurrentWord := '';
      FStopPursing := False;
@@ -261,7 +260,7 @@ Begin
      If Assigned(FCompleteParsing) Then FCompleteParsing;
 End;
 
-Procedure TMemoParser.ReplaceCurrentWord(Const rWord: WideString; Const PrevWord: WideString);
+Procedure TMemoParser.ReplaceCurrentWord(Const rWord: String; Const PrevWord: String);
 Begin
      frmSpell.MEMO.SelStart := frmSpell.MEMO.Perform(EM_LINEINDEX, CurrentLine, 0) + SelStart - 1;
      frmSpell.MEMO.SelLength := SelLength;

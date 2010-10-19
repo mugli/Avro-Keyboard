@@ -43,15 +43,12 @@ Uses
      Dialogs,
      Menus,
      StdCtrls,
-     TntStdCtrls,
      ComCtrls,
-     TntComCtrls,
-     clsMemoParser,
-     WideStrUtils;
+     clsMemoParser;
 
 Const
-     UNICODE_BOM              = WideChar($FEFF);
-     UNICODE_BOM_SWAPPED      = WideChar($FFFE);
+     UNICODE_BOM              = Char($FEFF);
+     UNICODE_BOM_SWAPPED      = Char($FFFE);
      UTF8_BOM                 = AnsiString(#$EF#$BB#$BF);
 
 Type
@@ -74,7 +71,7 @@ Type
           Startspellchek1: TMenuItem;
           N3: TMenuItem;
           Spellcheckoptions1: TMenuItem;
-          MEMO: TTntMemo;
+          MEMO: TMemo;
           Progress: TProgressBar;
           New1: TMenuItem;
           Open1: TMenuItem;
@@ -121,13 +118,13 @@ Type
           Procedure ShowSaveDialog;
 
           Function AutoDetectCharacterSet(Stream: TStream): TUnicodeStreamCharSet;
-          Procedure StrSwapByteOrder(Str: PWideChar);
+          Procedure StrSwapByteOrder(Str: PChar);
           Procedure LoadFromStream_BOM_Return(Stream: TStream; WithBOM: Boolean; Var BOM_Unicode, BOM_UnicodeBE, BOM_UTF8: Boolean);
           Procedure SaveToStream_BOM_Specify(Stream: TStream; WithBOM: Boolean; BOM_Unicode, BOM_UnicodeBE, BOM_UTF8: Boolean);
 
 
           {MemoParser events}
-          Procedure MP_WordFound(CurrentWord: WideString);
+          Procedure MP_WordFound(CurrentWord: String);
           Procedure MP_CompleteParsing;
           Procedure MP_PositionConflict;
           Procedure MP_TotalProgress(CurrentProgress: Integer);
@@ -153,9 +150,9 @@ Var
 
 Procedure InitSpell; Stdcall; external 'AvroSpell.dll' name 'InitSpell';
 Procedure RegisterCallback(mCallback: Pointer); Stdcall; external 'AvroSpell.dll' name 'RegisterCallback';
-Function IsWordPresent(Wrd: PWideChar; Var SAction: Integer): LongBool; Stdcall; external 'AvroSpell.dll' name 'IsWordPresent';
-Function WordPresentInChangeAll(Wrd: PWideChar): LongBool; Stdcall; external 'AvroSpell.dll' name 'WordPresentInChangeAll';
-Procedure GetCorrection(Wrd: PWideChar); Stdcall; external 'AvroSpell.dll' name 'GetCorrection';
+Function IsWordPresent(Wrd: PChar; Var SAction: Integer): LongBool; Stdcall; external 'AvroSpell.dll' name 'IsWordPresent';
+Function WordPresentInChangeAll(Wrd: PChar): LongBool; Stdcall; external 'AvroSpell.dll' name 'WordPresentInChangeAll';
+Procedure GetCorrection(Wrd: PChar); Stdcall; external 'AvroSpell.dll' name 'GetCorrection';
 Procedure SetWordPosInScreen(xPoint, yPoint: Integer); Stdcall; external 'AvroSpell.dll' name 'SetWordPosInScreen';
 Procedure HideSpeller; stdcall; external 'AvroSpell.dll' name 'HideSpeller';
 Procedure ShowOptions; stdcall; external 'AvroSpell.dll' name 'ShowOptions';
@@ -164,7 +161,7 @@ Procedure ForgetChangeIgnore; stdcall; external 'AvroSpell.dll' name 'ForgetChan
 Procedure UnloadAll; stdcall; external 'AvroSpell.dll' name 'UnloadAll';
 ///////////////////////////////////////////////////////////////////////////////////
 
-Procedure Callback(Wrd: PWideChar; CWrd: PWideChar; SAction: Integer); stdcall;
+Procedure Callback(Wrd: PChar; CWrd: PChar; SAction: Integer); stdcall;
 
 Implementation
 
@@ -186,7 +183,7 @@ Const
      SA_IgnoredByOption       : Integer = 2;
      SA_ReplaceAll            : Integer = 3;
 
-Procedure Callback(Wrd: PWideChar; CWrd: PWideChar; SAction: Integer); Stdcall;
+Procedure Callback(Wrd: PChar; CWrd: PChar; SAction: Integer); Stdcall;
 Begin
      If SAction = SA_Cancel Then Begin  {User clicked cancel}
           ForgetChangeIgnore;
@@ -202,17 +199,17 @@ End;
 
 {===============================================================================}
 
-Procedure TfrmSpell.MP_WordFound(CurrentWord: WideString);
+Procedure TfrmSpell.MP_WordFound(CurrentWord: String);
 Var
      DummySAction             : Integer;
      PT                       : TPoint;
 Begin
-     If Not IsWordPresent(PWideChar(CurrentWord), DummySAction) Then Begin
+     If Not IsWordPresent(PChar(CurrentWord), DummySAction) Then Begin
 
-          If WordPresentInChangeAll(PWideChar(CurrentWord)) Then
-               GetCorrection(PWideChar(CurrentWord))
+          If WordPresentInChangeAll(PChar(CurrentWord)) Then
+               GetCorrection(PChar(CurrentWord))
           Else Begin
-               GetCorrection(PWideChar(CurrentWord));
+               GetCorrection(PChar(CurrentWord));
                mp.SelectWord;
                MEMO.SetFocus;
                GetCaretPos(Pt);
@@ -766,7 +763,7 @@ End;
 Function TfrmSpell.AutoDetectCharacterSet(
      Stream: TStream): TUnicodeStreamCharSet;
 Var
-     ByteOrderMark            : WideChar;
+     ByteOrderMark            : Char;
      BytesRead                : Integer;
      Utf8Test                 : Array[0..2] Of AnsiChar;
 Begin
@@ -801,7 +798,7 @@ Procedure TfrmSpell.LoadFromStream_BOM_Return(Stream: TStream;
 Var
      DataLeft                 : Integer;
      StreamCharSet            : TUnicodeStreamCharSet;
-     SW                       : WideString;
+     SW                       : String;
      SA                       : AnsiString;
 Begin
 
@@ -820,27 +817,27 @@ Begin
           DataLeft := Stream.Size - Stream.Position;
           If (StreamCharSet In [csUnicode, csUnicodeSwapped]) Then Begin
                // BOM indicates Unicode text stream
-               If DataLeft < SizeOf(WideChar) Then
+               If DataLeft < SizeOf(Char) Then
                     SW := ''
                Else Begin
-                    SetLength(SW, DataLeft Div SizeOf(WideChar));
-                    Stream.Read(PWideChar(SW)^, DataLeft);
+                    SetLength(SW, DataLeft Div SizeOf(Char));
+                    Stream.Read(PChar(SW)^, DataLeft);
                     If StreamCharSet = csUnicodeSwapped Then
-                         StrSwapByteOrder(PWideChar(SW));
+                         StrSwapByteOrder(PChar(SW));
                End;
-               Memo.Lines.SetText(PWideChar(SW)) ;
+               Memo.Lines.SetText(PChar(SW)) ;
           End
           Else If StreamCharSet = csUtf8 Then Begin
                // BOM indicates UTF-8 text stream
                SetLength(SA, DataLeft Div SizeOf(AnsiChar));
                Stream.Read(PAnsiChar(SA)^, DataLeft);
-               Memo.Lines.SetText(PWideChar(UTF8Decode(SA)));
+               Memo.Lines.SetText(PChar(UTF8Decode(SA)));
           End
           Else Begin
                // without byte order mark it is assumed that we are loading ANSI text
                SetLength(SA, DataLeft Div SizeOf(AnsiChar));
                Stream.Read(PAnsiChar(SA)^, DataLeft);
-               Memo.Lines.SetText(PWideChar(SA));
+               Memo.Lines.SetText(PChar(String(SA)));
           End;
 
 End;
@@ -848,16 +845,16 @@ End;
 Procedure TfrmSpell.SaveToStream_BOM_Specify(Stream: TStream; WithBOM,
      BOM_Unicode, BOM_UnicodeBE, BOM_UTF8: Boolean);
 Var
-     SW                       : WideString;
+     SW                       : String;
      UT                       : utf8string;
-     BOM                      : WideChar;
+     BOM                      : Char;
 Begin
      If WithBOM Then Begin
           If BOM_Unicode Then Begin
                BOM := UNICODE_BOM;
-               Stream.WriteBuffer(BOM, SizeOf(WideChar));
+               Stream.WriteBuffer(BOM, SizeOf(Char));
                SW := Memo.Lines.GetText;
-               Stream.WriteBuffer(PWideChar(SW)^, Length(SW) * SizeOf(WideChar));
+               Stream.WriteBuffer(PChar(SW)^, Length(SW) * SizeOf(Char));
           End
           Else If BOM_UTF8 Then Begin
                Stream.WriteBuffer(UTF8_BOM, Length(UTF8_BOM) * SizeOf(AnsiChar));
@@ -866,25 +863,25 @@ Begin
           End
           Else If BOM_UnicodeBE Then Begin
                BOM := UNICODE_BOM_SWAPPED;
-               Stream.WriteBuffer(BOM, SizeOf(WideChar));
+               Stream.WriteBuffer(BOM, SizeOf(Char));
                SW := Memo.Lines.GetText;
-               StrSwapByteOrder(PWideChar(SW));
-               Stream.WriteBuffer(PWideChar(SW)^, Length(SW) * SizeOf(WideChar));
+               StrSwapByteOrder(PChar(SW));
+               Stream.WriteBuffer(PChar(SW)^, Length(SW) * SizeOf(Char));
           End
           Else Begin
                BOM := UNICODE_BOM;
-               Stream.WriteBuffer(BOM, SizeOf(WideChar));
+               Stream.WriteBuffer(BOM, SizeOf(Char));
                SW := Memo.Lines.GetText;
-               Stream.WriteBuffer(PWideChar(SW)^, Length(SW) * SizeOf(WideChar));
+               Stream.WriteBuffer(PChar(SW)^, Length(SW) * SizeOf(Char));
           End;
      End
      Else Begin
           SW := Memo.Lines.GetText;
-          Stream.WriteBuffer(PWideChar(SW)^, Length(SW) * SizeOf(WideChar));
+          Stream.WriteBuffer(PChar(SW)^, Length(SW) * SizeOf(Char));
      End;
 End;
 
-Procedure TfrmSpell.StrSwapByteOrder(Str: PWideChar);
+Procedure TfrmSpell.StrSwapByteOrder(Str: PChar);
 Var
      P                        : PWord;
 Begin

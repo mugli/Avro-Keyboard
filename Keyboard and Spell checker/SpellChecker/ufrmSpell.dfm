@@ -58,7 +58,7 @@ object frmSpell: TfrmSpell
     256)
   PixelsPerInch = 96
   TextHeight = 13
-  object MEMO: TTntMemo
+  object MEMO: TMemo
     Left = 1
     Top = 0
     Width = 488

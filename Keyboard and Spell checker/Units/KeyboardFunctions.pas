@@ -41,7 +41,7 @@ Uses
 
 Procedure TurnOffKey(Const vkKey: Integer);
 Procedure Backspace(KeyRepeat: Integer = 1);
-Procedure SendKey_Char(Const Keytext: WideString);
+Procedure SendKey_Char(Const Keytext: String);
 Procedure SendKey_SendInput(Const bKey: Integer);
 Procedure SendInput_UP(Const bKey: Integer);
 Procedure SendInput_Down(Const bKey: Integer);
@@ -356,7 +356,7 @@ End;
 
 {===============================================================================}
 
-Procedure SendKey_Char(Const Keytext: WideString);
+Procedure SendKey_Char(Const Keytext: String);
 Var
      i                        : integer;
 Begin

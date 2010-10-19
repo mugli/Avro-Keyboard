@@ -63,11 +63,11 @@ Type
           Destructor Destroy; Override; //Destructor
 
           Function LoadXMLData(): Boolean;
-          Function GetValue(Const ValueName: String; DefaultValue: String = ''): String; Overload;
-          Function GetValue(Const ValueName: String; DefaultValue: TDateTime): TDateTime; Overload;
+          Function GetValue(Const ValueName: UTF8String; DefaultValue: String = ''): String; Overload;
+          Function GetValue(Const ValueName: UTF8String; DefaultValue: TDateTime): TDateTime; Overload;
           Procedure CreateNewXMLData;
-          Procedure SetValue(Const ValueName: String; Const ValueData: String); Overload;
-          Procedure SetValue(Const ValueName: String; Const ValueData: TDateTime); Overload;
+          Procedure SetValue(Const ValueName: UTF8String; Const ValueData: String); Overload;
+          Procedure SetValue(Const ValueName: UTF8String; Const ValueData: TDateTime); Overload;
           Procedure SaveXMLData;
 
      End;
@@ -110,7 +110,7 @@ End;
 
 {===============================================================================}
 
-Function TXMLSetting.GetValue(Const ValueName: String;
+Function TXMLSetting.GetValue(Const ValueName: UTF8String;
      DefaultValue: TDateTime): TDateTime;
 Begin
      Try
@@ -124,15 +124,15 @@ End;
 
 {===============================================================================}
 
-Function TXMLSetting.GetValue(Const ValueName: String;
+Function TXMLSetting.GetValue(Const ValueName: UTF8String;
      DefaultValue: String): String;
 Begin
      Try
           Child := Xml.Root.FindNode(ValueName);
-          If Length(Trim(Child.Nodes[0].ValueAsString)) <= 0 Then
+          If Length(Trim(Child.Nodes[0].ValueAsUnicodeString)) <= 0 Then
                Result := DefaultValue
           Else
-               Result := Trim(Child.Nodes[0].ValueAsString);
+               Result := Trim(Child.Nodes[0].ValueAsUnicodeString);
      Except
           On E: Exception Do
                Result := DefaultValue;
@@ -188,7 +188,7 @@ End;
 
 {===============================================================================}
 
-Procedure TXMLSetting.SetValue(Const ValueName: String;
+Procedure TXMLSetting.SetValue(Const ValueName: UTF8String;
      Const ValueData: TDateTime);
 Var
      CdataChild               : TXmlNode;
@@ -201,14 +201,14 @@ End;
 
 {===============================================================================}
 
-Procedure TXMLSetting.SetValue(Const ValueName, ValueData: String);
+Procedure TXMLSetting.SetValue(Const ValueName:UTF8String; Const ValueData: String);
 Var
      CdataChild               : TXmlNode;
 Begin
      Child := XML.Root.NodeNew(ValueName);
      CdataChild := Child.NodeNew(ValueName);
      CdataChild.ElementType := xeCData;
-     CdataChild.ValueAsString := ValueData;
+     CdataChild.ValueAsUnicodeString := ValueData;
 End;
 
 {===============================================================================}
