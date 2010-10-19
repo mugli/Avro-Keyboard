@@ -42,7 +42,6 @@ Uses
      SysUtils,
      Forms,
      cDictionaries,
-     widestrings,
      Classes,
      JclAnsiStrings,
      DISQLite3Database;
@@ -114,7 +113,7 @@ Var
      W_Khandatta              : TAnsiStringList;
 
      Suffix                   : TStringDictionary;
-     Suffix_Spell             : TWideStringList;
+     Suffix_Spell             : TStringList;
 
      //Hash arrays
 Var
@@ -192,7 +191,7 @@ Begin
      Suffix := TStringDictionary.Create;
      Suffix.DuplicatesAction := ddIgnore;
 
-     Suffix_Spell := TWideStringList.Create;
+     Suffix_Spell := TStringList.Create;
      Suffix_Spell.Sorted := True;
      Suffix_Spell.Duplicates := dupIgnore;
      Stmt := FDatabase.Prepare16(SelectSQL);
@@ -202,8 +201,8 @@ Begin
           FirstPart := Stmt.Column_Str(0); // English
           SecondPart := Stmt.Column_Str(1); // Bangla
 
-          Suffix.Add(FirstPart, SecondPart);
-          Suffix_Spell.Add(utf8decode(SecondPart));
+          Suffix.Add(FirstPart, utf8encode(SecondPart));
+          Suffix_Spell.Add(SecondPart);
      End;
      Suffix_Spell.EndUpdate;
 
@@ -427,7 +426,7 @@ Begin
      Arr.BeginUpdate;
 
      While Stmt.Step = SQLITE_ROW Do Begin
-          Arr.Add(Stmt.Column_Str(0));
+          Arr.Add(Utf8Encode(Stmt.Column_Str(0)));
      End;
 
      Arr.EndUpdate;

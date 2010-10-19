@@ -61,7 +61,7 @@ Unit cStrings;
 {                      1429 lines interface. 6445 lines implementation.        }
 {   2001/11/11  v2.29  Revision.                                               }
 {   2002/02/14  v2.30  Added MatchPattern.                                     }
-{   2002/04/03  v3.31  Added string functions from cUtils.                     }
+{   2002/04/03  v3.31  Added AnsiString functions from cUtils.                     }
 {   2002/04/14  v3.32  Moved TQuickLexer to cQuickLexer.                       }
 {   2002/12/14  v3.33  Major revision. Removed rarely used functions.          }
 {                      674 lines interface. 3889 lines implementation.         }
@@ -295,7 +295,7 @@ Function PosNStr(Const F, S: AnsiString; Const N: Integer;
 {                                                                              }
 { Copy                                                                         }
 {   Out-of-range values of StartIndex, StopIndex and Count are clipped.        }
-{   These variants return a reference to the existing string if possible.      }
+{   These variants return a reference to the existing AnsiString if possible.      }
 {                                                                              }
 Function CopyRange(Const S: AnsiString;
      Const StartIndex, StopIndex: Integer): AnsiString; overload;
@@ -309,12 +309,12 @@ Function CopyLeftEllipsed(Const S: AnsiString; Const Count: Integer): AnsiString
 {                                                                              }
 { CopyEx                                                                       }
 {   CopyEx functions extend Copy so that negative Start/Stop values reference  }
-{   indexes from the end of the string, eg. -2 will reference the second last  }
-{   character in the string.                                                   }
+{   indexes from the end of the AnsiString, eg. -2 will reference the second last  }
+{   character in the AnsiString.                                                   }
 {                                                                              }
-Function CopyEx(Const S: String; Const Start, Count: Integer): String;
-Function CopyRangeEx(Const S: String; Const Start, Stop: Integer): String;
-Function CopyFromEx(Const S: String; Const Start: Integer): String;
+Function CopyEx(Const S: AnsiString; Const Start, Count: Integer): AnsiString;
+Function CopyRangeEx(Const S: AnsiString; Const Start, Stop: Integer): AnsiString;
+Function CopyFromEx(Const S: AnsiString; Const Start: Integer): AnsiString;
 
 
 
@@ -413,7 +413,7 @@ Function StrReplace(Const Find, Replace, S: AnsiString;
 Function StrReplace(Const Find: CharSet;
      Const Replace, S: AnsiString): AnsiString; overload;
 Function StrRemoveDup(Const S: AnsiString; Const C: AnsiChar): AnsiString;
-Function StrRemoveChar(Const S: AnsiString; Const C: Char): AnsiString; overload;
+Function StrRemoveChar(Const S: AnsiString; Const C: AnsiChar): AnsiString; overload;
 Function StrRemoveChar(Const S: AnsiString; Const C: CharSet): AnsiString; overload;
 
 
@@ -435,14 +435,14 @@ Function StrSplit(Const S, D: AnsiString): StringArray;
 Function StrSplitChar(Const S: AnsiString; Const D: AnsiChar): StringArray; overload;
 Function StrSplitChar(Const S: AnsiString; Const D: CharSet): StringArray; overload;
 Function StrSplitWords(Const S: AnsiString; Const C: CharSet): StringArray;
-Function StrJoin(Const S: Array Of String; Const D: AnsiString): AnsiString;
-Function StrJoinChar(Const S: Array Of String; Const D: AnsiChar): AnsiString;
+Function StrJoin(Const S: Array Of AnsiString; Const D: AnsiString): AnsiString;
+Function StrJoinChar(Const S: Array Of AnsiString; Const D: AnsiChar): AnsiString;
 
 
 
 {                                                                              }
 { Quoting                                                                      }
-{   QuoteText, UnquoteText converts text where the string is enclosed in a     }
+{   QuoteText, UnquoteText converts text where the AnsiString is enclosed in a     }
 {   pair of the same quote characters, and two consequetive occurance of the   }
 {   quote character inside the quotes indicate a quote character in the text.  }
 {   Examples:                                                                  }
@@ -592,9 +592,9 @@ Function MatchQuantSeq(Var MatchPos: Integer;
 {   Matching is non-determistic (ie does backtracking) / non-greedy (ie lazy)  }
 {       '*' Matches zero or more of any character                              }
 {       '?' Matches exactly one character                                      }
-{       [<char set>] Matches character from <char set>                         }
-{       [^<char set>] Matches character not in <char set>                      }
-{       where <char set> can include multiple ranges and escaped characters    }
+{       [<AnsiChar set>] Matches character from <AnsiChar set>                         }
+{       [^<AnsiChar set>] Matches character not in <AnsiChar set>                      }
+{       where <AnsiChar set> can include multiple ranges and escaped characters    }
 {         '\n' matches NewLine (#10), '\r' matches Return (#13)                }
 {         '\\' matches a slash ('\'), '\]' matches a close bracket (']'), etc. }
 {                                                                              }
@@ -602,7 +602,7 @@ Function MatchQuantSeq(Var MatchPos: Integer;
 {       MatchPattern('[a-z0-9_]bc?*c', 'abcabc') = True                        }
 {       MatchPattern('[\\\r\n]+', '\'#13#10) = True                            }
 {                                                                              }
-Function MatchPattern(M, S: PChar): Boolean;
+Function MatchPattern(M, S: PAnsiChar): Boolean;
 
 
 
@@ -612,7 +612,7 @@ Function MatchPattern(M, S: PChar): Boolean;
 {     ? = matches one character (or zero if at end of mask)                    }
 {     * = matches zero or more characters                                      }
 {                                                                              }
-Function MatchFileMask(Const Mask, Key: String;
+Function MatchFileMask(Const Mask, Key: AnsiString;
      Const CaseSensitive: Boolean = False): Boolean;
 
 
@@ -620,13 +620,13 @@ Function MatchFileMask(Const Mask, Key: String;
 {                                                                              }
 { Character class strings                                                      }
 {                                                                              }
-{   Perl-like character class string representation of character sets, eg      }
+{   Perl-like character class AnsiString representation of character sets, eg      }
 {   the set ['0', 'A'..'Z'] is presented as [0A-Z]. Negated classes are also   }
 {   supported, eg '[^A-Za-z]' is all non-alpha characters. The empty and       }
 {   complete sets have special representations; '[]' and '.' respectively.     }
 {                                                                              }
-Function CharSetToCharClassStr(Const C: CharSet): String;
-Function CharClassStrToCharSet(Const S: String): CharSet;
+Function CharSetToCharClassStr(Const C: CharSet): AnsiString;
+Function CharClassStrToCharSet(Const S: AnsiString): CharSet;
 
 
 
@@ -734,9 +734,9 @@ Function CharMatch(Const A: CharSet; Const B: AnsiChar;
      Const CaseSensitive: Boolean): Boolean;
 Begin
      If CaseSensitive Then
-          Result := B In A
+          Result := CharInSet(B , A)
      Else
-          Result := (UpCase(B) In A) Or (LowCase(B) In A);
+          Result := (CharInSet(UpCase(B) , A)) Or (CharInSet(LowCase(B) , A));
 End;
 
 Function StrIsNumeric(Const S: AnsiString): Boolean;
@@ -834,7 +834,7 @@ End;
 Function LowCase(Const Ch: AnsiChar): AnsiChar;
 Begin
      If Ch In ['A'..'Z'] Then
-          Result := Char(Byte(Ch) - 32)
+          Result := AnsiChar(Byte(Ch) - 32)
      Else
           Result := Ch;
 End;
@@ -893,7 +893,7 @@ Var
 Begin
      For F := 0 To Length(S) - 1 Do
           If S[F] In ['a'..'z'] Then
-               S[F] := Char(Ord(S[F]) - 32);
+               S[F] := AnsiChar(Ord(S[F]) - 32);
 End;
 {$ENDIF}
 
@@ -950,7 +950,7 @@ Var
 Begin
      For F := 1 To Length(S) Do
           If S[F] In ['A'..'Z'] Then
-               S[F] := Char(Ord(S[F]) + 32);
+               S[F] := AnsiChar(Ord(S[F]) + 32);
 End;
 {$ENDIF}
 
@@ -1655,10 +1655,10 @@ End;
 {                                                                              }
 
 { TranslateStartStop translates Start, Stop parameters (negative values are    }
-{ indexed from back of string) into StartIdx and StopIdx (relative to start).  }
+{ indexed from back of AnsiString) into StartIdx and StopIdx (relative to start).  }
 { Returns False if the Start, Stop does not specify a valid range.             }
 
-Function TranslateStart(Const S: String; Const Start: Integer; Var Len, StartIndex: Integer): Boolean;
+Function TranslateStart(Const S: AnsiString; Const Start: Integer; Var Len, StartIndex: Integer): Boolean;
 Begin
      Len := Length(S);
      If Len = 0 Then
@@ -1677,7 +1677,7 @@ Begin
      End;
 End;
 
-Function TranslateStartStop(Const S: String; Const Start, Stop: Integer; Var Len, StartIndex, StopIndex: Integer): Boolean;
+Function TranslateStartStop(Const S: AnsiString; Const Start, Stop: Integer; Var Len, StartIndex, StopIndex: Integer): Boolean;
 Begin
      Len := Length(S);
      If Len = 0 Then
@@ -1701,7 +1701,7 @@ Begin
      End;
 End;
 
-Function CopyEx(Const S: String; Const Start, Count: Integer): String;
+Function CopyEx(Const S: AnsiString; Const Start, Count: Integer): AnsiString;
 Var
      I, L                     : Integer;
 Begin
@@ -1713,7 +1713,7 @@ Begin
           Result := Copy(S, I, Count);
 End;
 
-Function CopyRangeEx(Const S: String; Const Start, Stop: Integer): String;
+Function CopyRangeEx(Const S: AnsiString; Const Start, Stop: Integer): AnsiString;
 Var
      I, J, L                  : Integer;
 Begin
@@ -1725,7 +1725,7 @@ Begin
           Result := Copy(S, I, J - I + 1);
 End;
 
-Function CopyFromEx(Const S: String; Const Start: Integer): String;
+Function CopyFromEx(Const S: AnsiString; Const Start: Integer): AnsiString;
 Var
      I, L                     : Integer;
 Begin
@@ -2248,7 +2248,7 @@ Begin
      End;
 End;
 
-{ Quick string replace, adapted from a routine by Andrew N. Driazgov }
+{ Quick AnsiString replace, adapted from a routine by Andrew N. Driazgov }
 
 Function StrReplace(Const Find, Replace, S: AnsiString;
      Const CaseSensitive: Boolean): AnsiString;
@@ -2452,7 +2452,7 @@ Begin
           SetLength(Result, M);
 End;
 
-Function StrRemoveChar(Const S: AnsiString; Const C: Char): AnsiString;
+Function StrRemoveChar(Const S: AnsiString; Const C: AnsiChar): AnsiString;
 Var
      P, Q                     : PAnsiChar;
      I, L, M                  : Integer;
@@ -2719,7 +2719,7 @@ End;
 
 Function StrSplitWords(Const S: AnsiString; Const C: CharSet): StringArray;
 Var
-     P, Q                     : PChar;
+     P, Q                     : PAnsiChar;
      L, M                     : Integer;
      T                        : AnsiString;
 Begin
@@ -2752,7 +2752,7 @@ Begin
      End;
 End;
 
-Function StrJoin(Const S: Array Of String; Const D: AnsiString): AnsiString;
+Function StrJoin(Const S: Array Of AnsiString; Const D: AnsiString): AnsiString;
 Var
      I, L, M, C               : Integer;
      P                        : PAnsiChar;
@@ -2780,7 +2780,7 @@ Begin
      End;
 End;
 
-Function StrJoinChar(Const S: Array Of String; Const D: AnsiChar): AnsiString;
+Function StrJoinChar(Const S: Array Of AnsiString; Const D: AnsiChar): AnsiString;
 Var
      I, L, C                  : Integer;
      P                        : PAnsiChar;
@@ -2855,7 +2855,7 @@ Begin
           Result := S;
           exit;
      End;
-     Quote := PChar(Pointer(S))^;
+     Quote := PAnsiChar(Pointer(S))^;
      Result := StrRemoveSurroundingQuotes(S, csQuotes);
      Result := StrReplace(Quote + Quote, Quote, Result);
 End;
@@ -2992,7 +2992,7 @@ Begin
                          V := HexCharValue(S[I]);
                          Inc(I);
                     End;
-                    Result := Result + Char(V);
+                    Result := Result + AnsiChar(V);
                End;
                J := I;
           End;
@@ -3153,7 +3153,7 @@ Procedure StrEnsurePrefix(Var S: AnsiString; Const Prefix: AnsiString;
      Const CaseSensitive: Boolean);
 Var
      L, M                     : Integer;
-     P                        : PChar;
+     P                        : PAnsiChar;
 Begin
      If (Prefix <> '') And Not StrMatchLeft(Prefix, S, CaseSensitive) Then Begin
           L := Length(S);
@@ -3172,7 +3172,7 @@ Procedure StrEnsureSuffix(Var S: AnsiString; Const Suffix: AnsiString;
      Const CaseSensitive: Boolean);
 Var
      L, M                     : Integer;
-     P                        : PChar;
+     P                        : PAnsiChar;
 Begin
      If (Suffix <> '') And Not StrMatchRight(Suffix, S, CaseSensitive) Then Begin
           L := Length(S);
@@ -3188,7 +3188,7 @@ Procedure StrEnsureNoPrefix(Var S: AnsiString; Const Prefix: AnsiString;
      Const CaseSensitive: Boolean);
 Var
      L, M                     : Integer;
-     P                        : PChar;
+     P                        : PAnsiChar;
 Begin
      If StrMatchLeft(Prefix, S, CaseSensitive) Then Begin
           L := Length(S);
@@ -3514,17 +3514,17 @@ Function VarRecToString(Const V: TVarRec; Const QuoteStrings: Boolean): AnsiStri
 Begin
      With V Do
           Case VType Of
-               vtInteger: Result := IntToStr(VInteger);
-               vtInt64: Result := IntToStr(VInt64^);
+               vtInteger: Result := AnsiString(IntToStr(VInteger));
+               vtInt64: Result := AnsiString(IntToStr(VInt64^));
                vtChar: Result := VChar;
                vtString: Result := VString^;
                vtPChar: Result := VPChar;
                vtAnsiString: Result := AnsiString(VAnsiString);
-               vtExtended: Result := FloatToStr(VExtended^);
+               vtExtended: Result := AnsiString(FloatToStr(VExtended^));
                vtBoolean: Result := BooleanToStr(VBoolean);
                vtObject: Result := ObjectToStr(VObject);
                vtClass: Result := ClassToStr(VClass);
-               vtCurrency: Result := CurrToStr(VCurrency^);
+               vtCurrency: Result := AnsiString(CurrToStr(VCurrency^));
                vtVariant: Result := AnsiString(VVariant^);
           End;
      If QuoteStrings And (V.VType In [vtChar, vtString, vtPChar, vtAnsiString]) Then
@@ -3914,7 +3914,7 @@ Begin
      Else Begin
           Result := '[';
           CS := C;
-          If (#0 In C) And (#255 In C) Then Begin
+          If (AnsiChar(#0) In C) And (AnsiChar(#255) In C) Then Begin
                ComplementCharSet(CS);
                Result := Result + '^';
           End;
@@ -3928,7 +3928,7 @@ Begin
                     End;
                End
                Else If Seq Then Begin
-                    Result := Result + SeqStr(SeqStart, Char(Ord(F) - 1));
+                    Result := Result + SeqStr(SeqStart, AnsiChar(Ord(F) - 1));
                     Seq := False;
                End;
           If Seq Then
@@ -3993,7 +3993,7 @@ Begin
           Else
                Result := [S[1]]
      Else If (S[1] <> '[') Or (S[L] <> ']') Then
-          Raise EConvertError.Create('Invalid character class string')
+          Raise EConvertError.Create('Invalid character class AnsiString')
      Else Begin
           Neg := S[2] = '^';
           I := iif(Neg, 3, 2);
@@ -4125,23 +4125,23 @@ Var
 Begin
      Fmt := iif(ShortFormat, '%1.0f', '%0.1f');
      If Bytes < 1024 Then Begin
-          Size := IntToStr(Bytes);
+          Size := AnsiString(IntToStr(Bytes));
           Suffix := iif(ShortFormat, 'b', 'bytes');
      End
      Else If Bytes < 1024 * 1024 Then Begin
-          Size := Format(Fmt, [Bytes / 1024]);
+          Size := AnsiString(Format(Fmt, [Bytes / 1024]));
           Suffix := iif(ShortFormat, 'K', 'Kb');
      End
      Else If Bytes < 1024 * 1024 * 1024 Then Begin
-          Size := Format(Fmt, [Bytes / (1024 * 1024)]);
+          Size := AnsiString(Format(Fmt, [Bytes / (1024 * 1024)]));
           Suffix := iif(ShortFormat, 'M', 'Mb');
      End
      Else If Bytes < Int64(1024) * 1024 * 1024 * 1024 Then Begin
-          Size := Format(Fmt, [Bytes / (1024 * 1024 * 1024)]);
+          Size := AnsiString(Format(Fmt, [Bytes / (1024 * 1024 * 1024)]));
           Suffix := iif(ShortFormat, 'G', 'Gb');
      End
      Else Begin
-          Size := Format(Fmt, [Bytes / (Int64(1024) * 1024 * 1024 * 1024)]);
+          Size := AnsiString(Format(Fmt, [Bytes / (Int64(1024) * 1024 * 1024 * 1024)]));
           Suffix := iif(ShortFormat, 'T', 'Tb');
      End;
      If StrMatchRight('.0', Size) Then

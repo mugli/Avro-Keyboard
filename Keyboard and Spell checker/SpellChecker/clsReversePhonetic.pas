@@ -37,27 +37,26 @@ Type
      Private
           ln: Integer;                  //Length of Bangla String
           ipos: Integer;                //Position of processing at Bangla string
-          fBanglaText: WideString;
+          fBanglaText: String;
 
-          Function WipeInvalidChars(input: Widestring): WideString;
-          Function NextT: WideString;
-          Function NextTEx(iLength: Integer; skipstart: Integer = 0): WideString;
+          Function WipeInvalidChars(input: String): String;
+          Function NextT: String;
+          Function NextTEx(iLength: Integer; skipstart: Integer = 0): String;
      Public
-          Function Convert(Const BanglaT: WideString): WideString;
+          Function Convert(Const BanglaT: String): String;
      End;
 
 
 Implementation
 
 Uses
-     BanglaChars,
-     WideStrUtils;
+     BanglaChars;
 
 { TReversePhonetic }
 
-Function TReversePhonetic.Convert(Const BanglaT: WideString): WideString;
+Function TReversePhonetic.Convert(Const BanglaT: String): String;
 Var
-     T                        : WideChar;
+     T                        : Char;
 Begin
      fBanglaText := WipeInvalidChars(BanglaT);
      ln := Length(fBanglaText);
@@ -269,26 +268,21 @@ Begin
 End;
 
 
-Function TReversePhonetic.NextT: WideString;
+Function TReversePhonetic.NextT: String;
 Begin
      NextT := MidStr(FBanglaText, ipos + 1, 1);
 End;
 
-Function TReversePhonetic.NextTEx(iLength, skipstart: Integer): WideString;
+Function TReversePhonetic.NextTEx(iLength, skipstart: Integer): String;
 Begin
      If iLength < 1 Then iLength := 1;
 
      NextTEx := MidStr(FBanglaText, ipos + skipstart + 1, iLength);
 End;
 
-Function TReversePhonetic.WipeInvalidChars(input: Widestring): WideString;
+Function TReversePhonetic.WipeInvalidChars(input: String): String;
 Begin
      Result := input;
-     {   Result:=widestrutils.WideReplaceStr(Result,b_chandra,'');
-        Result:=widestrutils.WideReplaceStr(Result,AssamRa,'');
-        Result:=widestrutils.WideReplaceStr(Result,AssamVa,'');
-        Result:=widestrutils.WideReplaceStr(Result,b_Bisharga,'');}
-
 End;
 
 End.

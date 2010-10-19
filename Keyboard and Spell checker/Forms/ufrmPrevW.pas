@@ -49,8 +49,7 @@ Uses
      Buttons,
      cDictionaries,
      StrUtils,
-     Menus,
-     TntStdCtrls;
+     Menus, TntStdCtrls;
 
 Type
      TfrmPrevW = Class(TForm)
@@ -76,7 +75,7 @@ Type
           N601: TMenuItem;
           ShowPreviewWindow1: TMenuItem;
           ShowPreviewWindow2: TMenuItem;
-          List: TTntListBox;
+          List: TListBox;
           Procedure FormCreate(Sender: TObject);
           Procedure ButtonMouseEnter(Sender: TObject);
           Procedure ButtonMouseLeave(Sender: TObject);

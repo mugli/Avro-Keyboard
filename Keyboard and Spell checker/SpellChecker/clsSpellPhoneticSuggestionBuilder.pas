@@ -32,33 +32,28 @@ Uses
      BanglaChars,
      SysUtils,
      StrUtils,
-     WideStrUtils,
-     WideStrings,
      clsReversePhonetic,
      clsPhoneticRegExBuilder_Spell,
      uRegExPhoneticSearch_Spell,
      classes;
 
 Type
-     WideStringArray = Array Of WideString;
+     StringArray = Array Of String;
 
 Type
      TPhoneticSpellSuggestion = Class
      Private
-          FWord: WideString;
-          { FSplittedWord: WideStringArray;}
+          FWord: String;
           FReversePhonetic: TReversePhonetic;
           FEnglishToRegEx: TEnglishToRegEx;
-          FResult: TWideStringList;
+          FResult: TStringList;
 
-          {  Procedure SplitWord;}
+
           Procedure Search;
           Procedure AddSuffix(MainStr: String);
-          { Procedure TempShowSlittedWord;}
-          { Procedure AppendArray(Var V: WideStringArray; Const W: WideString);}
 
      Public
-          Procedure BuildSuggestion(WrongWord: WideString; Var Suggestion: TWideStringList);
+          Procedure BuildSuggestion(WrongWord: String; Var Suggestion: TStringList);
           Constructor Create;
           Destructor Destroy; Override;
      End;
@@ -66,18 +61,6 @@ Type
 Implementation
 
 Uses uDBase;
-
-{ TSpellSuggestion }
-{
-Procedure TSpellSuggestion.AppendArray(Var V: WideStringArray; Const W: WideString);
-Var
-     Len                      : Integer;
-Begin
-     Len := Length(V);
-     SetLength(V, Len + 1);
-     V[Len] := W;
-End;
-}
 
 Procedure TPhoneticSpellSuggestion.Search;
 Var
@@ -94,21 +77,21 @@ Procedure TPhoneticSpellSuggestion.AddSuffix(MainStr: String);
 Var
      iLen, J, K               : Integer;
      isSuffix, WithoutSuffix  : String;
-     B_Suffix                 : WideString;
-     TempList                 : TWideStringList;
-     ListOfPart               : TWideStringList;
+     B_Suffix                 : String;
+     TempList                 : TStringList;
+     ListOfPart               : TStringList;
 
-     rPhoneticRegx            : utf8string;
+     rPhoneticRegx            : AnsiString;
 Begin
      iLen := Length(MainStr);
      FResult.Sorted := True;
      FResult.Duplicates := dupIgnore;
 
-     ListOfPart := TWideStringList.Create;
+     ListOfPart := TStringList.Create;
      ListOfPart.Sorted := True;
      ListOfPart.Duplicates := DupIgnore;
 
-     TempList := TWideStringList.Create;
+     TempList := TStringList.Create;
      TempList.Sorted := True;
      TempList.Duplicates := DupIgnore;
 
@@ -154,14 +137,12 @@ Begin
 
 End;
 
-Procedure TPhoneticSpellSuggestion.BuildSuggestion(WrongWord: WideString;
-     Var Suggestion: TWideStringList);
+Procedure TPhoneticSpellSuggestion.BuildSuggestion(WrongWord: String;
+     Var Suggestion: TStringList);
 Begin
      FWord := Trim(WrongWord);
      Search;
      Suggestion.Assign(FResult);
-     //SplitWord;
-     //TempShowSlittedWord;
 End;
 
 Constructor TPhoneticSpellSuggestion.Create;
@@ -169,9 +150,7 @@ Begin
      Inherited Create;
      FReversePhonetic := TReversePhonetic.Create;
      FEnglishToRegEx := TEnglishToRegEx.Create;
-     FResult := TWideStringList.Create;
-
-     //FSplittedWord := Nil;
+     FResult := TStringList.Create;
 End;
 
 Destructor TPhoneticSpellSuggestion.Destroy;
@@ -183,175 +162,6 @@ Begin
      FreeAndNil(FResult);
      Inherited Destroy;
 End;
-{
-Procedure TSpellSuggestion.SplitWord;
-Var
-     Len, iPos                : Integer;
-     WC, SplitPart            : WideString;
-     /////////////////////////////////
 
-     Function NextT: WideString;
-     Var
-          I                   : Integer;
-     Begin
-          i := ipos + 1;
-          If i > Len Then Begin
-               Result := '';
-               exit;
-          End;
-          Result := FWord[i];
-     End;
-     ////////////////////////////////
-
-     Function PrevT: WideString;
-     Var
-          i                   : Integer;
-     Begin
-          i := ipos - 1;
-          If i < 1 Then Begin
-               Result := '';
-               Exit;
-          End;
-          Result := FWord[i];
-     End;
-     ////////////////////////////////
-
-     Function NextTEx(iLength: Integer; skipstart: Integer = 0): WideString;
-     Begin
-          If iLength < 1 Then iLength := 1;
-          NextTEx := MidStr(FWord, ipos + skipstart + 1, iLength);
-     End;
-     ////////////////////////////////
-
-     Function PrevTEx(Const Position: Integer): WideString;
-     Var
-          i                   : integer;
-     Begin
-          i := ipos - Position;
-          If i < 1 Then Begin
-               Result := '';
-               Exit;
-          End;
-          Result := FWord[i];
-     End;
-     ///////////////////////////////
-
-     Procedure SeperateReph;
-     Var
-          tempArray           : WideStringArray;
-          ArrayItem           : WideString;
-          I                   : Integer;
-          RephFound           : Boolean;
-     Begin
-          tempArray := Nil;
-          RephFound := False;
-          For I := Low(FSplittedWord) To High(FSplittedWord) Do Begin
-               ArrayItem := FSplittedWord[I];
-               If (LeftStr(ArrayItem, 2) = b_R + b_Hasanta) And (Length(ArrayItem) > 2) Then Begin
-                    //Reph Found
-                    AppendArray(tempArray, b_R + b_Hasanta); //Reph
-                    AppendArray(tempArray, MidStr(ArrayItem, 3, Length(ArrayItem))); //Rest of reph
-                    RephFound := True;
-               End
-               Else
-                    AppendArray(tempArray, ArrayItem);
-          End;
-
-          If RephFound Then Begin
-               FSplittedWord := Nil;
-               SetLength(FSplittedWord, Length(tempArray));
-
-               For I := Low(tempArray) To High(tempArray) Do
-                    FSplittedWord[i] := tempArray[i];
-          End;
-     End;
-     //////////////////////////////
-
-     Procedure SeperateZfola;
-     Var
-          tempArray           : WideStringArray;
-          ArrayItem           : WideString;
-          I                   : Integer;
-          ZfolaFound          : Boolean;
-     Begin
-          tempArray := Nil;
-          ZfolaFound := False;
-          For I := Low(FSplittedWord) To High(FSplittedWord) Do Begin
-               ArrayItem := FSplittedWord[I];
-               If (RightStr(ArrayItem, 2) = b_hasanta + b_Z) And (Length(ArrayItem) > 2) Then Begin
-                    ZfolaFound := True;
-                    AppendArray(tempArray, LeftStr(ArrayItem, Length(ArrayItem) - 2));
-                    AppendArray(tempArray, b_hasanta + b_Z); //Z-Fola
-               End
-               Else
-                    AppendArray(tempArray, ArrayItem);
-          End;
-
-          If ZfolaFound Then Begin
-               FSplittedWord := Nil;
-               SetLength(FSplittedWord, Length(tempArray));
-
-               For I := Low(tempArray) To High(tempArray) Do
-                    FSplittedWord[i] := tempArray[i];
-          End;
-     End;
-
-     //////////////////////////////
-
-Begin
-     FSplittedWord := Nil;
-     Len := Length(FWord);
-     If Len <= 0 Then exit;
-     iPos := 1;
-     SplitPart := '';
-     Repeat
-          WC := FWord[iPos];
-          SplitPart := SplitPart + WC;
-          If WC <> b_Hasanta Then Begin
-               If (NextT <> b_hasanta) And (PrevT <> b_Hasanta) Then Begin //Individual Letters
-                    AppendArray(FSplittedWord, SplitPart);
-                    SplitPart := '';
-                    inc(iPos);
-               End
-               Else If (NextT = b_hasanta) And (PrevT <> b_Hasanta) Then Begin //Begining of Juktakkhor
-                    inc(iPos);
-               End
-               Else If (NextT <> b_hasanta) And (PrevT = b_Hasanta) Then Begin //End  of Juktakkhor
-                    AppendArray(FSplittedWord, SplitPart);
-                    SplitPart := '';
-                    inc(iPos);
-               End
-               Else If (NextT = b_hasanta) And (PrevT = b_Hasanta) Then Begin //Inside Juktakkhar
-                    inc(iPos);
-               End;
-          End
-          Else Begin
-               If NextT <> '' Then
-                    inc(iPos)
-               Else Begin               //ending hasanta
-                    AppendArray(FSplittedWord, SplitPart);
-                    SplitPart := '';
-                    inc(iPos);
-               End;
-          End;
-     Until iPos > Len;
-     SeperateReph;
-     SeperateZfola;
-
-End;
-
-Procedure TSpellSuggestion.TempShowSlittedWord;
-Var
-     I                        : integer;
-Begin
-     form1.Memo.Clear;
-     If Length(FSplittedWord) <= 0 Then exit;
-
-     For i := Low(FSplittedWord) To High(FSplittedWord) Do Begin
-          form1.Memo.Lines.Add(FSplittedWord[i]);
-     End;
-
-End;
-}
 End.
 

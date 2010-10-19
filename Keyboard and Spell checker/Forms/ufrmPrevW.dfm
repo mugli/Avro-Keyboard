@@ -614,7 +614,7 @@ object frmPrevW: TfrmPrevW
       FFFF0000}
     OnClick = imgPinClick
   end
-  object List: TTntListBox
+  object List: TListBox
     Left = 1
     Top = 55
     Width = 247

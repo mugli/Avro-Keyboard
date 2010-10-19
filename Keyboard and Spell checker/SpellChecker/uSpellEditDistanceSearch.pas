@@ -30,17 +30,17 @@ Unit uSpellEditDistanceSearch;
 Interface
 Uses sysutils,
      Math,
-     WideStrings,
+     Classes,
      uCustomDictionary;
 
 
-Procedure SearchSuggestion(Const Source: WideString; Var SList: TWideStringList; Max_Tolerance: Integer);
+Procedure SearchSuggestion(Const Source: String; Var SList: TStringList; Max_Tolerance: Integer);
 
 
 /////////////////////////////////////////////
-Procedure SearchSuggestion_Basic(Const Source: WideString; Var SList: TWideStringList; Max_Tolerance: Integer);
+Procedure SearchSuggestion_Basic(Const Source: String; Var SList: TStringList; Max_Tolerance: Integer);
 Function minimum(a, b, c: Integer): Integer;
-Function EditDistance(s, t: WideString): Integer;
+Function EditDistance(s, t: String): Integer;
 
 
 
@@ -50,14 +50,13 @@ Uses
      uDBase,
      clsReversePhonetic,
      StrUtils,
-     classes,
      JclAnsiStrings;
 
-Procedure SearchSuggestion(Const Source: WideString; Var SList: TWideStringList; Max_Tolerance: Integer);
+Procedure SearchSuggestion(Const Source: String; Var SList: TStringList; Max_Tolerance: Integer);
 Var
      iLen, I, Dummy, J        : Integer;
-     SearchingPart, IsSuffix, ListItem: WideString;
-     TempList                 : TWideStringlist;
+     SearchingPart, IsSuffix, ListItem: String;
+     TempList                 : TStringlist;
 Begin
      iLen := Length(Source);
      If iLen <= 0 Then exit;
@@ -66,7 +65,7 @@ Begin
 
      If iLen < 2 Then exit;
 
-     TempList := TWideStringlist.Create;
+     TempList := TStringlist.Create;
      TempList.Sorted := True;
      TempList.Duplicates := dupIgnore;
 
@@ -102,20 +101,20 @@ Begin
 
 End;
 
-Procedure SearchSuggestion_Basic(Const Source: WideString; Var SList: TWideStringList; Max_Tolerance: Integer);
+Procedure SearchSuggestion_Basic(Const Source: String; Var SList: TStringList; Max_Tolerance: Integer);
 Var
-     Start                    : WideChar;
+     Start                    : Char;
      I                        : Integer;
-     WideData                 : WideString;
+     StringData                 : String;
 
      Procedure SearchInDB(Var DB: TAnsiStringList);
      Var
           J                   : Integer;
      Begin
           For J := 0 To DB.Count - 1 Do Begin
-               WideData := utf8decode(DB[J]);
-               If EditDistance(Source, WideData) <= Max_Tolerance Then
-                    SList.Add(WideData);
+               StringData := utf8decode(DB[J]);
+               If EditDistance(Source, StringData) <= Max_Tolerance Then
+                    SList.Add(StringData);
           End;
      End;
 
@@ -179,9 +178,9 @@ Begin
 
      //Search custom dictionary
      For I := 0 To SpellCustomDict.Count - 1 Do Begin
-          WideData := utf8decode(SpellCustomDict[i]);
-          If EditDistance(Source, WideData) <= Max_Tolerance Then
-               SList.Add(WideData);
+          StringData := utf8decode(SpellCustomDict[i]);
+          If EditDistance(Source, StringData) <= Max_Tolerance Then
+               SList.Add(StringData);
      End;
 
 End;
@@ -198,11 +197,11 @@ Begin
      Result := mi;
 End;
 
-Function EditDistance(s, t: WideString): Integer;
+Function EditDistance(s, t: String): Integer;
 Var
      d                        : Array Of Array Of Integer;
      n, m, i, j, costo        : Integer;
-     s_i, t_j                 : Widechar;
+     s_i, t_j                 : Char;
 Begin
      n := Length(s);
      m := Length(t);

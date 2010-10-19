@@ -77,6 +77,9 @@ Unit cUtils;
 {                                                                              }
 Interface
 
+uses
+SysUtils;
+
 Const
      UnitName                 = 'cUtils';
      UnitVersion              = '3.30';
@@ -256,7 +259,7 @@ Const
      { Sets                                                                         }
      {                                                                              }
 Type
-     CharSet = Set Of Char;
+     CharSet = Set Of AnsiChar;
      ByteSet = Set Of Byte;
      PCharSet = ^CharSet;
      PByteSet = ^ByteSet;
@@ -265,9 +268,9 @@ Const
      CompleteCharSet          = [#0..#255];
      CompleteByteSet          = [0..255];
 
-Function AsCharSet(Const C: Array Of Char): CharSet;
+Function AsCharSet(Const C: Array Of AnsiChar): CharSet;
 Function AsByteSet(Const C: Array Of Byte): ByteSet;
-Procedure ComplementChar(Var C: CharSet; Const Ch: Char);
+Procedure ComplementChar(Var C: CharSet; Const Ch: AnsiChar);
 Procedure ClearCharSet(Var C: CharSet);
 Procedure FillCharSet(Var C: CharSet);
 Procedure ComplementCharSet(Var C: CharSet);
@@ -300,7 +303,7 @@ Procedure Swap(Var X, Y: Int64); overload;
 Procedure Swap(Var X, Y: Single); overload;
 Procedure Swap(Var X, Y: Double); overload;
 Procedure Swap(Var X, Y: Extended); overload;
-Procedure Swap(Var X, Y: String); overload;
+Procedure Swap(Var X, Y: AnsiString); overload;
 Procedure Swap(Var X, Y: Pointer); overload;
 Procedure Swap(Var X, Y: TObject); overload;
 Procedure SwapObjects(Var X, Y);
@@ -318,8 +321,8 @@ Function iif(Const Expr: Boolean; Const TrueValue: Int64;
      Const FalseValue: Int64 = 0): Int64; overload;
 Function iif(Const Expr: Boolean; Const TrueValue: Extended;
      Const FalseValue: Extended = 0.0): Extended; overload;
-Function iif(Const Expr: Boolean; Const TrueValue: String;
-     Const FalseValue: String = ''): String; overload;
+Function iif(Const Expr: Boolean; Const TrueValue: AnsiString;
+     Const FalseValue: AnsiString = ''): AnsiString; overload;
 Function iif(Const Expr: Boolean; Const TrueValue: TObject;
      Const FalseValue: TObject = Nil): TObject; overload;
 
@@ -332,7 +335,7 @@ Function Compare(Const I1, I2: Boolean): TCompareResult; overload;
 Function Compare(Const I1, I2: Integer): TCompareResult; overload;
 Function Compare(Const I1, I2: Int64): TCompareResult; overload;
 Function Compare(Const I1, I2: Extended): TCompareResult; overload;
-Function Compare(Const I1, I2: String): TCompareResult; overload;
+Function Compare(Const I1, I2: AnsiString): TCompareResult; overload;
 Function NegatedCompareResult(Const C: TCompareResult): TCompareResult;
 
 
@@ -346,51 +349,51 @@ Function NegatedCompareResult(Const C: TCompareResult): TCompareResult;
 {   values 0-63) to a binary string.                                           }
 {                                                                              }
 Const
-     s_HexDigitsUpper         : String[16] = '0123456789ABCDEF';
-     s_HexDigitsLower         : String[16] = '0123456789abcdef';
+     s_HexDigitsUpper         : AnsiString = '0123456789ABCDEF';
+     s_HexDigitsLower         : AnsiString = '0123456789abcdef';
 
-Function IsHexChar(Const Ch: Char): Boolean;
-Function HexCharValue(Const Ch: Char): Byte;
+Function IsHexChar(Const Ch: AnsiChar): Boolean;
+Function HexCharValue(Const Ch: AnsiChar): Byte;
 
-Function LongWordToBin(Const I: LongWord; Const Digits: Byte = 0): String;
-Function LongWordToOct(Const I: LongWord; Const Digits: Byte = 0): String;
-Function LongWordToHex(Const I: LongWord; Const Digits: Byte = 0): String;
-Function LongWordToStr(Const I: LongWord; Const Digits: Byte = 0): String;
+Function LongWordToBin(Const I: LongWord; Const Digits: Byte = 0): AnsiString;
+Function LongWordToOct(Const I: LongWord; Const Digits: Byte = 0): AnsiString;
+Function LongWordToHex(Const I: LongWord; Const Digits: Byte = 0): AnsiString;
+Function LongWordToStr(Const I: LongWord; Const Digits: Byte = 0): AnsiString;
 
-Function BinToLongWord(Const S: String): LongWord;
-Function OctToLongWord(Const S: String): LongWord;
-Function HexToLongWord(Const S: String): LongWord;
-Function StrToLongWord(Const S: String): LongWord;
+Function BinToLongWord(Const S: AnsiString): LongWord;
+Function OctToLongWord(Const S: AnsiString): LongWord;
+Function HexToLongWord(Const S: AnsiString): LongWord;
+Function StrToLongWord(Const S: AnsiString): LongWord;
 
-Function EncodeBase64(Const S, Alphabet: String; Const Pad: Boolean = False;
-     Const PadMultiple: Integer = 4; Const PadChar: Char = '='): String;
-Function DecodeBase64(Const S, Alphabet: String; Const PadSet: CharSet = []): String;
+Function EncodeBase64(Const S, Alphabet: AnsiString; Const Pad: Boolean = False;
+     Const PadMultiple: Integer = 4; Const PadChar: AnsiChar = '='): AnsiString;
+Function DecodeBase64(Const S, Alphabet: AnsiString; Const PadSet: CharSet = []): AnsiString;
 
 Const
      b64_MIMEBase64           = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
      b64_UUEncode             = ' !"#$%&''()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_';
      b64_XXEncode             = '+-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 
-Function MIMEBase64Decode(Const S: String): String;
-Function MIMEBase64Encode(Const S: String): String;
-Function UUDecode(Const S: String): String;
-Function XXDecode(Const S: String): String;
+Function MIMEBase64Decode(Const S: AnsiString): AnsiString;
+Function MIMEBase64Encode(Const S: AnsiString): AnsiString;
+Function UUDecode(Const S: AnsiString): AnsiString;
+Function XXDecode(Const S: AnsiString): AnsiString;
 
-Function BytesToHex(Const P: Pointer; Const Count: Integer): String;
+Function BytesToHex(Const P: Pointer; Const Count: Integer): AnsiString;
 
 
 
 {                                                                              }
 { Type conversion                                                              }
 {                                                                              }
-Function PointerToStr(Const P: Pointer): String;
-Function StrToPointer(Const S: String): Pointer;
-Function ObjectClassName(Const O: TObject): String;
-Function ClassClassName(Const C: TClass): String;
-Function ObjectToStr(Const O: TObject): String;
-Function ClassToStr(Const C: TClass): String;
-Function CharSetToStr(Const C: CharSet): String;
-Function StrToCharSet(Const S: String): CharSet;
+Function PointerToStr(Const P: Pointer): AnsiString;
+Function StrToPointer(Const S: AnsiString): Pointer;
+Function ObjectClassName(Const O: TObject): AnsiString;
+Function ClassClassName(Const C: TClass): AnsiString;
+Function ObjectToStr(Const O: TObject): AnsiString;
+Function ClassToStr(Const C: TClass): AnsiString;
+Function CharSetToStr(Const C: CharSet): AnsiString;
+Function StrToCharSet(Const S: AnsiString): CharSet;
 
 
 
@@ -401,7 +404,7 @@ Function HashBuf(Const Buf; Const BufSize: Integer;
      Const Slots: LongWord = 0): LongWord;
 Function HashStr(Const StrBuf: Pointer; Const StrLength: Integer;
      Const Slots: LongWord = 0; Const CaseSensitive: Boolean = True): LongWord; overload;
-Function HashStr(Const S: String; Const Slots: LongWord = 0;
+Function HashStr(Const S: AnsiString; Const Slots: LongWord = 0;
      Const CaseSensitive: Boolean = True): LongWord; overload;
 Function HashInteger(Const I: Integer; Const Slots: LongWord = 0): LongWord;
 
@@ -431,7 +434,7 @@ Type
      SingleArray = Array Of Single;
      DoubleArray = Array Of Double;
      ExtendedArray = Array Of Extended;
-     StringArray = Array Of String;
+     StringArray = Array Of AnsiString;
      PointerArray = Array Of Pointer;
      ObjectArray = Array Of TObject;
      BooleanArray = Array Of Boolean;
@@ -451,7 +454,7 @@ Function Append(Var V: Int64Array; Const R: Int64): Integer; overload;
 Function Append(Var V: SingleArray; Const R: Single): Integer; overload;
 Function Append(Var V: DoubleArray; Const R: Double): Integer; overload;
 Function Append(Var V: ExtendedArray; Const R: Extended): Integer; overload;
-Function Append(Var V: StringArray; Const R: String): Integer; overload;
+Function Append(Var V: StringArray; Const R: AnsiString): Integer; overload;
 Function Append(Var V: BooleanArray; Const R: Boolean): Integer; overload;
 Function Append(Var V: PointerArray; Const R: Pointer): Integer; overload;
 Function Append(Var V: ObjectArray; Const R: TObject): Integer; overload;
@@ -467,7 +470,7 @@ Function AppendInt64Array(Var V: Int64Array; Const R: Array Of Int64): Integer; 
 Function AppendSingleArray(Var V: SingleArray; Const R: Array Of Single): Integer; overload;
 Function AppendDoubleArray(Var V: DoubleArray; Const R: Array Of Double): Integer; overload;
 Function AppendExtendedArray(Var V: ExtendedArray; Const R: Array Of Extended): Integer; overload;
-Function AppendStringArray(Var V: StringArray; Const R: Array Of String): Integer; overload;
+Function AppendStringArray(Var V: StringArray; Const R: Array Of AnsiString): Integer; overload;
 Function AppendPointerArray(Var V: PointerArray; Const R: Array Of Pointer): Integer; overload;
 Function AppendObjectArray(Var V: ObjectArray; Const R: Array Of TObject): Integer; overload;
 Function AppendCharSetArray(Var V: CharSetArray; Const R: Array Of CharSet): Integer; overload;
@@ -512,7 +515,7 @@ Procedure TrimArrayLeft(Var S: Int64Array; Const TrimList: Array Of Int64); over
 Procedure TrimArrayLeft(Var S: SingleArray; Const TrimList: Array Of Single); overload;
 Procedure TrimArrayLeft(Var S: DoubleArray; Const TrimList: Array Of Double); overload;
 Procedure TrimArrayLeft(Var S: ExtendedArray; Const TrimList: Array Of Extended); overload;
-Procedure TrimArrayLeft(Var S: StringArray; Const TrimList: Array Of String); overload;
+Procedure TrimArrayLeft(Var S: StringArray; Const TrimList: Array Of AnsiString); overload;
 Procedure TrimArrayLeft(Var S: PointerArray; Const TrimList: Array Of Pointer); overload;
 
 Procedure TrimArrayRight(Var S: ByteArray; Const TrimList: Array Of Byte); overload;
@@ -525,7 +528,7 @@ Procedure TrimArrayRight(Var S: Int64Array; Const TrimList: Array Of Int64); ove
 Procedure TrimArrayRight(Var S: SingleArray; Const TrimList: Array Of Single); overload;
 Procedure TrimArrayRight(Var S: DoubleArray; Const TrimList: Array Of Double); overload;
 Procedure TrimArrayRight(Var S: ExtendedArray; Const TrimList: Array Of Extended); overload;
-Procedure TrimArrayRight(Var S: StringArray; Const TrimList: Array Of String); overload;
+Procedure TrimArrayRight(Var S: StringArray; Const TrimList: Array Of AnsiString); overload;
 Procedure TrimArrayRight(Var S: PointerArray; Const TrimList: Array Of Pointer); overload;
 
 Function ArrayInsert(Var V: ByteArray; Const Idx: Integer; Const Count: Integer): Integer; overload;
@@ -568,7 +571,7 @@ Function PosNext(Const Find: Extended; Const V: ExtendedArray; Const PrevPos: In
      Const IsSortedAscending: Boolean = False): Integer; overload;
 Function PosNext(Const Find: Boolean; Const V: BooleanArray; Const PrevPos: Integer = -1;
      Const IsSortedAscending: Boolean = False): Integer; overload;
-Function PosNext(Const Find: String; Const V: StringArray; Const PrevPos: Integer = -1;
+Function PosNext(Const Find: AnsiString; Const V: StringArray; Const PrevPos: Integer = -1;
      Const IsSortedAscending: Boolean = False): Integer; overload;
 Function PosNext(Const Find: Pointer; Const V: PointerArray;
      Const PrevPos: Integer = -1): Integer; overload;
@@ -576,7 +579,7 @@ Function PosNext(Const Find: TObject; Const V: ObjectArray;
      Const PrevPos: Integer = -1): Integer; overload;
 Function PosNext(Const ClassType: TClass; Const V: ObjectArray;
      Const PrevPos: Integer = -1): Integer; overload;
-Function PosNext(Const ClassName: String; Const V: ObjectArray;
+Function PosNext(Const ClassName: AnsiString; Const V: ObjectArray;
      Const PrevPos: Integer = -1): Integer; overload;
 
 Function Count(Const Find: Byte; Const V: ByteArray;
@@ -599,7 +602,7 @@ Function Count(Const Find: Double; Const V: DoubleArray;
      Const IsSortedAscending: Boolean = False): Integer; overload;
 Function Count(Const Find: Extended; Const V: ExtendedArray;
      Const IsSortedAscending: Boolean = False): Integer; overload;
-Function Count(Const Find: String; Const V: StringArray;
+Function Count(Const Find: AnsiString; Const V: StringArray;
      Const IsSortedAscending: Boolean = False): Integer; overload;
 Function Count(Const Find: Boolean; Const V: BooleanArray;
      Const IsSortedAscending: Boolean = False): Integer; overload;
@@ -624,7 +627,7 @@ Procedure RemoveAll(Const Find: Double; Var V: DoubleArray;
      Const IsSortedAscending: Boolean = False); overload;
 Procedure RemoveAll(Const Find: Extended; Var V: ExtendedArray;
      Const IsSortedAscending: Boolean = False); overload;
-Procedure RemoveAll(Const Find: String; Var V: StringArray;
+Procedure RemoveAll(Const Find: AnsiString; Var V: StringArray;
      Const IsSortedAscending: Boolean = False); overload;
 
 Function Intersection(Const V1, V2: ByteArray;
@@ -700,7 +703,7 @@ Function AsInt64Array(Const V: Array Of Int64): Int64Array; overload;
 Function AsSingleArray(Const V: Array Of Single): SingleArray; overload;
 Function AsDoubleArray(Const V: Array Of Double): DoubleArray; overload;
 Function AsExtendedArray(Const V: Array Of Extended): ExtendedArray; overload;
-Function AsStringArray(Const V: Array Of String): StringArray; overload;
+Function AsStringArray(Const V: Array Of AnsiString): StringArray; overload;
 Function AsPointerArray(Const V: Array Of Pointer): PointerArray; overload;
 Function AsCharSetArray(Const V: Array Of CharSet): CharSetArray; overload;
 Function AsObjectArray(Const V: Array Of TObject): ObjectArray; overload;
@@ -742,7 +745,7 @@ Function DupInt64(Const V: Int64; Const Count: Integer): Int64Array;
 Function DupSingle(Const V: Single; Const Count: Integer): SingleArray;
 Function DupDouble(Const V: Double; Const Count: Integer): DoubleArray;
 Function DupExtended(Const V: Extended; Const Count: Integer): ExtendedArray;
-Function DupString(Const V: String; Const Count: Integer): StringArray;
+Function DupString(Const V: AnsiString; Const Count: Integer): StringArray;
 Function DupCharSet(Const V: CharSet; Const Count: Integer): CharSetArray;
 Function DupObject(Const V: TObject; Const Count: Integer): ObjectArray;
 
@@ -1588,7 +1591,7 @@ End;
 { Sets                                                                         }
 {                                                                              }
 
-Function AsCharSet(Const C: Array Of Char): CharSet;
+Function AsCharSet(Const C: Array Of AnsiChar): CharSet;
 Var
      I                        : Integer;
 Begin
@@ -1608,16 +1611,16 @@ End;
 
 {$IFDEF CPU_INTEL386}
 
-Procedure ComplementChar(Var C: CharSet; Const Ch: Char);
+Procedure ComplementChar(Var C: CharSet; Const Ch: AnsiChar);
 Asm
       MOVZX   ECX, DL
       BTC     [EAX], ECX
 End;
 {$ELSE}
 
-Procedure ComplementChar(Var C: CharSet; Const Ch: Char);
+Procedure ComplementChar(Var C: CharSet; Const Ch: AnsiChar);
 Begin
-     If Ch In C Then
+     If CharInSet(Ch , C) Then
           Exclude(C, Ch)
      Else
           Include(C, Ch);
@@ -1838,14 +1841,14 @@ End;
 
 Procedure XORCharSet(Var DestSet: CharSet; Const SourceSet: CharSet);
 Var
-     Ch                       : Char;
+     Ch                       : AnsiChar;
 Begin
      For Ch := #0 To #255 Do
-          If Ch In DestSet Then Begin
-               If Ch In SourceSet Then
+          If CharInSet(Ch , DestSet) Then Begin
+               If CharInSet(Ch , SourceSet) Then
                     Exclude(DestSet, Ch);
           End
-          Else If Ch In SourceSet Then
+          Else If CharInSet(Ch , SourceSet) Then
                Include(DestSet, Ch);
 End;
 {$ENDIF}
@@ -2032,11 +2035,11 @@ End;
 
 Function CharCount(Const C: CharSet): Integer;
 Var
-     I                        : Char;
+     I                        : AnsiChar;
 Begin
      Result := 0;
      For I := #0 To #255 Do
-          If I In C Then
+          If CharInSet(I , C) Then
                Inc(Result);
 End;
 {$ENDIF}
@@ -2056,14 +2059,14 @@ End;
 
 Procedure ConvertCaseInsensitive(Var C: CharSet);
 Var
-     Ch                       : Char;
+     Ch                       : AnsiChar;
 Begin
      For Ch := 'A' To 'Z' Do
-          If Ch In C Then
-               Include(C, Char(Ord(Ch) + 32));
+          If CharInSet(Ch , C) Then
+               Include(C, AnsiChar(Ord(Ch) + 32));
      For Ch := 'a' To 'z' Do
-          If Ch In C Then
-               Include(C, Char(Ord(Ch) - 32));
+          If CharInSet(Ch , C) Then
+               Include(C, AnsiChar(Ord(Ch) - 32));
 End;
 {$ENDIF}
 
@@ -2294,9 +2297,9 @@ Begin
      Y := F;
 End;
 
-Procedure Swap(Var X, Y: String);
+Procedure Swap(Var X, Y: AnsiString);
 Var
-     F                        : String;
+     F                        : AnsiString;
 Begin
      F := X;
      X := Y;
@@ -2353,7 +2356,7 @@ Begin
           Result := FalseValue;
 End;
 
-Function iif(Const Expr: Boolean; Const TrueValue, FalseValue: String): String;
+Function iif(Const Expr: Boolean; Const TrueValue, FalseValue: AnsiString): AnsiString;
 Begin
      If Expr Then
           Result := TrueValue
@@ -2415,7 +2418,7 @@ Begin
           Result := crLess;
 End;
 
-Function Compare(Const I1, I2: String): TCompareResult;
+Function Compare(Const I1, I2: AnsiString): TCompareResult;
 Begin
      If I1 = I2 Then
           Result := crEqual
@@ -2441,11 +2444,11 @@ End;
 { Base Conversion                                                              }
 {                                                                              }
 
-Function LongWordToBase(Const I: LongWord; Const Digits, Base: Byte): String;
+Function LongWordToBase(Const I: LongWord; Const Digits, Base: Byte): AnsiString;
 Var
      D                        : LongWord;
      L                        : Byte;
-     P                        : PChar;
+     P                        : PAnsiChar;
 Begin
      Assert(Base <= 16, 'Base <= 16');
      If I = 0 Then Begin
@@ -2482,28 +2485,28 @@ Begin
      End;
 End;
 
-Function LongWordToBin(Const I: LongWord; Const Digits: Byte): String;
+Function LongWordToBin(Const I: LongWord; Const Digits: Byte): AnsiString;
 Begin
      Result := LongWordToBase(I, Digits, 2);
 End;
 
-Function LongWordToOct(Const I: LongWord; Const Digits: Byte): String;
+Function LongWordToOct(Const I: LongWord; Const Digits: Byte): AnsiString;
 Begin
      Result := LongWordToBase(I, Digits, 8);
 End;
 
-Function LongWordToHex(Const I: LongWord; Const Digits: Byte): String;
+Function LongWordToHex(Const I: LongWord; Const Digits: Byte): AnsiString;
 Begin
      Result := LongWordToBase(I, Digits, 16);
 End;
 
-Function LongWordToStr(Const I: LongWord; Const Digits: Byte): String;
+Function LongWordToStr(Const I: LongWord; Const Digits: Byte): AnsiString;
 Begin
      Result := LongWordToBase(I, Digits, 10);
 End;
 
 Const
-     HexLookup                : Array[Char] Of Byte = (
+     HexLookup                : Array[AnsiChar] Of Byte = (
           $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF,
           $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF,
           $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF,
@@ -2521,22 +2524,22 @@ Const
           $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF,
           $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF);
 
-Function IsHexChar(Const Ch: Char): Boolean;
+Function IsHexChar(Const Ch: AnsiChar): Boolean;
 Begin
      Result := HexLookup[Ch] <= 15;
 End;
 
-Function HexCharValue(Const Ch: Char): Byte;
+Function HexCharValue(Const Ch: AnsiChar): Byte;
 Begin
      Result := HexLookup[Ch];
 End;
 
-Function BaseToLongWord(Const S: String; Const BaseLog2: Byte): LongWord;
+Function BaseToLongWord(Const S: AnsiString; Const BaseLog2: Byte): LongWord;
 Var
      L                        : LongWord;
      P                        : Byte;
      C                        : Byte;
-     Q                        : PChar;
+     Q                        : PAnsiChar;
 Begin
      Assert(BaseLog2 <= 4, 'BaseLog2 <= 4');
      P := Length(S);
@@ -2558,26 +2561,26 @@ Begin
      Until (P = 0) Or (L = 32);
 End;
 
-Function BinToLongWord(Const S: String): LongWord;
+Function BinToLongWord(Const S: AnsiString): LongWord;
 Begin
      Result := BaseToLongWord(S, 1);
 End;
 
-Function OctToLongWord(Const S: String): LongWord;
+Function OctToLongWord(Const S: AnsiString): LongWord;
 Begin
      Result := BaseToLongWord(S, 3);
 End;
 
-Function HexToLongWord(Const S: String): LongWord;
+Function HexToLongWord(Const S: AnsiString): LongWord;
 Begin
      Result := BaseToLongWord(S, 4);
 End;
 
-Function StrToLongWord(Const S: String): LongWord;
+Function StrToLongWord(Const S: AnsiString): LongWord;
 Var
      L                        : Integer;
-     P                        : PChar;
-     C                        : Char;
+     P                        : PAnsiChar;
+     C                        : AnsiChar;
      F                        : LongWord;
 Begin
      L := Length(S);
@@ -2591,7 +2594,7 @@ Begin
      Inc(P, L - 1);
      Repeat
           C := P^;
-          If C In ['0'..'9'] Then
+          If CharInSet(C , ['0'..'9']) Then
                Inc(Result, Int64(Ord(C) - Ord('0')) * F);
           If F = 1000000000 Then
                exit;
@@ -2601,11 +2604,11 @@ Begin
      Until L = 0;
 End;
 
-Function EncodeBase64(Const S, Alphabet: String; Const Pad: Boolean; Const PadMultiple: Integer; Const PadChar: Char): String;
+Function EncodeBase64(Const S, Alphabet: AnsiString; Const Pad: Boolean; Const PadMultiple: Integer; Const PadChar: AnsiChar): AnsiString;
 Var
      R, C                     : Byte;
      F, L, M, N, U            : Integer;
-     P                        : PChar;
+     P                        : PAnsiChar;
      T                        : Boolean;
 Begin
      Assert(Length(Alphabet) = 64, 'Alphabet must contain 64 characters.');
@@ -2662,19 +2665,19 @@ Begin
      End;
 End;
 
-Function DecodeBase64(Const S, Alphabet: String; Const PadSet: CharSet): String;
+Function DecodeBase64(Const S, Alphabet: AnsiString; Const PadSet: CharSet): AnsiString;
 Var
      F, L, M, P               : Integer;
      B, OutPos                : Byte;
      OutB                     : Array[1..3] Of Byte;
-     Lookup                   : Array[Char] Of Byte;
-     R                        : PChar;
+     Lookup                   : Array[AnsiChar] Of Byte;
+     R                        : PAnsiChar;
 Begin
      Assert(Length(Alphabet) = 64, 'Alphabet must contain 64 characters.');
      L := Length(S);
      P := 0;
      If PadSet <> [] Then
-          While (L - P > 0) And (S[L - P] In PadSet) Do
+          While (L - P > 0) And CharInSet((S[L - P]) , PadSet) Do
                Inc(P);
      M := L - P;
      If M = 0 Then Begin
@@ -2693,19 +2696,19 @@ Begin
                0: OutB[1] := B Shl 2;
                1: Begin
                          OutB[1] := OutB[1] Or (B Shr 4);
-                         R^ := Char(OutB[1]);
+                         R^ := AnsiChar(OutB[1]);
                          Inc(R);
                          OutB[2] := (B Shl 4) And $FF;
                     End;
                2: Begin
                          OutB[2] := OutB[2] Or (B Shr 2);
-                         R^ := Char(OutB[2]);
+                         R^ := AnsiChar(OutB[2]);
                          Inc(R);
                          OutB[3] := (B Shl 6) And $FF;
                     End;
                3: Begin
                          OutB[3] := OutB[3] Or B;
-                         R^ := Char(OutB[3]);
+                         R^ := AnsiChar(OutB[3]);
                          Inc(R);
                     End;
           End;
@@ -2713,34 +2716,34 @@ Begin
      End;
      If (OutPos > 0) And (P = 0) Then   // incomplete encoding, add the partial byte if not 0
           If OutB[OutPos] <> 0 Then
-               Result := Result + Char(OutB[OutPos]);
+               Result := Result + AnsiChar(OutB[OutPos]);
 End;
 
-Function MIMEBase64Encode(Const S: String): String;
+Function MIMEBase64Encode(Const S: AnsiString): AnsiString;
 Begin
      Result := EncodeBase64(S, b64_MIMEBase64, True, 4, '=');
 End;
 
-Function UUDecode(Const S: String): String;
+Function UUDecode(Const S: AnsiString): AnsiString;
 Begin
      // Line without size indicator (first byte = length + 32)
      Result := DecodeBase64(S, b64_UUEncode, ['`']);
 End;
 
-Function MIMEBase64Decode(Const S: String): String;
+Function MIMEBase64Decode(Const S: AnsiString): AnsiString;
 Begin
      Result := DecodeBase64(S, b64_MIMEBase64, ['=']);
 End;
 
-Function XXDecode(Const S: String): String;
+Function XXDecode(Const S: AnsiString): AnsiString;
 Begin
      Result := DecodeBase64(S, b64_XXEncode, []);
 End;
 
-Function BytesToHex(Const P: Pointer; Const Count: Integer): String;
+Function BytesToHex(Const P: Pointer; Const Count: Integer): AnsiString;
 Var
      Q                        : PByte;
-     D                        : PChar;
+     D                        : PAnsiChar;
      L                        : Integer;
 Begin
      Q := P;
@@ -2767,51 +2770,51 @@ End;
 { Type conversion                                                              }
 {                                                                              }
 
-Function PointerToStr(Const P: Pointer): String;
+Function PointerToStr(Const P: Pointer): AnsiString;
 Begin
      Result := '$' + LongWordToHex(LongWord(P), 8);
 End;
 
-Function StrToPointer(Const S: String): Pointer;
+Function StrToPointer(Const S: AnsiString): Pointer;
 Begin
      Result := Pointer(HexToLongWord(S));
 End;
 
-Function ObjectClassName(Const O: TObject): String;
+Function ObjectClassName(Const O: TObject): AnsiString;
 Begin
      If Not Assigned(O) Then
           Result := 'nil'
      Else
-          Result := O.ClassName;
+          Result := AnsiString(O.ClassName);
 End;
 
-Function ClassClassName(Const C: TClass): String;
+Function ClassClassName(Const C: TClass): AnsiString;
 Begin
      If Not Assigned(C) Then
           Result := 'nil'
      Else
-          Result := C.ClassName;
+          Result := AnsiString(C.ClassName);
 End;
 
-Function ObjectToStr(Const O: TObject): String;
+Function ObjectToStr(Const O: TObject): AnsiString;
 Begin
      If Not Assigned(O) Then
           Result := 'nil'
      Else
-          Result := O.ClassName + '@' + LongWordToHex(LongWord(O), 8);
+          Result := AnsiString(O.ClassName) + '@' + LongWordToHex(LongWord(O), 8);
 End;
 
-Function ClassToStr(Const C: TClass): String;
+Function ClassToStr(Const C: TClass): AnsiString;
 Begin
      If Not Assigned(C) Then
           Result := 'nil'
      Else
-          Result := C.ClassName + '@' + LongWordToHex(LongWord(C), 8);
+          Result := AnsiString(C.ClassName) + '@' + LongWordToHex(LongWord(C), 8);
 End;
 
 {$IFDEF CPU_INTEL386}
 
-Function CharSetToStr(Const C: CharSet): String; // Andrew N. Driazgov
+Function CharSetToStr(Const C: CharSet): AnsiString; // Andrew N. Driazgov
 Asm
       PUSH    EBX
       MOV     ECX, $100
@@ -2839,19 +2842,19 @@ Asm
 End;
 {$ELSE}
 
-Function CharSetToStr(Const C: CharSet): String;
+Function CharSetToStr(Const C: CharSet): AnsiString;
 // Implemented recursively to avoid multiple memory allocations
 
-     Procedure CharMatch(Const Start: Char; Const Count: Integer);
+     Procedure CharMatch(Const Start: AnsiChar; Const Count: Integer);
      Var
-          Ch                  : Char;
+          Ch                  : AnsiChar;
      Begin
           For Ch := Start To #255 Do
-               If Ch In C Then Begin
+               If CharInSet(Ch , C )Then Begin
                     If Ch = #255 Then
                          SetLength(Result, Count + 1)
                     Else
-                         CharMatch(Char(Byte(Ch) + 1), Count + 1);
+                         CharMatch(AnsiChar(Byte(Ch) + 1), Count + 1);
                     Result[Count + 1] := Ch;
                     exit;
                End;
@@ -2864,7 +2867,7 @@ End;
 
 {$IFDEF CPU_INTEL386}
 
-Function StrToCharSet(Const S: String): CharSet; // Andrew N. Driazgov
+Function StrToCharSet(Const S: AnsiString): CharSet; // Andrew N. Driazgov
 Asm
       XOR     ECX, ECX
       MOV     [EDX], ECX
@@ -2922,7 +2925,7 @@ Asm
 End;
 {$ELSE}
 
-Function StrToCharSet(Const S: String): CharSet;
+Function StrToCharSet(Const S: AnsiString): CharSet;
 Var
      I                        : Integer;
 Begin
@@ -2992,7 +2995,7 @@ Begin
      Result := CRC32;
      For I := 1 To BufSize Do Begin
           C := P^;
-          If Char(C) In ['A'..'Z'] Then
+          If CharInSet(AnsiChar(C) , ['A'..'Z']) Then
                C := C Or 32;
           Result := CalcCRC32Byte(Result, C);
           Inc(P);
@@ -3025,7 +3028,7 @@ Function HashStr(Const StrBuf: Pointer; Const StrLength: Integer;
      Const Slots: LongWord; Const CaseSensitive: Boolean): LongWord;
 
 Var
-     P                        : PChar;
+     P                        : PAnsiChar;
      I, J                     : Integer;
 
      Procedure CRC32StrBuf(Const Size: Integer);
@@ -3037,7 +3040,7 @@ Var
      End;
 
 Begin
-     // Return 0 for an empty string
+     // Return 0 for an empty AnsiString
      Result := 0;
      If (StrLength <= 0) Or Not Assigned(StrBuf) Then
           exit;
@@ -3057,7 +3060,7 @@ Begin
           Inc(P, StrLength - 16);
           CRC32StrBuf(16);
 
-          // Hash 16 bytes sampled from rest of string
+          // Hash 16 bytes sampled from rest of AnsiString
           I := (StrLength - 48) Div 16;
           P := StrBuf;
           Inc(P, 16);
@@ -3072,7 +3075,7 @@ Begin
           Result := Result Mod Slots;
 End;
 
-Function HashStr(Const S: String; Const Slots: LongWord; Const CaseSensitive: Boolean): LongWord;
+Function HashStr(Const S: AnsiString; Const Slots: LongWord; Const CaseSensitive: Boolean): LongWord;
 Begin
      Result := HashStr(Pointer(S), Length(S), Slots, CaseSensitive);
 End;
@@ -3235,9 +3238,9 @@ Begin
      For I := 1 To Count Do Begin
           C := PByte(P)^;
           D := PByte(Q)^;
-          If C In [Ord('A')..Ord('Z')] Then
+          If C in [Ord('A')..Ord('Z')] Then
                C := C Or 32;
-          If D In [Ord('A')..Ord('Z')] Then
+          If D in [Ord('A')..Ord('Z')] Then
                D := D Or 32;
           If C = D Then Begin
                Inc(PByte(P));
@@ -3349,7 +3352,7 @@ Begin
      V[Result] := R;
 End;
 
-Function Append(Var V: StringArray; Const R: String): Integer;
+Function Append(Var V: StringArray; Const R: AnsiString): Integer;
 Begin
      Result := Length(V);
      SetLength(V, Result + 1);
@@ -3562,7 +3565,7 @@ Begin
      End;
 End;
 
-Function AppendStringArray(Var V: StringArray; Const R: Array Of String): Integer;
+Function AppendStringArray(Var V: StringArray; Const R: Array Of AnsiString): Integer;
 Var
      I, LR                    : Integer;
 Begin
@@ -4262,7 +4265,7 @@ End;
 Procedure RemoveDuplicates(Var V: StringArray; Const IsSorted: Boolean);
 Var
      I, C, J, L               : Integer;
-     F                        : String;
+     F                        : AnsiString;
 Begin
      L := Length(V);
      If L = 0 Then
@@ -4549,7 +4552,7 @@ Begin
 End;
 
 
-Procedure TrimArrayLeft(Var S: StringArray; Const TrimList: Array Of String); Overload;
+Procedure TrimArrayLeft(Var S: StringArray; Const TrimList: Array Of AnsiString); Overload;
 Var
      I, J                     : Integer;
      R                        : Boolean;
@@ -4802,7 +4805,7 @@ Begin
 End;
 
 
-Procedure TrimArrayRight(Var S: StringArray; Const TrimList: Array Of String); Overload;
+Procedure TrimArrayRight(Var S: StringArray; Const TrimList: Array Of AnsiString); Overload;
 Var
      I, J                     : Integer;
      R                        : Boolean;
@@ -5040,9 +5043,9 @@ Begin
      End;
      I := MaxI(Idx, 0);
      SetLength(V, L + Count);
-     C := Count * Sizeof(String);
+     C := Count * Sizeof(AnsiString);
      If I < L Then
-          Move(V[I], V[I + Count], (L - I) * Sizeof(String));
+          Move(V[I], V[I + Count], (L - I) * Sizeof(AnsiString));
      FillChar(V[I], C, #0);
      Result := I;
 End;
@@ -5554,10 +5557,10 @@ Begin
      End;
 End;
 
-Function PosNext(Const Find: String; Const V: StringArray; Const PrevPos: Integer; Const IsSortedAscending: Boolean): Integer;
+Function PosNext(Const Find: AnsiString; Const V: StringArray; Const PrevPos: Integer; Const IsSortedAscending: Boolean): Integer;
 Var
      I, L, H                  : Integer;
-     D                        : String;
+     D                        : AnsiString;
 Begin
      If IsSortedAscending Then          {// binary search} Begin
           If MaxI(PrevPos + 1, 0) = 0 Then {// find first} Begin
@@ -5620,14 +5623,14 @@ Begin
      Result := -1;
 End;
 
-Function PosNext(Const ClassName: String; Const V: ObjectArray; Const PrevPos: Integer): Integer;
+Function PosNext(Const ClassName: AnsiString; Const V: ObjectArray; Const PrevPos: Integer): Integer;
 Var
      I                        : Integer;
      T                        : TObject;
 Begin
      For I := MaxI(PrevPos + 1, 0) To Length(V) - 1 Do Begin
           T := V[I];
-          If Assigned(T) And (T.ClassName = ClassName) Then Begin
+          If Assigned(T) And (AnsiString(T.ClassName) = ClassName) Then Begin
                Result := I;
                exit;
           End;
@@ -5933,7 +5936,7 @@ Begin
      End;
 End;
 
-Function Count(Const Find: String; Const V: StringArray; Const IsSortedAscending: Boolean = False): Integer;
+Function Count(Const Find: AnsiString; Const V: StringArray; Const IsSortedAscending: Boolean = False): Integer;
 Var
      I, J                     : Integer;
 Begin
@@ -6135,7 +6138,7 @@ Begin
      End;
 End;
 
-Procedure RemoveAll(Const Find: String; Var V: StringArray; Const IsSortedAscending: Boolean = False);
+Procedure RemoveAll(Const Find: AnsiString; Var V: StringArray; Const IsSortedAscending: Boolean = False);
 Var
      I, J                     : Integer;
 Begin
@@ -7004,7 +7007,7 @@ Begin
           Result[I] := V[I];
 End;
 
-Function AsStringArray(Const V: Array Of String): StringArray;
+Function AsStringArray(Const V: Array Of AnsiString): StringArray;
 Var
      I                        : Integer;
 Begin
@@ -7309,7 +7312,7 @@ Begin
           Result[I] := V;
 End;
 
-Function DupString(Const V: String; Const Count: Integer): StringArray;
+Function DupString(Const V: AnsiString; Const Count: Integer): StringArray;
 Var
      I                        : Integer;
 Begin
@@ -9078,7 +9081,7 @@ End;
 
 Procedure Test_Misc;
 Var
-     A, B                     : String;
+     A, B                     : AnsiString;
 Begin
      { iif                                                                 }
      Assert(iif(True, 1, 2) = 1, 'iif');

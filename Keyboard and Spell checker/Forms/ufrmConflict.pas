@@ -39,17 +39,16 @@ Uses
      Controls,
      Forms,
      Dialogs,
-     TntStdCtrls,
-     StdCtrls;
+     StdCtrls, TntStdCtrls;
 
 Type
      TfrmConflict = Class(TForm)
-          EditR_P: TTntEdit;
+          EditR_P: TEdit;
           Label2: TLabel;
           EditR: TEdit;
-          EditWC_P: TTntEdit;
+          EditWC_P: TEdit;
           EditWC: TEdit;
-          EditWI_P: TTntEdit;
+          EditWI_P: TEdit;
           EditWI: TEdit;
           Label3: TLabel;
           Label4: TLabel;

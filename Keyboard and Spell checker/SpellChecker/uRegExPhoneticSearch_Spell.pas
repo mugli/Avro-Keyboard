@@ -29,9 +29,9 @@ Unit uRegExPhoneticSearch_Spell;
 
 Interface
 Uses
-     WideStrings;
+     Classes;
 
-Function SearchPhonetic_Spell(SearchIn, SearchStr: AnsiString; Var wList: TWideStringList): Integer;
+Function SearchPhonetic_Spell(SearchIn, SearchStr: AnsiString; Var wList: TStringList): Integer;
 
 
 Implementation
@@ -40,12 +40,11 @@ Uses
      Pcre,
      pcre_dll,
      uDBase,
-     classes,
      StrUtils,
      SysUtils,
      uCustomDictionary;
 
-Function SearchPhonetic_Spell(SearchIn, SearchStr: AnsiString; Var wList: TWideStringList): Integer;
+Function SearchPhonetic_Spell(SearchIn, SearchStr: AnsiString; Var wList: TStringList): Integer;
 Var
      theRegex                 : IRegex;
      theMatch                 : IMatch;

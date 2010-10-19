@@ -29,7 +29,7 @@ Unit uSimilarSort_Spell;
 
 Interface
 Uses
-     WideStrings,
+     Classes,
      uSpellEditDistanceSearch,
      clsReversePhonetic,
      SysUtils;
@@ -38,23 +38,18 @@ const
 PhoneticWeight=9;
 ManualWeight=1;
 
-{Type
-     SimilarRec = Record
-          wS: WideString;
-          Match: Integer;
-     End;
- }
-Procedure SimilarSort(SourceS: WideString; Var WList: TWideStringList);
-Function MyCustomSort(List: TWideStringList; Index1, Index2: Integer): Integer;
+
+Procedure SimilarSort(SourceS: String; Var WList: TStringList);
+Function MyCustomSort(List: TStringList; Index1, Index2: Integer): Integer;
 
 Var
-     SourceCompareS           : WideString;
+     SourceCompareS           : String;
      RP                       : TReversePhonetic;
 
 Implementation
 
 
-Function MyCustomSort(List: TWideStringList; Index1, Index2: Integer):
+Function MyCustomSort(List: TStringList; Index1, Index2: Integer):
      Integer;
 Var
      SRP, i1Rp, i2RP          : String;
@@ -71,48 +66,9 @@ Begin
 End;
 
 
-{
-Procedure SimilarSort(SourceS: WideString; Var WList: TWideStringList);
-Var
-     tArray                   : Array Of SimilarRec;
-     i, c                     : Integer;
-     tEntry                   : SimilarRec;
-Begin
 
-if WList.Count<=1  then exit;
-I:=0;
-C:=0;
-tEntry.wS:='';
-tEntry.Match :=0;
-SetLength(tArray, 0);
-WList.Sorted:=False;
 
-     SetLength(tArray, WList.Count);
-     For I := 0 To WList.Count - 1 Do Begin
-          tArray[i].wS := WList[i];
-          tArray[i].Match := LD(SourceS, tArray[i].wS);
-     End;
-
-     For c := 2 To High(tArray)+1 Do Begin
-          For i := 0 To High(tArray)+1 - c Do Begin
-               If tArray[i].Match > tArray[i + 1].Match Then Begin
-                    tEntry := tArray[i];
-                    tArray[i] := tArray[i + 1];
-                    tArray[i + 1] := tEntry;
-               End;
-          End;
-     End;
-
-     WList.Clear;
-     For I := Low(tArray) To High(tArray) Do Begin
-          WList.Add ( tArray[i].wS );
-     End;
-
-     SetLength(tArray, 0);
-End;
-}
-
-Procedure SimilarSort(SourceS: WideString; Var WList: TWideStringList);
+Procedure SimilarSort(SourceS: String; Var WList: TStringList);
 Begin
      WList.Sorted := False;
      SourceCompareS := SourceS;

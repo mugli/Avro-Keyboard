@@ -71,7 +71,7 @@ unit PCRE;
 interface
 
 uses
-  SysUtils, dialogs;
+  SysUtils, dialogs,JclAnsiStrings;
 
 const
   CAPTURE_GROUP_BEFORE_START = -1;
@@ -437,7 +437,7 @@ type
 
   TNameIndexLookup = class(TInterfacedObject, INameIndexLookup)
   private
-    FMappings : TStringList;
+    FMappings : TAnsiStringList;
 
   public
     constructor Create;
@@ -468,7 +468,7 @@ type
 
   TRegexStringCollection = class(TInterfacedObject, IStringCollection)
   private
-    FStrings  : TStringList;
+    FStrings  : TAnsiStringList;
   public
     constructor Create;
     destructor Destroy; override;
@@ -899,7 +899,7 @@ begin
                                           FMatch.Groups[CAPTURE_GROUP_AFTER_END].Value;
   else
     // it must be a number
-    theIndex := StrToInt(theSubstitution);
+    theIndex := StrToInt(String(theSubstitution));
 
     if theIndex >= FMatch.Groups.Count then
       raise ERegexInvalidSubstitutionGroup.CreateFmt('Invalid substitution variable $%d',
@@ -1022,7 +1022,7 @@ constructor TRegexStringCollection.Create;
 
 begin
   inherited;
-  FStrings := TStringList.Create();
+  FStrings := TAnsiStringList.Create();
 end;
 
 //===========================================================================
@@ -1993,7 +1993,7 @@ constructor TNameIndexLookup.Create;
 
 begin
   inherited Create();
-  FMappings := TStringList.Create();
+  FMappings := TAnsiStringList.Create();
 
   FMappings.Sorted         := true;
   FMappings.CaseSensitive  := true;

@@ -150,7 +150,7 @@ object frmAutoCorrect: TfrmAutoCorrect
     Height = 51
     Caption = 'Preview'
     TabOrder = 4
-    object R1: TTntEdit
+    object R1: TEdit
       Left = 3
       Top = 15
       Width = 142
@@ -166,7 +166,7 @@ object frmAutoCorrect: TfrmAutoCorrect
       ReadOnly = True
       TabOrder = 0
     end
-    object R2: TTntEdit
+    object R2: TEdit
       Left = 151
       Top = 15
       Width = 138

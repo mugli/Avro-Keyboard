@@ -157,7 +157,7 @@ object frmSpellPopUp: TfrmSpellPopUp
     TabOrder = 7
     OnClick = CheckLessPrefferedClick
   end
-  object List: TTntListBox
+  object List: TListBox
     Left = 8
     Top = 87
     Width = 281
@@ -174,7 +174,7 @@ object frmSpellPopUp: TfrmSpellPopUp
     OnDblClick = ListDblClick
     OnKeyUp = ListKeyUp
   end
-  object Edit_NotFound: TTntEdit
+  object Edit_NotFound: TEdit
     Left = 8
     Top = 27
     Width = 281
@@ -189,7 +189,7 @@ object frmSpellPopUp: TfrmSpellPopUp
     ReadOnly = True
     TabOrder = 9
   end
-  object Edit_ChangeTo: TTntEdit
+  object Edit_ChangeTo: TEdit
     Left = 8
     Top = 245
     Width = 281

@@ -70,7 +70,7 @@ Const
 
      {                                                                              }
      { ADictionary                                                                  }
-     {   Base class for a dictionary (key-value pair where the key is a string).    }
+     {   Base class for a dictionary (key-value pair where the key is a AnsiString).    }
      {                                                                              }
 Type
      TDictionaryDuplicatesAction = (ddError, // raises an exception on duplicate keys
@@ -78,8 +78,8 @@ Type
           ddIgnore);                    // silently discard duplicates
      ADictionary = Class(AType)
      Protected
-          Procedure DictionaryError(Const Msg: String);
-          Procedure KeyNotFoundError(Const Key: String);
+          Procedure DictionaryError(Const Msg: AnsiString);
+          Procedure KeyNotFoundError(Const Key: AnsiString);
 
           Function GetAddOnSet: Boolean; Virtual; Abstract;
           Procedure SetAddOnSet(Const AddOnSet: Boolean); Virtual; Abstract;
@@ -88,12 +88,12 @@ Type
           Function GetKeysCaseSensitive: Boolean; Virtual; Abstract;
 
      Public
-          Procedure Delete(Const Key: String); Virtual; Abstract;
-          Function HasKey(Const Key: String): Boolean; Virtual; Abstract;
-          Procedure Rename(Const Key, NewKey: String); Virtual; Abstract;
+          Procedure Delete(Const Key: AnsiString); Virtual; Abstract;
+          Function HasKey(Const Key: AnsiString): Boolean; Virtual; Abstract;
+          Procedure Rename(Const Key, NewKey: AnsiString); Virtual; Abstract;
 
           Function Count: Integer; Virtual; Abstract;
-          Function GetKeyByIndex(Const Idx: Integer): String; Virtual; Abstract;
+          Function GetKeyByIndex(Const Idx: Integer): AnsiString; Virtual; Abstract;
 
           Property AddOnSet: Boolean Read GetAddOnSet Write SetAddOnSet;
           Property DuplicatesAction: TDictionaryDuplicatesAction
@@ -107,30 +107,30 @@ Type
 
      {                                                                              }
      { AStringDictionary                                                            }
-     {   A Dictionary with String values and String keys.                           }
+     {   A Dictionary with AnsiString values and AnsiString keys.                           }
      {                                                                              }
 Type
      AStringDictionary = Class(ADictionary)
      Protected
-          Function GetAsString: String; Override;
+          Function GetAsString: AnsiString; Override;
 
-          Function GetItem(Const Key: String): String; Virtual;
-          Procedure SetItem(Const Key: String; Const Value: String); Virtual; Abstract;
+          Function GetItem(Const Key: AnsiString): AnsiString; Virtual;
+          Procedure SetItem(Const Key: AnsiString; Const Value: AnsiString); Virtual; Abstract;
 
      Public
           { AType implementations                                                    }
           Procedure Assign(Const Source: TObject); Override;
 
           { AStringDictionary interface                                            }
-          Property Item[Const Key: String]: String Read GetItem Write SetItem; Default;
-          Procedure Add(Const Key: String; Const Value: String); Virtual; Abstract;
+          Property Item[Const Key: AnsiString]: AnsiString Read GetItem Write SetItem; Default;
+          Procedure Add(Const Key: AnsiString; Const Value: AnsiString); Virtual; Abstract;
 
-          Function GetItemByIndex(Const Idx: Integer): String; Virtual; Abstract;
-          Function LocateItem(Const Key: String; Var Value: String): Integer; Virtual; Abstract;
-          Function LocateNext(Const Key: String; Const Idx: Integer;
-               Var Value: String): Integer; Virtual; Abstract;
+          Function GetItemByIndex(Const Idx: Integer): AnsiString; Virtual; Abstract;
+          Function LocateItem(Const Key: AnsiString; Var Value: AnsiString): Integer; Virtual; Abstract;
+          Function LocateNext(Const Key: AnsiString; Const Idx: Integer;
+               Var Value: AnsiString): Integer; Virtual; Abstract;
 
-          Function GetItemLength(Const Key: String): Integer; Virtual;
+          Function GetItemLength(Const Key: AnsiString): Integer; Virtual;
           Function GetTotalLength: Int64; Virtual;
      End;
      EStringDictionary = Class(EDictionary);
@@ -162,9 +162,9 @@ Type
           FAddOnSet: Boolean;
           FDuplicatesAction: TDictionaryDuplicatesAction;
 
-          Function LocateKey(Const Key: String; Var LookupIdx: Integer;
+          Function LocateKey(Const Key: AnsiString; Var LookupIdx: Integer;
                Const ErrorIfNotFound: Boolean): Integer;
-          Function KeyIndex(Const Key: String; Const ErrorIfNotFound: Boolean): Integer;
+          Function KeyIndex(Const Key: AnsiString; Const ErrorIfNotFound: Boolean): Integer;
           Procedure DeleteByIndex(Const Idx: Integer; Const Hash: Integer = -1);
           Procedure Rehash;
           Function GetHashTableSize: Integer;
@@ -178,7 +178,7 @@ Type
           Procedure SetDuplicatesAction(Const DuplicatesAction: TDictionaryDuplicatesAction); Override;
 
           { AStringDictionary implementations                                    }
-          Procedure SetItem(Const Key: String; Const Value: String); Override;
+          Procedure SetItem(Const Key: AnsiString; Const Value: AnsiString); Override;
 
      Public
           { TStringDictionary interface                                            }
@@ -193,19 +193,19 @@ Type
           Procedure Clear; Override;
 
           { ADictionary implementations                                              }
-          Procedure Delete(Const Key: String); Override;
-          Function HasKey(Const Key: String): Boolean; Override;
-          Procedure Rename(Const Key: String; Const NewKey: String); Override;
+          Procedure Delete(Const Key: AnsiString); Override;
+          Function HasKey(Const Key: AnsiString): Boolean; Override;
+          Procedure Rename(Const Key: AnsiString; Const NewKey: AnsiString); Override;
           Function Count: Integer; Override;
-          Function GetKeyByIndex(Const Idx: Integer): String; Override;
+          Function GetKeyByIndex(Const Idx: Integer): AnsiString; Override;
 
           { AStringDictionary implementations                                    }
-          Procedure Add(Const Key: String; Const Value: String); Override;
-          Function GetItemByIndex(Const Idx: Integer): String; Override;
-          Procedure SetItemByIndex(Const Idx: Integer; Const Value: String);
-          Function LocateItem(Const Key: String; Var Value: String): Integer; Override;
-          Function LocateNext(Const Key: String; Const Idx: Integer;
-               Var Value: String): Integer; Override;
+          Procedure Add(Const Key: AnsiString; Const Value: AnsiString); Override;
+          Function GetItemByIndex(Const Idx: Integer): AnsiString; Override;
+          Procedure SetItemByIndex(Const Idx: Integer; Const Value: AnsiString);
+          Function LocateItem(Const Key: AnsiString; Var Value: AnsiString): Integer; Override;
+          Function LocateNext(Const Key: AnsiString; Const Idx: Integer;
+               Var Value: AnsiString): Integer; Override;
 
           { TStringDictionary interface                                            }
           Property HashTableSize: Integer Read GetHashTableSize;
@@ -244,12 +244,12 @@ Uses
 { ADictionary                                                                  }
 {                                                                              }
 
-Procedure ADictionary.DictionaryError(Const Msg: String);
+Procedure ADictionary.DictionaryError(Const Msg: AnsiString);
 Begin
      TypeError(Msg, Nil, EDictionary);
 End;
 
-Procedure ADictionary.KeyNotFoundError(Const Key: String);
+Procedure ADictionary.KeyNotFoundError(Const Key: AnsiString);
 Begin
      DictionaryError('Key not found: ' + Key);
 End;
@@ -260,7 +260,7 @@ End;
 { AStringDictionary                                                            }
 {                                                                              }
 
-Function AStringDictionary.GetItem(Const Key: String): String;
+Function AStringDictionary.GetItem(Const Key: AnsiString): AnsiString;
 Begin
      If LocateItem(Key, Result) < 0 Then
           KeyNotFoundError(Key);
@@ -280,7 +280,7 @@ Begin
           Inherited Assign(Source);
 End;
 
-Function AStringDictionary.GetAsString: String;
+Function AStringDictionary.GetAsString: AnsiString;
 Var
      I, L                     : Integer;
 Begin
@@ -292,7 +292,7 @@ Begin
      End;
 End;
 
-Function AStringDictionary.GetItemLength(Const Key: String): Integer;
+Function AStringDictionary.GetItemLength(Const Key: AnsiString): Integer;
 Begin
      Result := Length(GetItem(Key));
 End;
@@ -416,7 +416,7 @@ Begin
           Append(FLookup[HashStr(FKeys[I], L, FCaseSensitive)], I);
 End;
 
-Function TStringDictionary.LocateKey(Const Key: String; Var LookupIdx: Integer; Const ErrorIfNotFound: Boolean): Integer;
+Function TStringDictionary.LocateKey(Const Key: AnsiString; Var LookupIdx: Integer; Const ErrorIfNotFound: Boolean): Integer;
 Var
      H, I, J, L               : Integer;
 Begin
@@ -437,14 +437,14 @@ Begin
           KeyNotFoundError(Key);
 End;
 
-Function TStringDictionary.KeyIndex(Const Key: String; Const ErrorIfNotFound: Boolean): Integer;
+Function TStringDictionary.KeyIndex(Const Key: AnsiString; Const ErrorIfNotFound: Boolean): Integer;
 Var
      H                        : Integer;
 Begin
      Result := LocateKey(Key, H, ErrorIfNotFound);
 End;
 
-Procedure TStringDictionary.Add(Const Key: String; Const Value: String);
+Procedure TStringDictionary.Add(Const Key: AnsiString; Const Value: AnsiString);
 Var
      H, L, I                  : Integer;
 Begin
@@ -488,7 +488,7 @@ Begin
                     Dec(FLookup[I][J]);
 End;
 
-Procedure TStringDictionary.Delete(Const Key: String);
+Procedure TStringDictionary.Delete(Const Key: AnsiString);
 Var
      I, H                     : Integer;
 Begin
@@ -496,12 +496,12 @@ Begin
      DeleteByIndex(I, H);
 End;
 
-Function TStringDictionary.HasKey(Const Key: String): Boolean;
+Function TStringDictionary.HasKey(Const Key: AnsiString): Boolean;
 Begin
      Result := KeyIndex(Key, False) >= 0;
 End;
 
-Procedure TStringDictionary.Rename(Const Key, NewKey: String);
+Procedure TStringDictionary.Rename(Const Key, NewKey: AnsiString);
 Var
      I, J, H                  : Integer;
 Begin
@@ -523,7 +523,7 @@ Begin
      FDuplicatesAction := DuplicatesAction;
 End;
 
-Function TStringDictionary.LocateItem(Const Key: String; Var Value: String): Integer;
+Function TStringDictionary.LocateItem(Const Key: AnsiString; Var Value: AnsiString): Integer;
 Begin
      Result := KeyIndex(Key, False);
      If Result >= 0 Then
@@ -532,7 +532,7 @@ Begin
           Value := '';
 End;
 
-Function TStringDictionary.LocateNext(Const Key: String; Const Idx: Integer; Var Value: String): Integer;
+Function TStringDictionary.LocateNext(Const Key: AnsiString; Const Idx: Integer; Var Value: AnsiString): Integer;
 Var
      L, H, I, J, K            : Integer;
 Begin
@@ -561,7 +561,7 @@ Begin
      DictionaryError('Item not found');
 End;
 
-Procedure TStringDictionary.SetItem(Const Key: String; Const Value: String);
+Procedure TStringDictionary.SetItem(Const Key: AnsiString; Const Value: AnsiString);
 Var
      I                        : Integer;
 Begin
@@ -585,7 +585,7 @@ Begin
      Assert(FValues.Count = Result, 'Key/Value count mismatch');
 End;
 
-Function TStringDictionary.GetKeyByIndex(Const Idx: Integer): String;
+Function TStringDictionary.GetKeyByIndex(Const Idx: Integer): AnsiString;
 Begin
      {$IFOPT R+}
      If (Idx < 0) Or (Idx >= FKeys.Count) Then
@@ -603,7 +603,7 @@ Begin
      DeleteByIndex(Idx, -1);
 End;
 
-Function TStringDictionary.GetItemByIndex(Const Idx: Integer): String;
+Function TStringDictionary.GetItemByIndex(Const Idx: Integer): AnsiString;
 Begin
      {$IFOPT R+}
      If (Idx < 0) Or (Idx >= FValues.Count) Then
@@ -612,7 +612,7 @@ Begin
      Result := FValues[Idx];
 End;
 
-Procedure TStringDictionary.SetItemByIndex(Const Idx: Integer; Const Value: String);
+Procedure TStringDictionary.SetItemByIndex(Const Idx: Integer; Const Value: AnsiString);
 Begin
      {$IFOPT R+}
      If (Idx < 0) Or (Idx >= FValues.Count) Then

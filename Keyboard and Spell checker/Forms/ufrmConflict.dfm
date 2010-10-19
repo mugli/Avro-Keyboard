@@ -110,7 +110,7 @@ object frmConflict: TfrmConflict
     Height = 13
     Caption = 'Imported:'
   end
-  object EditR_P: TTntEdit
+  object EditR_P: TEdit
     Left = 232
     Top = 8
     Width = 138
@@ -145,7 +145,7 @@ object frmConflict: TfrmConflict
     TabOrder = 3
     Text = 'EditR'
   end
-  object EditWC_P: TTntEdit
+  object EditWC_P: TEdit
     Left = 232
     Top = 71
     Width = 138
@@ -180,7 +180,7 @@ object frmConflict: TfrmConflict
     TabOrder = 5
     Text = 'Edit1'
   end
-  object EditWI_P: TTntEdit
+  object EditWI_P: TEdit
     Left = 232
     Top = 123
     Width = 138

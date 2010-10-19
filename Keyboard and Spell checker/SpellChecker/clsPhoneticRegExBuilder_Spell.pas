@@ -39,12 +39,12 @@ Type
           pEnglishText: AnsiString;
           ln: Integer;                  //Length of English AnsiString
           pos: Integer;                 //Position of processing at English AnsiString
-          RS: WideString;               //Result WideString
+          RS: String;               //Result String
 
      Private
-          Function MyConvert(): WideString;
-          Function Cnv(Const Compare: AnsiString; Const IfTrue: WideString): Boolean;
-          Procedure AddRs(Const T: WideString);
+          Function MyConvert(): String;
+          Function Cnv(Const Compare: AnsiString; Const IfTrue: String): Boolean;
+          Procedure AddRs(Const T: String);
           Function PrevT: AnsiString;
           Function NextT: AnsiString;
           Function Vowel(Const T: AnsiString): boolean;
@@ -79,7 +79,7 @@ Type
 
      Public
           Constructor Create;           //Initializer
-          Function Convert(Const EnglishT: AnsiString): UTF8String;
+          Function Convert(Const EnglishT: AnsiString): AnsiString;
           Function CorrectCase(Const inputT: AnsiString): AnsiString;
           Function EscapeSpecialCharacters(Const inputT: AnsiString): AnsiString;
      End;
@@ -102,7 +102,7 @@ Begin
      If Cnv('a', r_A) = True Then Exit;
 End;
 
-Procedure TEnglishToRegEx.AddRs(Const T: WideString);
+Procedure TEnglishToRegEx.AddRs(Const T: String);
 Begin
      {If (Consonent(PrevT) = True) And (Consonent(NextT) = True) Then
           Rs := Rs + T + r_InjectHasanta
@@ -178,7 +178,7 @@ End;
 
 {$HINTS Off}
 Function TEnglishToRegEx.Cnv(Const Compare: AnsiString;
-     Const IfTrue: WideString): Boolean;
+     Const IfTrue: String): Boolean;
 Var
      i                        : Integer;
      tmp                      : AnsiString;
@@ -218,7 +218,7 @@ Var
      Temp                     : AnsiChar;
      myT                      : AnsiString;
 Begin
-     myT := LowerCase(T);
+     myT := AnsiString(LowerCase(T));
      Temp := #0;
      If length(myT) > 0 Then
           Temp := myT[1];
@@ -233,7 +233,7 @@ Begin
      End;
 End;
 
-Function TEnglishToRegEx.Convert(Const EnglishT: AnsiString): UTF8String;
+Function TEnglishToRegEx.Convert(Const EnglishT: AnsiString): AnsiString;
 Begin
      If EnglishT = '' Then exit;
      pEnglishText := EscapeSpecialCharacters(CorrectCase(EnglishT));
@@ -242,7 +242,7 @@ End;
 
 Function TEnglishToRegEx.CorrectCase(Const inputT: AnsiString): AnsiString;
 Begin
-     Result := LowerCase(inputT);
+     Result := AnsiString(LowerCase(inputT));
 End;
 
 Constructor TEnglishToRegEx.Create;
@@ -279,14 +279,14 @@ End;
 {$WARN NO_RETVAL OFF}
 Function TEnglishToRegEx.EscapeSpecialCharacters(Const inputT: AnsiString): AnsiString;
 Var
-     T                        : AnsiString;
+     T                        : String;
 Begin
      (*
       We need to escape the following 14 metacharacters:
       \ | ( ) [ ] { } ^ $ * + ? .
      *)
 
-     T := inputT;
+     T := String(inputT);
 
      T := ReplaceStr(T, '\', '');
      T := ReplaceStr(T, '|', '');
@@ -324,7 +324,7 @@ Begin
      T := ReplaceStr(T, ':', '');
      T := ReplaceStr(T, '`', '');
 
-     Result := T;
+     Result := AnsiString(T);
 End;
 {$WARN NO_RETVAL On}
 
@@ -427,7 +427,7 @@ Begin
      If Cnv('m', r_MM) = True Then Exit;
 End;
 
-Function TEnglishToRegEx.MyConvert: WideString;
+Function TEnglishToRegEx.MyConvert: String;
 Var
      tt                       : AnsiChar;
      tString                  : AnsiString;

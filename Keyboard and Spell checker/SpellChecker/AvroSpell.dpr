@@ -32,8 +32,6 @@ Uses
      SysUtils,
 
      Windows,
-     widestrings,
-     widestrutils,
      StrUtils,
      PCRE In '..\Units\PCRE.pas',
      pcre_dll In '..\Units\pcre_dll.pas',
@@ -78,18 +76,18 @@ Var
 
      {===============================================================================}
 
-Function UnicodeDeNormalize(Const W: WideString): WideString;
+Function UnicodeDeNormalize(Const W: String): String;
 Begin
      Result := W;
-     Result := widestrutils.WideReplaceStr(Result, b_B + b_Nukta, b_r);
-     Result := widestrutils.WideReplaceStr(Result, b_Dd + b_Nukta, b_Rr);
-     Result := widestrutils.WideReplaceStr(Result, b_Ddh + b_Nukta, b_Rrh);
-     Result := widestrutils.WideReplaceStr(Result, b_Z + b_Nukta, b_Y);
+     Result := ReplaceStr(Result, b_B + b_Nukta, b_r);
+     Result := ReplaceStr(Result, b_Dd + b_Nukta, b_Rr);
+     Result := ReplaceStr(Result, b_Ddh + b_Nukta, b_Rrh);
+     Result := ReplaceStr(Result, b_Z + b_Nukta, b_Y);
 End;
 
 {===============================================================================}
 
-Function CanIgnoreByOption(W: WideString): Boolean;
+Function CanIgnoreByOption(W: String): Boolean;
 Var
      Spell_IgnoreNumbers, Spell_IgnoreAncient, Spell_IgnoreAssamese, Spell_IgnoreSingle: Boolean;
 
@@ -171,10 +169,10 @@ End;
 
 {===============================================================================}
 
-Function SplitSuggestion(w: widestring): WideString;
+Function SplitSuggestion(w: String): String;
 Var
      I, Len                   : Integer;
-     part1, part2             : widestring;
+     part1, part2             : String;
 Begin
      Result := '';
      Len := Length(w);
@@ -222,9 +220,9 @@ Begin
           LoadSettings;
           InitSpellCustomDict;
           PhoneticSug := TPhoneticSpellSuggestion.Create;
-          PhoneticResult := TWideStringList.Create;
-          FuzzyResult := TWideStringList.Create;
-          OtherResult := TWideStringList.Create;
+          PhoneticResult := TStringList.Create;
+          FuzzyResult := TStringList.Create;
+          OtherResult := TStringList.Create;
           DetermineZWNJ_ZWJ := ZWJ;
 
           Initialized := True;
@@ -241,9 +239,9 @@ End;
 
 {===============================================================================}
 
-Function IsWordPresent(Wrd: PWideChar; Var SAction: Integer): LongBool; Stdcall;
+Function IsWordPresent(Wrd: PChar; Var SAction: Integer): LongBool; Stdcall;
 Var
-     mWrd                     : WideString;
+     mWrd                     : String;
 Begin
      Try
           If Not Initialized Then Begin
@@ -289,9 +287,9 @@ End;
 
 {===============================================================================}
 
-Function WordPresentInChangeAll(Wrd: PWideChar): LongBool; Stdcall;
+Function WordPresentInChangeAll(Wrd: PChar): LongBool; Stdcall;
 Var
-     mWrd                     : WideString;
+     mWrd                     : String;
 Begin
      Try
           mWrd := UnicodeDeNormalize(Wrd);
@@ -309,10 +307,10 @@ End;
 
 {===============================================================================}
 
-Procedure GetCorrection(Wrd: PWideChar); Stdcall;
+Procedure GetCorrection(Wrd: PChar); Stdcall;
 Var
-     mWrd                     : WideString;
-     SplittedWord             : WideString;
+     mWrd                     : String;
+     SplittedWord             : String;
 Begin
      Try
           If Not Initialized Then Begin
@@ -323,7 +321,7 @@ Begin
 
           //SAction = 3 Change All
           If SpellChangeDict.HasKey(utf8encode(mWrd)) Then Begin
-               Callback(PWideChar(mWrd), PWideChar(utf8decode(SpellChangeDict.Item[utf8encode(mWrd)])), SA_ReplaceAll);
+               Callback(PChar(mWrd), PChar(utf8decode(SpellChangeDict.Item[utf8encode(mWrd)])), SA_ReplaceAll);
                exit;
           End;
 

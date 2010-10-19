@@ -40,10 +40,8 @@ Uses
      Forms,
      Dialogs,
      StdCtrls,
-     TntStdCtrls,
      ComCtrls,
-     clsSpellPhoneticSuggestionBuilder,
-     widestrings;
+     clsSpellPhoneticSuggestionBuilder;
 
 Type
      TfrmSpellPopUp = Class(TForm)
@@ -58,9 +56,9 @@ Type
           But_Change: TButton;
           But_ChangeAll: TButton;
           CheckLessPreffered: TCheckBox;
-          List: TTNTListBox;
-          Edit_NotFound: TTNTEdit;
-          Edit_ChangeTo: TTNTEdit;
+          List: TListBox;
+          Edit_NotFound: TEdit;
+          Edit_ChangeTo: TEdit;
           Procedure FormCreate(Sender: TObject);
           Procedure FormClose(Sender: TObject; Var Action: TCloseAction);
           Procedure But_ChangeClick(Sender: TObject);
@@ -88,7 +86,7 @@ Type
      End;
 
 Type
-     TCallback = Procedure(Wrd: PWideChar; CWrd: PWideChar; SAction: Integer); stdcall;
+     TCallback = Procedure(Wrd: PChar; CWrd: PChar; SAction: Integer); stdcall;
 
 Var
      Callback                 : TCallback;
@@ -97,13 +95,13 @@ Var
      frmSpellPopUp            : TfrmSpellPopUp;
      //Suggestions by various methods
      PhoneticSug              : TPhoneticSpellSuggestion;
-     PhoneticResult           : TWideStringList;
-     FuzzyResult              : TWideStringList;
-     OtherResult              : TWideStringList;
+     PhoneticResult           : TStringList;
+     FuzzyResult              : TStringList;
+     OtherResult              : TStringList;
 
-     DetermineZWNJ_ZWJ        : WideString;
+     DetermineZWNJ_ZWJ        : String;
      //
-     WordNotFound, WordSelected: WideString;
+     WordNotFound, WordSelected: String;
 
 Const
      SA_Default               : Integer = 0;
@@ -120,7 +118,6 @@ Implementation
 {$R *.dfm}
 Uses
      uCustomDictionary,
-     widestrutils,
      BanglaChars,
      uSimilarSort_Spell,
      StrUtils,
@@ -241,7 +238,7 @@ Begin
      WordSelected := '';
      SpellCustomDict.Add(WordNotFound);
      Self.Close;
-     callback(PWideChar(WordNotFound), PWideChar(WordSelected), SA_Ignore);
+     callback(PChar(WordNotFound), PChar(WordSelected), SA_Ignore);
 End;
 
 Procedure TfrmSpellPopUp.But_CancelClick(Sender: TObject);
@@ -249,7 +246,7 @@ Begin
      WordNotFound := '';
      WordSelected := '';
      Self.Close;
-     callback(PWideChar(WordNotFound), PWideChar(WordSelected), SA_Cancel);
+     callback(PChar(WordNotFound), PChar(WordSelected), SA_Cancel);
 End;
 
 Procedure TfrmSpellPopUp.But_ChangeAllClick(Sender: TObject);
@@ -258,7 +255,7 @@ Begin
      WordSelected := Edit_ChangeTo.Text;
      SpellChangeDict.Add(utf8encode(WordNotFound), utf8encode(WordSelected));
      Self.Close;
-     callback(PWideChar(WordNotFound), PWideChar(WordSelected), SA_ReplaceAll);
+     callback(PChar(WordNotFound), PChar(WordSelected), SA_ReplaceAll);
 End;
 
 Procedure TfrmSpellPopUp.But_ChangeClick(Sender: TObject);
@@ -266,7 +263,7 @@ Begin
      WordNotFound := Edit_NotFound.Text;
      WordSelected := Edit_ChangeTo.Text;
      Self.Close;
-     callback(PWideChar(WordNotFound), PWideChar(WordSelected), SA_Default);
+     callback(PChar(WordNotFound), PChar(WordSelected), SA_Default);
 End;
 
 Procedure TfrmSpellPopUp.But_IgnoreAllClick(Sender: TObject);
@@ -275,7 +272,7 @@ Begin
      WordSelected := '';
      SpellIgnoreDict.Add(WordNotFound);
      Self.Close;
-     callback(PWideChar(WordNotFound), PWideChar(WordSelected), SA_Ignore);
+     callback(PChar(WordNotFound), PChar(WordSelected), SA_Ignore);
 End;
 
 Procedure TfrmSpellPopUp.But_IgnoreClick(Sender: TObject);
@@ -283,7 +280,7 @@ Begin
      WordNotFound := Edit_NotFound.Text;
      WordSelected := '';
      Self.Close;
-     callback(PWideChar(WordNotFound), PWideChar(WordSelected), SA_Ignore);
+     callback(PChar(WordNotFound), PChar(WordSelected), SA_Ignore);
 End;
 
 Procedure TfrmSpellPopUp.But_OptionsClick(Sender: TObject);
@@ -371,24 +368,20 @@ End;
 
 Procedure TfrmSpellPopUp.ShowSuggestion(FullResult: Boolean);
 
-     Function Fix_ZWNJ_ZWJ(inp: WideString): WideString;
-     Var
-          retVal              : WideString;
+     Function Fix_ZWNJ_ZWJ(inp: String): String;
      Begin
-          retVal := WideReplaceStr(inp, b_R + ZWNJ + b_Hasanta + b_Z,
+          Result := ReplaceStr(inp, b_R + ZWNJ + b_Hasanta + b_Z,
                b_r + DetermineZWNJ_ZWJ + b_Hasanta + b_Z);
-
-          Result := retVal;
      End;
 
 Var
-     TempList                 : TWideStringList;
+     TempList                 : TStringList;
      I                        : Integer;
      MoreNumber               : Integer;
 Begin
 
 
-     TempList := TWideStringList.Create;
+     TempList := TStringList.Create;
      TempList.Sorted := True;
      TempList.Duplicates := dupIgnore;
 

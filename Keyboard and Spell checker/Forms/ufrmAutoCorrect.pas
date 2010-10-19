@@ -44,12 +44,11 @@ Uses
      Forms,
      Dialogs,
      uAutoCorrect,
-     TntStdCtrls,
      StdCtrls,
      ComCtrls,
      clsEnglishToBangla,
      uWindowHandlers,
-     uFileFolderHandling;
+     uFileFolderHandling, TntStdCtrls;
 
 Type
      TfrmAutoCorrect = Class(TForm)
@@ -63,8 +62,8 @@ Type
           WithT: TEdit;
           Label2: TLabel;
           Label3: TLabel;
-          R1: TTntEdit;
-          R2: TTntEdit;
+          R1: TEdit;
+          R2: TEdit;
           cmdClear: TButton;
           cmdDel: TButton;
           cmdAdd: TButton;

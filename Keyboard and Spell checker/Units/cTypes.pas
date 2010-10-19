@@ -69,15 +69,15 @@ Uses
 Type
      AType = Class
      Protected
-          Procedure TypeError(Const Msg: String; Const Error: Exception = Nil;
+          Procedure TypeError(Const Msg: AnsiString; Const Error: Exception = Nil;
                Const ErrorClass: ExceptClass = Nil);
-          Procedure MethodNotImplementedError(Const Method: String);
+          Procedure MethodNotImplementedError(Const Method: AnsiString);
 
           Procedure Init; Virtual;
           Procedure AssignTo(Const Dest: TObject); Virtual;
 
-          Function GetAsString: String; Virtual;
-          Procedure SetAsString(Const S: String); Virtual;
+          Function GetAsString: AnsiString; Virtual;
+          Procedure SetAsString(Const S: AnsiString); Virtual;
 
      Public
           Constructor Create;
@@ -90,7 +90,7 @@ Type
           Function IsEqual(Const V: TObject): Boolean; Virtual;
           Function Compare(Const V: TObject): TCompareResult; Virtual;
           Function HashValue: LongWord; Virtual;
-          Property AsString: String Read GetAsString Write SetAsString;
+          Property AsString: AnsiString Read GetAsString Write SetAsString;
      End;
      EType = Class(Exception);
      TypeClass = Class Of AType;
@@ -106,8 +106,8 @@ Function TypeDuplicate(Const V: TObject): TObject;
 Procedure TypeAssign(Const A, B: TObject);
 Function TypeIsEqual(Const A, B: TObject): Boolean;
 Function TypeCompare(Const A, B: TObject): TCompareResult;
-Function TypeGetAsString(Const V: TObject): String;
-Procedure TypeSetAsString(Const V: TObject; Const S: String);
+Function TypeGetAsString(Const V: TObject): AnsiString;
+Procedure TypeSetAsString(Const V: TObject; Const S: AnsiString);
 Function TypeHashValue(Const A: TObject): LongWord;
 
 
@@ -130,21 +130,21 @@ Procedure AType.Init;
 Begin
 End;
 
-Procedure AType.TypeError(Const Msg: String; Const Error: Exception; Const ErrorClass: ExceptClass);
+Procedure AType.TypeError(Const Msg: AnsiString; Const Error: Exception; Const ErrorClass: ExceptClass);
 Var
-     S                        : String;
+     S                        : AnsiString;
 Begin
      S := {$IFDEF DEBUG}ObjectClassName(self) + ': ' + {$ENDIF}
      Msg;
      If Assigned(Error) Then
-          S := S + ': ' + Error.Message;
+          S := S + ': ' + AnsiString(Error.Message);
      If Assigned(ErrorClass) Then
           Raise ErrorClass.Create(S)
      Else
           Raise EType.Create(S);
 End;
 
-Procedure AType.MethodNotImplementedError(Const Method: String);
+Procedure AType.MethodNotImplementedError(Const Method: AnsiString);
 Begin
      TypeError('Method ' + ObjectClassName(self) + '.' + Method + ' not implemented');
 End;
@@ -227,12 +227,12 @@ Begin
 End;
 {$WARNINGS ON}
 
-Function AType.GetAsString: String;
+Function AType.GetAsString: AnsiString;
 Begin
      MethodNotImplementedError('GetAsString');
 End;
 
-Procedure AType.SetAsString(Const S: String);
+Procedure AType.SetAsString(Const S: AnsiString);
 Begin
      MethodNotImplementedError('SetAsString');
 End;
@@ -243,20 +243,20 @@ End;
 { AType helper functions                                                       }
 {                                                                              }
 
-Function TypeGetAsString(Const V: TObject): String;
+Function TypeGetAsString(Const V: TObject): AnsiString;
 Begin
      If V Is AType Then
           Result := AType(V).GetAsString
      Else
-          Raise EType.Create(ObjectClassName(V) + ' can not convert to string');
+          Raise EType.Create(ObjectClassName(V) + ' can not convert to AnsiString');
 End;
 
-Procedure TypeSetAsString(Const V: TObject; Const S: String);
+Procedure TypeSetAsString(Const V: TObject; Const S: AnsiString);
 Begin
      If V Is AType Then
           AType(V).SetAsString(S)
      Else
-          Raise EType.Create(ObjectClassName(V) + ' can not set as string');
+          Raise EType.Create(ObjectClassName(V) + ' can not set as AnsiString');
 End;
 
 Function TypeDuplicate(Const V: TObject): TObject;

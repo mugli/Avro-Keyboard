@@ -37,7 +37,7 @@ Uses
      JclAnsiStrings;
 
 {Procedure BuildHashTable;}
-Function WordPresent(Const Wrd: WideString): Boolean;
+Function WordPresent(Const Wrd: String): Boolean;
 
 Type
      TCompareResult = (crLess,          // <
@@ -51,7 +51,7 @@ Function DictionaryRehashSize(Const Count: Integer): Integer;
 Function Append(Var V: LongIntArray; Const R: LongInt): Integer;
 Function StrPCompare(Const A, B: PAnsiChar; Const Len: Integer): TCompareResult;
 Function StrEqual(Const A, B: AnsiString): Boolean;
-Function WordPresent_Basic(Const Wrd: WideString): Boolean;
+Function WordPresent_Basic(Const Wrd: String): Boolean;
 
 Const
      AverageHashChainSize     = 4;
@@ -61,10 +61,10 @@ Uses
      StrUtils,
      SysUtils;
 
-Function WordPresent(Const Wrd: WideString): Boolean;
+Function WordPresent(Const Wrd: String): Boolean;
 Var
      iLen, I, Dummy           : Integer;
-     SearchingPart, IsSuffix  : WideString;
+     SearchingPart, IsSuffix  : String;
 Begin
      Result := False;
      iLen := Length(Wrd);
@@ -110,7 +110,7 @@ Begin
 
 End;
 
-Function WordPresent_Basic(Const Wrd: WideString): Boolean;
+Function WordPresent_Basic(Const Wrd: String): Boolean;
 
      Function SearchWord(Var SourceArray: TAnsiStringList; Var HArray: HashArray): Boolean;
      Var
@@ -133,7 +133,7 @@ Function WordPresent_Basic(Const Wrd: WideString): Boolean;
      End;
 
 Var
-     FirstChar                : WideChar;
+     FirstChar                : Char;
 Begin
      Result := False;
 
