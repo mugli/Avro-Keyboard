@@ -67,7 +67,7 @@ Begin
      SearchStr := '^' + SearchStr + '$';
      RegExOpt := [];
      theLocale := 'C';
-     RegExCompileOptions := DecodeRegCompileOptions({PCRE_CASELESS Or}PCRE_UTF8);
+     RegExCompileOptions := DecodeRegCompileOptions(PCRE_UTF8);
      theRegex := Pcre.RegexCreate(SearchStr, RegExCompileOptions, theLocale);
 
      mSearchIn := LeftStr(LowerCase(SearchIn), 1);
@@ -995,8 +995,6 @@ Begin
                     wList.Add(SpellCustomDict[i]);
                End;
           End;
-
-
 
      wList.EndUpdate;
 

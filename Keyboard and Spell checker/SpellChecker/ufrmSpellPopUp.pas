@@ -49,9 +49,6 @@ Type
      TfrmSpellPopUp = Class(TForm)
           Label1: TLabel;
           Label2: TLabel;
-          Edit_NotFound: TTntEdit;
-          Edit_ChangeTo: TTntEdit;
-          List: TTntListBox;
           Label3: TLabel;
           But_Cancel: TButton;
           But_Options: TButton;
@@ -61,6 +58,9 @@ Type
           But_Change: TButton;
           But_ChangeAll: TButton;
           CheckLessPreffered: TCheckBox;
+          List: TTNTListBox;
+          Edit_NotFound: TTNTEdit;
+          Edit_ChangeTo: TTNTEdit;
           Procedure FormCreate(Sender: TObject);
           Procedure FormClose(Sender: TObject; Var Action: TCloseAction);
           Procedure But_ChangeClick(Sender: TObject);
@@ -112,7 +112,7 @@ Const
      SA_IgnoredByOption       : Integer = 2;
      SA_ReplaceAll            : Integer = 3;
 
-     Procedure MoveToOptimumPos(T_X, T_Y: Integer);
+Procedure MoveToOptimumPos(T_X, T_Y: Integer);
 
 
 Implementation
@@ -129,7 +129,7 @@ Uses
      uWindowHandlers;
 
 
-     Procedure MoveToOptimumPos(T_X, T_Y: Integer);
+Procedure MoveToOptimumPos(T_X, T_Y: Integer);
 
      Function ValidPosition(f_Point: TPoint): Boolean;
      Var
@@ -172,6 +172,9 @@ Begin
      If (T_X < 0) Or (T_Y < 0) Then
           exit;
 
+     If Not assigned(frmSpellPopUp) Then
+          exit;
+
 
      //Check whether current position of Window hides the text
      RWord.Left := T_X - MinDistance;
@@ -179,8 +182,8 @@ Begin
      RWord.Right := T_X + WordWidth + MinDistance;
      RWord.Bottom := T_Y + WordHeight + MinDistance;
 
-     RWindow.Left := frmSpellPopUp.Left ;
-     RWindow.Top := frmSpellPopUp.Top ;
+     RWindow.Left := frmSpellPopUp.Left;
+     RWindow.Top := frmSpellPopUp.Top;
      RWindow.Right := RWindow.Left + frmSpellPopUp.Width;
      RWindow.Bottom := RWindow.Top + frmSpellPopUp.Height;
 
@@ -237,7 +240,7 @@ Begin
      WordNotFound := Edit_NotFound.Text;
      WordSelected := '';
      SpellCustomDict.Add(WordNotFound);
-     Self.Hide;
+     Self.Close;
      callback(PWideChar(WordNotFound), PWideChar(WordSelected), SA_Ignore);
 End;
 
@@ -245,7 +248,7 @@ Procedure TfrmSpellPopUp.But_CancelClick(Sender: TObject);
 Begin
      WordNotFound := '';
      WordSelected := '';
-     Self.Hide;
+     Self.Close;
      callback(PWideChar(WordNotFound), PWideChar(WordSelected), SA_Cancel);
 End;
 
@@ -254,7 +257,7 @@ Begin
      WordNotFound := Edit_NotFound.Text;
      WordSelected := Edit_ChangeTo.Text;
      SpellChangeDict.Add(utf8encode(WordNotFound), utf8encode(WordSelected));
-     Self.Hide;
+     Self.Close;
      callback(PWideChar(WordNotFound), PWideChar(WordSelected), SA_ReplaceAll);
 End;
 
@@ -262,7 +265,7 @@ Procedure TfrmSpellPopUp.But_ChangeClick(Sender: TObject);
 Begin
      WordNotFound := Edit_NotFound.Text;
      WordSelected := Edit_ChangeTo.Text;
-     Self.Hide;
+     Self.Close;
      callback(PWideChar(WordNotFound), PWideChar(WordSelected), SA_Default);
 End;
 
@@ -271,7 +274,7 @@ Begin
      WordNotFound := Edit_NotFound.Text;
      WordSelected := '';
      SpellIgnoreDict.Add(WordNotFound);
-     Self.Hide;
+     Self.Close;
      callback(PWideChar(WordNotFound), PWideChar(WordSelected), SA_Ignore);
 End;
 
@@ -279,7 +282,7 @@ Procedure TfrmSpellPopUp.But_IgnoreClick(Sender: TObject);
 Begin
      WordNotFound := Edit_NotFound.Text;
      WordSelected := '';
-     Self.Hide;
+     Self.Close;
      callback(PWideChar(WordNotFound), PWideChar(WordSelected), SA_Ignore);
 End;
 
@@ -316,7 +319,7 @@ End;
 Procedure TfrmSpellPopUp.FormCreate(Sender: TObject);
 Begin
      DetermineZWNJ_ZWJ := ZWJ;
-     
+
      TOPMOST(self.Handle);
 End;
 
@@ -487,5 +490,7 @@ Begin
                But_ChangeClick(Nil);
 End;
 
+Initialization
+     frmSpellPopUp := Nil;
 End.
 

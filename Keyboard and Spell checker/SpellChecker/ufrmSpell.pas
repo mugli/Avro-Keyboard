@@ -46,9 +46,18 @@ Uses
      TntStdCtrls,
      ComCtrls,
      TntComCtrls,
-     clsMemoParser;
+     clsMemoParser,
+     WideStrUtils;
+
+Const
+     UNICODE_BOM              = WideChar($FEFF);
+     UNICODE_BOM_SWAPPED      = WideChar($FFFE);
+     UTF8_BOM                 = AnsiString(#$EF#$BB#$BF);
 
 Type
+     TUnicodeStreamCharSet = (csAnsi, csUnicode, csUnicodeSwapped, csUtf8);
+
+
      TfrmSpell = Class(TForm)
           MainMenu1: TMainMenu;
           File1: TMenuItem;
@@ -111,13 +120,17 @@ Type
           Procedure ShowOpenDialog;
           Procedure ShowSaveDialog;
 
+          Function AutoDetectCharacterSet(Stream: TStream): TUnicodeStreamCharSet;
+          Procedure StrSwapByteOrder(Str: PWideChar);
+          Procedure LoadFromStream_BOM_Return(Stream: TStream; WithBOM: Boolean; Var BOM_Unicode, BOM_UnicodeBE, BOM_UTF8: Boolean);
+          Procedure SaveToStream_BOM_Specify(Stream: TStream; WithBOM: Boolean; BOM_Unicode, BOM_UnicodeBE, BOM_UTF8: Boolean);
+
 
           {MemoParser events}
           Procedure MP_WordFound(CurrentWord: WideString);
           Procedure MP_CompleteParsing;
           Procedure MP_PositionConflict;
           Procedure MP_TotalProgress(CurrentProgress: Integer);
-
      Public
           { Public declarations }
           MP: TMemoParser;
@@ -350,7 +363,7 @@ Begin
      FreeAndNil(MP);
 
      UnloadAll;
-     
+
      Action := caFree;
      frmSpell := Nil;
 End;
@@ -562,7 +575,7 @@ Begin
           BOM_UnicodeBE := False;
           BOM_UTF8 := False;
           fs := TFileStream.Create(fFile, fmOpenRead);
-          Memo.Lines.LoadFromStream_BOM_Return(fs, True, BOM_Unicode, BOM_UnicodeBE, BOM_UTF8);
+          LoadFromStream_BOM_Return(fs, True, BOM_Unicode, BOM_UnicodeBE, BOM_UTF8);
           FreeAndNil(fs);
           MemoChanged := False;
           fFileName := fFile;
@@ -613,9 +626,9 @@ Begin
      Try
           fs := TFileStream.Create(fFile, fmCreate);
           If bBOM_Unicode Or bBOM_UnicodeBE Or bBOM_UTF8 Then
-               Memo.Lines.SaveToStream_BOM_Specify(fs, True, bBOM_Unicode, bBOM_UnicodeBE, bBOM_UTF8)
+               SaveToStream_BOM_Specify(fs, True, bBOM_Unicode, bBOM_UnicodeBE, bBOM_UTF8)
           Else
-               Memo.Lines.SaveToStream_BOM_Specify(fs, True, True, False, False);
+               SaveToStream_BOM_Specify(fs, True, True, False, False);
           FreeAndNil(fs);
           fFileName := fFile;
           MemoChanged := False;
@@ -748,6 +761,139 @@ Begin
 End;
 
 {===============================================================================}
+
+
+Function TfrmSpell.AutoDetectCharacterSet(
+     Stream: TStream): TUnicodeStreamCharSet;
+Var
+     ByteOrderMark            : WideChar;
+     BytesRead                : Integer;
+     Utf8Test                 : Array[0..2] Of AnsiChar;
+Begin
+     // Byte Order Mark
+     ByteOrderMark := #0;
+     If (Stream.Size - Stream.Position) >= SizeOf(ByteOrderMark) Then Begin
+          BytesRead := Stream.Read(ByteOrderMark, SizeOf(ByteOrderMark));
+          If (ByteOrderMark <> UNICODE_BOM) And (ByteOrderMark <> UNICODE_BOM_SWAPPED) Then Begin
+               ByteOrderMark := #0;
+               Stream.Seek(-BytesRead, soFromCurrent);
+               If (Stream.Size - Stream.Position) >= Length(Utf8Test) * SizeOf(AnsiChar) Then Begin
+                    BytesRead := Stream.Read(Utf8Test[0], Length(Utf8Test) * SizeOf(AnsiChar));
+                    If Utf8Test <> UTF8_BOM Then
+                         Stream.Seek(-BytesRead, soFromCurrent);
+               End;
+          End;
+     End;
+     // Test Byte Order Mark
+     If ByteOrderMark = UNICODE_BOM Then
+          Result := csUnicode
+     Else If ByteOrderMark = UNICODE_BOM_SWAPPED Then
+          Result := csUnicodeSwapped
+     Else If Utf8Test = UTF8_BOM Then
+          Result := csUtf8
+     Else
+          Result := csAnsi;
+End;
+
+
+Procedure TfrmSpell.LoadFromStream_BOM_Return(Stream: TStream;
+     WithBOM: Boolean; Var BOM_Unicode, BOM_UnicodeBE, BOM_UTF8: Boolean);
+Var
+     DataLeft                 : Integer;
+     StreamCharSet            : TUnicodeStreamCharSet;
+     SW                       : WideString;
+     SA                       : AnsiString;
+Begin
+
+          If WithBOM Then
+               StreamCharSet := AutoDetectCharacterSet(Stream)
+          Else
+               StreamCharSet := csUnicode;
+
+          If StreamCharSet = csUnicode Then
+               BOM_Unicode := True
+          Else If StreamCharSet = csUnicodeSwapped Then
+               BOM_UnicodeBE := True
+          Else If StreamCharSet = csUtf8 Then
+               BOM_UTF8 := True;
+
+          DataLeft := Stream.Size - Stream.Position;
+          If (StreamCharSet In [csUnicode, csUnicodeSwapped]) Then Begin
+               // BOM indicates Unicode text stream
+               If DataLeft < SizeOf(WideChar) Then
+                    SW := ''
+               Else Begin
+                    SetLength(SW, DataLeft Div SizeOf(WideChar));
+                    Stream.Read(PWideChar(SW)^, DataLeft);
+                    If StreamCharSet = csUnicodeSwapped Then
+                         StrSwapByteOrder(PWideChar(SW));
+               End;
+               Memo.Lines.SetText(PWideChar(SW)) ;
+          End
+          Else If StreamCharSet = csUtf8 Then Begin
+               // BOM indicates UTF-8 text stream
+               SetLength(SA, DataLeft Div SizeOf(AnsiChar));
+               Stream.Read(PAnsiChar(SA)^, DataLeft);
+               Memo.Lines.SetText(PWideChar(UTF8Decode(SA)));
+          End
+          Else Begin
+               // without byte order mark it is assumed that we are loading ANSI text
+               SetLength(SA, DataLeft Div SizeOf(AnsiChar));
+               Stream.Read(PAnsiChar(SA)^, DataLeft);
+               Memo.Lines.SetText(PWideChar(SA));
+          End;
+
+End;
+
+Procedure TfrmSpell.SaveToStream_BOM_Specify(Stream: TStream; WithBOM,
+     BOM_Unicode, BOM_UnicodeBE, BOM_UTF8: Boolean);
+Var
+     SW                       : WideString;
+     UT                       : utf8string;
+     BOM                      : WideChar;
+Begin
+     If WithBOM Then Begin
+          If BOM_Unicode Then Begin
+               BOM := UNICODE_BOM;
+               Stream.WriteBuffer(BOM, SizeOf(WideChar));
+               SW := Memo.Lines.GetText;
+               Stream.WriteBuffer(PWideChar(SW)^, Length(SW) * SizeOf(WideChar));
+          End
+          Else If BOM_UTF8 Then Begin
+               Stream.WriteBuffer(UTF8_BOM, Length(UTF8_BOM) * SizeOf(AnsiChar));
+               UT := utf8encode(Memo.Lines.GetText);
+               Stream.WriteBuffer(PAnsiChar(UT)^, Length(UT) * SizeOf(AnsiChar));
+          End
+          Else If BOM_UnicodeBE Then Begin
+               BOM := UNICODE_BOM_SWAPPED;
+               Stream.WriteBuffer(BOM, SizeOf(WideChar));
+               SW := Memo.Lines.GetText;
+               StrSwapByteOrder(PWideChar(SW));
+               Stream.WriteBuffer(PWideChar(SW)^, Length(SW) * SizeOf(WideChar));
+          End
+          Else Begin
+               BOM := UNICODE_BOM;
+               Stream.WriteBuffer(BOM, SizeOf(WideChar));
+               SW := Memo.Lines.GetText;
+               Stream.WriteBuffer(PWideChar(SW)^, Length(SW) * SizeOf(WideChar));
+          End;
+     End
+     Else Begin
+          SW := Memo.Lines.GetText;
+          Stream.WriteBuffer(PWideChar(SW)^, Length(SW) * SizeOf(WideChar));
+     End;
+End;
+
+Procedure TfrmSpell.StrSwapByteOrder(Str: PWideChar);
+Var
+     P                        : PWord;
+Begin
+     P := PWord(Str);
+     While (P^ <> 0) Do Begin
+          P^ := MakeWord(HiByte(P^), LoByte(P^));
+          Inc(P);
+     End;
+End;
 
 End.
 

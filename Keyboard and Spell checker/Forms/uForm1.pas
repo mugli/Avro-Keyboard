@@ -1214,6 +1214,8 @@ Begin
      Execute_Something('http://www.omicronlab.com/go.php?id=12');
 End;
 
+
+
 Procedure TAvroMainForm1.ogglekeyboardmode2Click(Sender: TObject);
 Begin
      KeyLayout.ToggleMode;
@@ -1929,7 +1931,6 @@ Begin
 
      If IgnorableWindow(hforewnd) = True Then Exit;
      If hforewnd = LastWindow Then exit;
-
 
 
      //window z-order has been changed

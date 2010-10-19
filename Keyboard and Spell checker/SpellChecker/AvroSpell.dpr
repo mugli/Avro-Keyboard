@@ -29,27 +29,12 @@ Library AvroSpell;
 
 
 Uses
-        SysUtils,
-     Classes,
+     SysUtils,
+
      Windows,
      widestrings,
      widestrutils,
      StrUtils,
-     Controls,
-     Forms,
-     BanglaChars In '..\Units\BanglaChars.pas',
-     clsPhoneticRegExBuilder_Spell In 'clsPhoneticRegExBuilder_Spell.pas',
-     clsReversePhonetic In 'clsReversePhonetic.pas',
-     clsSpellPhoneticSuggestionBuilder In 'clsSpellPhoneticSuggestionBuilder.pas',
-     Hashing In 'Hashing.pas',
-     HashTable In 'HashTable.pas',
-     Phonetic_RegExp_Constants_Spell In 'Phonetic_RegExp_Constants_Spell.pas',
-     uCustomDictionary In 'uCustomDictionary.pas',
-     ufrmSpellOptions In 'ufrmSpellOptions.pas' {frmSpellOptions},
-     ufrmSpellPopUp In 'ufrmSpellPopUp.pas' {frmSpellPopUp},
-     uRegExPhoneticSearch_Spell In 'uRegExPhoneticSearch_Spell.pas',
-     uSimilarSort_Spell In 'uSimilarSort_Spell.pas',
-     uSpellEditDistanceSearch In 'uSpellEditDistanceSearch.pas',
      PCRE In '..\Units\PCRE.pas',
      pcre_dll In '..\Units\pcre_dll.pas',
      cDictionaries In '..\Units\cDictionaries.pas',
@@ -57,14 +42,30 @@ Uses
      cTypes In '..\Units\cTypes.pas',
      cArrays In '..\Units\cArrays.pas',
      cStrings In '..\Units\cStrings.pas',
+     BanglaChars In '..\Units\BanglaChars.pas',
+     clsPhoneticRegExBuilder_Spell In 'clsPhoneticRegExBuilder_Spell.pas',
+     clsReversePhonetic In 'clsReversePhonetic.pas',
      uFileFolderHandling In '..\Units\uFileFolderHandling.pas',
      uDBase In '..\Units\uDBase.pas',
-     uRegistrySettings In 'uRegistrySettings.pas',
+     clsSpellPhoneticSuggestionBuilder In 'clsSpellPhoneticSuggestionBuilder.pas',
+     Hashing In 'Hashing.pas',
+     HashTable In 'HashTable.pas',
+     Phonetic_RegExp_Constants_Spell In 'Phonetic_RegExp_Constants_Spell.pas',
+     uCustomDictionary In 'uCustomDictionary.pas',
      nativexml In '..\Units\nativexml.pas',
+     uWindowHandlers In '..\Units\uWindowHandlers.pas',
+     uRegExPhoneticSearch_Spell In 'uRegExPhoneticSearch_Spell.pas',
+     uSimilarSort_Spell In 'uSimilarSort_Spell.pas',
+     uSpellEditDistanceSearch In 'uSpellEditDistanceSearch.pas',
+     uRegistrySettings In 'uRegistrySettings.pas',
      ufrmAbout In 'ufrmAbout.pas' {frmAbout},
      clsRegistry_XMLSetting In 'clsRegistry_XMLSetting.pas',
      clsFileVersion In '..\Classes\clsFileVersion.pas',
-     uWindowHandlers In '..\Units\uWindowHandlers.pas';
+     ufrmSpellOptions In 'ufrmSpellOptions.pas' {frmSpellOptions},
+
+     ufrmSpellPopUp In 'ufrmSpellPopUp.pas' {frmSpellPopUp},
+     Forms,
+     Classes;
 
 {$R *.res}
 
@@ -127,7 +128,7 @@ Begin
 
      RegExOpt := [];
      theLocale := 'C';
-     RegExCompileOptions := DecodeRegCompileOptions({PCRE_CASELESS Or}PCRE_UTF8);
+     RegExCompileOptions := DecodeRegCompileOptions(PCRE_UTF8);
 
      If Spell_IgnoreSingle Then Begin
           If Length(W) < 2 Then Begin
@@ -165,6 +166,7 @@ Begin
                exit;
           End;
      End;
+
 End;
 
 {===============================================================================}
@@ -197,7 +199,7 @@ End;
 {===============================================================================}
 
 Procedure RegisterCallback(mCallback: TCallback); Stdcall;
-Begin 
+Begin
      Try
           Callback := mCallback;
      Except
@@ -224,7 +226,7 @@ Begin
           FuzzyResult := TWideStringList.Create;
           OtherResult := TWideStringList.Create;
           DetermineZWNJ_ZWJ := ZWJ;
-          frmSpellPopUp := TfrmSpellPopUp.Create(Nil);
+
           Initialized := True;
      Except
           On e: exception Do Begin
@@ -321,7 +323,6 @@ Begin
 
           //SAction = 3 Change All
           If SpellChangeDict.HasKey(utf8encode(mWrd)) Then Begin
-               frmSpellPopUp.Hide;
                Callback(PWideChar(mWrd), PWideChar(utf8decode(SpellChangeDict.Item[utf8encode(mWrd)])), SA_ReplaceAll);
                exit;
           End;
@@ -352,7 +353,7 @@ Begin
           //Rest Transposition and OCR errors for next version
           { TODO : transposition and OCR errors}
 
-
+          frmSpellPopUp := TfrmSpellPopUp.Create(Nil);
           frmSpellPopUp.Edit_NotFound.Text := mWrd;
           frmSpellPopUp.Show;
      Except
@@ -462,8 +463,6 @@ End;
 Procedure UnloadAll; Stdcall;
 Begin
      Try
-          frmSpellPopUp.Close;
-
           SaveSettings;
 
           SaveSpellCustomDict;
@@ -495,10 +494,12 @@ End;
 {===============================================================================}
 {===============================================================================}
 
+
+
 Exports
      InitSpell,
-     IsWordPresent,
      RegisterCallback,
+     IsWordPresent,
      WordPresentInChangeAll,
      GetCorrection,
      SetWordPosInScreen,
@@ -507,6 +508,7 @@ Exports
      ShowAbout,
      ForgetChangeIgnore,
      UnloadAll;
+
 Begin
 End.
 

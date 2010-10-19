@@ -68,7 +68,6 @@ object frmSpellPopUp: TfrmSpellPopUp
     Width = 130
     Height = 13
     Caption = '&Select from  Suggestion(s):'
-    FocusControl = List
   end
   object Label3: TLabel
     Left = 8
@@ -76,13 +75,104 @@ object frmSpellPopUp: TfrmSpellPopUp
     Width = 60
     Height = 13
     Caption = 'Change &to:'
-    FocusControl = Edit_ChangeTo
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
+  end
+  object But_Cancel: TButton
+    Left = 304
+    Top = 249
+    Width = 109
+    Height = 25
+    Cancel = True
+    Caption = 'Close'
+    TabOrder = 6
+    OnClick = But_CancelClick
+  end
+  object But_Options: TButton
+    Left = 304
+    Top = 207
+    Width = 109
+    Height = 25
+    Caption = 'Options...'
+    TabOrder = 5
+    OnClick = But_OptionsClick
+  end
+  object But_Ignore: TButton
+    Left = 304
+    Top = 8
+    Width = 109
+    Height = 25
+    Caption = '&Ignore once'
+    TabOrder = 0
+    OnClick = But_IgnoreClick
+  end
+  object But_IgnoreAll: TButton
+    Left = 304
+    Top = 35
+    Width = 109
+    Height = 25
+    Caption = 'I&gnore all'
+    TabOrder = 1
+    OnClick = But_IgnoreAllClick
+  end
+  object But_AddToDict: TButton
+    Left = 304
+    Top = 62
+    Width = 109
+    Height = 25
+    Caption = '&Add to dictionary'
+    TabOrder = 2
+    OnClick = But_AddToDictClick
+  end
+  object But_Change: TButton
+    Left = 304
+    Top = 115
+    Width = 109
+    Height = 25
+    Caption = '&Change once'
+    Enabled = False
+    TabOrder = 3
+    OnClick = But_ChangeClick
+  end
+  object But_ChangeAll: TButton
+    Left = 304
+    Top = 142
+    Width = 109
+    Height = 25
+    Caption = 'Change a&ll'
+    Enabled = False
+    TabOrder = 4
+    OnClick = But_ChangeAllClick
+  end
+  object CheckLessPreffered: TCheckBox
+    Left = 115
+    Top = 209
+    Width = 172
+    Height = 17
+    Caption = 'Always Show full suggestion list'
+    TabOrder = 7
+    OnClick = CheckLessPrefferedClick
+  end
+  object List: TTntListBox
+    Left = 8
+    Top = 87
+    Width = 281
+    Height = 116
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Siyam Rupali'
+    Font.Style = []
+    ItemHeight = 27
+    ParentFont = False
+    TabOrder = 8
+    OnClick = ListClick
+    OnDblClick = ListDblClick
+    OnKeyUp = ListKeyUp
   end
   object Edit_NotFound: TTntEdit
     Left = 8
@@ -110,100 +200,8 @@ object frmSpellPopUp: TfrmSpellPopUp
     Font.Name = 'Siyam Rupali'
     Font.Style = [fsBold]
     ParentFont = False
-    TabOrder = 1
+    TabOrder = 10
     OnChange = Edit_ChangeToChange
     OnKeyUp = Edit_ChangeToKeyUp
-  end
-  object List: TTntListBox
-    Left = 8
-    Top = 87
-    Width = 281
-    Height = 116
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -16
-    Font.Name = 'Siyam Rupali'
-    Font.Style = []
-    ItemHeight = 27
-    ParentFont = False
-    TabOrder = 0
-    OnClick = ListClick
-    OnDblClick = ListDblClick
-    OnKeyUp = ListKeyUp
-  end
-  object But_Cancel: TButton
-    Left = 304
-    Top = 249
-    Width = 109
-    Height = 25
-    Cancel = True
-    Caption = 'Close'
-    TabOrder = 8
-    OnClick = But_CancelClick
-  end
-  object But_Options: TButton
-    Left = 304
-    Top = 207
-    Width = 109
-    Height = 25
-    Caption = 'Options...'
-    TabOrder = 7
-    OnClick = But_OptionsClick
-  end
-  object But_Ignore: TButton
-    Left = 304
-    Top = 8
-    Width = 109
-    Height = 25
-    Caption = '&Ignore once'
-    TabOrder = 2
-    OnClick = But_IgnoreClick
-  end
-  object But_IgnoreAll: TButton
-    Left = 304
-    Top = 35
-    Width = 109
-    Height = 25
-    Caption = 'I&gnore all'
-    TabOrder = 3
-    OnClick = But_IgnoreAllClick
-  end
-  object But_AddToDict: TButton
-    Left = 304
-    Top = 62
-    Width = 109
-    Height = 25
-    Caption = '&Add to dictionary'
-    TabOrder = 4
-    OnClick = But_AddToDictClick
-  end
-  object But_Change: TButton
-    Left = 304
-    Top = 115
-    Width = 109
-    Height = 25
-    Caption = '&Change once'
-    Enabled = False
-    TabOrder = 5
-    OnClick = But_ChangeClick
-  end
-  object But_ChangeAll: TButton
-    Left = 304
-    Top = 142
-    Width = 109
-    Height = 25
-    Caption = 'Change a&ll'
-    Enabled = False
-    TabOrder = 6
-    OnClick = But_ChangeAllClick
-  end
-  object CheckLessPreffered: TCheckBox
-    Left = 115
-    Top = 209
-    Width = 172
-    Height = 17
-    Caption = 'Always Show full suggestion list'
-    TabOrder = 10
-    OnClick = CheckLessPrefferedClick
   end
 end

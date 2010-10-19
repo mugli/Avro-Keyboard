@@ -128,8 +128,6 @@ Begin
 
      If nCode = HC_ACTION Then Begin
 
-
-
           {$REGION 'Error fixes'}
           //----------------------------------------------
           //Ignore injected keys
@@ -475,7 +473,7 @@ Begin
           {$ENDREGION}
 
 
-          {$REGION 'Ctrl+F7 to paste globally to Spell checker'}
+          {$REGION 'Ctrl+F7 to launch Spell checker'}
           If (wParam = 257) Or (wParam = 261) Then Begin // Keyup
                If (kbdllhs.vkCode = VK_F7) And (IfTrueShift = False) And (IfControl = True) And (IfAlter = False) Then Begin
                     ShouldBlock := True;

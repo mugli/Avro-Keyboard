@@ -101,6 +101,7 @@ Begin
      { Disable FPU exceptions. No need to restore, setting is process specific. }
      Set8087CW($133F);
 
+
      ///////////////////////////////////////////////////////////////////////////////
      //Check parameters
      If uCommandLineFunctions.HandleAllCommandLine Then Begin
