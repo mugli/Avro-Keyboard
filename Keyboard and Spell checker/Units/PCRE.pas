@@ -71,7 +71,7 @@ unit PCRE;
 interface
 
 uses
-  SysUtils;
+  SysUtils, dialogs;
 
 const
   CAPTURE_GROUP_BEFORE_START = -1;
@@ -131,14 +131,14 @@ type
   ICaptureGroup = interface
   ['{2AAF1F28-63F8-4977-95EE-13AAC0E3E866}']
     function GetMatched: Boolean; stdcall;
-    function GetValue: string; stdcall;
+    function GetValue: AnsiString; stdcall;
     function GetIndex: Integer; stdcall;
     function GetLength: Integer; stdcall;
 
     property Matched: Boolean
         read GetMatched;
 
-    property Value: string
+    property Value: Ansistring
         read GetValue;
 
     property Index: Integer
@@ -152,7 +152,7 @@ type
   ['{662BAD69-E186-4582-A3EB-568AE049E16A}']
     function GetCount: Integer; stdcall;
     function GetItem(Index: Integer): ICaptureGroup; stdcall;
-    function GetItemByName(const Name: string): ICaptureGroup; stdcall;
+    function GetItemByName(const Name: ansistring): ICaptureGroup; stdcall;
 
     property Count: Integer
         read GetCount;
@@ -160,7 +160,7 @@ type
     property Items[Index: Integer]: ICaptureGroup
         read GetItem; default;
 
-    property ItemsByName[const Name: string]: ICaptureGroup
+    property ItemsByName[const Name: ansistring]: ICaptureGroup
         read GetItemByName;
   end;
 
@@ -190,22 +190,22 @@ type
   IStringCollection = interface
   ['{4FC62381-7D61-4399-B22E-4AB27BBC070C}']
     function GetCount: Integer; stdcall;
-    function GetString(Index: Integer): string; stdcall;
+    function GetString(Index: Integer): AnsiString; stdcall;
 
     property Count: Integer
         read GetCount;
 
-    property Strings[Index: Integer]: string
+    property Strings[Index: Integer]: AnsiString
         read GetString; default;
   end;
 
   IDfaMatch = interface
   ['{66D0477C-0ADB-4BB5-AA0A-73E4F578458B}']
-    function GetValue: string; stdcall;
+    function GetValue: ansistring; stdcall;
     function GetIndex: Integer; stdcall;
     function GetLength: Integer; stdcall;
 
-    property Value: string
+    property Value: ansistring
         read GetValue;
 
     property Index: Integer
@@ -227,105 +227,105 @@ type
         read GetItem; default;
   end;
 
-  TRegexMatchEvaluator = function(theMatch: IMatch): string of object;
+  TRegexMatchEvaluator = function(theMatch: IMatch): ansistring of object;
   TRegexMatchEvent     = procedure(theMatch: IMatch) of object;
 
   IRegex = interface
   ['{C8DA961E-33ED-4C3A-AA9F-400DD9A766EB}']
     { IsMatch }
-    function IsMatch(const Input    : string): Boolean; overload; stdcall;
+    function IsMatch(const Input    : ansistring): Boolean; overload; stdcall;
 
-    function IsMatch(const Input    : string;
+    function IsMatch(const Input    : ansistring;
                            Options  : TRegMatchOptions): Boolean; overload; stdcall;
 
-    function IsMatch(const Input    : string;
+    function IsMatch(const Input    : ansistring;
                            Start    : Integer): Boolean; overload; stdcall;
 
-    function IsMatch(const Input    : string;
+    function IsMatch(const Input    : ansistring;
                            Start    : Integer;
                            Options  : TRegMatchOptions): Boolean; overload; stdcall;
 
     { Match }
-    function Match(const Input    : string): IMatch; overload; stdcall;
+    function Match(const Input    : ansistring): IMatch; overload; stdcall;
 
-    function Match(const Input    : string;
+    function Match(const Input    : ansistring;
                          Options  : TRegMatchOptions): IMatch; overload; stdcall;
 
-    function Match(const Input    : string;
+    function Match(const Input    : ansistring;
                          Start    : Integer): IMatch; overload; stdcall;
 
-    function Match(const Input    : string;
+    function Match(const Input    : ansistring;
                          Start    : Integer;
                          Options  : TRegMatchOptions): IMatch; overload; stdcall;
 
 
     { DFA Match }
-    function DfaMatch(const Input    : string): IDfaMatchCollection; overload; stdcall;
+    function DfaMatch(const Input    : ansistring): IDfaMatchCollection; overload; stdcall;
 
-    function DfaMatch(const Input    : string;
+    function DfaMatch(const Input    : ansistring;
                             Options  : TRegMatchOptions): IDfaMatchCollection; overload; stdcall;
 
-    function DfaMatch(const Input    : string;
+    function DfaMatch(const Input    : ansistring;
                             Start    : Integer): IDfaMatchCollection; overload; stdcall;
 
-    function DfaMatch(const Input    : string;
+    function DfaMatch(const Input    : ansistring;
                             Start    : Integer;
                             Options  : TRegMatchOptions): IDfaMatchCollection; overload; stdcall;
 
     { Matches }
-    function Matches(const Input  : string): IMatchCollection; overload; stdcall;
+    function Matches(const Input  : ansistring): IMatchCollection; overload; stdcall;
 
-    function Matches(const Input  : string;
+    function Matches(const Input  : ansistring;
                            Options: TRegMatchOptions): IMatchCollection; overload; stdcall;
 
     { Grep }
-    procedure Grep(const Input    : string;
+    procedure Grep(const Input    : ansistring;
                          OnMatch  : TRegexMatchEvent); overload; stdcall;
 
-    procedure Grep(const Input    : string;
+    procedure Grep(const Input    : ansistring;
                          Options  : TRegMatchOptions;
                          OnMatch  : TRegexMatchEvent); overload; stdcall;
 
     { Split }
-    function Split(const Input        : string): IStringCollection; overload; stdcall;
+    function Split(const Input        : ansistring): IStringCollection; overload; stdcall;
 
-    function Split(const Input        : string;
+    function Split(const Input        : ansistring;
                          Options      : TRegSplitOptions): IStringCollection; overload; stdcall;
 
-    function Split(const Input        : string;
+    function Split(const Input        : ansistring;
                          Options      : TRegSplitOptions;
                          MatchOptions : TRegMatchOptions): IStringCollection; overload; stdcall;
 
     { Replace }
-    function Replace(const Input        : string;
-                     const Replacement  : string): string; overload; stdcall;
+    function Replace(const Input        : ansistring;
+                     const Replacement  : ansistring): ansistring; overload; stdcall;
 
-    function Replace(const Input        : string;
-                           Evaluator    : TRegexMatchEvaluator): string; overload; stdcall;
+    function Replace(const Input        : ansistring;
+                           Evaluator    : TRegexMatchEvaluator): ansistring; overload; stdcall;
 
-    function Replace(const Input        : string;
-                     const Replacement  : string;
-                           MatchOptions : TRegMatchOptions): string; overload; stdcall;
+    function Replace(const Input        : ansistring;
+                     const Replacement  : ansistring;
+                           MatchOptions : TRegMatchOptions): ansistring; overload; stdcall;
 
-    function Replace(const Input        : string;
+    function Replace(const Input        : ansistring;
                            Evaluator    : TRegexMatchEvaluator;
-                           MatchOptions : TRegMatchOptions): string; overload; stdcall;
+                           MatchOptions : TRegMatchOptions): ansistring; overload; stdcall;
 
     { Misc }
     function GetOptions: TRegCompileOptions; stdcall;
 
-    function GetPattern: string; stdcall;
+    function GetPattern: ansistring; stdcall;
 
     { properties }
     property Options: TRegCompileOptions
         read GetOptions;
 
-    property Pattern: string
+    property Pattern: ansistring
         read GetPattern;
   end;
 
   TNamedGroupInfo = record
-    Name  : string;
+    Name  : ansistring;
     Index : Integer;
   end;
 
@@ -337,16 +337,16 @@ type
     function GetFirstChar       : Integer; stdcall;
     function GetFirstTable      : Pointer; stdcall;
     function GetLastLiteral     : Integer; stdcall;
-    function GetLocale          : string; stdcall;
+    function GetLocale          : ansistring; stdcall;
     function GetOptions         : TRegCompileOptions; stdcall;
-    function GetPattern         : string; stdcall;
+    function GetPattern         : ansistring; stdcall;
     function GetNamedGroupCount : Integer; stdcall;
     function GetNamedGroup(Index: Integer): TNamedGroupInfo; stdcall;
 
     property Options: TRegCompileOptions
         read GetOptions;
 
-    property Pattern: string
+    property Pattern: ansistring
         read GetPattern;
 
     property CompiledSize: Cardinal
@@ -367,7 +367,7 @@ type
     property LastLiteral: Integer
         read GetLastLiteral;
 
-    property Locale: string
+    property Locale: ansistring
         read GetLocale;
 
     property NamedGroupCount: Integer
@@ -394,18 +394,18 @@ type
   ERegexInvalidSubstitutionGroup  = class(ERegexException);
   ERegexBadGroupName              = class(ERegexException);
 
-function RegexCreate(const thePattern       : string): IRegex; overload;
+function RegexCreate(const thePattern       : ansistring): IRegex; overload;
 
-function RegexCreate(const thePattern       : string;
+function RegexCreate(const thePattern       : ansistring;
                            theOptions       : TRegCompileOptions): IRegex; overload;
 
-function RegexCreate(const thePattern       : string;
-                     const theLocale        : string;
+function RegexCreate(const thePattern       : ansistring;
+                     const theLocale        : ansistring;
                            theLocaleCategory: TRegexLocaleCategory = RXLC_ALL): IRegex; overload;
 
-function RegexCreate(const thePattern       : string;
+function RegexCreate(const thePattern       : ansistring;
                            theOptions       : TRegCompileOptions;
-                     const theLocale        : string;
+                     const theLocale        : ansistring;
                            theLocaleCategory: TRegexLocaleCategory = RXLC_ALL): IRegex; overload;
 
 function EncodeRegCompileOptions(theOptions : TRegCompileOptions): LongWord;
@@ -429,8 +429,8 @@ uses
 type
   INameIndexLookup = interface
   ['{4EB901AE-50F9-4552-84B6-1676613B6F0E}']
-    function  GetGroupIndex(const theName: string): Integer;
-    procedure AddMapping(const theName: string; theIndex: Integer);
+    function  GetGroupIndex(const theName: ansistring): Integer;
+    procedure AddMapping(const theName: ansistring; theIndex: Integer);
     function  GetMappingCount: Integer;
     function  GetMappingAt(theIndex: Integer): TNamedGroupInfo;
   end;
@@ -444,8 +444,8 @@ type
     destructor Destroy; override;
 
     // INameIndexLookup
-    function  GetGroupIndex(const theName: string): Integer;
-    procedure AddMapping(const theName: string; theIndex: Integer);
+    function  GetGroupIndex(const theName: ansistring): Integer;
+    procedure AddMapping(const theName: ansistring; theIndex: Integer);
     function  GetMappingCount: Integer;
     function  GetMappingAt(theIndex: Integer): TNamedGroupInfo;
   end;
@@ -454,12 +454,12 @@ type
   private
     FNlsTable: TPcre_tableH;
     FDispose : Boolean;
-    FLocale  : string;
+    FLocale  : ansistring;
   public
-    constructor Create(const theLocale: string; theLocaleCategory: TRegexLocaleCategory);
+    constructor Create(const theLocale: ansistring; theLocaleCategory: TRegexLocaleCategory);
     destructor  Destroy; override;
 
-    property Locale: string
+    property Locale: ansistring
         read FLocale;
 
     property CharTable: TPcre_tableH
@@ -472,10 +472,10 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    procedure Add(const S: string);
+    procedure Add(const S: ansistring);
     { IStringCollection }
     function GetCount: Integer; stdcall;
-    function GetString(Index: Integer): string; stdcall;
+    function GetString(Index: Integer): Ansistring; stdcall;
   end;
 
   TRegexMatchCollection = class(TInterfacedObject, IMatchCollection)
@@ -499,24 +499,24 @@ type
 
   TRegexMatch = class(TInterfacedObject, IMatch, ICaptureGroupCollection)
   private
-    FSubject : string;
+    FSubject : ansistring;
     FCount   : Integer;
     FMatches : TOvector;
     FNames   : INameIndexLookup;
 
   public
-    constructor Create(const S: string; var VOffset: TOVector; const Names: INameIndexLookup);
+    constructor Create(const S: ansistring; var VOffset: TOVector; const Names: INameIndexLookup);
     destructor  Destroy; override;
 
     function InternalGetMatchPos(Index: Integer): TMatchPos;
     function InternalGetMatched(Index: Integer): Boolean;
-    function InternalGetValue(Index: Integer): string;
+    function InternalGetValue(Index: Integer): ansistring;
     function InternalGetIndex(Index: Integer): Integer;
     function InternalGetLength(Index: Integer): Integer;
 
     { ICaptureGroup }
     function GetMatched: Boolean; stdcall;
-    function GetValue: string; stdcall;
+    function GetValue: Ansistring; stdcall;
     function GetIndex: Integer; stdcall;
     function GetLength: Integer; stdcall;
 
@@ -526,7 +526,7 @@ type
     { ICaptureGroupCollection }
     function GetCount: Integer; stdcall;
     function GetItem(Index: Integer): ICaptureGroup; stdcall;
-    function GetItemByName(const Name: string): ICaptureGroup; stdcall;
+    function GetItemByName(const Name: ansistring): ICaptureGroup; stdcall;
   end;
 
   TRegexCaptureGroup = class(TInterfacedObject, ICaptureGroup)
@@ -538,23 +538,23 @@ type
     destructor Destroy; override;
     { ICaptureGroup }
     function GetMatched: Boolean; stdcall;
-    function GetValue: string; stdcall;
+    function GetValue: Ansistring; stdcall;
     function GetIndex: Integer; stdcall;
     function GetLength: Integer; stdcall;
   end;
 
   TDfaMatchCollection = class(TInterfacedObject, IDfaMatchCollection)
   private
-    FSubject : string;
+    FSubject : ansistring;
     FCount   : Integer;
     FMatches : TOvector;
 
   public
-    constructor Create(const S: string; var VOffset: TOVector);
+    constructor Create(const S: ansistring; var VOffset: TOVector);
     destructor  Destroy; override;
 
     function InternalGetMatchPos(Index: Integer): TMatchPos;
-    function InternalGetValue(Index: Integer): string;
+    function InternalGetValue(Index: Integer): ansistring;
     function InternalGetIndex(Index: Integer): Integer;
     function InternalGetLength(Index: Integer): Integer;
 
@@ -573,14 +573,14 @@ type
     destructor Destroy; override;
 
     { IDfaMatch }
-    function GetValue: string; stdcall;
+    function GetValue: ansistring; stdcall;
     function GetIndex: Integer; stdcall;
     function GetLength: Integer; stdcall;
   end;
 
   TRegex = class(TInterfacedObject, IRegex, IRegexInfo)
   private
-    FPattern    : string;
+    FPattern    : AnsiString;
     FOptions    : TRegCompileOptions;
     FRegex      : TPcreH;
     FRegExtra   : TPcre_extraH;
@@ -592,54 +592,54 @@ type
     procedure PcreCheck(ErrorCode: Integer);
 
   public
-    constructor Create(const Pattern        : string;
+    constructor Create(const Pattern        : ansistring;
                              Options        : TRegCompileOptions;
-                       const Locale         : string;
+                       const Locale         : ansistring;
                              LocaleCategory : TRegexLocaleCategory = RXLC_ALL);
 
     destructor Destroy; override;
 
     { IRegex }
-    function IsMatch(const Input: string): Boolean; overload; stdcall;
-    function IsMatch(const Input: string; Options: TRegMatchOptions): Boolean; overload; stdcall;
-    function IsMatch(const Input: string; Start: Integer): Boolean; overload; stdcall;
-    function IsMatch(const Input: string; Start: Integer; Options: TRegMatchOptions): Boolean; overload; stdcall;
+    function IsMatch(const Input: ansistring): Boolean; overload; stdcall;
+    function IsMatch(const Input: ansistring; Options: TRegMatchOptions): Boolean; overload; stdcall;
+    function IsMatch(const Input: ansistring; Start: Integer): Boolean; overload; stdcall;
+    function IsMatch(const Input: ansistring; Start: Integer; Options: TRegMatchOptions): Boolean; overload; stdcall;
 
-    function Match(const Input: string): IMatch; overload; stdcall;
-    function Match(const Input: string; Options: TRegMatchOptions): IMatch; overload; stdcall;
-    function Match(const Input: string; Start: Integer): IMatch; overload; stdcall;
-    function Match(const Input: string; Start: Integer; Options: TRegMatchOptions): IMatch; overload; stdcall;
+    function Match(const Input: ansistring): IMatch; overload; stdcall;
+    function Match(const Input: ansistring; Options: TRegMatchOptions): IMatch; overload; stdcall;
+    function Match(const Input: ansistring; Start: Integer): IMatch; overload; stdcall;
+    function Match(const Input: ansistring; Start: Integer; Options: TRegMatchOptions): IMatch; overload; stdcall;
 
-    function DfaMatch(const Input    : string): IDfaMatchCollection; overload; stdcall;
+    function DfaMatch(const Input    : ansistring): IDfaMatchCollection; overload; stdcall;
 
-    function DfaMatch(const Input    : string;
+    function DfaMatch(const Input    : ansistring;
                             Options  : TRegMatchOptions): IDfaMatchCollection; overload; stdcall;
 
-    function DfaMatch(const Input    : string;
+    function DfaMatch(const Input    : ansistring;
                             Start    : Integer): IDfaMatchCollection; overload; stdcall;
 
-    function DfaMatch(const Input    : string;
+    function DfaMatch(const Input    : ansistring;
                             Start    : Integer;
                             Options  : TRegMatchOptions): IDfaMatchCollection; overload; stdcall;
 
 
-    function Matches(const Input: string): IMatchCollection; overload; stdcall;
-    function Matches(const Input: string; Options: TRegMatchOptions): IMatchCollection; overload; stdcall;
+    function Matches(const Input: ansistring): IMatchCollection; overload; stdcall;
+    function Matches(const Input: ansistring; Options: TRegMatchOptions): IMatchCollection; overload; stdcall;
 
-    procedure Grep(const Input: string; OnMatch: TRegexMatchEvent); overload; stdcall;
-    procedure Grep(const Input: string; Options: TRegMatchOptions; OnMatch: TRegexMatchEvent); overload; stdcall;
+    procedure Grep(const Input: ansistring; OnMatch: TRegexMatchEvent); overload; stdcall;
+    procedure Grep(const Input: ansistring; Options: TRegMatchOptions; OnMatch: TRegexMatchEvent); overload; stdcall;
 
-    function Split(const Input: string): IStringCollection; overload; stdcall;
-    function Split(const Input: string; Options: TRegSplitOptions): IStringCollection; overload; stdcall;
-    function Split(const Input: string; Options: TRegSplitOptions; MatchOptions: TRegMatchOptions): IStringCollection; overload; stdcall;
+    function Split(const Input: ansistring): IStringCollection; overload; stdcall;
+    function Split(const Input: ansistring; Options: TRegSplitOptions): IStringCollection; overload; stdcall;
+    function Split(const Input: ansistring; Options: TRegSplitOptions; MatchOptions: TRegMatchOptions): IStringCollection; overload; stdcall;
 
-    function Replace(const Input: string; const Replacement: string): string; overload; stdcall;
-    function Replace(const Input: string; Evaluator: TRegexMatchEvaluator): string; overload; stdcall;
-    function Replace(const Input: string; const Replacement: string; MatchOptions: TRegMatchOptions): string; overload; stdcall;
-    function Replace(const Input: string; Evaluator: TRegexMatchEvaluator; MatchOptions: TRegMatchOptions): string; overload; stdcall;
+    function Replace(const Input: ansistring; const Replacement: ansistring): ansistring; overload; stdcall;
+    function Replace(const Input: ansistring; Evaluator: TRegexMatchEvaluator): ansistring; overload; stdcall;
+    function Replace(const Input: ansistring; const Replacement: ansistring; MatchOptions: TRegMatchOptions): ansistring; overload; stdcall;
+    function Replace(const Input: ansistring; Evaluator: TRegexMatchEvaluator; MatchOptions: TRegMatchOptions): ansistring; overload; stdcall;
 
     function GetOptions: TRegCompileOptions; stdcall;
-    function GetPattern: string; stdcall;
+    function GetPattern: ansistring; stdcall;
 
     { IRegexInfo }
     function GetCompiledSize: Cardinal; stdcall;
@@ -648,7 +648,7 @@ type
     function GetFirstChar: Integer; stdcall;
     function GetFirstTable: Pointer; stdcall;
     function GetLastLiteral: Integer; stdcall;
-    function GetLocale: string; stdcall;
+    function GetLocale: ansistring; stdcall;
     function GetNamedGroupCount : Integer; stdcall;
     function GetNamedGroup(Index: Integer): TNamedGroupInfo; stdcall;
   end;
@@ -658,7 +658,7 @@ type
     FMatch  : IMatch;
   public
     constructor Create(theMatch: IMatch);
-    function    RegexSubstitute(Match: IMatch): string;
+    function    RegexSubstitute(Match: IMatch): ansistring;
   end;
 
 { ********************************************************* }
@@ -669,7 +669,7 @@ type
 
 //===========================================================================
 
-function RegexCreate(const thePattern: string): IRegex;
+function RegexCreate(const thePattern: ansistring): IRegex;
 
 begin
   Result := RegexCreate(thePattern, [], 'C');
@@ -677,7 +677,7 @@ end;
 
 //===========================================================================
 
-function RegexCreate(const thePattern: string; theOptions: TRegCompileOptions): IRegex;
+function RegexCreate(const thePattern: ansistring; theOptions: TRegCompileOptions): IRegex;
 
 begin
   Result := RegexCreate(thePattern, theOptions, 'C');
@@ -685,8 +685,8 @@ end;
 
 //===========================================================================
 
-function RegexCreate(const thePattern         : string;
-                     const theLocale          : string;
+function RegexCreate(const thePattern         : ansistring;
+                     const theLocale          : ansistring;
                            theLocaleCategory  : TRegexLocaleCategory = RXLC_ALL): IRegex;
 
 begin
@@ -695,9 +695,9 @@ end;
 
 //===========================================================================
 
-function RegexCreate(const thePattern       : string;
+function RegexCreate(const thePattern       : ansistring;
                            theOptions       : TRegCompileOptions;
-                     const theLocale        : string;
+                     const theLocale        : ansistring;
                            theLocaleCategory: TRegexLocaleCategory = RXLC_ALL): IRegex;
 
 begin
@@ -869,7 +869,7 @@ end;
 
 //===========================================================================
 
-function TSubstitute.RegexSubstitute(Match: IMatch): string;
+function TSubstitute.RegexSubstitute(Match: IMatch): ansistring;
 
 const
   REGEX_SUBST_DOLLAR        = '$';
@@ -881,7 +881,7 @@ const
   REGEX_SUBST_NAMED_GROUP   = '{';
 
 var
-  theSubstitution : string;
+  theSubstitution : ansistring;
   theIndex        : Integer;
 
 begin
@@ -916,7 +916,7 @@ var
 
 //===========================================================================
 
-function Substitute(const Replace: string; theMatch: IMatch): string;
+function Substitute(const Replace: ansistring; theMatch: IMatch): ansistring;
 
 var
   theAction : TSubstitute;
@@ -939,18 +939,18 @@ var
 
 //===========================================================================
 
-function GetLocaleTable(const theLocale         : string;
+function GetLocaleTable(const theLocale         : ansistring;
                               theLocaleCategory : Integer;
-                        var   theCharTable      : TPcre_tableH): string;
+                        var   theCharTable      : TPcre_tableH): ansistring;
 
 var
-  szLocale : PChar;
+  szLocale : PAnsiChar;
 
 begin
   LocaleLock.Enter;
 
   try
-    szLocale := pcre_setlocale(theLocaleCategory, PChar(theLocale));
+    szLocale := pcre_setlocale(theLocaleCategory, PAnsiChar(theLocale));
 
     if szLocale = nil then
     begin
@@ -973,7 +973,7 @@ end;
 
 //===========================================================================
 
-constructor TRegexLocale.Create(const theLocale         : string;
+constructor TRegexLocale.Create(const theLocale         : ansistring;
                                       theLocaleCategory : TRegexLocaleCategory);
 
 begin
@@ -1010,7 +1010,7 @@ end;
 
 { TRegexStringCollection }
 
-procedure TRegexStringCollection.Add(const S: string);
+procedure TRegexStringCollection.Add(const S: ansistring);
 
 begin
   FStrings.Add(S);
@@ -1044,7 +1044,7 @@ end;
 
 //===========================================================================
 
-function TRegexStringCollection.GetString(Index: Integer): string;
+function TRegexStringCollection.GetString(Index: Integer): AnsiString;
 
 begin
   Result := FStrings[Index];
@@ -1141,7 +1141,7 @@ end;
 
 //===========================================================================
 
-function TRegexCaptureGroup.GetValue: string;
+function TRegexCaptureGroup.GetValue: Ansistring;
 
 begin
   Result := FMatch.InternalGetValue(FIndex);
@@ -1151,7 +1151,7 @@ end;
 
 { TRegexMatch }
 
-constructor TRegexMatch.Create(const S: string; var VOffset: TOVector; const Names: INameIndexLookup);
+constructor TRegexMatch.Create(const S: ansistring; var VOffset: TOVector; const Names: INameIndexLookup);
 
 begin
   ASSERT(Names <> nil);
@@ -1205,7 +1205,7 @@ end;
 
 //===========================================================================
 
-function TRegexMatch.InternalGetValue(Index: Integer): string;
+function TRegexMatch.InternalGetValue(Index: Integer): ansistring;
 
 var
   MatchPos: TMatchPos;
@@ -1291,7 +1291,7 @@ end;
 
 //===========================================================================
 
-function TRegexMatch.GetItemByName(const Name: string): ICaptureGroup;
+function TRegexMatch.GetItemByName(const Name: ansistring): ICaptureGroup;
 
 begin
   Result := GetItem(FNames.GetGroupIndex(Name));
@@ -1323,7 +1323,7 @@ end;
 
 //===========================================================================
 
-function TRegexMatch.GetValue: string;
+function TRegexMatch.GetValue: Ansistring;
 
 begin
   Result := InternalGetValue(CAPTURE_GROUP_ENTIRE_MATCH);
@@ -1333,9 +1333,9 @@ end;
 
 { TRegex }
 
-constructor TRegex.Create(const Pattern       : string;
+constructor TRegex.Create(const Pattern       : ansistring;
                                 Options       : TRegCompileOptions;
-                          const Locale        : string;
+                          const Locale        : ansistring;
                                 LocaleCategory: TRegexLocaleCategory);
 
 begin
@@ -1367,7 +1367,7 @@ procedure TRegex.CompilePattern;
 var
   Pcre            : TPcreH;
   CharTable       : TPcre_tableH;
-  ErrMsg          : PChar;
+  ErrMsg          : PAnsiChar;
   ErrOffs         : Integer;
   CompileOptions  : LongWord;
 
@@ -1375,7 +1375,8 @@ begin
   CharTable       := FLocaleInfo.CharTable;
   CompileOptions  := EncodeRegCompileOptions(FOptions);
 
-  Pcre            := pcre_compile(PChar(FPattern),
+
+  Pcre            := pcre_compile(PAnsiChar(FPattern),
                                   CompileOptions,
                                   ErrMsg,
                                   ErrOffs,
@@ -1427,7 +1428,7 @@ begin
   begin
     WordRec(Idx).Hi := Ptr^; Inc(Ptr);
     WordRec(Idx).Lo := Ptr^; Inc(Ptr);
-    FNames.AddMapping(PChar(Ptr), Idx);
+    FNames.AddMapping(PAnsiChar(Ptr), Idx);
     Inc(Ptr, NameEntrySize - 2 );
   end;
 end;
@@ -1545,7 +1546,7 @@ end;
 
 //===========================================================================
 
-function TRegex.GetLocale: string;
+function TRegex.GetLocale: ansistring;
 
 begin
   Result := FLocaleInfo.Locale;
@@ -1566,7 +1567,7 @@ end;
 
 //===========================================================================
 
-function TRegex.GetPattern: string;
+function TRegex.GetPattern: ansistring;
 
 begin
   Result := FPattern;
@@ -1574,7 +1575,7 @@ end;
 
 //===========================================================================
 
-function TRegex.IsMatch(const Input: string): Boolean;
+function TRegex.IsMatch(const Input: ansistring): Boolean;
 
 begin
   Result := Match(Input).Success;
@@ -1582,7 +1583,7 @@ end;
 
 //===========================================================================
 
-function TRegex.IsMatch(const Input: string; Start: Integer): Boolean;
+function TRegex.IsMatch(const Input: ansistring; Start: Integer): Boolean;
 
 begin
   Result := Match(Input, Start).Success;
@@ -1590,7 +1591,7 @@ end;
 
 //===========================================================================
 
-function TRegex.IsMatch(const Input: string; Options: TRegMatchOptions): Boolean;
+function TRegex.IsMatch(const Input: ansistring; Options: TRegMatchOptions): Boolean;
 
 begin
   Result := Match(Input, Options).Success;
@@ -1598,7 +1599,7 @@ end;
 
 //===========================================================================
 
-function TRegex.IsMatch(const Input: string; Start: Integer; Options: TRegMatchOptions): Boolean;
+function TRegex.IsMatch(const Input: ansistring; Start: Integer; Options: TRegMatchOptions): Boolean;
 
 begin
   Result := Match(Input, Start, Options).Success;
@@ -1606,7 +1607,7 @@ end;
 
 //===========================================================================
 
-function TRegex.Match(const Input: string): IMatch;
+function TRegex.Match(const Input: ansistring): IMatch;
 
 begin
   Result := Match(Input, 0, []);
@@ -1614,7 +1615,7 @@ end;
 
 //===========================================================================
 
-function TRegex.Match(const Input: string; Options: TRegMatchOptions): IMatch;
+function TRegex.Match(const Input: ansistring; Options: TRegMatchOptions): IMatch;
 
 begin
   Result := Match(Input, 0, Options);
@@ -1622,7 +1623,7 @@ end;
 
 //===========================================================================
 
-function TRegex.Match(const Input: string; Start: Integer): IMatch;
+function TRegex.Match(const Input: ansistring; Start: Integer): IMatch;
 
 begin
   Result := Match(Input, Start, []);
@@ -1630,7 +1631,7 @@ end;
 
 //===========================================================================
 
-function TRegex.Match(const Input: string; Start: Integer; Options: TRegMatchOptions): IMatch;
+function TRegex.Match(const Input: ansistring; Start: Integer; Options: TRegMatchOptions): IMatch;
 
 var
   ErrorCode : Integer;
@@ -1665,7 +1666,7 @@ begin
 
     ErrorCode := pcre_exec(FRegex,
                            FRegExtra,
-                           PChar(Input),
+                           PAnsiChar(Input),
                            Length(Input),
                            Start,
                            EncodeRegMatchOptions(Options),
@@ -1683,7 +1684,7 @@ end;
 
 //===========================================================================
 
-function TRegex.Matches(const Input: string): IMatchCollection;
+function TRegex.Matches(const Input: ansistring): IMatchCollection;
 
 begin
   Result := Matches(Input, []);
@@ -1691,7 +1692,7 @@ end;
 
 //===========================================================================
 
-function TRegex.Matches(const Input: string; Options: TRegMatchOptions): IMatchCollection;
+function TRegex.Matches(const Input: ansistring; Options: TRegMatchOptions): IMatchCollection;
 
 var
   theCollection: TRegexMatchCollection;
@@ -1704,7 +1705,7 @@ end;
 
 //===========================================================================
 
-function TRegex.Replace(const Input, Replacement: string): string;
+function TRegex.Replace(const Input, Replacement: ansistring): ansistring;
 
 begin
   Result := Replace(Input, Replacement, []);
@@ -1712,7 +1713,7 @@ end;
 
 //===========================================================================
 
-function TRegex.Replace(const Input: string; Evaluator: TRegexMatchEvaluator): string;
+function TRegex.Replace(const Input: ansistring; Evaluator: TRegexMatchEvaluator): ansistring;
 
 begin
   Result := Replace(Input, Evaluator, []);
@@ -1720,12 +1721,12 @@ end;
 
 //===========================================================================
 
-function TRegex.Replace(const Input, Replacement  : string;
-                              MatchOptions        : TRegMatchOptions): string;
+function TRegex.Replace(const Input, Replacement  : ansistring;
+                              MatchOptions        : TRegMatchOptions): ansistring;
 
 var
   theOffset     : Integer;
-  theToken      : string;
+  theToken      : ansistring;
   theMatch      : IMatch;
   firstPosition : Integer;
   lastPosition  : Integer;
@@ -1759,13 +1760,13 @@ end;
 
 //===========================================================================
 
-function TRegex.Replace(const Input         : string;
+function TRegex.Replace(const Input         : ansistring;
                               Evaluator     : TRegexMatchEvaluator;
-                              MatchOptions  : TRegMatchOptions): string;
+                              MatchOptions  : TRegMatchOptions): ansistring;
 
 var
   theOffset     : Integer;
-  theToken      : string;
+  theToken      : ansistring;
   theMatch      : IMatch;
   firstPosition : Integer;
   lastPosition  : Integer;
@@ -1804,7 +1805,7 @@ end;
 
 //===========================================================================
 
-function TRegex.Split(const Input: string): IStringCollection;
+function TRegex.Split(const Input: ansistring): IStringCollection;
 
 begin
   Result := Split(Input, [], []);
@@ -1812,7 +1813,7 @@ end;
 
 //===========================================================================
 
-function TRegex.Split(const Input: string; Options: TRegSplitOptions): IStringCollection;
+function TRegex.Split(const Input: ansistring; Options: TRegSplitOptions): IStringCollection;
 
 begin
   Result := Split(Input, Options, []);
@@ -1820,13 +1821,13 @@ end;
 
 //===========================================================================
 
-function TRegex.Split(const Input         : string;
+function TRegex.Split(const Input         : ansistring;
                             Options       : TRegSplitOptions;
                             MatchOptions  : TRegMatchOptions): IStringCollection;
 var
   theCollection : TRegexStringCollection;
   theOffset     : Integer;
-  theToken      : string;
+  theToken      : ansistring;
   theMatch      : IMatch;
   hasGroups     : Boolean;
   firstPosition : Integer;
@@ -1869,14 +1870,14 @@ end;
 
 //===========================================================================
 
-procedure TRegex.Grep(const Input: string; OnMatch: TRegexMatchEvent);
+procedure TRegex.Grep(const Input: ansistring; OnMatch: TRegexMatchEvent);
 begin
   Grep(Input, [], OnMatch);
 end;
 
 //===========================================================================
 
-procedure TRegex.Grep(const Input: string; Options: TRegMatchOptions; OnMatch: TRegexMatchEvent);
+procedure TRegex.Grep(const Input: ansistring; Options: TRegMatchOptions; OnMatch: TRegexMatchEvent);
 
 var
   theOffset : Integer;
@@ -1915,7 +1916,7 @@ end;
 
 //===========================================================================
 
-function TRegex.DfaMatch(const Input: string; Start: Integer;
+function TRegex.DfaMatch(const Input: ansistring; Start: Integer;
   Options: TRegMatchOptions): IDfaMatchCollection;
 
 var
@@ -1936,7 +1937,7 @@ begin
 
     ErrorCode := pcre_dfa_exec(FRegex,
                                FRegExtra,
-                               PChar(Input),
+                               PAnsiChar(Input),
                                Length(Input),
                                Start,
                                EncodeRegMatchOptions(Options),
@@ -1960,7 +1961,7 @@ end;
 
 //===========================================================================
 
-function TRegex.DfaMatch(const Input: string;
+function TRegex.DfaMatch(const Input: ansistring;
   Start: Integer): IDfaMatchCollection;
 
 begin
@@ -1969,7 +1970,7 @@ end;
 
 //===========================================================================
 
-function TRegex.DfaMatch(const Input: string;
+function TRegex.DfaMatch(const Input: ansistring;
   Options: TRegMatchOptions): IDfaMatchCollection;
 
 begin
@@ -1978,7 +1979,7 @@ end;
 
 //===========================================================================
 
-function TRegex.DfaMatch(const Input: string): IDfaMatchCollection;
+function TRegex.DfaMatch(const Input: ansistring): IDfaMatchCollection;
 
 begin
   Result := DfaMatch(Input, 0, []);
@@ -2010,7 +2011,7 @@ end;
 
 //===========================================================================
 
-procedure TNameIndexLookup.AddMapping(const theName: string; theIndex: Integer);
+procedure TNameIndexLookup.AddMapping(const theName: ansistring; theIndex: Integer);
 
 begin
   FMappings.AddObject(theName, Pointer(theIndex));
@@ -2018,7 +2019,7 @@ end;
 
 //===========================================================================
 
-function TNameIndexLookup.GetGroupIndex(const theName: string): Integer;
+function TNameIndexLookup.GetGroupIndex(const theName: ansistring): Integer;
 
 var
   theIndex : Integer;
@@ -2079,7 +2080,7 @@ end;
 
 //===========================================================================
 
-function TDfaMatch.GetValue: string;
+function TDfaMatch.GetValue: ansistring;
 
 begin
   Result := FMatchCollection.InternalGetValue(FIndex);
@@ -2097,7 +2098,7 @@ end;
 
 { TDfaMatchCollection }
 
-constructor TDfaMatchCollection.Create(const S: string; var VOffset: TOVector);
+constructor TDfaMatchCollection.Create(const S: ansistring; var VOffset: TOVector);
 
 begin
   inherited Create();
@@ -2143,7 +2144,7 @@ end;
 
 //===========================================================================
 
-function TDfaMatchCollection.InternalGetValue(Index: Integer): string;
+function TDfaMatchCollection.InternalGetValue(Index: Integer): ansistring;
 
 var
   MatchPos: TMatchPos;
