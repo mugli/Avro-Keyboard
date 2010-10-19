@@ -3802,8 +3802,8 @@ object frmMain: TfrmMain
     object imgNormal: TImage
       Left = 224
       Top = 25
-      Width = 32
-      Height = 32
+      Width = 16
+      Height = 16
       Hint = 'Empty key!'
       AutoSize = True
       ParentShowHint = False
@@ -3858,8 +3858,8 @@ object frmMain: TfrmMain
     object imgShift: TImage
       Left = 223
       Top = 81
-      Width = 32
-      Height = 32
+      Width = 16
+      Height = 16
       Hint = 'Empty key!'
       AutoSize = True
       ParentShowHint = False
@@ -3914,8 +3914,8 @@ object frmMain: TfrmMain
     object imgAltGr: TImage
       Left = 395
       Top = 24
-      Width = 32
-      Height = 32
+      Width = 16
+      Height = 16
       Hint = 'Empty key!'
       AutoSize = True
       ParentShowHint = False
@@ -3970,8 +3970,8 @@ object frmMain: TfrmMain
     object imgShiftAltGr: TImage
       Left = 394
       Top = 80
-      Width = 32
-      Height = 32
+      Width = 16
+      Height = 16
       Hint = 'Empty key!'
       AutoSize = True
       ParentShowHint = False
@@ -4037,7 +4037,7 @@ object frmMain: TfrmMain
       Font.Style = [fsBold]
       ParentFont = False
     end
-    object txtNormal: TTntEdit
+    object txtNormal: TEdit
       Left = 154
       Top = 29
       Width = 68
@@ -4052,7 +4052,7 @@ object frmMain: TfrmMain
       OnChange = txtNormalChange
       OnEnter = txtNormalEnter
     end
-    object txtShift: TTntEdit
+    object txtShift: TEdit
       Left = 154
       Top = 88
       Width = 68
@@ -4067,7 +4067,7 @@ object frmMain: TfrmMain
       OnChange = txtShiftChange
       OnEnter = txtNormalEnter
     end
-    object txtShiftAltGr: TTntEdit
+    object txtShiftAltGr: TEdit
       Left = 326
       Top = 87
       Width = 68
@@ -4082,7 +4082,7 @@ object frmMain: TfrmMain
       OnChange = txtShiftAltGrChange
       OnEnter = txtNormalEnter
     end
-    object txtAltGr: TTntEdit
+    object txtAltGr: TEdit
       Left = 326
       Top = 29
       Width = 68

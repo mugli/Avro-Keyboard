@@ -46,13 +46,11 @@ Uses
      StdCtrls,
      ExtCtrls,
      GIFImg,
-     TntStdCtrls,
      jpeg,
      ExtDlgs,
      StrUtils,
      uShapeInterceptor,
      nativeXML,
-     axCtrls,
      ImgList {Always must be the last};
 
 Type
@@ -87,12 +85,12 @@ Type
           butImageAltGrShift: TButton;
           butImageNormalShift: TButton;
           Label8: TLabel;
-          txtNormal: TTntEdit;
-          txtShift: TTntEdit;
+          txtNormal: TEdit;
+          txtShift: TEdit;
           Label9: TLabel;
-          txtShiftAltGr: TTntEdit;
+          txtShiftAltGr: TEdit;
           Label10: TLabel;
-          txtAltGr: TTntEdit;
+          txtAltGr: TEdit;
           Label11: TLabel;
           Image3: TImage;
           LabelShift: TLabel;
@@ -217,16 +215,16 @@ Uses
 
 Procedure TfrmMain.BuildLayout;
 Const
-     b_0                      : WideChar = #$9E6;
-     b_1                      : WideChar = #$9E7;
-     b_2                      : WideChar = #$9E8;
-     b_3                      : WideChar = #$9E9;
-     b_4                      : WideChar = #$9EA;
-     b_5                      : WideChar = #$9EB;
-     b_6                      : WideChar = #$9EC;
-     b_7                      : WideChar = #$9ED;
-     b_8                      : WideChar = #$9EE;
-     b_9                      : WideChar = #$9EF;
+     b_0                      : Char = #$9E6;
+     b_1                      : Char = #$9E7;
+     b_2                      : Char = #$9E8;
+     b_3                      : Char = #$9E9;
+     b_4                      : Char = #$9EA;
+     b_5                      : Char = #$9EB;
+     b_6                      : Char = #$9EC;
+     b_7                      : Char = #$9ED;
+     b_8                      : Char = #$9EE;
+     b_9                      : Char = #$9EF;
 Var
      XML                      : TNativeXml;
      child                    : TXmlNode;
@@ -1002,7 +1000,7 @@ End;
 
 Procedure TfrmMain.txtNormalEnter(Sender: TObject);
 Begin
-     (Sender As TTNTEdit).SelectAll;
+     (Sender As TEdit).SelectAll;
 End;
 
 {===============================================================================}

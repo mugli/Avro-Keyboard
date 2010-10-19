@@ -48,19 +48,19 @@ Type
           fKeyName: String;
           fCaptionNormal: String;
           fCaptionShift: String;
-          fNormal: WideString;
-          fShift: WideString;
-          fAltGr: WideString;
-          fShiftAltGr: WideString;
+          fNormal: String;
+          fShift: String;
+          fAltGr: String;
+          fShiftAltGr: String;
 
           Procedure SetSelected(Const Value: Boolean);
           Procedure SetKeyName(Const Value: String);
           Procedure SetCaptionNormal(Const Value: String);
           Procedure SetCaptionShift(Const Value: String);
-          Procedure SetNormal(Const Value: WideString);
-          Procedure SetShift(Const Value: WideString);
-          Procedure SetAltGr(Const Value: WideString);
-          Procedure SetShiftAltGr(Const Value: WideString);
+          Procedure SetNormal(Const Value: String);
+          Procedure SetShift(Const Value: String);
+          Procedure SetAltGr(Const Value: String);
+          Procedure SetShiftAltGr(Const Value: String);
      Public
 
      Published
@@ -68,10 +68,10 @@ Type
           Property KeyName: String Read fKeyName Write SetKeyName;
           Property CaptionNormal: String Read fCaptionNormal Write SetCaptionNormal;
           Property CaptionShift: String Read fCaptionShift Write SetCaptionShift;
-          Property Normal: WideString Read fNormal Write SetNormal;
-          Property Shift: WideString Read fShift Write SetShift;
-          Property AltGr: WideString Read fAltGr Write SetAltGr;
-          Property ShiftAltGr: WideString Read fShiftAltGr Write SetShiftAltGr;
+          Property Normal: String Read fNormal Write SetNormal;
+          Property Shift: String Read fShift Write SetShift;
+          Property AltGr: String Read fAltGr Write SetAltGr;
+          Property ShiftAltGr: String Read fShiftAltGr Write SetShiftAltGr;
      End;
 
 Implementation
@@ -93,7 +93,7 @@ Begin
      fKeyName := Value;
 End;
 
-Procedure TShape.SetNormal(Const Value: WideString);
+Procedure TShape.SetNormal(Const Value: String);
 Begin
      fNormal := Value;
 End;
@@ -116,17 +116,17 @@ Begin
 
 End;
 
-Procedure TShape.SetShift(Const Value: WideString);
+Procedure TShape.SetShift(Const Value: String);
 Begin
      fShift := Value;
 End;
 
-Procedure TShape.SetAltGr(Const Value: WideString);
+Procedure TShape.SetAltGr(Const Value: String);
 Begin
      fAltGr := Value;
 End;
 
-Procedure TShape.SetShiftAltGr(Const Value: WideString);
+Procedure TShape.SetShiftAltGr(Const Value: String);
 Begin
      fShiftAltGr := Value;
 End;
