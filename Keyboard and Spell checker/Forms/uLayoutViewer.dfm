@@ -183,8 +183,7 @@ object LayoutViewer: TLayoutViewer
     Top = 0
     Width = 33
     Height = 25
-    TabOrder = 0
-    OnClick = but_ZoomInClick
+    DoubleBuffered = True
     Glyph.Data = {
       36030000424D3603000000000000360000002800000010000000100000000100
       18000000000000030000880B0000880B00000000000000000000FFFFFFFFFFFF
@@ -212,14 +211,16 @@ object LayoutViewer: TLayoutViewer
       B4B4B49E9E9EB3B3B3B9B9B9B4B4B3A1A1A1C0C0C0FEFEFEFFFFFFFFFFFFFFFF
       FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFEFEFC2C2C2B8B8B8C7C7C7F4
       F4F4FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
+    ParentDoubleBuffered = False
+    TabOrder = 0
+    OnClick = but_ZoomInClick
   end
   object but_ZoomOut: TBitBtn
     Left = 236
     Top = 0
     Width = 33
     Height = 25
-    TabOrder = 1
-    OnClick = but_ZoomOutClick
+    DoubleBuffered = True
     Glyph.Data = {
       36030000424D3603000000000000360000002800000010000000100000000100
       18000000000000030000880B0000880B00000000000000000000FFFFFFFFFFFF
@@ -247,6 +248,9 @@ object LayoutViewer: TLayoutViewer
       B4B4B49E9E9EB3B3B3B9B9B9B4B4B3A1A1A1C0C0C0FEFEFEFFFFFFFFFFFFFFFF
       FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFEFEFC2C2C2B8B8B8C7C7C7F4
       F4F4FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
+    ParentDoubleBuffered = False
+    TabOrder = 1
+    OnClick = but_ZoomOutClick
   end
   object but_About: TBitBtn
     Left = 435
@@ -254,6 +258,8 @@ object LayoutViewer: TLayoutViewer
     Width = 97
     Height = 25
     Caption = 'About layout...'
+    DoubleBuffered = True
+    ParentDoubleBuffered = False
     TabOrder = 2
     OnClick = but_AboutClick
   end
@@ -262,8 +268,7 @@ object LayoutViewer: TLayoutViewer
     Top = 0
     Width = 33
     Height = 25
-    TabOrder = 3
-    OnClick = but_PrintClick
+    DoubleBuffered = True
     Glyph.Data = {
       36030000424D3603000000000000360000002800000010000000100000000100
       18000000000000030000880B0000880B00000000000000000000FFFFFFFFFFFF
@@ -291,6 +296,9 @@ object LayoutViewer: TLayoutViewer
       FFFFFFFFFFFFABABABFAFAFAFFFFFFFFFFFFFFFFFFD1D1D18F8F8FE9E9E9FFFF
       FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD0D0D0B7B7B7B8B8B8B8
       B8B8B8B8B8ABABABD6D6D6FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
+    ParentDoubleBuffered = False
+    TabOrder = 3
+    OnClick = but_PrintClick
   end
   object PrintDialog1: TPrintDialog
     Options = [poWarning, poDisablePrintToFile]

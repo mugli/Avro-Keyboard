@@ -45,8 +45,8 @@ Const
 
 
 Procedure ChangeLocaleToBangla(Const TopWnd: HWND);
-Procedure ChangeLocalToAny(Const TargetWin, FullLocaleMsg: Integer);
-Function GetForeignLocale(Const TargetWin: HWND): String;
+Procedure ChangeLocalToAny(Const TargetWin:HWND; FullLocaleMsg: Cardinal);
+Function GetForeignLocale(Const TargetWin: HWND): Cardinal;
 Procedure InstallLocale;
 Function IsBangladeshLocaleInstalled: Boolean;
 Function IsAssameseLocaleInstalled: Boolean;
@@ -264,7 +264,7 @@ Till Vista, KLF_ACTIVATE works ok
 From Windows 7, it always makes long delay to change locale.
 'KLF_ACTIVATE OR KLF_NOTELLSHELL' failed, too
 Possible workaround- using KLF_NOTELLSHELL }
-     Local_ID := LoadKeyboardLayout(PAnsiChar(BanglaLocale), KLF_NOTELLSHELL);
+     Local_ID := LoadKeyboardLayout(PChar(BanglaLocale), KLF_NOTELLSHELL);
      PostMessage(TopWnd, WM_INPUTLANGCHANGEREQUEST, INPUTLANGCHANGE_SYSCHARSET, Local_ID);
      PostMessage(TopWnd, WM_INPUTLANGCHANGE, 0, Local_ID);
 
@@ -280,12 +280,12 @@ Possible workaround- using KLF_NOTELLSHELL }
      End;
 
      {Keyboard Locale Changed in foreign app, now set my locale to English}
-     LoadKeyboardLayout(PAnsiChar(LANG_EN_US), KLF_ACTIVATE);
+     LoadKeyboardLayout(PChar(LANG_EN_US), KLF_ACTIVATE);
 End;
 
 {===============================================================================}
 
-Procedure ChangeLocalToAny(Const TargetWin, FullLocaleMsg: Integer);
+Procedure ChangeLocalToAny(Const TargetWin:HWND; FullLocaleMsg: Cardinal);
 Var
      ParentHandle             : HWND;
 Begin
@@ -306,14 +306,12 @@ End;
 
 {===============================================================================}
 
-Function GetForeignLocale(Const TargetWin: HWND): String;
+Function GetForeignLocale(Const TargetWin: HWND): Cardinal;
 Var
      TID                      : Integer;
-     KL                       : Cardinal;
 Begin
      TID := GetWindowThreadProcessId(TargetWin, Nil);
-     KL := GetKeyboardLayout(TID);
-     Result := '$' + IntToHex(KL, 1);
+     Result := GetKeyboardLayout(TID);
 End;
 
 {===============================================================================}

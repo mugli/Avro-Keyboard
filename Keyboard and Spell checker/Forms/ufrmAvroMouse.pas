@@ -187,7 +187,7 @@ Type
      Private
           { Private declarations }
           Bijoy: TUnicodeToBijoy2000;
-          Procedure TypeIt(Const tStr: WideString);
+          Procedure TypeIt(Const tStr: String);
           Procedure DetectLeftClickOnTitleBar(Var Msg: TWMNCLButtonDown); Message WM_NCLBUTTONDOWN;
           Procedure DetectRightClickOnTitleBar(Var Msg: TWMNCLButtonDown); Message WM_NCRBUTTONDOWN;
      Public
@@ -216,9 +216,9 @@ Const
 
 Procedure TfrmAvroMouse.BitBtn1Click(Sender: TObject);
 Var
-     WC                       : WideChar;
+     WC                       : Char;
 Begin
-     WC := WideChar((Sender As TBitBtn).Tag);
+     WC := Char((Sender As TBitBtn).Tag);
      TypeIt(WC);
 End;
 
@@ -353,7 +353,7 @@ Begin
      Bijoy := TUnicodeToBijoy2000.Create;
 End;
 
-Procedure TfrmAvroMouse.TypeIt(Const tStr: WideString);
+Procedure TfrmAvroMouse.TypeIt(Const tStr: String);
 Begin
      If OutputIsBijoy = 'YES' Then Begin
           SendKey_Char(Bijoy.Convert(tStr));

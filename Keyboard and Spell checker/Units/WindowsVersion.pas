@@ -40,21 +40,6 @@ Uses
      Windows,
      Sysutils;
 
-Type
-     POSVersionInfoEx = ^TOSVersionInfoEx;
-     TOSVersionInfoEx = Packed Record
-          dwOSVersionInfoSize: DWORD;
-          dwMajorVersion: DWORD;
-          dwMinorVersion: DWORD;
-          dwBuildNumber: DWORD;
-          dwPlatformId: DWORD;
-          szCSDVersion: Array[0..127] Of AnsiChar;
-          wServicePackMajor: Word;
-          wServicePackMinor: Word;
-          wSuiteMask: Word;
-          wProductType: Byte;
-          wReserved: Byte;
-     End;
 
 
 Function GetOSVersionInfo(Var Info: TOSVersionInfoEx): Boolean;
@@ -247,7 +232,7 @@ Begin
      Result := False;
      If IsWinXP Then Begin
           If GetOSVersionInfo(osv) Then Begin
-               If pos(osv.szCSDVersion, RawByteString('Service Pack 2')) > 0 Then
+               If pos(osv.szCSDVersion, 'Service Pack 2') > 0 Then
                     Result := True;
           End;
      End;
@@ -261,15 +246,15 @@ Begin
      Result := False;
      If IsWinXP Then Begin
           If GetOSVersionInfo(osv) Then Begin
-               If pos(osv.szCSDVersion, RawByteString('Service Pack 2')) > 0 Then
+               If pos(osv.szCSDVersion, 'Service Pack 2') > 0 Then
                     Result := True
-               Else If pos(osv.szCSDVersion, RawByteString('Service Pack 3')) > 0 Then
+               Else If pos(osv.szCSDVersion, ('Service Pack 3')) > 0 Then
                     Result := True
-               Else If pos(osv.szCSDVersion, RawByteString('Service Pack 4')) > 0 Then
+               Else If pos(osv.szCSDVersion, 'Service Pack 4') > 0 Then
                     Result := True
-               Else If pos(osv.szCSDVersion, RawByteString('Service Pack 5')) > 0 Then
+               Else If pos(osv.szCSDVersion, 'Service Pack 5') > 0 Then
                     Result := True
-               Else If pos(osv.szCSDVersion, RawByteString('Service Pack 6')) > 0 Then
+               Else If pos(osv.szCSDVersion, 'Service Pack 6') > 0 Then
                     Result := True;
           End;
      End;
@@ -283,19 +268,19 @@ Begin
      Result := False;
      If IsWinXP Then Begin
           If GetOSVersionInfo(osv) Then Begin
-               If pos(osv.szCSDVersion, RawByteString('Service Pack 3')) > 0 Then
+               If pos(osv.szCSDVersion, 'Service Pack 3') > 0 Then
                     Result := True
-               Else If pos(osv.szCSDVersion, RawByteString('Service Pack 4')) > 0 Then
+               Else If pos(osv.szCSDVersion, 'Service Pack 4') > 0 Then
                     Result := True
-               Else If pos(osv.szCSDVersion, RawByteString('Service Pack 5')) > 0 Then
+               Else If pos(osv.szCSDVersion, 'Service Pack 5') > 0 Then
                     Result := True
-               Else If pos(osv.szCSDVersion, RawByteString('Service Pack 6')) > 0 Then
+               Else If pos(osv.szCSDVersion, 'Service Pack 6') > 0 Then
                     Result := True
-               Else If pos(osv.szCSDVersion, RawByteString('Service Pack 7')) > 0 Then
+               Else If pos(osv.szCSDVersion, 'Service Pack 7') > 0 Then
                     Result := True
-               Else If pos(osv.szCSDVersion, RawByteString('Service Pack 8')) > 0 Then
+               Else If pos(osv.szCSDVersion, 'Service Pack 8') > 0 Then
                     Result := True
-               Else If pos(osv.szCSDVersion, RawByteString('Service Pack 9')) > 0 Then
+               Else If pos(osv.szCSDVersion, 'Service Pack 9') > 0 Then
                     Result := True;
           End;
      End;

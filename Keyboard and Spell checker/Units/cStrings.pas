@@ -3491,7 +3491,7 @@ End;
 Function StrToFloatDef(Const S: AnsiString; Const Default: Extended): Extended;
 Begin
      Try
-          Result := StrToFloat(S);
+          Result := StrToFloat(String(S));
      Except
           Result := Default;
      End;
@@ -3874,18 +3874,18 @@ Function CharSetToCharClassStr(Const C: CharSet): AnsiString;
      Function ChStr(Const Ch: AnsiChar): AnsiString;
      Begin
           Case Ch Of
-               '\': Result := '\\';
-               ']': Result := '\]';
-               asciiBEL: Result := '\a';
-               asciiBS: Result := '\b';
-               asciiESC: Result := '\e';
-               asciiFF: Result := '\f';
-               asciiLF: Result := '\n';
-               asciiCR: Result := '\r';
-               asciiHT: Result := '\t';
-               asciiVT: Result := '\v';
+               '\': Result := AnsiString('\\');
+               ']': Result := AnsiString('\]');
+               asciiBEL: Result := AnsiString('\a');
+               asciiBS: Result := AnsiString('\b');
+               asciiESC: Result := AnsiString('\e');
+               asciiFF: Result := AnsiString('\f');
+               asciiLF: Result := AnsiString('\n');
+               asciiCR: Result := AnsiString('\r');
+               asciiHT: Result := AnsiString('\t');
+               asciiVT: Result := AnsiString('\v');
           Else If (Ch < #32) Or (Ch > #127) Then // non-printable
-               Result := '\x' + IntToHex(Ord(Ch), 1)
+               Result := AnsiString('\x' + IntToHex(Ord(Ch), 1))
           Else
                Result := Ch;
           End;

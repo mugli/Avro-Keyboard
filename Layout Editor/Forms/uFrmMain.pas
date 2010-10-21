@@ -243,27 +243,27 @@ Begin
      XML.Root.Name := 'Layout';
 
      Child := XML.Root.NodeNew('AvroKeyboardVersion');
-     Child.ValueAsString := '5';
+     Child.ValueAsUnicodeString := '5';
 
      Child := XML.Root.NodeNew('LayoutName');
      CdataChild := Child.NodeNew('LayoutName');
      CdataChild.ElementType := xeCData;
-     CdataChild.ValueAsString := txtLayoutName.Text;
+     CdataChild.ValueAsUnicodeString := txtLayoutName.Text;
 
      Child := XML.Root.NodeNew('LayoutVersion');
      CdataChild := Child.NodeNew('LayoutVersion');
      CdataChild.ElementType := xeCData;
-     CdataChild.ValueAsString := txtVersion.Text;
+     CdataChild.ValueAsUnicodeString := txtVersion.Text;
 
      Child := XML.Root.NodeNew('DeveloperName');
      CdataChild := Child.NodeNew('DeveloperName');
      CdataChild.ElementType := xeCData;
-     CdataChild.ValueAsString := txtDeveloper.Text;
+     CdataChild.ValueAsUnicodeString := txtDeveloper.Text;
 
      Child := XML.Root.NodeNew('DeveloperComment');
      CdataChild := Child.NodeNew('DeveloperComment');
      CdataChild.ElementType := xeCData;
-     CdataChild.ValueAsString := txtComment.Text;
+     CdataChild.ValueAsUnicodeString := txtComment.Text;
 
 
      Child := XML.Root.NodeNew('ImageNormalShift');
@@ -541,17 +541,17 @@ Begin
 
                //----------------------------------------------
                //Check if the layout is a compatible one
-               If trim(Xml.Root.FindNode('AvroKeyboardVersion').ValueAsString) <> '5' Then Begin
+               If trim(Xml.Root.FindNode('AvroKeyboardVersion').ValueAsUnicodeString) <> '5' Then Begin
                     Application.MessageBox('This Keyboard Layout is not compatible with current version of Avro Keyboard.', 'Error loading keyboard layout...', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
                     Exit;
                End;
                //----------------------------------------------
 
           //Load basic informations
-               txtLayoutName.Text := Xml.Root.FindNode('LayoutName').Nodes[0].ValueAsString;
-               txtDeveloper.Text := Xml.Root.FindNode('DeveloperName').Nodes[0].ValueAsString;
-               txtVersion.Text := Xml.Root.FindNode('LayoutVersion').Nodes[0].ValueAsString;
-               txtComment.Text := Xml.Root.FindNode('DeveloperComment').Nodes[0].ValueAsString;
+               txtLayoutName.Text := Xml.Root.FindNode('LayoutName').Nodes[0].ValueAsUnicodeString;
+               txtDeveloper.Text := Xml.Root.FindNode('DeveloperName').Nodes[0].ValueAsUnicodeString;
+               txtVersion.Text := Xml.Root.FindNode('LayoutVersion').Nodes[0].ValueAsUnicodeString;
+               txtComment.Text := Xml.Root.FindNode('DeveloperComment').Nodes[0].ValueAsUnicodeString;
 
                //Extract images
                If Xml.Root.FindNode('ImageNormalShift') <> Nil Then Begin

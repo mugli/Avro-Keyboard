@@ -114,7 +114,7 @@ Function LowLevelKeyboardProc(nCode: integer; wParam: wParam; lParam: lParam): l
 Var
      kbdllhs                  : pKBDLLHOOKSTRUCT;
      ShouldBlock              : Boolean;
-     T                        : WideString;
+     T                        : String;
 
 Label
      ExitHere;

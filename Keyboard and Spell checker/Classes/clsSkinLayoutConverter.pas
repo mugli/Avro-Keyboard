@@ -49,10 +49,10 @@ Type
           CdataChild: TXmlNode;
           KeyData: TXmlNode;
 
-          Procedure CopyCDataNode(Nodename: String);
-          Procedure CopyNode(Nodename: String);
+          Procedure CopyCDataNode(Nodename: UTF8String);
+          Procedure CopyNode(Nodename: UTF8String);
           Procedure CreateVersionNode;
-          Procedure CopyImageNode(Nodename: String);
+          Procedure CopyImageNode(Nodename: UTF8String);
           Procedure CopyKeyDataNodes;
           Function NeedConversion: Boolean;
           Procedure CheckCreateXMLObject;
@@ -64,7 +64,7 @@ Type
      End;
 
 Const
-     AvroKeyboardVersion      = '5';
+     AvroKeyboardVersion :String     = '5';
 
 
 Implementation
@@ -275,13 +275,13 @@ End;
 
 {===============================================================================}
 
-Procedure TSkinLayoutConverter.CopyCDataNode(Nodename: String);
+Procedure TSkinLayoutConverter.CopyCDataNode(Nodename: UTF8String);
 Begin
      Try
           Child := NewXML.Root.NodeNew(Nodename);
           CdataChild := Child.NodeNew(Nodename);
           CdataChild.ElementType := xeCData;
-          CdataChild.ValueAsString := OldXML.Root.FindNode(Nodename).Nodes[0].ValueAsString;
+          CdataChild.ValueAsUnicodeString := OldXML.Root.FindNode(Nodename).Nodes[0].ValueAsUnicodeString;
      Except
           On e: Exception Do Begin
 
@@ -292,7 +292,7 @@ End;
 
 {===============================================================================}
 
-Procedure TSkinLayoutConverter.CopyImageNode(Nodename: String);
+Procedure TSkinLayoutConverter.CopyImageNode(Nodename: UTF8String);
 Var
      OldSStream, NewSStream   : TStringStream;
      JpegImg                  : TjpegImage;
@@ -406,7 +406,7 @@ Begin
 
                Application.ProcessMessages;
 
-               If LowerCase(LeftStr(OldNode.Nodes[i].Name, 3)) <> 'num' Then Begin
+               If LowerCase(LeftStr(String(OldNode.Nodes[i].Name), 3)) <> 'num' Then Begin
                     If OldNode.Nodes[i].NodeCount <= 0 Then Begin
                          //If item has no cdata
                          Child := KeyData.NodeNew('Key_' + OldNode.Nodes[i].Name);
@@ -451,11 +451,11 @@ End;
 
 {===============================================================================}
 
-Procedure TSkinLayoutConverter.CopyNode(Nodename: String);
+Procedure TSkinLayoutConverter.CopyNode(Nodename: UTF8String);
 Begin
      Try
           Child := NewXML.Root.NodeNew(Nodename);
-          Child.ValueAsString := OldXML.Root.FindNode(Nodename).ValueAsString;
+          Child.ValueAsUnicodeString := OldXML.Root.FindNode(Nodename).ValueAsUnicodeString;
      Except
           On e: Exception Do Begin
 
@@ -478,7 +478,7 @@ Procedure TSkinLayoutConverter.CreateVersionNode;
 Begin
      Try
           Child := NewXML.Root.NodeNew('AvroKeyboardVersion');
-          Child.ValueAsString := AvroKeyboardVersion;
+          Child.ValueAsUnicodeString := AvroKeyboardVersion;
      Except
           On e: Exception Do Begin
 
@@ -504,7 +504,7 @@ Var
      AvroVer                  : String;
 Begin
      Try
-          AvroVer := trim(OldXML.Root.FindNode('AvroKeyboardVersion').ValueAsString);
+          AvroVer := trim(OldXML.Root.FindNode('AvroKeyboardVersion').ValueAsUnicodeString);
      Except
           On e: Exception Do Begin
 

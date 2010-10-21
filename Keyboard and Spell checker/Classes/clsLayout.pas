@@ -94,13 +94,13 @@ Type
           Constructor Create;           //Initializer
           Destructor Destroy; Override; //Destructor
 
-          Function ProcessVKeyDown(Const KeyCode: Integer; Var Block: Boolean): WideString;
+          Function ProcessVKeyDown(Const KeyCode: Integer; Var Block: Boolean): String;
           Procedure ProcessVKeyUP(Const KeyCode: Integer; Var Block: Boolean);
           Procedure ResetDeadKey;
           Procedure ToggleMode;
           Procedure BanglaMode;
           Procedure SysMode;
-          Procedure SelectCandidate(Const Item: WideString); //For Phonetic
+          Procedure SelectCandidate(Const Item: String); //For Phonetic
 
           //Published
               //--------------------------------------------------------------
@@ -206,7 +206,7 @@ End;
 {===============================================================================}
 
 Function TLayout.ProcessVKeyDown(Const KeyCode: Integer;
-     Var Block: Boolean): WideString;
+     Var Block: Boolean): String;
 Begin
      If Lowercase(k_Layout) = 'avrophonetic*' Then
           ProcessVKeyDown := AvroPhonetic.ProcessVKeyDown(KeyCode, Block)
@@ -243,7 +243,7 @@ End;
 
 {===============================================================================}
 
-Procedure TLayout.SelectCandidate(Const Item: WideString);
+Procedure TLayout.SelectCandidate(Const Item: String);
 Begin
      AvroPhonetic.SelectCandidate(Item);
 End;
@@ -263,7 +263,7 @@ Begin
 
      If Lowercase(Value) <> 'avrophonetic*' Then Begin
           If Init_KeyboardLayout(Value) = False Then Begin
-               Application.MessageBox(PAnsiChar('Error Loading ' + Value + ' keyboard layout!' + #10 + '' + #10 + 'Layout switched back to Avro Phonetic.'), 'Avro Keyboard', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
+               Application.MessageBox(PChar('Error Loading ' + Value + ' keyboard layout!' + #10 + '' + #10 + 'Layout switched back to Avro Phonetic.'), 'Avro Keyboard', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
                Value := 'AvroPhonetic*';
           End;
      End;

@@ -60,7 +60,7 @@ Var
           r_W,
           r_X,
           r_Y,
-          r_Z                 : WideString;
+          r_Z                 : String;
 
      r_AI,
           r_AU,
@@ -128,7 +128,7 @@ Var
           r_XM,
           r_XN,
           r_ZH,
-          r_ZZ                : WideString;
+          r_ZZ                : String;
 
      r_BBH,
           r_BDH,
@@ -178,7 +178,7 @@ Var
           r_SHN,
           r_T_Acnt_Acnt,
           r_TTH,
-          r_ZZH               : WideString;
+          r_ZZH               : String;
 
      r_KSHM,
           r_KKHM,
@@ -190,17 +190,17 @@ Var
           r_NGKX,
           r_NGJH,
           r_SHSH,
-          r_THTH              : Widestring;
+          r_THTH              : String;
 
 
      r_CHCHH,
           r_NGKSH,
-          r_NGKKH             : Widestring;
+          r_NGKKH             : String;
 
 
      r_InjectFola,
           r_InjectHasanta,
-          r_InjectChandraBisharga: Widestring;
+          r_InjectChandraBisharga: String;
 
 
 Procedure Initialize_RVals;

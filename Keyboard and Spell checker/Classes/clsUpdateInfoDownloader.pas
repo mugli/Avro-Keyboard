@@ -179,10 +179,10 @@ Begin
                     If XML.Root.FindNode('versionbuild') <> Nil Then //Avro 4.x compatibility
                          Build := XML.Root.FindNode('versionbuild').ValueAsInteger;
 
-                    changelogurl := XML.Root.FindNode('changelogurl').ValueAsString;
-                    downloadurl := XML.Root.FindNode('downloadurl').ValueAsString;
-                    productpageurl := XML.Root.FindNode('productpageurl').ValueAsString;
-                    releasedate := XML.Root.FindNode('releasedate').ValueAsString;
+                    changelogurl := XML.Root.FindNode('changelogurl').ValueAsUnicodeString;
+                    downloadurl := XML.Root.FindNode('downloadurl').ValueAsUnicodeString;
+                    productpageurl := XML.Root.FindNode('productpageurl').ValueAsUnicodeString;
+                    releasedate := XML.Root.FindNode('releasedate').ValueAsUnicodeString;
                Except
                     On e: exception Do Begin
                          If Verbose Then

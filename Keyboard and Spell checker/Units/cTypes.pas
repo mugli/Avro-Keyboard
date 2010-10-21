@@ -139,9 +139,9 @@ Begin
      If Assigned(Error) Then
           S := S + ': ' + AnsiString(Error.Message);
      If Assigned(ErrorClass) Then
-          Raise ErrorClass.Create(S)
+          Raise ErrorClass.Create(String(S))
      Else
-          Raise EType.Create(S);
+          Raise EType.Create(String(S));
 End;
 
 Procedure AType.MethodNotImplementedError(Const Method: AnsiString);
@@ -248,7 +248,7 @@ Begin
      If V Is AType Then
           Result := AType(V).GetAsString
      Else
-          Raise EType.Create(ObjectClassName(V) + ' can not convert to AnsiString');
+          Raise EType.Create(String(ObjectClassName(V)) + ' can not convert to AnsiString');
 End;
 
 Procedure TypeSetAsString(Const V: TObject; Const S: AnsiString);
@@ -256,7 +256,7 @@ Begin
      If V Is AType Then
           AType(V).SetAsString(S)
      Else
-          Raise EType.Create(ObjectClassName(V) + ' can not set as AnsiString');
+          Raise EType.Create(String(ObjectClassName(V)) + ' can not set as AnsiString');
 End;
 
 Function TypeDuplicate(Const V: TObject): TObject;
@@ -266,7 +266,7 @@ Begin
      Else If Not Assigned(V) Then
           Result := Nil
      Else
-          Raise EType.Create(ObjectClassName(V) + ' can not duplicate');
+          Raise EType.Create(String(ObjectClassName(V)) + ' can not duplicate');
 End;
 
 Function TypeIsEqual(Const A, B: TObject): Boolean;
@@ -278,7 +278,7 @@ Begin
      Else If B Is AType Then
           Result := AType(B).IsEqual(A)
      Else
-          Raise EType.Create(ObjectClassName(A) + ' and ' + ObjectClassName(B) + ' can not compare');
+          Raise EType.Create(String(ObjectClassName(A)) + ' and ' + String(ObjectClassName(B)) + ' can not compare');
 End;
 
 Function TypeCompare(Const A, B: TObject): TCompareResult;
@@ -302,7 +302,7 @@ Begin
      Else If B Is AType Then
           AType(B).AssignTo(A)
      Else
-          Raise EType.Create(ObjectClassName(B) + ' can not assign to ' + ObjectClassName(A));
+          Raise EType.Create(String(ObjectClassName(B)) + ' can not assign to ' + String(ObjectClassName(A)));
 End;
 
 {$WARNINGS OFF}

@@ -112,7 +112,7 @@ Var
           J                   : Integer;
      Begin
           For J := 0 To DB.Count - 1 Do Begin
-               StringData := utf8decode(DB[J]);
+               StringData := UTF8ToString(DB[J]);
                If EditDistance(Source, StringData) <= Max_Tolerance Then
                     SList.Add(StringData);
           End;
@@ -178,8 +178,7 @@ Begin
 
      //Search custom dictionary
      For I := 0 To SpellCustomDict.Count - 1 Do Begin
-          StringData := utf8decode(SpellCustomDict[i]);
-          If EditDistance(Source, StringData) <= Max_Tolerance Then
+          If EditDistance(Source, SpellCustomDict[i]) <= Max_Tolerance Then
                SList.Add(StringData);
      End;
 

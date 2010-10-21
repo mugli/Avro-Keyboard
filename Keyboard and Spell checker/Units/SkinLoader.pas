@@ -106,7 +106,7 @@ Begin
 
                //----------------------------------------------
                //Check if the skin is a compatible one
-               If trim(Xml.Root.FindNode('AvroKeyboardVersion').ValueAsString) <> '5' Then Begin
+               If trim(Xml.Root.FindNode('AvroKeyboardVersion').ValueAsUnicodeString) <> '5' Then Begin
                     Application.MessageBox('This Skin is not compatible with current version of Avro Keyboard.', 'Error loading skin...', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
                     Result := False;
                     Exit;
@@ -114,31 +114,31 @@ Begin
                //----------------------------------------------
 
                //'Which buttons are added?
-               If trim(Xml.Root.FindNode('AvroIconAdded').ValueAsString) = '1' Then
+               If trim(Xml.Root.FindNode('AvroIconAdded').ValueAsUnicodeString) = '1' Then
                     AvroIconAdded := True;
 
-               If trim(Xml.Root.FindNode('KeyboardModeAdded').ValueAsString) = '1' Then
+               If trim(Xml.Root.FindNode('KeyboardModeAdded').ValueAsUnicodeString) = '1' Then
                     KeyboardModeAdded := True;
 
-               If trim(Xml.Root.FindNode('KeyboardLayoutAdded').ValueAsString) = '1' Then
+               If trim(Xml.Root.FindNode('KeyboardLayoutAdded').ValueAsUnicodeString) = '1' Then
                     KeyboardLayoutAdded := True;
 
-               If trim(Xml.Root.FindNode('LayoutViewerAdded').ValueAsString) = '1' Then
+               If trim(Xml.Root.FindNode('LayoutViewerAdded').ValueAsUnicodeString) = '1' Then
                     LayoutViewerAdded := True;
 
-               If trim(Xml.Root.FindNode('AvroMouseAdded').ValueAsString) = '1' Then
+               If trim(Xml.Root.FindNode('AvroMouseAdded').ValueAsUnicodeString) = '1' Then
                     AvroMouseAdded := True;
 
-               If trim(Xml.Root.FindNode('ToolsAdded').ValueAsString) = '1' Then
+               If trim(Xml.Root.FindNode('ToolsAdded').ValueAsUnicodeString) = '1' Then
                     ToolsAdded := True;
 
-               If trim(Xml.Root.FindNode('WebAdded').ValueAsString) = '1' Then
+               If trim(Xml.Root.FindNode('WebAdded').ValueAsUnicodeString) = '1' Then
                     WebAdded := True;
 
-               If trim(Xml.Root.FindNode('HelpAdded').ValueAsString) = '1' Then
+               If trim(Xml.Root.FindNode('HelpAdded').ValueAsUnicodeString) = '1' Then
                     HelpAdded := True;
 
-               If trim(Xml.Root.FindNode('ExitAdded').ValueAsString) = '1' Then
+               If trim(Xml.Root.FindNode('ExitAdded').ValueAsUnicodeString) = '1' Then
                     ExitAdded := True;
 
                //----------------------------------------------
@@ -394,7 +394,7 @@ Begin
 
                //----------------------------------------------
                //Check if the skin is a compatible one
-               If trim(Xml.Root.FindNode('AvroKeyboardVersion').ValueAsString) <> '5' Then Begin
+               If trim(Xml.Root.FindNode('AvroKeyboardVersion').ValueAsUnicodeString) <> '5' Then Begin
                     Application.MessageBox('This Skin is not compatible with current version of Avro Keyboard.', 'Error loading skin...', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
                     Exit;
                End;
@@ -443,16 +443,16 @@ Begin
 
                //----------------------------------------------
                //Check if the skin is a compatible one
-               If trim(Xml.Root.FindNode('AvroKeyboardVersion').ValueAsString) <> '5' Then Begin
+               If trim(Xml.Root.FindNode('AvroKeyboardVersion').ValueAsUnicodeString) <> '5' Then Begin
                     Application.MessageBox('This Skin is not compatible with current version of Avro Keyboard.', 'Error loading skin...', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
                     Exit;
                End;
                //----------------------------------------------
 
-               SkinName := Xml.Root.FindNode('SkinName').Nodes[0].ValueAsString;
-               DesignerName := Xml.Root.FindNode('DesignerName').Nodes[0].ValueAsString;
-               SkinVersion := Xml.Root.FindNode('SkinVersion').Nodes[0].ValueAsString;
-               DesignerComment := Xml.Root.FindNode('DesignerComment').Nodes[0].ValueAsString;
+               SkinName := Xml.Root.FindNode('SkinName').Nodes[0].ValueAsUnicodeString;
+               DesignerName := Xml.Root.FindNode('DesignerName').Nodes[0].ValueAsUnicodeString;
+               SkinVersion := Xml.Root.FindNode('SkinVersion').Nodes[0].ValueAsUnicodeString;
+               DesignerComment := Xml.Root.FindNode('DesignerComment').Nodes[0].ValueAsUnicodeString;
 
                CheckCreateForm(TfrmAboutSkinLayout, frmAboutSkinLayout, 'frmAboutSkinLayout');
 
@@ -494,10 +494,10 @@ Begin
 
 
 
-               SkinName := Xml.Root.FindNode('SkinName').Nodes[0].ValueAsString;
-               DesignerName := Xml.Root.FindNode('DesignerName').Nodes[0].ValueAsString;
-               SkinVersion := Xml.Root.FindNode('SkinVersion').Nodes[0].ValueAsString;
-               DesignerComment := Xml.Root.FindNode('DesignerComment').Nodes[0].ValueAsString;
+               SkinName := Xml.Root.FindNode('SkinName').Nodes[0].ValueAsUnicodeString;
+               DesignerName := Xml.Root.FindNode('DesignerName').Nodes[0].ValueAsUnicodeString;
+               SkinVersion := Xml.Root.FindNode('SkinVersion').Nodes[0].ValueAsUnicodeString;
+               DesignerComment := Xml.Root.FindNode('DesignerComment').Nodes[0].ValueAsUnicodeString;
 
                FreeAndNil(XML);
                Filename := ExtractFilename(SkinPath);

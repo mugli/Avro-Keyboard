@@ -267,7 +267,7 @@ Const
 Procedure TUnicodeToBijoy2000.SecondHalfForms;
 Var
   I: Integer;
-  wT: WideString;
+  wT: String;
 Begin
   { A_BH_2H }
   fConvertedText := ReplaceStr(fConvertedText, b_Hasanta + b_Bh, A_BH_2H);

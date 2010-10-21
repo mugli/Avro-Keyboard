@@ -29,13 +29,14 @@ program SkinDesigner;
 
 uses
   Forms,
-  ufrmSkinCreator in 'ufrmSkinCreator.pas' { frmSkinCreator } ,
-  ufrmAbout in 'ufrmAbout.pas' { frmAbout } ,
-  uFrameImageAdd in 'uFrameImageAdd.pas' { FrameImageAdd: TFrame } ,
-  uFrameDrag in 'uFrameDrag.pas' { FrameDrag: TFrame } ,
+  ufrmSkinCreator in 'ufrmSkinCreator.pas' { frmSkinCreator },
+  ufrmAbout in 'ufrmAbout.pas' { frmAbout },
   uFileFolderHandling in '..\Keyboard and Spell checker\Units\uFileFolderHandling.pas',
   clsFileVersion in '..\Keyboard and Spell checker\Classes\clsFileVersion.pas',
-  nativexml in '..\Keyboard and Spell checker\Units\nativexml.pas';
+  nativexml in '..\Keyboard and Spell checker\Units\nativexml.pas',
+  uFrameDrag in 'uFrameDrag.pas' {FrameDrag: TFrame},
+  uFrameImageAdd in 'uFrameImageAdd.pas' {FrameImageAdd: TFrame};
+
 {$R *.res}
 
 begin

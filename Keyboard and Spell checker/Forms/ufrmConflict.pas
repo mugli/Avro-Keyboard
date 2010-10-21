@@ -39,7 +39,7 @@ Uses
      Controls,
      Forms,
      Dialogs,
-     StdCtrls, TntStdCtrls;
+     StdCtrls;
 
 Type
      TfrmConflict = Class(TForm)

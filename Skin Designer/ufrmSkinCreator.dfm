@@ -312,7 +312,7 @@ object frmSkinCreator: TfrmSkinCreator
       VertScrollBar.Tracking = True
       BorderStyle = bsNone
       TabOrder = 0
-      inline FrameImageAdd: TFrameImageAdd
+      inline FrameImageAdd1: TFrameImageAdd
         Left = 0
         Top = 0
         Width = 377
@@ -346,7 +346,7 @@ object frmSkinCreator: TfrmSkinCreator
       Font.Style = []
       ParentFont = False
     end
-    inline FrameDrag: TFrameDrag
+    inline FrameDrag1: TFrameDrag
       Left = 18
       Top = 30
       Width = 455

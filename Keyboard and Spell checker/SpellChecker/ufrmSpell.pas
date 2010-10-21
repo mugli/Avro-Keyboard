@@ -831,7 +831,7 @@ Begin
                // BOM indicates UTF-8 text stream
                SetLength(SA, DataLeft Div SizeOf(AnsiChar));
                Stream.Read(PAnsiChar(SA)^, DataLeft);
-               Memo.Lines.SetText(PChar(UTF8Decode(SA)));
+               Memo.Lines.SetText(PChar(UTF8ToString(SA)));
           End
           Else Begin
                // without byte order mark it is assumed that we are loading ANSI text

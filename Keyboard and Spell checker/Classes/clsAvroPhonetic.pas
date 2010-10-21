@@ -51,10 +51,10 @@ Type
           Constructor Create;           //Initializer
           Destructor Destroy; Override; //Destructor
 
-          Function ProcessVKeyDown(Const KeyCode: Integer; Var Block: Boolean): WideString;
+          Function ProcessVKeyDown(Const KeyCode: Integer; Var Block: Boolean): String;
           Procedure ProcessVKeyUP(Const KeyCode: Integer; Var Block: Boolean);
           Procedure ResetDeadKey;
-          Procedure SelectCandidate(Const Item: WideString); //For Avro Phonetic
+          Procedure SelectCandidate(Const Item: String); //For Avro Phonetic
           //Published
           Property AutoCorrectEnabled: Boolean
                Read GetAutoCorrectEnabled Write SetAutoCorrectEnabled;
@@ -90,7 +90,7 @@ End;
 {===============================================================================}
 
 Function TAvroPhonetic.ProcessVKeyDown(Const KeyCode: Integer;
-     Var Block: Boolean): WideString;
+     Var Block: Boolean): String;
 Begin
      Result := CharBased.ProcessVKeyDown(Keycode, Block);
 End;
@@ -112,7 +112,7 @@ End;
 
 {===============================================================================}
 
-Procedure TAvroPhonetic.SelectCandidate(Const Item: WideString);
+Procedure TAvroPhonetic.SelectCandidate(Const Item: String);
 Begin
      CharBased.SelectCandidate(Item);
 End;

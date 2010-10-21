@@ -31,13 +31,13 @@ Interface
 
 Uses
   Classes,
-  cDictionaries;
+  Generics.Collections ;
 
 Var
   FCustomDictLoaded: Boolean;
   SpellCustomDict: TStringList;
   SpellIgnoreDict: TStringList;
-  SpellChangeDict: TStringDictionary;
+  SpellChangeDict: TDictionary<string,string>;
 
 Procedure InitSpellCustomDict;
 Procedure SaveSpellCustomDict;
@@ -79,8 +79,7 @@ Begin
   SpellIgnoreDict.Sorted := True;
   SpellIgnoreDict.Duplicates := dupIgnore;
 
-  SpellChangeDict := TStringDictionary.Create;
-  SpellChangeDict.DuplicatesAction := ddIgnore;
+  SpellChangeDict := TDictionary<string,string>.Create;
   FCustomDictLoaded := True;
 End;
 

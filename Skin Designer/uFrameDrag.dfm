@@ -44,6 +44,10 @@ object FrameDrag: TFrameDrag
     Top = 3
     Width = 446
     Height = 246
+    HorzScrollBar.Smooth = True
+    HorzScrollBar.Tracking = True
+    VertScrollBar.Smooth = True
+    VertScrollBar.Tracking = True
     TabOrder = 0
     object Panel1: TPanel
       Left = 0

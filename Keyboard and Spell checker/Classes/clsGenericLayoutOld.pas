@@ -47,10 +47,10 @@ Type
      TGenericLayoutOld = Class
      Private
           Bijoy: TUnicodeToBijoy2000;
-          LastChar: WideString;
-          DetermineZWNJ_ZWJ: WideString;
-          LastChars: Array[1..TrackL] Of WideString;
-          PrevBanglaT, NewBanglaText: WideString;
+          LastChar: String;
+          DetermineZWNJ_ZWJ: String;
+          LastChars: Array[1..TrackL] Of String;
+          PrevBanglaT, NewBanglaText: String;
 
           //Kar Variables for Full Old Style Typing
           EKarActive, IKarActive, OIKarActive: Boolean;
@@ -58,14 +58,13 @@ Type
           Procedure InternalBackspace(KeyRepeat: Integer = 1);
           Procedure DoBackspace(Var Block: Boolean);
           Procedure ParseAndSendNow;
-          Function InsertKar(Const sKar: WideString): WideString;
-          Function InsertReph: WideString;
-          Procedure SetLastChar(Const wChar: WideString);
-          Procedure DeleteLastCharOneStep;
+          Function InsertKar(Const sKar: String): String;
+          Function InsertReph: String;
+          Procedure SetLastChar(Const wChar: String);
           Procedure DeleteLastCharSteps_Ex(StepCount: Integer);
           Procedure ResetLastChar;
           Function MyProcessVKeyDown(Const KeyCode: Integer;
-               Var Block: Boolean; Const var_IfShift, var_IfTrueShift, var_IfAltGr: Boolean): widestring;
+               Var Block: Boolean; Const var_IfShift, var_IfTrueShift, var_IfAltGr: Boolean): String;
           Procedure MyProcessVKeyUP(Const KeyCode: Integer;
                Var Block: Boolean; Const var_IfShift: Boolean; Const var_IfTrueShift: Boolean; Const var_IfAltGr: Boolean);
           Procedure ResetAllKarsToInactive;
@@ -73,7 +72,7 @@ Type
           Constructor Create;           //Initializer
           Destructor Destroy; Override; //Destructor
 
-          Function ProcessVKeyDown(Const KeyCode: Integer; Var Block: Boolean): WideString;
+          Function ProcessVKeyDown(Const KeyCode: Integer; Var Block: Boolean): String;
           Procedure ProcessVKeyUP(Const KeyCode: Integer; Var Block: Boolean);
           Procedure ResetDeadKey;
      End;
@@ -109,30 +108,10 @@ End;
 
 {===============================================================================}
 
-Procedure TGenericLayoutOld.DeleteLastCharOneStep;
-Var
-     I, J                     : integer;
-     t1                       : Widestring;
-Begin
-     For i := TrackL Downto 1 Do
-          t1 := t1 + LastChars[i];
-
-     t1 := ' ' + LeftStr(t1, Length(t1) - 1);
-
-     For i := TrackL Downto 1 Do Begin
-          J := TrackL + 1 - i;
-          LastChars[i] := MidStr(t1, J, 1);
-     End;
-     LastChar := LastChars[1];
-
-End;
-
-{===============================================================================}
-
 Procedure TGenericLayoutOld.DeleteLastCharSteps_Ex(StepCount: Integer);
 Var
      I, J                     : integer;
-     t1                       : Widestring;
+     t1                       : String;
 Begin
      For i := TrackL Downto 1 Do
           t1 := t1 + LastChars[i];
@@ -162,7 +141,7 @@ End;
 
 Procedure TGenericLayoutOld.DoBackspace(Var Block: Boolean);
 Var
-     BijoyNewBanglaText       : WideString;
+     BijoyNewBanglaText       : String;
 Begin
      If (Length(PrevBanglaT) - 1) <= 0 Then Begin
 
@@ -188,7 +167,7 @@ End;
 
 {===============================================================================}
 
-Function TGenericLayoutOld.InsertKar(Const sKar: WideString): WideString;
+Function TGenericLayoutOld.InsertKar(Const sKar: String): String;
 Begin
      If LastChar = b_Chandra Then Begin
           If LastChars[2] = b_Ekar Then Begin
@@ -214,10 +193,10 @@ End;
 {===============================================================================}
 {$HINTS Off}
 
-Function TGenericLayoutOld.InsertReph: WideString;
+Function TGenericLayoutOld.InsertReph: String;
 Var
      RephMoveable             : Boolean;
-     TmpStr                   : Widestring;
+     TmpStr                   : String;
      I, J                     : Integer;
 Begin
      RephMoveable := False;
@@ -300,9 +279,9 @@ End;
 {===============================================================================}
 
 Function TGenericLayoutOld.MyProcessVKeyDown(Const KeyCode: Integer;
-     Var Block: Boolean; Const var_IfShift, var_IfTrueShift, var_IfAltGr: Boolean): Widestring;
+     Var Block: Boolean; Const var_IfShift, var_IfTrueShift, var_IfAltGr: Boolean): String;
 Var
-     CharForKey, tmpString, PendingKar: Widestring;
+     CharForKey, tmpString, PendingKar: String;
 Begin
 
      If AvroMainForm1.GetMyCurrentKeyboardMode = SysDefault Then Begin
@@ -661,7 +640,7 @@ End;
 Procedure TGenericLayoutOld.MyProcessVKeyUP(Const KeyCode: Integer;
      Var Block: Boolean; Const var_IfShift, var_IfTrueShift, var_IfAltGr: Boolean);
 Var
-     CharForKey               : Widestring;
+     CharForKey               : String;
 Begin
      If AvroMainForm1.GetMyCurrentKeyboardMode = SysDefault Then Begin
           Block := False;
@@ -687,7 +666,7 @@ End;
 Procedure TGenericLayoutOld.ParseAndSendNow;
 Var
      I, Matched, UnMatched    : Integer;
-     BijoyPrevBanglaT, BijoyNewBanglaText: WideString;
+     BijoyPrevBanglaT, BijoyNewBanglaText: String;
 Begin
      Matched := 0;
 
@@ -741,10 +720,10 @@ End;
 {===============================================================================}
 
 Function TGenericLayoutOld.ProcessVKeyDown(Const KeyCode: Integer;
-     Var Block: Boolean): WideString;
+     Var Block: Boolean): String;
 Var
      m_Block                  : Boolean;
-     m_Str                    : WideString;
+     m_Str                    : String;
 Begin
      m_Block := False;
 
@@ -831,9 +810,9 @@ End;
 
 {===============================================================================}
 
-Procedure TGenericLayoutOld.SetLastChar(Const wChar: WideString);
+Procedure TGenericLayoutOld.SetLastChar(Const wChar: String);
 Var
-     t1, t2                   : Widestring;
+     t1, t2                   : String;
      I, J                     : Integer;
 Begin
      For i := TrackL Downto 1 Do

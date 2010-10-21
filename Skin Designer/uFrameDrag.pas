@@ -242,7 +242,6 @@ Begin
           Exit.Top := 152;
           CurrentWidth := CurrentWidth + Exit.Width + 8;
      End;
-
 End;
 
 Procedure TFrameDrag.SetNumber(Var NumberText: TEdit);

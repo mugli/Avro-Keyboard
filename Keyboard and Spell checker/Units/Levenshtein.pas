@@ -9,7 +9,7 @@ uses sysutils, Math;
 
     function minimum(a, b, c: Integer): Integer;
 
-    function LD(s, t: Widestring): Integer;
+    function LD(s, t: String): Integer;
 
 
 implementation
@@ -25,11 +25,11 @@ begin
   Result := mi;
 end;
 
-function LD(s, t: Widestring): Integer;
+function LD(s, t: String): Integer;
 var
   d: array of array of Integer;
   n, m, i, j, costo: Integer;
-  s_i, t_j: widechar;
+  s_i, t_j: Char;
 begin
   n := Length(s);
   m := Length(t);

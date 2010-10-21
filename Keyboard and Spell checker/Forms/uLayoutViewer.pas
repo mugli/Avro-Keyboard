@@ -75,7 +75,7 @@ Type
           CurrentSize: Integer;
           LayerDisplay: Integer;        //1= Normal, 2= AltGr
           KeyboardLayout: String;
-          Procedure Resize(PICSRC: TImage; picSize: Integer);
+          Procedure ResizeMe(PICSRC: TImage; picSize: Integer);
           Procedure ResizeImage(Var SourcePictureBox, DestinationPictureBox: TImage; oldx, oldy, NewX, NewY: Integer);
      Public
           { Public declarations }
@@ -284,7 +284,7 @@ End;
 
 ////////////////////////////////////////////////////////////////////////
 
-Procedure TLayoutViewer.Resize(PICSRC: TImage; picSize: Integer);
+Procedure TLayoutViewer.ResizeMe(PICSRC: TImage; picSize: Integer);
 Var
      X, Y                     : Integer;
      J                        : Integer;
@@ -377,7 +377,7 @@ Begin
      If Lowercase(KeyboardLayout) = 'avrophonetic*' Then Begin
           If LayerDisplay = 1 Then Begin
                tmpPicture.Picture.Assign(Pic_LayoutNormal);
-               Resize(tmpPicture, picSize);
+               ResizeMe(tmpPicture, picSize);
           End
           Else If LayerDisplay = 2 Then Begin
                picRSetMode.Picture := Nil;
@@ -393,7 +393,7 @@ Begin
           If LayerDisplay = 1 Then Begin
                If Not (Pic_LayoutNormal = Nil) Then Begin
                     tmpPicture.Picture.Assign(Pic_LayoutNormal);
-                    Resize(tmpPicture, picSize);
+                    ResizeMe(tmpPicture, picSize);
                End
                Else Begin
                     picRSetMode.Picture := Nil;
@@ -408,7 +408,7 @@ Begin
           Else If LayerDisplay = 2 Then Begin
                If Not (Pic_LayoutAltGr = Nil) Then Begin
                     tmpPicture.Picture.Assign(Pic_LayoutAltGr);
-                    Resize(tmpPicture, picSize);
+                    ResizeMe(tmpPicture, picSize);
                End
                Else Begin
                     picRSetMode.Picture := Nil;

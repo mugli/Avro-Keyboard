@@ -308,8 +308,8 @@ object TopBar: TTopBar
     DefaultHeader = 'Avro Keyboard'
     Options = [boUseDefaultIcon, boUseDefaultImageIndex, boShowCloseBtn]
     UseBalloonAsApplicationHint = True
-    Left = 480
-    Top = 160
+    Left = 384
+    Top = 200
   end
   object HintTimer: TTimer
     Enabled = False

@@ -81,7 +81,7 @@ Var
      TempList                 : TStringList;
      ListOfPart               : TStringList;
 
-     rPhoneticRegx            : AnsiString;
+     rPhoneticRegx            : String;
 Begin
      iLen := Length(MainStr);
      FResult.Sorted := True;
@@ -102,8 +102,7 @@ Begin
      If iLen >= 2 Then Begin
           For j := 2 To iLen Do Begin
                isSuffix := LowerCase(MidStr(MainStr, j, iLen));
-               If Suffix.HasKey(isSuffix) Then Begin
-                    B_Suffix := utf8decode(Suffix.Item[isSuffix]);
+               If Suffix.TryGetValue(isSuffix,B_Suffix) Then Begin
                     WithoutSuffix := leftstr(MainStr, Length(MainStr) - Length(isSuffix));
 
                     ListOfPart.Clear;

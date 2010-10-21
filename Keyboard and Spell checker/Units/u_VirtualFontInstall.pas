@@ -123,7 +123,7 @@ Var
      Reg                      : TMyRegistry;
 Begin
      Reg := TMyRegistry.Create;
-     AddFontResource(PAnsiChar(FontFilePath));
+     AddFontResource(PChar(FontFilePath));
      VirtualFontName := GetFontName(FontFilePath);
 
      Reg.RootKey := HKEY_CURRENT_USER;
@@ -153,11 +153,11 @@ End;
 
 Procedure RemoveVirtualFont(FontFilePath: String);
 Var
-     PrevDefaultFixedFont, PrevDefaultPropFont, VirtualFontName: String;
+     PrevDefaultFixedFont, PrevDefaultPropFont: String;
      Reg                      : TMyRegistry;
 Begin
      Reg := TMyRegistry.Create;
-     RemoveFontResource(PAnsiChar(FontFilePath));
+     RemoveFontResource(PChar(FontFilePath));
 
      If Reg.OpenKey('Software\Microsoft\Internet Explorer\International\Scripts\11', True) = True Then Begin
           PrevDefaultFixedFont := trim(REG.ReadString('IEFixedFontName_Prev'));

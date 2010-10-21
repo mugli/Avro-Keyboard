@@ -80,9 +80,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 0
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         60050000424D6005000000000000360400002800000019000000190000000100
         0800010000002A010000232E0000232E00000001000000010000000000000101
@@ -128,7 +126,11 @@ object frmAvroMouse: TfrmAvroMouse
         0240018001BF07FF00000AFF016001CF02FF01400200018007FF00000EFF0140
         01DF09FF00000EFF01400AFF00000EFF01EF0AFF000019FF000019FF000019FF
         00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 0
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn1: TBitBtn
       Tag = 2453
@@ -140,9 +142,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 1
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         48050000424D4805000000000000360400002800000019000000190000000100
         08000100000012010000232E0000232E00000001000000010000000000000101
@@ -187,7 +187,11 @@ object frmAvroMouse: TfrmAvroMouse
         019F08FF00000BFF0005CF402080DF9F09FF000004FF01DF0780014001200580
         01BF05FF000004FF01BF0E00018005FF000019FF000019FF000019FF000019FF
         000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 1
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn2: TBitBtn
       Tag = 2458
@@ -199,9 +203,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 2
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         2C050000424D2C05000000000000360400002800000019000000190000000100
         080001000000F6000000232E0000232E00000001000000010000000000000101
@@ -245,7 +247,11 @@ object frmAvroMouse: TfrmAvroMouse
         000008FF0004BF00309F0DFF000008FF0003BF009F9F0EFF000006FF0004D180
         60000780019F07FF000006FF01BF0A00014007FF000019FF000019FF000019FF
         000019FF000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 2
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn4: TBitBtn
       Tag = 2459
@@ -257,9 +263,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 3
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         58050000424D5805000000000000360400002800000019000000190000000100
         08000100000022010000232E0000232E00000001000000010000000000000101
@@ -304,7 +308,11 @@ object frmAvroMouse: TfrmAvroMouse
         4000300070CF09FF000007FF000480407020034001800AFF000007FF00038000
         8F200FFF000005FF0004DF8040100880019F07FF000005FF01BF0B00014007FF
         000019FF000019FF000019FF000019FF000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 3
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn5: TBitBtn
       Tag = 2468
@@ -316,9 +324,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 4
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         54050000424D5405000000000000360400002800000019000000190000000100
         0800010000001E010000232E0000232E00000001000000010000000000000101
@@ -363,7 +369,11 @@ object frmAvroMouse: TfrmAvroMouse
         013003FF01CF01100300012001CF08FF000005FF01BF01AF04FF01DF0280019F
         01EF09FF000004FF01DF0E8001DF05FF000004FF01BF0E0001BF05FF000019FF
         000019FF000019FF000019FF000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 4
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn6: TBitBtn
       Tag = 2463
@@ -375,9 +385,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 5
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         5C050000424D5C05000000000000360400002800000019000000190000000100
         08000100000026010000232E0000232E00000001000000010000000000000101
@@ -422,7 +430,11 @@ object frmAvroMouse: TfrmAvroMouse
         06FF01BF0B0007FF00000EFF01EF010009FF000008FF01BF018004BF01500120
         09FF000006FF01CF01200600011001CF09FF000006FF00042080BFAF0380018F
         01EF0AFF000006FF016012FF000006FF018F12FF000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 5
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn7: TBitBtn
       Tag = 2464
@@ -434,9 +446,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 6
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         70050000424D7005000000000000360400002800000019000000190000000100
         0800010000003A010000232E0000232E00000001000000010000000000000101
@@ -482,7 +492,11 @@ object frmAvroMouse: TfrmAvroMouse
         00039F30EF400CFF000009FF0003EF20CF400DFF000009FF02800EFF000009FF
         01200FFF000008FF01CF01300FFF000008FF0003BF00CFFF0EFF000009FF0003
         1000CFFF0DFF000009FF01CF01BF0EFF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 6
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn8: TBitBtn
       Tag = 2469
@@ -494,9 +508,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 7
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         66050000424D6605000000000000360400002800000019000000190000000100
         08000100000030010000232E0000232E00000001000000010000000000000101
@@ -542,7 +554,11 @@ object frmAvroMouse: TfrmAvroMouse
         0009607000BFFF006080DFFF06FF000008FF000580330020AF7002FF030001BF
         06FF00000FFF012009FF00000FFF016009FF00000FFF01EF09FF000019FF0000
         19FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 7
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn9: TBitBtn
       Tag = 2474
@@ -554,9 +570,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 8
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         52050000424D5205000000000000360400002800000019000000190000000100
         0800010000001C010000232E0000232E00000001000000010000000000000101
@@ -601,7 +615,11 @@ object frmAvroMouse: TfrmAvroMouse
         014008FF000007FF01600200000940300060FF8020809F4006FF000008FF0005
         BF604050BF3002FF01800200014006FF00000FFF018001BF08FF00000FFF01CF
         09FF000019FF000019FF000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 8
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn10: TBitBtn
       Tag = 2475
@@ -613,9 +631,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 9
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         5C050000424D5C05000000000000360400002800000019000000190000000100
         08000100000026010000232E0000232E00000001000000010000000000000101
@@ -660,7 +676,11 @@ object frmAvroMouse: TfrmAvroMouse
         9FFFBFBF0300012001CF06FF000006FF01CF01500200019F02FF01DF02500180
         01EF07FF000004FF0003BF801000020001400A8001BF04FF000004FF01800F00
         018004FF000019FF000019FF000019FF000019FF000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 9
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn11: TBitBtn
       Tag = 2455
@@ -672,9 +692,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 10
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         6C050000424D6C05000000000000360400002800000019000000190000000100
         08000100000036010000232E0000232E00000001000000010000000000000101
@@ -720,7 +738,11 @@ object frmAvroMouse: TfrmAvroMouse
         EF008FBFDFFF07FF000006FF01CF01300300000360EFFF000300017D07FF0000
         08FF02BF01EF03FF011002BF01DF07FF00000EFF01400AFF00000EFF01CF0AFF
         000019FF000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 10
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn12: TBitBtn
       Tag = 2456
@@ -732,9 +754,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 11
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         40050000424D4005000000000000360400002800000019000000190000000100
         0800010000000A010000232E0000232E00000001000000010000000000000101
@@ -779,7 +799,11 @@ object frmAvroMouse: TfrmAvroMouse
         010008FF000006FF0005DF80200020BF048001600100028001DF05FF000006FF
         01BF0C0001BF05FF000019FF000019FF000019FF000019FF000019FF000019FF
         00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 11
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn13: TBitBtn
       Tag = 2461
@@ -791,9 +815,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 12
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         74050000424D7405000000000000360400002800000019000000190000000100
         0800010000003E010000232E0000232E00000001000000010000000000000101
@@ -839,7 +861,11 @@ object frmAvroMouse: TfrmAvroMouse
         02FF010001BF06FF000005FF01DF07800160010002FF0004006080BF04FF0000
         05FF01BF090002FF0300018004FF000011FF012001EF06FF000011FF016007FF
         000011FF01EF07FF000019FF000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 12
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn14: TBitBtn
       Tag = 2460
@@ -851,9 +877,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 13
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         76050000424D7605000000000000360400002800000019000000190000000100
         08000100000040010000232E0000232E00000001000000010000000000000101
@@ -899,7 +923,11 @@ object frmAvroMouse: TfrmAvroMouse
         01100140028000035010CFCF06FF000005FF0008EFDFFFEF301020500CFF0000
         04FF01DF0480015002000120078001DF04FF000004FF01BF0F0001BF04FF0000
         19FF000019FF000019FF000019FF000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 13
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn15: TBitBtn
       Tag = 2465
@@ -911,9 +939,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 14
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         4C050000424D4C05000000000000360400002800000019000000190000000100
         08000100000016010000232E0000232E00000001000000010000000000000101
@@ -958,7 +984,11 @@ object frmAvroMouse: TfrmAvroMouse
         09FF000006FF01EF018003FF010001BF0CFF000005FF01DF0580010001600680
         019F05FF000005FF01BF0D00014005FF000019FF000019FF000019FF000019FF
         000019FF000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 14
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn16: TBitBtn
       Tag = 2466
@@ -970,9 +1000,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 15
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         2A050000424D2A05000000000000360400002800000019000000190000000100
         080001000000F4000000232E0000232E00000001000000010000000000000101
@@ -1016,7 +1044,11 @@ object frmAvroMouse: TfrmAvroMouse
         08FF000009FF01BF01000EFF000009FF01BF01000EFF000007FF0004BF806000
         078001BF06FF000007FF01800A00018006FF000019FF000019FF000019FF0000
         19FF000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 15
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn17: TBitBtn
       Tag = 2471
@@ -1028,9 +1060,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 16
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         4E050000424D4E05000000000000360400002800000019000000190000000100
         08000100000018010000232E0000232E00000001000000010000000000000101
@@ -1075,7 +1105,11 @@ object frmAvroMouse: TfrmAvroMouse
         AF20008008FF000008FF01BF010002410007EFFFEF304180BFFF06FF000009FF
         0004300010EF02FF01410200018006FF00000AFF01BF01DF0DFF000019FF0000
         19FF000019FF000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 16
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn18: TBitBtn
       Tag = 2470
@@ -1087,9 +1121,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 17
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         3C050000424D3C05000000000000360400002800000019000000190000000100
         08000100000006010000232E0000232E00000001000000010000000000000101
@@ -1133,7 +1165,11 @@ object frmAvroMouse: TfrmAvroMouse
         FFEF70000300011001CF07FF000008FF0140018003FF0004BF5040EF08FF0000
         08FF014001800FFF000006FF0004BF802040098001BF05FF000006FF01800C00
         018005FF000019FF000019FF000019FF000019FF000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 17
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn19: TBitBtn
       Tag = 2476
@@ -1145,9 +1181,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 18
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         34050000424D3405000000000000360400002800000019000000190000000100
         080001000000FE000000232E0000232E00000001000000010000000000000101
@@ -1191,7 +1225,11 @@ object frmAvroMouse: TfrmAvroMouse
         40A400BF08FF00000BFF01BF0140030001BF08FF00000DFF0004DF8F00BF08FF
         000006FF01BF08800004006080BF06FF000006FF01800B00018006FF000019FF
         000019FF000019FF000019FF000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 18
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn20: TBitBtn
       Tag = 2477
@@ -1203,9 +1241,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 19
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         4E050000424D4E05000000000000360400002800000019000000190000000100
         08000100000018010000232E0000232E00000001000000010000000000000101
@@ -1250,7 +1286,11 @@ object frmAvroMouse: TfrmAvroMouse
         80FF8010CFEF08FF000005FF01BF01EF02FF01EF028F01EF01FF02EF09FF0000
         04FF01DF0D80019F06FF000004FF01BF0D00014006FF000019FF000019FF0000
         19FF000019FF000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 19
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn21: TBitBtn
       Tag = 2457
@@ -1262,9 +1302,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 20
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         62050000424D6205000000000000360400002800000019000000190000000100
         0800010000002C010000232E0000232E00000001000000010000000000000101
@@ -1310,7 +1348,11 @@ object frmAvroMouse: TfrmAvroMouse
         8F5D109FFF5D80AF08FF000007FF0006CF0020FFEF300200011001DF08FF0000
         08FF01DF01CF03FF01CF01BF0AFF000019FF000019FF000019FF000019FF0000
         19FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 20
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn24: TBitBtn
       Tag = 2462
@@ -1322,9 +1364,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 21
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         AC050000424DAC05000000000000360400002800000019000000190000000100
         08000100000076010000232E0000232E00000001000000010000000000000101
@@ -1372,7 +1412,11 @@ object frmAvroMouse: TfrmAvroMouse
         EF30007D02FF000400BFCF100200011001CF04FF000008FF000CEF4000206000
         DFFFEF8F7DDF05FF00000AFF00049F40209F0BFF000019FF000019FF000019FF
         000019FF000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 21
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn25: TBitBtn
       Tag = 2467
@@ -1384,9 +1428,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 22
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         4C050000424D4C05000000000000360400002800000019000000190000000100
         08000100000016010000232E0000232E00000001000000010000000000000101
@@ -1431,7 +1473,11 @@ object frmAvroMouse: TfrmAvroMouse
         000008FF01600400000620EF426080BF06FF000009FF000780200042CFFF4260
         0200018006FF00000FFF014201BF08FF00000FFF019F09FF00000FFF01EF09FF
         000019FF000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 22
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn28: TBitBtn
       Tag = 2472
@@ -1443,9 +1489,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 23
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         30050000424D3005000000000000360400002800000019000000190000000100
         080001000000FA000000232E0000232E00000001000000010000000000000101
@@ -1489,7 +1533,11 @@ object frmAvroMouse: TfrmAvroMouse
         02FF0140018008FF00000FFF0140018008FF00000FFF0140018008FF000006FF
         01DF088000042040809F06FF000006FF01BF0B00014006FF000019FF000019FF
         000019FF000019FF000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 23
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn29: TBitBtn
       Tag = 2478
@@ -1501,9 +1549,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 24
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         46050000424D4605000000000000360400002800000019000000190000000100
         08000100000010010000232E0000232E00000001000000010000000000000101
@@ -1548,7 +1594,11 @@ object frmAvroMouse: TfrmAvroMouse
         0200018004FF010001BF07FF000006FF01BF01500200013005800004006080BF
         05FF000006FF01800C00018005FF000019FF000019FF000019FF000019FF0000
         19FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 24
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn22: TBitBtn
       Tag = 2509
@@ -1560,9 +1610,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 25
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         94080000424D94080000000000003604000028000000190000007D0000000100
         0800010000005E040000232E0000232E00000001000000010000FFFFFF005C5C
@@ -1633,7 +1681,11 @@ object frmAvroMouse: TfrmAvroMouse
         0000190000001900000019000000190000001900000019000000190000001900
         0000190000001900000019000000190000001900000019000000190000001900
         000019000000190000001900000019000000190000000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 25
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn23: TBitBtn
       Tag = 2479
@@ -1645,9 +1697,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 26
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         3A050000424D3A05000000000000360400002800000019000000190000000100
         08000100000004010000232E0000232E00000001000000010000000000000101
@@ -1691,7 +1741,11 @@ object frmAvroMouse: TfrmAvroMouse
         0006DF109FFFBF0008FF000008FF0005DF8030009F0002FF01BF010008FF0000
         06FF01BF017003000150038001600100028001DF05FF000006FF01800C0001BF
         05FF000019FF000019FF000019FF000019FF000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 26
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn26: TBitBtn
       Tag = 2480
@@ -1703,9 +1757,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 27
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         42050000424D4205000000000000360400002800000019000000190000000100
         0800010000000C010000232E0000232E00000001000000010000000000000101
@@ -1750,7 +1802,11 @@ object frmAvroMouse: TfrmAvroMouse
         08FF00000DFF0004DF8000BF08FF000006FF01DF08800004006080BF06FF0000
         06FF01BF0B00018006FF000019FF000019FF000019FF000019FF000019FF0000
         19FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 27
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn27: TBitBtn
       Tag = 2482
@@ -1762,9 +1818,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 28
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         54050000424D5405000000000000360400002800000019000000190000000100
         0800010000001E010000232E0000232E00000001000000010000000000000101
@@ -1809,7 +1863,11 @@ object frmAvroMouse: TfrmAvroMouse
         01300200000730CF10009F40808007FF000009FF02BF02FF0005EFCFFF408000
         07FF000005FF01BF0A8001200140028005FF000005FF01800E0005FF000019FF
         000019FF000019FF000019FF000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 28
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn30: TBitBtn
       Tag = 2486
@@ -1821,9 +1879,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 29
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         58050000424D5805000000000000360400002800000019000000190000000100
         08000100000022010000232E0000232E00000001000000010000000000000101
@@ -1868,7 +1924,11 @@ object frmAvroMouse: TfrmAvroMouse
         05FF01DF0280000330409F500300000630EF206080BF05FF000004FF01EF0130
         0200000840EFFFAF3020CFFF0300018005FF000010FF010001DF07FF000010FF
         015008FF00000FFF01EF09FF000019FF000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 29
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn31: TBitBtn
       Tag = 2489
@@ -1880,9 +1940,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 30
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         56050000424D5605000000000000360400002800000019000000190000000100
         08000100000020010000232E0000232E00000001000000010000000000000101
@@ -1927,7 +1985,11 @@ object frmAvroMouse: TfrmAvroMouse
         BF20EF7009FF000008FF019F01100300011001CF0AFF000009FF0005EF60308F
         EF100BFF000005FF01BF048001100143058001DF07FF000005FF01800B0001BF
         07FF000019FF000019FF000019FF000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 30
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn32: TBitBtn
       Tag = 2527
@@ -1939,9 +2001,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 31
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         52050000424D5205000000000000360400002800000019000000190000000100
         0800010000001C010000232E0000232E00000001000000010000000000000101
@@ -1986,7 +2046,11 @@ object frmAvroMouse: TfrmAvroMouse
         CFFF804008FF000008FF00059F602010CF4002FF0180014008FF000006FF01BF
         015003000150038001400120028001DF05FF000006FF01800C0001BF05FF0000
         19FF000019FF000019FF000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 31
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn33: TBitBtn
       Tag = 2435
@@ -1998,9 +2062,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 32
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         1E050000424D1E05000000000000360400002800000019000000190000000100
         080001000000E8000000232E0000232E00000001000000010000000000000101
@@ -2044,7 +2106,11 @@ object frmAvroMouse: TfrmAvroMouse
         00BF09FF00000AFF000620309F4400DF09FF00000AFF019F0300019F0AFF0000
         0BFF0003DFAFCF9F0BFF000019FF000019FF000019FF000019FF000019FF0000
         0100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 32
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn34: TBitBtn
       Tag = 2510
@@ -2056,9 +2122,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 33
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         22050000424D2205000000000000360400002800000019000000190000000100
         080001000000EC000000232E0000232E00000001000000010000000000000101
@@ -2102,7 +2166,11 @@ object frmAvroMouse: TfrmAvroMouse
         07FF00048F205E9F02FF017001400AFF000007FF0008EF30005E805E009F0AFF
         000008FF0006EF70100020800BFF000019FF000019FF000019FF000019FF0000
         19FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 33
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn35: TBitBtn
       Tag = 2524
@@ -2114,9 +2182,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 34
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         74050000424D7405000000000000360400002800000019000000190000000100
         0800010000003E010000232E0000232E00000001000000010000000000000101
@@ -2162,7 +2228,11 @@ object frmAvroMouse: TfrmAvroMouse
         01BF016003FF010001BF02FF01CF01DF08FF000006FF01BF019F03FF010001BF
         0CFF000005FF01DF0580010001600680019F05FF000005FF01BF0D00014005FF
         000019FF000019FF000019FF000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 34
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn36: TBitBtn
       Tag = 2487
@@ -2174,9 +2244,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 35
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         44050000424D4405000000000000360400002800000019000000190000000100
         0800010000000E010000232E0000232E00000001000000010000000000000101
@@ -2221,7 +2289,11 @@ object frmAvroMouse: TfrmAvroMouse
         02FF01BF010009FF000005FF01DF016003000160038001600100028001DF06FF
         000005FF01BF0C0001BF06FF000019FF000019FF000019FF000019FF000019FF
         000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 35
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn37: TBitBtn
       Tag = 2488
@@ -2233,9 +2305,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 36
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         44050000424D4405000000000000360400002800000019000000190000000100
         0800010000000E010000232E0000232E00000001000000010000000000000101
@@ -2280,7 +2350,11 @@ object frmAvroMouse: TfrmAvroMouse
         03FF01BF010008FF000005FF01DF016003000120048001600100028001BF05FF
         000005FF01BF0D00018005FF000019FF000019FF000019FF000019FF000019FF
         000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 36
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn38: TBitBtn
       Tag = 2525
@@ -2292,9 +2366,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 37
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         3E050000424D3E05000000000000360400002800000019000000190000000100
         08000100000008010000232E0000232E00000001000000010000000000000101
@@ -2339,7 +2411,11 @@ object frmAvroMouse: TfrmAvroMouse
         02FF02AF0AFF000009FF010001BF0EFF000006FF01DF028001000160078007FF
         000006FF01BF0B0007FF000019FF000019FF000019FF000019FF000019FF0000
         0100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 37
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn39: TBitBtn
       Tag = 2434
@@ -2351,9 +2427,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 38
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         1C050000424D1C05000000000000360400002800000019000000190000000100
         080001000000E6000000232E0000232E00000001000000010000000000000101
@@ -2396,7 +2470,11 @@ object frmAvroMouse: TfrmAvroMouse
         0AFF00000AFF000680BFFF8000CF09FF00000AFF014001AF02FF013001BF09FF
         00000AFF00065013807000DF09FF00000AFF01CF01130200019F0AFF00000BFF
         0003EFBFDF000BFF000019FF000019FF000019FF000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 38
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn41: TBitBtn
       Left = 241
@@ -2407,8 +2485,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 39
-      TabStop = False
+      DoubleBuffered = True
       Glyph.Data = {
         48050000424D4805000000000000360400002800000019000000190000000100
         08000100000012010000232E0000232E00000001000000010000000000000101
@@ -2453,7 +2530,10 @@ object frmAvroMouse: TfrmAvroMouse
         019F08FF00000BFF0005CF402080DF9F09FF000004FF01DF0780014001200580
         01BF05FF000004FF01BF0E00018005FF000019FF000019FF000019FF000019FF
         000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 39
+      TabStop = False
     end
   end
   object Panel2: TPanel
@@ -2473,11 +2553,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      ParentShowHint = False
-      ShowHint = False
-      TabOrder = 0
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         92050000424D9205000000000000360400002800000019000000190000000100
         0800010000005C010000232E0000232E00000001000000010000000000000101
@@ -2524,7 +2600,13 @@ object frmAvroMouse: TfrmAvroMouse
         0180019F03FF016B0300014001EF03FF024006FF000003FF01BF05FF02BF01DF
         05FF024006FF000002FF019F0E4002100240019F03FF000002FF019F1240019F
         03FF000019FF000019FF000019FF000019FF00000100}
+      ParentDoubleBuffered = False
+      ParentShowHint = False
+      ShowHint = False
       Spacing = 0
+      TabOrder = 0
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn42: TBitBtn
       Tag = 2438
@@ -2536,9 +2618,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 1
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         FC050000424DFC05000000000000360400002800000019000000190000000100
         080001000000C6010000232E0000232E00000001000000010000000000000101
@@ -2588,7 +2668,11 @@ object frmAvroMouse: TfrmAvroMouse
         0004BF809FEF04FF024001FF01EF0230018003FF000001FF019F0D4002100005
         401070302040024001CF000001FF019F104000048FFF0030024001CF000014FF
         012004FF000014FF015A04FF000013FF01EF05FF000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 1
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn43: TBitBtn
       Tag = 2439
@@ -2600,9 +2684,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 2
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         9C050000424D9C05000000000000360400002800000019000000190000000100
         08000100000066010000232E0000232E00000001000000010000000000000101
@@ -2649,7 +2731,11 @@ object frmAvroMouse: TfrmAvroMouse
         0340019F04FF00000FFF018F014008FF000007FF01EB018F0380029F00038020
         8FFF08FF000006FF01700800013009FF000005FF00039F207030048000034060
         9FFF0AFF000005FF018001BF12FF000005FF01AF017012FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 2
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn44: TBitBtn
       Tag = 2440
@@ -2661,9 +2747,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 3
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         AC050000424DAC05000000000000360400002800000019000000190000000100
         08000100000076010000232E0000232E00000001000000010000000000000101
@@ -2711,7 +2795,11 @@ object frmAvroMouse: TfrmAvroMouse
         EF7020001000024000046080406007FF000006FF01EF01300800016001EF07FF
         000006FF00058F30BAEFCF6002BA00038FBADF6009FF000006FF028011FF0000
         06FF01DF018011FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 3
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn45: TBitBtn
       Tag = 2441
@@ -2723,9 +2811,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 4
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         C2050000424DC205000000000000360400002800000019000000190000000100
         0800010000008C010000232E0000232E00000001000000010000000000000101
@@ -2774,7 +2860,11 @@ object frmAvroMouse: TfrmAvroMouse
         10DF07FF000006FF01CF011007000110019F08FF000006FF01100140067D018F
         01DF09FF000005FF01BF015012FF000005FF0003EF40EFFF11FF000006FF01EF
         12FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 4
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn46: TBitBtn
       Tag = 2442
@@ -2786,9 +2876,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 5
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         BA050000424DBA05000000000000360400002800000019000000190000000100
         08000100000084010000232E0000232E00000001000000010000000000000101
@@ -2836,7 +2924,11 @@ object frmAvroMouse: TfrmAvroMouse
         03FF000010FF01CF013007FF000005FF0003E37040FF040001200340010001AF
         07FF000004FF0003AF0030FF0340040000031050CFAF08FF000004FF0140019F
         13FF000004FF0140019F13FF000004FF01BF01E313FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 5
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn47: TBitBtn
       Tag = 2443
@@ -2848,9 +2940,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 6
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         C6050000424DC605000000000000360400002800000019000000190000000100
         08000100000090010000232E0000232E00000001000000010000000000000101
@@ -2899,7 +2989,11 @@ object frmAvroMouse: TfrmAvroMouse
         00300240019F03FF000005FF01EF03FF01DD018F02FF02400004FFBF00BF06FF
         00000DFF0006509FFFBF30DD06FF00000DFF01DD02FF01EF08FF000019FF0000
         19FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 6
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn48: TBitBtn
       Tag = 2447
@@ -2911,9 +3005,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 7
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         76050000424D7605000000000000360400002800000019000000190000000100
         08000100000040010000232E0000232E00000001000000010000000000000101
@@ -2959,7 +3051,11 @@ object frmAvroMouse: TfrmAvroMouse
         07FF00000AFF00048F0010EF02FF0180010007FF00000BFF00076000109FFF80
         008007FF00000CFF017002000220018007FF00000DFF0004DF70409F08FF0000
         19FF000019FF000019FF000019FF000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 7
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn49: TBitBtn
       Tag = 2448
@@ -2971,9 +3067,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 8
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         CA050000424DCA05000000000000360400002800000019000000190000000100
         08000100000094010000232E0000232E00000001000000010000000000000101
@@ -3022,7 +3116,11 @@ object frmAvroMouse: TfrmAvroMouse
         0160030000032670DFFF07FF000009FF0006DF10002670CF0AFF000009FF0003
         7026BF260DFF000009FF016001BF0EFF000009FF0003BF26CFFF0DFF00000AFF
         019F01CF0DFF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 8
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn50: TBitBtn
       Tag = 2451
@@ -3034,9 +3132,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 9
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         80050000424D8005000000000000360400002800000019000000190000000100
         0800010000004A010000232E0000232E00000001000000010000000000000101
@@ -3083,7 +3179,11 @@ object frmAvroMouse: TfrmAvroMouse
         04FF01CF01AF03FF01CF012002000160027B011001CF07FF00000BFF019F0140
         0200013001BF08FF000019FF000019FF000019FF000019FF000019FF000019FF
         00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 9
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn51: TBitBtn
       Tag = 2452
@@ -3095,9 +3195,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 10
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         DC050000424DDC05000000000000360400002800000019000000190000000100
         080001000000A6010000232E0000232E00000001000000010000000000000101
@@ -3146,7 +3244,11 @@ object frmAvroMouse: TfrmAvroMouse
         01EF06FF00000AFF01A30120030000032080EFEF07FF000009FF016002000003
         1060A3800AFF000008FF0004A30030BF0DFF000008FF00038000EFBF0EFF0000
         08FF0003A310EFBF0EFF000009FF018001400EFF000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 10
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn52: TBitBtn
       Tag = 2508
@@ -3158,9 +3260,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 11
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         AE050000424DAE05000000000000360400002800000019000000190000000100
         08000100000078010000232E0000232E00000001000000010000000000000101
@@ -3208,7 +3308,11 @@ object frmAvroMouse: TfrmAvroMouse
         018F011004FF00000BFF0003EF7030FF0200000530402000801004FF00000BFF
         0003304080FF0440017001BF05FF00000AFF01BF01300DFF00000AFF01EF0130
         0DFF00000BFF01EF0DFF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 11
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn53: TBitBtn
       Tag = 2494
@@ -3220,9 +3324,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 12
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         10050000424D1005000000000000360400002800000019000000190000000100
         080001000000DA000000232E0000232E00000001000000010000000000000101
@@ -3265,7 +3367,11 @@ object frmAvroMouse: TfrmAvroMouse
         11FF0003DF2080FF05FF00000FFF0007CF8F307060BFDF0003FF00000EFF0008
         9F0020CF502050EF03FF000012FF014001EF05FF000012FF018006FF000012FF
         01EF06FF000019FF000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 12
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn54: TBitBtn
       Tag = 2495
@@ -3277,9 +3383,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 13
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         44050000424D4405000000000000360400002800000019000000190000000100
         0800010000000E010000232E0000232E00000001000000010000000000000101
@@ -3324,7 +3428,11 @@ object frmAvroMouse: TfrmAvroMouse
         019F09FF000004FF0004700030DF04FF0003DF609FFF0AFF000005FF01700200
         0150028000033040DFFF0BFF000006FF01BF01600240018001DF0DFF000019FF
         000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 13
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn55: TBitBtn
       Tag = 2496
@@ -3336,9 +3444,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 14
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         5C050000424D5C05000000000000360400002800000019000000190000000100
         08000100000026010000232E0000232E00000001000000010000000000000101
@@ -3383,7 +3489,11 @@ object frmAvroMouse: TfrmAvroMouse
         000008FF016004000120018002FF01CF012006FF000008FF015002BF05FF0003
         CF10BFCF06FF000008FF0003209FDFFF02FF0005EFAF60009F0007FF000008FF
         01CF01500500016001DF08FF00000BFF03BF0BFF000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 14
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn56: TBitBtn
       Tag = 2497
@@ -3395,9 +3505,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 15
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         E4040000424DE404000000000000360400002800000019000000190000000100
         080001000000AE000000232E0000232E00000001000000010000000000000101
@@ -3439,7 +3547,11 @@ object frmAvroMouse: TfrmAvroMouse
         01CF0AFF000019FF000019FF000019FF000019FF000019FF000019FF000019FF
         000019FF000019FF000019FF000019FF000019FF000019FF000019FF000019FF
         000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 15
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn57: TBitBtn
       Tag = 2498
@@ -3451,9 +3563,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 16
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         E6040000424DE604000000000000360400002800000019000000190000000100
         080001000000B0000000232E0000232E00000001000000010000000000000101
@@ -3495,7 +3605,11 @@ object frmAvroMouse: TfrmAvroMouse
         09FF00000EFF01EF0AFF000019FF000019FF000019FF000019FF000019FF0000
         19FF000019FF000019FF000019FF000019FF000019FF000019FF000019FF0000
         19FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 16
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn58: TBitBtn
       Tag = 2499
@@ -3507,9 +3621,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 17
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         DC040000424DDC04000000000000360400002800000019000000190000000100
         080001000000A6000000232E0000232E00000001000000010000000000000101
@@ -3550,7 +3662,11 @@ object frmAvroMouse: TfrmAvroMouse
         00000CFF019F021001BF09FF00000DFF0003DF20BFBF09FF00000EFF01AF0AFF
         000019FF000019FF000019FF000019FF000019FF000019FF000019FF000019FF
         000019FF000019FF000019FF000019FF000019FF000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 17
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn59: TBitBtn
       Tag = 2503
@@ -3562,9 +3678,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 18
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         0E050000424D0E05000000000000360400002800000019000000190000000100
         080001000000D8000000232E0000232E00000001000000010000000000000101
@@ -3607,7 +3721,11 @@ object frmAvroMouse: TfrmAvroMouse
         000004FF0004EF1030EF11FF000005FF00048F0030DF10FF000006FF01600200
         015001CF0EFF000007FF0003AF507D500FFF000019FF000019FF000019FF0000
         19FF000019FF000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 18
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn60: TBitBtn
       Tag = 2504
@@ -3619,9 +3737,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 19
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         3C050000424D3C05000000000000360400002800000019000000190000000100
         08000100000006010000232E0000232E00000001000000010000000000000101
@@ -3665,7 +3781,11 @@ object frmAvroMouse: TfrmAvroMouse
         9FEF0EFF000006FF0004CF1000600FFF000007FF0003BF00BF600FFF000004FF
         02BF0003FFCF10FF10FF000002FF019F01100400019F10FF00000008FFDF50BF
         9F808FDF11FF00000003FFCFAFBF16FF000002FF01BF16FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 19
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn61: TBitBtn
       Tag = 2507
@@ -3677,9 +3797,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 20
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         86050000424D8605000000000000360400002800000019000000190000000100
         08000100000050010000232E0000232E00000001000000010000000000000101
@@ -3726,7 +3844,11 @@ object frmAvroMouse: TfrmAvroMouse
         DF0002FF000002FF0170074001CF04FF0008A20020CF502050EF02FF000013FF
         014001EF04FF000013FF018005FF000013FF01EF05FF000019FF000019FF0000
         19FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 20
+      TabStop = False
+      OnClick = BitBtn1Click
     end
   end
   object Panel3: TPanel
@@ -3746,9 +3868,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 0
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         CE040000424DCE0400000000000036040000280000000F0000000F0000000100
         08000100000098000000232E0000232E00000001000000010000000000000101
@@ -3789,7 +3909,11 @@ object frmAvroMouse: TfrmAvroMouse
         0003DF00EF5003FF01BF010004FF000004FF0110018003FF01BF015004FF0000
         04FF0003AF1080FF02EF017001CF04FF000005FF0005DF804080EFEF05FF0000
         0FFF00000FFF00000FFF00000FFF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 0
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn63: TBitBtn
       Tag = 2535
@@ -3801,9 +3925,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 1
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         CA040000424DCA0400000000000036040000280000000F0000000F0000000100
         08000100000094000000232E0000232E00000001000000010000000000000101
@@ -3844,7 +3966,11 @@ object frmAvroMouse: TfrmAvroMouse
         04FF000008FF00036010EFFF04FF000007FF00036000BFFF05FF000006FF0003
         60009FFF06FF000005FF0003800080FF07FF000005FF000370009FFF07FF0000
         06FF01BF08FF00000FFF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 1
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn64: TBitBtn
       Tag = 2536
@@ -3856,9 +3982,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 2
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         D0040000424DD00400000000000036040000280000000F0000000F0000000100
         0800010000009A000000232E0000232E00000001000000010000000000000101
@@ -3899,7 +4023,11 @@ object frmAvroMouse: TfrmAvroMouse
         000004FF00062080CFFF9F3005FF000003FF01CF01EF04FF012005FF000008FF
         0160012005FF000006FF00049F2000AF05FF000005FF0004300020BF06FF0000
         05FF0110013008FF00000FFF00000FFF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 2
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn65: TBitBtn
       Tag = 2537
@@ -3911,9 +4039,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 3
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         EA040000424DEA0400000000000036040000280000000F0000000F0000000100
         080001000000B4000000232E0000232E00000001000000010000000000000101
@@ -3955,7 +4081,11 @@ object frmAvroMouse: TfrmAvroMouse
         000003FF000330FFCFAA0200000450FF60CF03FF000002FF0004DF70FFAA0200
         0003408050CF04FF000005FF01EF01300200013001EF04FF000006FF01EF02BF
         06FF00000FFF00000FFF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 3
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn66: TBitBtn
       Tag = 2538
@@ -3967,9 +4097,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 4
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         F2040000424DF20400000000000036040000280000000F0000000F0000000100
         080001000000BC000000232E0000232E00000001000000010000000000000101
@@ -4011,7 +4139,11 @@ object frmAvroMouse: TfrmAvroMouse
         04FF000005FF00064000809F109F04FF000005FF0100018F02FF01BF011004FF
         000005FF014001AF02FF01BF012004FF000005FF01EF01400270012001CF04FF
         000007FF01CF01BF06FF00000FFF00000FFF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 4
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn67: TBitBtn
       Tag = 2543
@@ -4023,9 +4155,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 5
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         E0040000424DE00400000000000036040000280000000F0000000F0000000100
         080001000000AA000000232E0000232E00000001000000010000000000000101
@@ -4067,7 +4197,11 @@ object frmAvroMouse: TfrmAvroMouse
         DF601000608005FF000004FF018002000150019F06FF000003FF0004AF008FEF
         08FF000003FF00038000BFEF09FF000003FF01EF01BF0AFF00000FFF00000FFF
         00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 5
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn68: TBitBtn
       Tag = 2542
@@ -4079,9 +4213,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 6
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         D0040000424DD00400000000000036040000280000000F0000000F0000000100
         0800010000009A000000232E0000232E00000001000000010000000000000101
@@ -4122,7 +4254,11 @@ object frmAvroMouse: TfrmAvroMouse
         02FF01BF011006FF000004FF000800608030207080EF03FF000004FF000800AF
         4070EF60408003FF000004FF010006FF01DF03FF000003FF013001000AFF0000
         03FF013001700AFF00000FFF00000FFF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 6
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn69: TBitBtn
       Tag = 2541
@@ -4134,9 +4270,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 7
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         CA040000424DCA0400000000000036040000280000000F0000000F0000000100
         08000100000094000000232E0000232E00000001000000010000000000000101
@@ -4177,7 +4311,11 @@ object frmAvroMouse: TfrmAvroMouse
         0400018004FF000004FF01CF012003FF028004FF000004FF0003CF00BFFF02FF
         0120019F04FF000005FF00064010BF8F30EF04FF000005FF0005EF600050EFEF
         05FF00000FFF00000FFF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 7
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn70: TBitBtn
       Tag = 2540
@@ -4189,9 +4327,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 8
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         E8040000424DE80400000000000036040000280000000F0000000F0000000100
         080001000000B2000000232E0000232E00000001000000010000000000000101
@@ -4233,7 +4369,11 @@ object frmAvroMouse: TfrmAvroMouse
         0030EFFF03FF000003FF000460FFCF0002FF0130017004FF000003FF0004AFFF
         BF0002FF01CF05FF000004FF0003DF20000008FF000004FF0003EF50800008FF
         00000FFF00000FFF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 8
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn71: TBitBtn
       Tag = 2539
@@ -4245,9 +4385,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 9
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         E0040000424DE00400000000000036040000280000000F0000000F0000000100
         080001000000AA000000232E0000232E00000001000000010000000000000101
@@ -4289,7 +4427,11 @@ object frmAvroMouse: TfrmAvroMouse
         04FF0110015002FF0004AF1030CA03FF000004FF0007AF008FEF2080DF1004FF
         000005FF00049F00204006FF000006FF0004DF6050DF05FF00000FFF00000FFF
         00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 9
+      TabStop = False
+      OnClick = BitBtn1Click
     end
   end
   object GroupBox1: TGroupBox
@@ -4309,9 +4451,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 0
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         94050000424D9405000000000000360400002800000019000000190000000100
         0800010000005E010000232E0000232E00000001000000010000000000000101
@@ -4358,7 +4498,11 @@ object frmAvroMouse: TfrmAvroMouse
         04FF01C00200000439A7CCF50EFF000004FF0003B400990412FF000004FF01B4
         010013FF000004FF0003EC00F5FF12FF000005FF0004B499D7EC10FF000006FF
         0003A700B4EC10FF000019FF000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 0
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn73: TBitBtn
       Tag = 2492
@@ -4370,9 +4514,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 1
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         AC060000424DAC06000000000000360400002800000014000000180000000100
         08000100000076020000610F0000610F00000001000000010000000000000101
@@ -4428,7 +4570,11 @@ object frmAvroMouse: TfrmAvroMouse
         FEFFF8FFFEF802FF0004F6FDFFFC03FF01FE00000005FFFDFFFAF9FF05FF0003
         F9FEFF0402FA0005FFFDFBFFFE0000000009FCFFF9FFFBFCFFFCFD0302FF01FE
         01FB02FF0005FCFFFCFFFE0000000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 1
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn74: TBitBtn
       Tag = 2493
@@ -4440,9 +4586,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 2
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         80060000424D8006000000000000360400002800000014000000180000000100
         0800010000004A020000610F0000610F00000001000000010000000000000101
@@ -4497,7 +4641,11 @@ object frmAvroMouse: TfrmAvroMouse
         FEF9F6F905FF0003FBF8FCFF05FF00000005F9FFFDFFF9F902FF01FB01FE02FD
         03FF01FE05FF00000003FFFEF8FF02FF01F901FD02FE02FF01FE02FF01FE05FF
         00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 2
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn75: TBitBtn
       Tag = 2500
@@ -4509,9 +4657,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 3
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         1E070000424D1E07000000000000360400002800000019000000190000000100
         080001000000E8020000610F0000610F00000001000000010000FAFAFA00FFFF
@@ -4571,7 +4717,11 @@ object frmAvroMouse: TfrmAvroMouse
         0901001314090901010A0000000301000204030100070B0C0D0E060F02130201
         01030801010A0000000F000100020302040506070108010903130901010A0000
         0100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 3
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn76: TBitBtn
       Tag = 2519
@@ -4583,9 +4733,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 4
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         14070000424D1407000000000000360400002800000019000000190000000100
         080001000000DE020000610F0000610F00000001000000010000FFFFFF00F8F8
@@ -4644,7 +4792,11 @@ object frmAvroMouse: TfrmAvroMouse
         040702000204020001040200000008050010000B0C0D0E0F0407010405060500
         0501020000000800000602000708090A0400000304070B00040000000A000005
         01000200030A030400030500050002060105020000000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 4
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn77: TBitBtn
       Tag = 2528
@@ -4656,9 +4808,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 5
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         46070000424D4607000000000000360400002800000019000000190000000100
         08000100000010030000610F0000610F00000001000000010000FFFFFF00F9F9
@@ -4719,7 +4869,11 @@ object frmAvroMouse: TfrmAvroMouse
         00060200010D0200000001070200000402030002030001030200000502000402
         0006030601010200010400000200010101020500000903000405040006000200
         05000105010400000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 5
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn78: TBitBtn
       Tag = 2529
@@ -4731,9 +4885,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 6
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         D0050000424DD005000000000000360400002800000019000000190000000100
         0800010000009A010000232E0000232E00000001000000010000000000000101
@@ -4782,7 +4934,11 @@ object frmAvroMouse: TfrmAvroMouse
         0AFF000005FF0006FC520D74C9F30EFF000005FF0004F83974FC10FF000005FF
         0003FC5291FC11FF000006FF0005C991C9F3FCFF0EFF000007FF0003D639B1F3
         0FFF000008FF01E701F30FFF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 6
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn79: TBitBtn
       Tag = 2530
@@ -4794,9 +4950,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 7
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         9A050000424D9A05000000000000360400002800000014000000180000000100
         08000100000064010000232E0000232E00000001000000010000000000000101
@@ -4843,7 +4997,11 @@ object frmAvroMouse: TfrmAvroMouse
         01A009FF01C201D703FF000004FF01C6013709FF0182019A03FF000006FF0187
         01F806FF019901E504FF000006FF000A5DF3C2FFFEFDC6F376DB04FF000007FF
         0007F740FE43FD52BCF306FF000008FF0006F4F5A2FFF4FE06FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 7
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn80: TBitBtn
       Tag = 2553
@@ -4855,9 +5013,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 8
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         AE050000424DAE05000000000000360400002800000014000000180000000100
         08000100000078010000232E0000232E00000001000000010000000000000101
@@ -4905,7 +5061,11 @@ object frmAvroMouse: TfrmAvroMouse
         7D090200018803FF000004FF01AA011602000102020F01030200010D018F04FF
         000005FF0004E0652A0802000004092460D705FF000007FF0006FBDBCBCCDCF9
         07FF000014FF000014FF000014FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 8
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn81: TBitBtn
       Tag = 2552
@@ -4917,9 +5077,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 9
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         DA050000424DDA05000000000000360400002800000014000000180000000100
         080001000000A4010000232E0000232E00000001000000010000000000000101
@@ -4968,7 +5126,11 @@ object frmAvroMouse: TfrmAvroMouse
         04FF0003B40016FF07FF00035600120903FF000004FF0003B40016FF07FF0003
         F8AACF0903FF000004FF0003A30012FF0DFF000003FF0004DC1A00210DFF0000
         03FF01A2020001980DFF000003FF0004D74781FB0DFF000014FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 9
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn82: TBitBtn
       Tag = 2551
@@ -4980,9 +5142,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 10
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         72050000424D7205000000000000360400002800000014000000180000000100
         0800010000003C010000232E0000232E00000001000000010000000000000101
@@ -5028,7 +5188,11 @@ object frmAvroMouse: TfrmAvroMouse
         000008FF01F40200011801FE07FF000008FF01F40200011801FE07FF000008FF
         01F40200011701FE07FF000008FF01F40200011A01FE07FF000008FF0004F400
         49B908FF000008FF01FB01BC0AFF000014FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 10
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn83: TBitBtn
       Tag = 2550
@@ -5040,9 +5204,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 11
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         D8050000424DD805000000000000360400002800000014000000180000000100
         080001000000A2010000232E0000232E00000001000000010000000000000101
@@ -5091,7 +5253,11 @@ object frmAvroMouse: TfrmAvroMouse
         FFC2000005FF0004FCC1C7F906FF00059B0197FAFFFD00000FFF0005F72381F7
         FFFF000010FF00046071F3FF000010FF0004C170EDFF000010FF0004FE82EDFF
         000011FF0003B2F3FFFF000011FF0003EAFCFFFF000014FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 11
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn84: TBitBtn
       Tag = 2549
@@ -5103,9 +5269,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 12
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         82050000424D8205000000000000360400002800000014000000180000000100
         0800010000004C010000232E0000232E00000001000000010000000000000101
@@ -5152,7 +5316,11 @@ object frmAvroMouse: TfrmAvroMouse
         ECFF05FF0004B12FF4FF000004FF0005DDAB98B9DB0008FF0003759AFFFF0000
         11FF0003EE84F2B9000012FF01DB01DD000013FF01FA000014FF000014FF0000
         14FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 12
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn85: TBitBtn
       Tag = 2548
@@ -5164,9 +5332,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 13
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         44050000424D4405000000000000360400002800000014000000180000000100
         0800010000000E010000232E0000232E00000001000000010000000000000101
@@ -5211,7 +5377,11 @@ object frmAvroMouse: TfrmAvroMouse
         00000FFF017D010D03FF00000FFF0003F5299EFF02FF000010FF0004DF21FCFF
         000011FF0003A3B9FFFF000011FF0003F3B8FFFF000012FF01EC01FF000014FF
         000014FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 13
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn86: TBitBtn
       Tag = 2546
@@ -5223,9 +5393,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 14
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         2A050000424D2A05000000000000360400002800000014000000180000000100
         080001000000F4000000232E0000232E00000001000000010000000000000101
@@ -5269,7 +5437,11 @@ object frmAvroMouse: TfrmAvroMouse
         07FF000004FF01F6011E0500012B01EB07FF000004FF01590500012B01E508FF
         000003FF01EB0500012C01E709FF000003FF0007EE78515272A0E7FF0AFF0000
         14FF000014FF000014FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 14
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn87: TBitBtn
       Tag = 2531
@@ -5281,9 +5453,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 15
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         F4050000424DF405000000000000360400002800000014000000180000000100
         080001000000BE010000232E0000232E00000001000000010000000000000101
@@ -5333,7 +5503,11 @@ object frmAvroMouse: TfrmAvroMouse
         08FF0003EA23FBFF05FF000002FF0004FAF5B4FB05FF0003F0B0E6FF06FF0000
         04FF00034DE6E3FB02FF0005FDE5D64AF0FF06FF000005FF0008C43AFF54F739
         F4FE07FF000005FF0007FAF3F59CFFF1FEFE08FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 15
+      TabStop = False
+      OnClick = BitBtn1Click
     end
     object BitBtn88: TBitBtn
       Tag = 2554
@@ -5345,9 +5519,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 16
-      TabStop = False
-      OnClick = BitBtn1Click
+      DoubleBuffered = True
       Glyph.Data = {
         52050000424D5205000000000000360400002800000014000000180000000100
         0800010000001C010000232E0000232E00000001000000010000000000000101
@@ -5392,7 +5564,11 @@ object frmAvroMouse: TfrmAvroMouse
         0105020001C804FF013101E902FF000008FF0003A24F94FF05FF019701C002FF
         000010FF01CD019A02FF000010FF01F5014B02FF000011FF000383F5FFFF0000
         14FF000014FF000014FF000014FF000014FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 16
+      TabStop = False
+      OnClick = BitBtn1Click
     end
   end
   object GroupBox2: TGroupBox
@@ -5411,9 +5587,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 0
-      TabStop = False
-      OnClick = But_KSsClick
+      DoubleBuffered = True
       Glyph.Data = {
         50050000424D5005000000000000360400002800000019000000190000000100
         0800010000001A010000232E0000232E00000001000000010000000000000101
@@ -5458,7 +5632,11 @@ object frmAvroMouse: TfrmAvroMouse
         20AF8F00BFCF07FF000007FF019F018002FF00055480FFBF00CF09FF000004FF
         01CF01100E00011001CF03FF000004FF01CF0FBF01DF04FF000019FF000019FF
         000019FF000019FF000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 0
+      TabStop = False
+      OnClick = But_KSsClick
     end
     object But_NGK: TBitBtn
       Left = 56
@@ -5469,9 +5647,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 1
-      TabStop = False
-      OnClick = But_NGKClick
+      DoubleBuffered = True
       Glyph.Data = {
         50050000424D5005000000000000360400002800000019000000190000000100
         0800010000001A010000232E0000232E00000001000000010000000000000101
@@ -5516,7 +5692,11 @@ object frmAvroMouse: TfrmAvroMouse
         AB10002060BF5010020001AB08FF000007FF000ACF10BFFFEF308FFF60AB08FF
         000004FF01EF01300B00016007FF000004FF01DF0CBF08FF000019FF000019FF
         000019FF000019FF000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 1
+      TabStop = False
+      OnClick = But_NGKClick
     end
     object But_NgG: TBitBtn
       Left = 92
@@ -5527,9 +5707,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 2
-      TabStop = False
-      OnClick = But_NgGClick
+      DoubleBuffered = True
       Glyph.Data = {
         40050000424D4005000000000000360400002800000019000000190000000100
         0800010000000A010000232E0000232E00000001000000010000000000000101
@@ -5574,7 +5752,11 @@ object frmAvroMouse: TfrmAvroMouse
         08FF000007FF0008EF10BFCF7EDF208F0AFF000004FF019F0C00019F07FF0000
         04FF0CBF01CF08FF000019FF000019FF000019FF000019FF000019FF000019FF
         00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 2
+      TabStop = False
+      OnClick = But_NgGClick
     end
     object But_JNYA: TBitBtn
       Left = 128
@@ -5585,9 +5767,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 3
-      TabStop = False
-      OnClick = But_JNYAClick
+      DoubleBuffered = True
       Glyph.Data = {
         6C050000424D6C05000000000000360400002800000019000000190000000100
         08000100000036010000232E0000232E00000001000000010000000000000101
@@ -5633,7 +5813,11 @@ object frmAvroMouse: TfrmAvroMouse
         FFBF0070805003FF0004CF80A3EF05FF000009FF0170020001800CFF000004FF
         01A30F00013001EF03FF000004FF10BF01DF04FF000019FF000019FF000019FF
         000019FF000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 3
+      TabStop = False
+      OnClick = But_JNYAClick
     end
     object But_NYAC: TBitBtn
       Left = 164
@@ -5644,9 +5828,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 4
-      TabStop = False
-      OnClick = But_NYACClick
+      DoubleBuffered = True
       Glyph.Data = {
         88050000424D8805000000000000360400002800000019000000190000000100
         08000100000052010000232E0000232E00000001000000010000000000000101
@@ -5693,7 +5875,11 @@ object frmAvroMouse: TfrmAvroMouse
         AF9F109F05FF000006FF000AAF30001080FF00BFEF440200013006FF00000CFF
         013001EF02FF01DF01BF07FF00000CFF01EF0CFF000019FF000019FF000019FF
         000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 4
+      TabStop = False
+      OnClick = But_NYACClick
     end
     object But_NYACh: TBitBtn
       Left = 199
@@ -5704,9 +5890,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 5
-      TabStop = False
-      OnClick = But_NYAChClick
+      DoubleBuffered = True
       Glyph.Data = {
         A6050000424DA605000000000000360400002800000019000000190000000100
         08000100000070010000232E0000232E00000001000000010000000000000101
@@ -5754,7 +5938,11 @@ object frmAvroMouse: TfrmAvroMouse
         DFEF02FF010001BF07FF000006FF000C6000207A507A9F10607A00DF07FF0000
         07FF0004BF60407A02FF0004BF20007A08FF000019FF000019FF000019FF0000
         19FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 5
+      TabStop = False
+      OnClick = But_NYAChClick
     end
     object But_NYAJ: TBitBtn
       Left = 40
@@ -5765,9 +5953,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 6
-      TabStop = False
-      OnClick = But_NYAJClick
+      DoubleBuffered = True
       Glyph.Data = {
         88050000424D8805000000000000360400002800000019000000190000000100
         08000100000052010000232E0000232E00000001000000010000000000000101
@@ -5814,7 +6000,11 @@ object frmAvroMouse: TfrmAvroMouse
         FF70403007FF000007FF01CF0110020000039FEF40700200011001BF07FF0000
         08FF0003EFBFDF0003FF01CF01BF09FF000019FF000019FF000019FF000019FF
         000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 6
+      TabStop = False
+      OnClick = But_NYAJClick
     end
     object But_T_T: TBitBtn
       Left = 76
@@ -5825,9 +6015,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 7
-      TabStop = False
-      OnClick = But_T_TClick
+      DoubleBuffered = True
       Glyph.Data = {
         54050000424D5405000000000000360400002800000019000000190000000100
         0800010000001E010000232E0000232E00000001000000010000000000000101
@@ -5872,7 +6060,11 @@ object frmAvroMouse: TfrmAvroMouse
         01AF015008FF000005FF01EF01CF03FF0007600010608510BF5008FF00000BFF
         0005BF704050BF0709FF000004FF019F0C00019F07FF000004FF0CBF01CF08FF
         000019FF000019FF000019FF000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 7
+      TabStop = False
+      OnClick = But_T_TClick
     end
     object But_SsNYA: TBitBtn
       Left = 112
@@ -5883,9 +6075,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 8
-      TabStop = False
-      OnClick = But_SsNYAClick
+      DoubleBuffered = True
       Glyph.Data = {
         7E050000424D7E05000000000000360400002800000019000000190000000100
         08000100000048010000232E0000232E00000001000000010000000000000101
@@ -5932,7 +6122,11 @@ object frmAvroMouse: TfrmAvroMouse
         03FF00074084FFAF200084FF05FF000004FF01CF01100900013001EF08FF0000
         04FF01CF0ABF01EF09FF000019FF000019FF000019FF000019FF000019FF0000
         0100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 8
+      TabStop = False
+      OnClick = But_SsNYAClick
     end
     object But_HM: TBitBtn
       Left = 148
@@ -5943,9 +6137,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 9
-      TabStop = False
-      OnClick = But_HMClick
+      DoubleBuffered = True
       Glyph.Data = {
         9C050000424D9C05000000000000360400002800000019000000190000000100
         08000100000066010000232E0000232E00000001000000010000000000000101
@@ -5992,7 +6184,11 @@ object frmAvroMouse: TfrmAvroMouse
         0007DD94872C879459FF0394022C049401B501F904FF000003FF01B50F000140
         01F904FF000003FF0003F9E1DD4002E10005DDE1DDE1DD9402E101DD01E102DD
         01EB05FF000019FF000019FF000019FF000019FF000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 9
+      TabStop = False
+      OnClick = But_HMClick
     end
     object But_ND: TBitBtn
       Left = 184
@@ -6003,9 +6199,7 @@ object frmAvroMouse: TfrmAvroMouse
       Margins.Top = 0
       Margins.Right = 0
       Margins.Bottom = 0
-      TabOrder = 10
-      TabStop = False
-      OnClick = But_NDClick
+      DoubleBuffered = True
       Glyph.Data = {
         4E050000424D4E05000000000000360400002800000019000000190000000100
         08000100000018010000232E0000232E00000001000000010000000000000101
@@ -6050,7 +6244,11 @@ object frmAvroMouse: TfrmAvroMouse
         000005FF000770FF7020DFEF5010021001EF0AFF000007FF01DF011002000003
         9F8570100BFF000008FF0003DF859F0002FF01EF0BFF000019FF000019FF0000
         19FF000019FF000019FF000019FF00000100}
+      ParentDoubleBuffered = False
       Spacing = 0
+      TabOrder = 10
+      TabStop = False
+      OnClick = But_NDClick
     end
   end
   object But_ZFola: TBitBtn
@@ -6062,9 +6260,7 @@ object frmAvroMouse: TfrmAvroMouse
     Margins.Top = 0
     Margins.Right = 0
     Margins.Bottom = 0
-    TabOrder = 5
-    TabStop = False
-    OnClick = But_ZFolaClick
+    DoubleBuffered = True
     Glyph.Data = {
       62060000424D620600000000000036040000280000003C000000190000000100
       0800010000002C020000232E0000232E00000001000000010000FFFFFF00BFBF
@@ -6118,7 +6314,11 @@ object frmAvroMouse: TfrmAvroMouse
       140900050B060908000600000700010306040105290001060105020000000700
       060101022A000102030000003C0000003C0000003C0000003C0000003C000000
       3C0000000100}
+    ParentDoubleBuffered = False
     Spacing = 0
+    TabOrder = 5
+    TabStop = False
+    OnClick = But_ZFolaClick
   end
   object But_RFola: TBitBtn
     Left = 525
@@ -6129,9 +6329,7 @@ object frmAvroMouse: TfrmAvroMouse
     Margins.Top = 0
     Margins.Right = 0
     Margins.Bottom = 0
-    TabOrder = 6
-    TabStop = False
-    OnClick = But_RFolaClick
+    DoubleBuffered = True
     Glyph.Data = {
       68060000424D680600000000000036040000280000003C000000190000000100
       08000100000032020000232E0000232E00000001000000010000FFFFFF00DFDF
@@ -6185,7 +6383,11 @@ object frmAvroMouse: TfrmAvroMouse
       02000A0503000000150001030704010503000106010514040005020708090009
       0000380001020300000038000101030000003C0000003C0000003C0000003C00
       00003C0000003C0000000100}
+    ParentDoubleBuffered = False
     Spacing = 0
+    TabOrder = 6
+    TabStop = False
+    OnClick = But_RFolaClick
   end
   object BitBtn102: TBitBtn
     Tag = 2433
@@ -6197,9 +6399,7 @@ object frmAvroMouse: TfrmAvroMouse
     Margins.Top = 0
     Margins.Right = 0
     Margins.Bottom = 0
-    TabOrder = 7
-    TabStop = False
-    OnClick = BitBtn1Click
+    DoubleBuffered = True
     Glyph.Data = {
       10050000424D1005000000000000360400002800000019000000190000000100
       080001000000DA000000232E0000232E00000001000000010000000000000101
@@ -6242,7 +6442,11 @@ object frmAvroMouse: TfrmAvroMouse
       0120014002FF00079F1040EFFF2040FF08FF000005FF00039F00DFFF02FF0140
       020000049FFF805008FF000005FF028003FF017002000004AFFFEFDF08FF0000
       0BFF01AF01BF0CFF000019FF000019FF00000100}
+    ParentDoubleBuffered = False
     Spacing = 0
+    TabOrder = 7
+    TabStop = False
+    OnClick = BitBtn1Click
   end
   object BitBtn103: TBitBtn
     Tag = 8204
@@ -6255,16 +6459,18 @@ object frmAvroMouse: TfrmAvroMouse
     Margins.Right = 0
     Margins.Bottom = 0
     Caption = 'ZWNJ'
+    DoubleBuffered = True
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
+    ParentDoubleBuffered = False
     ParentFont = False
+    Spacing = 0
     TabOrder = 8
     TabStop = False
     OnClick = BitBtn1Click
-    Spacing = 0
   end
   object BitBtn104: TBitBtn
     Tag = 2547
@@ -6276,9 +6482,7 @@ object frmAvroMouse: TfrmAvroMouse
     Margins.Top = 0
     Margins.Right = 0
     Margins.Bottom = 0
-    TabOrder = 9
-    TabStop = False
-    OnClick = BitBtn1Click
+    DoubleBuffered = True
     Glyph.Data = {
       44050000424D4405000000000000360400002800000019000000190000000100
       0800010000000E010000232E0000232E00000001000000010000000000000101
@@ -6323,7 +6527,11 @@ object frmAvroMouse: TfrmAvroMouse
       08FF018001000FFF000008FF018001000FFF000006FF0004AF4010200FFF0000
       06FF0150020001800FFF000007FF01AF01BF10FF000019FF000019FF000019FF
       000019FF00000100}
+    ParentDoubleBuffered = False
     Spacing = 0
+    TabOrder = 9
+    TabStop = False
+    OnClick = BitBtn1Click
   end
   object BitBtn105: TBitBtn
     Tag = 2544
@@ -6335,9 +6543,7 @@ object frmAvroMouse: TfrmAvroMouse
     Margins.Top = 0
     Margins.Right = 0
     Margins.Bottom = 0
-    TabOrder = 10
-    TabStop = False
-    OnClick = BitBtn1Click
+    DoubleBuffered = True
     Glyph.Data = {
       5A050000424D5A05000000000000360400002800000019000000190000000100
       08000100000024010000232E0000232E00000001000000010000000000000101
@@ -6382,7 +6588,11 @@ object frmAvroMouse: TfrmAvroMouse
       5063008006FF00000BFF0003DF8020000400018006FF00000EFF0005CF803000
       800006FF000005FF0BBF00038F00630002BF01DF03FF000005FF1000018003FF
       000005FF10BF01DF03FF000019FF000019FF000019FF000019FF00000100}
+    ParentDoubleBuffered = False
     Spacing = 0
+    TabOrder = 10
+    TabStop = False
+    OnClick = BitBtn1Click
   end
   object BitBtn106: TBitBtn
     Tag = 2545
@@ -6394,9 +6604,7 @@ object frmAvroMouse: TfrmAvroMouse
     Margins.Top = 0
     Margins.Right = 0
     Margins.Bottom = 0
-    TabOrder = 11
-    TabStop = False
-    OnClick = BitBtn1Click
+    DoubleBuffered = True
     Glyph.Data = {
       60050000424D6005000000000000360400002800000019000000190000000100
       0800010000002A010000232E0000232E00000001000000010000000000000101
@@ -6442,7 +6650,11 @@ object frmAvroMouse: TfrmAvroMouse
       EF9F300009FF000005FF01EF08BF018F010002BF01DF06FF000005FF01BF0C00
       018006FF000005FF01EF0CBF01DF06FF000019FF000019FF000019FF000019FF
       00000100}
+    ParentDoubleBuffered = False
     Spacing = 0
+    TabOrder = 11
+    TabStop = False
+    OnClick = BitBtn1Click
   end
   object btnTab: TButton
     Tag = 9
@@ -6523,16 +6735,18 @@ object frmAvroMouse: TfrmAvroMouse
     Margins.Right = 0
     Margins.Bottom = 0
     Caption = 'ZWJ'
+    DoubleBuffered = True
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
+    ParentDoubleBuffered = False
     ParentFont = False
+    Spacing = 0
     TabOrder = 16
     TabStop = False
     OnClick = BitBtn1Click
-    Spacing = 0
   end
   object BitBtn90: TBitBtn
     Tag = 2404
@@ -6544,9 +6758,7 @@ object frmAvroMouse: TfrmAvroMouse
     Margins.Top = 0
     Margins.Right = 0
     Margins.Bottom = 0
-    TabOrder = 17
-    TabStop = False
-    OnClick = BitBtn1Click
+    DoubleBuffered = True
     Glyph.Data = {
       0E050000424D0E05000000000000360400002800000019000000190000000100
       080001000000D8000000232E0000232E00000001000000010000000000000101
@@ -6589,6 +6801,10 @@ object frmAvroMouse: TfrmAvroMouse
       0BFF0003BF0080FF0BFF00000BFF0003BF0080FF0BFF00000BFF0003BF0080FF
       0BFF00000BFF0003BF008FFF0BFF00000BFF02DF0CFF000019FF000019FF0000
       19FF000019FF000019FF000019FF00000100}
+    ParentDoubleBuffered = False
     Spacing = 0
+    TabOrder = 17
+    TabStop = False
+    OnClick = BitBtn1Click
   end
 end

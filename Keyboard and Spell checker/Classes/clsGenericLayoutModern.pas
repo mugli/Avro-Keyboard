@@ -47,34 +47,33 @@ Type
      TGenericLayoutModern = Class
      Private
           Bijoy: TUnicodeToBijoy2000;
-          LastChar: WideString;
+          LastChar: String;
           DeadKey: Boolean;
-          DeadKeyChars: WideString;
-          DetermineZWNJ_ZWJ: WideString;
-          LastChars: Array[1..TrackL] Of WideString;
-          PrevBanglaT, NewBanglaText: WideString;
+          DeadKeyChars: String;
+          DetermineZWNJ_ZWJ: String;
+          LastChars: Array[1..TrackL] Of String;
+          PrevBanglaT, NewBanglaText: String;
 
           Procedure InternalBackspace(KeyRepeat: Integer = 1);
           Procedure DoBackspace(Var Block: Boolean);
           Procedure ParseAndSendNow;
-          Function InsertKar(Const sKar: WideString): WideString;
-          Function InsertReph: WideString;
-          Procedure DeleteLastCharOneStep;
+          Function InsertKar(Const sKar: String): String;
+          Function InsertReph: String;
           Procedure DeleteLastCharSteps_Ex(StepCount: Integer);
-          Procedure SetLastChar(Const wChar: WideString);
+          Procedure SetLastChar(Const wChar: String);
           Procedure ResetLastChar;
           Function MyProcessVKeyDown(Const KeyCode: Integer;
-               Var Block: Boolean; Const var_IfShift, var_IfTrueShift, var_IfAltGr: Boolean): Widestring;
+               Var Block: Boolean; Const var_IfShift, var_IfTrueShift, var_IfAltGr: Boolean): String;
           Procedure MyProcessVKeyUP(Const KeyCode: Integer;
                Var Block: Boolean; Const var_IfShift: Boolean; Const var_IfTrueShift: Boolean; Const var_IfAltGr: Boolean);
 
-          Function IsDeadKeyChar(Const CheckS: WideString): Boolean;
+          Function IsDeadKeyChar(Const CheckS: String): Boolean;
 
      Public
           Constructor Create;           //Initializer
           Destructor Destroy; Override; //Destructor
 
-          Function ProcessVKeyDown(Const KeyCode: Integer; Var Block: Boolean): WideString;
+          Function ProcessVKeyDown(Const KeyCode: Integer; Var Block: Boolean): String;
           Procedure ProcessVKeyUP(Const KeyCode: Integer; Var Block: Boolean);
           Procedure ResetDeadKey;
      End;
@@ -139,30 +138,10 @@ End;
 
 {===============================================================================}
 
-Procedure TGenericLayoutModern.DeleteLastCharOneStep;
-Var
-     I, J                     : Integer;
-     t1                       : WideString;
-Begin
-     For i := TrackL Downto 1 Do
-          t1 := t1 + LastChars[i];
-
-
-     t1 := ' ' + LeftStr(t1, Length(t1) - 1);
-
-     For i := TrackL Downto 1 Do Begin
-          J := TrackL + 1 - i;
-          LastChars[i] := MidStr(t1, J, 1);
-     End;
-     LastChar := LastChars[1];
-End;
-
-{===============================================================================}
-
 Procedure TGenericLayoutModern.DeleteLastCharSteps_Ex(StepCount: Integer);
 Var
      I, J                     : Integer;
-     t1                       : Widestring;
+     t1                       : String;
 Begin
 
      For i := TrackL Downto 1 Do
@@ -192,7 +171,7 @@ End;
 
 Procedure TGenericLayoutModern.DoBackspace(Var Block: Boolean);
 Var
-     BijoyNewBanglaText       : WideString;
+     BijoyNewBanglaText       : String;
 Begin
 
      If (Length(PrevBanglaT) - 1) <= 0 Then Begin
@@ -219,7 +198,7 @@ End;
 
 {===============================================================================}
 
-Function TGenericLayoutModern.InsertKar(Const sKar: WideString): WideString;
+Function TGenericLayoutModern.InsertKar(Const sKar: String): String;
 Begin
      If AutomaticallyFixChandra = 'YES' Then Begin
           If LastChar = b_Chandra Then Begin
@@ -237,10 +216,10 @@ End;
 {===============================================================================}
 {$HINTS Off}
 
-Function TGenericLayoutModern.InsertReph: WideString;
+Function TGenericLayoutModern.InsertReph: String;
 Var
      RephMoveable             : Boolean;
-     TmpStr                   : Widestring;
+     TmpStr                   : String;
      I, J                     : Integer;
 Begin
      RephMoveable := False;
@@ -328,7 +307,7 @@ End;
 
 {$HINTS Off}
 
-Function TGenericLayoutModern.IsDeadKeyChar(Const CheckS: WideString): Boolean;
+Function TGenericLayoutModern.IsDeadKeyChar(Const CheckS: String): Boolean;
 Begin
      Result := False;
 
@@ -338,7 +317,7 @@ Begin
      End;
 
      //Check only the most right letter
-     If pos(RightStr(CheckS, 1), DeadKeyChars) > 0 Then
+     If pos(String(RightStr(CheckS, 1)), DeadKeyChars) > 0 Then
           IsDeadKeyChar := True
      Else
           IsDeadKeyChar := False;
@@ -348,9 +327,9 @@ End;
 {===============================================================================}
 
 Function TGenericLayoutModern.MyProcessVKeyDown(Const KeyCode: Integer;
-     Var Block: Boolean; Const var_IfShift, var_IfTrueShift, var_IfAltGr: Boolean): Widestring;
+     Var Block: Boolean; Const var_IfShift, var_IfTrueShift, var_IfAltGr: Boolean): String;
 Var
-     CharForKey               : WideString;
+     CharForKey               : String;
 Begin
 
      If AvroMainForm1.GetMyCurrentKeyboardMode = SysDefault Then Begin
@@ -571,7 +550,7 @@ End;
 Procedure TGenericLayoutModern.MyProcessVKeyUP(Const KeyCode: Integer;
      Var Block: Boolean; Const var_IfShift, var_IfTrueShift, var_IfAltGr: Boolean);
 Var
-     CharForKey               : Widestring;
+     CharForKey               : String;
 Begin
      If AvroMainForm1.GetMyCurrentKeyboardMode = SysDefault Then Begin
 
@@ -597,7 +576,7 @@ End;
 Procedure TGenericLayoutModern.ParseAndSendNow;
 Var
      I, Matched, UnMatched    : Integer;
-     BijoyPrevBanglaT, BijoyNewBanglaText: WideString;
+     BijoyPrevBanglaT, BijoyNewBanglaText: String;
 Begin
      Matched := 0;
 
@@ -651,10 +630,10 @@ End;
 {===============================================================================}
 
 Function TGenericLayoutModern.ProcessVKeyDown(Const KeyCode: Integer;
-     Var Block: Boolean): WideString;
+     Var Block: Boolean): String;
 Var
      m_Block                  : Boolean;
-     m_Str                    : Widestring;
+     m_Str                    : String;
 Begin
      m_Block := False;
 
@@ -725,9 +704,9 @@ End;
 
 {===============================================================================}
 
-Procedure TGenericLayoutModern.SetLastChar(Const wChar: WideString);
+Procedure TGenericLayoutModern.SetLastChar(Const wChar: String);
 Var
-     t1, t2                   : Widestring;
+     t1, t2                   : String;
      I, J                     : Integer;
 Begin
      For i := TrackL Downto 1 Do

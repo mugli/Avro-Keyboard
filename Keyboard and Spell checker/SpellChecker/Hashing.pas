@@ -41,7 +41,7 @@ Function HashBuf(Const Buf; Const BufSize: Integer;
      Const Slots: LongWord = 0): LongWord;
 Function HashStr(Const StrBuf: Pointer; Const StrLength: Integer;
      Const Slots: LongWord = 0): LongWord; overload;
-Function HashStr(Const S: String; Const Slots: LongWord = 0): LongWord; overload;
+Function HashStr(Const S: AnsiString; Const Slots: LongWord = 0): LongWord; overload;
 
 
 Implementation
@@ -154,7 +154,7 @@ Begin
           Result := Result Mod Slots;
 End;
 
-Function HashStr(Const S: String; Const Slots: LongWord): LongWord;
+Function HashStr(Const S: AnsiString; Const Slots: LongWord): LongWord;
 Begin
      Result := HashStr(Pointer(S), Length(S), Slots);
 End;

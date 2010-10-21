@@ -6,7 +6,7 @@ object AvroMainForm1: TAvroMainForm1
   BorderStyle = bsNone
   Caption = 'Avro Keyboard'
   ClientHeight = 292
-  ClientWidth = 359
+  ClientWidth = 451
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -119,15 +119,15 @@ object AvroMainForm1: TAvroMainForm1
     PopupMenu = Popup_Tray
     OnClick = TrayClick
     OnDblClick = TrayDblClick
-    Left = 40
-    Top = 224
+    Left = 360
+    Top = 232
   end
   object ImageList1: TImageList
     DrawingStyle = dsTransparent
-    Left = 8
+    Left = 24
     Top = 224
     Bitmap = {
-      494C01011C00B800DC0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011C00B800F40010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000008000000001002000000000000080
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1191,9 +1191,10 @@ object AvroMainForm1: TAvroMainForm1
       000000000000}
   end
   object Popup_Web: TPopupMenu
+    AutoHotkeys = maManual
     Images = ImageList1
-    Left = 176
-    Top = 16
+    Left = 248
+    Top = 72
     object CheckupdateforAvroKeyboard1: TMenuItem
       Caption = 'Check update for Avro Keyboard'
       ImageIndex = 1
@@ -1246,9 +1247,10 @@ object AvroMainForm1: TAvroMainForm1
     end
   end
   object Popup_LayoutList: TPopupMenu
+    AutoHotkeys = maManual
     Images = ImageList1
-    Left = 144
-    Top = 16
+    Left = 96
+    Top = 72
     object AvroPhoneticEnglishtoBangla1: TMenuItem
       Caption = 'Avro Phonetic (English to Bangla)'
       RadioItem = True
@@ -1272,9 +1274,10 @@ object AvroMainForm1: TAvroMainForm1
     end
   end
   object Popup_Exit: TPopupMenu
+    AutoHotkeys = maManual
     Images = ImageList1
-    Left = 112
-    Top = 16
+    Left = 376
+    Top = 72
     object Jumptosystemtray1: TMenuItem
       Caption = 'Jump to system tray'
       OnClick = Jumptosystemtray1Click
@@ -1286,9 +1289,10 @@ object AvroMainForm1: TAvroMainForm1
     end
   end
   object Popup_Help: TPopupMenu
+    AutoHotkeys = maManual
     Images = ImageList1
-    Left = 80
-    Top = 16
+    Left = 312
+    Top = 72
     object Configuringyoursystem1: TMenuItem
       Caption = 'Configuring your system'
       ImageIndex = 16
@@ -1426,9 +1430,10 @@ object AvroMainForm1: TAvroMainForm1
     end
   end
   object Popup_Main: TPopupMenu
+    AutoHotkeys = maManual
     Images = ImageList1
-    Left = 48
-    Top = 16
+    Left = 24
+    Top = 72
     object ogglekeyboardmode1: TMenuItem
       Caption = 'Toggle keyboard mode'
       ImageIndex = 12
@@ -1686,9 +1691,10 @@ object AvroMainForm1: TAvroMainForm1
     end
   end
   object Popup_Tools: TPopupMenu
+    AutoHotkeys = maManual
     Images = ImageList1
-    Left = 208
-    Top = 16
+    Left = 176
+    Top = 72
     object Spellcheck2: TMenuItem
       Caption = 'Spell checker...'
       ImageIndex = 24
@@ -1847,9 +1853,10 @@ object AvroMainForm1: TAvroMainForm1
     end
   end
   object Popup_Tray: TPopupMenu
+    AutoHotkeys = maManual
     Images = ImageList1
-    Left = 16
-    Top = 16
+    Left = 304
+    Top = 232
     object ogglekeyboardmode2: TMenuItem
       Caption = 'Toggle keyboard mode'
       ImageIndex = 12
@@ -2263,20 +2270,20 @@ object AvroMainForm1: TAvroMainForm1
     Enabled = False
     Interval = 100
     OnTimer = WindowCheckTimer
-    Left = 96
-    Top = 224
+    Left = 208
+    Top = 176
   end
   object InternetCheck: TTimer
     Enabled = False
     Interval = 60000
     OnTimer = InternetCheckTimer
-    Left = 120
+    Left = 208
     Top = 224
   end
   object IdleTimer: TTimer
     Interval = 30000
     OnTimer = IdleTimerTimer
-    Left = 72
-    Top = 224
+    Left = 208
+    Top = 136
   end
 end
