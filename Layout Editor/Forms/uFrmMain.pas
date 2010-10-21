@@ -281,8 +281,8 @@ Begin
                     End;
                End;
           Finally
-               FStream.Free;
-               SStream.Free;
+               FreeAndNil(FStream);
+               FreeAndNil(SStream);
           End;
      End;
 
@@ -314,23 +314,23 @@ Begin
 
      For I := 0 To ComponentCount - 1 Do Begin
           If Components[I] Is TShape Then Begin
-               Child := KeyData.NodeNew('Key_' + UpperCase((Components[i] As TShape).KeyName) + '_Normal');
-               CdataChild := Child.NodeNew('Key_' + UpperCase((Components[i] As TShape).KeyName) + '_Normal');
+               Child := KeyData.NodeNew(UTF8String('Key_' + UpperCase((Components[i] As TShape).KeyName) + '_Normal'));
+               CdataChild := Child.NodeNew(UTF8String('Key_' + UpperCase((Components[i] As TShape).KeyName) + '_Normal'));
                CdataChild.ElementType := xeCData;
                CdataChild.ValueAsUnicodeString := (Components[i] As TShape).Normal;
 
-               Child := KeyData.NodeNew('Key_' + UpperCase((Components[i] As TShape).KeyName) + '_Shift');
-               CdataChild := Child.NodeNew('Key_' + UpperCase((Components[i] As TShape).KeyName) + '_Shift');
+               Child := KeyData.NodeNew(UTF8String('Key_' + UpperCase((Components[i] As TShape).KeyName) + '_Shift'));
+               CdataChild := Child.NodeNew(UTF8String('Key_' + UpperCase((Components[i] As TShape).KeyName) + '_Shift'));
                CdataChild.ElementType := xeCData;
                CdataChild.ValueAsUnicodeString := (Components[i] As TShape).Shift;
 
-               Child := KeyData.NodeNew('Key_' + UpperCase((Components[i] As TShape).KeyName) + '_AltGr');
-               CdataChild := Child.NodeNew('Key_' + UpperCase((Components[i] As TShape).KeyName) + '_AltGr');
+               Child := KeyData.NodeNew(UTF8String('Key_' + UpperCase((Components[i] As TShape).KeyName) + '_AltGr'));
+               CdataChild := Child.NodeNew(UTF8String('Key_' + UpperCase((Components[i] As TShape).KeyName) + '_AltGr'));
                CdataChild.ElementType := xeCData;
                CdataChild.ValueAsUnicodeString := (Components[i] As TShape).AltGr;
 
-               Child := KeyData.NodeNew('Key_' + UpperCase((Components[i] As TShape).KeyName) + '_ShiftAltGr');
-               CdataChild := Child.NodeNew('Key_' + UpperCase((Components[i] As TShape).KeyName) + '_ShiftAltGr');
+               Child := KeyData.NodeNew(UTF8String('Key_' + UpperCase((Components[i] As TShape).KeyName) + '_ShiftAltGr'));
+               CdataChild := Child.NodeNew(UTF8String('Key_' + UpperCase((Components[i] As TShape).KeyName) + '_ShiftAltGr'));
                CdataChild.ElementType := xeCData;
                CdataChild.ValueAsUnicodeString := (Components[i] As TShape).ShiftAltGr;
           End;
