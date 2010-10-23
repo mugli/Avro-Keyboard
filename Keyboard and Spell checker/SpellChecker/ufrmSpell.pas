@@ -148,17 +148,17 @@ Var
 		 // AvroSpell.dll functions
 		 /// ////////////////////////////////////////////////////////////////////////////////
 
-Procedure Avro_InitSpell; Stdcall; External 'AvroSpell.dll' Name 'InitSpell';
-Procedure Avro_RegisterCallback(mCallback: Pointer); Stdcall; External 'AvroSpell.dll' Name 'RegisterCallback';
-Function Avro_IsWordPresent(Wrd: PChar; Var SAction: Integer): LongBool; Stdcall; External 'AvroSpell.dll' Name 'IsWordPresent';
-Function Avro_WordPresentInChangeAll(Wrd: PChar): LongBool; Stdcall; External 'AvroSpell.dll' Name 'WordPresentInChangeAll';
-Procedure Avro_GetCorrection(Wrd: PChar); Stdcall; External 'AvroSpell.dll' Name 'GetCorrection';
-Procedure Avro_SetWordPosInScreen(xPoint, yPoint: Integer); Stdcall; External 'AvroSpell.dll' Name 'SetWordPosInScreen';
-Procedure Avro_HideSpeller; Stdcall; External 'AvroSpell.dll' Name 'HideSpeller';
-Procedure Avro_ShowOptions; Stdcall; External 'AvroSpell.dll' Name 'ShowOptions';
-Procedure Avro_ShowAbout; Stdcall; External 'AvroSpell.dll' Name 'ShowAbout';
-Procedure Avro_ForgetChangeIgnore; Stdcall; External 'AvroSpell.dll' Name 'ForgetChangeIgnore';
-Procedure Avro_UnloadAll; Stdcall; External 'AvroSpell.dll' Name 'UnloadAll';
+Procedure Avro_InitSpell; Stdcall; External 'AvroSpell.dll' Name 'Avro_InitSpell';
+Procedure Avro_RegisterCallback(mCallback: Pointer); Stdcall; External 'AvroSpell.dll' Name 'Avro_RegisterCallback';
+Function Avro_IsWordPresent(Wrd: PChar; Var SAction: Integer): LongBool; Stdcall; External 'AvroSpell.dll' Name 'Avro_IsWordPresent';
+Function Avro_WordPresentInChangeAll(Wrd: PChar): LongBool; Stdcall; External 'AvroSpell.dll' Name 'Avro_WordPresentInChangeAll';
+Procedure Avro_GetCorrection(Wrd: PChar); Stdcall; External 'AvroSpell.dll' Name 'Avro_GetCorrection';
+Procedure Avro_SetWordPosInScreen(xPoint, yPoint: Integer); Stdcall; External 'AvroSpell.dll' Name 'Avro_SetWordPosInScreen';
+Procedure Avro_HideSpeller; Stdcall; External 'AvroSpell.dll' Name 'Avro_HideSpeller';
+Procedure Avro_ShowOptions; Stdcall; External 'AvroSpell.dll' Name 'Avro_ShowOptions';
+Procedure Avro_ShowAbout; Stdcall; External 'AvroSpell.dll' Name 'Avro_ShowAbout';
+Procedure Avro_ForgetChangeIgnore; Stdcall; External 'AvroSpell.dll' Name 'Avro_ForgetChangeIgnore';
+Procedure Avro_UnloadAll; Stdcall; External 'AvroSpell.dll' Name 'Avro_UnloadAll';
 /// ////////////////////////////////////////////////////////////////////////////////
 
 Procedure Callback(Wrd: PChar; CWrd: PChar; SAction: Integer); Stdcall;
