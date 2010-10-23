@@ -6,7 +6,7 @@ object AvroMainForm1: TAvroMainForm1
   BorderStyle = bsNone
   Caption = 'Avro Keyboard'
   ClientHeight = 292
-  ClientWidth = 451
+  ClientWidth = 491
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -127,7 +127,7 @@ object AvroMainForm1: TAvroMainForm1
     Left = 24
     Top = 224
     Bitmap = {
-      494C01011C00B800FC0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011C00B800040110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000008000000001002000000000000080
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1193,7 +1193,7 @@ object AvroMainForm1: TAvroMainForm1
   object Popup_Web: TPopupMenu
     AutoHotkeys = maManual
     Images = ImageList1
-    Left = 248
+    Left = 320
     Top = 72
     object CheckupdateforAvroKeyboard1: TMenuItem
       Caption = 'Check update for Avro Keyboard'
@@ -1249,7 +1249,7 @@ object AvroMainForm1: TAvroMainForm1
   object Popup_LayoutList: TPopupMenu
     AutoHotkeys = maManual
     Images = ImageList1
-    Left = 96
+    Left = 176
     Top = 72
     object AvroPhoneticEnglishtoBangla1: TMenuItem
       Caption = 'Avro Phonetic (English to Bangla)'
@@ -1276,7 +1276,7 @@ object AvroMainForm1: TAvroMainForm1
   object Popup_Exit: TPopupMenu
     AutoHotkeys = maManual
     Images = ImageList1
-    Left = 376
+    Left = 440
     Top = 72
     object Jumptosystemtray1: TMenuItem
       Caption = 'Jump to system tray'
@@ -1291,7 +1291,7 @@ object AvroMainForm1: TAvroMainForm1
   object Popup_Help: TPopupMenu
     AutoHotkeys = maManual
     Images = ImageList1
-    Left = 312
+    Left = 384
     Top = 72
     object Configuringyoursystem1: TMenuItem
       Caption = 'Configuring your system'
@@ -1299,7 +1299,7 @@ object AvroMainForm1: TAvroMainForm1
       OnClick = Configuringyoursystem1Click
     end
     object OTFBanglaFontscamewithAvroKeyboard1: TMenuItem
-      Caption = 'OTF Bangla Fonts came with Avro Keyboard'
+      Caption = 'Bangla Fonts came with Avro Keyboard'
       ImageIndex = 16
       OnClick = OTFBanglaFontscamewithAvroKeyboard1Click
     end
@@ -1432,7 +1432,7 @@ object AvroMainForm1: TAvroMainForm1
   object Popup_Main: TPopupMenu
     AutoHotkeys = maManual
     Images = ImageList1
-    Left = 24
+    Left = 96
     Top = 72
     object ogglekeyboardmode1: TMenuItem
       Caption = 'Toggle keyboard mode'
@@ -1562,7 +1562,7 @@ object AvroMainForm1: TAvroMainForm1
         OnClick = Configuringyoursystem1Click
       end
       object OTFBanglaFontscamewithAvroKeyboard2: TMenuItem
-        Caption = 'OTF Bangla Fonts came with Avro Keyboard'
+        Caption = 'Bangla Fonts came with Avro Keyboard'
         ImageIndex = 16
         OnClick = OTFBanglaFontscamewithAvroKeyboard1Click
       end
@@ -1693,7 +1693,7 @@ object AvroMainForm1: TAvroMainForm1
   object Popup_Tools: TPopupMenu
     AutoHotkeys = maManual
     Images = ImageList1
-    Left = 176
+    Left = 256
     Top = 72
     object Spellcheck2: TMenuItem
       Caption = 'Spell checker...'
@@ -2127,7 +2127,7 @@ object AvroMainForm1: TAvroMainForm1
         OnClick = Configuringyoursystem1Click
       end
       object OTFBanglaFontscamewithAvroKeyboard3: TMenuItem
-        Caption = 'OTF Bangla Fonts came with Avro Keyboard'
+        Caption = 'Bangla Fonts came with Avro Keyboard'
         ImageIndex = 16
         OnClick = OTFBanglaFontscamewithAvroKeyboard1Click
       end
@@ -2271,14 +2271,14 @@ object AvroMainForm1: TAvroMainForm1
     Interval = 100
     OnTimer = WindowCheckTimer
     Left = 208
-    Top = 176
+    Top = 192
   end
   object InternetCheck: TTimer
     Enabled = False
     Interval = 60000
     OnTimer = InternetCheckTimer
     Left = 208
-    Top = 224
+    Top = 240
   end
   object IdleTimer: TTimer
     Interval = 30000

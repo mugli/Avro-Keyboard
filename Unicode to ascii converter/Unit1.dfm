@@ -116,7 +116,7 @@ object Form1: TForm1
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
     Font.Height = -21
-    Font.Name = 'SutonnyMJ'
+    Font.Name = 'Kalpurush ANSI'
     Font.Style = []
     ParentFont = False
     ScrollBars = ssVertical

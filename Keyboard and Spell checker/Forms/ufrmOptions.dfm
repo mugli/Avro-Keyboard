@@ -247,18 +247,18 @@ object frmOptions: TfrmOptions
       03080000002C0000000000000000000000FFFFFFFFFFFFFFFFFFFFFFFF000000
       00000000000107470065006E006500720061006C003000000000000000000000
       00FFFFFFFFFFFFFFFFFFFFFFFF0000000000000000010949006E007400650072
-      006600610063006500380000000000000000000000FFFFFFFFFFFFFFFFFFFFFF
-      FF0000000000000000010D4B006500790062006F0061007200640020004D006F
-      00640065003C0000000000000000000000FFFFFFFFFFFFFFFFFFFFFFFF000000
-      0000000000010F4C006F00630061006C0065002F004C0061006E006700750061
-      0067006500380000000000000000000000FFFFFFFFFFFFFFFFFFFFFFFF000000
-      0000000000010D4100760072006F002000500068006F006E0065007400690063
-      00320000000000000000000000FFFFFFFFFFFFFFFFFFFFFFFF00000000000000
-      00010A4100760072006F0020004D006F00750073006500380000000000000000
-      000000FFFFFFFFFFFFFFFFFFFFFFFF0000000000000000010D46006900780065
-      00640020004C00610079006F00750074007300380000000000000000000000FF
-      FFFFFFFFFFFFFFFFFFFFFF0000000000000000010D47006C006F00620061006C
-      0020006F0075007400700075007400}
+      0066006100630065003A0000000000000000000000FFFFFFFFFFFFFFFFFFFFFF
+      FF0000000000000000010E47006C006F00620061006C00200048006F0074006B
+      006500790073003C0000000000000000000000FFFFFFFFFFFFFFFFFFFFFFFF00
+      00000000000000010F4C006F00630061006C0065002F004C0061006E00670075
+      00610067006500380000000000000000000000FFFFFFFFFFFFFFFFFFFFFFFF00
+      00000000000000010D4100760072006F002000500068006F006E006500740069
+      006300320000000000000000000000FFFFFFFFFFFFFFFFFFFFFFFF0000000000
+      000000010A4100760072006F0020004D006F0075007300650038000000000000
+      0000000000FFFFFFFFFFFFFFFFFFFFFFFF0000000000000000010D4600690078
+      006500640020004C00610079006F007500740073003800000000000000000000
+      00FFFFFFFFFFFFFFFFFFFFFFFF0000000000000000010D47006C006F00620061
+      006C0020006F0075007400700075007400}
   end
   object butEditCustomDict: TButton
     Left = 596
@@ -291,6 +291,427 @@ object frmOptions: TfrmOptions
     VertScrollBar.Tracking = True
     BorderStyle = bsNone
     TabOrder = 5
+    object Locale_Panel: TPanel
+      Left = 4
+      Top = 4
+      Width = 428
+      Height = 280
+      BevelKind = bkTile
+      BevelOuter = bvNone
+      TabOrder = 2
+      object Label8: TLabel
+        Left = 40
+        Top = 75
+        Width = 118
+        Height = 13
+        Caption = 'Select Bangla Locale:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object Label15: TLabel
+        Left = 40
+        Top = 220
+        Width = 369
+        Height = 45
+        Caption = 
+          'Note: This setting is only applicable when you type Bangla in Un' +
+          'icode output mode. In ANSI mode, locale will be changed to US En' +
+          'glish regardless whatever is selected here.'
+        WordWrap = True
+      end
+      object CheckEnableLocaleChange: TCheckBox
+        Left = 16
+        Top = 26
+        Width = 393
+        Height = 43
+        Caption = 
+          'Automatically change "Input Locale" (Input Language) with Keyboa' +
+          'rd Mode'
+        TabOrder = 0
+        WordWrap = True
+      end
+      object optLocaleIND: TRadioButton
+        Left = 72
+        Top = 94
+        Width = 169
+        Height = 17
+        Caption = 'Bangla (India)'
+        TabOrder = 1
+      end
+      object optLocaleBD: TRadioButton
+        Left = 72
+        Top = 117
+        Width = 169
+        Height = 17
+        Caption = 'Bangla (Bangladesh)'
+        TabOrder = 2
+      end
+      object optLocaleAS: TRadioButton
+        Left = 72
+        Top = 140
+        Width = 169
+        Height = 17
+        Caption = 'Assamese'
+        TabOrder = 3
+      end
+      object ButtonInstallLocale: TButton
+        Left = 288
+        Top = 180
+        Width = 121
+        Height = 25
+        Caption = 'Install Locale'
+        TabOrder = 4
+        OnClick = ButtonInstallLocaleClick
+      end
+    end
+    object General_Panel: TPanel
+      Left = 5
+      Top = 2
+      Width = 427
+      Height = 282
+      BevelKind = bkTile
+      BevelOuter = bvNone
+      TabOrder = 3
+      object Label3: TLabel
+        Left = 16
+        Top = 196
+        Width = 250
+        Height = 13
+        Caption = 'When I click the cross (X) button on Top Bar:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object GroupBox1: TGroupBox
+        Left = 13
+        Top = 1
+        Width = 388
+        Height = 161
+        Caption = 'Startup options'
+        TabOrder = 0
+        object Label2: TLabel
+          Left = 16
+          Top = 70
+          Width = 210
+          Height = 13
+          Caption = 'At stratup, Avro Keyboard will run as:'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object checkStartUp: TCheckBox
+          Left = 16
+          Top = 24
+          Width = 201
+          Height = 17
+          Caption = 'Start Avro Keyboard with Windows'
+          TabOrder = 0
+        end
+        object CheckShowSplash: TCheckBox
+          Left = 16
+          Top = 47
+          Width = 201
+          Height = 17
+          Caption = 'Show splash screen at startup'
+          TabOrder = 1
+        end
+        object optStartupUIMode_TopBar: TRadioButton
+          Left = 40
+          Top = 89
+          Width = 177
+          Height = 17
+          Caption = 'Top Bar (on desktop, as toolbar)'
+          TabOrder = 2
+        end
+        object optStartupUIMode_Tray: TRadioButton
+          Left = 40
+          Top = 112
+          Width = 177
+          Height = 17
+          Caption = 'System tray icon'
+          TabOrder = 3
+        end
+        object optStartupUIMode_Last: TRadioButton
+          Left = 40
+          Top = 135
+          Width = 177
+          Height = 17
+          Caption = 'UI mode used last time'
+          TabOrder = 4
+        end
+      end
+      object optTopBarXButton_Close: TRadioButton
+        Left = 40
+        Top = 233
+        Width = 257
+        Height = 18
+        Caption = 'Close Avro Keyboard'
+        TabOrder = 1
+      end
+      object optTopBarXButton_Minimize: TRadioButton
+        Left = 40
+        Top = 213
+        Width = 257
+        Height = 18
+        Caption = 'Minimize Avro Keyboard to the System Tray'
+        TabOrder = 2
+      end
+      object optTopBarXButton_ShowMenu: TRadioButton
+        Left = 40
+        Top = 254
+        Width = 257
+        Height = 18
+        Caption = 'Show option for both'
+        TabOrder = 3
+      end
+      object CheckUpdate: TCheckBox
+        Left = 29
+        Top = 170
+        Width = 300
+        Height = 17
+        Caption = 'Automatically check for update every week (anonymous)'
+        TabOrder = 4
+      end
+    end
+    object Interface_Panel: TPanel
+      Left = 3
+      Top = 4
+      Width = 429
+      Height = 280
+      BevelKind = bkTile
+      BevelOuter = bvNone
+      TabOrder = 4
+      object Captionl_Transparency: TLabel
+        Left = 16
+        Top = 41
+        Width = 134
+        Height = 13
+        Caption = 'Transparency level (0-255):'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+      end
+      object Label_Transparency: TLabel
+        Left = 386
+        Top = 43
+        Width = 12
+        Height = 13
+        Caption = '80'
+      end
+      object checkTopBarTransparent: TCheckBox
+        Left = 16
+        Top = 16
+        Width = 297
+        Height = 17
+        Caption = 'Make Top Bar semi transparent when it is inactive'
+        TabOrder = 0
+        OnClick = checkTopBarTransparentClick
+      end
+      object TrackBar_Transparency: TTrackBar
+        Left = 156
+        Top = 39
+        Width = 222
+        Height = 24
+        Max = 255
+        TabOrder = 1
+        OnChange = TrackBar_TransparencyChange
+      end
+      object GroupBox2: TGroupBox
+        Left = 13
+        Top = 73
+        Width = 388
+        Height = 195
+        Caption = 'Interface Skin'
+        TabOrder = 2
+        object Label5: TLabel
+          Left = 16
+          Top = 25
+          Width = 54
+          Height = 13
+          Caption = 'Select skin:'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+        end
+        object Label6: TLabel
+          Left = 16
+          Top = 48
+          Width = 42
+          Height = 13
+          Caption = 'Preview:'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+        end
+        object comboSkin: TComboBox
+          Left = 89
+          Top = 20
+          Width = 280
+          Height = 21
+          Style = csDropDownList
+          TabOrder = 0
+          OnChange = comboSkinChange
+        end
+        object ScrollBox1: TScrollBox
+          Left = 16
+          Top = 67
+          Width = 353
+          Height = 94
+          HorzScrollBar.Smooth = True
+          VertScrollBar.Smooth = True
+          Color = clWhite
+          ParentColor = False
+          TabOrder = 1
+          object SkinPreviewPic: TImage
+            Left = 8
+            Top = 8
+            Width = 105
+            Height = 105
+            AutoSize = True
+          end
+        end
+        object cmdDownloadSkin: TButton
+          Left = 250
+          Top = 165
+          Width = 118
+          Height = 25
+          Caption = 'Download skins...'
+          TabOrder = 2
+          OnClick = cmdDownloadSkinClick
+        end
+        object ccmdAboutSkin: TButton
+          Left = 128
+          Top = 165
+          Width = 116
+          Height = 25
+          Caption = 'About this skin...'
+          TabOrder = 3
+          OnClick = ccmdAboutSkinClick
+        end
+      end
+    end
+    object AvroMouse_Panel: TPanel
+      Left = 1
+      Top = 2
+      Width = 431
+      Height = 282
+      BevelKind = bkTile
+      BevelOuter = bvNone
+      TabOrder = 5
+      object GroupBox5: TGroupBox
+        Left = 16
+        Top = 19
+        Width = 394
+        Height = 105
+        Caption = 'Keyboard Mode and Input Locale changing'
+        TabOrder = 0
+        object optAvroMouseKeyboardMode_NoChange: TRadioButton
+          Left = 16
+          Top = 33
+          Width = 321
+          Height = 17
+          Caption = 'Do not change Keyboard Mode when I type with Avro Mouse'
+          TabOrder = 0
+        end
+        object optAvroMouseKeyboardMode_Change: TRadioButton
+          Left = 16
+          Top = 68
+          Width = 321
+          Height = 17
+          Caption = 'Change Keyboard Mode to Bangla'
+          TabOrder = 1
+        end
+      end
+    end
+    object GlobalOutput_Panel: TPanel
+      Left = -2
+      Top = 2
+      Width = 431
+      Height = 282
+      BevelKind = bkTile
+      BevelOuter = bvNone
+      TabOrder = 7
+      object Label20: TLabel
+        Left = 18
+        Top = 193
+        Width = 394
+        Height = 13
+        Caption = 
+          'You can select your preferred  hotkey for toggling between Unico' +
+          'de/ANSI mode in'
+      end
+      object LabelGlobalHotkeysLink: TLabel
+        Left = 18
+        Top = 213
+        Width = 107
+        Height = 13
+        Cursor = crHandPoint
+        Caption = 'Global Hotkeys setting'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlue
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsUnderline]
+        ParentFont = False
+        OnClick = LabelGlobalHotkeysLinkClick
+      end
+      object optOutputUnicode: TRadioButton
+        Left = 23
+        Top = 29
+        Width = 228
+        Height = 17
+        Caption = 'Output as Unicode (Recommended)'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBtnText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 0
+      end
+      object optOutputANSI: TRadioButton
+        Left = 23
+        Top = 61
+        Width = 228
+        Height = 17
+        Caption = 'Output as ANSI (Experimental)'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBtnText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 1
+        OnMouseUp = optOutputANSIMouseUp
+      end
+      object CheckWarningAnsi: TCheckBox
+        Left = 23
+        Top = 127
+        Width = 228
+        Height = 17
+        Caption = 'Show warning in ANSI mode.'
+        TabOrder = 2
+      end
+    end
     object AvroPhonetic_Panel: TPanel
       Left = 4
       Top = 2
@@ -616,7 +1037,7 @@ object frmOptions: TfrmOptions
         Left = 14
         Top = 18
         Width = 395
-        Height = 74
+        Height = 54
         Caption = 'Keyboard Mode Settings'
         TabOrder = 0
         object Label7: TLabel
@@ -654,107 +1075,19 @@ object frmOptions: TfrmOptions
             'F12')
         end
       end
-    end
-    object Locale_Panel: TPanel
-      Left = 4
-      Top = 4
-      Width = 428
-      Height = 280
-      BevelKind = bkTile
-      BevelOuter = bvNone
-      TabOrder = 2
-      object Label8: TLabel
-        Left = 40
-        Top = 75
-        Width = 118
-        Height = 13
-        Caption = 'Select Bangla Locale:'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-      end
-      object CheckEnableLocaleChange: TCheckBox
-        Left = 16
-        Top = 26
-        Width = 393
-        Height = 43
-        Caption = 
-          'Automatically change "Input Locale" (Input Language) with Keyboa' +
-          'rd Mode'
-        TabOrder = 0
-        WordWrap = True
-      end
-      object optLocaleIND: TRadioButton
-        Left = 72
-        Top = 94
-        Width = 169
-        Height = 17
-        Caption = 'Bangla (India)'
+      object GroupBox8: TGroupBox
+        Left = 15
+        Top = 97
+        Width = 394
+        Height = 76
+        Caption = 'Global output settings'
         TabOrder = 1
-      end
-      object optLocaleBD: TRadioButton
-        Left = 72
-        Top = 117
-        Width = 169
-        Height = 17
-        Caption = 'Bangla (Bangladesh)'
-        TabOrder = 2
-      end
-      object optLocaleAS: TRadioButton
-        Left = 72
-        Top = 140
-        Width = 169
-        Height = 17
-        Caption = 'Assamese'
-        TabOrder = 3
-      end
-      object ButtonInstallLocale: TButton
-        Left = 280
-        Top = 239
-        Width = 121
-        Height = 25
-        Caption = 'Install Locale'
-        TabOrder = 4
-        OnClick = ButtonInstallLocaleClick
-      end
-    end
-    object General_Panel: TPanel
-      Left = 5
-      Top = 2
-      Width = 427
-      Height = 282
-      BevelKind = bkTile
-      BevelOuter = bvNone
-      TabOrder = 3
-      object Label3: TLabel
-        Left = 16
-        Top = 196
-        Width = 250
-        Height = 13
-        Caption = 'When I click the cross (X) button on Top Bar:'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-      end
-      object GroupBox1: TGroupBox
-        Left = 13
-        Top = 1
-        Width = 388
-        Height = 161
-        Caption = 'Startup options'
-        TabOrder = 0
-        object Label2: TLabel
+        object Label16: TLabel
           Left = 16
-          Top = 70
-          Width = 210
+          Top = 25
+          Width = 250
           Height = 13
-          Caption = 'At stratup, Avro Keyboard will run as:'
+          Caption = 'Toggle between Unicode/ANSI output mode:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
@@ -762,283 +1095,83 @@ object frmOptions: TfrmOptions
           Font.Style = [fsBold]
           ParentFont = False
         end
-        object checkStartUp: TCheckBox
-          Left = 16
-          Top = 24
-          Width = 201
-          Height = 17
-          Caption = 'Start Avro Keyboard with Windows'
+        object Label17: TLabel
+          Left = 156
+          Top = 50
+          Width = 33
+          Height = 13
+          Caption = 'Shift +'
+        end
+        object comboFunctionKeys_OutputMode: TComboBox
+          Left = 195
+          Top = 46
+          Width = 117
+          Height = 21
           TabOrder = 0
-        end
-        object CheckShowSplash: TCheckBox
-          Left = 16
-          Top = 47
-          Width = 201
-          Height = 17
-          Caption = 'Show splash screen at startup'
-          TabOrder = 1
-        end
-        object optStartupUIMode_TopBar: TRadioButton
-          Left = 40
-          Top = 89
-          Width = 177
-          Height = 17
-          Caption = 'Top Bar (on desktop, as toolbar)'
-          TabOrder = 2
-        end
-        object optStartupUIMode_Tray: TRadioButton
-          Left = 40
-          Top = 112
-          Width = 177
-          Height = 17
-          Caption = 'System tray icon'
-          TabOrder = 3
-        end
-        object optStartupUIMode_Last: TRadioButton
-          Left = 40
-          Top = 135
-          Width = 177
-          Height = 17
-          Caption = 'UI mode used last time'
-          TabOrder = 4
+          Text = 'F1'
+          Items.Strings = (
+            'F1'
+            'F2'
+            'F3'
+            'F4'
+            'F5'
+            'F6'
+            'F7'
+            'F8'
+            'F9'
+            'F10'
+            'F11'
+            'F12')
         end
       end
-      object optTopBarXButton_Close: TRadioButton
-        Left = 40
-        Top = 233
-        Width = 257
-        Height = 18
-        Caption = 'Close Avro Keyboard'
-        TabOrder = 1
-      end
-      object optTopBarXButton_Minimize: TRadioButton
-        Left = 40
-        Top = 213
-        Width = 257
-        Height = 18
-        Caption = 'Minimize Avro Keyboard to the System Tray'
-        TabOrder = 2
-      end
-      object optTopBarXButton_ShowMenu: TRadioButton
-        Left = 40
-        Top = 254
-        Width = 257
-        Height = 18
-        Caption = 'Show option for both'
-        TabOrder = 3
-      end
-      object CheckUpdate: TCheckBox
-        Left = 29
-        Top = 170
-        Width = 300
-        Height = 17
-        Caption = 'Automatically check for update every week (anonymous)'
-        TabOrder = 4
-      end
-    end
-    object Interface_Panel: TPanel
-      Left = 3
-      Top = 4
-      Width = 429
-      Height = 280
-      BevelKind = bkTile
-      BevelOuter = bvNone
-      TabOrder = 4
-      object Captionl_Transparency: TLabel
+      object GroupBox9: TGroupBox
         Left = 16
-        Top = 41
-        Width = 134
-        Height = 13
-        Caption = 'Transparency level (0-255):'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-      end
-      object Label_Transparency: TLabel
-        Left = 386
-        Top = 43
-        Width = 12
-        Height = 13
-        Caption = '80'
-      end
-      object checkTopBarTransparent: TCheckBox
-        Left = 16
-        Top = 16
-        Width = 297
-        Height = 17
-        Caption = 'Make Top Bar semi transparent when it is inactive'
-        TabOrder = 0
-        OnClick = checkTopBarTransparentClick
-      end
-      object TrackBar_Transparency: TTrackBar
-        Left = 156
-        Top = 39
-        Width = 222
-        Height = 24
-        Max = 255
-        TabOrder = 1
-        OnChange = TrackBar_TransparencyChange
-      end
-      object GroupBox2: TGroupBox
-        Left = 13
-        Top = 73
-        Width = 388
-        Height = 195
-        Caption = 'Interface Skin'
+        Top = 194
+        Width = 393
+        Height = 73
+        Caption = 'Spell checker settings'
         TabOrder = 2
-        object Label5: TLabel
+        object Label18: TLabel
           Left = 16
           Top = 25
-          Width = 54
+          Width = 224
           Height = 13
-          Caption = 'Select skin:'
+          Caption = 'Avro Bangla spell checker launcher key:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
           Font.Name = 'Tahoma'
-          Font.Style = []
+          Font.Style = [fsBold]
           ParentFont = False
         end
-        object Label6: TLabel
-          Left = 16
-          Top = 48
-          Width = 42
+        object Label19: TLabel
+          Left = 156
+          Top = 49
+          Width = 28
           Height = 13
-          Caption = 'Preview:'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentFont = False
+          Caption = 'Ctrl +'
         end
-        object comboSkin: TComboBox
-          Left = 89
-          Top = 20
-          Width = 280
+        object comboFunctionKeys_SpellerLauncher: TComboBox
+          Left = 195
+          Top = 46
+          Width = 117
           Height = 21
-          Style = csDropDownList
           TabOrder = 0
-          OnChange = comboSkinChange
+          Text = 'F1'
+          Items.Strings = (
+            'F1'
+            'F2'
+            'F3'
+            'F4'
+            'F5'
+            'F6'
+            'F7'
+            'F8'
+            'F9'
+            'F10'
+            'F11'
+            'F12')
         end
-        object ScrollBox1: TScrollBox
-          Left = 16
-          Top = 67
-          Width = 353
-          Height = 94
-          HorzScrollBar.Smooth = True
-          VertScrollBar.Smooth = True
-          Color = clWhite
-          ParentColor = False
-          TabOrder = 1
-          object SkinPreviewPic: TImage
-            Left = 8
-            Top = 8
-            Width = 105
-            Height = 105
-            AutoSize = True
-          end
-        end
-        object cmdDownloadSkin: TButton
-          Left = 250
-          Top = 165
-          Width = 118
-          Height = 25
-          Caption = 'Download skins...'
-          TabOrder = 2
-          OnClick = cmdDownloadSkinClick
-        end
-        object ccmdAboutSkin: TButton
-          Left = 128
-          Top = 165
-          Width = 116
-          Height = 25
-          Caption = 'About this skin...'
-          TabOrder = 3
-          OnClick = ccmdAboutSkinClick
-        end
-      end
-    end
-    object AvroMouse_Panel: TPanel
-      Left = 1
-      Top = 2
-      Width = 431
-      Height = 282
-      BevelKind = bkTile
-      BevelOuter = bvNone
-      TabOrder = 5
-      object GroupBox5: TGroupBox
-        Left = 16
-        Top = 19
-        Width = 394
-        Height = 105
-        Caption = 'Keyboard Mode and Input Locale changing'
-        TabOrder = 0
-        object optAvroMouseKeyboardMode_NoChange: TRadioButton
-          Left = 16
-          Top = 33
-          Width = 321
-          Height = 17
-          Caption = 'Do not change Keyboard Mode when I type with Avro Mouse'
-          TabOrder = 0
-        end
-        object optAvroMouseKeyboardMode_Change: TRadioButton
-          Left = 16
-          Top = 68
-          Width = 321
-          Height = 17
-          Caption = 'Change Keyboard Mode to Bangla'
-          TabOrder = 1
-        end
-      end
-    end
-    object GlobalOutput_Panel: TPanel
-      Left = -2
-      Top = 2
-      Width = 431
-      Height = 282
-      BevelKind = bkTile
-      BevelOuter = bvNone
-      TabOrder = 7
-      object optOutputUnicode: TRadioButton
-        Left = 23
-        Top = 29
-        Width = 228
-        Height = 17
-        Caption = 'Output as Unicode (Recommended)'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBtnText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 0
-      end
-      object optOutputANSI: TRadioButton
-        Left = 23
-        Top = 61
-        Width = 228
-        Height = 17
-        Caption = 'Output as ANSI (Experimental)'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBtnText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        TabOrder = 1
-        OnMouseUp = optOutputANSIMouseUp
-      end
-      object CheckWarningAnsi: TCheckBox
-        Left = 23
-        Top = 127
-        Width = 228
-        Height = 17
-        Caption = 'Show warning in ANSI mode.'
-        TabOrder = 2
       end
     end
   end
@@ -1047,6 +1180,6 @@ object frmOptions: TfrmOptions
     Interval = 2000
     OnTimer = LabelHideTimerTimer
     Left = 296
-    Top = 16
+    Top = 8
   end
 end

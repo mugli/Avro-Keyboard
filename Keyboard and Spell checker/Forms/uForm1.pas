@@ -429,6 +429,7 @@ Type
 					Procedure TransferKeyUp(Const KeyCode: Integer; Var Block: Boolean);
 					Procedure TrimAppMemorySize;
 					Procedure Initmenu;
+					Procedure ToggleOutputEncoding;
 		 Protected
 					Procedure CreateParams(Var Params: TCreateParams); Override;
 		 End;
@@ -848,18 +849,24 @@ End;
 
 Function TAvroMainForm1.IgnorableWindow(Const lngHWND: HWND): Boolean;
 Begin
+		 result := False;
+
 		 // System tray
 		 If (lngHWND = FindWindow('Shell_TrayWnd', Nil)) Or (lngHWND = FindWindowEx(FindWindow('Shell_TrayWnd', Nil), 0, 'TrayNotifyWnd', Nil)) Then
 					result := True
 		 Else If lngHWND = Self.Handle Then
 					result := True
-		 Else If (IsFormLoaded('TopBar') = True) And (lngHWND = Topbar.Handle) Then
-					result := True
-					// Photoshop drag window exception
+		 Else If IsFormLoaded('TopBar') Then Begin
+					If lngHWND = Topbar.Handle Then
+							 result := True;
+		 End
+		 // Photoshop drag window exception
+		 Else If IsFormLoaded('frmEncodingWarning') Then Begin
+					If lngHWND = frmEncodingWarning.Handle Then
+							 result := True;
+		 End
 		 Else If GetWindowClassName(lngHWND) = 'PSDocDragFeedback' Then
-					result := True
-		 Else
-					result := False;
+					result := True;
 End;
 
 {$HINTS ON}
@@ -1792,7 +1799,7 @@ End;
 
 Procedure TAvroMainForm1.Spellcheck1Click(Sender: TObject);
 Begin
-		 Execute_Something(ExtractFilePath(Application.ExeName) + 'Avro Spell checker.exe')
+		 Execute_Something(ExtractFilePath(Application.ExeName) + 'Avro Spell checker.exe');
 End;
 
 { =============================================================================== }
@@ -1844,6 +1851,16 @@ Begin
 		 Else
 					OldStyleReph := 'YES';
 		 RefreshSettings;
+End;
+
+{ =============================================================================== }
+
+Procedure TAvroMainForm1.ToggleOutputEncoding;
+Begin
+		 If OutputIsBijoy = 'YES' Then
+					OutputasUnicodeRecommended1Click(Nil)
+		 Else
+					OutputasANSIAreyousure1Click(Nil);
 End;
 
 { =============================================================================== }

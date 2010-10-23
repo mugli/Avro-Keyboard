@@ -184,7 +184,7 @@ End;
 { =============================================================================== }
 { =============================================================================== }
 
-Procedure RegisterCallback(mCallback: TCallback); Stdcall;
+Procedure Avro_RegisterCallback(mCallback: TCallback); Stdcall;
 Begin
 		 Try
 					Callback := mCallback;
@@ -198,7 +198,7 @@ End;
 
 { =============================================================================== }
 
-Procedure InitSpell; Stdcall;
+Procedure Avro_InitSpell; Stdcall;
 Begin
 		 Try
 					LoadWordDatabase;
@@ -223,7 +223,7 @@ End;
 
 { =============================================================================== }
 
-Function IsWordPresent(Wrd: PChar; Var SAction: Integer): LongBool; Stdcall;
+Function Avro_IsWordPresent(Wrd: PChar; Var SAction: Integer): LongBool; Stdcall;
 Var
 		 mWrd: String;
 Begin
@@ -269,7 +269,7 @@ End;
 
 { =============================================================================== }
 
-Function WordPresentInChangeAll(Wrd: PChar): LongBool; Stdcall;
+Function Avro_WordPresentInChangeAll(Wrd: PChar): LongBool; Stdcall;
 Var
 		 mWrd: String;
 Begin
@@ -287,7 +287,7 @@ End;
 
 { =============================================================================== }
 
-Procedure GetCorrection(Wrd: PChar); Stdcall;
+Procedure Avro_GetCorrection(Wrd: PChar); Stdcall;
 Var
 		 mWrd: String;
 		 SplittedWord: String;
@@ -343,7 +343,7 @@ End;
 
 { =============================================================================== }
 
-Procedure SetWordPosInScreen(xPoint, yPoint: Integer); Stdcall;
+Procedure Avro_SetWordPosInScreen(xPoint, yPoint: Integer); Stdcall;
 Begin
 		 Try
 					MoveToOptimumPos(xPoint, yPoint);
@@ -357,7 +357,7 @@ End;
 
 { =============================================================================== }
 
-Procedure HideSpeller; Stdcall;
+Procedure Avro_HideSpeller; Stdcall;
 Begin
 		 Try
 					frmSpellPopUp.Hide;
@@ -371,7 +371,7 @@ End;
 
 { =============================================================================== }
 
-Procedure ShowOptions; Stdcall;
+Procedure Avro_ShowOptions; Stdcall;
 Begin
 		 Try
 					LoadSettings;
@@ -387,7 +387,7 @@ End;
 
 { =============================================================================== }
 
-Procedure ShowAbout; Stdcall;
+Procedure Avro_ShowAbout; Stdcall;
 Begin
 		 Try
 					frmAbout := TfrmAbout.Create(Application);
@@ -402,7 +402,7 @@ End;
 
 { =============================================================================== }
 
-Procedure ForgetChangeIgnore; Stdcall;
+Procedure Avro_ForgetChangeIgnore; Stdcall;
 Begin
 		 If Not Initialized Then
 					exit;
@@ -420,7 +420,7 @@ End;
 
 { =============================================================================== }
 
-Procedure UnloadAll; Stdcall;
+Procedure Avro_UnloadAll; Stdcall;
 Begin
 		 Try
 					frmSpellPopUp.Close;
@@ -452,17 +452,17 @@ End;
 { =============================================================================== }
 
 Exports
-		 InitSpell,
-		 RegisterCallback,
-		 IsWordPresent,
-		 WordPresentInChangeAll,
-		 GetCorrection,
-		 SetWordPosInScreen,
-		 HideSpeller,
-		 ShowOptions,
-		 ShowAbout,
-		 ForgetChangeIgnore,
-		 UnloadAll;
+		 Avro_InitSpell,
+		 Avro_RegisterCallback,
+		 Avro_IsWordPresent,
+		 Avro_WordPresentInChangeAll,
+		 Avro_GetCorrection,
+		 Avro_SetWordPosInScreen,
+		 Avro_HideSpeller,
+		 Avro_ShowOptions,
+		 Avro_ShowAbout,
+		 Avro_ForgetChangeIgnore,
+		 Avro_UnloadAll;
 
 Begin
 

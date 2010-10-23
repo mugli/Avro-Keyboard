@@ -32,14 +32,7 @@ respective authors of that library.
 Required Delphi Version: 
 ------------------------------
 
-Delphi 2007. 
-
-Other versions of Delphi may or may not compile the source successfully. 
-[Delphi has changed default string type from AnsiString to UnicodeString 
-since Delphi 2009. So versions after 2007 are very likely to produce 
-a lot of compiler errors!]
-
-
+Delphi 2010 
 
 
 Required 3rd party libraries: 
@@ -51,11 +44,7 @@ This source includes the following 3rd party libraries:
 Open source. 
 Site: http://www.simdesign.nl/xml.html
 
-2) Portions of Delphi Fundamentals. 
-Open source.
-Site: http://sourceforge.net/projects/fundementals/
-
-3) PCRE Delphi wrapper.
+2) PCRE Delphi wrapper.
 Open source.
 Author: Renato Mancuso <mancuso@renatomancuso.com>
 
@@ -74,12 +63,6 @@ Site: http://www.overbyte.be/
 Open source.
 Site: http://www.delphi-jedi.org/
 
-4) TNT Unicode Controls
-Author: Troy Wolbrink
-In late March 2007, the free TNT Unicode Controls turned 
-commercial. They are no longer available for download 
-from their old home, but it is still possible and legal to 
-download them from: http://www.yunqa.de
 
 
 If you are ready with the above mentions requirements,
