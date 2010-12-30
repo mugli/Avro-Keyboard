@@ -315,8 +315,8 @@ object frmOptions: TfrmOptions
       object Label15: TLabel
         Left = 40
         Top = 220
-        Width = 369
-        Height = 45
+        Width = 368
+        Height = 39
         Caption = 
           'Note: This setting is only applicable when you type Bangla in Un' +
           'icode output mode. In ANSI mode, locale will be changed to US En' +
@@ -1072,7 +1072,8 @@ object frmOptions: TfrmOptions
             'F9'
             'F10'
             'F11'
-            'F12')
+            'F12'
+            'Ctrl+Space')
         end
       end
       object GroupBox8: TGroupBox

@@ -259,7 +259,7 @@ Begin
 
 		 // As is support
 		 If AutoCorrect = True Then Begin
-					if dict.TryGetValue(EnglishT, DictItem) then begin
+					If dict.TryGetValue(EnglishT, DictItem) Then Begin
 							 If EnglishT = DictItem Then Begin
 										Convert := EnglishT;
 										Exit;
@@ -272,7 +272,7 @@ Begin
 		 EngStr := CorrectCase(EnglishT);
 
 		 If AutoCorrect = True Then Begin
-          If dict.TryGetValue(EngStr, DictItem) Then Begin
+					If dict.TryGetValue(EngStr, DictItem) Then Begin
 							 pEnglishText := DictItem;
 							 Convert := MyConvert;
 					End
@@ -334,8 +334,15 @@ Begin
 					Case T Of
 							 'o', 'O', 'i', 'I', 'u', 'U':
 										s := s + T;
-							 'd', 'D', 'g', 'G', 'j', 'J', 'n', 'N', 'r', 'R', 's', 'S', 't', 'T', 'y', 'Y', 'z', 'Z':
+							 'd', 'D', 'g', 'G', 'j', 'n', 'N', 'r', 'R', 's', 'S', 't', 'T', 'y', 'Y', 'z', 'Z':
 										s := s + T;
+							 'J':
+										If EnableJoNukta = 'YES' Then Begin
+												 s := s + T;
+										End
+										Else Begin
+												 s := s + LowerCase(T);
+										End;
 							 Else
 										s := s + LowerCase(T);
 							 End;
@@ -707,6 +714,8 @@ Begin
 		 If Cnv('mph', b_M + b_Hasanta + b_Ph) = True Then
 					Exit; // M+Ph
 		 If Cnv('mbh', b_M + b_Hasanta + b_Bh) = True Then
+					Exit; // M+V
+		 If Cnv('mpl', b_M + b_P + b_Hasanta + b_L) = True Then
 					Exit; // M+V
 
 		 If Cnv('mn', b_M + b_Hasanta + b_N) = True Then
@@ -1234,7 +1243,7 @@ Begin
 		 If Cnv('Rh', b_Rrh) = True Then
 					Exit; // Rrh
 
-		 If (Consonent(PrevT) = True) And (PrevT <> 'r') And (PrevT <> 'y') And (PrevT <> 'w') And (PrevT <> 'x') Then Begin
+		 If (Consonent(PrevT) = True) And (PrevT <> 'r') And (PrevT <> 'y') And (PrevT <> 'w') And (PrevT <> 'x') And (PrevT <> 'Z') Then Begin
 					If Cnv('r', b_Hasanta + b_R) = True Then
 							 Exit; // R-Fola
 		 End

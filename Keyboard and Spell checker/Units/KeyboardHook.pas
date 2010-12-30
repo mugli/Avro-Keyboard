@@ -302,7 +302,7 @@ Begin
 					{$ENDREGION}
 					{$REGION 'Keyboard mode management'}
 
-					If (wParam = 257) Or (wParam = 261) Then Begin // Keyup
+					If ((wParam = 256) or (wParam = 260)) Then Begin // Keydown
 							 If kbdllhs.vkCode = VK_F1 Then Begin
 										If (ModeSwitchKey = 'F1') And (IfTrueShift = False) And (IfControl = False) And (IfAlter = False) Then Begin
 												 AvroMainForm1.ToggleMode;
@@ -503,12 +503,21 @@ Begin
 										End;
 										If (SpellerLauncherKey = 'F12') And (IfTrueShift = False) And IfControl And (IfAlter = False) Then Begin
 												 AvroMainForm1.Spellcheck1Click(Nil);
+												 ShouldBlock := True;
+												 Goto ExitHere;
+										End;
+							 End
+							 Else If kbdllhs.vkCode = VK_SPACE Then Begin
+										If (ModeSwitchKey = 'CTRL+SPACE') And (IfTrueShift = False) And IfControl And (IfAlter = False) Then Begin
+												 AvroMainForm1.ToggleMode;
 												 ShouldBlock := True;
 												 Goto ExitHere;
 										End;
 							 End;
 					End
-					Else If (wParam = 256) Or (wParam = 260) Then Begin // KeyDown
+
+					Else If ((wParam = 257) Or (wParam = 261)) Then Begin // Keyup
+
 							 If kbdllhs.vkCode = VK_F1 Then Begin
 										If (ModeSwitchKey = 'F1') And (IfTrueShift = False) And (IfControl = False) And (IfAlter = False) Then Begin
 												 ShouldBlock := True;
@@ -676,7 +685,13 @@ Begin
 												 ShouldBlock := True;
 												 Goto ExitHere;
 										End;
-							 End;
+							 End
+               else if kbdllhs.vkCode = VK_SPACE then begin
+										If (ModeSwitchKey = 'CTRL+SPACE') And (IfTrueShift = False) And IfControl And (IfAlter = False) Then Begin
+												 ShouldBlock := True;
+												 Goto ExitHere;
+										End;
+               end;
 					End;
 
 		 End; { nCode = HC_ACTION }

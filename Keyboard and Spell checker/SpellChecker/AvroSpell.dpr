@@ -324,8 +324,10 @@ Begin
 					// Splitted suggestion  (Words Joined?)
 					If (PhoneticResult.Count + FuzzyResult.Count) <= 0 Then Begin
 							 SplittedWord := SplitSuggestion(mWrd);
-							 If SplittedWord <> '' Then
+							 If SplittedWord <> '' Then begin
 										OtherResult.Add(SplittedWord);
+                    OtherResult.Add(ReplaceStr(SplittedWord,' ', '-'));
+               end;
 					End;
 
 					// Rest Transposition and OCR errors for next version

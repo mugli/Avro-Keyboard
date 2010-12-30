@@ -563,7 +563,7 @@ Begin
 
 		 // Keyboard Mode settings
 		 If Not((ModeSwitchKey = 'F1') Or (ModeSwitchKey = 'F2') Or (ModeSwitchKey = 'F3') Or (ModeSwitchKey = 'F4') Or (ModeSwitchKey = 'F5') Or (ModeSwitchKey = 'F6') Or (ModeSwitchKey = 'F7') Or (ModeSwitchKey = 'F8') Or (ModeSwitchKey = 'F9') Or
-						(ModeSwitchKey = 'F10') Or (ModeSwitchKey = 'F11') Or (ModeSwitchKey = 'F12')) Then
+						(ModeSwitchKey = 'F10') Or (ModeSwitchKey = 'F11') Or (ModeSwitchKey = 'F12') Or (ModeSwitchKey = 'CTRL+SPACE')) Then
 					ModeSwitchKey := 'F12';
 		 If Not((ToggleOutputModeKey = 'F1') Or (ToggleOutputModeKey = 'F2') Or (ToggleOutputModeKey = 'F3') Or (ToggleOutputModeKey = 'F4') Or (ToggleOutputModeKey = 'F5') Or (ToggleOutputModeKey = 'F6') Or (ToggleOutputModeKey = 'F7') Or
 						(ToggleOutputModeKey = 'F8') Or (ToggleOutputModeKey = 'F9') Or (ToggleOutputModeKey = 'F10') Or (ToggleOutputModeKey = 'F11') Or (ToggleOutputModeKey = 'F12')) Then

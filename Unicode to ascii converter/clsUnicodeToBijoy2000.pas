@@ -421,6 +421,13 @@ Begin
 		 fConvertedText := ReplaceStr(fConvertedText, b_Hasanta, '');
 		 fConvertedText := ReplaceStr(fConvertedText, zwj, '');
 		 fConvertedText := ReplaceStr(fConvertedText, zwnj, '');
+		 // Warning: Hardcoded conversion
+		 fConvertedText := ReplaceStr(fConvertedText, 'nè', 'nœ');
+		 fConvertedText := ReplaceStr(fConvertedText, 'Kœ', 'Kè');
+		 fConvertedText := ReplaceStr(fConvertedText, '¶y', '¶z');
+		 fConvertedText := ReplaceStr(fConvertedText, 'Rz', 'Ry');
+		 fConvertedText := ReplaceStr(fConvertedText, 'R‚', 'R~');
+		 fConvertedText := ReplaceStr(fConvertedText, 'R…', 'R„');
 End;
 
 Procedure TUnicodeToBijoy2000.ReplaceFullForms;
@@ -528,8 +535,10 @@ End;
 
 Function TUnicodeToBijoy2000.Convert(Const UniText: String): String;
 Begin
-		 If UniText = '' Then
+		 If UniText = '' Then Begin
+					Result := '';
 					exit;
+		 End;
 
 		 fUniText := UniText;
 		 fConvertedText := '';

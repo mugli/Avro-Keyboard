@@ -312,6 +312,15 @@ Type
 					N51: TMenuItem;
 					OutputasUnicodeRecommended2: TMenuItem;
 					OutputasANSIAreyousure2: TMenuItem;
+					N52: TMenuItem;
+					AvroKeyboardonFacebook1: TMenuItem;
+					OmicronLabonTwitter1: TMenuItem;
+					N53: TMenuItem;
+					AvroKeyboardonFacebook2: TMenuItem;
+					OmicronLabonTwitter2: TMenuItem;
+					N54: TMenuItem;
+					AvroKeyboardonFacebook3: TMenuItem;
+					OmicronLabonTwitter3: TMenuItem;
 					Procedure FormKeyDown(Sender: TObject; Var Key: Word; Shift: TShiftState);
 					Procedure FormCreate(Sender: TObject);
 					Procedure AvroPhoneticEnglishtoBangla3Click(Sender: TObject);
@@ -384,6 +393,8 @@ Type
 					Procedure TypeJoNuktawithShiftJ1Click(Sender: TObject);
 					Procedure OutputasUnicodeRecommended1Click(Sender: TObject);
 					Procedure OutputasANSIAreyousure1Click(Sender: TObject);
+					Procedure AvroKeyboardonFacebook1Click(Sender: TObject);
+					Procedure OmicronLabonTwitter1Click(Sender: TObject);
 		 Private
 					{ Private declarations }
 					WindowDict: TDictionary<HWND, TWindowRecord>;
@@ -512,6 +523,11 @@ Begin
 		 ToggleVowelFormat;
 End;
 
+
+Procedure TAvroMainForm1.AvroKeyboardonFacebook1Click(Sender: TObject);
+Begin
+		 Execute_Something('http://www.omicronlab.com/go.php?id=39');
+End;
 
 Procedure TAvroMainForm1.AvroKeyboardontheweb1Click(Sender: TObject);
 Begin
@@ -860,11 +876,11 @@ Begin
 					If lngHWND = Topbar.Handle Then
 							 result := True;
 		 End
-		 // Photoshop drag window exception
 		 Else If IsFormLoaded('frmEncodingWarning') Then Begin
 					If lngHWND = frmEncodingWarning.Handle Then
 							 result := True;
 		 End
+		 // Photoshop drag window exception
 		 Else If GetWindowClassName(lngHWND) = 'PSDocDragFeedback' Then
 					result := True;
 End;
@@ -1266,6 +1282,13 @@ End;
 
 { =============================================================================== }
 
+Procedure TAvroMainForm1.OmicronLabonTwitter1Click(Sender: TObject);
+Begin
+		 Execute_Something('http://www.omicronlab.com/go.php?id=40');
+End;
+
+{ =============================================================================== }
+
 Procedure TAvroMainForm1.OpenHelpFile(Const HelpID: Integer);
 Begin
 		 Case HelpID Of
@@ -1364,7 +1387,7 @@ Procedure TAvroMainForm1.OutputasANSIAreyousure1Click(Sender: TObject);
 Begin
 		 If ShowOutputwarning <> 'NO' Then Begin
 					CheckCreateForm(TfrmEncodingWarning, frmEncodingWarning, 'frmEncodingWarning');
-					frmEncodingWarning.ShowModal;
+					frmEncodingWarning.Show;
 		 End
 		 Else
 					OutputIsBijoy := 'YES';

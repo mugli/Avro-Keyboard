@@ -506,6 +506,7 @@ End;
 
 { =============================================================================== }
 
+
 Procedure TfrmOptions.comboSkinChange(Sender: TObject);
 Begin
 		 Try
@@ -1004,9 +1005,9 @@ Begin
 		 // =======================================================
 		 // Hotkeys Settings
 
-		 ModeSwitchKey := comboFunctionKeys.Items[comboFunctionKeys.ItemIndex];
-		 ToggleOutputModeKey := comboFunctionKeys_OutputMode.Items[comboFunctionKeys_OutputMode.ItemIndex];
-		 SpellerLauncherKey := comboFunctionKeys_SpellerLauncher.Items[comboFunctionKeys_SpellerLauncher.ItemIndex];
+		 ModeSwitchKey := uppercase(comboFunctionKeys.Items[comboFunctionKeys.ItemIndex]);
+		 ToggleOutputModeKey := uppercase(comboFunctionKeys_OutputMode.Items[comboFunctionKeys_OutputMode.ItemIndex]);
+		 SpellerLauncherKey := uppercase(comboFunctionKeys_SpellerLauncher.Items[comboFunctionKeys_SpellerLauncher.ItemIndex]);
 
 
 		 // =========================================================
