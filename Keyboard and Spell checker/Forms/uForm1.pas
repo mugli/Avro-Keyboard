@@ -1428,9 +1428,10 @@ End;
 Procedure TAvroMainForm1.RefreshSettings;
 Begin
 
-  // Update Spell Checker Shortcut in Menu
-  Spellcheck1.ShortCut := TextToShortcut('Ctrl+'+SpellerLauncherKey);
-  Spellcheck3.ShortCut := TextToShortcut('Ctrl+'+SpellerLauncherKey);
+     // Update Spell Checker Shortcut in Menu
+     Spellcheck1.ShortCut := TextToShortcut('Ctrl+' + SpellerLauncherKey);
+     Spellcheck2.ShortCut := TextToShortcut('Ctrl+' + SpellerLauncherKey);
+     Spellcheck3.ShortCut := TextToShortcut('Ctrl+' + SpellerLauncherKey);
 
 		 If VowelFormating = 'NO' Then Begin
 					AutomaticVowelFormatingInModernTypingStyle1.Checked := False;
