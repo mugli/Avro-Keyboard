@@ -78,6 +78,7 @@ Type
 					Function NextTEx(iLength: Integer; skipstart: Integer = 0): String;
 					Function Vowel(Const T: String): Boolean;
 					Function Consonent(Const T: String): Boolean;
+          Function Number(Const T: String): Boolean;
 					Function Begining: Boolean;
 		 Public
 					Constructor Create; // Initializer
@@ -516,8 +517,13 @@ Begin
 		 If Cnv('..', b_Dari + b_Dari) = True Then
 					Exit; // ||
 
-		 If Cnv('.', b_Dari) = True Then
-					Exit; // |
+     if Number(NextT) = True then begin
+       If Cnv('.', '.') = True Then
+            Exit; // Decimal Mark
+     end
+     else
+		    If Cnv('.', b_Dari) = True Then
+					  Exit; // |
 End;
 
 { =============================================================================== }
@@ -1416,6 +1422,27 @@ Begin
 
 End;
 
+
+Function TEnglishToBangla.Number(Const T: String): Boolean;
+Var
+		 temp: Char;
+		 myT: String;
+Begin
+		 Result := False;
+		 myT := LowerCase(T);
+		 temp := #0;
+		 If length(myT) > 0 Then
+					temp := myT[1];
+
+		 Case temp Of
+					'0', '1', '2', '3', '4', '5', '6', '7', '8', '9':
+							 Number := True;
+					Else
+							 Number := False;
+					End;
+End;
+
 {$HINTS On}
+
 
 End.
