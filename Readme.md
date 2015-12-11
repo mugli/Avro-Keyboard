@@ -30,7 +30,7 @@ This source includes the following 3rd party libraries:
 
 1. **NativeXml**.
 Open source. 
-Site: http://www.simdesign.nl/xml.html
+Site: http://www.simdesign.nl/nativexml.html
 
 2. **PCRE Delphi wrapper**.
 Open source.
