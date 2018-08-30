@@ -51,7 +51,7 @@ Site: http://www.overbyte.be/
 Open source.
 Site: http://www.delphi-jedi.org/
 
-If you are ready with the above mentions requirements,
+If you are ready with the above mentioned requirements,
 the delphi project files (*.dpr) should be compiled without any problem.
 
 
