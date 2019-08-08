@@ -291,83 +291,6 @@ object frmOptions: TfrmOptions
     VertScrollBar.Tracking = True
     BorderStyle = bsNone
     TabOrder = 5
-    object Locale_Panel: TPanel
-      Left = 4
-      Top = 4
-      Width = 428
-      Height = 280
-      BevelKind = bkTile
-      BevelOuter = bvNone
-      TabOrder = 2
-      object Label8: TLabel
-        Left = 40
-        Top = 75
-        Width = 118
-        Height = 13
-        Caption = 'Select Bangla Locale:'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-      end
-      object Label15: TLabel
-        Left = 40
-        Top = 220
-        Width = 368
-        Height = 39
-        Caption = 
-          'Note: This setting is only applicable when you type Bangla in Un' +
-          'icode output mode. In ANSI mode, locale will be changed to US En' +
-          'glish regardless whatever is selected here.'
-        WordWrap = True
-      end
-      object CheckEnableLocaleChange: TCheckBox
-        Left = 16
-        Top = 26
-        Width = 393
-        Height = 43
-        Caption = 
-          'Automatically change "Input Locale" (Input Language) with Keyboa' +
-          'rd Mode'
-        TabOrder = 0
-        WordWrap = True
-      end
-      object optLocaleIND: TRadioButton
-        Left = 72
-        Top = 94
-        Width = 169
-        Height = 17
-        Caption = 'Bangla (India)'
-        TabOrder = 1
-      end
-      object optLocaleBD: TRadioButton
-        Left = 72
-        Top = 117
-        Width = 169
-        Height = 17
-        Caption = 'Bangla (Bangladesh)'
-        TabOrder = 2
-      end
-      object optLocaleAS: TRadioButton
-        Left = 72
-        Top = 140
-        Width = 169
-        Height = 17
-        Caption = 'Assamese'
-        TabOrder = 3
-      end
-      object ButtonInstallLocale: TButton
-        Left = 288
-        Top = 180
-        Width = 121
-        Height = 25
-        Caption = 'Install Locale'
-        TabOrder = 4
-        OnClick = ButtonInstallLocaleClick
-      end
-    end
     object General_Panel: TPanel
       Left = 5
       Top = 2
@@ -1173,6 +1096,89 @@ object frmOptions: TfrmOptions
             'F11'
             'F12')
         end
+      end
+    end
+    object Locale_Panel: TPanel
+      Left = 4
+      Top = 2
+      Width = 428
+      Height = 280
+      BevelKind = bkTile
+      BevelOuter = bvNone
+      TabOrder = 2
+      object Label8: TLabel
+        Left = 40
+        Top = 125
+        Width = 101
+        Height = 13
+        Caption = 'Select Bangla Locale:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+      end
+      object Label15: TLabel
+        Left = 24
+        Top = 22
+        Width = 361
+        Height = 39
+        Caption = 
+          'Warning: This is a legacy configuration and known to cause probl' +
+          'em with latest editions of Windows. Change this only if you are ' +
+          'sure about your action. '
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBtnText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        WordWrap = True
+      end
+      object CheckEnableLocaleChange: TCheckBox
+        Left = 16
+        Top = 76
+        Width = 393
+        Height = 43
+        Caption = 
+          'Automatically change "Input Locale" (Input Language) with Keyboa' +
+          'rd Mode'
+        TabOrder = 0
+        WordWrap = True
+      end
+      object optLocaleIND: TRadioButton
+        Left = 72
+        Top = 144
+        Width = 169
+        Height = 17
+        Caption = 'Bangla (India)'
+        TabOrder = 1
+      end
+      object optLocaleBD: TRadioButton
+        Left = 72
+        Top = 167
+        Width = 169
+        Height = 17
+        Caption = 'Bangla (Bangladesh)'
+        TabOrder = 2
+      end
+      object optLocaleAS: TRadioButton
+        Left = 72
+        Top = 190
+        Width = 169
+        Height = 17
+        Caption = 'Assamese'
+        TabOrder = 3
+      end
+      object ButtonInstallLocale: TButton
+        Left = 288
+        Top = 219
+        Width = 121
+        Height = 25
+        Caption = 'Install Locale'
+        TabOrder = 4
+        OnClick = ButtonInstallLocaleClick
       end
     end
   end
