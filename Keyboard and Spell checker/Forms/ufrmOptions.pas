@@ -448,6 +448,8 @@ Begin
 
 End;
 
+
+
 { =============================================================================== }
 
 Procedure TfrmOptions.CheckShowPrevWindowClick(Sender: TObject);
@@ -628,6 +630,8 @@ End;
 
 
 { =============================================================================== }
+
+
 
 Procedure TfrmOptions.LabelGlobalHotkeysLinkClick(Sender: TObject);
 Begin

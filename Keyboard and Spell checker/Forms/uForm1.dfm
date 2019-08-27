@@ -127,7 +127,7 @@ object AvroMainForm1: TAvroMainForm1
     Left = 24
     Top = 224
     Bitmap = {
-      494C01011E00B8002C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01011E00B8004C0110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000008000000001002000000000000080
       000000000000000000000000000000000000FBF9EE1EDFCC6CEDDBC256FFDBC2
       56FFDBC256FFDBC256FFDBC256FFDBC256FFDBC256FFDBC256FFDBC256FFDBC2
@@ -1371,60 +1371,10 @@ object AvroMainForm1: TAvroMainForm1
     object N11: TMenuItem
       Caption = '-'
     end
-    object HowtoBanglaFileFolderName1: TMenuItem
-      Caption = 'How to: Bangla File/Folder Name'
-      ImageIndex = 7
-      Visible = False
-      OnClick = HowtoBanglaFileFolderName1Click
-    end
-    object HowtoBanglaChat1: TMenuItem
-      Caption = 'How to: Bangla Chat!'
-      ImageIndex = 7
-      Visible = False
-      OnClick = HowtoBanglaChat1Click
-    end
-    object HowtoSearchingwebinBangla1: TMenuItem
-      Caption = 'How to: Searching web in Bangla!'
-      ImageIndex = 7
-      Visible = False
-      OnClick = HowtoSearchingwebinBangla1Click
-    end
-    object N12: TMenuItem
-      Caption = '-'
-      Visible = False
-    end
-    object HowtoDevelopBanglaWebPage1: TMenuItem
-      Caption = 'How to: Develop Bangla Web Page'
-      ImageIndex = 7
-      Visible = False
-      OnClick = HowtoDevelopBanglaWebPage1Click
-    end
-    object HowtoEmbedBanglaFontinWebPages1: TMenuItem
-      Caption = 'How to: Embed Bangla Font in Web Pages'
-      ImageIndex = 7
-      Visible = False
-      OnClick = HowtoEmbedBanglaFontinWebPages1Click
-    end
-    object N13: TMenuItem
-      Caption = '-'
-      Visible = False
-    end
     object Moredocumentsontheweb1: TMenuItem
       Caption = 'More documents on the web...'
       ImageIndex = 17
       OnClick = Moredocumentsontheweb1Click
-    end
-    object FreeOnlineSupport1: TMenuItem
-      Caption = 'Free Online Support...'
-      ImageIndex = 10
-      OnClick = UserForum1Click
-    end
-    object N14: TMenuItem
-      Caption = '-'
-    end
-    object GetAcrobatReader1: TMenuItem
-      Caption = 'Get Acrobat Reader...'
-      OnClick = GetAcrobatReader1Click
     end
     object N15: TMenuItem
       Caption = '-'
@@ -1654,19 +1604,16 @@ object AvroMainForm1: TAvroMainForm1
         Caption = 'How to: Bangla File/Folder Name'
         ImageIndex = 7
         Visible = False
-        OnClick = HowtoBanglaFileFolderName1Click
       end
       object HowtoBanglaChat2: TMenuItem
         Caption = 'How to: Bangla Chat!'
         ImageIndex = 7
         Visible = False
-        OnClick = HowtoBanglaChat1Click
       end
       object HowtoSearchingwebinBangla2: TMenuItem
         Caption = 'How to: Searching web in Bangla!'
         ImageIndex = 7
         Visible = False
-        OnClick = HowtoSearchingwebinBangla1Click
       end
       object N25: TMenuItem
         Caption = '-'
@@ -1676,13 +1623,11 @@ object AvroMainForm1: TAvroMainForm1
         Caption = 'How to: Develop Bangla Web Page'
         ImageIndex = 7
         Visible = False
-        OnClick = HowtoDevelopBanglaWebPage1Click
       end
       object HowtoEmbedBanglaFontinWebPages2: TMenuItem
         Caption = 'How to: Embed Bangla Font in Web Pages'
         ImageIndex = 7
         Visible = False
-        OnClick = HowtoEmbedBanglaFontinWebPages1Click
       end
       object N26: TMenuItem
         Caption = '-'
@@ -1770,16 +1715,6 @@ object AvroMainForm1: TAvroMainForm1
       Caption = 'Avro Mouse : Click '#39'n Type!'
       ImageIndex = 9
       OnClick = AvroMouseClicknType2Click
-    end
-    object FontFixerSetdefaultBanglafont1: TMenuItem
-      Caption = 'Font Fixer: Set default Bangla font'
-      ImageIndex = 27
-      OnClick = FontFixerSetdefaultBanglafont1Click
-    end
-    object iComplexInstallcomplexscriptsupportinWindows1: TMenuItem
-      Caption = 'iComplex: Install complex script support in Windows'
-      ImageIndex = 26
-      OnClick = iComplexInstallcomplexscriptsupportinWindows1Click
     end
     object N5: TMenuItem
       Caption = '-'
@@ -1976,12 +1911,10 @@ object AvroMainForm1: TAvroMainForm1
       object FontFixerSetdefaultBanglafont2: TMenuItem
         Caption = 'Font Fixer: Set default Bangla font'
         ImageIndex = 27
-        OnClick = FontFixerSetdefaultBanglafont1Click
       end
       object iComplexInstallcomplexscriptsupportinWindows2: TMenuItem
         Caption = 'iComplex: Install complex script support in Windows'
         ImageIndex = 26
-        OnClick = iComplexInstallcomplexscriptsupportinWindows1Click
       end
       object N48: TMenuItem
         Caption = '-'
@@ -2234,19 +2167,16 @@ object AvroMainForm1: TAvroMainForm1
         Caption = 'How to: Bangla File/Folder Name'
         ImageIndex = 7
         Visible = False
-        OnClick = HowtoBanglaFileFolderName1Click
       end
       object HowtoBanglaChat3: TMenuItem
         Caption = 'How to: Bangla Chat!'
         ImageIndex = 7
         Visible = False
-        OnClick = HowtoBanglaChat1Click
       end
       object HowtoSearchingwebinBangla3: TMenuItem
         Caption = 'How to: Searching web in Bangla!'
         ImageIndex = 7
         Visible = False
-        OnClick = HowtoSearchingwebinBangla1Click
       end
       object N38: TMenuItem
         Caption = '-'
@@ -2256,13 +2186,11 @@ object AvroMainForm1: TAvroMainForm1
         Caption = 'How to: Develop Bangla Web Page'
         ImageIndex = 7
         Visible = False
-        OnClick = HowtoDevelopBanglaWebPage1Click
       end
       object HowtoEmbedBanglaFontinWebPages3: TMenuItem
         Caption = 'How to: Embed Bangla Font in Web Pages'
         ImageIndex = 7
         Visible = False
-        OnClick = HowtoEmbedBanglaFontinWebPages1Click
       end
       object N39: TMenuItem
         Caption = '-'

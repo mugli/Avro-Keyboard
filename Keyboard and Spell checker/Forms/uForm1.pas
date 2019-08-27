@@ -118,17 +118,7 @@ Type
 					N10: TMenuItem;
 					CreatingEditingFixedKeyboardLayouts1: TMenuItem;
 					N11: TMenuItem;
-					HowtoBanglaFileFolderName1: TMenuItem;
-					HowtoBanglaChat1: TMenuItem;
-					HowtoSearchingwebinBangla1: TMenuItem;
-					N12: TMenuItem;
-					HowtoDevelopBanglaWebPage1: TMenuItem;
-					HowtoEmbedBanglaFontinWebPages1: TMenuItem;
-					N13: TMenuItem;
 					Moredocumentsontheweb1: TMenuItem;
-					FreeOnlineSupport1: TMenuItem;
-					N14: TMenuItem;
-					GetAcrobatReader1: TMenuItem;
 					N15: TMenuItem;
 					Aboutcurrentkeyboardlayout1: TMenuItem;
 					AboutAvroKeyboard1: TMenuItem;
@@ -266,10 +256,6 @@ Type
 					AvroMouseClicknType5: TMenuItem;
 					N48: TMenuItem;
 					Options2: TMenuItem;
-					FontFixerSetdefaultBanglafont1: TMenuItem;
-					iComplexInstallcomplexscriptsupportinWindows1: TMenuItem;
-					FontFixerSetdefaultBanglafont2: TMenuItem;
-					iComplexInstallcomplexscriptsupportinWindows2: TMenuItem;
 					FixedKeyboardLayout1: TMenuItem;
 					UseModernStyleTyping1: TMenuItem;
 					UseOldStyleTyping1: TMenuItem;
@@ -351,11 +337,6 @@ Type
 					Procedure BanglaTypingwithAvroMouse1Click(Sender: TObject);
 					Procedure FrequentlyAskedQuestionsFAQ1Click(Sender: TObject);
 					Procedure CreatingEditingFixedKeyboardLayouts1Click(Sender: TObject);
-					Procedure HowtoBanglaFileFolderName1Click(Sender: TObject);
-					Procedure HowtoBanglaChat1Click(Sender: TObject);
-					Procedure HowtoSearchingwebinBangla1Click(Sender: TObject);
-					Procedure HowtoDevelopBanglaWebPage1Click(Sender: TObject);
-					Procedure HowtoEmbedBanglaFontinWebPages1Click(Sender: TObject);
 					Procedure Moredocumentsontheweb1Click(Sender: TObject);
 					Procedure GetAcrobatReader1Click(Sender: TObject);
 					Procedure Aboutcurrentkeyboardlayout1Click(Sender: TObject);
@@ -380,8 +361,6 @@ Type
 					Procedure IdleTimerTimer(Sender: TObject);
 					Procedure AboutCurrentskin1Click(Sender: TObject);
 					Procedure UnicodetoBijoytextconverter1Click(Sender: TObject);
-					Procedure FontFixerSetdefaultBanglafont1Click(Sender: TObject);
-					Procedure iComplexInstallcomplexscriptsupportinWindows1Click(Sender: TObject);
 					Procedure FormCloseQuery(Sender: TObject; Var CanClose: Boolean);
 					Procedure ShowPreviewWindow1Click(Sender: TObject);
 					Procedure Dictionarymodeisdefault1Click(Sender: TObject);
@@ -416,7 +395,6 @@ Type
 					Procedure KeyLayout_KeyboardLayoutChanged(CurrentKeyboardLayout: String);
 					Procedure KeyLayout_KeyboardModeChanged(CurrentMode: enumMode);
 					Procedure ResetAllWindowLocale;
-					Procedure ComplexLanguageNotify;
 
 
 
@@ -475,7 +453,6 @@ Uses
 		 uDBase,
 		 SkinLoader,
 		 u_VirtualFontInstall,
-		 uComplexLNotify,
 		 ufrmEncodingWarning;
 
 
@@ -593,38 +570,6 @@ Begin
 		 RefreshSettings;
 End;
 
-Procedure TAvroMainForm1.ComplexLanguageNotify;
-
-		 Function CheckIfComplexLabguageInstalled: Boolean;
-		 Var
-					REG: TMyRegistry;
-					str: String;
-		 Begin
-					REG := TMyRegistry.Create;
-					REG.RootKey := HKEY_LOCAL_MACHINE;
-					REG.OpenKeyReadOnly('SYSTEM\CurrentControlSet\Control\Nls\Language Groups');
-					str := REG.ReadString('f');
-					FreeAndNil(REG);
-
-					If str = '1' Then
-							 result := True
-					Else
-							 result := False;
-		 End;
-
-/// ///
-Begin
-		 If IsWinVistaOrLater Then
-					exit;
-		 If CheckIfComplexLabguageInstalled Then
-					exit;
-
-		 If UpperCase(DontShowComplexLNotification) = 'YES' Then
-					exit;
-
-		 CheckCreateForm(TComplexLNotify, ComplexLNotify, 'ComplexLNotify');
-		 ComplexLNotify.ShowModal;
-End;
 
 Procedure TAvroMainForm1.Configuringyoursystem1Click(Sender: TObject);
 Begin
@@ -736,10 +681,6 @@ End;
 
 { =============================================================================== }
 
-Procedure TAvroMainForm1.FontFixerSetdefaultBanglafont1Click(Sender: TObject);
-Begin
-		 Execute_Something(ExtractFilePath(Application.ExeName) + 'Font Fixer.exe');
-End;
 
 Procedure TAvroMainForm1.FormClose(Sender: TObject; Var Action: TCloseAction);
 Begin
@@ -762,8 +703,6 @@ Begin
 		 Application.ProcessMessages;
 
 		 LoadSettings;
-		 { DONE : ComplexLanguageNotify }
-		 ComplexLanguageNotify;
 
 		 { TODO :
 			 If DontShowStartupWizard <> 'YES Then
@@ -815,36 +754,6 @@ End;
 Procedure TAvroMainForm1.Helponhelp1Click(Sender: TObject);
 Begin
 		 Execute_Something(ExtractFilePath(Application.ExeName) + 'help_on_help.htm');
-End;
-
-Procedure TAvroMainForm1.HowtoBanglaChat1Click(Sender: TObject);
-Begin
-		 OpenHelpFile(31);
-End;
-
-Procedure TAvroMainForm1.HowtoBanglaFileFolderName1Click(Sender: TObject);
-Begin
-		 OpenHelpFile(30);
-End;
-
-Procedure TAvroMainForm1.HowtoDevelopBanglaWebPage1Click(Sender: TObject);
-Begin
-		 OpenHelpFile(33);
-End;
-
-Procedure TAvroMainForm1.HowtoEmbedBanglaFontinWebPages1Click(Sender: TObject);
-Begin
-		 OpenHelpFile(34);
-End;
-
-Procedure TAvroMainForm1.HowtoSearchingwebinBangla1Click(Sender: TObject);
-Begin
-		 OpenHelpFile(32);
-End;
-
-Procedure TAvroMainForm1.iComplexInstallcomplexscriptsupportinWindows1Click(Sender: TObject);
-Begin
-		 Execute_Something(ExtractFilePath(Application.ExeName) + 'icomplex\IComplex.exe');
 End;
 
 { =============================================================================== }
@@ -1331,36 +1240,6 @@ Begin
 					29:
 							 If FileExists(ExtractFilePath(Application.ExeName) + 'faq.pdf') Then
 										Execute_Something(ExtractFilePath(Application.ExeName) + 'faq.pdf')
-							 Else
-										Execute_Something('http://www.omicronlab.com/go.php?id=' + IntToStr(HelpID));
-
-					30:
-							 If FileExists(ExtractFilePath(Application.ExeName) + 'How to- Bangla File Folder Name.pdf') Then
-										Execute_Something(ExtractFilePath(Application.ExeName) + 'How to- Bangla File Folder Name.pdf')
-							 Else
-										Execute_Something('http://www.omicronlab.com/go.php?id=' + IntToStr(HelpID));
-
-					31:
-							 If FileExists(ExtractFilePath(Application.ExeName) + 'How to- Bangla Chat.pdf') Then
-										Execute_Something(ExtractFilePath(Application.ExeName) + 'How to- Bangla Chat.pdf')
-							 Else
-										Execute_Something('http://www.omicronlab.com/go.php?id=' + IntToStr(HelpID));
-
-					32:
-							 If FileExists(ExtractFilePath(Application.ExeName) + 'How to- Searching Web in Bangla.pdf') Then
-										Execute_Something(ExtractFilePath(Application.ExeName) + 'How to- Searching Web in Bangla.pdf')
-							 Else
-										Execute_Something('http://www.omicronlab.com/go.php?id=' + IntToStr(HelpID));
-
-					33:
-							 If FileExists(ExtractFilePath(Application.ExeName) + 'How to- Bangla Web Page.pdf') Then
-										Execute_Something(ExtractFilePath(Application.ExeName) + 'How to- Bangla Web Page.pdf')
-							 Else
-										Execute_Something('http://www.omicronlab.com/go.php?id=' + IntToStr(HelpID));
-
-					34:
-							 If FileExists(ExtractFilePath(Application.ExeName) + 'How to- Embed Bangla font in Web Pages.pdf') Then
-										Execute_Something(ExtractFilePath(Application.ExeName) + 'How to- Embed Bangla font in Web Pages.pdf')
 							 Else
 										Execute_Something('http://www.omicronlab.com/go.php?id=' + IntToStr(HelpID));
 

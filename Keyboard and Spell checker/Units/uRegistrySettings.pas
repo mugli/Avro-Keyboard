@@ -207,7 +207,7 @@ Begin
 
 
 		 // Input Locale Settings
-		 ChangeInputLocale := UpperCase(XML.GetValue('ChangeInputLocale', 'Yes'));
+		 ChangeInputLocale := UpperCase(XML.GetValue('ChangeInputLocale', 'NO'));
 		 PrefferedLocale := UpperCase(XML.GetValue('PrefferedLocale', 'India'));
 		 // PrefferedLocaleEnglish := XML.GetValue('PrefferedLocaleEnglish', 'Locale:00000409');
 
@@ -382,7 +382,7 @@ Begin
 					EnableJoNukta := UpperCase(Reg.ReadStringDef('EnableJoNukta', 'NO'));
 
 					// Input Locale Settings
-					ChangeInputLocale := UpperCase(Reg.ReadStringDef('ChangeInputLocale', 'Yes'));
+					ChangeInputLocale := UpperCase(Reg.ReadStringDef('ChangeInputLocale', 'NO'));
 					PrefferedLocale := UpperCase(Reg.ReadStringDef('PrefferedLocale', 'India'));
 
 					// Tools Settings
@@ -595,7 +595,7 @@ Begin
 
 		 // Input Locale Settings
 		 If Not((ChangeInputLocale = 'YES') Or (ChangeInputLocale = 'NO')) Then
-					ChangeInputLocale := 'YES';
+					ChangeInputLocale := 'NO';
 		 If Not((PrefferedLocale = 'BANGLADESH') Or (PrefferedLocale = 'INDIA') Or (PrefferedLocale = 'ASSAMESE')) Then
 					PrefferedLocale := 'INDIA';
 
