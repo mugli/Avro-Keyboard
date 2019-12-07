@@ -968,7 +968,7 @@ object frmOptions: TfrmOptions
           Top = 25
           Width = 165
           Height = 13
-          Caption = 'Keyboard mode switcing key:'
+          Caption = 'Keyboard mode switching key:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
