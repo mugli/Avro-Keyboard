@@ -303,13 +303,10 @@ object TopBar: TTopBar
     Left = 480
     Top = 192
   end
-  object JvBalloonHint1: TJvBalloonHint
-    CustomAnimationStyle = atNone
-    DefaultHeader = 'Avro Keyboard'
-    Options = [boUseDefaultIcon, boUseDefaultImageIndex, boShowCloseBtn]
-    UseBalloonAsApplicationHint = True
-    Left = 384
-    Top = 200
+  object BalloonHint1: TBalloonHint
+    HideAfter = 5000
+    Left = 336
+    Top = 184
   end
   object HintTimer: TTimer
     Enabled = False
