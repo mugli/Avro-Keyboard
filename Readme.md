@@ -18,38 +18,20 @@ respective authors of that library.
 
 ## Required Delphi Version: ##
 
-**Delphi 2010**
+**Delphi 10.4**
 
 
 ## Required 3rd party libraries:  ##
 
 
-This source includes the following 3rd party libraries:
-
-
-
-1. **NativeXml**.
-Open source. 
-Site: http://www.simdesign.nl/nativexml.html
-
-2. **PCRE Delphi wrapper**.
-Open source.
-Author: Renato Mancuso <mancuso@renatomancuso.com>
 
 **Before compiling, you have to install the following 3rd party
 libraries in you Delphi environment:**
 
-1. **DISQLite3**.
-Freeware (Not open source).
-Site: http://www.yunqa.de/
 
-2. **ICS**.
+1. **ICS**.
 Freeware with Source Code.
-Site: http://www.overbyte.be/
-
-3. **Delphi Jedi (JVCL and JCL)**.
-Open source.
-Site: http://www.delphi-jedi.org/
+Site: http://www.overbyte.eu/
 
 If you are ready with the above mentioned requirements,
 the delphi project files (*.dpr) should be compiled without any problem.
