@@ -80,52 +80,52 @@ Function IsElevated: Boolean;
 
   Function IsElevatedBasic: Boolean;
   Var
-    token: Cardinal;
+    token: NativeUInt;
     ElevationType: Integer;
     // Elevation                : DWord;
     dwSize: Cardinal;
   Begin
     Result := False;
 
-    // If OpenProcessToken(GetCurrentProcess, TOKEN_QUERY, token) Then
-    // Try
-    // If GetTokenInformation(token,
-    // TTokenInformationClass(TokenElevationType), @ElevationType,
-    // SizeOf(ElevationType), dwSize) Then
-    // { * If already elevated returns TokenElevationTypeFull.
-    //
-    // * If it can be elevated simply by showing the elevation request
-    // dialog it returns TokenElevationTypeLimited.
-    //
-    // * If running on a non-administrator account that needs to show
-    // the elevation dialog and enter an admin password,
-    // it returns TokenElevationTypeDefault. }
-    // Case ElevationType Of
-    // TokenElevationTypeDefault:
-    // Result := False;
-    // TokenElevationTypeFull:
-    // Result := True;
-    // TokenElevationTypeLimited:
-    // Result := False;
-    // Else
-    // Result := False;
-    // End
-    // Else
-    // Result := False;
-    //
-    // { If GetTokenInformation(token, TTokenInformationClass(TokenElevation), @Elevation, SizeOf(Elevation), dwSize) Then Begin
-    // If Elevation = 0 Then
-    // ShowMessage('token does NOT have elevate privs')
-    // Else
-    // ShowMessage('token has elevate privs');
-    // End
-    // Else
-    // Result := False; }
-    // Finally
-    // CloseHandle(token);
-    // End
-    // Else
-    // Result := False;
+    If OpenProcessToken(GetCurrentProcess, TOKEN_QUERY, token) Then
+      Try
+        If GetTokenInformation(token,
+          TTokenInformationClass(TokenElevationType), @ElevationType,
+          SizeOf(ElevationType), dwSize) Then
+          { * If already elevated returns TokenElevationTypeFull.
+
+            * If it can be elevated simply by showing the elevation request
+            dialog it returns TokenElevationTypeLimited.
+
+            * If running on a non-administrator account that needs to show
+            the elevation dialog and enter an admin password,
+            it returns TokenElevationTypeDefault. }
+          Case ElevationType Of
+            TokenElevationTypeDefault:
+              Result := False;
+            TokenElevationTypeFull:
+              Result := True;
+            TokenElevationTypeLimited:
+              Result := False;
+          Else
+            Result := False;
+          End
+        Else
+          Result := False;
+
+        { If GetTokenInformation(token, TTokenInformationClass(TokenElevation), @Elevation, SizeOf(Elevation), dwSize) Then Begin
+          If Elevation = 0 Then
+          ShowMessage('token does NOT have elevate privs')
+          Else
+          ShowMessage('token has elevate privs');
+          End
+          Else
+          Result := False; }
+      Finally
+        CloseHandle(token);
+      End
+    Else
+      Result := False;
   End;
 
 Begin
