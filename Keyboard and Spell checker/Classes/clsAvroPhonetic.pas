@@ -1,130 +1,128 @@
 {
   =============================================================================
   *****************************************************************************
-     The contents of this file are subject to the Mozilla Public License
-     Version 1.1 (the "License"); you may not use this file except in
-     compliance with the License. You may obtain a copy of the License at
-     http://www.mozilla.org/MPL/
+  The contents of this file are subject to the Mozilla Public License
+  Version 1.1 (the "License"); you may not use this file except in
+  compliance with the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
 
-     Software distributed under the License is distributed on an "AS IS"
-     basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
-     License for the specific language governing rights and limitations
-     under the License.
+  Software distributed under the License is distributed on an "AS IS"
+  basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+  License for the specific language governing rights and limitations
+  under the License.
 
-     The Original Code is Avro Keyboard 5.
+  The Original Code is Avro Keyboard 5.
 
-     The Initial Developer of the Original Code is
-     Mehdi Hasan Khan (mhasan@omicronlab.com).
+  The Initial Developer of the Original Code is
+  Mehdi Hasan Khan (mhasan@omicronlab.com).
 
-     Copyright (C) OmicronLab (http://www.omicronlab.com). All Rights Reserved.
+  Copyright (C) OmicronLab (http://www.omicronlab.com). All Rights Reserved.
 
 
-     Contributor(s): ______________________________________.
+  Contributor(s): ______________________________________.
 
   *****************************************************************************
   =============================================================================
 }
 
 {$INCLUDE ../ProjectDefines.inc}
-
-{COMPLETE TRANSFERING!}
+{ COMPLETE TRANSFERING! }
 
 Unit clsAvroPhonetic;
 
 Interface
 
 Uses
-     classes,
-     sysutils,
-     StrUtils,
-     clsE2BCharBased;
+  classes,
+  sysutils,
+  StrUtils,
+  clsE2BCharBased;
 
-//Skeleton of Class TAvroPhonetic
+// Skeleton of Class TAvroPhonetic
 Type
-     TAvroPhonetic = Class
-     Private
-          CharBased: TE2BCharBased;
+  TAvroPhonetic = Class
+  Private
+    CharBased: TE2BCharBased;
 
-          Procedure SetAutoCorrectEnabled(Const Value: Boolean);
-          Function GetAutoCorrectEnabled: Boolean;
-     Public
-          Constructor Create;           //Initializer
-          Destructor Destroy; Override; //Destructor
+    Procedure SetAutoCorrectEnabled(Const Value: Boolean);
+    Function GetAutoCorrectEnabled: Boolean;
+  Public
+    Constructor Create; // Initializer
+    Destructor Destroy; Override; // Destructor
 
-          Function ProcessVKeyDown(Const KeyCode: Integer; Var Block: Boolean): String;
-          Procedure ProcessVKeyUP(Const KeyCode: Integer; Var Block: Boolean);
-          Procedure ResetDeadKey;
-          Procedure SelectCandidate(Const Item: String); //For Avro Phonetic
-          //Published
-          Property AutoCorrectEnabled: Boolean
-               Read GetAutoCorrectEnabled Write SetAutoCorrectEnabled;
-     End;
-
+    Function ProcessVKeyDown(Const KeyCode: Integer;
+      Var Block: Boolean): String;
+    Procedure ProcessVKeyUP(Const KeyCode: Integer; Var Block: Boolean);
+    Procedure ResetDeadKey;
+    Procedure SelectCandidate(Const Item: String); // For Avro Phonetic
+    // Published
+    Property AutoCorrectEnabled: Boolean Read GetAutoCorrectEnabled
+      Write SetAutoCorrectEnabled;
+  End;
 
 Implementation
 
 { TAvroPhonetic }
-{===============================================================================}
+{ =============================================================================== }
 
 Constructor TAvroPhonetic.Create;
 Begin
-     Inherited;
+  Inherited;
 
-     CharBased := TE2BCharBased.Create;
+  CharBased := TE2BCharBased.Create;
 End;
 
-{===============================================================================}
+{ =============================================================================== }
 
 Destructor TAvroPhonetic.Destroy;
 Begin
-     FreeAndNil(CharBased);
-     Inherited;
+  FreeAndNil(CharBased);
+  Inherited;
 End;
-{===============================================================================}
+{ =============================================================================== }
 
 Function TAvroPhonetic.GetAutoCorrectEnabled: Boolean;
 Begin
-     Result := CharBased.AutoCorrectEnabled;
+  Result := CharBased.AutoCorrectEnabled;
 End;
 
-{===============================================================================}
+{ =============================================================================== }
 
 Function TAvroPhonetic.ProcessVKeyDown(Const KeyCode: Integer;
-     Var Block: Boolean): String;
+  Var Block: Boolean): String;
 Begin
-     Result := CharBased.ProcessVKeyDown(Keycode, Block);
+  Result := CharBased.ProcessVKeyDown(KeyCode, Block);
 End;
 
-{===============================================================================}
+{ =============================================================================== }
 
 Procedure TAvroPhonetic.ProcessVKeyUP(Const KeyCode: Integer;
-     Var Block: Boolean);
+  Var Block: Boolean);
 Begin
-     CharBased.ProcessVKeyUP(Keycode, Block);
+  CharBased.ProcessVKeyUP(KeyCode, Block);
 End;
 
-{===============================================================================}
+{ =============================================================================== }
 
 Procedure TAvroPhonetic.ResetDeadKey;
 Begin
-     CharBased.ResetDeadKey;
+  CharBased.ResetDeadKey;
 End;
 
-{===============================================================================}
+{ =============================================================================== }
 
 Procedure TAvroPhonetic.SelectCandidate(Const Item: String);
 Begin
-     CharBased.SelectCandidate(Item);
+  CharBased.SelectCandidate(Item);
 End;
 
-{===============================================================================}
+{ =============================================================================== }
 
 Procedure TAvroPhonetic.SetAutoCorrectEnabled(Const Value: Boolean);
 Begin
-     CharBased.AutoCorrectEnabled := Value;
+  CharBased.AutoCorrectEnabled := Value;
 End;
 
-{===============================================================================}
+{ =============================================================================== }
 
 End.
-

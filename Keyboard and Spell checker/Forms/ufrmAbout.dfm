@@ -4926,7 +4926,7 @@ object frmAbout: TfrmAbout
   object Label2: TLabel
     Left = 178
     Top = 31
-    Width = 48
+    Width = 47
     Height = 13
     Caption = 'Version:'
     Font.Charset = ANSI_CHARSET
@@ -6366,28 +6366,11 @@ object frmAbout: TfrmAbout
       ''
       ''
       ''
-      '3rd Party components:'
+      '3rd party components:'
       '________________________'
       ''
-      'NativeXml'
-      '(http://www.simdesign.nl/xml.html)'
-      ''
-      ''
-      'PCRE Delphi wrapper by:'
-      'Renato Mancuso '
-      'mancuso@renatomancuso.com'
-      ''
-      ''
-      'DISQLite3'
-      '(http://www.yunqa.de/)'
-      ''
-      ''
       'ICS'
-      '(http://www.overbyte.be/)'
-      ''
-      ''
-      'Delphi Jedi (JVCL and JCL)'
-      '(http://www.delphi-jedi.org/)'
+      '(http://www.overbyte.eu/)'
       ''
       ''
       '----------------------------'

@@ -432,7 +432,7 @@ object frmAbout: TfrmAbout
     object lblVer: TLabel
       Left = 79
       Top = 30
-      Width = 56
+      Width = 55
       Height = 13
       Caption = 'Version : '
     end

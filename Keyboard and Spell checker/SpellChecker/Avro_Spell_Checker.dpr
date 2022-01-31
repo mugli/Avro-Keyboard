@@ -38,7 +38,6 @@ uses
   VirtualKeyCode in '..\Units\VirtualKeyCode.pas',
   uRegistrySettings in 'uRegistrySettings.pas',
   uWindowHandlers in '..\Units\uWindowHandlers.pas',
-  nativexml in '..\Units\nativexml.pas',
   clsFileVersion in '..\Classes\clsFileVersion.pas',
   clsRegistry_XMLSetting in 'clsRegistry_XMLSetting.pas',
   WindowsVersion in '..\Units\WindowsVersion.pas';

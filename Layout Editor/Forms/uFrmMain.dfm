@@ -4041,7 +4041,7 @@ object frmMain: TfrmMain
       Left = 154
       Top = 29
       Width = 68
-      Height = 35
+      Height = 33
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
@@ -4056,7 +4056,7 @@ object frmMain: TfrmMain
       Left = 154
       Top = 88
       Width = 68
-      Height = 35
+      Height = 33
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
@@ -4071,7 +4071,7 @@ object frmMain: TfrmMain
       Left = 326
       Top = 87
       Width = 68
-      Height = 35
+      Height = 33
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
@@ -4086,7 +4086,7 @@ object frmMain: TfrmMain
       Left = 326
       Top = 29
       Width = 68
-      Height = 35
+      Height = 33
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
@@ -4107,9 +4107,9 @@ object frmMain: TfrmMain
     ParentBackground = False
     TabOrder = 4
     object Label14: TLabel
-      Left = 18
+      Left = 19
       Top = 13
-      Width = 302
+      Width = 301
       Height = 13
       Alignment = taRightJustify
       Caption = 'You can share your layout with Avro Keyboard users'
