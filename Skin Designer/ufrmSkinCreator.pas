@@ -521,6 +521,8 @@ Begin
 
   Index := 1;
   GroupBox1.BringToFront;
+  { Position Form to Screen Center }
+  Self.position := poScreenCenter;
   Self.Show;
   Application.ProcessMessages;
   EditSkinName.SetFocus;
