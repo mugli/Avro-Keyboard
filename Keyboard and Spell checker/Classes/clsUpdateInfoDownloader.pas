@@ -69,17 +69,17 @@ Const
      {$IFDEF BetaVersion}
 
      {$IFDEF PortableOn}
-     UpdateInfo               = 'http://www.omicronlab.com/download/liveupdate/portable_avrokeyboard/versioninfo_beta.xml';
+     UpdateInfo               = 'https://www.omicronlab.com/download/liveupdate/portable_avrokeyboard/versioninfo_beta.xml';
      {$ELSE}
-     UpdateInfo               = 'http://www.omicronlab.com/download/liveupdate/avrokeyboard/versioninfo_beta.xml';
+     UpdateInfo               = 'https://www.omicronlab.com/download/liveupdate/avrokeyboard/versioninfo_beta.xml';
      {$ENDIF}
 
      {$ELSE}
 
      {$IFDEF PortableOn}
-     UpdateInfo               = 'http://www.omicronlab.com/download/liveupdate/portable_avrokeyboard/versioninfo.xml';
+     UpdateInfo               = 'https://www.omicronlab.com/download/liveupdate/portable_avrokeyboard/versioninfo.xml';
      {$ELSE}
-     UpdateInfo               = 'http://www.omicronlab.com/download/liveupdate/avrokeyboard/versioninfo.xml';
+     UpdateInfo               = 'https://www.omicronlab.com/download/liveupdate/avrokeyboard/versioninfo.xml';
      {$ENDIF}
 
      {$ENDIF}
