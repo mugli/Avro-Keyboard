@@ -35,157 +35,168 @@ Unit clsRegistry_XMLSetting;
 Interface
 
 Uses
-     classes,
-     sysutils,
-     StrUtils,
-     NativeXML,
-     Forms,
-     Registry,
-     uFileFolderHandling;
+  classes,
+  sysutils,
+  StrUtils,
+  windows,
+  XMLIntf, XMLDoc,
+  Forms,
+  Registry,
+  Dialogs,
+  system.Variants,
+  uFileFolderHandling;
 
-//Custom Registry class
 Type
-     TMyRegistry = Class(TRegistry)
-     Public
-          Function ReadStringDef(Const Name: String; DefaultVal: String = ''): String;
-     End;
+  TMyRegistry = class(TRegistry)
+  public
+    function ReadStringDef(const Name: String; DefaultVal: String = ''): String;
+  end;
 
-     //Skeleton of Class TXMLSetting
 Type
-     TXMLSetting = Class
-     Private
-          XML: TNativeXml;
-          child: TXmlNode;
+  TXMLSetting = class
+  private
+    XML: IXMLDocument;
+    child: IXMLNode;
 
-     Public
-          Constructor Create;           //Initializer
-          Destructor Destroy; Override; //Destructor
+  public
+    constructor Create;
+    destructor Destroy; override;
 
-          Function LoadXMLData(): Boolean;
-          Function GetValue(Const ValueName: UTF8String; DefaultValue: String = ''): String;
-          Procedure CreateNewXMLData;
-          Procedure SetValue(Const ValueName: UTF8String; Const ValueData: String);
-          Procedure SaveXMLData;
+    function LoadXMLData(): Boolean;
+    function GetValue(const ValueName: UTF8String; DefaultValue: String = ''): String; overload;
+    procedure CreateNewXMLData;
+    procedure SetValue(const ValueName: UTF8String; const ValueData: String); overload;
+    procedure SaveXMLData;
 
-     End;
+  end;
 
-
-
-Implementation
-
-{===============================================================================}
+implementation
 
 { TXMLSetting }
 
-Constructor TXMLSetting.Create;
-Begin
-     Inherited;
+constructor TXMLSetting.Create;
+begin
+  inherited;
 
-     XML := TNativeXml.Create;
-     XML.ExternalEncoding := seUTF8;
+  XML := TXMLDocument.Create(nil);
+  XML.Active := true;
+  XML.Encoding := 'UTF-8';
+  XML.AddChild('Settings');
 
-End;
-
-{===============================================================================}
-
-Procedure TXMLSetting.CreateNewXMLData;
-Begin
-     Xml.Free;
-     XML := TNativeXml.Create;
-     XML.EncodingString := 'UTF-8';
-     XML.ExternalEncoding := seUTF8;
-     XML.Root.Name := 'Settings';
-End;
+end;
 
 {===============================================================================}
 
-Destructor TXMLSetting.Destroy;
-Begin
-     FreeAndNil(XML);
-     Inherited;
-End;
+procedure TXMLSetting.CreateNewXMLData;
+begin
+
+  if XML <> nil then
+    XML := nil;
+
+  XML := TXMLDocument.Create(nil);
+  XML.Active := true;
+
+  XML.Encoding := 'UTF-8';
+  XML.AddChild('Settings');
+end;
 
 {===============================================================================}
 
-Function TXMLSetting.GetValue(Const ValueName: UTF8String;
-     DefaultValue: String): String;
-Begin
-     Try
-          Child := Xml.Root.FindNode(ValueName);
-          If Length(Trim(Child.Nodes[0].ValueAsUnicodeString)) <= 0 Then
-               Result := DefaultValue
-          Else
-               Result := Trim(Child.Nodes[0].ValueAsUnicodeString);
-     Except
-          On E: Exception Do
-               Result := DefaultValue;
-     End;
-End;
+destructor TXMLSetting.Destroy;
+begin
+  XML.Active := false;
+  XML := nil;
+  inherited;
+end;
 
 {===============================================================================}
 
-Function TXMLSetting.LoadXMLData(): Boolean;
-Begin
-     Try
-          If FileExists(ExtractFilePath(Application.ExeName) + 'Layout Editor Settings.xml') = True Then Begin
-               XML.LoadFromFile(ExtractFilePath(Application.ExeName) + 'Layout Editor Settings.xml');
-               Result := True;
-          End
-          Else
-               Result := False;
-     Except
-          On E: Exception Do
-               Result := False;
-     End;
-End;
+
+function TXMLSetting.GetValue(const ValueName: UTF8String;
+  DefaultValue: String): String;
+begin
+  try
+
+    child := XML.DocumentElement.ChildNodes.FindNode(ValueName);
+
+    if assigned(child) then
+    begin
+      if Length(Trim(child.ChildNodes.Nodes[0].NodeValue)) <= 0 then
+        Result := DefaultValue
+      else
+        Result := VarToStr(Trim(child.ChildNodes.Nodes[0].NodeValue));
+    end
+    else
+      Result := DefaultValue
+  except
+    On E: Exception do
+      Result := DefaultValue;
+  end;
+end;
+{$HINTS Off}
+
+function TXMLSetting.LoadXMLData(): Boolean;
+begin
+  Result := false;
+  try
+    if FileExists(ExtractFilePath(Application.ExeName) + 'Layout Editor Settings.xml') = true then
+    begin
+      XML.LoadFromFile(ExtractFilePath(Application.ExeName) + 'Layout Editor Settings.xml');
+      Result := True;
+    end
+    else
+      Result := false;
+  except
+    On E: Exception do
+      Result := false;
+  end;
+end;
+{$HINTS On}
+
+procedure TXMLSetting.SaveXMLData;
+begin
+  XML.XML.Text := XMLDoc.FormatXMLData(XML.XML.Text);
+  XML.Active := true;
+  try
+    XML.SaveToFile(GetAvroDataDir + 'Settings.xml');
+  except
+    On E: Exception do
+    begin
+    end;
+  end;
+end;
+
 
 {===============================================================================}
 
-Procedure TXMLSetting.SaveXMLData;
-Begin
-     XML.XmlFormat := xfReadable;
-     Try
-          Xml.SaveToFile(GetAvroDataDir + 'Layout Editor Settings.xml');
-     Except
-          On E: Exception Do Begin
-               //Nothing
-          End;
-     End;
-End;
+procedure TXMLSetting.SetValue(const ValueName: UTF8String;
+  const ValueData: String);
+var
+  CdataChild: IXMLNode;
+begin
 
-{===============================================================================}
+  child := XML.DocumentElement.AddChild(ValueName);
+  CdataChild := XML.CreateNode(ValueData, ntCDATA);
+  child.ChildNodes.Add(CdataChild);
 
-Procedure TXMLSetting.SetValue(Const ValueName:UTF8String; const ValueData: String);
-Var
-     CdataChild               : TXmlNode;
-Begin
-     Child := XML.Root.NodeNew(ValueName);
-     CdataChild := Child.NodeNew(ValueName);
-     CdataChild.ElementType := xeCData;
-     CdataChild.ValueAsUnicodeString := ValueData;
-End;
-
-{===============================================================================}
-{===============================================================================}
-{===============================================================================}
+end;
 
 { TMyRegistry }
 
-Function TMyRegistry.ReadStringDef(Const Name: String;
-     DefaultVal: String = ''): String;
-Begin
-     Try
-          If ValueExists(Name) = True Then Begin
-               Result := ReadString(Name);
-          End
-          Else Begin
-               Result := DefaultVal;
-          End;
-     Except
-          On E: Exception Do
-               If Trim(Result) = '' Then
-                    Result := DefaultVal;
-     End;
-End;
 
-End.
+function TMyRegistry.ReadStringDef(const Name: String;
+  DefaultVal: String = ''): String;
+begin
+  try
+    if ValueExists(Name) = true then
+      Result := ReadString(Name)
+    else
+      Result := DefaultVal;
+  except
+    On E: Exception do
+      if Trim(Result) = '' then
+        Result := DefaultVal;
+  end;
+end;
+
+end.

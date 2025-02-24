@@ -27,1011 +27,1006 @@
 
 {$INCLUDE ../ProjectDefines.inc}
 
-Unit uFrmMain;
+unit uFrmMain;
 
-Interface
+interface
 
-Uses
-     Windows,
-     Messages,
-     SysUtils,
-     Variants,
-     Classes,
-     Graphics,
-     Controls,
-     Forms,
-     Dialogs,
-     ToolWin,
-     ComCtrls,
-     StdCtrls,
-     ExtCtrls,
-     GIFImg,
-     jpeg,
-     ExtDlgs,
-     StrUtils,
-     uShapeInterceptor,
-     nativeXML,
-     ImgList {Always must be the last};
+uses
+  Windows,
+  Messages,
+  SysUtils,
+  Variants,
+  Classes,
+  Graphics,
+  Controls,
+  Forms,
+  Dialogs,
+  ToolWin,
+  ComCtrls,
+  StdCtrls,
+  ExtCtrls,
+  GIFImg,
+  jpeg,
+  ExtDlgs,
+  StrUtils,
+  uShapeInterceptor,
+  XMLIntf, XMLDoc,
+  System.NetEncoding,  System.Generics.Collections,
+  Soap.EncdDecd,
+  ImgList {Always must be the last};
 
-Type
-     TfrmMain = Class(TForm)
-          ToolBar1: TToolBar;
-          ToolButton5: TToolButton;
-          butNew: TToolButton;
-          butOpen: TToolButton;
-          butFont: TToolButton;
-          butHelp: TToolButton;
-          butAbout: TToolButton;
-          Panel1: TPanel;
-          Image1: TImage;
-          GroupBox1: TGroupBox;
-          GroupBox2: TGroupBox;
-          Label1: TLabel;
-          txtLayoutName: TEdit;
-          ToolButton12: TToolButton;
-          ToolButton13: TToolButton;
-          ToolButton14: TToolButton;
-          ToolButton15: TToolButton;
-          txtVersion: TEdit;
-          Label2: TLabel;
-          txtDeveloper: TEdit;
-          Label3: TLabel;
-          Label4: TLabel;
-          txtComment: TMemo;
-          txtImageAltGrShift: TEdit;
-          txtImageNormalShift: TEdit;
-          Label5: TLabel;
-          Label6: TLabel;
-          butImageAltGrShift: TButton;
-          butImageNormalShift: TButton;
-          Label8: TLabel;
-          txtNormal: TEdit;
-          txtShift: TEdit;
-          Label9: TLabel;
-          txtShiftAltGr: TEdit;
-          Label10: TLabel;
-          txtAltGr: TEdit;
-          Label11: TLabel;
-          Image3: TImage;
-          LabelShift: TLabel;
-          Shape_E: TShape;
-          imgNormal: TImage;
-          imgShift: TImage;
-          imgAltGr: TImage;
-          imgShiftAltGr: TImage;
-          Shape_R: TShape;
-          Shape_D: TShape;
-          Shape_S: TShape;
-          LabelNormal: TLabel;
-          Shape_F: TShape;
-          Shape_C: TShape;
-          Shape_X: TShape;
-          Shape_V: TShape;
-          Shape_G: TShape;
-          Shape_T: TShape;
-          Shape_Y: TShape;
-          Shape_U: TShape;
-          Shape_H: TShape;
-          Shape_B: TShape;
-          Shape_N: TShape;
-          Shape_OEM2: TShape;
-          Shape_PERIOD: TShape;
-          Shape_COMMA: TShape;
-          Shape_M: TShape;
-          Shape_Z: TShape;
-          Shape_J: TShape;
-          Shape_K: TShape;
-          Shape_L: TShape;
-          Shape_OEM1: TShape;
-          Shape_OEM7: TShape;
-          Shape_A: TShape;
-          Shape_OEM4: TShape;
-          Shape_P: TShape;
-          Shape_O: TShape;
-          Shape_I: TShape;
-          Shape_W: TShape;
-          Shape_Q: TShape;
-          Shape_OEM5: TShape;
-          Shape_OEM6: TShape;
-          Shape_OEM3: TShape;
-          Shape_1: TShape;
-          Shape_2: TShape;
-          Shape_3: TShape;
-          Shape_4: TShape;
-          Shape_5: TShape;
-          Shape_6: TShape;
-          Shape_7: TShape;
-          Shape_8: TShape;
-          Shape_9: TShape;
-          Shape_0: TShape;
-          Shape_MINUS: TShape;
-          Shape_PLUS: TShape;
-          OpenPictureDialog1: TOpenPictureDialog;
-          SaveDialog1: TSaveDialog;
-          FontDialog1: TFontDialog;
-          OpenDialog1: TOpenDialog;
-          ButSave: TToolButton;
-          ButSaveAs: TToolButton;
-          ToolButton3: TToolButton;
-          ToolButton4: TToolButton;
-          Label7: TLabel;
-          Panel2: TPanel;
-          Label14: TLabel;
-          Label15: TLabel;
-          Source: TImage;
-          Procedure FormCreate(Sender: TObject);
-          Procedure Shape_QMouseDown(Sender: TObject; Button: TMouseButton;
-               Shift: TShiftState; X, Y: Integer);
-          Procedure txtLayoutNameEnter(Sender: TObject);
-          Procedure txtCommentEnter(Sender: TObject);
-          Procedure txtNormalEnter(Sender: TObject);
-          Procedure butNewClick(Sender: TObject);
-          Procedure txtLayoutNameChange(Sender: TObject);
-          Procedure txtNormalChange(Sender: TObject);
-          Procedure txtShiftChange(Sender: TObject);
-          Procedure txtAltGrChange(Sender: TObject);
-          Procedure txtShiftAltGrChange(Sender: TObject);
-          Procedure butFontClick(Sender: TObject);
-          Procedure butHelpClick(Sender: TObject);
-          Procedure Label15Click(Sender: TObject);
-          Procedure butImageNormalShiftClick(Sender: TObject);
-          Procedure butImageAltGrShiftClick(Sender: TObject);
-          Procedure ButSaveAsClick(Sender: TObject);
-          Procedure ButSaveClick(Sender: TObject);
-          Procedure butAboutClick(Sender: TObject);
-          Procedure butOpenClick(Sender: TObject);
-          Procedure FormClose(Sender: TObject; Var Action: TCloseAction);
+type
+  TfrmMain = class(TForm)
+    ToolBar1: TToolBar;
+    ToolButton5: TToolButton;
+    butNew: TToolButton;
+    butOpen: TToolButton;
+    butFont: TToolButton;
+    butHelp: TToolButton;
+    butAbout: TToolButton;
+    Panel1: TPanel;
+    Image1: TImage;
+    GroupBox1: TGroupBox;
+    GroupBox2: TGroupBox;
+    Label1: TLabel;
+    txtLayoutName: TEdit;
+    ToolButton12: TToolButton;
+    ToolButton13: TToolButton;
+    ToolButton14: TToolButton;
+    ToolButton15: TToolButton;
+    txtVersion: TEdit;
+    Label2: TLabel;
+    txtDeveloper: TEdit;
+    Label3: TLabel;
+    Label4: TLabel;
+    txtComment: TMemo;
+    txtImageAltGrShift: TEdit;
+    txtImageNormalShift: TEdit;
+    Label5: TLabel;
+    Label6: TLabel;
+    butImageAltGrShift: TButton;
+    butImageNormalShift: TButton;
+    Label8: TLabel;
+    txtNormal: TEdit;
+    txtShift: TEdit;
+    Label9: TLabel;
+    txtShiftAltGr: TEdit;
+    Label10: TLabel;
+    txtAltGr: TEdit;
+    Label11: TLabel;
+    Image3: TImage;
+    LabelShift: TLabel;
+    Shape_E: TShape;
+    imgNormal: TImage;
+    imgShift: TImage;
+    imgAltGr: TImage;
+    imgShiftAltGr: TImage;
+    Shape_R: TShape;
+    Shape_D: TShape;
+    Shape_S: TShape;
+    LabelNormal: TLabel;
+    Shape_F: TShape;
+    Shape_C: TShape;
+    Shape_X: TShape;
+    Shape_V: TShape;
+    Shape_G: TShape;
+    Shape_T: TShape;
+    Shape_Y: TShape;
+    Shape_U: TShape;
+    Shape_H: TShape;
+    Shape_B: TShape;
+    Shape_N: TShape;
+    Shape_OEM2: TShape;
+    Shape_PERIOD: TShape;
+    Shape_COMMA: TShape;
+    Shape_M: TShape;
+    Shape_Z: TShape;
+    Shape_J: TShape;
+    Shape_K: TShape;
+    Shape_L: TShape;
+    Shape_OEM1: TShape;
+    Shape_OEM7: TShape;
+    Shape_A: TShape;
+    Shape_OEM4: TShape;
+    Shape_P: TShape;
+    Shape_O: TShape;
+    Shape_I: TShape;
+    Shape_W: TShape;
+    Shape_Q: TShape;
+    Shape_OEM5: TShape;
+    Shape_OEM6: TShape;
+    Shape_OEM3: TShape;
+    Shape_1: TShape;
+    Shape_2: TShape;
+    Shape_3: TShape;
+    Shape_4: TShape;
+    Shape_5: TShape;
+    Shape_6: TShape;
+    Shape_7: TShape;
+    Shape_8: TShape;
+    Shape_9: TShape;
+    Shape_0: TShape;
+    Shape_MINUS: TShape;
+    Shape_PLUS: TShape;
+    OpenPictureDialog1: TOpenPictureDialog;
+    SaveDialog1: TSaveDialog;
+    FontDialog1: TFontDialog;
+    OpenDialog1: TOpenDialog;
+    ButSave: TToolButton;
+    ButSaveAs: TToolButton;
+    ToolButton3: TToolButton;
+    ToolButton4: TToolButton;
+    Label7: TLabel;
+    Panel2: TPanel;
+    Label14: TLabel;
+    Label15: TLabel;
+    Source: TImage;
+    procedure FormCreate(Sender: TObject);
+    procedure Shape_QMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure txtLayoutNameEnter(Sender: TObject);
+    procedure txtCommentEnter(Sender: TObject);
+    procedure txtNormalEnter(Sender: TObject);
+    procedure butNewClick(Sender: TObject);
+    procedure txtLayoutNameChange(Sender: TObject);
+    procedure txtNormalChange(Sender: TObject);
+    procedure txtShiftChange(Sender: TObject);
+    procedure txtAltGrChange(Sender: TObject);
+    procedure txtShiftAltGrChange(Sender: TObject);
+    procedure butFontClick(Sender: TObject);
+    procedure butHelpClick(Sender: TObject);
+    procedure Label15Click(Sender: TObject);
+    procedure butImageNormalShiftClick(Sender: TObject);
+    procedure butImageAltGrShiftClick(Sender: TObject);
+    procedure ButSaveAsClick(Sender: TObject);
+    procedure ButSaveClick(Sender: TObject);
+    procedure butAboutClick(Sender: TObject);
+    procedure butOpenClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
 
 
-     Private
-          { Private declarations }
-          fDirty: Boolean;
-          fSelected: TShape;
-          fFileName: String;
-          Procedure SetSelectedKey(ControlName: String);
-          Procedure InitializeKeys;
-          Procedure NewLayout;
-          Procedure BuildLayout;
-          Function NoErrorFound: Boolean;
-     Public
-          { Public declarations }
-     End;
+  private
+    { Private declarations }
+    fDirty: Boolean;
+    fSelected: TShape;
+    fFileName: String;
+    procedure SetSelectedKey(ControlName: String);
+    procedure InitializeKeys;
+    procedure NewLayout;
+    procedure BuildLayout;
+    function NoErrorFound: Boolean;
+    procedure EncodeAndSaveImage(XML: IXMLDocument; NodeName: string; FileName: string);
+  public
+    { Public declarations }
+  end;
 
-Var
-     frmMain                  : TfrmMain;
+var
+  frmMain                  : TfrmMain;
 
-Implementation
+implementation
 
 {$R *.dfm}
 
-Uses
-     uFileFolderHandling,
-     uFrmAbout,
-     clsSkinLayoutConverter,
-     uRegistrySettings;
+uses
+  uFileFolderHandling,
+  uFrmAbout,
+  clsSkinLayoutConverter,
+  uRegistrySettings;
 
 
 {===============================================================================}
 
-Procedure TfrmMain.BuildLayout;
-Const
-     b_0                      : Char = #$9E6;
-     b_1                      : Char = #$9E7;
-     b_2                      : Char = #$9E8;
-     b_3                      : Char = #$9E9;
-     b_4                      : Char = #$9EA;
-     b_5                      : Char = #$9EB;
-     b_6                      : Char = #$9EC;
-     b_7                      : Char = #$9ED;
-     b_8                      : Char = #$9EE;
-     b_9                      : Char = #$9EF;
-Var
-     XML                      : TNativeXml;
-     child                    : TXmlNode;
-     CdataChild               : TXmlNode;
-     KeyData                  : TXmlNode;
-     I                        : Integer;
-     FStream                  : TFileStream;
-     SStream                  : TStringStream;
-Begin
+procedure TfrmMain.BuildLayout;
+const
+  b_0 : Char = #$9E6;
+  b_1 : Char = #$9E7;
+  b_2 : Char = #$9E8;
+  b_3 : Char = #$9E9;
+  b_4 : Char = #$9EA;
+  b_5 : Char = #$9EB;
+  b_6 : Char = #$9EC;
+  b_7 : Char = #$9ED;
+  b_8 : Char = #$9EE;
+  b_9 : Char = #$9EF;
+var
+  XML         : IXMLDocument;
+  Child       : IXMLNode;
+  KeyData     : IXMLNode;
+  I           : Int64;
+  FStream     : TFileStream;
+  SStream     : TStringStream;
+  ImageStream     : TMemoryStream;
+  TempStr     : String;
 
-     XML := TNativeXml.Create;
-     XML.EncodingString := 'UTF-8';
-     XML.XmlFormat := xfReadable;
-     XML.ExternalEncoding := seUTF8;
+begin
+  XML := TXMLDocument.Create(nil);
+  XML.Active := True;
+  XML.Encoding := 'UTF-8';
 
-     XML.Root.Name := 'Layout';
+  XML.DocumentElement := XML.CreateNode('Layout');
 
-     Child := XML.Root.NodeNew('AvroKeyboardVersion');
-     Child.ValueAsUnicodeString := '5';
+  Child := XML.DocumentElement.AddChild('AvroKeyboardVersion');
+  Child.NodeValue := '5';
 
-     Child := XML.Root.NodeNew('LayoutName');
-     CdataChild := Child.NodeNew('LayoutName');
-     CdataChild.ElementType := xeCData;
-     CdataChild.ValueAsUnicodeString := txtLayoutName.Text;
+  Child := XML.DocumentElement.AddChild('LayoutName');
+  Child.NodeValue := txtLayoutName.Text;
 
-     Child := XML.Root.NodeNew('LayoutVersion');
-     CdataChild := Child.NodeNew('LayoutVersion');
-     CdataChild.ElementType := xeCData;
-     CdataChild.ValueAsUnicodeString := txtVersion.Text;
+  Child := XML.DocumentElement.AddChild('LayoutVersion');
+  Child.NodeValue := txtVersion.Text;
 
-     Child := XML.Root.NodeNew('DeveloperName');
-     CdataChild := Child.NodeNew('DeveloperName');
-     CdataChild.ElementType := xeCData;
-     CdataChild.ValueAsUnicodeString := txtDeveloper.Text;
+  Child := XML.DocumentElement.AddChild('DeveloperName');
+  Child.NodeValue := txtDeveloper.Text;
 
-     Child := XML.Root.NodeNew('DeveloperComment');
-     CdataChild := Child.NodeNew('DeveloperComment');
-     CdataChild.ElementType := xeCData;
-     CdataChild.ValueAsUnicodeString := txtComment.Text;
+  Child := XML.DocumentElement.AddChild('DeveloperComment');
+  Child.NodeValue := txtComment.Text;
 
 
-     Child := XML.Root.NodeNew('ImageNormalShift');
-     Child.BinaryEncoding := xbeBase64;
-     If FileExists(trim(txtImageNormalShift.Text)) Then Begin
-          Try
-               Try
-                    FStream := TFileStream.Create(txtImageNormalShift.Text, fmOpenRead, fmShareDenyWrite);
-                    SStream := TStringStream.Create('');
-                    SStream.CopyFrom(FStream, FStream.Size);
-                    Child.BinaryString := SStream.DataString;
-               Except
-                    On E: Exception Do Begin
-                         Application.MessageBox(pchar('Error occured!' + #10 + #10 + e.Message), Pchar('Layout Editor'), MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
-                    End;
-               End;
-          Finally
-               FreeAndNil(FStream);
-               FreeAndNil(SStream);
-          End;
-     End;
+  EncodeAndSaveImage(XML, 'ImageNormalShift', GetAvroDataDir + 'tmpImage_Normal_Shift.bmp');
+  txtImageNormalShift.Text := GetAvroDataDir + 'tmpImage_Normal_Shift.bmp';
 
 
+  EncodeAndSaveImage(XML, 'ImageAltGrShift', GetAvroDataDir + 'tmpImage_AltGr_Shift.bmp');
+  txtImageAltGrShift.Text := GetAvroDataDir + 'tmpImage_AltGr_Shift.bmp';
 
 
-     Child := XML.Root.NodeNew('ImageAltGrShift');
-     Child.BinaryEncoding := xbeBase64;
-     If FileExists(trim(txtImageAltGrShift.Text)) Then Begin
-          Try
-               Try
-                    FStream := TFileStream.Create(txtImageAltGrShift.Text, fmOpenRead, fmShareDenyWrite);
-                    SStream := TStringStream.Create('');
-                    SStream.CopyFrom(FStream, FStream.Size);
-                    Child.BinaryString := SStream.DataString;
-               Except
-                    On E: Exception Do Begin
-                         Application.MessageBox(pchar('Error occured!' + #10 + #10 + e.Message), Pchar('Layout Editor'), MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
-                    End;
-               End;
-          Finally
-               FStream.Free;
-               SStream.Free;
-          End;
-     End;
+  KeyData := XML.DocumentElement.AddChild('KeyData');
 
+  for I := 0 to ComponentCount - 1 do
+    if Components[I] is TShape then
+    begin
+      Child := KeyData.AddChild('Key_' + UpperCase((Components[i] as TShape).KeyName) + '_Normal');
+      Child.NodeValue := (Components[i] as TShape).Normal;
 
-     KeyData := XML.Root.NodeNew('KeyData');
+      Child := KeyData.AddChild('Key_' + UpperCase((Components[i] as TShape).KeyName) + '_Shift');
+      Child.NodeValue := (Components[i] as TShape).Shift;
 
-     For I := 0 To ComponentCount - 1 Do Begin
-          If Components[I] Is TShape Then Begin
-               Child := KeyData.NodeNew(UTF8String('Key_' + UpperCase((Components[i] As TShape).KeyName) + '_Normal'));
-               CdataChild := Child.NodeNew(UTF8String('Key_' + UpperCase((Components[i] As TShape).KeyName) + '_Normal'));
-               CdataChild.ElementType := xeCData;
-               CdataChild.ValueAsUnicodeString := (Components[i] As TShape).Normal;
+      Child := KeyData.AddChild('Key_' + UpperCase((Components[i] as TShape).KeyName) + '_AltGr');
+      Child.NodeValue := (Components[i] as TShape).AltGr;
 
-               Child := KeyData.NodeNew(UTF8String('Key_' + UpperCase((Components[i] As TShape).KeyName) + '_Shift'));
-               CdataChild := Child.NodeNew(UTF8String('Key_' + UpperCase((Components[i] As TShape).KeyName) + '_Shift'));
-               CdataChild.ElementType := xeCData;
-               CdataChild.ValueAsUnicodeString := (Components[i] As TShape).Shift;
+      Child := KeyData.AddChild('Key_' + UpperCase((Components[i] as TShape).KeyName) + '_ShiftAltGr');
+      Child.NodeValue := (Components[i] as TShape).ShiftAltGr;
+    end;
 
-               Child := KeyData.NodeNew(UTF8String('Key_' + UpperCase((Components[i] As TShape).KeyName) + '_AltGr'));
-               CdataChild := Child.NodeNew(UTF8String('Key_' + UpperCase((Components[i] As TShape).KeyName) + '_AltGr'));
-               CdataChild.ElementType := xeCData;
-               CdataChild.ValueAsUnicodeString := (Components[i] As TShape).AltGr;
+  Child := KeyData.AddChild('Num1');
+  Child.NodeValue := b_1;
 
-               Child := KeyData.NodeNew(UTF8String('Key_' + UpperCase((Components[i] As TShape).KeyName) + '_ShiftAltGr'));
-               CdataChild := Child.NodeNew(UTF8String('Key_' + UpperCase((Components[i] As TShape).KeyName) + '_ShiftAltGr'));
-               CdataChild.ElementType := xeCData;
-               CdataChild.ValueAsUnicodeString := (Components[i] As TShape).ShiftAltGr;
-          End;
-     End;
+  Child := KeyData.AddChild('Num2');
+  Child.NodeValue := b_2;
 
-     Child := KeyData.NodeNew('Num1');
-     CdataChild := Child.NodeNew('Num1');
-     CdataChild.ElementType := xeCData;
-     CdataChild.ValueAsUnicodeString := b_1;
+  Child := KeyData.AddChild('Num3');
+  Child.NodeValue := b_3;
 
-     Child := KeyData.NodeNew('Num2');
-     CdataChild := Child.NodeNew('Num2');
-     CdataChild.ElementType := xeCData;
-     CdataChild.ValueAsUnicodeString := b_2;
+  Child := KeyData.AddChild('Num4');
+  Child.NodeValue := b_4;
 
-     Child := KeyData.NodeNew('Num3');
-     CdataChild := Child.NodeNew('Num3');
-     CdataChild.ElementType := xeCData;
-     CdataChild.ValueAsUnicodeString := b_3;
+  Child := KeyData.AddChild('Num5');
+  Child.NodeValue := b_5;
 
-     Child := KeyData.NodeNew('Num4');
-     CdataChild := Child.NodeNew('Num4');
-     CdataChild.ElementType := xeCData;
-     CdataChild.ValueAsUnicodeString := b_4;
+  Child := KeyData.AddChild('Num6');
+  Child.NodeValue := b_6;
 
-     Child := KeyData.NodeNew('Num5');
-     CdataChild := Child.NodeNew('Num5');
-     CdataChild.ElementType := xeCData;
-     CdataChild.ValueAsUnicodeString := b_5;
+  Child := KeyData.AddChild('Num7');
+  Child.NodeValue := b_7;
 
-     Child := KeyData.NodeNew('Num6');
-     CdataChild := Child.NodeNew('Num6');
-     CdataChild.ElementType := xeCData;
-     CdataChild.ValueAsUnicodeString := b_6;
+  Child := KeyData.AddChild('Num8');
+  Child.NodeValue := b_8;
 
-     Child := KeyData.NodeNew('Num7');
-     CdataChild := Child.NodeNew('Num7');
-     CdataChild.ElementType := xeCData;
-     CdataChild.ValueAsUnicodeString := b_7;
+  Child := KeyData.AddChild('Num9');
+  Child.NodeValue := b_9;
 
-     Child := KeyData.NodeNew('Num8');
-     CdataChild := Child.NodeNew('Num8');
-     CdataChild.ElementType := xeCData;
-     CdataChild.ValueAsUnicodeString := b_8;
+  Child := KeyData.AddChild('Num0');
+  Child.NodeValue := b_0;
 
-     Child := KeyData.NodeNew('Num9');
-     CdataChild := Child.NodeNew('Num9');
-     CdataChild.ElementType := xeCData;
-     CdataChild.ValueAsUnicodeString := b_9;
+  Child := KeyData.AddChild('NumAdd');
+  Child.NodeValue := '+';
 
-     Child := KeyData.NodeNew('Num0');
-     CdataChild := Child.NodeNew('Num0');
-     CdataChild.ElementType := xeCData;
-     CdataChild.ValueAsUnicodeString := b_0;
+  Child := KeyData.AddChild('NumDecimal');
+  Child.NodeValue := '.';
 
-     Child := KeyData.NodeNew('NumAdd');
-     CdataChild := Child.NodeNew('NumAdd');
-     CdataChild.ElementType := xeCData;
-     CdataChild.ValueAsUnicodeString := '+';
+  Child := KeyData.AddChild('NumDivide');
+  Child.NodeValue := '/';
 
-     Child := KeyData.NodeNew('NumDecimal');
-     CdataChild := Child.NodeNew('NumDecimal');
-     CdataChild.ElementType := xeCData;
-     CdataChild.ValueAsUnicodeString := '.';
+  Child := KeyData.AddChild('NumMultiply');
+  Child.NodeValue := '*';
 
-     Child := KeyData.NodeNew('NumDivide');
-     CdataChild := Child.NodeNew('NumDivide');
-     CdataChild.ElementType := xeCData;
-     CdataChild.ValueAsUnicodeString := '/';
+  Child := KeyData.AddChild('NumSubtract');
+  Child.NodeValue := '-';
 
-     Child := KeyData.NodeNew('NumMultiply');
-     CdataChild := Child.NodeNew('NumMultiply');
-     CdataChild.ElementType := xeCData;
-     CdataChild.ValueAsUnicodeString := '*';
+  try
+    XML.SaveToFile(fFileName);
+  except
+    On E: Exception do
+    begin
+      Application.MessageBox(PChar('Error occurred!' + #10 + #10 + e.Message), PChar('Layout Editor'), MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
+    end;
+  end;
+  XML := nil;
 
-     Child := KeyData.NodeNew('NumSubtract');
-     CdataChild := Child.NodeNew('NumSubtract');
-     CdataChild.ElementType := xeCData;
-     CdataChild.ValueAsUnicodeString := '-';
+end;
 
-     Try
-          Try
-               Xml.SaveToFile(fFileName);
-          Except
-               On E: Exception Do Begin
-                    Application.MessageBox(pchar('Error occured!' + #10 + #10 + e.Message), Pchar('Layout Editor'), MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
-               End;
-          End;
-     Finally
-          FreeAndNil(XML);
-     End;
-
-End;
 
 {===============================================================================}
 
-Procedure TfrmMain.butAboutClick(Sender: TObject);
-Begin
-     Application.CreateForm(TfrmAbout, frmAbout);
+procedure TfrmMain.EncodeAndSaveImage(XML: IXMLDocument; NodeName: string; FileName: string);
+var
+  FStream: TFileStream;
+  ImageStream: TMemoryStream;
+  EncodedString: string;
+  Node: IXMLNode;
+begin
+  if FileExists(Trim(FileName)) then
+  begin
+    ImageStream := TMemoryStream.Create;
+    try
+      FStream := TFileStream.Create(FileName, fmOpenRead, fmShareDenyWrite);
+      try
+        ImageStream.CopyFrom(FStream, FStream.Size);
+        ImageStream.Position := 0;
+      finally
+        FreeAndNil(FStream);
+      end;
 
-     Try
-          frmAbout.ShowModal;
-     Except
-          On E: Exception Do Begin
-               //Nothing
-          End;
-     End;
-End;
+      EncodedString := TNetEncoding.Base64.EncodeBytesToString(ImageStream.Memory, ImageStream.Size);
 
-{===============================================================================}
+      Node := XML.DocumentElement.AddChild(NodeName);
+      Node.NodeValue := EncodedString;
+    finally
+      FreeAndNil(ImageStream);
+    end;
+  end;
+end;
 
-Procedure TfrmMain.butFontClick(Sender: TObject);
-Begin
-     //Initialize
-     FontDialog1.Font.Name := LEFontName;
-     FontDialog1.Font.Size := StrToInt(LEFontSize);
+procedure TfrmMain.butAboutClick(Sender: TObject);
+begin
+  Application.CreateForm(TfrmAbout, frmAbout);
 
-     //Open dialog
-     If FontDialog1.Execute Then Begin
-          txtNormal.Font := FontDialog1.Font;
-          txtShift.Font := FontDialog1.Font;
-          txtAltGr.Font := FontDialog1.Font;
-          txtShiftAltGr.Font := FontDialog1.Font;
-          LEFontName := FontDialog1.Font.Name;
-          LEFontSize := IntToStr(FontDialog1.Font.Size);
-     End;
-End;
-
-{===============================================================================}
-
-Procedure TfrmMain.butHelpClick(Sender: TObject);
-Begin
-     If FileExists(ExtractFilePath(Application.ExeName) + 'Editing Keyboard Layout.pdf') Then
-          Execute_Something(ExtractFilePath(Application.ExeName) + 'Editing Keyboard Layout.pdf')
-     Else
-          Execute_Something('http://www.omicronlab.com/go.php?id=' + IntToStr(35));
-End;
-
-{===============================================================================}
-
-Procedure TfrmMain.butImageAltGrShiftClick(Sender: TObject);
-Begin
-     OpenPictureDialog1.FileName := '';
-     Try
-          If OpenPictureDialog1.Execute(Self.Handle) Then
-               txtImageAltGrShift.Text := OpenPictureDialog1.FileName;
-     Except
-          On E: Exception Do Begin
-               Application.MessageBox(pchar('Error occured!' + #10 + #10 + e.Message), Pchar('Layout Editor'), MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
-          End;
-     End;
-End;
+  try
+    frmAbout.ShowModal;
+  except
+    On E: Exception do
+    begin
+      //Nothing
+    end;
+  end;
+end;
 
 {===============================================================================}
 
-Procedure TfrmMain.butImageNormalShiftClick(Sender: TObject);
-Begin
-     OpenPictureDialog1.FileName := '';
-     Try
-          If OpenPictureDialog1.Execute(Self.Handle) Then
-               txtImageNormalShift.Text := OpenPictureDialog1.FileName;
+procedure TfrmMain.butFontClick(Sender: TObject);
+begin
+  //Initialize
+  FontDialog1.Font.Name := LEFontName;
+  FontDialog1.Font.Size := StrToInt(LEFontSize);
 
-     Except
-          On E: Exception Do Begin
-               Application.MessageBox(pchar('Error occured!' + #10 + #10 + e.Message), Pchar('Layout Editor'), MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
-          End;
-     End;
-End;
-
-{===============================================================================}
-
-Procedure TfrmMain.butNewClick(Sender: TObject);
-Begin
-     NewLayout;
-End;
+  //Open dialog
+  if FontDialog1.Execute then
+  begin
+    txtNormal.Font := FontDialog1.Font;
+    txtShift.Font := FontDialog1.Font;
+    txtAltGr.Font := FontDialog1.Font;
+    txtShiftAltGr.Font := FontDialog1.Font;
+    LEFontName := FontDialog1.Font.Name;
+    LEFontSize := IntToStr(FontDialog1.Font.Size);
+  end;
+end;
 
 {===============================================================================}
 
-Procedure TfrmMain.butOpenClick(Sender: TObject);
-Var
-     XML                      : TNativeXml;
-     Node                     : TXmlNode;
-     I, P                     : Integer;
-     KeyName, Layer, TrimLeftString: String;
-     tmpShape                 : TShape;
-     FStream                  : TFileStream;
-     SStream                  : TStringStream;
-
-     m_Converter              : TSkinLayoutConverter;
-Begin
-     Opendialog1.InitialDir := LELastDir;
-     If Opendialog1.Execute(Self.Handle) = False Then
-          exit;
-     LELastDir := ExtractFilePath(Opendialog1.FileName);
-
-     m_Converter := TSkinLayoutConverter.Create;
-     m_Converter.CheckConvertLayout(Opendialog1.FileName);
-     FreeAndNil(m_Converter);
-
-     XML := TNativeXml.Create;
-     XML.EncodingString := 'UTF-8';
-     XML.XmlFormat := xfReadable;
-     XML.ExternalEncoding := seUTF8;
-
-     Try
-          Try
-               XML.LoadFromFile(Opendialog1.FileName);
-
-               //----------------------------------------------
-               //Check if the layout is a compatible one
-               If trim(Xml.Root.FindNode('AvroKeyboardVersion').ValueAsUnicodeString) <> '5' Then Begin
-                    Application.MessageBox('This Keyboard Layout is not compatible with current version of Avro Keyboard.', 'Error loading keyboard layout...', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
-                    Exit;
-               End;
-               //----------------------------------------------
-
-          //Load basic informations
-               txtLayoutName.Text := Xml.Root.FindNode('LayoutName').Nodes[0].ValueAsUnicodeString;
-               txtDeveloper.Text := Xml.Root.FindNode('DeveloperName').Nodes[0].ValueAsUnicodeString;
-               txtVersion.Text := Xml.Root.FindNode('LayoutVersion').Nodes[0].ValueAsUnicodeString;
-               txtComment.Text := Xml.Root.FindNode('DeveloperComment').Nodes[0].ValueAsUnicodeString;
-
-               //Extract images
-               If Xml.Root.FindNode('ImageNormalShift') <> Nil Then Begin
-
-                    FStream := TFileStream.Create(GetAvroDataDir + 'tmpImage_Normal_Shift.bmp', fmCreate);
-                    SStream := TStringStream.Create(Xml.Root.FindNode('ImageNormalShift').BinaryString);
-                    SStream.Position := 0;
-                    FStream.CopyFrom(SStream, SStream.Size);
-                    txtImageNormalShift.Text := GetAvroDataDir + 'tmpImage_Normal_Shift.bmp';
-                    FStream.Free;
-                    SStream.Free;
-               End;
-
-               If Xml.Root.FindNode('ImageAltGrShift') <> Nil Then Begin
-                    FStream := TFileStream.Create(GetAvroDataDir + 'tmpImage_AltGr_Shift.bmp', fmCreate);
-                    SStream := TStringStream.Create(Xml.Root.FindNode('ImageAltGrShift').BinaryString);
-                    SStream.Position := 0;
-                    FStream.CopyFrom(SStream, SStream.Size);
-                    txtImageAltGrShift.Text := GetAvroDataDir + 'tmpImage_AltGr_Shift.bmp';
-                    FStream.Free;
-                    SStream.Free;
-               End;
-
-
-
-               //Load Keys
-               Node := XML.Root.FindNode('KeyData');
-
-               For I := 0 To Node.NodeCount - 1 Do Begin
-                    If LowerCase(LeftStr(Node.Nodes[i].Name, 3)) <> 'num' Then Begin
-
-                         // Structure: Key_OEM1_Normal
-                         TrimLeftString := MidStr(Node.Nodes[i].Name, 5, Length(Node.Nodes[i].Name)); //OEM1_normal
-                         P := Pos('_', TrimLeftString);
-                         KeyName := MidStr(TrimLeftString, 1, P - 1); //OEM
-                         Layer := LowerCase(MidStr(TrimLeftString, P + 1, Length(TrimLeftString))); //normal/Shift/AltGr/ShiftAltGr
-
-                         tmpShape := FindComponent('Shape_' + KeyName) As TShape;
-
-                         If Node.Nodes[i].NodeCount <= 0 Then Begin
-                              //If item has no cdata
-                              If Layer = 'normal' Then tmpShape.Normal := '';
-                              If Layer = 'shift' Then tmpShape.Shift := '';
-                              If Layer = 'altgr' Then tmpShape.AltGr := '';
-                              If Layer = 'shiftaltgr' Then tmpShape.ShiftAltGr := '';
-                         End
-                         Else Begin
-                              //if item has cdata
-                              If Layer = 'normal' Then tmpShape.Normal := Node.Nodes[i].Nodes[0].ValueAsUnicodeString;
-                              If Layer = 'shift' Then tmpShape.Shift := Node.Nodes[i].Nodes[0].ValueAsUnicodeString;
-                              If Layer = 'altgr' Then tmpShape.AltGr := Node.Nodes[i].Nodes[0].ValueAsUnicodeString;
-                              If Layer = 'shiftaltgr' Then tmpShape.ShiftAltGr := Node.Nodes[i].Nodes[0].ValueAsUnicodeString;
-                         End;
-                    End;
-               End;
-
-
-          Except
-               On E: Exception Do Begin
-                    Application.MessageBox(pchar('Error occured!' + #10 + #10 + e.Message), Pchar('Layout Editor'), MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
-                    NewLayout;
-               End;
-          End;
-     Finally
-          FreeAndNil(XML);
-     End;
-
-     SetSelectedKey('Shape_Q');
-
-End;
+procedure TfrmMain.butHelpClick(Sender: TObject);
+begin
+  if FileExists(ExtractFilePath(Application.ExeName) + 'Editing Keyboard Layout.pdf') then
+    Execute_Something(ExtractFilePath(Application.ExeName) + 'Editing Keyboard Layout.pdf')
+  else
+    Execute_Something('http://www.omicronlab.com/go.php?id=' + IntToStr(35));
+end;
 
 {===============================================================================}
 
-Procedure TfrmMain.ButSaveAsClick(Sender: TObject);
-Begin
-     If NoErrorFound = False Then
-          exit;
-
-     Try
-          Savedialog1.FileName := txtLayoutName.Text + '.avrolayout';
-          If Savedialog1.Execute(self.Handle) Then Begin
-               LELastDir := ExtractFilePath(Savedialog1.FileName);
-               fFileName := Savedialog1.FileName;
-               BuildLayout;
-          End;
-
-     Except
-          On E: Exception Do Begin
-               Application.MessageBox(pchar('Error occured!' + #10 + #10 + e.Message), Pchar('Layout Editor'), MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
-          End;
-     End;
-End;
+procedure TfrmMain.butImageAltGrShiftClick(Sender: TObject);
+begin
+  OpenPictureDialog1.FileName := '';
+  try
+    if OpenPictureDialog1.Execute(Self.Handle) then
+      txtImageAltGrShift.Text := OpenPictureDialog1.FileName;
+  except
+    On E: Exception do
+    begin
+      Application.MessageBox(pchar('Error occured!' + #10 + #10 + e.Message), Pchar('Layout Editor'), MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
+    end;
+  end;
+end;
 
 {===============================================================================}
 
-Procedure TfrmMain.ButSaveClick(Sender: TObject);
-Begin
-     If NoErrorFound = False Then
-          exit;
+procedure TfrmMain.butImageNormalShiftClick(Sender: TObject);
+begin
+  OpenPictureDialog1.FileName := '';
+  try
+    if OpenPictureDialog1.Execute(Self.Handle) then
+      txtImageNormalShift.Text := OpenPictureDialog1.FileName;
 
-     If fFileName = '' Then
-          ButSaveAsClick(Nil)
-     Else
-          BuildLayout;
-End;
-
-{===============================================================================}
-
-Procedure TfrmMain.FormClose(Sender: TObject; Var Action: TCloseAction);
-Begin
-     SaveSettings;
-
-     Action := caFree;
-     frmMain := Nil;
-End;
+  except
+    On E: Exception do
+    begin
+      Application.MessageBox(pchar('Error occured!' + #10 + #10 + e.Message), Pchar('Layout Editor'), MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
+    end;
+  end;
+end;
 
 {===============================================================================}
 
-Procedure TfrmMain.FormCreate(Sender: TObject);
-Begin
-     InitializeKeys;
-     NewLayout;
-     fDirty := False;
-
-     LoadSettings;
-     Self.Top := StrToInt(LETop);
-     Self.Left := StrToInt(LELeft);
-     txtNormal.Font.Name := LEFontName;
-     txtShift.Font.Name := LEFontName;
-     txtAltGr.Font.Name := LEFontName;
-     txtShiftAltGr.Font.Name := LEFontName;
-     txtNormal.Font.Size := StrToInt(LEFontSize);
-     txtShift.Font.Size := StrToInt(LEFontSize);
-     txtAltGr.Font.Size := StrToInt(LEFontSize);
-     txtShiftAltGr.Font.Size := StrToInt(LEFontSize);
-End;
+procedure TfrmMain.butNewClick(Sender: TObject);
+begin
+  NewLayout;
+end;
 
 {===============================================================================}
 
-Procedure TfrmMain.InitializeKeys;
-Var
-     I                        : Integer;
-Begin
+procedure TfrmMain.butOpenClick(Sender: TObject);
+var
+  XML         : IXMLDocument;
+  Node        : IXMLNode;
+  I           : Int64;
+  KeyName, Layer, TrimLeftString : String;
+  tmpShape    : TShape;
+  FStream     : TFileStream;
+  SStream     : TStringStream;
+  DecodedData : TBytes;
+  m_Converter : TSkinLayoutConverter;
+  P           : Integer;
+begin
+  Opendialog1.InitialDir := LELastDir;
+  if Opendialog1.Execute(Self.Handle) = False then
+    exit;
+  LELastDir := ExtractFilePath(Opendialog1.FileName);
+
+  m_Converter := TSkinLayoutConverter.Create;
+  m_Converter.CheckConvertLayout(Opendialog1.FileName);
+  FreeAndNil(m_Converter);
+
+  XML := TXMLDocument.Create(nil);
+  XML.Active := True;
+  XML.Encoding := 'UTF-8';
+
+  try
+    try
+      XML.LoadFromFile(Opendialog1.FileName);
+
+      //----------------------------------------------
+      //Check if the layout is a compatible one
+      if Trim(VarToStr(XML.DocumentElement.ChildNodes.FindNode('AvroKeyboardVersion').NodeValue)) <> '5' then
+      begin
+        Application.MessageBox('This Keyboard Layout is not compatible with the current version of Avro Keyboard.', 'Error loading keyboard layout...', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
+        Exit;
+      end;
+      //----------------------------------------------
+
+      //Load basic information
+      txtLayoutName.Text := VarToStr(XML.DocumentElement.ChildNodes.FindNode('LayoutName').ChildNodes[0].NodeValue);
+      txtDeveloper.Text := VarToStr(XML.DocumentElement.ChildNodes.FindNode('DeveloperName').ChildNodes[0].NodeValue);
+      txtVersion.Text := VarToStr(XML.DocumentElement.ChildNodes.FindNode('LayoutVersion').ChildNodes[0].NodeValue);
+      txtComment.Text := VarToStr(XML.DocumentElement.ChildNodes.FindNode('DeveloperComment').ChildNodes[0].NodeValue);
+
+      //Extract images
+      if XML.DocumentElement.ChildNodes.FindNode('ImageNormalShift') <> Nil then
+      begin
+        SStream := TStringStream.Create(VarToStr(XML.DocumentElement.ChildNodes.FindNode('ImageNormalShift').NodeValue));
+        try
+          DecodedData := DecodeBase64(SStream.DataString);
+          FStream     := TFileStream.Create(GetAvroDataDir + 'tmpImage_Normal_Shift.bmp', fmCreate);
+          try
+            FStream.WriteBuffer(DecodedData[0], Length(DecodedData));
+            txtImageNormalShift.Text := GetAvroDataDir + 'tmpImage_Normal_Shift.bmp';
+          finally
+            FreeAndNil(FStream);
+          end;
+        finally
+          FreeAndNil(SStream);
+        end;
+      end;
+
+      if XML.DocumentElement.ChildNodes.FindNode('ImageAltGrShift') <> Nil then
+      begin
+        SStream := TStringStream.Create(VarToStr(XML.DocumentElement.ChildNodes.FindNode('ImageAltGrShift').NodeValue));
+
+        try
+          DecodedData := DecodeBase64(SStream.DataString);
+          FStream     := TFileStream.Create(GetAvroDataDir + 'tmpImage_AltGr_Shift.bmp', fmCreate);
+          try
+            FStream.WriteBuffer(DecodedData[0], Length(DecodedData));
+            txtImageAltGrShift.Text := GetAvroDataDir + 'tmpImage_AltGr_Shift.bmp';
+          finally
+            FreeAndNil(FStream)
+          end;
+        finally
+          FreeAndNil(SStream);
+        end;
+      end;
+
+
+      //Load Keys
+      Node := XML.DocumentElement.ChildNodes.FindNode('KeyData');
+
+      for I := 0 to Node.ChildNodes.Count - 1 do
+        if LowerCase(LeftStr(Node.ChildNodes[i].NodeName, 3)) <> 'num' then
+        begin
+
+          // Structure: Key_OEM1_Normal
+          TrimLeftString := MidStr(Node.ChildNodes[i].NodeName, 5, Length(Node.ChildNodes[i].NodeName)); //OEM1_normal
+          P := Pos('_', TrimLeftString);
+          KeyName := MidStr(TrimLeftString, 1, P - 1);        //OEM
+          Layer := LowerCase(MidStr(TrimLeftString, P + 1, Length(TrimLeftString))); //normal/Shift/AltGr/ShiftAltGr
+
+          tmpShape := FindComponent('Shape_' + KeyName) as TShape;
+
+          if Node.ChildNodes[i].ChildNodes.Count <= 0 then
+          begin
+            //If item has no cdata
+            if Layer = 'normal' then tmpShape.Normal := '';
+            if Layer = 'shift' then tmpShape.Shift := '';
+            if Layer = 'altgr' then tmpShape.AltGr := '';
+            if Layer = 'shiftaltgr' then tmpShape.ShiftAltGr := '';
+          end
+          else
+          begin
+            //if item has cdata
+            if Layer = 'normal' then tmpShape.Normal := VarToStr(Node.ChildNodes[i].ChildNodes[0].NodeValue);
+            if Layer = 'shift' then tmpShape.Shift := VarToStr(Node.ChildNodes[i].ChildNodes[0].NodeValue);
+            if Layer = 'altgr' then tmpShape.AltGr := VarToStr(Node.ChildNodes[i].ChildNodes[0].NodeValue);
+            if Layer = 'shiftaltgr' then tmpShape.ShiftAltGr := VarToStr(Node.ChildNodes[i].ChildNodes[0].NodeValue);
+          end;
+        end;
+
+    except
+      On E: Exception do
+      begin
+        Application.MessageBox(PChar('Error occurred!' + #10 + #10 + e.Message), PChar('Layout Editor'), MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
+        NewLayout;
+      end;
+    end;
+  finally
+    XML := nil;
+
+  end;
+
+  SetSelectedKey('Shape_Q');
+
+end;
+{===============================================================================}
+
+procedure TfrmMain.ButSaveAsClick(Sender: TObject);
+begin
+  if NoErrorFound = False then
+    exit;
+
+  try
+    Savedialog1.FileName := txtLayoutName.Text + '.avrolayout';
+    if Savedialog1.Execute(self.Handle) then
+    begin
+      LELastDir := ExtractFilePath(Savedialog1.FileName);
+      fFileName := Savedialog1.FileName;
+      BuildLayout;
+    end;
+
+  except
+    On E: Exception do
+    begin
+      Application.MessageBox(pchar('Error occured!' + #10 + #10 + e.Message), Pchar('Layout Editor'), MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
+    end;
+  end;
+end;
+
+{===============================================================================}
+
+procedure TfrmMain.ButSaveClick(Sender: TObject);
+begin
+  if NoErrorFound = False then
+    exit;
+
+  if fFileName = '' then
+    ButSaveAsClick(Nil)
+  else
+    BuildLayout;
+end;
+
+{===============================================================================}
+
+procedure TfrmMain.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  SaveSettings;
+
+  Action := caFree;
+  frmMain := Nil;
+end;
+
+{===============================================================================}
+
+procedure TfrmMain.FormCreate(Sender: TObject);
+begin
+  InitializeKeys;
+  NewLayout;
+  fDirty := False;
+
+  LoadSettings;
+  Self.Top := StrToInt(LETop);
+  Self.Left := StrToInt(LELeft);
+  txtNormal.Font.Name := LEFontName;
+  txtShift.Font.Name := LEFontName;
+  txtAltGr.Font.Name := LEFontName;
+  txtShiftAltGr.Font.Name := LEFontName;
+  txtNormal.Font.Size := StrToInt(LEFontSize);
+  txtShift.Font.Size := StrToInt(LEFontSize);
+  txtAltGr.Font.Size := StrToInt(LEFontSize);
+  txtShiftAltGr.Font.Size := StrToInt(LEFontSize);
+end;
+
+{===============================================================================}
+
+procedure TfrmMain.InitializeKeys;
+var
+  I                        : Integer;
+begin
      {$REGION 'Initializing stuffs'}
-     With Shape_OEM3 Do Begin
-          KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
-          CaptionNormal := '`';
-          CaptionShift := '~';
-     End;
+  with Shape_OEM3 do
+  begin
+    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    CaptionNormal := '`';
+    CaptionShift := '~';
+  end;
 
-     With Shape_1 Do Begin
-          KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
-          CaptionNormal := '1';
-          CaptionShift := '!';
-     End;
+  with Shape_1 do
+  begin
+    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    CaptionNormal := '1';
+    CaptionShift := '!';
+  end;
 
-     With Shape_2 Do Begin
-          KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
-          CaptionNormal := '2';
-          CaptionShift := '@';
-     End;
+  with Shape_2 do
+  begin
+    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    CaptionNormal := '2';
+    CaptionShift := '@';
+  end;
 
-     With Shape_3 Do Begin
-          KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
-          CaptionNormal := '3';
-          CaptionShift := '#';
-     End;
+  with Shape_3 do
+  begin
+    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    CaptionNormal := '3';
+    CaptionShift := '#';
+  end;
 
-     With Shape_4 Do Begin
-          KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
-          CaptionNormal := '4';
-          CaptionShift := '$';
-     End;
+  with Shape_4 do
+  begin
+    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    CaptionNormal := '4';
+    CaptionShift := '$';
+  end;
 
-     With Shape_4 Do Begin
-          KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
-          CaptionNormal := '4';
-          CaptionShift := '$';
-     End;
+  with Shape_4 do
+  begin
+    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    CaptionNormal := '4';
+    CaptionShift := '$';
+  end;
 
-     With Shape_5 Do Begin
-          KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
-          CaptionNormal := '5';
-          CaptionShift := '%';
-     End;
+  with Shape_5 do
+  begin
+    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    CaptionNormal := '5';
+    CaptionShift := '%';
+  end;
 
-     With Shape_6 Do Begin
-          KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
-          CaptionNormal := '6';
-          CaptionShift := '^';
-     End;
+  with Shape_6 do
+  begin
+    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    CaptionNormal := '6';
+    CaptionShift := '^';
+  end;
 
-     With Shape_7 Do Begin
-          KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
-          CaptionNormal := '7';
-          CaptionShift := '&';
-     End;
+  with Shape_7 do
+  begin
+    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    CaptionNormal := '7';
+    CaptionShift := '&';
+  end;
 
-     With Shape_8 Do Begin
-          KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
-          CaptionNormal := '8';
-          CaptionShift := '*';
-     End;
+  with Shape_8 do
+  begin
+    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    CaptionNormal := '8';
+    CaptionShift := '*';
+  end;
 
-     With Shape_9 Do Begin
-          KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
-          CaptionNormal := '9';
-          CaptionShift := '(';
-     End;
+  with Shape_9 do
+  begin
+    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    CaptionNormal := '9';
+    CaptionShift := '(';
+  end;
 
-     With Shape_0 Do Begin
-          KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
-          CaptionNormal := '0';
-          CaptionShift := ')';
-     End;
+  with Shape_0 do
+  begin
+    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    CaptionNormal := '0';
+    CaptionShift := ')';
+  end;
 
-     With Shape_MINUS Do Begin
-          KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
-          CaptionNormal := '-';
-          CaptionShift := '_';
-     End;
+  with Shape_MINUS do
+  begin
+    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    CaptionNormal := '-';
+    CaptionShift := '_';
+  end;
 
-     With Shape_PLUS Do Begin
-          KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
-          CaptionNormal := '=';
-          CaptionShift := '+';
-     End;
+  with Shape_PLUS do
+  begin
+    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    CaptionNormal := '=';
+    CaptionShift := '+';
+  end;
 
-     With Shape_OEM4 Do Begin
-          KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
-          CaptionNormal := '[';
-          CaptionShift := '{';
-     End;
+  with Shape_OEM4 do
+  begin
+    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    CaptionNormal := '[';
+    CaptionShift := '{';
+  end;
 
-     With Shape_OEM6 Do Begin
-          KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
-          CaptionNormal := ']';
-          CaptionShift := '}';
-     End;
+  with Shape_OEM6 do
+  begin
+    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    CaptionNormal := ']';
+    CaptionShift := '}';
+  end;
 
-     With Shape_OEM5 Do Begin
-          KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
-          CaptionNormal := '\';
-          CaptionShift := '|';
-     End;
+  with Shape_OEM5 do
+  begin
+    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    CaptionNormal := '\';
+    CaptionShift := '|';
+  end;
 
-     With Shape_COMMA Do Begin
-          KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
-          CaptionNormal := ',';
-          CaptionShift := '<';
-     End;
+  with Shape_COMMA do
+  begin
+    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    CaptionNormal := ',';
+    CaptionShift := '<';
+  end;
 
-     With Shape_PERIOD Do Begin
-          KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
-          CaptionNormal := '.';
-          CaptionShift := '>';
-     End;
+  with Shape_PERIOD do
+  begin
+    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    CaptionNormal := '.';
+    CaptionShift := '>';
+  end;
 
-     With Shape_OEM2 Do Begin
-          KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
-          CaptionNormal := '/';
-          CaptionShift := '?';
-     End;
+  with Shape_OEM2 do
+  begin
+    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    CaptionNormal := '/';
+    CaptionShift := '?';
+  end;
 
-     With Shape_OEM1 Do Begin
-          KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
-          CaptionNormal := ';';
-          CaptionShift := ':';
-     End;
+  with Shape_OEM1 do
+  begin
+    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    CaptionNormal := ';';
+    CaptionShift := ':';
+  end;
 
-     With Shape_OEM7 Do Begin
-          KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
-          CaptionNormal := #39;
-          CaptionShift := '"';
-     End;
+  with Shape_OEM7 do
+  begin
+    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    CaptionNormal := #39;
+    CaptionShift := '"';
+  end;
 
-     /////////////// Initialize alphabet keys
-     For I := 0 To ComponentCount - 1 Do Begin
-          If Components[I] Is TShape Then Begin
-               If (Components[i] As TShape).KeyName = '' Then Begin
-                    With (Components[i] As TShape) Do Begin
-                         KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
-                         CaptionNormal := LowerCase(KeyName);
-                         CaptionShift := UpperCase(CaptionNormal);
-                    End;
-               End;
-          End;
-     End;
+  /////////////// Initialize alphabet keys
+  for I := 0 to ComponentCount - 1 do
+    if Components[I] is TShape then
+      if (Components[i] as TShape).KeyName = '' then
+        with (Components[i] as TShape) do
+        begin
+          KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+          CaptionNormal := LowerCase(KeyName);
+          CaptionShift := UpperCase(CaptionNormal);
+        end;
      {$ENDREGION}
 
-End;
+end;
 
 {===============================================================================}
 
-Procedure TfrmMain.Label15Click(Sender: TObject);
-Begin
-     Execute_Something('http://www.omicronlab.com/go.php?id=5');
-End;
+procedure TfrmMain.Label15Click(Sender: TObject);
+begin
+  Execute_Something('http://www.omicronlab.com/go.php?id=5');
+end;
 
 {===============================================================================}
 
-Procedure TfrmMain.NewLayout;
-Var
-     retVal                   : Integer;
-Begin
-     If fDirty Then Begin
-          retVal := Application.MessageBox('Save changes to the current keyboard layout?', 'Layout Editor', MB_YESNOCANCEL + +MB_ICONQUESTION + MB_DEFBUTTON1 + MB_APPLMODAL);
-          If retVal = ID_YES Then Begin
-               If NoErrorFound = True Then
-                    ButSaveClick(Nil)
-               Else
-                    exit;
-          End
-          Else If retVal = ID_CANCEL Then
-               exit;
-     End;
+procedure TfrmMain.NewLayout;
+var
+  retVal                   : Integer;
+begin
+  if fDirty then
+  begin
+    retVal := Application.MessageBox('Save changes to the current keyboard layout?', 'Layout Editor', MB_YESNOCANCEL + +MB_ICONQUESTION + MB_DEFBUTTON1 + MB_APPLMODAL);
+    if retVal = ID_YES then
+    begin
+      if NoErrorFound = True then
+        ButSaveClick(Nil)
+      else
+        exit;
+    end
+    else if retVal = ID_CANCEL then
+      exit;
+  end;
 
-     txtLayoutName.Text := '[My Layout]';
-     txtVersion.Text := '1';
-     txtDeveloper.Text := 'Your Name';
-     txtComment.Text := 'Some Comments';
-     txtImageNormalShift.Text := '';
-     txtImageAltGrShift.Text := '';
+  txtLayoutName.Text := '[My Layout]';
+  txtVersion.Text := '1';
+  txtDeveloper.Text := 'Your Name';
+  txtComment.Text := 'Some Comments';
+  txtImageNormalShift.Text := '';
+  txtImageAltGrShift.Text := '';
 
-     txtNormal.Text := '';
-     txtShift.Text := '';
-     txtAltGr.Text := '';
-     txtShiftAltGr.Text := '';
+  txtNormal.Text := '';
+  txtShift.Text := '';
+  txtAltGr.Text := '';
+  txtShiftAltGr.Text := '';
 
-     SetSelectedKey('Shape_Q');
+  SetSelectedKey('Shape_Q');
 
-     fFileName := '';
-     fDirty := False;
-End;
-
-{===============================================================================}
-
-Function TfrmMain.NoErrorFound: Boolean;
-Begin
-     result := False;
-     If (Trim(txtLayoutName.Text) = '') Or (Trim(txtLayoutName.Text) = '[My Layout]') Then Begin
-          Application.MessageBox('Please give a name to your layout first.', 'Layout Editor', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
-          txtLayoutName.SetFocus;
-          txtLayoutName.SelectAll;
-          exit;
-     End;
-     If trim(txtImageNormalShift.Text) = '' Then Begin
-          Application.MessageBox('Please add bitmap images for Layout Viewer of Avro Keyboard before building keyboard layout.', 'Layout Editor', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
-          exit;
-     End;
-     If trim(txtImageAltGrShift.Text) = '' Then Begin
-          Application.MessageBox('Please add bitmap images for Layout Viewer of Avro Keyboard before building keyboard layout.', 'Layout Editor', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
-          exit;
-     End;
-     result := True;
-End;
+  fFileName := '';
+  fDirty := False;
+end;
 
 {===============================================================================}
 
-Procedure TfrmMain.SetSelectedKey(ControlName: String);
-Var
-     I                        : Integer;
-Begin
-
-     For I := 0 To ComponentCount - 1 Do Begin
-          If Components[I] Is TShape Then Begin
-               If UpperCase((Components[i] As TShape).Name) = UpperCase(ControlName) Then Begin
-                    (Components[i] As TShape).Selected := True;
-                    fSelected := Components[i] As TShape;
-
-                    If (Components[i] As TShape).CaptionShift <> '&' Then
-                         LabelShift.Caption := (Components[i] As TShape).CaptionShift
-                    Else
-                         LabelShift.Caption := '&&';
-
-                    LabelNormal.Caption := (Components[i] As TShape).CaptionNormal;
-
-                    txtNormal.Text := (Components[i] As TShape).Normal;
-                    txtShift.Text := (Components[i] As TShape).Shift;
-                    txtAltGr.Text := (Components[i] As TShape).AltGr;
-                    txtShiftAltGr.Text := (Components[i] As TShape).ShiftAltGr;
-
-               End
-               Else
-                    (Components[i] As TShape).Selected := False;
-          End;
-     End;
-End;
+function TfrmMain.NoErrorFound: Boolean;
+begin
+  result := False;
+  if (Trim(txtLayoutName.Text) = '') or (Trim(txtLayoutName.Text) = '[My Layout]') then
+  begin
+    Application.MessageBox('Please give a name to your layout first.', 'Layout Editor', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
+    txtLayoutName.SetFocus;
+    txtLayoutName.SelectAll;
+    exit;
+  end;
+  if trim(txtImageNormalShift.Text) = '' then
+  begin
+    Application.MessageBox('Please add bitmap images for Layout Viewer of Avro Keyboard before building keyboard layout.', 'Layout Editor', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
+    exit;
+  end;
+  if trim(txtImageAltGrShift.Text) = '' then
+  begin
+    Application.MessageBox('Please add bitmap images for Layout Viewer of Avro Keyboard before building keyboard layout.', 'Layout Editor', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
+    exit;
+  end;
+  result := True;
+end;
 
 {===============================================================================}
 
-Procedure TfrmMain.Shape_QMouseDown(Sender: TObject; Button: TMouseButton;
-     Shift: TShiftState; X, Y: Integer);
-Begin
-     SetSelectedKey((Sender As TShape).Name);
-End;
+procedure TfrmMain.SetSelectedKey(ControlName: String);
+var
+  I                        : Integer;
+begin
+
+  for I := 0 to ComponentCount - 1 do
+    if Components[I] is TShape then
+      if UpperCase((Components[i] as TShape).Name) = UpperCase(ControlName) then
+      begin
+        (Components[i] as TShape).Selected := True;
+        fSelected := Components[i] as TShape;
+
+        if (Components[i] as TShape).CaptionShift <> '&' then
+          LabelShift.Caption := (Components[i] as TShape).CaptionShift
+        else
+          LabelShift.Caption := '&&';
+
+        LabelNormal.Caption := (Components[i] as TShape).CaptionNormal;
+
+        txtNormal.Text := (Components[i] as TShape).Normal;
+        txtShift.Text := (Components[i] as TShape).Shift;
+        txtAltGr.Text := (Components[i] as TShape).AltGr;
+        txtShiftAltGr.Text := (Components[i] as TShape).ShiftAltGr;
+
+      end
+      else
+        (Components[i] as TShape).Selected := False;
+end;
 
 {===============================================================================}
 
-Procedure TfrmMain.txtAltGrChange(Sender: TObject);
-Begin
-     fSelected.AltGr := txtAltGr.Text;
-     If txtAltGr.Text = '' Then
-          imgAltGr.Visible := True
-     Else
-          imgAltGr.Visible := False;
-
-     fDirty := True;
-End;
+procedure TfrmMain.Shape_QMouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  SetSelectedKey((Sender as TShape).Name);
+end;
 
 {===============================================================================}
 
-Procedure TfrmMain.txtCommentEnter(Sender: TObject);
-Begin
-     txtComment.SelectAll;
-End;
+procedure TfrmMain.txtAltGrChange(Sender: TObject);
+begin
+  fSelected.AltGr := txtAltGr.Text;
+  if txtAltGr.Text = '' then
+    imgAltGr.Visible := True
+  else
+    imgAltGr.Visible := False;
+
+  fDirty := True;
+end;
 
 {===============================================================================}
 
-Procedure TfrmMain.txtLayoutNameChange(Sender: TObject);
-Begin
-     fDirty := True;
-End;
+procedure TfrmMain.txtCommentEnter(Sender: TObject);
+begin
+  txtComment.SelectAll;
+end;
 
 {===============================================================================}
 
-Procedure TfrmMain.txtLayoutNameEnter(Sender: TObject);
-Begin
-     (Sender As TEdit).SelectAll;
-End;
+procedure TfrmMain.txtLayoutNameChange(Sender: TObject);
+begin
+  fDirty := True;
+end;
 
 {===============================================================================}
 
-Procedure TfrmMain.txtNormalChange(Sender: TObject);
-Begin
-     fSelected.Normal := txtNormal.Text;
-     If txtNormal.Text = '' Then
-          imgNormal.Visible := True
-     Else
-          imgNormal.Visible := False;
-
-     fDirty := True;
-End;
+procedure TfrmMain.txtLayoutNameEnter(Sender: TObject);
+begin
+  (Sender as TEdit).SelectAll;
+end;
 
 {===============================================================================}
 
-Procedure TfrmMain.txtNormalEnter(Sender: TObject);
-Begin
-     (Sender As TEdit).SelectAll;
-End;
+procedure TfrmMain.txtNormalChange(Sender: TObject);
+begin
+  fSelected.Normal := txtNormal.Text;
+  if txtNormal.Text = '' then
+    imgNormal.Visible := True
+  else
+    imgNormal.Visible := False;
+
+  fDirty := True;
+end;
 
 {===============================================================================}
 
-Procedure TfrmMain.txtShiftAltGrChange(Sender: TObject);
-Begin
-     fSelected.ShiftAltGr := txtShiftAltGr.Text;
-     If txtShiftAltGr.Text = '' Then
-          imgShiftAltGr.Visible := True
-     Else
-          imgShiftAltGr.Visible := False;
-
-     fDirty := True;
-
-End;
+procedure TfrmMain.txtNormalEnter(Sender: TObject);
+begin
+  (Sender as TEdit).SelectAll;
+end;
 
 {===============================================================================}
 
-Procedure TfrmMain.txtShiftChange(Sender: TObject);
-Begin
-     fSelected.Shift := txtShift.Text;
-     If txtShift.Text = '' Then
-          imgShift.Visible := True
-     Else
-          imgShift.Visible := False;
+procedure TfrmMain.txtShiftAltGrChange(Sender: TObject);
+begin
+  fSelected.ShiftAltGr := txtShiftAltGr.Text;
+  if txtShiftAltGr.Text = '' then
+    imgShiftAltGr.Visible := True
+  else
+    imgShiftAltGr.Visible := False;
 
-     fDirty := True;
+  fDirty := True;
 
-End;
+end;
 
 {===============================================================================}
 
-End.
+procedure TfrmMain.txtShiftChange(Sender: TObject);
+begin
+  fSelected.Shift := txtShift.Text;
+  if txtShift.Text = '' then
+    imgShift.Visible := True
+  else
+    imgShift.Visible := False;
+
+  fDirty := True;
+
+end;
+
+{===============================================================================}
+
+end.
 
