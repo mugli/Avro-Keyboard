@@ -49,9 +49,7 @@ object frmSkinCreator: TfrmSkinCreator
     4A044A4A4A044A4A4A044A4A4A044A4A4A04494949043939390300000000FFFF
     0000000000000000000000000000000000000000000000000000000000000000
     000000000000000000000000000000000000000000000000000080010000}
-  OldCreateOrder = False
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 13
   object GroupBox1: TGroupBox
     Left = 8
@@ -324,6 +322,267 @@ object frmSkinCreator: TfrmSkinCreator
         ParentColor = False
         TabOrder = 0
         ExplicitWidth = 377
+        inherited PanelTopBar: TPanel
+          StyleElements = [seFont, seClient, seBorder]
+          inherited Label1: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label2: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited ImagePath_TopBar: TEdit
+            StyleElements = [seFont, seClient, seBorder]
+          end
+        end
+        inherited PanelAvroIcon: TPanel
+          StyleElements = [seFont, seClient, seBorder]
+          inherited Label3: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label4: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label5: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label6: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited AvroIcon: TEdit
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited AvroIconOver: TEdit
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited AvroIconDown: TEdit
+            StyleElements = [seFont, seClient, seBorder]
+          end
+        end
+        inherited PanelKM_E: TPanel
+          StyleElements = [seFont, seClient, seBorder]
+          inherited Label7: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label8: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label9: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label10: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited KMSys: TEdit
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited KMSysOver: TEdit
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited KMSysDown: TEdit
+            StyleElements = [seFont, seClient, seBorder]
+          end
+        end
+        inherited PanelKM_B: TPanel
+          StyleElements = [seFont, seClient, seBorder]
+          inherited Label11: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label12: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label13: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label14: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited KMBangla: TEdit
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited KMBanglaOver: TEdit
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited KMBanglaDown: TEdit
+            StyleElements = [seFont, seClient, seBorder]
+          end
+        end
+        inherited PanelKL: TPanel
+          StyleElements = [seFont, seClient, seBorder]
+          inherited Label15: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label16: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label17: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label18: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited KL: TEdit
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited KLOver: TEdit
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited KLDown: TEdit
+            StyleElements = [seFont, seClient, seBorder]
+          end
+        end
+        inherited PanelLV: TPanel
+          StyleElements = [seFont, seClient, seBorder]
+          inherited Label19: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label20: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label21: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label22: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited LayoutV: TEdit
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited LayoutVOver: TEdit
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited LayoutVDown: TEdit
+            StyleElements = [seFont, seClient, seBorder]
+          end
+        end
+        inherited PanelMouse: TPanel
+          StyleElements = [seFont, seClient, seBorder]
+          inherited Label23: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label24: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label25: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label26: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited AvroMouse: TEdit
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited AvroMouseOver: TEdit
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited AvroMouseDown: TEdit
+            StyleElements = [seFont, seClient, seBorder]
+          end
+        end
+        inherited PanelTools: TPanel
+          StyleElements = [seFont, seClient, seBorder]
+          inherited Label27: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label28: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label29: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label30: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Tools: TEdit
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited ToolsOver: TEdit
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited ToolsDown: TEdit
+            StyleElements = [seFont, seClient, seBorder]
+          end
+        end
+        inherited PanelHelp: TPanel
+          StyleElements = [seFont, seClient, seBorder]
+          inherited Label31: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label32: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label33: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label34: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Help: TEdit
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited HelpOver: TEdit
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited HelpDown: TEdit
+            StyleElements = [seFont, seClient, seBorder]
+          end
+        end
+        inherited PanelWeb: TPanel
+          StyleElements = [seFont, seClient, seBorder]
+          inherited Label39: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label40: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label41: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label42: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Web: TEdit
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited WebOver: TEdit
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited WebDown: TEdit
+            StyleElements = [seFont, seClient, seBorder]
+          end
+        end
+        inherited PanelExit: TPanel
+          StyleElements = [seFont, seClient, seBorder]
+          inherited Label35: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label36: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label37: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Label38: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Exit: TEdit
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited ExitOver: TEdit
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited ExitDown: TEdit
+            StyleElements = [seFont, seClient, seBorder]
+          end
+        end
+        inherited PanelPreview: TPanel
+          StyleElements = [seFont, seClient, seBorder]
+          inherited Label43: TLabel
+            StyleElements = [seFont, seClient, seBorder]
+          end
+          inherited Preview: TEdit
+            StyleElements = [seFont, seClient, seBorder]
+          end
+        end
       end
     end
   end
@@ -357,12 +616,32 @@ object frmSkinCreator: TfrmSkinCreator
       inherited Label1: TLabel
         Left = 119
         Top = 259
+        StyleElements = [seFont, seClient, seBorder]
         ExplicitLeft = 119
         ExplicitTop = 259
       end
       inherited Label2: TLabel
         Top = 259
+        StyleElements = [seFont, seClient, seBorder]
         ExplicitTop = 259
+      end
+      inherited Label3: TLabel
+        Width = 394
+        Height = 13
+        StyleElements = [seFont, seClient, seBorder]
+        ExplicitWidth = 394
+        ExplicitHeight = 13
+      end
+      inherited ScrollBox1: TScrollBox
+        inherited Panel1: TPanel
+          StyleElements = [seFont, seClient, seBorder]
+        end
+      end
+      inherited XPos: TEdit
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited YPos: TEdit
+        StyleElements = [seFont, seClient, seBorder]
       end
     end
   end

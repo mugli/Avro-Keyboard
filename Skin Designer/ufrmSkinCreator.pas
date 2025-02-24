@@ -1,526 +1,462 @@
 {
-	=============================================================================
-	*****************************************************************************
-	The contents of this file are subject to the Mozilla Public License
-	Version 1.1 (the "License"); you may not use this file except in
-	compliance with the License. You may obtain a copy of the License at
-	http://www.mozilla.org/MPL/
+  =============================================================================
+  *****************************************************************************
+  The contents of this file are subject to the Mozilla Public License
+  Version 1.1 (the "License"); you may not use this file except in
+  compliance with the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
 
-	Software distributed under the License is distributed on an "AS IS"
-	basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
-	License for the specific language governing rights and limitations
-	under the License.
+  Software distributed under the License is distributed on an "AS IS"
+  basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+  License for the specific language governing rights and limitations
+  under the License.
 
-	The Original Code is Avro Keyboard 5.
+  The Original Code is Avro Keyboard 5.
 
-	The Initial Developer of the Original Code is
-	Mehdi Hasan Khan <mhasan@omicronlab.com>.
+  The Initial Developer of the Original Code is
+  Mehdi Hasan Khan <mhasan@omicronlab.com>.
 
-	Copyright (C) OmicronLab <http://www.omicronlab.com>. All Rights Reserved.
+  Copyright (C) OmicronLab <http://www.omicronlab.com>. All Rights Reserved.
 
 
-	Contributor(s): ______________________________________.
+  Contributor(s): ______________________________________.
 
-	*****************************************************************************
-	=============================================================================
+  *****************************************************************************
+  =============================================================================
 }
 
 {$INCLUDE ../ProjectDefines.inc}
 
-Unit ufrmSkinCreator;
+unit ufrmSkinCreator;
 
-Interface
+interface
 
-Uses
-		 Windows,
-		 Messages,
-		 SysUtils,
-		 Variants,
-		 Classes,
-		 Graphics,
-		 Controls,
-		 Forms,
-		 Dialogs,
-		 StdCtrls,
-		 uFrameImageAdd,
-		 uFrameDrag,
-		 ExtCtrls,
-		 GIFImg;
+uses
+  Windows,
+  Messages,
+  SysUtils,
+  Variants,
+  Classes,
+  Graphics,
+  Controls,
+  Forms,
+  Dialogs,
+  StdCtrls,
+  uFrameImageAdd,
+  uFrameDrag,
+  ExtCtrls,
+  GIFImg;
 
-Type
-		 TfrmSkinCreator = Class(TForm)
-					Panel1: TPanel;
-					Label1: TLabel;
-					GroupBox1: TGroupBox;
-					Label3: TLabel;
-					Label4: TLabel;
-					EditSkinName: TEdit;
-					Label5: TLabel;
-					EditSkinVer: TEdit;
-					Label6: TLabel;
-					EditDesignerName: TEdit;
-					Label7: TLabel;
-					EditComment: TMemo;
-					Label8: TLabel;
-					CheckAvroIcon: TCheckBox;
-					CheckKM: TCheckBox;
-					CheckKL: TCheckBox;
-					CheckLayoutViewer: TCheckBox;
-					CheckMouse: TCheckBox;
-					CheckTools: TCheckBox;
-					CheckWeb: TCheckBox;
-					CheckHelp: TCheckBox;
-					CheckExit: TCheckBox;
-					ButtonHelp: TButton;
-					ButtonAbout: TButton;
-					ButtonPrev: TButton;
-					ButtonNext: TButton;
-					ButtonExit: TButton;
-					GroupBox2: TGroupBox;
-					ScrollBoxImageAdd: TScrollBox;
-					FrameImageAdd1: TFrameImageAdd;
-					GroupBox3: TGroupBox;
-					FrameDrag1: TFrameDrag;
-					GroupBox4: TGroupBox;
-					ButtonSaveSkin: TButton;
-					Label9: TLabel;
-					Label10: TLabel;
-					Panel2: TPanel;
-					Label11: TLabel;
-					LabelShareLink: TLabel;
-					Panel3: TPanel;
-					Image1: TImage;
-					Label13: TLabel;
-					Label14: TLabel;
-					Label2: TLabel;
-					SaveDialog1: TSaveDialog;
-					Procedure FormCreate(Sender: TObject);
-					Procedure ButtonNextClick(Sender: TObject);
-					Procedure ButtonPrevClick(Sender: TObject);
-					Procedure ButtonSaveSkinClick(Sender: TObject);
-					Procedure ButtonHelpClick(Sender: TObject);
-					Procedure LabelShareLinkClick(Sender: TObject);
-					Procedure ButtonAboutClick(Sender: TObject);
-					Procedure ButtonExitClick(Sender: TObject);
-		 Private
-					{ Private declarations }
-					Index: Integer;
-					Function ValidateNext(Val: Integer): Boolean;
-					Function Validate_1To2_Page: Boolean;
-					Function Validate_2To3_Page: Boolean;
-					Function Validate_3To4_Page: Boolean;
-		 Public
-					{ Public declarations }
-		 End;
+type
+  TfrmSkinCreator = class(TForm)
+    Panel1: TPanel;
+    Label1: TLabel;
+    GroupBox1: TGroupBox;
+    Label3: TLabel;
+    Label4: TLabel;
+    EditSkinName: TEdit;
+    Label5: TLabel;
+    EditSkinVer: TEdit;
+    Label6: TLabel;
+    EditDesignerName: TEdit;
+    Label7: TLabel;
+    EditComment: TMemo;
+    Label8: TLabel;
+    CheckAvroIcon: TCheckBox;
+    CheckKM: TCheckBox;
+    CheckKL: TCheckBox;
+    CheckLayoutViewer: TCheckBox;
+    CheckMouse: TCheckBox;
+    CheckTools: TCheckBox;
+    CheckWeb: TCheckBox;
+    CheckHelp: TCheckBox;
+    CheckExit: TCheckBox;
+    ButtonHelp: TButton;
+    ButtonAbout: TButton;
+    ButtonPrev: TButton;
+    ButtonNext: TButton;
+    ButtonExit: TButton;
+    GroupBox2: TGroupBox;
+    ScrollBoxImageAdd: TScrollBox;
+    FrameImageAdd1: TFrameImageAdd;
+    GroupBox3: TGroupBox;
+    FrameDrag1: TFrameDrag;
+    GroupBox4: TGroupBox;
+    ButtonSaveSkin: TButton;
+    Label9: TLabel;
+    Label10: TLabel;
+    Panel2: TPanel;
+    Label11: TLabel;
+    LabelShareLink: TLabel;
+    Panel3: TPanel;
+    Image1: TImage;
+    Label13: TLabel;
+    Label14: TLabel;
+    Label2: TLabel;
+    SaveDialog1: TSaveDialog;
+    procedure FormCreate(Sender: TObject);
+    procedure ButtonNextClick(Sender: TObject);
+    procedure ButtonPrevClick(Sender: TObject);
+    procedure ButtonSaveSkinClick(Sender: TObject);
+    procedure ButtonHelpClick(Sender: TObject);
+    procedure LabelShareLinkClick(Sender: TObject);
+    procedure ButtonAboutClick(Sender: TObject);
+    procedure ButtonExitClick(Sender: TObject);
+  private
+    { Private declarations }
+    Index: Integer;
+    function ValidateNext(Val: Integer): Boolean;
+    function Validate_1To2_Page: Boolean;
+    function Validate_2To3_Page: Boolean;
+    function Validate_3To4_Page: Boolean;
+  public
+    { Public declarations }
+  end;
 
-Var
-		 frmSkinCreator: TfrmSkinCreator;
+var
+  frmSkinCreator: TfrmSkinCreator;
 
-Implementation
+implementation
 
 {$R *.dfm}
 
-Uses
-		 ufrmAbout,
-		 NativeXml,
-		 uFileFolderHandling;
-
-Procedure TfrmSkinCreator.ButtonAboutClick(Sender: TObject);
-Begin
-		 Application.CreateForm(TfrmAbout, frmAbout);
-		 frmAbout.ShowModal;
-End;
-
-Procedure TfrmSkinCreator.ButtonExitClick(Sender: TObject);
-Begin
-
-		 If Application.MessageBox('Exit Skin Designer?', 'Skin Designer', MB_YESNO + MB_ICONQUESTION + MB_DEFBUTTON2 + MB_APPLMODAL) = ID_YES Then
-					Self.Close;
-End;
-
-Procedure TfrmSkinCreator.ButtonHelpClick(Sender: TObject);
-Begin
-		 { TODO : Write help and make this button Visible! }
-End;
-
-Procedure TfrmSkinCreator.ButtonNextClick(Sender: TObject);
-Begin
-		 If ValidateNext(Index + 1) = False Then
-					System.Exit;
-		 Inc(Index);
-
-		 If Index = 4 Then
-					ButtonNext.Enabled := False
-		 Else
-					ButtonNext.Enabled := True;
-
-		 If Index = 1 Then
-					ButtonPrev.Enabled := False
-		 Else
-					ButtonPrev.Enabled := True;
-
-(FindComponent('GroupBox' + IntToStr(Index)) As TGroupBox)
-		 .BringToFront;
-
-End;
-
-Procedure TfrmSkinCreator.ButtonPrevClick(Sender: TObject);
-Begin
-		 If Index <= 1 Then
-					System.Exit;
-
-		 Dec(Index);
-
-		 If Index = 4 Then
-					ButtonNext.Enabled := False
-		 Else
-					ButtonNext.Enabled := True;
-
-		 If Index = 1 Then
-					ButtonPrev.Enabled := False
-		 Else
-					ButtonPrev.Enabled := True;
-
-(FindComponent('GroupBox' + IntToStr(Index)) As TGroupBox)
-		 .BringToFront;
-
-End;
-
-Procedure TfrmSkinCreator.ButtonSaveSkinClick(Sender: TObject);
-/// /////////////////////////////////////
-
-		 Procedure NewCDataNode(Var mXML: TNativeXML; NodeName: UTF8String; NodeData: String);
-		 Var
-					mChild: TXmlNode;
-					mCDataChild: TXmlNode;
-		 Begin
-					mChild := mXML.Root.NodeNew(NodeName);
-					mCDataChild := mChild.NodeNew(NodeName);
-					mCDataChild.ElementType := xeCData;
-					mCDataChild.ValueAsUnicodeString := NodeData;
-		 End;
-/// /////////////////////////////////////
-
-		 Procedure NewNode(Var mXML: TNativeXML; NodeName: UTF8String; NodeData: String);
-		 Var
-					mChild: TXmlNode;
-		 Begin
-					mChild := mXML.Root.NodeNew(NodeName);
-					mChild.ValueAsUnicodeString := NodeData;
-		 End;
-/// /////////////////////////////////////
-
-		 Function ImageToXml(Var mXML: TNativeXML; NodeName: UTF8String; ImagePath: String): Boolean;
-		 Var
-					FStream: TFileStream;
-					SStream: TStringStream;
-					mChild: TXmlNode;
-					// mCDataChild         : TXmlNode;
-
-					ErrorOccured: Boolean;
-		 Begin
-					ErrorOccured := False;
-					ImagePath := Trim(ImagePath);
-
-					mChild := mXML.Root.NodeNew(NodeName);
-					// mCDataChild := mChild.NodeNew(NodeName);
-					// mCDataChild.ElementType := xeCData;
-					mChild.BinaryEncoding := xbeBase64;
-					Try
-							 Try
-										If ImagePath <> '' Then Begin
-												 SStream := TStringStream.Create('');
-												 FStream := TFileStream.Create(ImagePath, fmOpenRead, fmShareDenyWrite);
-												 SStream.CopyFrom(FStream, FStream.Size);
-												 mChild.BinaryString := RawByteString(SStream.DataString);
-										End
-										Else
-												 mChild.BinaryString := '';
-
-							 Except
-										On E: Exception Do Begin
-												 ErrorOccured := True;
-										End;
-							 End;
-					Finally
-							 If ImagePath <> '' Then Begin
-										SStream.Free;
-										FStream.Free;
-							 End;
-
-							 If ErrorOccured Then
-										Result := False
-							 Else
-										Result := True;
-					End;
-		 End;
-/// /////////////////////////////////////
-
-		 Function MyBoolToStr(b: Boolean): String;
-		 Begin
-					If b Then
-							 Result := '1'
-					Else
-							 Result := '0';
-
-		 End;
-
-/// /////////////////////////////////////
-Var
-		 XML: TNativeXML;
-		 child: TXmlNode;
-Begin
-		 Try
-					Try
-							 XML := TNativeXML.Create;
-							 XML.EncodingString := 'UTF-8';
-							 XML.XmlFormat := xfReadable;
-							 XML.ExternalEncoding := seUTF8;
-
-							 XML.Root.Name := 'Skin';
-
-							 // Avro version
-							 child := XML.Root.NodeNew('AvroKeyboardVersion');
-							 child.ValueAsUnicodeString := '5';
-
-							 // Skin info
-							 NewCDataNode(XML, 'SkinName', EditSkinName.Text);
-							 NewCDataNode(XML, 'SkinVersion', EditSkinVer.Text);
-							 NewCDataNode(XML, 'DesignerName', EditDesignerName.Text);
-							 NewCDataNode(XML, 'DesignerComment', EditComment.Text);
-
-							 // Preview Image
-							 If Not ImageToXml(XML, 'Preview', FrameImageAdd1.Preview.Text) Then
-										Raise Exception.Create('Unable to convert image to skin!' + #10 + FrameImageAdd1.Preview.Text);
-
-							 // Button info
-							 NewNode(XML, 'AvroIconAdded', MyBoolToStr(CheckAvroIcon.Checked));
-							 NewNode(XML, 'KeyboardModeAdded', MyBoolToStr(CheckKM.Checked));
-							 NewNode(XML, 'KeyboardLayoutAdded', MyBoolToStr(CheckKL.Checked));
-							 NewNode(XML, 'LayoutViewerAdded', MyBoolToStr(CheckLayoutViewer.Checked));
-							 NewNode(XML, 'AvroMouseAdded', MyBoolToStr(CheckMouse.Checked));
-							 NewNode(XML, 'ToolsAdded', MyBoolToStr(CheckTools.Checked));
-							 NewNode(XML, 'WebAdded', MyBoolToStr(CheckWeb.Checked));
-							 NewNode(XML, 'HelpAdded', MyBoolToStr(CheckHelp.Checked));
-							 NewNode(XML, 'ExitAdded', MyBoolToStr(CheckExit.Checked));
-
-							 // Main Image
-							 If Not ImageToXml(XML, 'TopBarMain', FrameImageAdd1.ImagePath_TopBar.Text) Then
-										Raise Exception.Create('Unable to convert image to skin!' + #10 + FrameImageAdd1.ImagePath_TopBar.Text);
-							 NewNode(XML, 'TopBarHeight', IntToStr(FrameDrag1.Background.Height));
-							 NewNode(XML, 'TopBarWidth', IntToStr(FrameDrag1.Background.Width));
-
-							 // Avro icon
-							 If Not ImageToXml(XML, 'AvroIconNormal', FrameImageAdd1.AvroIcon.Text) Then
-										Raise Exception.Create('Unable to convert image to skin!' + #10 + FrameImageAdd1.AvroIcon.Text);
-							 If Not ImageToXml(XML, 'AvroIconOver', FrameImageAdd1.AvroIconOver.Text) Then
-										Raise Exception.Create('Unable to convert image to skin!' + #10 + FrameImageAdd1.AvroIconOver.Text);
-							 If Not ImageToXml(XML, 'AvroIconDown', FrameImageAdd1.AvroIconDown.Text) Then
-										Raise Exception.Create('Unable to convert image to skin!' + #10 + FrameImageAdd1.AvroIconDown.Text);
-							 NewNode(XML, 'AvroIconHeight', IntToStr(FrameDrag1.AvroIcon.Height));
-							 NewNode(XML, 'AvroIconWidth', IntToStr(FrameDrag1.AvroIcon.Width));
-							 NewNode(XML, 'AvroIconLeft', IntToStr(FrameDrag1.AvroIcon.Left));
-							 NewNode(XML, 'AvroIconTop', IntToStr(FrameDrag1.AvroIcon.Top));
-
-
-							 // Keyboard Mode
-							 If Not ImageToXml(XML, 'KeyboardModeEnglishNormal', FrameImageAdd1.KMSys.Text) Then
-										Raise Exception.Create('Unable to convert image to skin!' + #10 + FrameImageAdd1.KMSys.Text);
-							 If Not ImageToXml(XML, 'KeyboardModeEnglishOver', FrameImageAdd1.KMSysOver.Text) Then
-										Raise Exception.Create('Unable to convert image to skin!' + #10 + FrameImageAdd1.KMSysOver.Text);
-							 If Not ImageToXml(XML, 'KeyboardModeEnglishDown', FrameImageAdd1.KMSysDown.Text) Then
-										Raise Exception.Create('Unable to convert image to skin!' + #10 + FrameImageAdd1.KMSysDown.Text);
-							 If Not ImageToXml(XML, 'KeyboardModeBanglaNormal', FrameImageAdd1.KMBangla.Text) Then
-										Raise Exception.Create('Unable to convert image to skin!' + #10 + FrameImageAdd1.KMBangla.Text);
-							 If Not ImageToXml(XML, 'KeyboardModeBanglaOver', FrameImageAdd1.KMBanglaOver.Text) Then
-										Raise Exception.Create('Unable to convert image to skin!' + #10 + FrameImageAdd1.KMBanglaOver.Text);
-							 If Not ImageToXml(XML, 'KeyboardModeBanglaDown', FrameImageAdd1.KMBanglaDown.Text) Then
-										Raise Exception.Create('Unable to convert image to skin!' + #10 + FrameImageAdd1.KMBanglaDown.Text);
-							 NewNode(XML, 'KeyboardModeHeight', IntToStr(FrameDrag1.KM.Height));
-							 NewNode(XML, 'KeyboardModeWidth', IntToStr(FrameDrag1.KM.Width));
-							 NewNode(XML, 'KeyboardModeLeft', IntToStr(FrameDrag1.KM.Left));
-							 NewNode(XML, 'KeyboardModeTop', IntToStr(FrameDrag1.KM.Top));
-
-							 // Keyboard Layout
-							 If Not ImageToXml(XML, 'KeyboardLayoutNormal', FrameImageAdd1.KL.Text) Then
-										Raise Exception.Create('Unable to convert image to skin!' + #10 + FrameImageAdd1.KL.Text);
-							 If Not ImageToXml(XML, 'KeyboardLayoutOver', FrameImageAdd1.KLOver.Text) Then
-										Raise Exception.Create('Unable to convert image to skin!' + #10 + FrameImageAdd1.KLOver.Text);
-							 If Not ImageToXml(XML, 'KeyboardLayoutDown', FrameImageAdd1.KLDown.Text) Then
-										Raise Exception.Create('Unable to convert image to skin!' + #10 + FrameImageAdd1.KLDown.Text);
-							 NewNode(XML, 'KeyboardLayoutHeight', IntToStr(FrameDrag1.KL.Height));
-							 NewNode(XML, 'KeyboardLayoutWidth', IntToStr(FrameDrag1.KL.Width));
-							 NewNode(XML, 'KeyboardLayoutLeft', IntToStr(FrameDrag1.KL.Left));
-							 NewNode(XML, 'KeyboardLayoutTop', IntToStr(FrameDrag1.KL.Top));
-
-
-							 // LayoutViewer
-							 If Not ImageToXml(XML, 'LayoutViewerNormal', FrameImageAdd1.LayoutV.Text) Then
-										Raise Exception.Create('Unable to convert image to skin!' + #10 + FrameImageAdd1.LayoutV.Text);
-							 If Not ImageToXml(XML, 'LayoutViewerOver', FrameImageAdd1.LayoutVOver.Text) Then
-										Raise Exception.Create('Unable to convert image to skin!' + #10 + FrameImageAdd1.LayoutVOver.Text);
-							 If Not ImageToXml(XML, 'LayoutViewerDown', FrameImageAdd1.LayoutVDown.Text) Then
-										Raise Exception.Create('Unable to convert image to skin!' + #10 + FrameImageAdd1.LayoutVDown.Text);
-							 NewNode(XML, 'LayoutViewerHeight', IntToStr(FrameDrag1.LayoutV.Height));
-							 NewNode(XML, 'LayoutViewerWidth', IntToStr(FrameDrag1.LayoutV.Width));
-							 NewNode(XML, 'LayoutViewerLeft', IntToStr(FrameDrag1.LayoutV.Left));
-							 NewNode(XML, 'LayoutViewerTop', IntToStr(FrameDrag1.LayoutV.Top));
-
-
-							 // AvroMouse
-							 If Not ImageToXml(XML, 'AvroMouseNormal', FrameImageAdd1.AvroMouse.Text) Then
-										Raise Exception.Create('Unable to convert image to skin!' + #10 + FrameImageAdd1.AvroMouse.Text);
-							 If Not ImageToXml(XML, 'AvroMouseOver', FrameImageAdd1.AvroMouseOver.Text) Then
-										Raise Exception.Create('Unable to convert image to skin!' + #10 + FrameImageAdd1.AvroMouseOver.Text);
-							 If Not ImageToXml(XML, 'AvroMouseDown', FrameImageAdd1.AvroMouseDown.Text) Then
-										Raise Exception.Create('Unable to convert image to skin!' + #10 + FrameImageAdd1.AvroMouseDown.Text);
-							 NewNode(XML, 'AvroMouseHeight', IntToStr(FrameDrag1.AvroMouse.Height));
-							 NewNode(XML, 'AvroMouseWidth', IntToStr(FrameDrag1.AvroMouse.Width));
-							 NewNode(XML, 'AvroMouseLeft', IntToStr(FrameDrag1.AvroMouse.Left));
-							 NewNode(XML, 'AvroMouseTop', IntToStr(FrameDrag1.AvroMouse.Top));
-
-
-							 // Tools
-							 If Not ImageToXml(XML, 'ToolsNormal', FrameImageAdd1.Tools.Text) Then
-										Raise Exception.Create('Unable to convert image to skin!' + #10 + FrameImageAdd1.Tools.Text);
-							 If Not ImageToXml(XML, 'ToolsOver', FrameImageAdd1.ToolsOver.Text) Then
-										Raise Exception.Create('Unable to convert image to skin!' + #10 + FrameImageAdd1.ToolsOver.Text);
-							 If Not ImageToXml(XML, 'ToolsDown', FrameImageAdd1.ToolsDown.Text) Then
-										Raise Exception.Create('Unable to convert image to skin!' + #10 + FrameImageAdd1.ToolsDown.Text);
-							 NewNode(XML, 'ToolsHeight', IntToStr(FrameDrag1.Tools.Height));
-							 NewNode(XML, 'ToolsWidth', IntToStr(FrameDrag1.Tools.Width));
-							 NewNode(XML, 'ToolsLeft', IntToStr(FrameDrag1.Tools.Left));
-							 NewNode(XML, 'ToolsTop', IntToStr(FrameDrag1.Tools.Top));
-
-							 // Web
-							 If Not ImageToXml(XML, 'WebNormal', FrameImageAdd1.Web.Text) Then
-										Raise Exception.Create('Unable to convert image to skin!' + #10 + FrameImageAdd1.Web.Text);
-							 If Not ImageToXml(XML, 'WebOver', FrameImageAdd1.WebOver.Text) Then
-										Raise Exception.Create('Unable to convert image to skin!' + #10 + FrameImageAdd1.WebOver.Text);
-							 If Not ImageToXml(XML, 'WebDown', FrameImageAdd1.WebDown.Text) Then
-										Raise Exception.Create('Unable to convert image to skin!' + #10 + FrameImageAdd1.WebDown.Text);
-							 NewNode(XML, 'WebHeight', IntToStr(FrameDrag1.Web.Height));
-							 NewNode(XML, 'WebWidth', IntToStr(FrameDrag1.Web.Width));
-							 NewNode(XML, 'WebLeft', IntToStr(FrameDrag1.Web.Left));
-							 NewNode(XML, 'WebTop', IntToStr(FrameDrag1.Web.Top));
-
-							 // Help
-							 If Not ImageToXml(XML, 'HelpNormal', FrameImageAdd1.Help.Text) Then
-										Raise Exception.Create('Unable to convert image to skin!' + #10 + FrameImageAdd1.Help.Text);
-							 If Not ImageToXml(XML, 'HelpOver', FrameImageAdd1.HelpOver.Text) Then
-										Raise Exception.Create('Unable to convert image to skin!' + #10 + FrameImageAdd1.HelpOver.Text);
-							 If Not ImageToXml(XML, 'HelpDown', FrameImageAdd1.HelpDown.Text) Then
-										Raise Exception.Create('Unable to convert image to skin!' + #10 + FrameImageAdd1.HelpDown.Text);
-							 NewNode(XML, 'HelpHeight', IntToStr(FrameDrag1.Help.Height));
-							 NewNode(XML, 'HelpWidth', IntToStr(FrameDrag1.Help.Width));
-							 NewNode(XML, 'HelpLeft', IntToStr(FrameDrag1.Help.Left));
-							 NewNode(XML, 'HelpTop', IntToStr(FrameDrag1.Help.Top));
-
-							 // Exit
-							 If Not ImageToXml(XML, 'ExitNormal', FrameImageAdd1.Exit.Text) Then
-										Raise Exception.Create('Unable to convert image to skin!' + #10 + FrameImageAdd1.Exit.Text);
-							 If Not ImageToXml(XML, 'ExitOver', FrameImageAdd1.ExitOver.Text) Then
-										Raise Exception.Create('Unable to convert image to skin!' + #10 + FrameImageAdd1.ExitOver.Text);
-							 If Not ImageToXml(XML, 'ExitDown', FrameImageAdd1.ExitDown.Text) Then
-										Raise Exception.Create('Unable to convert image to skin!' + #10 + FrameImageAdd1.ExitDown.Text);
-							 NewNode(XML, 'ExitHeight', IntToStr(FrameDrag1.Exit.Height));
-							 NewNode(XML, 'ExitWidth', IntToStr(FrameDrag1.Exit.Width));
-							 NewNode(XML, 'ExitLeft', IntToStr(FrameDrag1.Exit.Left));
-							 NewNode(XML, 'ExitTop', IntToStr(FrameDrag1.Exit.Top));
-
-							 SaveDialog1.FileName := EditSkinName.Text + '.avroskin';
-							 If SaveDialog1.Execute(Self.Handle) Then Begin
-										XML.SaveToFile(SaveDialog1.FileName);
-							 End;
-							 { TODO : Save path in registry }
-
-
-					Except
-							 On E: Exception Do Begin
-										Application.MessageBox(pchar('Error occured!' + #10 + #10 + E.Message), pchar('Skin Designer'), MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
-							 End;
-					End;
-		 Finally
-					FreeAndNil(XML);
-		 End;
-
-
-End;
-
-Procedure TfrmSkinCreator.FormCreate(Sender: TObject);
-Begin
-		 With FrameImageAdd1 Do Begin
-					Initialize;
-					Top := 0;
-					Left := 0;
-		 End;
-
-		 With FrameDrag1 Do Begin
-					Initialize;
-		 End;
-
-		 Index := 1;
-		 GroupBox1.BringToFront;
-		 Self.Show;
-		 Application.ProcessMessages;
-		 EditSkinName.SetFocus;
-End;
-
-Procedure TfrmSkinCreator.LabelShareLinkClick(Sender: TObject);
-Begin
-		 Execute_Something('http://www.omicronlab.com/go.php?id=7');
-End;
-
-Function TfrmSkinCreator.ValidateNext(Val: Integer): Boolean;
-Begin
-		 Result := False;
-		 Case Index Of
-					1:
-							 Result := Validate_1To2_Page;
-
-					2:
-							 Result := Validate_2To3_Page;
-
-					3:
-							 Result := Validate_3To4_Page;
-		 End;
-End;
-
-Function TfrmSkinCreator.Validate_1To2_Page: Boolean;
-Begin
-		 Result := False;
-
-		 // Validate
-		 If Trim(EditSkinName.Text) = '' Then Begin
-					Application.MessageBox('Please enter Skin Name', 'Skin Designer', MB_OK + MB_ICONEXCLAMATION + MB_DEFBUTTON1 + MB_APPLMODAL);
-					EditSkinName.SetFocus;
-					System.Exit;
-		 End;
-
-		 // Cosmetics
-		 FrameImageAdd1.SetVisibleControls(CheckKL.Checked, CheckLayoutViewer.Checked, CheckMouse.Checked, CheckTools.Checked, CheckWeb.Checked, CheckHelp.Checked);
-		 Result := True;
-End;
-
-Function TfrmSkinCreator.Validate_2To3_Page: Boolean;
-Begin
-		 Result := False;
-
-		 // Validate
-		 If FrameImageAdd1.Validate = False Then
-					System.Exit;
-
-
-		 // Load Images
-		 With FrameImageAdd1 Do
-					FrameDrag1.SetImages(ImagePath_TopBar.Text, AvroIcon.Text, KMSys.Text, KL.Text, LayoutV.Text, AvroMouse.Text, Tools.Text, Web.Text, Help.Text, Exit.Text);
-
-		 Result := True;
-End;
-
-Function TfrmSkinCreator.Validate_3To4_Page: Boolean;
-Begin
-		 Result := FrameDrag1.Validate;
-End;
-
-End.
+uses
+  ufrmAbout,
+  Xml.XMLIntf, Xml.XMLDoc, NetEncoding,
+  uFileFolderHandling;
+
+procedure TfrmSkinCreator.ButtonAboutClick(Sender: TObject);
+begin
+  Application.CreateForm(TfrmAbout, frmAbout);
+  frmAbout.ShowModal;
+end;
+
+procedure TfrmSkinCreator.ButtonExitClick(Sender: TObject);
+begin
+
+  if Application.MessageBox('Exit Skin Designer?', 'Skin Designer', MB_YESNO + MB_ICONQUESTION + MB_DEFBUTTON2 + MB_APPLMODAL) = ID_YES then
+    Self.Close;
+end;
+
+procedure TfrmSkinCreator.ButtonHelpClick(Sender: TObject);
+begin
+  { TODO : Write help and make this button Visible! }
+end;
+
+procedure TfrmSkinCreator.ButtonNextClick(Sender: TObject);
+begin
+  if ValidateNext(Index + 1) = False then
+    System.Exit;
+  Inc(Index);
+
+  if Index = 4 then
+    ButtonNext.Enabled := False
+  else
+    ButtonNext.Enabled := True;
+
+  if Index = 1 then
+    ButtonPrev.Enabled := False
+  else
+    ButtonPrev.Enabled := True;
+
+  (FindComponent('GroupBox' + IntToStr(Index)) as TGroupBox)
+  .BringToFront;
+
+end;
+
+procedure TfrmSkinCreator.ButtonPrevClick(Sender: TObject);
+begin
+  if Index <= 1 then
+    System.Exit;
+
+  Dec(Index);
+
+  if Index = 4 then
+    ButtonNext.Enabled := False
+  else
+    ButtonNext.Enabled := True;
+
+  if Index = 1 then
+    ButtonPrev.Enabled := False
+  else
+    ButtonPrev.Enabled := True;
+
+  (FindComponent('GroupBox' + IntToStr(Index)) as TGroupBox)
+  .BringToFront;
+
+end;
+
+procedure TfrmSkinCreator.ButtonSaveSkinClick(Sender: TObject);
+
+  procedure NewCDataNode(var Doc: IXMLDocument; ParentNode: IXMLNode; NodeName, NodeData: string);
+  var
+    NewNode: IXMLNode;
+  begin
+    NewNode := ParentNode.AddChild(NodeName);
+    NewNode.NodeValue := NodeData;
+  end;
+
+  procedure NewNode(var Doc: IXMLDocument; ParentNode: IXMLNode; NodeName, NodeData: string);
+  var
+    NewNode: IXMLNode;
+  begin
+    NewNode := ParentNode.AddChild(NodeName);
+    NewNode.Text := NodeData;
+  end;
+
+  function ImageToXml(var Doc: IXMLDocument; ParentNode: IXMLNode; NodeName, ImagePath: string): Boolean;
+  var
+    FileStream: TFileStream;
+    ByteStream: TBytesStream;
+    EncodedStr: string;
+    ImageNode: IXMLNode;
+  begin
+    Result := False;
+    ImagePath := Trim(ImagePath);
+
+    if ImagePath = '' then
+      Exit(True);
+
+    ImageNode := ParentNode.AddChild(NodeName);
+
+    try
+      FileStream := TFileStream.Create(ImagePath, fmOpenRead or fmShareDenyWrite);
+      try
+        ByteStream := TBytesStream.Create;
+        try
+          ByteStream.CopyFrom(FileStream, 0);
+          EncodedStr := TNetEncoding.Base64.EncodeBytesToString(ByteStream.Bytes, ByteStream.Size);
+          ImageNode.Text := EncodedStr;
+          Result := True;
+        finally
+          ByteStream.Free;
+        end;
+      finally
+        FileStream.Free;
+      end;
+    except
+      on E: Exception do
+        Application.MessageBox(PChar('Error loading image: ' + ImagePath + #10 + E.Message),
+          PChar('Error'), MB_OK or MB_ICONHAND);
+    end;
+  end;
+
+  function MyBoolToStr(b: Boolean): String;
+  begin
+    if b then
+      Result := '1'
+    else
+      Result := '0';
+
+  end;
+
+var
+  XMLDoc: IXMLDocument;
+  RootNode, ChildNode: IXMLNode;
+begin
+  XMLDoc := NewXMLDocument;
+  XMLDoc.Encoding := 'UTF-8';
+  XMLDoc.Options := [doNodeAutoIndent];
+
+  RootNode := XMLDoc.AddChild('Skin');
+
+  // Avro version
+  ChildNode := RootNode.AddChild('AvroKeyboardVersion');
+  ChildNode.Text := '5';
+
+  // Skin info
+  NewCDataNode(XMLDoc, RootNode, 'SkinName', EditSkinName.Text);
+  NewCDataNode(XMLDoc, RootNode, 'SkinVersion', EditSkinVer.Text);
+  NewCDataNode(XMLDoc, RootNode, 'DesignerName', EditDesignerName.Text);
+  NewCDataNode(XMLDoc, RootNode, 'DesignerComment', EditComment.Text);
+
+  // Preview Image
+  if not ImageToXml(XMLDoc, RootNode, 'Preview', FrameImageAdd1.Preview.Text) then
+    Exit;
+
+  // Button info
+  NewNode(XMLDoc, RootNode, 'AvroIconAdded', MyBoolToStr(CheckAvroIcon.Checked));
+  NewNode(XMLDoc, RootNode, 'KeyboardModeAdded', MyBoolToStr(CheckKM.Checked));
+  NewNode(XMLDoc, RootNode, 'KeyboardLayoutAdded', MyBoolToStr(CheckKL.Checked));
+  NewNode(XMLDoc, RootNode, 'LayoutViewerAdded', MyBoolToStr(CheckLayoutViewer.Checked));
+  NewNode(XMLDoc, RootNode, 'AvroMouseAdded', MyBoolToStr(CheckMouse.Checked));
+  NewNode(XMLDoc, RootNode, 'ToolsAdded', MyBoolToStr(CheckTools.Checked));
+  NewNode(XMLDoc, RootNode, 'WebAdded', MyBoolToStr(CheckWeb.Checked));
+  NewNode(XMLDoc, RootNode, 'HelpAdded', MyBoolToStr(CheckHelp.Checked));
+  NewNode(XMLDoc, RootNode, 'ExitAdded', MyBoolToStr(CheckExit.Checked));
+
+  // Main Image
+  if not ImageToXml(XMLDoc, RootNode, 'TopBarMain', FrameImageAdd1.ImagePath_TopBar.Text) then
+    Exit;
+  NewNode(XMLDoc, RootNode, 'TopBarHeight', IntToStr(FrameDrag1.Background.Height));
+  NewNode(XMLDoc, RootNode, 'TopBarWidth', IntToStr(FrameDrag1.Background.Width));
+
+  // Avro Icon
+  if not ImageToXml(XMLDoc, RootNode, 'AvroIconNormal', FrameImageAdd1.AvroIcon.Text) then Exit;
+  if not ImageToXml(XMLDoc, RootNode, 'AvroIconOver', FrameImageAdd1.AvroIconOver.Text) then Exit;
+  if not ImageToXml(XMLDoc, RootNode, 'AvroIconDown', FrameImageAdd1.AvroIconDown.Text) then Exit;
+  NewNode(XMLDoc, RootNode, 'AvroIconHeight', IntToStr(FrameDrag1.AvroIcon.Height));
+  NewNode(XMLDoc, RootNode, 'AvroIconWidth', IntToStr(FrameDrag1.AvroIcon.Width));
+  NewNode(XMLDoc, RootNode, 'AvroIconLeft', IntToStr(FrameDrag1.AvroIcon.Left));
+  NewNode(XMLDoc, RootNode, 'AvroIconTop', IntToStr(FrameDrag1.AvroIcon.Top));
+
+  // Keyboard Mode
+  if not ImageToXml(XMLDoc, RootNode, 'KeyboardModeEnglishNormal', FrameImageAdd1.KMSys.Text) then Exit;
+  if not ImageToXml(XMLDoc, RootNode, 'KeyboardModeEnglishOver', FrameImageAdd1.KMSysOver.Text) then Exit;
+  if not ImageToXml(XMLDoc, RootNode, 'KeyboardModeEnglishDown', FrameImageAdd1.KMSysDown.Text) then Exit;
+  if not ImageToXml(XMLDoc, RootNode, 'KeyboardModeBanglaNormal', FrameImageAdd1.KMBangla.Text) then Exit;
+  if not ImageToXml(XMLDoc, RootNode, 'KeyboardModeBanglaOver', FrameImageAdd1.KMBanglaOver.Text) then Exit;
+  if not ImageToXml(XMLDoc, RootNode, 'KeyboardModeBanglaDown', FrameImageAdd1.KMBanglaDown.Text) then Exit;
+  NewNode(XMLDoc, RootNode, 'KeyboardModeHeight', IntToStr(FrameDrag1.KM.Height));
+  NewNode(XMLDoc, RootNode, 'KeyboardModeWidth', IntToStr(FrameDrag1.KM.Width));
+  NewNode(XMLDoc, RootNode, 'KeyboardModeLeft', IntToStr(FrameDrag1.KM.Left));
+  NewNode(XMLDoc, RootNode, 'KeyboardModeTop', IntToStr(FrameDrag1.KM.Top));
+
+
+  // Keyboard Layout
+  if not ImageToXml(XMLDoc, RootNode, 'KeyboardLayoutNormal', FrameImageAdd1.KL.Text) then Exit;
+  if not ImageToXml(XMLDoc, RootNode, 'KeyboardLayoutOver', FrameImageAdd1.KLOver.Text) then Exit;
+  if not ImageToXml(XMLDoc, RootNode, 'KeyboardLayoutDown', FrameImageAdd1.KLDown.Text) then Exit;
+  NewNode(XMLDoc, RootNode, 'KeyboardLayoutHeight', IntToStr(FrameDrag1.KL.Height));
+  NewNode(XMLDoc, RootNode, 'KeyboardLayoutWidth', IntToStr(FrameDrag1.KL.Width));
+  NewNode(XMLDoc, RootNode, 'KeyboardLayoutLeft', IntToStr(FrameDrag1.KL.Left));
+  NewNode(XMLDoc, RootNode, 'KeyboardLayoutTop', IntToStr(FrameDrag1.KL.Top));
+
+  // LayoutViewer
+  if not ImageToXml(XMLDoc, RootNode, 'LayoutViewerNormal', FrameImageAdd1.LayoutV.Text) then Exit;
+  if not ImageToXml(XMLDoc, RootNode, 'LayoutViewerOver', FrameImageAdd1.LayoutVOver.Text) then Exit;
+  if not ImageToXml(XMLDoc, RootNode, 'LayoutViewerDown', FrameImageAdd1.LayoutVDown.Text) then Exit;
+  NewNode(XMLDoc, RootNode, 'LayoutViewerHeight', IntToStr(FrameDrag1.LayoutV.Height));
+  NewNode(XMLDoc, RootNode, 'LayoutViewerWidth', IntToStr(FrameDrag1.LayoutV.Width));
+  NewNode(XMLDoc, RootNode, 'LayoutViewerLeft', IntToStr(FrameDrag1.LayoutV.Left));
+  NewNode(XMLDoc, RootNode, 'LayoutViewerTop', IntToStr(FrameDrag1.LayoutV.Top));
+
+  // AvroMouse
+  if not ImageToXml(XMLDoc, RootNode, 'AvroMouseNormal', FrameImageAdd1.AvroMouse.Text) then Exit;
+  if not ImageToXml(XMLDoc, RootNode, 'AvroMouseOver', FrameImageAdd1.AvroMouseOver.Text) then Exit;
+  if not ImageToXml(XMLDoc, RootNode, 'AvroMouseDown', FrameImageAdd1.AvroMouseDown.Text) then Exit;
+  NewNode(XMLDoc, RootNode, 'AvroMouseHeight', IntToStr(FrameDrag1.AvroMouse.Height));
+  NewNode(XMLDoc, RootNode, 'AvroMouseWidth', IntToStr(FrameDrag1.AvroMouse.Width));
+  NewNode(XMLDoc, RootNode, 'AvroMouseLeft', IntToStr(FrameDrag1.AvroMouse.Left));
+  NewNode(XMLDoc, RootNode, 'AvroMouseTop', IntToStr(FrameDrag1.AvroMouse.Top));
+
+  // Tools
+  if not ImageToXml(XMLDoc, RootNode, 'ToolsNormal', FrameImageAdd1.Tools.Text) then Exit;
+  if not ImageToXml(XMLDoc, RootNode, 'ToolsOver', FrameImageAdd1.ToolsOver.Text) then Exit;
+  if not ImageToXml(XMLDoc, RootNode, 'ToolsDown', FrameImageAdd1.ToolsDown.Text) then Exit;
+  NewNode(XMLDoc, RootNode, 'ToolsHeight', IntToStr(FrameDrag1.Tools.Height));
+  NewNode(XMLDoc, RootNode, 'ToolsWidth', IntToStr(FrameDrag1.Tools.Width));
+  NewNode(XMLDoc, RootNode, 'ToolsLeft', IntToStr(FrameDrag1.Tools.Left));
+  NewNode(XMLDoc, RootNode, 'ToolsTop', IntToStr(FrameDrag1.Tools.Top));
+
+  // Web
+  if not ImageToXml(XMLDoc, RootNode, 'WebNormal', FrameImageAdd1.Web.Text) then Exit;
+  if not ImageToXml(XMLDoc, RootNode, 'WebOver', FrameImageAdd1.WebOver.Text) then Exit;
+  if not ImageToXml(XMLDoc, RootNode, 'WebDown', FrameImageAdd1.WebDown.Text) then Exit;
+  NewNode(XMLDoc, RootNode, 'WebHeight', IntToStr(FrameDrag1.Web.Height));
+  NewNode(XMLDoc, RootNode, 'WebWidth', IntToStr(FrameDrag1.Web.Width));
+  NewNode(XMLDoc, RootNode, 'WebLeft', IntToStr(FrameDrag1.Web.Left));
+  NewNode(XMLDoc, RootNode, 'WebTop', IntToStr(FrameDrag1.Web.Top));
+
+  // Help
+  if not ImageToXml(XMLDoc, RootNode, 'HelpNormal', FrameImageAdd1.Help.Text) then Exit;
+  if not ImageToXml(XMLDoc, RootNode, 'HelpOver', FrameImageAdd1.HelpOver.Text) then Exit;
+  if not ImageToXml(XMLDoc, RootNode, 'HelpDown', FrameImageAdd1.HelpDown.Text) then Exit;
+  NewNode(XMLDoc, RootNode, 'HelpHeight', IntToStr(FrameDrag1.Help.Height));
+  NewNode(XMLDoc, RootNode, 'HelpWidth', IntToStr(FrameDrag1.Help.Width));
+  NewNode(XMLDoc, RootNode, 'HelpLeft', IntToStr(FrameDrag1.Help.Left));
+  NewNode(XMLDoc, RootNode, 'HelpTop', IntToStr(FrameDrag1.Help.Top));
+
+  // Exit
+  if not ImageToXml(XMLDoc, RootNode, 'ExitNormal', FrameImageAdd1.Exit.Text) then Exit;
+  if not ImageToXml(XMLDoc, RootNode, 'ExitOver', FrameImageAdd1.ExitOver.Text) then Exit;
+  if not ImageToXml(XMLDoc, RootNode, 'ExitDown', FrameImageAdd1.ExitDown.Text) then Exit;
+  NewNode(XMLDoc, RootNode, 'ExitHeight', IntToStr(FrameDrag1.Exit.Height));
+  NewNode(XMLDoc, RootNode, 'ExitWidth', IntToStr(FrameDrag1.Exit.Width));
+  NewNode(XMLDoc, RootNode, 'ExitLeft', IntToStr(FrameDrag1.Exit.Left));
+  NewNode(XMLDoc, RootNode, 'ExitTop', IntToStr(FrameDrag1.Exit.Top));
+
+  // Save file
+  SaveDialog1.FileName := EditSkinName.Text + '.avroskin';
+  if SaveDialog1.Execute then
+    XMLDoc.SaveToFile(SaveDialog1.FileName);
+end;
+
+procedure TfrmSkinCreator.FormCreate(Sender: TObject);
+begin
+  with FrameImageAdd1 do
+  begin
+    Initialize;
+    Top := 0;
+    Left := 0;
+  end;
+
+  with FrameDrag1 do Initialize;
+
+  Index := 1;
+  GroupBox1.BringToFront;
+  Self.Show;
+  Application.ProcessMessages;
+  EditSkinName.SetFocus;
+end;
+
+procedure TfrmSkinCreator.LabelShareLinkClick(Sender: TObject);
+begin
+  Execute_Something('http://www.omicronlab.com/go.php?id=7');
+end;
+
+function TfrmSkinCreator.ValidateNext(Val: Integer): Boolean;
+begin
+  Result := False;
+  case Index of
+    1:
+      Result := Validate_1To2_Page;
+
+    2:
+      Result := Validate_2To3_Page;
+
+    3:
+      Result := Validate_3To4_Page;
+  end;
+end;
+
+function TfrmSkinCreator.Validate_1To2_Page: Boolean;
+begin
+  Result := False;
+
+  // Validate
+  if Trim(EditSkinName.Text) = '' then
+  begin
+    Application.MessageBox('Please enter Skin Name', 'Skin Designer', MB_OK + MB_ICONEXCLAMATION + MB_DEFBUTTON1 + MB_APPLMODAL);
+    EditSkinName.SetFocus;
+    System.Exit;
+  end;
+
+  // Cosmetics
+  FrameImageAdd1.SetVisibleControls(CheckKL.Checked, CheckLayoutViewer.Checked, CheckMouse.Checked, CheckTools.Checked, CheckWeb.Checked, CheckHelp.Checked);
+  Result := True;
+end;
+
+function TfrmSkinCreator.Validate_2To3_Page: Boolean;
+begin
+  Result := False;
+
+  // Validate
+  if FrameImageAdd1.Validate = False then
+    System.Exit;
+
+
+  // Load Images
+  with FrameImageAdd1 do
+    FrameDrag1.SetImages(ImagePath_TopBar.Text, AvroIcon.Text, KMSys.Text, KL.Text, LayoutV.Text, AvroMouse.Text, Tools.Text, Web.Text, Help.Text, Exit.Text);
+
+  Result := True;
+end;
+
+function TfrmSkinCreator.Validate_3To4_Page: Boolean;
+begin
+  Result := FrameDrag1.Validate;
+end;
+
+end.
+
