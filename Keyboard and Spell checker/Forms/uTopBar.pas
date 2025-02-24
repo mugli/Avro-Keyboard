@@ -42,8 +42,6 @@ Uses
      ExtCtrls,
      Menus,
      DateUtils,
-     JvComponentBase,
-     JvBalloonHint,
      SHELLAPI;
 
 Type
@@ -77,8 +75,9 @@ Type
           TmrButtonHelp: TTimer;
           TmrButtonMinimize: TTimer;
           TransparencyTimer: TTimer;
-          JvBalloonHint1: TJvBalloonHint;
+
           HintTimer: TTimer;
+    BalloonHint1: TBalloonHint;
           Procedure FormCreate(Sender: TObject);
           Procedure ImgAppIconMouseEnter(Sender: TObject);
           Procedure ImgButtonModeMouseEnter(Sender: TObject);
@@ -455,13 +454,17 @@ End;
 
 Procedure TTopBar.HintTimerTimer(Sender: TObject);
 Begin
-     HintTimer.Enabled := False;
-     If Self.Visible Then Begin
-          If StrToInt(TopHintShowTimes) < NumberOfVisibleHints Then Begin
-               JvBalloonHint1.ActivateHint(ImgButtonMode, 'Click here to start Bangla typing' + #13 + 'or Press ' + ModeSwitchKey, '', 5000);
-               TopHintShowTimes := IntToStr(StrToInt(TopHintShowTimes) + 1);
-          End;
-     End;
+  HintTimer.Enabled := False;
+  If Self.Visible Then
+  Begin
+    If StrToInt(TopHintShowTimes) < NumberOfVisibleHints Then
+    Begin
+      BalloonHint1.Title := 'Click here to start Bangla typing' + #13 +
+        'or Press ' + ModeSwitchKey;
+      BalloonHint1.ShowHint(ImgButtonMode);
+	  TopHintShowTimes := IntToStr(StrToInt(TopHintShowTimes) + 1);
+    End;
+  End;
 End;
 
 { =============================================================================== }
