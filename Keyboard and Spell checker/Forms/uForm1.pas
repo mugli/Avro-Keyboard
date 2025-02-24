@@ -49,7 +49,7 @@ Uses
 		 Generics.Collections,
 		 StrUtils,
 		 clsUpdateInfoDownloader,
-		 DateUtils;
+		 DateUtils, System.ImageList;
 
 Type
 		 TMenuItemExtended = Class(TMenuItem)
