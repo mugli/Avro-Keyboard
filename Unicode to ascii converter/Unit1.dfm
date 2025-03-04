@@ -47,14 +47,12 @@ object Form1: TForm1
     000000000000000000000000000000000000000000000000000000000000FFFF
     0000FFFF0000FFFF0000FFFF0000FFFF000080FF000080FF000081FF000080FE
     0000803800008000000090010000FC030000FF1F0000FFFF0000FFFF0000}
-  OldCreateOrder = False
   Position = poDesktopCenter
   OnClose = FormClose
   OnCreate = FormCreate
   DesignSize = (
     570
     299)
-  PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
     Left = 8
@@ -106,6 +104,7 @@ object Form1: TForm1
     ParentFont = False
     ScrollBars = ssVertical
     TabOrder = 0
+    ExplicitWidth = 548
   end
   object MEMO2: TMemo
     Left = 8
@@ -121,6 +120,8 @@ object Form1: TForm1
     ParentFont = False
     ScrollBars = ssVertical
     TabOrder = 1
+    ExplicitWidth = 548
+    ExplicitHeight = 88
   end
   object Button1: TButton
     Left = 8
@@ -146,5 +147,7 @@ object Form1: TForm1
     Anchors = [akLeft, akRight, akBottom]
     TabOrder = 3
     Visible = False
+    ExplicitTop = 260
+    ExplicitWidth = 284
   end
 end

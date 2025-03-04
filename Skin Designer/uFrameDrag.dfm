@@ -33,8 +33,8 @@ object FrameDrag: TFrameDrag
   object Label3: TLabel
     Left = 55
     Top = 286
-    Width = 394
-    Height = 13
+    Width = 426
+    Height = 15
     Caption = 
       'Note: All coordinate values are related to Top-Left corner of To' +
       'p Bar, in Pixel unit.'
@@ -191,7 +191,7 @@ object FrameDrag: TFrameDrag
     Left = 149
     Top = 255
     Width = 81
-    Height = 21
+    Height = 23
     TabOrder = 3
     Text = '0'
     OnChange = XPosChange
@@ -200,7 +200,7 @@ object FrameDrag: TFrameDrag
     Left = 349
     Top = 255
     Width = 81
-    Height = 21
+    Height = 23
     TabOrder = 4
     Text = '0'
     OnChange = YPosChange

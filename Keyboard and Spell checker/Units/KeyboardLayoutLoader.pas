@@ -438,8 +438,8 @@ Begin
     End;
   Finally
 
-	XML.Active := false;
-	XML := Nil;
+    XML.Active := False;
+    XML := Nil;
     Application.ProcessMessages;
   End;
 End;

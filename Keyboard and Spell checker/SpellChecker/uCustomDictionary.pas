@@ -31,13 +31,13 @@ Interface
 
 Uses
   Classes,
-  Generics.Collections ;
+  Generics.Collections;
 
 Var
   FCustomDictLoaded: Boolean;
   SpellCustomDict: TStringList;
   SpellIgnoreDict: TStringList;
-  SpellChangeDict: TDictionary<string,string>;
+  SpellChangeDict: TDictionary<string, string>;
 
 Procedure InitSpellCustomDict;
 Procedure SaveSpellCustomDict;
@@ -64,13 +64,15 @@ Begin
   SpellCustomDict.Duplicates := dupIgnore;
   Try
     TempList.Clear;
-    TempList.LoadFromFile(GetAvroDataDir + 'CustomSpellingDictionary.dat',TEncoding.UTF8);
+    TempList.LoadFromFile(GetAvroDataDir + 'CustomSpellingDictionary.dat',
+      TEncoding.UTF8);
     TempList.Delete(0); // Avoid BOM
     SpellCustomDict.Assign(TempList);
   Except
-    On E: Exception Do Begin
-        // Nothing
-      End;
+    On E: Exception Do
+    Begin
+      // Nothing
+    End;
   End;
   TempList.Clear;
   FreeAndNil(TempList);
@@ -79,7 +81,7 @@ Begin
   SpellIgnoreDict.Sorted := True;
   SpellIgnoreDict.Duplicates := dupIgnore;
 
-  SpellChangeDict := TDictionary<string,string>.Create;
+  SpellChangeDict := TDictionary<string, string>.Create;
   FCustomDictLoaded := True;
 End;
 
@@ -90,13 +92,16 @@ Begin
   TempList := TStringList.Create;
   TempList.Assign(SpellCustomDict);
   TempList.Sorted := False;
-  TempList.Insert(0, '// Custom Bangla Dictionary for Avro Spell Checker (Do not remove this line)');
+  TempList.Insert(0,
+    '// Custom Bangla Dictionary for Avro Spell Checker (Do not remove this line)');
   Try
-    TempList.SaveToFile(GetAvroDataDir + 'CustomSpellingDictionary.dat',TEncoding.UTF8);
+    TempList.SaveToFile(GetAvroDataDir + 'CustomSpellingDictionary.dat',
+      TEncoding.UTF8);
   Except
-    On E: Exception Do Begin
-        // Nothing
-      End;
+    On E: Exception Do
+    Begin
+      // Nothing
+    End;
   End;
   TempList.Clear;
   FreeAndNil(TempList);

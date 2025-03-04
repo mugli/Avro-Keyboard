@@ -1,34 +1,32 @@
 {
   =============================================================================
   *****************************************************************************
-     The contents of this file are subject to the Mozilla Public License
-     Version 1.1 (the "License"); you may not use this file except in
-     compliance with the License. You may obtain a copy of the License at
-     http://www.mozilla.org/MPL/
+  The contents of this file are subject to the Mozilla Public License
+  Version 1.1 (the "License"); you may not use this file except in
+  compliance with the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
 
-     Software distributed under the License is distributed on an "AS IS"
-     basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
-     License for the specific language governing rights and limitations
-     under the License.
+  Software distributed under the License is distributed on an "AS IS"
+  basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+  License for the specific language governing rights and limitations
+  under the License.
 
-     The Original Code is Avro Keyboard 5.
+  The Original Code is Avro Keyboard 5.
 
-     The Initial Developer of the Original Code is
-     Mehdi Hasan Khan <mhasan@omicronlab.com>.
+  The Initial Developer of the Original Code is
+  Mehdi Hasan Khan <mhasan@omicronlab.com>.
 
-     Copyright (C) OmicronLab <http://www.omicronlab.com>. All Rights Reserved.
+  Copyright (C) OmicronLab <http://www.omicronlab.com>. All Rights Reserved.
 
 
-     Contributor(s): ______________________________________.
+  Contributor(s): ______________________________________.
 
   *****************************************************************************
   =============================================================================
 }
 
 {$INCLUDE ../ProjectDefines.inc}
-
-{COMPLETE TRANSFERING!}
-
+{ COMPLETE TRANSFERING! }
 
 Unit clsRegistry_XMLSetting;
 
@@ -63,9 +61,11 @@ Type
     destructor Destroy; override;
 
     function LoadXMLData(): Boolean;
-    function GetValue(const ValueName: UTF8String; DefaultValue: String = ''): String; overload;
+    function GetValue(const ValueName: UTF8String; DefaultValue: String = '')
+      : String; overload;
     procedure CreateNewXMLData;
-    procedure SetValue(const ValueName: UTF8String; const ValueData: String); overload;
+    procedure SetValue(const ValueName: UTF8String;
+      const ValueData: String); overload;
     procedure SaveXMLData;
 
   end;
@@ -85,7 +85,7 @@ begin
 
 end;
 
-{===============================================================================}
+{ =============================================================================== }
 
 procedure TXMLSetting.CreateNewXMLData;
 begin
@@ -100,7 +100,7 @@ begin
   XML.AddChild('Settings');
 end;
 
-{===============================================================================}
+{ =============================================================================== }
 
 destructor TXMLSetting.Destroy;
 begin
@@ -109,8 +109,7 @@ begin
   inherited;
 end;
 
-{===============================================================================}
-
+{ =============================================================================== }
 
 function TXMLSetting.GetValue(const ValueName: UTF8String;
   DefaultValue: String): String;
@@ -139,10 +138,12 @@ function TXMLSetting.LoadXMLData(): Boolean;
 begin
   Result := false;
   try
-    if FileExists(ExtractFilePath(Application.ExeName) + 'Layout Editor Settings.xml') = true then
+    if FileExists(ExtractFilePath(Application.ExeName) +
+      'Layout Editor Settings.xml') = true then
     begin
-      XML.LoadFromFile(ExtractFilePath(Application.ExeName) + 'Layout Editor Settings.xml');
-      Result := True;
+      XML.LoadFromFile(ExtractFilePath(Application.ExeName) +
+        'Layout Editor Settings.xml');
+      Result := true;
     end
     else
       Result := false;
@@ -166,8 +167,7 @@ begin
   end;
 end;
 
-
-{===============================================================================}
+{ =============================================================================== }
 
 procedure TXMLSetting.SetValue(const ValueName: UTF8String;
   const ValueData: String);
@@ -182,7 +182,6 @@ begin
 end;
 
 { TMyRegistry }
-
 
 function TMyRegistry.ReadStringDef(const Name: String;
   DefaultVal: String = ''): String;

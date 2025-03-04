@@ -1,88 +1,88 @@
 {
   =============================================================================
   *****************************************************************************
-     The contents of this file are subject to the Mozilla Public License
-     Version 1.1 (the "License"); you may not use this file except in
-     compliance with the License. You may obtain a copy of the License at
-     http://www.mozilla.org/MPL/
+  The contents of this file are subject to the Mozilla Public License
+  Version 1.1 (the "License"); you may not use this file except in
+  compliance with the License. You may obtain a copy of the License at
+  http://www.mozilla.org/MPL/
 
-     Software distributed under the License is distributed on an "AS IS"
-     basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
-     License for the specific language governing rights and limitations
-     under the License.
+  Software distributed under the License is distributed on an "AS IS"
+  basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+  License for the specific language governing rights and limitations
+  under the License.
 
-     The Original Code is Avro Keyboard 5.
+  The Original Code is Avro Keyboard 5.
 
-     The Initial Developer of the Original Code is
-     Mehdi Hasan Khan (mhasan@omicronlab.com).
+  The Initial Developer of the Original Code is
+  Mehdi Hasan Khan (mhasan@omicronlab.com).
 
-     Copyright (C) OmicronLab (http://www.omicronlab.com). All Rights Reserved.
+  Copyright (C) OmicronLab (http://www.omicronlab.com). All Rights Reserved.
 
 
-     Contributor(s): ______________________________________.
+  Contributor(s): ______________________________________.
 
   *****************************************************************************
   =============================================================================
 }
 
 {$INCLUDE ../../ProjectDefines.inc}
-
-{COMPLETE TRANSFERING!}
-
+{ COMPLETE TRANSFERING! }
 
 Unit clsRegistry_XMLSetting;
 
 Interface
 
 Uses
-     classes,
-     sysutils,
-     StrUtils,
-       XMLIntf, XMLDoc,
-         system.Variants,
-     Forms,
-     Registry,
-     uFileFolderHandling;
+  classes,
+  sysutils,
+  StrUtils,
+  XMLIntf, XMLDoc,
+  system.Variants,
+  Forms,
+  Registry,
+  uFileFolderHandling;
 
-//Custom Registry class
+// Custom Registry class
 Type
-     TMyRegistry = Class(TRegistry)
-     Public
-          Function ReadStringDef(Const Name: String; DefaultVal: String = ''): String;
-          Function ReadDateDef(Const Name: String; DefaultVal: TDateTime): TDateTime;
-     End;
+  TMyRegistry = Class(TRegistry)
+  Public
+    Function ReadStringDef(Const Name: String; DefaultVal: String = ''): String;
+    Function ReadDateDef(Const Name: String; DefaultVal: TDateTime): TDateTime;
+  End;
 
-     //Skeleton of Class TXMLSetting
+  // Skeleton of Class TXMLSetting
 Type
-     TXMLSetting = Class
-     Private
-          XML: IXMLDocument;
+  TXMLSetting = Class
+  Private
+    XML: IXMLDocument;
     child: IXMLNode;
-     Public
-          Constructor Create;           //Initializer
-          Destructor Destroy; Override; //Destructor
+  Public
+    Constructor Create; // Initializer
+    Destructor Destroy; Override; // Destructor
 
-          Function LoadXMLData(): Boolean;
-          Function GetValue(Const ValueName: UTF8String; DefaultValue: String = ''): String; Overload;
-          Function GetValue(Const ValueName: UTF8String; DefaultValue: TDateTime): TDateTime; Overload;
-          Procedure CreateNewXMLData;
-          Procedure SetValue(Const ValueName: UTF8String; Const ValueData: String); Overload;
-          Procedure SetValue(Const ValueName: UTF8String; Const ValueData: TDateTime); Overload;
-          Procedure SaveXMLData;
+    Function LoadXMLData(): Boolean;
+    Function GetValue(Const ValueName: UTF8String; DefaultValue: String = '')
+      : String; Overload;
+    Function GetValue(Const ValueName: UTF8String; DefaultValue: TDateTime)
+      : TDateTime; Overload;
+    Procedure CreateNewXMLData;
+    Procedure SetValue(Const ValueName: UTF8String;
+      Const ValueData: String); Overload;
+    Procedure SetValue(Const ValueName: UTF8String;
+      Const ValueData: TDateTime); Overload;
+    Procedure SaveXMLData;
 
-     End;
-
-
+  End;
 
 Implementation
 
-{===============================================================================}
+{ =============================================================================== }
 
 { TXMLSetting }
 
 Constructor TXMLSetting.Create;
 Begin
-     Inherited;
+  Inherited;
 
   XML := TXMLDocument.Create(nil);
   XML.Active := true;
@@ -91,7 +91,7 @@ Begin
 
 End;
 
-{===============================================================================}
+{ =============================================================================== }
 
 Procedure TXMLSetting.CreateNewXMLData;
 Begin
@@ -105,19 +105,19 @@ Begin
   XML.AddChild('Settings');
 End;
 
-{===============================================================================}
+{ =============================================================================== }
 
 Destructor TXMLSetting.Destroy;
 Begin
-    XML.Active := false;
+  XML.Active := false;
   XML := nil;
   Inherited;
 End;
 
-{===============================================================================}
+{ =============================================================================== }
 
 Function TXMLSetting.GetValue(Const ValueName: UTF8String;
-     DefaultValue: TDateTime): TDateTime;
+  DefaultValue: TDateTime): TDateTime;
 Begin
   Try
     child := XML.DocumentElement.ChildNodes.FindNode(ValueName);
@@ -132,10 +132,10 @@ Begin
   End;
 End;
 
-{===============================================================================}
+{ =============================================================================== }
 
 Function TXMLSetting.GetValue(Const ValueName: UTF8String;
-     DefaultValue: String): String;
+  DefaultValue: String): String;
 Begin
   Try
 
@@ -156,20 +156,19 @@ Begin
   End;
 End;
 
-{===============================================================================}
+{ =============================================================================== }
 {$HINTS Off}
-
 
 Function TXMLSetting.LoadXMLData(): Boolean;
 Var
-     SettingFileName          : String;
+  SettingFileName: String;
 Begin
   Result := false;
-      {$IFNDEF SpellCheckerDll}
-     SettingFileName := 'Spell Settings.xml';
-     {$ELSE}
-     SettingFileName := 'Spell dll Settings.xml';
-     {$ENDIF}
+{$IFNDEF SpellCheckerDll}
+  SettingFileName := 'Spell Settings.xml';
+{$ELSE}
+  SettingFileName := 'Spell dll Settings.xml';
+{$ENDIF}
   Try
     If FileExists(ExtractFilePath(Application.ExeName) + SettingFileName)
       = true Then
@@ -186,21 +185,20 @@ Begin
 End;
 
 {$HINTS On}
-{===============================================================================}
-
+{ =============================================================================== }
 
 Procedure TXMLSetting.SaveXMLData;
 Var
-     SettingFileName          : String;
+  SettingFileName: String;
 Begin
   // XML.XmlFormat := xfReadable;
-       {$IFNDEF SpellCheckerDll}
-     SettingFileName := 'Spell Settings.xml';
-     {$ELSE}
-     SettingFileName := 'Spell dll Settings.xml';
-     {$ENDIF}
+{$IFNDEF SpellCheckerDll}
+  SettingFileName := 'Spell Settings.xml';
+{$ELSE}
+  SettingFileName := 'Spell dll Settings.xml';
+{$ENDIF}
   XML.XML.Text := XMLDoc.FormatXMLData(XML.XML.Text);
-    XML.Active := true;
+  XML.Active := true;
   Try
     XML.SaveToFile(GetAvroDataDir + SettingFileName);
   Except
@@ -211,8 +209,7 @@ Begin
   End;
 End;
 
-
-{===============================================================================}
+{ =============================================================================== }
 
 Procedure TXMLSetting.SetValue(Const ValueName: UTF8String;
   Const ValueData: TDateTime);
@@ -239,9 +236,9 @@ Begin
 
 End;
 
-{===============================================================================}
-{===============================================================================}
-{===============================================================================}
+{ =============================================================================== }
+{ =============================================================================== }
+{ =============================================================================== }
 
 { TMyRegistry }
 
@@ -287,4 +284,3 @@ Begin
 End;
 
 End.
-

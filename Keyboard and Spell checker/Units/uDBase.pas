@@ -29,7 +29,6 @@ Unit uDBase;
 
 {$INCLUDE ../../ProjectDefines.inc}
 
-
 Interface
 
 Uses
@@ -40,8 +39,6 @@ Uses
   FireDAC.Phys.SQLiteWrapper.Stat, FireDAC.Phys.SQLiteDef, FireDAC.Stan.Intf,
   FireDAC.Phys,
   Forms;
-
-
 
 Type
   LongIntArray = Array Of LongInt;
@@ -192,7 +189,6 @@ Begin
   Suffix_Spell.Duplicates := dupIgnore;
 
   Suffix := TDictionary<String, String>.Create;
-
 
   Stmt := TSQLiteStatement.Create(FDatabase);
   Stmt.Prepare(SelectSQL);
@@ -346,7 +342,6 @@ Begin
 
   FDConnection1.DriverName := 'SQLITE';
 
-
   if FileExists(GetAvroDataDir + 'Database.db3') then
   begin
     FDConnection1.Params.Values['Database'] := GetAvroDataDir + 'Database.db3';
@@ -356,7 +351,6 @@ Begin
       FDatabase := TSQLiteDatabase(FDConnection1.CliObj);
 
       Try
-
 
         LoadOneDatabase('A', W_A, W_Hash_A);
         LoadOneDatabase('AA', W_AA, W_Hash_AA);
@@ -448,8 +442,6 @@ Begin
   SelectSQL := 'SELECT Words FROM ' + FileName + ';';
   // Inititialize Data
   Arr := TStringList.Create;
-
-
 
   Stmt := TSQLiteStatement.Create(FDatabase);
   Stmt.Prepare('select Words from ' + FileName);

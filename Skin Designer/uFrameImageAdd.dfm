@@ -54,7 +54,7 @@ object FrameImageAdd: TFrameImageAdd
       Left = 56
       Top = 23
       Width = 266
-      Height = 21
+      Height = 23
       TabOrder = 0
       Text = 'ImagePath_TopBar'
       OnClick = ImagePath_TopBarClick
@@ -146,7 +146,7 @@ object FrameImageAdd: TFrameImageAdd
       Left = 115
       Top = 23
       Width = 207
-      Height = 21
+      Height = 23
       TabOrder = 0
       Text = 'Edit1'
       OnClick = ImagePath_TopBarClick
@@ -164,7 +164,7 @@ object FrameImageAdd: TFrameImageAdd
       Left = 115
       Top = 52
       Width = 207
-      Height = 21
+      Height = 23
       TabOrder = 2
       Text = 'Edit1'
       OnClick = ImagePath_TopBarClick
@@ -182,7 +182,7 @@ object FrameImageAdd: TFrameImageAdd
       Left = 115
       Top = 79
       Width = 207
-      Height = 21
+      Height = 23
       TabOrder = 4
       Text = 'Edit1'
       OnClick = ImagePath_TopBarClick
@@ -274,7 +274,7 @@ object FrameImageAdd: TFrameImageAdd
       Left = 115
       Top = 23
       Width = 207
-      Height = 21
+      Height = 23
       TabOrder = 0
       Text = 'Edit1'
       OnClick = ImagePath_TopBarClick
@@ -292,7 +292,7 @@ object FrameImageAdd: TFrameImageAdd
       Left = 115
       Top = 52
       Width = 207
-      Height = 21
+      Height = 23
       TabOrder = 2
       Text = 'Edit1'
       OnClick = ImagePath_TopBarClick
@@ -310,7 +310,7 @@ object FrameImageAdd: TFrameImageAdd
       Left = 115
       Top = 79
       Width = 207
-      Height = 21
+      Height = 23
       TabOrder = 4
       Text = 'Edit1'
       OnClick = ImagePath_TopBarClick
@@ -402,7 +402,7 @@ object FrameImageAdd: TFrameImageAdd
       Left = 115
       Top = 23
       Width = 207
-      Height = 21
+      Height = 23
       TabOrder = 0
       Text = 'Edit1'
       OnClick = ImagePath_TopBarClick
@@ -420,7 +420,7 @@ object FrameImageAdd: TFrameImageAdd
       Left = 115
       Top = 52
       Width = 207
-      Height = 21
+      Height = 23
       TabOrder = 2
       Text = 'Edit1'
       OnClick = ImagePath_TopBarClick
@@ -438,7 +438,7 @@ object FrameImageAdd: TFrameImageAdd
       Left = 115
       Top = 79
       Width = 207
-      Height = 21
+      Height = 23
       TabOrder = 4
       Text = 'Edit1'
       OnClick = ImagePath_TopBarClick
@@ -530,7 +530,7 @@ object FrameImageAdd: TFrameImageAdd
       Left = 115
       Top = 24
       Width = 207
-      Height = 21
+      Height = 23
       TabOrder = 0
       Text = 'Edit1'
       OnClick = ImagePath_TopBarClick
@@ -548,7 +548,7 @@ object FrameImageAdd: TFrameImageAdd
       Left = 115
       Top = 52
       Width = 207
-      Height = 21
+      Height = 23
       TabOrder = 2
       Text = 'Edit1'
       OnClick = ImagePath_TopBarClick
@@ -566,7 +566,7 @@ object FrameImageAdd: TFrameImageAdd
       Left = 115
       Top = 79
       Width = 207
-      Height = 21
+      Height = 23
       TabOrder = 4
       Text = 'Edit1'
       OnClick = ImagePath_TopBarClick
@@ -658,7 +658,7 @@ object FrameImageAdd: TFrameImageAdd
       Left = 115
       Top = 23
       Width = 207
-      Height = 21
+      Height = 23
       TabOrder = 0
       Text = 'Edit1'
       OnClick = ImagePath_TopBarClick
@@ -676,7 +676,7 @@ object FrameImageAdd: TFrameImageAdd
       Left = 115
       Top = 52
       Width = 207
-      Height = 21
+      Height = 23
       TabOrder = 2
       Text = 'Edit1'
       OnClick = ImagePath_TopBarClick
@@ -694,7 +694,7 @@ object FrameImageAdd: TFrameImageAdd
       Left = 115
       Top = 79
       Width = 207
-      Height = 21
+      Height = 23
       TabOrder = 4
       Text = 'Edit1'
       OnClick = ImagePath_TopBarClick
@@ -786,7 +786,7 @@ object FrameImageAdd: TFrameImageAdd
       Left = 115
       Top = 23
       Width = 207
-      Height = 21
+      Height = 23
       TabOrder = 0
       Text = 'Edit1'
       OnClick = ImagePath_TopBarClick
@@ -804,7 +804,7 @@ object FrameImageAdd: TFrameImageAdd
       Left = 115
       Top = 52
       Width = 207
-      Height = 21
+      Height = 23
       TabOrder = 2
       Text = 'Edit1'
       OnClick = ImagePath_TopBarClick
@@ -822,7 +822,7 @@ object FrameImageAdd: TFrameImageAdd
       Left = 115
       Top = 79
       Width = 207
-      Height = 21
+      Height = 23
       TabOrder = 4
       Text = 'Edit1'
       OnClick = ImagePath_TopBarClick
@@ -914,7 +914,7 @@ object FrameImageAdd: TFrameImageAdd
       Left = 115
       Top = 23
       Width = 207
-      Height = 21
+      Height = 23
       TabOrder = 0
       Text = 'Edit1'
       OnClick = ImagePath_TopBarClick
@@ -932,7 +932,7 @@ object FrameImageAdd: TFrameImageAdd
       Left = 115
       Top = 52
       Width = 207
-      Height = 21
+      Height = 23
       TabOrder = 2
       Text = 'Edit1'
       OnClick = ImagePath_TopBarClick
@@ -950,7 +950,7 @@ object FrameImageAdd: TFrameImageAdd
       Left = 115
       Top = 79
       Width = 207
-      Height = 21
+      Height = 23
       TabOrder = 4
       Text = 'Edit1'
       OnClick = ImagePath_TopBarClick
@@ -1042,7 +1042,7 @@ object FrameImageAdd: TFrameImageAdd
       Left = 115
       Top = 23
       Width = 207
-      Height = 21
+      Height = 23
       TabOrder = 0
       Text = 'Edit1'
       OnClick = ImagePath_TopBarClick
@@ -1060,7 +1060,7 @@ object FrameImageAdd: TFrameImageAdd
       Left = 115
       Top = 52
       Width = 207
-      Height = 21
+      Height = 23
       TabOrder = 2
       Text = 'Edit1'
       OnClick = ImagePath_TopBarClick
@@ -1078,7 +1078,7 @@ object FrameImageAdd: TFrameImageAdd
       Left = 115
       Top = 79
       Width = 207
-      Height = 21
+      Height = 23
       TabOrder = 4
       Text = 'Edit1'
       OnClick = ImagePath_TopBarClick
@@ -1170,7 +1170,7 @@ object FrameImageAdd: TFrameImageAdd
       Left = 115
       Top = 23
       Width = 207
-      Height = 21
+      Height = 23
       TabOrder = 0
       Text = 'Edit1'
       OnClick = ImagePath_TopBarClick
@@ -1188,7 +1188,7 @@ object FrameImageAdd: TFrameImageAdd
       Left = 115
       Top = 52
       Width = 207
-      Height = 21
+      Height = 23
       TabOrder = 2
       Text = 'Edit1'
       OnClick = ImagePath_TopBarClick
@@ -1206,7 +1206,7 @@ object FrameImageAdd: TFrameImageAdd
       Left = 115
       Top = 79
       Width = 207
-      Height = 21
+      Height = 23
       TabOrder = 4
       Text = 'Edit1'
       OnClick = ImagePath_TopBarClick
@@ -1298,7 +1298,7 @@ object FrameImageAdd: TFrameImageAdd
       Left = 115
       Top = 23
       Width = 207
-      Height = 21
+      Height = 23
       TabOrder = 0
       Text = 'Edit1'
       OnClick = ImagePath_TopBarClick
@@ -1316,7 +1316,7 @@ object FrameImageAdd: TFrameImageAdd
       Left = 115
       Top = 52
       Width = 207
-      Height = 21
+      Height = 23
       TabOrder = 2
       Text = 'Edit1'
       OnClick = ImagePath_TopBarClick
@@ -1334,7 +1334,7 @@ object FrameImageAdd: TFrameImageAdd
       Left = 115
       Top = 79
       Width = 207
-      Height = 21
+      Height = 23
       TabOrder = 4
       Text = 'Edit1'
       OnClick = ImagePath_TopBarClick
@@ -1378,7 +1378,7 @@ object FrameImageAdd: TFrameImageAdd
       Left = 115
       Top = 23
       Width = 207
-      Height = 21
+      Height = 23
       TabOrder = 0
       Text = 'Preview'
       OnClick = ImagePath_TopBarClick
