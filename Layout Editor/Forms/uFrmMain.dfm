@@ -57,10 +57,8 @@ object frmMain: TfrmMain
     020202020202020202020202020202020202020202020202020202020202FFFF
     0202FFFFF1EEFFFFF1F68001623F00011A3800016D0200010202000102020001
     02020001F0EE0001F2F600014F980001113C80070202FFFF0202FFFF0202}
-  OldCreateOrder = False
   OnClose = FormClose
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 13
   object Label7: TLabel
     Left = 12
@@ -4041,7 +4039,7 @@ object frmMain: TfrmMain
       Left = 154
       Top = 29
       Width = 68
-      Height = 35
+      Height = 33
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
@@ -4056,7 +4054,7 @@ object frmMain: TfrmMain
       Left = 154
       Top = 88
       Width = 68
-      Height = 35
+      Height = 33
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
@@ -4071,7 +4069,7 @@ object frmMain: TfrmMain
       Left = 326
       Top = 87
       Width = 68
-      Height = 35
+      Height = 33
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
@@ -4086,7 +4084,7 @@ object frmMain: TfrmMain
       Left = 326
       Top = 29
       Width = 68
-      Height = 35
+      Height = 33
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -16
@@ -4107,9 +4105,9 @@ object frmMain: TfrmMain
     ParentBackground = False
     TabOrder = 4
     object Label14: TLabel
-      Left = 18
+      Left = 19
       Top = 13
-      Width = 302
+      Width = 301
       Height = 13
       Alignment = taRightJustify
       Caption = 'You can share your layout with Avro Keyboard users'

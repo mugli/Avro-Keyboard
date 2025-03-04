@@ -29,11 +29,10 @@ program SkinDesigner;
 
 uses
   Forms,
-  ufrmSkinCreator in 'ufrmSkinCreator.pas' { frmSkinCreator },
-  ufrmAbout in 'ufrmAbout.pas' { frmAbout },
+  ufrmSkinCreator in 'ufrmSkinCreator.pas' {frmSkinCreator},
+  ufrmAbout in 'ufrmAbout.pas' {frmAbout},
   uFileFolderHandling in '..\Keyboard and Spell checker\Units\uFileFolderHandling.pas',
   clsFileVersion in '..\Keyboard and Spell checker\Classes\clsFileVersion.pas',
-  nativexml in '..\Keyboard and Spell checker\Units\nativexml.pas',
   uFrameDrag in 'uFrameDrag.pas' {FrameDrag: TFrame},
   uFrameImageAdd in 'uFrameImageAdd.pas' {FrameImageAdd: TFrame};
 

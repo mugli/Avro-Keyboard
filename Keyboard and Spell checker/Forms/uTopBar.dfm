@@ -58,7 +58,6 @@ object TopBar: TTopBar
     0000000000000000000000000000000000000000000000000000000000000000
     000000000000000000000000000000000000000000000000000000000000}
   KeyPreview = True
-  OldCreateOrder = False
   Position = poDesigned
   ScreenSnap = True
   SnapBuffer = 32
@@ -67,7 +66,6 @@ object TopBar: TTopBar
   OnHide = FormHide
   OnKeyDown = FormKeyDown
   OnShow = FormShow
-  PixelsPerInch = 96
   TextHeight = 13
   object ImgMain: TImage
     Left = 24
@@ -303,19 +301,15 @@ object TopBar: TTopBar
     Left = 480
     Top = 192
   end
-  object JvBalloonHint1: TJvBalloonHint
-    CustomAnimationStyle = atNone
-    DefaultHeader = 'Avro Keyboard'
-    Options = [boUseDefaultIcon, boUseDefaultImageIndex, boShowCloseBtn]
-    UseBalloonAsApplicationHint = True
-    Left = 384
-    Top = 200
-  end
   object HintTimer: TTimer
     Enabled = False
     Interval = 5000
     OnTimer = HintTimerTimer
     Left = 448
     Top = 192
+  end
+  object BalloonHint1: TBalloonHint
+    Left = 200
+    Top = 184
   end
 end

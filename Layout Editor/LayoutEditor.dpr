@@ -36,8 +36,7 @@ uses
   uRegistrySettings in 'Units\uRegistrySettings.pas',
   clsSkinLayoutConverter in '..\Keyboard and Spell checker\Classes\clsSkinLayoutConverter.pas',
   clsFileVersion in '..\Keyboard and Spell checker\Classes\clsFileVersion.pas',
-  uFileFolderHandling in '..\Keyboard and Spell checker\Units\uFileFolderHandling.pas',
-  nativexml in '..\Keyboard and Spell checker\Units\nativexml.pas';
+  uFileFolderHandling in '..\Keyboard and Spell checker\Units\uFileFolderHandling.pas';
 
 {$R *.res}
 

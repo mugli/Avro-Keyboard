@@ -38,7 +38,8 @@ Uses
      classes,
      sysutils,
      StrUtils,
-     NativeXML,
+       XMLIntf, XMLDoc,
+         system.Variants,
      Forms,
      Registry,
      uFileFolderHandling;
@@ -55,9 +56,8 @@ Type
 Type
      TXMLSetting = Class
      Private
-          XML: TNativeXml;
-          child: TXmlNode;
-
+          XML: IXMLDocument;
+    child: IXMLNode;
      Public
           Constructor Create;           //Initializer
           Destructor Destroy; Override; //Destructor
@@ -84,8 +84,10 @@ Constructor TXMLSetting.Create;
 Begin
      Inherited;
 
-     XML := TNativeXml.Create;
-     XML.ExternalEncoding := seUTF8;
+  XML := TXMLDocument.Create(nil);
+  XML.Active := true;
+  XML.Encoding := 'UTF-8';
+  XML.AddChild('Settings');
 
 End;
 
@@ -93,19 +95,23 @@ End;
 
 Procedure TXMLSetting.CreateNewXMLData;
 Begin
-     Xml.Free;
-     XML := TNativeXml.Create;
-     XML.EncodingString := 'UTF-8';
-     XML.ExternalEncoding := seUTF8;
-     XML.Root.Name := 'Settings';
+  if XML <> nil then
+    XML := nil;
+
+  XML := TXMLDocument.Create(nil);
+  XML.Active := true;
+
+  XML.Encoding := 'UTF-8';
+  XML.AddChild('Settings');
 End;
 
 {===============================================================================}
 
 Destructor TXMLSetting.Destroy;
 Begin
-     FreeAndNil(XML);
-     Inherited;
+    XML.Active := false;
+  XML := nil;
+  Inherited;
 End;
 
 {===============================================================================}
@@ -113,13 +119,17 @@ End;
 Function TXMLSetting.GetValue(Const ValueName: UTF8String;
      DefaultValue: TDateTime): TDateTime;
 Begin
-     Try
-          Child := Xml.Root.FindNode(ValueName);
-          Result := Child.Nodes[0].ValueAsDateTimeDef(DefaultValue);
-     Except
-          On E: Exception Do
-               Result := DefaultValue;
-     End;
+  Try
+    child := XML.DocumentElement.ChildNodes.FindNode(ValueName);
+    if assigned(child) then
+      Result := VarToDateTime((child.ChildNodes.Nodes[0].NodeValue))
+    else
+      Result := DefaultValue;
+
+  Except
+    On E: Exception Do
+      Result := DefaultValue;
+  End;
 End;
 
 {===============================================================================}
@@ -127,88 +137,106 @@ End;
 Function TXMLSetting.GetValue(Const ValueName: UTF8String;
      DefaultValue: String): String;
 Begin
-     Try
-          Child := Xml.Root.FindNode(ValueName);
-          If Length(Trim(Child.Nodes[0].ValueAsUnicodeString)) <= 0 Then
-               Result := DefaultValue
-          Else
-               Result := Trim(Child.Nodes[0].ValueAsUnicodeString);
-     Except
-          On E: Exception Do
-               Result := DefaultValue;
-     End;
+  Try
+
+    child := XML.DocumentElement.ChildNodes.FindNode(ValueName);
+
+    if assigned(child) then
+    begin
+      If Length(Trim(child.ChildNodes.Nodes[0].NodeValue)) <= 0 Then
+        Result := DefaultValue
+      Else
+        Result := VarToStr(Trim(child.ChildNodes.Nodes[0].NodeValue));
+    end
+    else
+      Result := DefaultValue
+  Except
+    On E: Exception Do
+      Result := DefaultValue;
+  End;
 End;
 
 {===============================================================================}
 {$HINTS Off}
 
+
 Function TXMLSetting.LoadXMLData(): Boolean;
 Var
      SettingFileName          : String;
 Begin
-     Result := False;
-     {$IFNDEF SpellCheckerDll}
+  Result := false;
+      {$IFNDEF SpellCheckerDll}
      SettingFileName := 'Spell Settings.xml';
      {$ELSE}
      SettingFileName := 'Spell dll Settings.xml';
      {$ENDIF}
-     Try
-          If FileExists(GetAvroDataDir + SettingFileName) = True Then Begin
-               XML.LoadFromFile(GetAvroDataDir + SettingFileName);
-               Result := True;
-          End
-          Else
-               Result := False;
-     Except
-          On E: Exception Do
-               Result := False;
-     End;
+  Try
+    If FileExists(ExtractFilePath(Application.ExeName) + SettingFileName)
+      = true Then
+    Begin
+      XML.LoadFromFile(ExtractFilePath(Application.ExeName) + SettingFileName);
+      Result := true;
+    End
+    Else
+      Result := false;
+  Except
+    On E: Exception Do
+      Result := false;
+  End;
 End;
+
 {$HINTS On}
 {===============================================================================}
+
 
 Procedure TXMLSetting.SaveXMLData;
 Var
      SettingFileName          : String;
 Begin
-     XML.XmlFormat := xfReadable;
-     {$IFNDEF SpellCheckerDll}
+  // XML.XmlFormat := xfReadable;
+       {$IFNDEF SpellCheckerDll}
      SettingFileName := 'Spell Settings.xml';
      {$ELSE}
      SettingFileName := 'Spell dll Settings.xml';
      {$ENDIF}
-     Try
-          Xml.SaveToFile(GetAvroDataDir + SettingFileName);
-     Except
-          On E: Exception Do Begin
-               //Nothing
-          End;
-     End;
+  XML.XML.Text := XMLDoc.FormatXMLData(XML.XML.Text);
+    XML.Active := true;
+  Try
+    XML.SaveToFile(GetAvroDataDir + SettingFileName);
+  Except
+    On E: Exception Do
+    Begin
+      // Nothing
+    End;
+  End;
 End;
+
 
 {===============================================================================}
 
 Procedure TXMLSetting.SetValue(Const ValueName: UTF8String;
-     Const ValueData: TDateTime);
+  Const ValueData: TDateTime);
 Var
-     CdataChild               : TXmlNode;
+  CdataChild: IXMLNode;
 Begin
-     Child := XML.Root.NodeNew(ValueName);
-     CdataChild := Child.NodeNew(ValueName);
-     CdataChild.ElementType := xeCData;
-     CdataChild.ValueAsDateTime := ValueData;
+  child := XML.DocumentElement.AddChild(ValueName);
+  CdataChild := XML.CreateNode(DateTimeToStr(ValueData), ntCDATA);
+  XML.DocumentElement.ChildNodes.Nodes[ValueName].ChildNodes.Add(CdataChild);
+
 End;
 
-{===============================================================================}
+{ =============================================================================== }
 
-Procedure TXMLSetting.SetValue(Const ValueName:UTF8String; Const ValueData: String);
+Procedure TXMLSetting.SetValue(Const ValueName: UTF8String;
+  const ValueData: String);
 Var
-     CdataChild               : TXmlNode;
+  CdataChild: IXMLNode;
 Begin
-     Child := XML.Root.NodeNew(ValueName);
-     CdataChild := Child.NodeNew(ValueName);
-     CdataChild.ElementType := xeCData;
-     CdataChild.ValueAsUnicodeString := ValueData;
+
+  child := XML.DocumentElement.AddChild(ValueName);
+  CdataChild := XML.CreateNode(ValueData, ntCDATA);
+  XML.DocumentElement.ChildNodes.Nodes[ValueName].ChildNodes.Add(CdataChild);
+
 End;
 
 {===============================================================================}
@@ -217,41 +245,45 @@ End;
 
 { TMyRegistry }
 
-{===============================================================================}
+{ =============================================================================== }
 
-Function TMyRegistry.ReadDateDef(Const Name: String;
-     DefaultVal: TDateTime): TDateTime;
+Function TMyRegistry.ReadDateDef(Const Name: String; DefaultVal: TDateTime)
+  : TDateTime;
 Begin
-     Try
-          If ValueExists(Name) = True Then Begin
-               Result := ReadDateTime(Name);
-          End
-          Else Begin
-               Result := DefaultVal;
-          End;
-     Except
-          On E: Exception Do
-               Result := DefaultVal;
-     End;
+  Try
+    If ValueExists(Name) = true Then
+    Begin
+      Result := ReadDateTime(Name);
+    End
+    Else
+    Begin
+      Result := DefaultVal;
+    End;
+  Except
+    On E: Exception Do
+      Result := DefaultVal;
+  End;
 End;
 
-{===============================================================================}
+{ =============================================================================== }
 
 Function TMyRegistry.ReadStringDef(Const Name: String;
-     DefaultVal: String = ''): String;
+  DefaultVal: String = ''): String;
 Begin
-     Try
-          If ValueExists(Name) = True Then Begin
-               Result := ReadString(Name);
-          End
-          Else Begin
-               Result := DefaultVal;
-          End;
-     Except
-          On E: Exception Do
-               If Trim(Result) = '' Then
-                    Result := DefaultVal;
-     End;
+  Try
+    If ValueExists(Name) = true Then
+    Begin
+      Result := ReadString(Name);
+    End
+    Else
+    Begin
+      Result := DefaultVal;
+    End;
+  Except
+    On E: Exception Do
+      If Trim(Result) = '' Then
+        Result := DefaultVal;
+  End;
 End;
 
 End.
