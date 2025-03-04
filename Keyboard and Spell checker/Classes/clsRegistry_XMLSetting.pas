@@ -191,7 +191,7 @@ Begin
   // XML.XmlFormat := xfReadable;
 
   XML.XML.Text := XMLDoc.FormatXMLData(XML.XML.Text);
-    XML.Active := true;
+  XML.Active := true;
   Try
     XML.SaveToFile(GetAvroDataDir + 'Settings.xml');
   Except

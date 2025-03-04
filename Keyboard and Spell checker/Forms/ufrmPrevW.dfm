@@ -61,11 +61,9 @@ object frmPrevW: TfrmPrevW
     7575757575757575757575757505050505050505050505050505050505050000
     0000000000000000000000000000000000000000000000000000000000000000
     000000000000000000000000000000000000000000000000000000000000}
-  OldCreateOrder = False
   Position = poDesigned
   OnClose = FormClose
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 13
   object Shape1: TShape
     Left = 0
@@ -266,8 +264,8 @@ object frmPrevW: TfrmPrevW
   object ImgButtonOver: TImage
     Left = 8
     Top = 132
-    Width = 32
-    Height = 32
+    Width = 16
+    Height = 16
     Margins.Left = 0
     Margins.Top = 0
     Margins.Right = 0
@@ -324,8 +322,8 @@ object frmPrevW: TfrmPrevW
   object imgPinOpen: TImage
     Left = 32
     Top = 160
-    Width = 32
-    Height = 32
+    Width = 16
+    Height = 16
     Margins.Left = 0
     Margins.Top = 0
     Margins.Right = 0
@@ -382,8 +380,8 @@ object frmPrevW: TfrmPrevW
   object imgPinClose: TImage
     Left = 8
     Top = 160
-    Width = 32
-    Height = 32
+    Width = 16
+    Height = 16
     Margins.Left = 0
     Margins.Top = 0
     Margins.Right = 0
@@ -559,8 +557,8 @@ object frmPrevW: TfrmPrevW
   object imgPin: TImage
     Left = 199
     Top = 124
-    Width = 32
-    Height = 32
+    Width = 16
+    Height = 16
     Margins.Left = 0
     Margins.Top = 0
     Margins.Right = 0

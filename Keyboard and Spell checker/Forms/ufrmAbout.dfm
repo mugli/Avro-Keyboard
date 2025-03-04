@@ -56,14 +56,12 @@ object frmAbout: TfrmAbout
     7575757575757575757575757505050505050505050505050505050505050000
     0000000000000000000000000000000000000000000000000000000000000000
     000000000000000000000000000000000000000000000000000000000000}
-  OldCreateOrder = False
   Position = poDesktopCenter
   OnActivate = FormActivate
   OnClose = FormClose
   OnCreate = FormCreate
   OnPaint = FormPaint
   OnShow = FormShow
-  PixelsPerInch = 96
   TextHeight = 13
   object Shape1: TShape
     Left = 0
@@ -4926,7 +4924,7 @@ object frmAbout: TfrmAbout
   object Label2: TLabel
     Left = 178
     Top = 31
-    Width = 48
+    Width = 47
     Height = 13
     Caption = 'Version:'
     Font.Charset = ANSI_CHARSET

@@ -49,9 +49,7 @@ object frmAbout: TfrmAbout
     4A044A4A4A044A4A4A044A4A4A044A4A4A04494949043939390300000000FFFF
     0000000000000000000000000000000000000000000000000000000000000000
     000000000000000000000000000000000000000000000000000080010000}
-  OldCreateOrder = False
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 13
   object Label5: TLabel
     Left = 8
@@ -416,8 +414,8 @@ object frmAbout: TfrmAbout
     object Label1: TLabel
       Left = 78
       Top = 8
-      Width = 253
-      Height = 24
+      Width = 233
+      Height = 16
       Caption = 'Skin Designer for Avro Keyboard'
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText

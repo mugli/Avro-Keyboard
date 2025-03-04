@@ -48,7 +48,6 @@ object frmSpell: TfrmSpell
     0000800100000000000000000000000000000000000000000000000000000000
     00000000000000000000000000000000000080000000C0010000E0070000}
   Menu = MainMenu1
-  OldCreateOrder = False
   Visible = True
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery
@@ -56,7 +55,6 @@ object frmSpell: TfrmSpell
   DesignSize = (
     491
     256)
-  PixelsPerInch = 96
   TextHeight = 13
   object MEMO: TMemo
     Left = 1
@@ -76,6 +74,8 @@ object frmSpell: TfrmSpell
     TabOrder = 0
     WantTabs = True
     OnChange = MEMOChange
+    ExplicitWidth = 482
+    ExplicitHeight = 224
   end
   object Progress: TProgressBar
     Left = 4
@@ -85,6 +85,8 @@ object frmSpell: TfrmSpell
     Anchors = [akLeft, akRight, akBottom]
     TabOrder = 1
     Visible = False
+    ExplicitTop = 227
+    ExplicitWidth = 475
   end
   object MainMenu1: TMainMenu
     Left = 280

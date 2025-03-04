@@ -331,7 +331,9 @@ object frmSkinCreator: TfrmSkinCreator
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited ImagePath_TopBar: TEdit
+            Height = 21
             StyleElements = [seFont, seClient, seBorder]
+            ExplicitHeight = 21
           end
         end
         inherited PanelAvroIcon: TPanel
@@ -349,13 +351,19 @@ object frmSkinCreator: TfrmSkinCreator
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited AvroIcon: TEdit
+            Height = 21
             StyleElements = [seFont, seClient, seBorder]
+            ExplicitHeight = 21
           end
           inherited AvroIconOver: TEdit
+            Height = 21
             StyleElements = [seFont, seClient, seBorder]
+            ExplicitHeight = 21
           end
           inherited AvroIconDown: TEdit
+            Height = 21
             StyleElements = [seFont, seClient, seBorder]
+            ExplicitHeight = 21
           end
         end
         inherited PanelKM_E: TPanel
@@ -373,13 +381,19 @@ object frmSkinCreator: TfrmSkinCreator
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited KMSys: TEdit
+            Height = 21
             StyleElements = [seFont, seClient, seBorder]
+            ExplicitHeight = 21
           end
           inherited KMSysOver: TEdit
+            Height = 21
             StyleElements = [seFont, seClient, seBorder]
+            ExplicitHeight = 21
           end
           inherited KMSysDown: TEdit
+            Height = 21
             StyleElements = [seFont, seClient, seBorder]
+            ExplicitHeight = 21
           end
         end
         inherited PanelKM_B: TPanel
@@ -397,13 +411,19 @@ object frmSkinCreator: TfrmSkinCreator
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited KMBangla: TEdit
+            Height = 21
             StyleElements = [seFont, seClient, seBorder]
+            ExplicitHeight = 21
           end
           inherited KMBanglaOver: TEdit
+            Height = 21
             StyleElements = [seFont, seClient, seBorder]
+            ExplicitHeight = 21
           end
           inherited KMBanglaDown: TEdit
+            Height = 21
             StyleElements = [seFont, seClient, seBorder]
+            ExplicitHeight = 21
           end
         end
         inherited PanelKL: TPanel
@@ -421,13 +441,19 @@ object frmSkinCreator: TfrmSkinCreator
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited KL: TEdit
+            Height = 21
             StyleElements = [seFont, seClient, seBorder]
+            ExplicitHeight = 21
           end
           inherited KLOver: TEdit
+            Height = 21
             StyleElements = [seFont, seClient, seBorder]
+            ExplicitHeight = 21
           end
           inherited KLDown: TEdit
+            Height = 21
             StyleElements = [seFont, seClient, seBorder]
+            ExplicitHeight = 21
           end
         end
         inherited PanelLV: TPanel
@@ -445,13 +471,19 @@ object frmSkinCreator: TfrmSkinCreator
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited LayoutV: TEdit
+            Height = 21
             StyleElements = [seFont, seClient, seBorder]
+            ExplicitHeight = 21
           end
           inherited LayoutVOver: TEdit
+            Height = 21
             StyleElements = [seFont, seClient, seBorder]
+            ExplicitHeight = 21
           end
           inherited LayoutVDown: TEdit
+            Height = 21
             StyleElements = [seFont, seClient, seBorder]
+            ExplicitHeight = 21
           end
         end
         inherited PanelMouse: TPanel
@@ -469,13 +501,19 @@ object frmSkinCreator: TfrmSkinCreator
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited AvroMouse: TEdit
+            Height = 21
             StyleElements = [seFont, seClient, seBorder]
+            ExplicitHeight = 21
           end
           inherited AvroMouseOver: TEdit
+            Height = 21
             StyleElements = [seFont, seClient, seBorder]
+            ExplicitHeight = 21
           end
           inherited AvroMouseDown: TEdit
+            Height = 21
             StyleElements = [seFont, seClient, seBorder]
+            ExplicitHeight = 21
           end
         end
         inherited PanelTools: TPanel
@@ -493,13 +531,19 @@ object frmSkinCreator: TfrmSkinCreator
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Tools: TEdit
+            Height = 21
             StyleElements = [seFont, seClient, seBorder]
+            ExplicitHeight = 21
           end
           inherited ToolsOver: TEdit
+            Height = 21
             StyleElements = [seFont, seClient, seBorder]
+            ExplicitHeight = 21
           end
           inherited ToolsDown: TEdit
+            Height = 21
             StyleElements = [seFont, seClient, seBorder]
+            ExplicitHeight = 21
           end
         end
         inherited PanelHelp: TPanel
@@ -517,13 +561,19 @@ object frmSkinCreator: TfrmSkinCreator
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Help: TEdit
+            Height = 21
             StyleElements = [seFont, seClient, seBorder]
+            ExplicitHeight = 21
           end
           inherited HelpOver: TEdit
+            Height = 21
             StyleElements = [seFont, seClient, seBorder]
+            ExplicitHeight = 21
           end
           inherited HelpDown: TEdit
+            Height = 21
             StyleElements = [seFont, seClient, seBorder]
+            ExplicitHeight = 21
           end
         end
         inherited PanelWeb: TPanel
@@ -541,13 +591,19 @@ object frmSkinCreator: TfrmSkinCreator
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Web: TEdit
+            Height = 21
             StyleElements = [seFont, seClient, seBorder]
+            ExplicitHeight = 21
           end
           inherited WebOver: TEdit
+            Height = 21
             StyleElements = [seFont, seClient, seBorder]
+            ExplicitHeight = 21
           end
           inherited WebDown: TEdit
+            Height = 21
             StyleElements = [seFont, seClient, seBorder]
+            ExplicitHeight = 21
           end
         end
         inherited PanelExit: TPanel
@@ -565,13 +621,19 @@ object frmSkinCreator: TfrmSkinCreator
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Exit: TEdit
+            Height = 21
             StyleElements = [seFont, seClient, seBorder]
+            ExplicitHeight = 21
           end
           inherited ExitOver: TEdit
+            Height = 21
             StyleElements = [seFont, seClient, seBorder]
+            ExplicitHeight = 21
           end
           inherited ExitDown: TEdit
+            Height = 21
             StyleElements = [seFont, seClient, seBorder]
+            ExplicitHeight = 21
           end
         end
         inherited PanelPreview: TPanel
@@ -580,7 +642,9 @@ object frmSkinCreator: TfrmSkinCreator
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Preview: TEdit
+            Height = 21
             StyleElements = [seFont, seClient, seBorder]
+            ExplicitHeight = 21
           end
         end
       end
@@ -638,10 +702,14 @@ object frmSkinCreator: TfrmSkinCreator
         end
       end
       inherited XPos: TEdit
+        Height = 21
         StyleElements = [seFont, seClient, seBorder]
+        ExplicitHeight = 21
       end
       inherited YPos: TEdit
+        Height = 21
         StyleElements = [seFont, seClient, seBorder]
+        ExplicitHeight = 21
       end
     end
   end

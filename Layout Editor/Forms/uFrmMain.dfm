@@ -89,6 +89,7 @@ object frmMain: TfrmMain
     DrawingStyle = dsGradient
     ShowCaptions = True
     TabOrder = 0
+    ExplicitWidth = 787
     object butNew: TToolButton
       Left = 0
       Top = 0

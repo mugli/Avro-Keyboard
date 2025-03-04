@@ -48,11 +48,9 @@ object frmSpellOptions: TfrmSpellOptions
     55E9CC5A38B3AE3C1F5E0000000C00000003000000000000000000000000C003
     0000800100000000000000000000000000000000000000000000000000000000
     00000000000000000000000000000000000080000000C0010000E0070000}
-  OldCreateOrder = False
   Position = poDesktopCenter
   OnClose = FormClose
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 13
   object CheckIgnoreNumber: TCheckBox
     Left = 28

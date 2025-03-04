@@ -49,11 +49,9 @@ object frmAbout: TfrmAbout
     000000000000000000000000000000000000000000000000000000000000FFF8
     0000FFF00000FF800000FF81000000000000000000000000000000000000FFC0
     0000FC000000FC000000FC3F0000FF1F0000FFDF0000FFFF0000FFFF0000}
-  OldCreateOrder = False
   Position = poMainFormCenter
   OnClose = FormClose
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 13
   object Label3: TLabel
     Left = 103
@@ -432,7 +430,7 @@ object frmAbout: TfrmAbout
     object lblVer: TLabel
       Left = 79
       Top = 30
-      Width = 56
+      Width = 55
       Height = 13
       Caption = 'Version : '
     end
