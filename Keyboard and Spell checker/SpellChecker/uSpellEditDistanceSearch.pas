@@ -49,8 +49,7 @@ Uses
      BanglaChars,
      uDBase,
      clsReversePhonetic,
-     StrUtils,
-     JclAnsiStrings;
+     StrUtils;
 
 Procedure SearchSuggestion(Const Source: String; Var SList: TStringList; Max_Tolerance: Integer);
 Var
@@ -107,7 +106,7 @@ Var
      I                        : Integer;
      StringData                 : String;
 
-     Procedure SearchInDB(Var DB: TAnsiStringList);
+     Procedure SearchInDB(Var DB: TStringList);
      Var
           J                   : Integer;
      Begin

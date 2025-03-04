@@ -31,8 +31,7 @@ uses
 		 SysUtils,
 		 Windows,
 		 StrUtils,
-		 PCRE in '..\Units\PCRE.pas',
-		 pcre_dll in '..\Units\pcre_dll.pas',
+     System.RegularExpressions,
 		 BanglaChars in '..\Units\BanglaChars.pas',
 		 clsPhoneticRegExBuilder_Spell in 'clsPhoneticRegExBuilder_Spell.pas',
 		 clsReversePhonetic in 'clsReversePhonetic.pas',
@@ -43,7 +42,6 @@ uses
 		 HashTable in 'HashTable.pas',
 		 Phonetic_RegExp_Constants_Spell in 'Phonetic_RegExp_Constants_Spell.pas',
 		 uCustomDictionary in 'uCustomDictionary.pas',
-		 nativexml in '..\Units\nativexml.pas',
 		 uWindowHandlers in '..\Units\uWindowHandlers.pas',
 		 uRegExPhoneticSearch_Spell in 'uRegExPhoneticSearch_Spell.pas',
 		 uSimilarSort_Spell in 'uSimilarSort_Spell.pas',
@@ -75,86 +73,67 @@ End;
 
 { =============================================================================== }
 
-Function CanIgnoreByOption(W: String): Boolean;
-Var
-		 Spell_IgnoreNumbers, Spell_IgnoreAncient, Spell_IgnoreAssamese, Spell_IgnoreSingle: Boolean;
+function CanIgnoreByOption(W: String): Boolean;
+var
+  Spell_IgnoreNumbers, Spell_IgnoreAncient, Spell_IgnoreAssamese, Spell_IgnoreSingle: Boolean;
+  theRegex: TRegex;
+  SearchStr: string;
 
-		 theRegex: IRegex;
-		 theMatch: IMatch;
-		 theLocale: ansistring;
-		 RegExOpt: TRegMatchOptions;
-		 RegExCompileOptions: TRegCompileOptions;
+begin
+  Result := False;
 
-		 SearchStr: ansistring;
-		 AnsiW: ansistring;
-Begin
-		 Result := False;
-		 AnsiW := utf8encode(W);
+  Spell_IgnoreNumbers   := IgnoreNumber = 'YES';
+  Spell_IgnoreAncient   := IgnoreAncient = 'YES';
+  Spell_IgnoreAssamese  := IgnoreAssamese = 'YES';
+  Spell_IgnoreSingle    := IgnoreSingle = 'YES';
 
-		 If IgnoreNumber = 'YES' Then
-					Spell_IgnoreNumbers := True
-		 Else
-					Spell_IgnoreNumbers := False;
 
-		 If IgnoreAncient = 'YES' Then
-					Spell_IgnoreAncient := True
-		 Else
-					Spell_IgnoreAncient := False;
+  if Spell_IgnoreSingle then
+  begin
+    if Length(W) < 2 then
+    begin
+      Result := True;
+      Exit;
+    end;
+  end;
 
-		 If IgnoreAssamese = 'YES' Then
-					Spell_IgnoreAssamese := True
-		 Else
-					Spell_IgnoreAssamese := False;
+  if Spell_IgnoreNumbers then
+  begin
+    SearchStr := '^.*[' + b_0 + b_1 + b_2 + b_3 + b_4 + b_5 + b_6 + b_7 + b_8 + b_9 + '].*$';
+    theRegex := TRegex.Create(SearchStr, [roCompiled]); // Use roUnicode for UTF-8
+    if theRegex.IsMatch(W) then
+    begin
+      Result := True;
+      Exit;
+    end;
+  end;
 
-		 If IgnoreSingle = 'YES' Then
-					Spell_IgnoreSingle := True
-		 Else
-					Spell_IgnoreSingle := False;
+  if Spell_IgnoreAssamese then
+  begin
+    SearchStr := '^.*[' + AssamRa + AssamVa + '].*$';
+    theRegex := TRegex.Create(SearchStr, [roCompiled]);
+    if theRegex.IsMatch(W) then
+    begin
+      Result := True;
+      Exit;
+    end;
+  end;
 
-		 RegExOpt := [];
-		 theLocale := 'C';
-		 RegExCompileOptions := DecodeRegCompileOptions(PCRE_UTF8);
-
-		 If Spell_IgnoreSingle Then Begin
-					If Length(W) < 2 Then Begin
-							 Result := True;
-							 exit;
-					End;
-		 End;
-
-		 If Spell_IgnoreNumbers Then Begin
-					SearchStr := utf8encode('^.*[' + b_0 + b_1 + b_2 + b_3 + b_4 + b_5 + b_6 + b_7 + b_8 + b_9 + '].*$');
-					theRegex := PCRE.RegexCreate(SearchStr, RegExCompileOptions, theLocale);
-					theMatch := theRegex.Match(AnsiW, RegExOpt);
-					If theMatch.Success Then Begin
-							 Result := True;
-							 exit;
-					End;
-		 End;
-
-		 If Spell_IgnoreAssamese Then Begin
-					SearchStr := utf8encode('^.*[' + AssamRa + AssamVa + '].*$');
-					theRegex := PCRE.RegexCreate(SearchStr, RegExCompileOptions, theLocale);
-					theMatch := theRegex.Match(AnsiW, RegExOpt);
-					If theMatch.Success Then Begin
-							 Result := True;
-							 exit;
-					End;
-		 End;
-
-		 If Spell_IgnoreAncient Then Begin
-					SearchStr := utf8encode('^.*[' + b_Vocalic_L + b_Vocalic_LL + b_Vocalic_RR + b_Vocalic_RR_Kar + b_Vocalic_L_Kar + b_Vocalic_LL_Kar + b_Avagraha + b_LengthMark + b_RupeeMark +
-								 b_CurrencyNumerator1 + b_CurrencyNumerator2 + b_CurrencyNumerator3 + b_CurrencyNumerator4 + b_CurrencyNumerator1LessThanDenominator + b_CurrencyDenominator16 + b_CurrencyEsshar +
-								 '].*$');
-					theRegex := PCRE.RegexCreate(SearchStr, RegExCompileOptions, theLocale);
-					theMatch := theRegex.Match(AnsiW, RegExOpt);
-					If theMatch.Success Then Begin
-							 Result := True;
-							 exit;
-					End;
-		 End;
-
-End;
+  if Spell_IgnoreAncient then
+  begin
+    SearchStr := '^.*[' + b_Vocalic_L + b_Vocalic_LL + b_Vocalic_RR + b_Vocalic_RR_Kar +
+      b_Vocalic_L_Kar + b_Vocalic_LL_Kar + b_Avagraha + b_LengthMark + b_RupeeMark +
+      b_CurrencyNumerator1 + b_CurrencyNumerator2 + b_CurrencyNumerator3 + b_CurrencyNumerator4 +
+      b_CurrencyNumerator1LessThanDenominator + b_CurrencyDenominator16 + b_CurrencyEsshar +
+      '].*$';
+    theRegex := TRegex.Create(SearchStr, [roCompiled]);
+    if theRegex.IsMatch(W) then
+    begin
+      Result := True;
+      Exit;
+    end;
+  end;
+end;
 
 { =============================================================================== }
 

@@ -27,11 +27,7 @@
 
 Unit uDBase;
 
-{$IFDEF SpellChecker}
 {$INCLUDE ../../ProjectDefines.inc}
-{$ELSE}
-{$INCLUDE ../ProjectDefines.inc}
-{$ENDIF}
 
 
 Interface
