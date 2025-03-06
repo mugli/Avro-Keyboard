@@ -47,6 +47,10 @@ Uses
   Buttons,
   Printers;
 
+Const
+  MINIMUM_WIDTH = 560;
+  MINIMUM_HEIGHT = 70;
+
 Type
   TLayoutViewer = Class(TForm)
     picRSetMode: TImage;
@@ -181,7 +185,7 @@ Begin
             tmpPicture.Picture.Height * ScaleY);
           Canvas.StretchDraw(RR, tmpPicture.Picture.Graphic);
         Finally
-          EndDoc; // Methode EndDoc beendet den aktuellen Druckauftrag und schlieﬂt die
+          EndDoc;
         End;
       End;
     End
@@ -297,7 +301,6 @@ Procedure TLayoutViewer.ResizeMe(PICSRC: TImage; picSize: Integer);
 Var
   X, Y: Integer;
   J: Integer;
-  MinimumWidth, MinimumHeight: Integer;
 
 Begin
   If Self.WindowState = wsMinimized Then
@@ -331,20 +334,17 @@ Begin
 
   // ========================================
 
-  MinimumWidth := 560;
-  MinimumHeight := 70;
-
-  If (picRSetMode.Width + 10) < MinimumWidth Then
-    Self.Width := MinimumWidth
+  If picRSetMode.Width < MINIMUM_WIDTH Then
+    Self.ClientWidth := MINIMUM_WIDTH
   Else
-    Self.Width := picRSetMode.Width + 10;
+    Self.ClientWidth := picRSetMode.Width;
 
-  If (picRSetMode.Top + picRSetMode.Height + 30) < MinimumHeight Then
-    Self.Height := MinimumHeight
+  If (picRSetMode.Top + picRSetMode.Height) < MINIMUM_HEIGHT Then
+    Self.ClientHeight := MINIMUM_HEIGHT
   Else
-    Self.Height := picRSetMode.Top + picRSetMode.Height + 30;
+    Self.ClientHeight := picRSetMode.Top + picRSetMode.Height;
 
-  picRSetMode.Left := (Self.Width Div 2) - (picRSetMode.Width Div 2);
+  picRSetMode.Left := (Self.ClientWidth - picRSetMode.Width) div 2;
 
 End;
 

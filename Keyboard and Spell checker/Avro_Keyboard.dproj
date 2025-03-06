@@ -1,0 +1,211 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{0219940E-5F78-48B1-8960-2C65283492DA}</ProjectGuid>
+        <MainSource>Avro_Keyboard.dpr</MainSource>
+        <Base>True</Base>
+        <Config Condition="'$(Config)'==''">Debug</Config>
+        <ProjectName Condition="'$(ProjectName)'==''">Avro_Keyboard</ProjectName>
+        <TargetedPlatforms>1</TargetedPlatforms>
+        <AppType>Application</AppType>
+        <FrameworkType>VCL</FrameworkType>
+        <Platform Condition="'$(Platform)'==''">Win32</Platform>
+        <ProjectVersion>20.1</ProjectVersion>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Base)'=='true') or '$(Base_Win32)'!=''">
+        <Base_Win32>true</Base_Win32>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win64' and '$(Base)'=='true') or '$(Base_Win64)'!=''">
+        <Base_Win64>true</Base_Win64>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_1)'!=''">
+        <Cfg_1>true</Cfg_1>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_1)'=='true') or '$(Cfg_1_Win32)'!=''">
+        <Cfg_1_Win32>true</Cfg_1_Win32>
+        <CfgParent>Cfg_1</CfgParent>
+        <Cfg_1>true</Cfg_1>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_2)'!=''">
+        <Cfg_2>true</Cfg_2>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_2)'=='true') or '$(Cfg_2_Win32)'!=''">
+        <Cfg_2_Win32>true</Cfg_2_Win32>
+        <CfgParent>Cfg_2</CfgParent>
+        <Cfg_2>true</Cfg_2>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base)'!=''">
+        <DCC_DebugInformation>1</DCC_DebugInformation>
+        <DCC_E>false</DCC_E>
+        <DCC_F>false</DCC_F>
+        <DCC_K>false</DCC_K>
+        <DCC_N>true</DCC_N>
+        <DCC_S>false</DCC_S>
+        <DCC_SymbolReferenceInfo>1</DCC_SymbolReferenceInfo>
+        <DCC_ImageBase>00400000</DCC_ImageBase>
+        <DCC_UsePackage>vcl;rtl;vclx;vclactnband;dbrtl;vcldb;vcldbx;bdertl;dsnap;dsnapcon;teeUI;teedb;tee;adortl;vclib;ibxpress;dbxcds;dbexpress;DbxCommonDriver;IndyCore;IndySystem;IndyProtocols;xmlrtl;inet;IntrawebDB_90_100;Intraweb_90_100;VclSmp;vclie;websnap;webdsnap;inetdbbde;inetdbxpress;soaprtl;$(DCC_UsePackage)</DCC_UsePackage>
+        <SanitizedProjectName>Avro_Keyboard</SanitizedProjectName>
+        <DCC_Namespace>Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;System.Win;$(DCC_Namespace)</DCC_Namespace>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_Locale>1033</VerInfo_Locale>
+        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base_Win32)'!=''">
+        <DCC_Namespace>Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
+        <BT_BuildType>Debug</BT_BuildType>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName)</VerInfo_Keys>
+        <VerInfo_Locale>1033</VerInfo_Locale>
+        <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
+        <Icon_MainIcon>Avro_Keyboard_Icon.ico</Icon_MainIcon>
+        <UWP_DelphiLogo44>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_44.png</UWP_DelphiLogo44>
+        <UWP_DelphiLogo150>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_150.png</UWP_DelphiLogo150>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base_Win64)'!=''">
+        <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
+        <Icon_MainIcon>Avro_Keyboard_Icon.ico</Icon_MainIcon>
+        <UWP_DelphiLogo44>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_44.png</UWP_DelphiLogo44>
+        <UWP_DelphiLogo150>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_150.png</UWP_DelphiLogo150>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_1)'!=''">
+        <DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
+        <DCC_DebugInformation>0</DCC_DebugInformation>
+        <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
+        <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
+        <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_2)'!=''">
+        <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
+        <DCC_Optimize>false</DCC_Optimize>
+        <DCC_GenerateStackFrames>true</DCC_GenerateStackFrames>
+        <DCC_RangeChecking>true</DCC_RangeChecking>
+        <DCC_IntegerOverflowCheck>true</DCC_IntegerOverflowCheck>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
+        <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
+    </PropertyGroup>
+    <ItemGroup>
+        <DelphiCompile Include="$(MainSource)">
+            <MainSource>MainSource</MainSource>
+        </DelphiCompile>
+        <DCCReference Include="Forms\uForm1.pas">
+            <Form>AvroMainForm1</Form>
+        </DCCReference>
+        <DCCReference Include="Units\BanglaChars.pas"/>
+        <DCCReference Include="Forms\uTopBar.pas">
+            <Form>TopBar</Form>
+        </DCCReference>
+        <DCCReference Include="Units\SkinLoader.pas"/>
+        <DCCReference Include="Units\KeyboardLayoutLoader.pas"/>
+        <DCCReference Include="Classes\clsEnglishToBangla.pas"/>
+        <DCCReference Include="Classes\clsE2BCharBased.pas"/>
+        <DCCReference Include="Classes\clsAvroPhonetic.pas"/>
+        <DCCReference Include="Classes\clsGenericLayoutModern.pas"/>
+        <DCCReference Include="Classes\clsGenericLayoutOld.pas"/>
+        <DCCReference Include="Classes\clsLayout.pas"/>
+        <DCCReference Include="Classes\clsRegistry_XMLSetting.pas"/>
+        <DCCReference Include="Units\KeyboardHook.pas"/>
+        <DCCReference Include="Units\VirtualKeyCode.pas"/>
+        <DCCReference Include="Units\KeyboardFunctions.pas"/>
+        <DCCReference Include="Units\uAutoCorrect.pas"/>
+        <DCCReference Include="Units\uRegistrySettings.pas"/>
+        <DCCReference Include="Units\uFileFolderHandling.pas"/>
+        <DCCReference Include="Units\u_VirtualFontInstall.pas"/>
+        <DCCReference Include="Units\u_Admin.pas"/>
+        <DCCReference Include="Forms\ufrmAbout.pas">
+            <Form>frmAbout</Form>
+        </DCCReference>
+        <DCCReference Include="Forms\ufrmAboutSkinLayout.pas">
+            <Form>frmAboutSkinLayout</Form>
+        </DCCReference>
+        <DCCReference Include="Forms\ufrmAutoCorrect.pas">
+            <Form>frmAutoCorrect</Form>
+        </DCCReference>
+        <DCCReference Include="Forms\ufrmAvroMouse.pas">
+            <Form>frmAvroMouse</Form>
+        </DCCReference>
+        <DCCReference Include="Forms\ufrmOptions.pas">
+            <Form>frmOptions</Form>
+        </DCCReference>
+        <DCCReference Include="Forms\ufrmPrevW.pas">
+            <Form>frmPrevW</Form>
+        </DCCReference>
+        <DCCReference Include="Forms\ufrmUpdateNotify.pas">
+            <Form>frmUpdateNotify</Form>
+        </DCCReference>
+        <DCCReference Include="Forms\uLayoutViewer.pas">
+            <Form>LayoutViewer</Form>
+        </DCCReference>
+        <DCCReference Include="Units\uProcessHandler.pas"/>
+        <DCCReference Include="Units\uWindowHandlers.pas"/>
+        <DCCReference Include="Classes\clsUpdateInfoDownloader.pas"/>
+        <DCCReference Include="Classes\clsFileVersion.pas"/>
+        <DCCReference Include="Units\WindowsVersion.pas"/>
+        <DCCReference Include="Units\uLocale.pas"/>
+        <DCCReference Include="Units\Phonetic_RegExp_Constants.pas"/>
+        <DCCReference Include="Classes\clsPhoneticRegExBuilder.pas"/>
+        <DCCReference Include="Units\uDBase.pas"/>
+        <DCCReference Include="Units\uRegExPhoneticSearch.pas"/>
+        <DCCReference Include="Units\Levenshtein.pas"/>
+        <DCCReference Include="Units\uSimilarSort.pas"/>
+        <DCCReference Include="SpellChecker\HashTable.pas"/>
+        <DCCReference Include="SpellChecker\Hashing.pas"/>
+        <DCCReference Include="Classes\clsSkinLayoutConverter.pas"/>
+        <DCCReference Include="Units\uCmdLineHelper.pas"/>
+        <DCCReference Include="Units\uCommandLineFunctions.pas"/>
+        <DCCReference Include="Forms\ufrmConflict.pas">
+            <Form>frmConflict</Form>
+        </DCCReference>
+        <DCCReference Include="Forms\uFrmSplash.pas">
+            <Form>frmSplash</Form>
+        </DCCReference>
+        <DCCReference Include="Classes\clsAbbreviation.pas"/>
+        <DCCReference Include="..\Unicode to ascii converter\clsUnicodeToBijoy2000.pas"/>
+        <DCCReference Include="Forms\ufrmEncodingWarning.pas">
+            <Form>frmEncodingWarning</Form>
+        </DCCReference>
+        <BuildConfiguration Include="Base">
+            <Key>Base</Key>
+        </BuildConfiguration>
+        <BuildConfiguration Include="Release">
+            <Key>Cfg_1</Key>
+            <CfgParent>Base</CfgParent>
+        </BuildConfiguration>
+        <BuildConfiguration Include="Debug">
+            <Key>Cfg_2</Key>
+            <CfgParent>Base</CfgParent>
+        </BuildConfiguration>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Delphi.Personality.12</Borland.Personality>
+        <Borland.ProjectType>VCLApplication</Borland.ProjectType>
+        <BorlandProject>
+            <Delphi.Personality>
+                <Source>
+                    <Source Name="MainSource">Avro_Keyboard.dpr</Source>
+                </Source>
+            </Delphi.Personality>
+            <Platforms>
+                <Platform value="Win32">True</Platform>
+                <Platform value="Win64">False</Platform>
+            </Platforms>
+        </BorlandProject>
+        <ProjectFileVersion>12</ProjectFileVersion>
+    </ProjectExtensions>
+    <Import Project="$(BDS)\Bin\CodeGear.Delphi.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')"/>
+    <Import Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj" Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj')"/>
+</Project>

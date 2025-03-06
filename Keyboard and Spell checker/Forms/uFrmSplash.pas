@@ -80,8 +80,8 @@ End;
 
 Procedure TfrmSplash.FormCreate(Sender: TObject);
 Begin
-  Self.Width := Image1.Width;
-  Self.Height := Image1.Height;
+  Self.ClientWidth := Image1.Width;
+  Self.ClientHeight := Image1.Height;
   // Set Window to top
   // SetWindowPos(Self.Handle, HWND_TOPMOST, 0, 0, 0, 0,
   // SWP_NOMOVE Or SWP_NOSIZE Or SWP_NOACTIVATE);

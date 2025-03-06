@@ -58,6 +58,7 @@ object frmSplash: TfrmSplash
     000000000000000000000000000000000000000000000000000000000000}
   KeyPreview = True
   Position = poScreenCenter
+  Scaled = False
   OnClose = FormClose
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown

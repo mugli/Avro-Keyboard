@@ -25,11 +25,9 @@
   =============================================================================
 }
 
-{$IFDEF SpellChecker}
+
 {$INCLUDE ../../ProjectDefines.inc}
-{$ELSE}
-{$INCLUDE ../ProjectDefines.inc}
-{$ENDIF}
+
 { COMPLETE TRANSFERING! }
 
 Unit BanglaChars;

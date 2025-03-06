@@ -40,7 +40,6 @@ Uses
 
 Var
 
-{$IFNDEF SpellCheckerDll}
   AvroPadHeight: String;
   AvroPadWidth: String;
   AvroPadTop: String;
@@ -51,14 +50,14 @@ Var
   AvroPadWrap: String;
 
   LastDirectory: String;
-{$ELSE}
+
   // Spellchecker options
   IgnoreNumber: String;
   IgnoreAncient: String;
   IgnoreAssamese: String;
   IgnoreSingle: String;
   FullSuggestion: String;
-{$ENDIF}
+
 Procedure LoadSettings;
 Procedure ValidateSettings;
 Procedure SaveSettings;
