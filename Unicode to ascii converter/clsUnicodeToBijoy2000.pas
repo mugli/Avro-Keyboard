@@ -250,7 +250,7 @@ Const
   A_RFola_1: Char = #$AA; //
   A_RFola_2: Char = #$AB; //
   A_L_2H_1: Char = #$AC; //
-  A_L_2H_2: Char = #$AD; //
+  A_L_2H_2: Char = #$AD; // <--- Not used
   A_T_R_2H: Char = #$BF; //
   A_RFola_3: Char = #$D6; //
   A_Nn_2H_1: Char = #$E8;
@@ -261,7 +261,7 @@ Const
   A_T_UKar_2H: Char = #$2018; //
   A_Th_2H: Char = #$2019; //
   A_K_2H: Char = #$2039; //
-  A_L_2H_3: Char = #$2212; // ------Not used
+  A_L_2H_3: Char = #$2212; //
 
   { TUnicodeToBijoy2000 }
   { =============================================================================== }
@@ -314,14 +314,14 @@ Begin
       fConvertedText := WideStuffString(fConvertedText, I, 2, A_M_2H_1);
   Until I <= 0;
 
-  { A_L_2H_1  and  A_L_2H_2 }
+  { A_L_2H_1  and  A_L_2H_3 }
   Repeat
     I := Pos(b_Hasanta + b_L, fConvertedText);
     If I <= 0 Then
       break;
     wT := MidStr(fConvertedText, I - 1, 1);
     If BaseLineRightCharacter(wT) Then
-      fConvertedText := WideStuffString(fConvertedText, I, 2, A_L_2H_2)
+      fConvertedText := WideStuffString(fConvertedText, I, 2, A_L_2H_3)
     Else
       fConvertedText := WideStuffString(fConvertedText, I, 2, A_L_2H_1);
   Until I <= 0;
