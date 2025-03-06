@@ -414,7 +414,7 @@ object frmAbout: TfrmAbout
     object Label1: TLabel
       Left = 78
       Top = 8
-      Width = 233
+      Width = 331
       Height = 16
       Caption = 'Skin Designer for Avro Keyboard'
       Font.Charset = ANSI_CHARSET

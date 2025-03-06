@@ -1,13 +1,17 @@
 object Form1: TForm1
   Left = 0
   Top = 0
+  Margins.Left = 5
+  Margins.Top = 5
+  Margins.Right = 5
+  Margins.Bottom = 5
   Caption = 'Avro Unicode to Bijoy Converter'
-  ClientHeight = 299
-  ClientWidth = 570
+  ClientHeight = 449
+  ClientWidth = 864
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -17
   Font.Name = 'Tahoma'
   Font.Style = []
   Icon.Data = {
@@ -50,89 +54,115 @@ object Form1: TForm1
   Position = poDesktopCenter
   OnClose = FormClose
   OnCreate = FormCreate
+  PixelsPerInch = 144
   DesignSize = (
-    570
-    299)
-  TextHeight = 13
+    864
+    449)
+  TextHeight = 21
   object Label1: TLabel
-    Left = 8
-    Top = 8
-    Width = 195
-    Height = 13
+    Left = 12
+    Top = 12
+    Width = 299
+    Height = 21
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Type or Paste Unicode Bangla text here:'
   end
   object Label8: TLabel
-    Left = 158
-    Top = 278
-    Width = 97
-    Height = 13
+    Left = 237
+    Top = 417
+    Width = 150
+    Height = 21
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'All Rights Reserved.'
   end
   object Label_OmicronLab: TLabel
-    Left = 72
-    Top = 278
-    Width = 81
-    Height = 13
+    Left = 108
+    Top = 417
+    Width = 120
+    Height = 20
     Cursor = crHandPoint
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'OmicronLab.'
     Font.Charset = ANSI_CHARSET
     Font.Color = clBlue
-    Font.Height = -11
+    Font.Height = -17
     Font.Name = 'Verdana'
     Font.Style = [fsBold, fsUnderline]
     ParentFont = False
     OnClick = Label_OmicronLabClick
   end
   object Label4: TLabel
-    Left = 8
-    Top = 278
-    Width = 60
-    Height = 13
+    Left = 12
+    Top = 417
+    Width = 91
+    Height = 21
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Copyright '#169
   end
   object MEMO1: TMemo
-    Left = 8
-    Top = 24
-    Width = 554
-    Height = 105
+    Left = 12
+    Top = 36
+    Width = 831
+    Height = 158
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Anchors = [akLeft, akTop, akRight]
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
-    Font.Height = -13
+    Font.Height = -20
     Font.Name = 'Siyam Rupali'
     Font.Style = []
     ParentFont = False
     ScrollBars = ssVertical
     TabOrder = 0
-    ExplicitWidth = 548
   end
   object MEMO2: TMemo
-    Left = 8
-    Top = 166
-    Width = 554
-    Height = 105
+    Left = 12
+    Top = 249
+    Width = 831
+    Height = 158
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Anchors = [akLeft, akTop, akRight, akBottom]
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
-    Font.Height = -21
+    Font.Height = -32
     Font.Name = 'Kalpurush ANSI'
     Font.Style = []
     ParentFont = False
     ScrollBars = ssVertical
     TabOrder = 1
-    ExplicitWidth = 548
-    ExplicitHeight = 88
   end
   object Button1: TButton
-    Left = 8
-    Top = 135
-    Width = 183
-    Height = 25
+    Left = 12
+    Top = 203
+    Width = 275
+    Height = 37
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Convert to Bijoy encoding >>'
     Default = True
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
+    Font.Height = -17
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
@@ -140,14 +170,16 @@ object Form1: TForm1
     OnClick = Button1Click
   end
   object Progress: TProgressBar
-    Left = 272
-    Top = 277
-    Width = 290
-    Height = 13
+    Left = 408
+    Top = 416
+    Width = 435
+    Height = 19
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Anchors = [akLeft, akRight, akBottom]
     TabOrder = 3
     Visible = False
-    ExplicitTop = 260
-    ExplicitWidth = 284
   end
 end

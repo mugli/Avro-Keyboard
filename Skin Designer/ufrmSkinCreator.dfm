@@ -1,15 +1,19 @@
 object frmSkinCreator: TfrmSkinCreator
   Left = 0
   Top = 0
+  Margins.Left = 5
+  Margins.Top = 5
+  Margins.Right = 5
+  Margins.Bottom = 5
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Skin designer for Avro Keyboard'
-  ClientHeight = 471
-  ClientWidth = 517
+  ClientHeight = 707
+  ClientWidth = 785
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -17
   Font.Name = 'Tahoma'
   Font.Style = []
   Icon.Data = {
@@ -50,102 +54,151 @@ object frmSkinCreator: TfrmSkinCreator
     0000000000000000000000000000000000000000000000000000000000000000
     000000000000000000000000000000000000000000000000000080010000}
   OnCreate = FormCreate
-  TextHeight = 13
+  PixelsPerInch = 144
+  TextHeight = 21
   object GroupBox1: TGroupBox
-    Left = 8
-    Top = 63
-    Width = 497
-    Height = 362
+    Left = 12
+    Top = 95
+    Width = 746
+    Height = 543
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     TabOrder = 1
     object Label3: TLabel
-      Left = 18
-      Top = 11
-      Width = 113
-      Height = 13
+      Left = 27
+      Top = 17
+      Width = 174
+      Height = 21
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Caption = 'Edit Skin Properties:'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -11
+      Font.Height = -17
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
     end
     object Label4: TLabel
-      Left = 34
-      Top = 33
-      Width = 53
-      Height = 13
+      Left = 51
+      Top = 50
+      Width = 84
+      Height = 21
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Caption = 'Skin Name:'
     end
     object Label5: TLabel
-      Left = 34
-      Top = 58
-      Width = 39
-      Height = 13
+      Left = 51
+      Top = 87
+      Width = 61
+      Height = 21
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Caption = 'Version:'
     end
     object Label6: TLabel
-      Left = 34
-      Top = 84
-      Width = 56
-      Height = 13
+      Left = 51
+      Top = 126
+      Width = 88
+      Height = 21
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Caption = 'Your Name:'
     end
     object Label7: TLabel
-      Left = 34
-      Top = 111
-      Width = 49
-      Height = 13
+      Left = 51
+      Top = 167
+      Width = 77
+      Height = 21
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Caption = 'Comment:'
     end
     object Label8: TLabel
-      Left = 20
-      Top = 177
-      Width = 273
-      Height = 13
+      Left = 30
+      Top = 266
+      Width = 420
+      Height = 21
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Caption = 'Select Buttons You Want to Include in "Top Bar":'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -11
+      Font.Height = -17
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
     end
     object EditSkinName: TEdit
-      Left = 93
-      Top = 30
-      Width = 239
-      Height = 21
+      Left = 140
+      Top = 45
+      Width = 358
+      Height = 29
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       TabOrder = 0
     end
     object EditSkinVer: TEdit
-      Left = 93
-      Top = 55
-      Width = 144
-      Height = 21
+      Left = 140
+      Top = 83
+      Width = 216
+      Height = 29
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       TabOrder = 1
       Text = '1.0'
     end
     object EditDesignerName: TEdit
-      Left = 93
-      Top = 81
-      Width = 239
-      Height = 21
+      Left = 140
+      Top = 122
+      Width = 358
+      Height = 29
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       TabOrder = 2
     end
     object EditComment: TMemo
-      Left = 93
-      Top = 108
-      Width = 239
-      Height = 42
+      Left = 140
+      Top = 162
+      Width = 358
+      Height = 63
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       ScrollBars = ssVertical
       TabOrder = 3
     end
     object CheckAvroIcon: TCheckBox
-      Left = 34
-      Top = 196
-      Width = 97
-      Height = 17
+      Left = 51
+      Top = 294
+      Width = 146
+      Height = 26
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Caption = 'Avro Icon'
       Checked = True
       Enabled = False
@@ -153,10 +206,14 @@ object frmSkinCreator: TfrmSkinCreator
       TabOrder = 4
     end
     object CheckKM: TCheckBox
-      Left = 33
-      Top = 220
-      Width = 97
-      Height = 17
+      Left = 50
+      Top = 330
+      Width = 145
+      Height = 26
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Caption = 'Keyboard Mode'
       Checked = True
       Enabled = False
@@ -164,70 +221,98 @@ object frmSkinCreator: TfrmSkinCreator
       TabOrder = 5
     end
     object CheckKL: TCheckBox
-      Left = 33
-      Top = 243
-      Width = 97
-      Height = 17
+      Left = 50
+      Top = 365
+      Width = 145
+      Height = 25
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Caption = 'Keyboard Layout'
       Checked = True
       State = cbChecked
       TabOrder = 6
     end
     object CheckLayoutViewer: TCheckBox
-      Left = 149
-      Top = 196
-      Width = 97
-      Height = 17
+      Left = 224
+      Top = 294
+      Width = 145
+      Height = 26
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Caption = 'Layout Viewer'
       Checked = True
       State = cbChecked
       TabOrder = 7
     end
     object CheckMouse: TCheckBox
-      Left = 149
-      Top = 220
-      Width = 97
-      Height = 17
+      Left = 224
+      Top = 330
+      Width = 145
+      Height = 26
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Caption = 'Avro Mouse'
       Checked = True
       State = cbChecked
       TabOrder = 8
     end
     object CheckTools: TCheckBox
-      Left = 149
-      Top = 243
-      Width = 97
-      Height = 17
+      Left = 224
+      Top = 365
+      Width = 145
+      Height = 25
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Caption = 'Tools'
       Checked = True
       State = cbChecked
       TabOrder = 9
     end
     object CheckWeb: TCheckBox
-      Left = 252
-      Top = 196
-      Width = 97
-      Height = 17
+      Left = 378
+      Top = 294
+      Width = 146
+      Height = 26
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Caption = 'Web Options'
       Checked = True
       State = cbChecked
       TabOrder = 10
     end
     object CheckHelp: TCheckBox
-      Left = 252
-      Top = 220
-      Width = 97
-      Height = 17
+      Left = 378
+      Top = 330
+      Width = 146
+      Height = 26
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Caption = 'Help'
       Checked = True
       State = cbChecked
       TabOrder = 11
     end
     object CheckExit: TCheckBox
-      Left = 252
-      Top = 243
-      Width = 97
-      Height = 17
+      Left = 378
+      Top = 365
+      Width = 146
+      Height = 25
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Caption = 'Exit'
       Checked = True
       Enabled = False
@@ -235,17 +320,25 @@ object frmSkinCreator: TfrmSkinCreator
       TabOrder = 12
     end
     object Panel3: TPanel
-      Left = 17
-      Top = 272
-      Width = 464
-      Height = 77
+      Left = 26
+      Top = 408
+      Width = 696
+      Height = 116
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       ParentBackground = False
       TabOrder = 13
       object Image1: TImage
-        Left = 10
-        Top = 13
+        Left = 15
+        Top = 20
         Width = 12
         Height = 12
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         AutoSize = True
         Picture.Data = {
           0954474946496D6167654749463839610C000C00B30000EFF4F5DBE6E9D1DFE3
@@ -265,23 +358,31 @@ object frmSkinCreator: TfrmSkinCreator
           00865108D7241C65121446F9B5E581A6B424D7B81501003B}
       end
       object Label13: TLabel
-        Left = 27
-        Top = 12
-        Width = 23
-        Height = 13
+        Left = 41
+        Top = 18
+        Width = 36
+        Height = 21
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         Caption = 'Hint'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -17
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
       end
       object Label14: TLabel
-        Left = 12
-        Top = 31
-        Width = 437
-        Height = 97
+        Left = 18
+        Top = 47
+        Width = 656
+        Height = 145
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         AutoSize = False
         Caption = 
           'Not all the buttons are compulsory in Avro Keyboard'#39's Top Bar. Y' +
@@ -294,16 +395,24 @@ object frmSkinCreator: TfrmSkinCreator
     end
   end
   object GroupBox2: TGroupBox
-    Left = 8
-    Top = 63
-    Width = 497
-    Height = 362
+    Left = 12
+    Top = 95
+    Width = 746
+    Height = 543
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     TabOrder = 6
     object ScrollBoxImageAdd: TScrollBox
-      Left = 50
-      Top = 16
-      Width = 409
-      Height = 337
+      Left = 75
+      Top = 24
+      Width = 614
+      Height = 506
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       HorzScrollBar.Smooth = True
       HorzScrollBar.Tracking = True
       VertScrollBar.Smooth = True
@@ -315,13 +424,24 @@ object frmSkinCreator: TfrmSkinCreator
         Top = 0
         Width = 377
         Height = 1250
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         HorzScrollBar.Visible = False
         VertScrollBar.Visible = False
         Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -18
+        Font.Name = 'Tahoma'
+        Font.Style = []
         ParentBackground = False
         ParentColor = False
+        ParentFont = False
         TabOrder = 0
         ExplicitWidth = 377
+        ExplicitHeight = 1250
         inherited PanelTopBar: TPanel
           StyleElements = [seFont, seClient, seBorder]
           inherited Label1: TLabel
@@ -331,9 +451,9 @@ object frmSkinCreator: TfrmSkinCreator
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited ImagePath_TopBar: TEdit
-            Height = 21
+            Height = 30
             StyleElements = [seFont, seClient, seBorder]
-            ExplicitHeight = 21
+            ExplicitHeight = 30
           end
         end
         inherited PanelAvroIcon: TPanel
@@ -351,19 +471,19 @@ object frmSkinCreator: TfrmSkinCreator
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited AvroIcon: TEdit
-            Height = 21
+            Height = 30
             StyleElements = [seFont, seClient, seBorder]
-            ExplicitHeight = 21
+            ExplicitHeight = 30
           end
           inherited AvroIconOver: TEdit
-            Height = 21
+            Height = 30
             StyleElements = [seFont, seClient, seBorder]
-            ExplicitHeight = 21
+            ExplicitHeight = 30
           end
           inherited AvroIconDown: TEdit
-            Height = 21
+            Height = 30
             StyleElements = [seFont, seClient, seBorder]
-            ExplicitHeight = 21
+            ExplicitHeight = 30
           end
         end
         inherited PanelKM_E: TPanel
@@ -381,19 +501,19 @@ object frmSkinCreator: TfrmSkinCreator
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited KMSys: TEdit
-            Height = 21
+            Height = 30
             StyleElements = [seFont, seClient, seBorder]
-            ExplicitHeight = 21
+            ExplicitHeight = 30
           end
           inherited KMSysOver: TEdit
-            Height = 21
+            Height = 30
             StyleElements = [seFont, seClient, seBorder]
-            ExplicitHeight = 21
+            ExplicitHeight = 30
           end
           inherited KMSysDown: TEdit
-            Height = 21
+            Height = 30
             StyleElements = [seFont, seClient, seBorder]
-            ExplicitHeight = 21
+            ExplicitHeight = 30
           end
         end
         inherited PanelKM_B: TPanel
@@ -411,19 +531,19 @@ object frmSkinCreator: TfrmSkinCreator
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited KMBangla: TEdit
-            Height = 21
+            Height = 30
             StyleElements = [seFont, seClient, seBorder]
-            ExplicitHeight = 21
+            ExplicitHeight = 30
           end
           inherited KMBanglaOver: TEdit
-            Height = 21
+            Height = 30
             StyleElements = [seFont, seClient, seBorder]
-            ExplicitHeight = 21
+            ExplicitHeight = 30
           end
           inherited KMBanglaDown: TEdit
-            Height = 21
+            Height = 30
             StyleElements = [seFont, seClient, seBorder]
-            ExplicitHeight = 21
+            ExplicitHeight = 30
           end
         end
         inherited PanelKL: TPanel
@@ -441,19 +561,19 @@ object frmSkinCreator: TfrmSkinCreator
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited KL: TEdit
-            Height = 21
+            Height = 30
             StyleElements = [seFont, seClient, seBorder]
-            ExplicitHeight = 21
+            ExplicitHeight = 30
           end
           inherited KLOver: TEdit
-            Height = 21
+            Height = 30
             StyleElements = [seFont, seClient, seBorder]
-            ExplicitHeight = 21
+            ExplicitHeight = 30
           end
           inherited KLDown: TEdit
-            Height = 21
+            Height = 30
             StyleElements = [seFont, seClient, seBorder]
-            ExplicitHeight = 21
+            ExplicitHeight = 30
           end
         end
         inherited PanelLV: TPanel
@@ -471,19 +591,19 @@ object frmSkinCreator: TfrmSkinCreator
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited LayoutV: TEdit
-            Height = 21
+            Height = 30
             StyleElements = [seFont, seClient, seBorder]
-            ExplicitHeight = 21
+            ExplicitHeight = 30
           end
           inherited LayoutVOver: TEdit
-            Height = 21
+            Height = 30
             StyleElements = [seFont, seClient, seBorder]
-            ExplicitHeight = 21
+            ExplicitHeight = 30
           end
           inherited LayoutVDown: TEdit
-            Height = 21
+            Height = 30
             StyleElements = [seFont, seClient, seBorder]
-            ExplicitHeight = 21
+            ExplicitHeight = 30
           end
         end
         inherited PanelMouse: TPanel
@@ -501,19 +621,19 @@ object frmSkinCreator: TfrmSkinCreator
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited AvroMouse: TEdit
-            Height = 21
+            Height = 30
             StyleElements = [seFont, seClient, seBorder]
-            ExplicitHeight = 21
+            ExplicitHeight = 30
           end
           inherited AvroMouseOver: TEdit
-            Height = 21
+            Height = 30
             StyleElements = [seFont, seClient, seBorder]
-            ExplicitHeight = 21
+            ExplicitHeight = 30
           end
           inherited AvroMouseDown: TEdit
-            Height = 21
+            Height = 30
             StyleElements = [seFont, seClient, seBorder]
-            ExplicitHeight = 21
+            ExplicitHeight = 30
           end
         end
         inherited PanelTools: TPanel
@@ -531,19 +651,19 @@ object frmSkinCreator: TfrmSkinCreator
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Tools: TEdit
-            Height = 21
+            Height = 30
             StyleElements = [seFont, seClient, seBorder]
-            ExplicitHeight = 21
+            ExplicitHeight = 30
           end
           inherited ToolsOver: TEdit
-            Height = 21
+            Height = 30
             StyleElements = [seFont, seClient, seBorder]
-            ExplicitHeight = 21
+            ExplicitHeight = 30
           end
           inherited ToolsDown: TEdit
-            Height = 21
+            Height = 30
             StyleElements = [seFont, seClient, seBorder]
-            ExplicitHeight = 21
+            ExplicitHeight = 30
           end
         end
         inherited PanelHelp: TPanel
@@ -561,19 +681,19 @@ object frmSkinCreator: TfrmSkinCreator
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Help: TEdit
-            Height = 21
+            Height = 30
             StyleElements = [seFont, seClient, seBorder]
-            ExplicitHeight = 21
+            ExplicitHeight = 30
           end
           inherited HelpOver: TEdit
-            Height = 21
+            Height = 30
             StyleElements = [seFont, seClient, seBorder]
-            ExplicitHeight = 21
+            ExplicitHeight = 30
           end
           inherited HelpDown: TEdit
-            Height = 21
+            Height = 30
             StyleElements = [seFont, seClient, seBorder]
-            ExplicitHeight = 21
+            ExplicitHeight = 30
           end
         end
         inherited PanelWeb: TPanel
@@ -591,19 +711,19 @@ object frmSkinCreator: TfrmSkinCreator
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Web: TEdit
-            Height = 21
+            Height = 30
             StyleElements = [seFont, seClient, seBorder]
-            ExplicitHeight = 21
+            ExplicitHeight = 30
           end
           inherited WebOver: TEdit
-            Height = 21
+            Height = 30
             StyleElements = [seFont, seClient, seBorder]
-            ExplicitHeight = 21
+            ExplicitHeight = 30
           end
           inherited WebDown: TEdit
-            Height = 21
+            Height = 30
             StyleElements = [seFont, seClient, seBorder]
-            ExplicitHeight = 21
+            ExplicitHeight = 30
           end
         end
         inherited PanelExit: TPanel
@@ -621,19 +741,19 @@ object frmSkinCreator: TfrmSkinCreator
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Exit: TEdit
-            Height = 21
+            Height = 30
             StyleElements = [seFont, seClient, seBorder]
-            ExplicitHeight = 21
+            ExplicitHeight = 30
           end
           inherited ExitOver: TEdit
-            Height = 21
+            Height = 30
             StyleElements = [seFont, seClient, seBorder]
-            ExplicitHeight = 21
+            ExplicitHeight = 30
           end
           inherited ExitDown: TEdit
-            Height = 21
+            Height = 30
             StyleElements = [seFont, seClient, seBorder]
-            ExplicitHeight = 21
+            ExplicitHeight = 30
           end
         end
         inherited PanelPreview: TPanel
@@ -642,29 +762,37 @@ object frmSkinCreator: TfrmSkinCreator
             StyleElements = [seFont, seClient, seBorder]
           end
           inherited Preview: TEdit
-            Height = 21
+            Height = 30
             StyleElements = [seFont, seClient, seBorder]
-            ExplicitHeight = 21
+            ExplicitHeight = 30
           end
         end
       end
     end
   end
   object GroupBox3: TGroupBox
-    Left = 8
-    Top = 63
-    Width = 497
-    Height = 362
+    Left = 12
+    Top = 95
+    Width = 746
+    Height = 543
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     TabOrder = 7
     object Label2: TLabel
-      Left = 198
-      Top = 339
-      Width = 268
-      Height = 13
+      Left = 297
+      Top = 509
+      Width = 422
+      Height = 21
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Caption = 'Clicking on '#39'< Previous'#39' button will reset all adjustments!'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -11
+      Font.Height = -17
       Font.Name = 'Tahoma'
       Font.Style = []
       ParentFont = False
@@ -674,80 +802,110 @@ object frmSkinCreator: TfrmSkinCreator
       Top = 30
       Width = 455
       Height = 308
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -18
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
       TabOrder = 0
       ExplicitLeft = 18
       ExplicitTop = 30
+      ExplicitWidth = 455
+      ExplicitHeight = 308
       inherited Label1: TLabel
-        Left = 119
-        Top = 259
         StyleElements = [seFont, seClient, seBorder]
-        ExplicitLeft = 119
-        ExplicitTop = 259
       end
       inherited Label2: TLabel
-        Top = 259
         StyleElements = [seFont, seClient, seBorder]
-        ExplicitTop = 259
       end
       inherited Label3: TLabel
-        Width = 394
-        Height = 13
+        Width = 650
+        Height = 22
         StyleElements = [seFont, seClient, seBorder]
-        ExplicitWidth = 394
-        ExplicitHeight = 13
+        ExplicitWidth = 650
+        ExplicitHeight = 22
       end
       inherited ScrollBox1: TScrollBox
         inherited Panel1: TPanel
           StyleElements = [seFont, seClient, seBorder]
         end
       end
+      inherited UpDown1: TUpDown
+        Height = 30
+        ExplicitHeight = 30
+      end
+      inherited UpDown2: TUpDown
+        Height = 30
+        ExplicitHeight = 30
+      end
       inherited XPos: TEdit
-        Height = 21
+        Height = 30
         StyleElements = [seFont, seClient, seBorder]
-        ExplicitHeight = 21
+        ExplicitHeight = 30
       end
       inherited YPos: TEdit
-        Height = 21
+        Height = 30
         StyleElements = [seFont, seClient, seBorder]
-        ExplicitHeight = 21
+        ExplicitHeight = 30
       end
     end
   end
   object GroupBox4: TGroupBox
-    Left = 8
-    Top = 63
-    Width = 497
-    Height = 362
+    Left = 12
+    Top = 95
+    Width = 746
+    Height = 543
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     TabOrder = 8
     object Label9: TLabel
-      Left = 32
-      Top = 32
-      Width = 99
-      Height = 13
+      Left = 48
+      Top = 48
+      Width = 150
+      Height = 21
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Caption = 'Almost complete!'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -11
+      Font.Height = -17
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
     end
     object Label10: TLabel
-      Left = 81
-      Top = 109
-      Width = 219
-      Height = 13
+      Left = 122
+      Top = 164
+      Width = 337
+      Height = 21
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Caption = 'Click on the Save Skin button to Save the skin'
     end
     object ButtonSaveSkin: TButton
-      Left = 137
-      Top = 128
-      Width = 225
-      Height = 51
+      Left = 206
+      Top = 192
+      Width = 337
+      Height = 77
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Caption = 'Save Skin...'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -11
+      Font.Height = -17
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
@@ -755,18 +913,26 @@ object frmSkinCreator: TfrmSkinCreator
       OnClick = ButtonSaveSkinClick
     end
     object Panel2: TPanel
-      Left = 20
-      Top = 266
-      Width = 461
-      Height = 64
+      Left = 30
+      Top = 399
+      Width = 692
+      Height = 96
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Color = clWhite
       ParentBackground = False
       TabOrder = 1
       object Label11: TLabel
-        Left = 16
-        Top = 8
-        Width = 421
-        Height = 25
+        Left = 24
+        Top = 12
+        Width = 632
+        Height = 38
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         AutoSize = False
         Caption = 
           'You can Share your skin with Avro Keyboard users if you wish. Cl' +
@@ -774,15 +940,19 @@ object frmSkinCreator: TfrmSkinCreator
         WordWrap = True
       end
       object LabelShareLink: TLabel
-        Left = 189
-        Top = 37
-        Width = 56
-        Height = 16
+        Left = 284
+        Top = 56
+        Width = 86
+        Height = 24
         Cursor = crHandPoint
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         Caption = 'Share it!'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clNavy
-        Font.Height = -13
+        Font.Height = -20
         Font.Name = 'Tahoma'
         Font.Style = [fsBold, fsUnderline]
         ParentFont = False
@@ -791,31 +961,43 @@ object frmSkinCreator: TfrmSkinCreator
     end
   end
   object Panel1: TPanel
-    Left = -2
-    Top = -8
-    Width = 595
-    Height = 65
+    Left = -3
+    Top = -12
+    Width = 893
+    Height = 98
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Color = clWhite
     ParentBackground = False
     TabOrder = 0
     object Label1: TLabel
-      Left = 10
-      Top = 21
-      Width = 273
-      Height = 25
+      Left = 15
+      Top = 32
+      Width = 420
+      Height = 39
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Caption = 'Welcome to Skin Designer'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -21
+      Font.Height = -32
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
     end
     object ButtonHelp: TButton
-      Left = 430
-      Top = 21
-      Width = 75
-      Height = 25
+      Left = 645
+      Top = 32
+      Width = 113
+      Height = 37
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Caption = 'Help'
       TabOrder = 0
       Visible = False
@@ -823,38 +1005,54 @@ object frmSkinCreator: TfrmSkinCreator
     end
   end
   object ButtonAbout: TButton
-    Left = 8
-    Top = 431
-    Width = 75
-    Height = 25
+    Left = 12
+    Top = 647
+    Width = 113
+    Height = 37
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'About...'
     TabOrder = 2
     OnClick = ButtonAboutClick
   end
   object ButtonPrev: TButton
-    Left = 237
-    Top = 431
-    Width = 75
-    Height = 25
+    Left = 356
+    Top = 647
+    Width = 112
+    Height = 37
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = '< Previous'
     Enabled = False
     TabOrder = 3
     OnClick = ButtonPrevClick
   end
   object ButtonNext: TButton
-    Left = 318
-    Top = 431
-    Width = 75
-    Height = 25
+    Left = 477
+    Top = 647
+    Width = 113
+    Height = 37
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Next >'
     TabOrder = 4
     OnClick = ButtonNextClick
   end
   object ButtonExit: TButton
-    Left = 428
-    Top = 431
-    Width = 75
-    Height = 25
+    Left = 642
+    Top = 647
+    Width = 113
+    Height = 37
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Exit'
     TabOrder = 5
     OnClick = ButtonExitClick

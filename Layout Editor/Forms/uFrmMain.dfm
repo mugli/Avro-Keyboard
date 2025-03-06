@@ -57,6 +57,7 @@ object frmMain: TfrmMain
     020202020202020202020202020202020202020202020202020202020202FFFF
     0202FFFFF1EEFFFFF1F68001623F00011A3800016D0200010202000102020001
     02020001F0EE0001F2F600014F980001113C80070202FFFF0202FFFF0202}
+  Scaled = False
   OnClose = FormClose
   OnCreate = FormCreate
   TextHeight = 13
@@ -4095,45 +4096,6 @@ object frmMain: TfrmMain
       TabOrder = 2
       OnChange = txtAltGrChange
       OnEnter = txtNormalEnter
-    end
-  end
-  object Panel2: TPanel
-    Left = 367
-    Top = 453
-    Width = 422
-    Height = 41
-    Color = clWhite
-    ParentBackground = False
-    TabOrder = 4
-    object Label14: TLabel
-      Left = 19
-      Top = 13
-      Width = 301
-      Height = 13
-      Alignment = taRightJustify
-      Caption = 'You can share your layout with Avro Keyboard users'
-      Font.Charset = ANSI_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Verdana'
-      Font.Style = []
-      ParentFont = False
-      WordWrap = True
-    end
-    object Label15: TLabel
-      Left = 327
-      Top = 7
-      Width = 81
-      Height = 23
-      Cursor = crHandPoint
-      Caption = 'Share it!'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clNavy
-      Font.Height = -19
-      Font.Name = 'Tahoma'
-      Font.Style = [fsBold, fsUnderline]
-      ParentFont = False
-      OnClick = Label15Click
     end
   end
   object OpenPictureDialog1: TOpenPictureDialog
