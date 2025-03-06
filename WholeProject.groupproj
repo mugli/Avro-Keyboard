@@ -1,0 +1,96 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{E55BD1E9-BAA7-4CFD-B0F4-9D1115CD36AC}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="Keyboard and Spell checker\Avro_Keyboard.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Keyboard and Spell checker\SpellChecker\AvroSpell.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Keyboard and Spell checker\SpellChecker\Avro_Spell_Checker.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Layout Editor\LayoutEditor.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Skin Designer\SkinDesigner.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Unicode to ascii converter\Unicode_to_Bijoy.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="Avro_Keyboard">
+        <MSBuild Projects="Keyboard and Spell checker\Avro_Keyboard.dproj"/>
+    </Target>
+    <Target Name="Avro_Keyboard:Clean">
+        <MSBuild Projects="Keyboard and Spell checker\Avro_Keyboard.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Avro_Keyboard:Make">
+        <MSBuild Projects="Keyboard and Spell checker\Avro_Keyboard.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="AvroSpell">
+        <MSBuild Projects="Keyboard and Spell checker\SpellChecker\AvroSpell.dproj"/>
+    </Target>
+    <Target Name="AvroSpell:Clean">
+        <MSBuild Projects="Keyboard and Spell checker\SpellChecker\AvroSpell.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="AvroSpell:Make">
+        <MSBuild Projects="Keyboard and Spell checker\SpellChecker\AvroSpell.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Avro_Spell_Checker">
+        <MSBuild Projects="Keyboard and Spell checker\SpellChecker\Avro_Spell_Checker.dproj"/>
+    </Target>
+    <Target Name="Avro_Spell_Checker:Clean">
+        <MSBuild Projects="Keyboard and Spell checker\SpellChecker\Avro_Spell_Checker.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Avro_Spell_Checker:Make">
+        <MSBuild Projects="Keyboard and Spell checker\SpellChecker\Avro_Spell_Checker.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="LayoutEditor">
+        <MSBuild Projects="Layout Editor\LayoutEditor.dproj"/>
+    </Target>
+    <Target Name="LayoutEditor:Clean">
+        <MSBuild Projects="Layout Editor\LayoutEditor.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="LayoutEditor:Make">
+        <MSBuild Projects="Layout Editor\LayoutEditor.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="SkinDesigner">
+        <MSBuild Projects="Skin Designer\SkinDesigner.dproj"/>
+    </Target>
+    <Target Name="SkinDesigner:Clean">
+        <MSBuild Projects="Skin Designer\SkinDesigner.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SkinDesigner:Make">
+        <MSBuild Projects="Skin Designer\SkinDesigner.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Unicode_to_Bijoy">
+        <MSBuild Projects="Unicode to ascii converter\Unicode_to_Bijoy.dproj"/>
+    </Target>
+    <Target Name="Unicode_to_Bijoy:Clean">
+        <MSBuild Projects="Unicode to ascii converter\Unicode_to_Bijoy.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Unicode_to_Bijoy:Make">
+        <MSBuild Projects="Unicode to ascii converter\Unicode_to_Bijoy.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="Avro_Keyboard;AvroSpell;Avro_Spell_Checker;LayoutEditor;SkinDesigner;Unicode_to_Bijoy"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="Avro_Keyboard:Clean;AvroSpell:Clean;Avro_Spell_Checker:Clean;LayoutEditor:Clean;SkinDesigner:Clean;Unicode_to_Bijoy:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="Avro_Keyboard:Make;AvroSpell:Make;Avro_Spell_Checker:Make;LayoutEditor:Make;SkinDesigner:Make;Unicode_to_Bijoy:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

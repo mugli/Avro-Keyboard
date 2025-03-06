@@ -165,7 +165,7 @@ Implementation
 
 Uses
 
-{$IFNDEF SpellChecker}
+{$IF Not (Defined(SpellChecker) OR (Defined(SpellCheckerDll))))}
   uForm1,
 
 {$ENDIF}
@@ -324,7 +324,7 @@ Begin
     FDatabaseLoading := False;
   End;
 
-{$IFNDEF SpellChecker}
+{$IF Not (Defined(SpellChecker) OR (Defined(SpellCheckerDll))))}
   AvroMainForm1.TrimAppMemorySize;
 
 {$ENDIF}
@@ -405,7 +405,7 @@ Begin
 
         FDatabase.Close;
 
-{$IFNDEF SpellChecker}
+{$IF Not (Defined(SpellChecker) OR (Defined(SpellCheckerDll))))}
         AvroMainForm1.TrimAppMemorySize;
 
 {$ENDIF}

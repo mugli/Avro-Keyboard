@@ -5,7 +5,6 @@
 *.bdsgroup
 *.bpg
 *.dcl
-*.groupproj
 *.dcp
 *.dcpil
 *.dcu
@@ -39,21 +38,12 @@
 *.xml
 *__history
 *.elf
-Keyboard and Spell checker/ProjectDefines.inc
-Keyboard and Spell checker/*/ProjectDefines.inc
-Keyboard and Spell checker/*/*/ProjectDefines.inc
-Keyboard and Spell checker/Profiling/
-Layout Editor/ProjectDefines.inc
-Layout Editor/*/ProjectDefines.inc
-Skin Designer/ProjectDefines.inc
-Skin Designer/*/ProjectDefines.inc
-Unicode to ascii converter/ProjectDefines.inc
-Unicode to ascii converter/*/ProjectDefines.inc
+
 __history/
 Data/
 DCU/
 Portable Edition/
 Source Archive/
 Standard edition/
-Keyboard and Spell checker/SpellChecker/AvroSpell.dll
+*.dll
 *.dsv
