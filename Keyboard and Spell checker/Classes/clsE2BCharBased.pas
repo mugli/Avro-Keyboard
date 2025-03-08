@@ -1211,7 +1211,7 @@ Begin
     // frmPrevW.List.Items.Add(TempBanglaText1);
     // End;
   End;
-
+  frmPrevW.List.Items.Insert(1, EnglishT);
   If (PhoneticMode = 'ONLYCHAR') Or (ShowPrevWindow = 'NO') Then
   Begin
     If (TempBanglaText1 <> TempBanglaText2) Then
