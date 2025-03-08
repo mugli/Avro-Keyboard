@@ -30,9 +30,9 @@ Program Avro_Keyboard;
 uses
   Forms,
   Windows,
-  uForm1 in 'Forms\uForm1.pas' {AvroMainForm1} ,
+  uForm1 in 'Forms\uForm1.pas' {AvroMainForm1},
   BanglaChars in 'Units\BanglaChars.pas',
-  uTopBar in 'Forms\uTopBar.pas' {TopBar} ,
+  uTopBar in 'Forms\uTopBar.pas' {TopBar},
   SkinLoader in 'Units\SkinLoader.pas',
   KeyboardLayoutLoader in 'Units\KeyboardLayoutLoader.pas',
   clsEnglishToBangla in 'Classes\clsEnglishToBangla.pas',
@@ -50,14 +50,14 @@ uses
   uFileFolderHandling in 'Units\uFileFolderHandling.pas',
   u_VirtualFontInstall in 'Units\u_VirtualFontInstall.pas',
   u_Admin in 'Units\u_Admin.pas',
-  ufrmAbout in 'Forms\ufrmAbout.pas' {frmAbout} ,
-  ufrmAboutSkinLayout in 'Forms\ufrmAboutSkinLayout.pas' {frmAboutSkinLayout} ,
-  ufrmAutoCorrect in 'Forms\ufrmAutoCorrect.pas' {frmAutoCorrect} ,
-  ufrmAvroMouse in 'Forms\ufrmAvroMouse.pas' {frmAvroMouse} ,
-  ufrmOptions in 'Forms\ufrmOptions.pas' {frmOptions} ,
-  ufrmPrevW in 'Forms\ufrmPrevW.pas' {frmPrevW} ,
-  ufrmUpdateNotify in 'Forms\ufrmUpdateNotify.pas' {frmUpdateNotify} ,
-  uLayoutViewer in 'Forms\uLayoutViewer.pas' {LayoutViewer} ,
+  ufrmAbout in 'Forms\ufrmAbout.pas' {frmAbout},
+  ufrmAboutSkinLayout in 'Forms\ufrmAboutSkinLayout.pas' {frmAboutSkinLayout},
+  ufrmAutoCorrect in 'Forms\ufrmAutoCorrect.pas' {frmAutoCorrect},
+  ufrmAvroMouse in 'Forms\ufrmAvroMouse.pas' {frmAvroMouse},
+  ufrmOptions in 'Forms\ufrmOptions.pas' {frmOptions},
+  ufrmPrevW in 'Forms\ufrmPrevW.pas' {frmPrevW},
+  ufrmUpdateNotify in 'Forms\ufrmUpdateNotify.pas' {frmUpdateNotify},
+  uLayoutViewer in 'Forms\uLayoutViewer.pas' {LayoutViewer},
   uProcessHandler in 'Units\uProcessHandler.pas',
   uWindowHandlers in 'Units\uWindowHandlers.pas',
   clsUpdateInfoDownloader in 'Classes\clsUpdateInfoDownloader.pas',
@@ -75,12 +75,12 @@ uses
   clsSkinLayoutConverter in 'Classes\clsSkinLayoutConverter.pas',
   uCmdLineHelper in 'Units\uCmdLineHelper.pas',
   uCommandLineFunctions in 'Units\uCommandLineFunctions.pas',
-  ufrmConflict in 'Forms\ufrmConflict.pas' {frmConflict} ,
-  uFrmSplash in 'Forms\uFrmSplash.pas' {frmSplash} ,
+  ufrmConflict in 'Forms\ufrmConflict.pas' {frmConflict},
+  uFrmSplash in 'Forms\uFrmSplash.pas' {frmSplash},
   clsAbbreviation in 'Classes\clsAbbreviation.pas',
-  clsUnicodeToBijoy2000
-    in '..\Unicode to ascii converter\clsUnicodeToBijoy2000.pas',
-  ufrmEncodingWarning in 'Forms\ufrmEncodingWarning.pas' {frmEncodingWarning};
+  clsUnicodeToBijoy2000 in '..\Unicode to ascii converter\clsUnicodeToBijoy2000.pas',
+  ufrmEncodingWarning in 'Forms\ufrmEncodingWarning.pas' {frmEncodingWarning},
+  DebugLog in 'Units\DebugLog.pas';
 
 Var
   Mutex: THandle;

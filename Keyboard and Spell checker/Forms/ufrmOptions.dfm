@@ -1,15 +1,19 @@
 object frmOptions: TfrmOptions
   Left = 0
   Top = 0
+  Margins.Left = 5
+  Margins.Top = 5
+  Margins.Right = 5
+  Margins.Bottom = 5
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Customize Avro Keyboard...'
-  ClientHeight = 396
-  ClientWidth = 585
+  ClientHeight = 594
+  ClientWidth = 887
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clBtnText
-  Font.Height = -11
+  Font.Height = -17
   Font.Name = 'Tahoma'
   Font.Style = []
   Icon.Data = {
@@ -60,22 +64,31 @@ object frmOptions: TfrmOptions
   Position = poScreenCenter
   OnClose = FormClose
   OnCreate = FormCreate
-  TextHeight = 13
+  PixelsPerInch = 144
+  TextHeight = 21
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 617
-    Height = 49
+    Width = 926
+    Height = 74
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     BevelKind = bkTile
     BevelOuter = bvNone
     Color = clWhite
     ParentBackground = False
     TabOrder = 1
     object Image1: TImage
-      Left = 8
-      Top = 8
+      Left = 12
+      Top = 12
       Width = 32
       Height = 32
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       AutoSize = True
       Picture.Data = {
         055449636F6E0000010001002020000001000800A80800001600000028000000
@@ -152,87 +165,119 @@ object frmOptions: TfrmOptions
       Transparent = True
     end
     object TopLabel: TLabel
-      Left = 46
-      Top = 16
-      Width = 119
-      Height = 16
+      Left = 69
+      Top = 24
+      Width = 186
+      Height = 24
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Caption = 'General Settings...'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -13
+      Font.Height = -20
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
     end
     object Button_Help: TButton
-      Left = 493
-      Top = 13
-      Width = 75
-      Height = 25
+      Left = 740
+      Top = 20
+      Width = 112
+      Height = 37
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Caption = 'Help'
       TabOrder = 0
       OnClick = Button_HelpClick
     end
   end
   object ButtonPanel: TPanel
-    Left = -3
-    Top = 345
-    Width = 638
-    Height = 57
+    Left = -5
+    Top = 518
+    Width = 958
+    Height = 85
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     BevelKind = bkTile
     BevelOuter = bvNone
     TabOrder = 2
     object LabelStatus: TLabel
-      Left = 11
-      Top = 16
-      Width = 87
-      Height = 13
+      Left = 17
+      Top = 24
+      Width = 132
+      Height = 21
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Caption = 'Settings saved!'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clGreen
-      Font.Height = -11
+      Font.Height = -17
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
       Visible = False
     end
     object Button_OK: TButton
-      Left = 334
-      Top = 16
-      Width = 75
-      Height = 25
+      Left = 501
+      Top = 24
+      Width = 113
+      Height = 38
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Caption = 'Ok'
       Default = True
       TabOrder = 0
       OnClick = Button_OKClick
     end
     object Button_Cancel: TButton
-      Left = 415
-      Top = 16
-      Width = 75
-      Height = 25
+      Left = 623
+      Top = 24
+      Width = 112
+      Height = 38
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Cancel = True
       Caption = 'Cancel'
       TabOrder = 1
       OnClick = Button_CancelClick
     end
     object Button_Apply: TButton
-      Left = 496
-      Top = 16
-      Width = 75
-      Height = 25
+      Left = 744
+      Top = 24
+      Width = 113
+      Height = 38
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Caption = 'Apply'
       TabOrder = 2
       OnClick = Button_ApplyClick
     end
   end
   object CategoryTree: TTreeView
-    Left = 2
-    Top = 52
-    Width = 128
-    Height = 287
+    Left = 3
+    Top = 78
+    Width = 192
+    Height = 431
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     HideSelection = False
-    Indent = 19
+    Indent = 29
     ReadOnly = True
     RightClickSelect = True
     RowSelect = True
@@ -260,20 +305,28 @@ object frmOptions: TfrmOptions
       47006C006F00620061006C0020006F0075007400700075007400}
   end
   object butEditCustomDict: TButton
-    Left = 596
-    Top = 149
-    Width = 137
-    Height = 25
+    Left = 894
+    Top = 224
+    Width = 206
+    Height = 37
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Edit custom dictionary...'
     TabOrder = 3
     Visible = False
     OnClick = butEditCustomDictClick
   end
   object CheckAddNewWords: TCheckBox
-    Left = 596
-    Top = 211
-    Width = 239
-    Height = 25
+    Left = 894
+    Top = 317
+    Width = 359
+    Height = 37
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Add new words to custom dictionary automatically'
     TabOrder = 4
     Visible = False
@@ -281,250 +334,359 @@ object frmOptions: TfrmOptions
     OnClick = CheckAddNewWordsClick
   end
   object ScrollBox2: TScrollBox
-    Left = 132
-    Top = 53
-    Width = 446
-    Height = 285
+    Left = 198
+    Top = 80
+    Width = 669
+    Height = 427
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     HorzScrollBar.Visible = False
     VertScrollBar.Smooth = True
     VertScrollBar.Tracking = True
     BorderStyle = bsNone
     TabOrder = 5
     object General_Panel: TPanel
-      Left = 5
-      Top = 2
-      Width = 427
-      Height = 282
+      Left = 8
+      Top = 3
+      Width = 640
+      Height = 423
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       BevelKind = bkTile
       BevelOuter = bvNone
       TabOrder = 3
       object Label3: TLabel
-        Left = 16
-        Top = 196
-        Width = 250
-        Height = 13
+        Left = 24
+        Top = 294
+        Width = 388
+        Height = 21
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         Caption = 'When I click the cross (X) button on Top Bar:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -17
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
       end
       object GroupBox1: TGroupBox
-        Left = 13
-        Top = 1
-        Width = 388
-        Height = 161
+        Left = 20
+        Top = 2
+        Width = 582
+        Height = 241
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         Caption = 'Startup options'
         TabOrder = 0
         object Label2: TLabel
-          Left = 16
-          Top = 70
-          Width = 210
-          Height = 13
+          Left = 24
+          Top = 105
+          Width = 322
+          Height = 21
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
           Caption = 'At stratup, Avro Keyboard will run as:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -17
           Font.Name = 'Tahoma'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object checkStartUp: TCheckBox
-          Left = 16
-          Top = 24
-          Width = 201
-          Height = 17
+          Left = 24
+          Top = 36
+          Width = 302
+          Height = 26
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
           Caption = 'Start Avro Keyboard with Windows'
           TabOrder = 0
         end
         object CheckShowSplash: TCheckBox
-          Left = 16
-          Top = 47
-          Width = 201
-          Height = 17
+          Left = 24
+          Top = 71
+          Width = 302
+          Height = 25
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
           Caption = 'Show splash screen at startup'
           TabOrder = 1
         end
         object optStartupUIMode_TopBar: TRadioButton
-          Left = 40
-          Top = 89
-          Width = 177
-          Height = 17
+          Left = 60
+          Top = 134
+          Width = 266
+          Height = 25
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
           Caption = 'Top Bar (on desktop, as toolbar)'
           TabOrder = 2
         end
         object optStartupUIMode_Tray: TRadioButton
-          Left = 40
-          Top = 112
-          Width = 177
-          Height = 17
+          Left = 60
+          Top = 168
+          Width = 266
+          Height = 26
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
           Caption = 'System tray icon'
           TabOrder = 3
         end
         object optStartupUIMode_Last: TRadioButton
-          Left = 40
-          Top = 135
-          Width = 177
-          Height = 17
+          Left = 60
+          Top = 203
+          Width = 266
+          Height = 25
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
           Caption = 'UI mode used last time'
           TabOrder = 4
         end
       end
       object optTopBarXButton_Close: TRadioButton
-        Left = 40
-        Top = 233
-        Width = 257
-        Height = 18
+        Left = 60
+        Top = 350
+        Width = 386
+        Height = 27
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         Caption = 'Close Avro Keyboard'
         TabOrder = 1
       end
       object optTopBarXButton_Minimize: TRadioButton
-        Left = 40
-        Top = 213
-        Width = 257
-        Height = 18
+        Left = 60
+        Top = 320
+        Width = 386
+        Height = 27
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         Caption = 'Minimize Avro Keyboard to the System Tray'
         TabOrder = 2
       end
       object optTopBarXButton_ShowMenu: TRadioButton
-        Left = 40
-        Top = 254
-        Width = 257
-        Height = 18
+        Left = 60
+        Top = 381
+        Width = 386
+        Height = 27
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         Caption = 'Show option for both'
         TabOrder = 3
       end
       object CheckUpdate: TCheckBox
-        Left = 29
-        Top = 170
-        Width = 300
-        Height = 17
+        Left = 44
+        Top = 255
+        Width = 450
+        Height = 26
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         Caption = 'Automatically check for update every week (anonymous)'
         TabOrder = 4
       end
     end
     object Interface_Panel: TPanel
-      Left = 3
-      Top = 4
-      Width = 429
-      Height = 280
+      Left = 5
+      Top = 6
+      Width = 643
+      Height = 420
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       BevelKind = bkTile
       BevelOuter = bvNone
       TabOrder = 4
       object Captionl_Transparency: TLabel
-        Left = 16
-        Top = 41
-        Width = 134
-        Height = 13
+        Left = 24
+        Top = 62
+        Width = 206
+        Height = 21
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         Caption = 'Transparency level (0-255):'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -17
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
       end
       object Label_Transparency: TLabel
-        Left = 386
-        Top = 43
-        Width = 12
-        Height = 13
+        Left = 579
+        Top = 65
+        Width = 18
+        Height = 21
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         Caption = '80'
       end
       object checkTopBarTransparent: TCheckBox
-        Left = 16
-        Top = 16
-        Width = 297
-        Height = 17
+        Left = 24
+        Top = 24
+        Width = 446
+        Height = 26
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         Caption = 'Make Top Bar semi transparent when it is inactive'
         TabOrder = 0
         OnClick = checkTopBarTransparentClick
       end
       object TrackBar_Transparency: TTrackBar
-        Left = 156
-        Top = 39
-        Width = 222
-        Height = 24
+        Left = 234
+        Top = 59
+        Width = 333
+        Height = 36
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         Max = 255
         TabOrder = 1
+        ThumbLength = 30
         OnChange = TrackBar_TransparencyChange
       end
       object GroupBox2: TGroupBox
-        Left = 13
-        Top = 73
-        Width = 388
-        Height = 195
+        Left = 20
+        Top = 110
+        Width = 582
+        Height = 292
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         Caption = 'Interface Skin'
         TabOrder = 2
         object Label5: TLabel
-          Left = 16
-          Top = 25
-          Width = 54
-          Height = 13
+          Left = 24
+          Top = 38
+          Width = 85
+          Height = 21
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
           Caption = 'Select skin:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -17
           Font.Name = 'Tahoma'
           Font.Style = []
           ParentFont = False
         end
         object Label6: TLabel
-          Left = 16
-          Top = 48
-          Width = 42
-          Height = 13
+          Left = 24
+          Top = 72
+          Width = 64
+          Height = 21
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
           Caption = 'Preview:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -17
           Font.Name = 'Tahoma'
           Font.Style = []
           ParentFont = False
         end
         object comboSkin: TComboBox
-          Left = 89
-          Top = 20
-          Width = 280
-          Height = 21
+          Left = 134
+          Top = 30
+          Width = 420
+          Height = 29
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
           Style = csDropDownList
           TabOrder = 0
           OnChange = comboSkinChange
         end
         object ScrollBox1: TScrollBox
-          Left = 16
-          Top = 67
-          Width = 353
-          Height = 94
+          Left = 24
+          Top = 101
+          Width = 530
+          Height = 141
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
           HorzScrollBar.Smooth = True
           VertScrollBar.Smooth = True
           Color = clWhite
           ParentColor = False
           TabOrder = 1
           object SkinPreviewPic: TImage
-            Left = 8
-            Top = 8
-            Width = 105
-            Height = 105
+            Left = 12
+            Top = 12
+            Width = 158
+            Height = 158
+            Margins.Left = 5
+            Margins.Top = 5
+            Margins.Right = 5
+            Margins.Bottom = 5
             AutoSize = True
           end
         end
         object cmdDownloadSkin: TButton
-          Left = 250
-          Top = 165
-          Width = 118
-          Height = 25
+          Left = 375
+          Top = 248
+          Width = 177
+          Height = 37
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
           Caption = 'Download skins...'
           TabOrder = 2
           OnClick = cmdDownloadSkinClick
         end
         object ccmdAboutSkin: TButton
-          Left = 128
-          Top = 165
-          Width = 116
-          Height = 25
+          Left = 192
+          Top = 248
+          Width = 174
+          Height = 37
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
           Caption = 'About this skin...'
           TabOrder = 3
           OnClick = ccmdAboutSkinClick
@@ -532,93 +694,129 @@ object frmOptions: TfrmOptions
       end
     end
     object AvroMouse_Panel: TPanel
-      Left = 1
-      Top = 2
-      Width = 431
-      Height = 282
+      Left = 2
+      Top = 3
+      Width = 646
+      Height = 423
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       BevelKind = bkTile
       BevelOuter = bvNone
       TabOrder = 5
       object GroupBox5: TGroupBox
-        Left = 16
-        Top = 19
-        Width = 394
-        Height = 105
+        Left = 24
+        Top = 29
+        Width = 591
+        Height = 157
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         Caption = 'Keyboard Mode and Input Locale changing'
         TabOrder = 0
         object optAvroMouseKeyboardMode_NoChange: TRadioButton
-          Left = 16
-          Top = 33
-          Width = 321
-          Height = 17
+          Left = 24
+          Top = 50
+          Width = 482
+          Height = 25
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
           Caption = 'Do not change Keyboard Mode when I type with Avro Mouse'
           TabOrder = 0
         end
         object optAvroMouseKeyboardMode_Change: TRadioButton
-          Left = 16
-          Top = 68
-          Width = 321
-          Height = 17
+          Left = 24
+          Top = 102
+          Width = 482
+          Height = 26
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
           Caption = 'Change Keyboard Mode to Bangla'
           TabOrder = 1
         end
       end
     end
     object GlobalOutput_Panel: TPanel
-      Left = -2
-      Top = 2
-      Width = 431
-      Height = 282
+      Left = -3
+      Top = 3
+      Width = 647
+      Height = 423
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       BevelKind = bkTile
       BevelOuter = bvNone
       TabOrder = 7
       object Label20: TLabel
-        Left = 18
-        Top = 193
-        Width = 394
-        Height = 13
+        Left = 27
+        Top = 290
+        Width = 607
+        Height = 21
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         Caption = 
           'You can select your preferred  hotkey for toggling between Unico' +
           'de/ANSI mode in'
       end
       object LabelGlobalHotkeysLink: TLabel
-        Left = 18
-        Top = 213
-        Width = 107
-        Height = 13
+        Left = 27
+        Top = 320
+        Width = 166
+        Height = 21
         Cursor = crHandPoint
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         Caption = 'Global Hotkeys setting'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlue
-        Font.Height = -11
+        Font.Height = -17
         Font.Name = 'Tahoma'
         Font.Style = [fsUnderline]
         ParentFont = False
         OnClick = LabelGlobalHotkeysLinkClick
       end
       object optOutputUnicode: TRadioButton
-        Left = 23
-        Top = 29
-        Width = 228
-        Height = 17
+        Left = 35
+        Top = 44
+        Width = 342
+        Height = 25
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         Caption = 'Output as Unicode (Recommended)'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBtnText
-        Font.Height = -11
+        Font.Height = -17
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 0
       end
       object optOutputANSI: TRadioButton
-        Left = 23
-        Top = 61
-        Width = 228
-        Height = 17
+        Left = 35
+        Top = 92
+        Width = 342
+        Height = 25
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         Caption = 'Output as ANSI (Experimental)'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBtnText
-        Font.Height = -11
+        Font.Height = -17
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
@@ -626,360 +824,67 @@ object frmOptions: TfrmOptions
         OnMouseUp = optOutputANSIMouseUp
       end
       object CheckWarningAnsi: TCheckBox
-        Left = 23
-        Top = 127
-        Width = 228
-        Height = 17
+        Left = 35
+        Top = 191
+        Width = 342
+        Height = 25
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         Caption = 'Show warning in ANSI mode.'
         TabOrder = 2
       end
     end
-    object AvroPhonetic_Panel: TPanel
-      Left = 4
-      Top = 2
-      Width = 430
-      Height = 532
-      BevelKind = bkTile
-      BevelOuter = bvNone
-      TabOrder = 6
-      object Label13: TLabel
-        Left = 48
-        Top = 479
-        Width = 338
-        Height = 13
-        Caption = 
-          '(Quick tip: Enable if your keyboard doesn'#39't have NumPa-d to type' +
-          ' dot.'
-      end
-      object Label14: TLabel
-        Left = 101
-        Top = 495
-        Width = 285
-        Height = 26
-        Caption = 
-          'Disable if you want to use Vertical Line/Pipe symbol to type Mat' +
-          'hematical Equations for example)'
-        WordWrap = True
-      end
-      object GroupBox3: TGroupBox
-        Left = 8
-        Top = 5
-        Width = 401
-        Height = 348
-        Caption = 'Preview Window and Typing Mode'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-        TabOrder = 0
-        object Label_PhoneticTypingMode: TLabel
-          Left = 16
-          Top = 48
-          Width = 111
-          Height = 13
-          Caption = 'Suggestion options:'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = [fsBold]
-          ParentFont = False
-        end
-        object Label1: TLabel
-          Left = 56
-          Top = 83
-          Width = 314
-          Height = 26
-          Caption = 
-            '(Avro selects first dictionary suggestion automatically. Charact' +
-            'er mode is still available as option)'
-          WordWrap = True
-        end
-        object Label4: TLabel
-          Left = 56
-          Top = 134
-          Width = 332
-          Height = 26
-          Caption = 
-            '(Avro selects character mode automatically. Dictionary hints are' +
-            ' also shown if available)'
-          WordWrap = True
-        end
-        object Label9: TLabel
-          Left = 48
-          Top = 256
-          Width = 314
-          Height = 52
-          Caption = 
-            '(Quick Tip: If you use Tab key for other purposes like moving be' +
-            'tween cells in a spreadsheet program or in a table or in a datab' +
-            'ase application and still want to enable this option, you can pr' +
-            'ess Esc key first to close preview window.)'
-          WordWrap = True
-        end
-        object Label12: TLabel
-          Left = 56
-          Top = 196
-          Width = 287
-          Height = 26
-          Caption = 
-            '(Note: If any autocorrect entry is found, suggestion list will s' +
-            'till show up)'
-          WordWrap = True
-        end
-        object CheckShowPrevWindow: TCheckBox
-          Left = 16
-          Top = 23
-          Width = 145
-          Height = 17
-          Caption = 'Show Preview Window'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentFont = False
-          TabOrder = 0
-          OnClick = CheckShowPrevWindowClick
-        end
-        object optPhoneticMode_Dict: TRadioButton
-          Left = 32
-          Top = 67
-          Width = 366
-          Height = 19
-          Caption = 'Dictionary Mode is Default in suggestions'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = [fsBold]
-          ParentFont = False
-          TabOrder = 1
-          WordWrap = True
-        end
-        object optPhoneticMode_Char: TRadioButton
-          Left = 32
-          Top = 116
-          Width = 366
-          Height = 20
-          Caption = 'Character Mode is Default in suggestions'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = [fsBold]
-          ParentFont = False
-          TabOrder = 2
-          WordWrap = True
-        end
-        object optPhoneticMode_OnlyChar: TRadioButton
-          Left = 32
-          Top = 167
-          Width = 345
-          Height = 25
-          Caption = 
-            'Use classic Avro Phonetic only, don'#39't show any dictionary sugges' +
-            'tion'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = [fsBold]
-          ParentFont = False
-          TabOrder = 3
-          WordWrap = True
-        end
-        object CheckRememberCandidate: TCheckBox
-          Left = 16
-          Top = 323
-          Width = 281
-          Height = 17
-          Caption = 'Remember my choice when multiple hints are available.'
-          TabOrder = 4
-        end
-        object CheckTabBrowsing: TCheckBox
-          Left = 16
-          Top = 236
-          Width = 361
-          Height = 17
-          Caption = 
-            'Use Tab key to browse through suggestions just like Down Arrow k' +
-            'ey.'
-          TabOrder = 5
-        end
-      end
-      object GroupBox7: TGroupBox
-        Left = 8
-        Top = 359
-        Width = 401
-        Height = 56
-        Caption = 'Auto correct options'
-        TabOrder = 1
-        object CheckAutoCorrect: TCheckBox
-          Left = 16
-          Top = 26
-          Width = 145
-          Height = 17
-          Caption = 'Enable Auto-correction'
-          TabOrder = 0
-        end
-        object cmdAutoCorrect: TButton
-          Left = 192
-          Top = 18
-          Width = 198
-          Height = 25
-          Caption = 'Edit/Import Auto correct entries...'
-          TabOrder = 1
-          OnClick = cmdAutoCorrectClick
-        end
-      end
-      object CheckEnableJoNukta: TCheckBox
-        Left = 24
-        Top = 428
-        Width = 163
-        Height = 17
-        Caption = 'Type Jo+Nukta with Shift+J'
-        TabOrder = 2
-      end
-      object CheckPipeToDot: TCheckBox
-        Left = 24
-        Top = 456
-        Width = 223
-        Height = 17
-        Caption = 'Type Dot (.) with Vertical Line/Pipe Key (|)'
-        TabOrder = 3
-      end
-    end
-    object FixedLayout_Panel: TPanel
-      Left = 2
-      Top = 0
-      Width = 430
-      Height = 284
-      BevelKind = bkTile
-      BevelOuter = bvNone
-      TabOrder = 0
-      object GroupBox6: TGroupBox
-        Left = 16
-        Top = 11
-        Width = 401
-        Height = 199
-        Caption = 'Typing Style in Fixed Keyboard Layouts'
-        TabOrder = 0
-        object Label10: TLabel
-          Left = 32
-          Top = 44
-          Width = 315
-          Height = 13
-          Caption = '(Type Kar/Matra/Short Form Of Vowel always AFTER consonants)'
-          WordWrap = True
-        end
-        object Label11: TLabel
-          Left = 32
-          Top = 169
-          Width = 236
-          Height = 13
-          Caption = '(Use Type writer or old ASCII based typing style)'
-          WordWrap = True
-        end
-        object optTypingStyle_Modern: TRadioButton
-          Left = 14
-          Top = 24
-          Width = 202
-          Height = 17
-          Caption = 'Use Modern Style Typing'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = [fsBold]
-          ParentFont = False
-          TabOrder = 0
-          OnClick = optTypingStyle_ModernClick
-        end
-        object chkOldReph: TCheckBox
-          Left = 48
-          Top = 65
-          Width = 153
-          Height = 17
-          Caption = 'Enable "Old Style Reph"'
-          TabOrder = 1
-        end
-        object chkVowelFormat: TCheckBox
-          Left = 48
-          Top = 88
-          Width = 201
-          Height = 17
-          Caption = 'Enable "Automatic vowel Forming"'
-          TabOrder = 2
-        end
-        object CheckChandraPosition: TCheckBox
-          Left = 48
-          Top = 111
-          Width = 201
-          Height = 17
-          Caption = 'Automatically fix "Chandra" position'
-          TabOrder = 3
-        end
-        object optTypingStyle_Old: TRadioButton
-          Left = 14
-          Top = 149
-          Width = 217
-          Height = 17
-          Caption = 'Use Full Old Style Typing'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = [fsBold]
-          ParentFont = False
-          TabOrder = 4
-          OnClick = optTypingStyle_ModernClick
-        end
-      end
-      object CheckNumPadBangla: TCheckBox
-        Left = 30
-        Top = 232
-        Width = 291
-        Height = 17
-        Caption = 'Enable Bangla in Number Pad'
-        TabOrder = 1
-      end
-    end
     object KeyboardMode_Panel: TPanel
-      Left = 2
-      Top = 1
-      Width = 430
-      Height = 283
+      Left = 3
+      Top = 2
+      Width = 645
+      Height = 424
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       BevelKind = bkTile
       BevelOuter = bvNone
       TabOrder = 1
       object GroupBox4: TGroupBox
-        Left = 14
-        Top = 18
-        Width = 395
-        Height = 54
+        Left = 21
+        Top = 27
+        Width = 593
+        Height = 81
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         Caption = 'Keyboard Mode Settings'
         TabOrder = 0
         object Label7: TLabel
-          Left = 16
-          Top = 25
-          Width = 165
-          Height = 13
+          Left = 24
+          Top = 38
+          Width = 253
+          Height = 21
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
           Caption = 'Keyboard mode switcing key:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -17
           Font.Name = 'Tahoma'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object comboFunctionKeys: TComboBox
-          Left = 196
-          Top = 21
-          Width = 117
-          Height = 21
+          Left = 294
+          Top = 32
+          Width = 176
+          Height = 29
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
           TabOrder = 0
           Text = 'F1'
           Items.Strings = (
@@ -999,37 +904,53 @@ object frmOptions: TfrmOptions
         end
       end
       object GroupBox8: TGroupBox
-        Left = 15
-        Top = 97
-        Width = 394
-        Height = 76
+        Left = 23
+        Top = 146
+        Width = 591
+        Height = 114
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         Caption = 'Global output settings'
         TabOrder = 1
         object Label16: TLabel
-          Left = 16
-          Top = 25
-          Width = 250
-          Height = 13
+          Left = 24
+          Top = 38
+          Width = 388
+          Height = 21
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
           Caption = 'Toggle between Unicode/ANSI output mode:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -17
           Font.Name = 'Tahoma'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object Label17: TLabel
-          Left = 156
-          Top = 50
-          Width = 33
-          Height = 13
+          Left = 234
+          Top = 75
+          Width = 50
+          Height = 21
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
           Caption = 'Shift +'
         end
         object comboFunctionKeys_OutputMode: TComboBox
-          Left = 195
-          Top = 46
-          Width = 117
-          Height = 21
+          Left = 293
+          Top = 69
+          Width = 175
+          Height = 29
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
           TabOrder = 0
           Text = 'F1'
           Items.Strings = (
@@ -1048,37 +969,53 @@ object frmOptions: TfrmOptions
         end
       end
       object GroupBox9: TGroupBox
-        Left = 16
-        Top = 194
-        Width = 393
-        Height = 73
+        Left = 24
+        Top = 291
+        Width = 590
+        Height = 110
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         Caption = 'Spell checker settings'
         TabOrder = 2
         object Label18: TLabel
-          Left = 16
-          Top = 25
-          Width = 224
-          Height = 13
+          Left = 24
+          Top = 38
+          Width = 340
+          Height = 21
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
           Caption = 'Avro Bangla spell checker launcher key:'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
-          Font.Height = -11
+          Font.Height = -17
           Font.Name = 'Tahoma'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object Label19: TLabel
-          Left = 156
-          Top = 49
-          Width = 28
-          Height = 13
+          Left = 234
+          Top = 74
+          Width = 43
+          Height = 21
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
           Caption = 'Ctrl +'
         end
         object comboFunctionKeys_SpellerLauncher: TComboBox
-          Left = 195
-          Top = 46
-          Width = 117
-          Height = 21
+          Left = 293
+          Top = 69
+          Width = 175
+          Height = 29
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
           TabOrder = 0
           Text = 'F1'
           Items.Strings = (
@@ -1098,48 +1035,64 @@ object frmOptions: TfrmOptions
       end
     end
     object Locale_Panel: TPanel
-      Left = 4
-      Top = 2
-      Width = 428
-      Height = 280
+      Left = 6
+      Top = 3
+      Width = 642
+      Height = 420
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       BevelKind = bkTile
       BevelOuter = bvNone
       TabOrder = 2
       object Label8: TLabel
-        Left = 40
-        Top = 125
-        Width = 101
-        Height = 13
+        Left = 60
+        Top = 188
+        Width = 158
+        Height = 21
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         Caption = 'Select Bangla Locale:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -17
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
       end
       object Label15: TLabel
-        Left = 24
-        Top = 22
-        Width = 361
-        Height = 39
+        Left = 36
+        Top = 33
+        Width = 523
+        Height = 63
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         Caption = 
           'Warning: This is a legacy configuration and known to cause probl' +
           'em with latest editions of Windows. Change this only if you are ' +
           'sure about your action. '
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBtnText
-        Font.Height = -11
+        Font.Height = -17
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
         WordWrap = True
       end
       object CheckEnableLocaleChange: TCheckBox
-        Left = 16
-        Top = 76
-        Width = 393
-        Height = 43
+        Left = 24
+        Top = 114
+        Width = 590
+        Height = 65
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         Caption = 
           'Automatically change "Input Locale" (Input Language) with Keyboa' +
           'rd Mode'
@@ -1147,37 +1100,486 @@ object frmOptions: TfrmOptions
         WordWrap = True
       end
       object optLocaleIND: TRadioButton
-        Left = 72
-        Top = 144
-        Width = 169
-        Height = 17
+        Left = 108
+        Top = 216
+        Width = 254
+        Height = 26
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         Caption = 'Bangla (India)'
         TabOrder = 1
       end
       object optLocaleBD: TRadioButton
-        Left = 72
-        Top = 167
-        Width = 169
-        Height = 17
+        Left = 108
+        Top = 251
+        Width = 254
+        Height = 25
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         Caption = 'Bangla (Bangladesh)'
         TabOrder = 2
       end
       object optLocaleAS: TRadioButton
-        Left = 72
-        Top = 190
-        Width = 169
-        Height = 17
+        Left = 108
+        Top = 285
+        Width = 254
+        Height = 26
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         Caption = 'Assamese'
         TabOrder = 3
       end
       object ButtonInstallLocale: TButton
-        Left = 288
-        Top = 219
-        Width = 121
-        Height = 25
+        Left = 432
+        Top = 329
+        Width = 182
+        Height = 37
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         Caption = 'Install Locale'
         TabOrder = 4
         OnClick = ButtonInstallLocaleClick
+      end
+    end
+    object FixedLayout_Panel: TPanel
+      Left = 3
+      Top = 0
+      Width = 645
+      Height = 426
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
+      BevelKind = bkTile
+      BevelOuter = bvNone
+      TabOrder = 0
+      object GroupBox6: TGroupBox
+        Left = 24
+        Top = 17
+        Width = 602
+        Height = 298
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
+        Caption = 'Typing Style in Fixed Keyboard Layouts'
+        TabOrder = 0
+        object Label10: TLabel
+          Left = 48
+          Top = 66
+          Width = 529
+          Height = 42
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Caption = '(Type Kar/Matra/Short Form Of Vowel always AFTER consonants)'
+          WordWrap = True
+        end
+        object Label11: TLabel
+          Left = 48
+          Top = 254
+          Width = 517
+          Height = 42
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Caption = '(Use Type writer or old ASCII based typing style)'
+          WordWrap = True
+        end
+        object optTypingStyle_Modern: TRadioButton
+          Left = 21
+          Top = 36
+          Width = 303
+          Height = 26
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Caption = 'Use Modern Style Typing'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -17
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 0
+          OnClick = optTypingStyle_ModernClick
+        end
+        object chkOldReph: TCheckBox
+          Left = 61
+          Top = 102
+          Width = 230
+          Height = 25
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Caption = 'Enable "Old Style Reph"'
+          TabOrder = 1
+        end
+        object chkVowelFormat: TCheckBox
+          Left = 61
+          Top = 136
+          Width = 302
+          Height = 26
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Caption = 'Enable "Automatic vowel Forming"'
+          TabOrder = 2
+        end
+        object CheckChandraPosition: TCheckBox
+          Left = 61
+          Top = 171
+          Width = 302
+          Height = 25
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Caption = 'Automatically fix "Chandra" position'
+          TabOrder = 3
+        end
+        object optTypingStyle_Old: TRadioButton
+          Left = 21
+          Top = 224
+          Width = 326
+          Height = 25
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Caption = 'Use Full Old Style Typing'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -17
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 4
+          OnClick = optTypingStyle_ModernClick
+        end
+      end
+      object CheckNumPadBangla: TCheckBox
+        Left = 45
+        Top = 348
+        Width = 437
+        Height = 26
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
+        Caption = 'Enable Bangla in Number Pad'
+        TabOrder = 1
+      end
+    end
+    object AvroPhonetic_Panel: TPanel
+      Left = 6
+      Top = 3
+      Width = 645
+      Height = 798
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
+      BevelKind = bkTile
+      BevelOuter = bvNone
+      TabOrder = 6
+      object Label13: TLabel
+        Left = 72
+        Top = 719
+        Width = 518
+        Height = 21
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
+        Caption = 
+          '(Quick tip: Enable if your keyboard doesn'#39't have NumPa-d to type' +
+          ' dot.'
+      end
+      object Label14: TLabel
+        Left = 152
+        Top = 743
+        Width = 409
+        Height = 42
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
+        Caption = 
+          'Disable if you want to use Vertical Line/Pipe symbol to type Mat' +
+          'hematical Equations for example)'
+        WordWrap = True
+      end
+      object GroupBox3: TGroupBox
+        Left = 12
+        Top = 8
+        Width = 602
+        Height = 522
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
+        Caption = 'Preview Window and Typing Mode'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -17
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 0
+        object Label_PhoneticTypingMode: TLabel
+          Left = 24
+          Top = 72
+          Width = 173
+          Height = 21
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Caption = 'Suggestion options:'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -17
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object Label1: TLabel
+          Left = 84
+          Top = 125
+          Width = 493
+          Height = 42
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Caption = 
+            '(Avro selects first dictionary suggestion automatically. Charact' +
+            'er mode is still available as option)'
+          WordWrap = True
+        end
+        object Label4: TLabel
+          Left = 84
+          Top = 201
+          Width = 483
+          Height = 42
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Caption = 
+            '(Avro selects character mode automatically. Dictionary hints are' +
+            ' also shown if available)'
+          WordWrap = True
+        end
+        object Label9: TLabel
+          Left = 72
+          Top = 384
+          Width = 505
+          Height = 84
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Caption = 
+            '(Quick Tip: If you use Tab key for other purposes like moving be' +
+            'tween cells in a spreadsheet program or in a table or in a datab' +
+            'ase application and still want to enable this option, you can pr' +
+            'ess Esc key first to close preview window.)'
+          WordWrap = True
+        end
+        object Label12: TLabel
+          Left = 84
+          Top = 298
+          Width = 493
+          Height = 42
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Caption = 
+            '(Note: If any autocorrect entry is found, suggestion list will s' +
+            'till show up)'
+          WordWrap = True
+        end
+        object CheckShowPrevWindow: TCheckBox
+          Left = 24
+          Top = 35
+          Width = 218
+          Height = 25
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Caption = 'Show Preview Window'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -17
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 0
+          OnClick = CheckShowPrevWindowClick
+        end
+        object optPhoneticMode_Dict: TRadioButton
+          Left = 48
+          Top = 101
+          Width = 549
+          Height = 28
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Caption = 'Dictionary Mode is Default in suggestions'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -17
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 1
+          WordWrap = True
+        end
+        object optPhoneticMode_Char: TRadioButton
+          Left = 48
+          Top = 174
+          Width = 549
+          Height = 30
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Caption = 'Character Mode is Default in suggestions'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -17
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 2
+          WordWrap = True
+        end
+        object optPhoneticMode_OnlyChar: TRadioButton
+          Left = 48
+          Top = 251
+          Width = 518
+          Height = 37
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Caption = 
+            'Use classic Avro Phonetic only, don'#39't show any dictionary sugges' +
+            'tion'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -17
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 3
+          WordWrap = True
+        end
+        object CheckRememberCandidate: TCheckBox
+          Left = 24
+          Top = 485
+          Width = 553
+          Height = 25
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Caption = 'Remember my choice when multiple hints are available.'
+          TabOrder = 4
+        end
+        object CheckTabBrowsing: TCheckBox
+          Left = 24
+          Top = 354
+          Width = 573
+          Height = 26
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Caption = 
+            'Use Tab key to browse through suggestions just like Down Arrow k' +
+            'ey.'
+          TabOrder = 5
+        end
+      end
+      object GroupBox7: TGroupBox
+        Left = 12
+        Top = 539
+        Width = 602
+        Height = 84
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
+        Caption = 'Auto correct options'
+        TabOrder = 1
+        object CheckAutoCorrect: TCheckBox
+          Left = 24
+          Top = 39
+          Width = 218
+          Height = 26
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Caption = 'Enable Auto-correction'
+          TabOrder = 0
+        end
+        object cmdAutoCorrect: TButton
+          Left = 288
+          Top = 27
+          Width = 297
+          Height = 38
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Caption = 'Edit/Import Auto correct entries...'
+          TabOrder = 1
+          OnClick = cmdAutoCorrectClick
+        end
+      end
+      object CheckEnableJoNukta: TCheckBox
+        Left = 36
+        Top = 642
+        Width = 245
+        Height = 26
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
+        Caption = 'Type Jo+Nukta with Shift+J'
+        TabOrder = 2
+      end
+      object CheckPipeToDot: TCheckBox
+        Left = 36
+        Top = 684
+        Width = 517
+        Height = 26
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
+        Caption = 'Type Dot (.) with Vertical Line/Pipe Key (|)'
+        TabOrder = 3
       end
     end
   end
