@@ -80,7 +80,7 @@ Function IsElevated: Boolean;
 
   Function IsElevatedBasic: Boolean;
   Var
-    token: Cardinal;
+    token: THandle;
     ElevationType: Integer;
     // Elevation                : DWord;
     dwSize: Cardinal;
