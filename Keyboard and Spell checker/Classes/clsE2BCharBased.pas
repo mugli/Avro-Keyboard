@@ -1271,6 +1271,9 @@ Begin
           frmPrevW.List.Items.Add(WStringList[I]);
       End;
 
+      // Add English option as the last item
+      frmPrevW.List.Items.Add(EnglishT);
+
       // frmPrevW.SelectFirstItem;
       if CandidateDict.TryGetValue(Middle_Main_T, CandidateItem) And
         (SaveCandidate = 'YES') Then
