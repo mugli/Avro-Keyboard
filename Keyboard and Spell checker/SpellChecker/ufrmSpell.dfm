@@ -1,13 +1,17 @@
 object frmSpell: TfrmSpell
   Left = 0
   Top = 0
+  Margins.Left = 5
+  Margins.Top = 5
+  Margins.Right = 5
+  Margins.Bottom = 5
   Caption = 'Untitled - Avro Pad'
-  ClientHeight = 256
-  ClientWidth = 491
+  ClientHeight = 384
+  ClientWidth = 746
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -17
   Font.Name = 'Tahoma'
   Font.Style = []
   Icon.Data = {
@@ -52,19 +56,24 @@ object frmSpell: TfrmSpell
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
+  PixelsPerInch = 144
   DesignSize = (
-    491
-    256)
-  TextHeight = 13
+    746
+    384)
+  TextHeight = 21
   object MEMO: TMemo
-    Left = 1
+    Left = 2
     Top = 0
-    Width = 488
-    Height = 241
+    Width = 732
+    Height = 362
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Anchors = [akLeft, akTop, akRight, akBottom]
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
-    Font.Height = -16
+    Font.Height = -24
     Font.Name = 'Siyam Rupali'
     Font.Style = []
     HideSelection = False
@@ -74,19 +83,19 @@ object frmSpell: TfrmSpell
     TabOrder = 0
     WantTabs = True
     OnChange = MEMOChange
-    ExplicitWidth = 482
-    ExplicitHeight = 224
   end
   object Progress: TProgressBar
-    Left = 4
-    Top = 244
-    Width = 481
-    Height = 10
+    Left = 6
+    Top = 366
+    Width = 722
+    Height = 15
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Anchors = [akLeft, akRight, akBottom]
     TabOrder = 1
     Visible = False
-    ExplicitTop = 227
-    ExplicitWidth = 475
   end
   object MainMenu1: TMainMenu
     Left = 280
