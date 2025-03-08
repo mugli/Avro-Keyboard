@@ -66,6 +66,9 @@ Var
 
 Implementation
 
+Uses
+  DebugLog;
+
 {$R *.dfm}
 
 Const
@@ -82,22 +85,7 @@ Procedure TfrmSplash.FormCreate(Sender: TObject);
 Begin
   Self.ClientWidth := Image1.Width;
   Self.ClientHeight := Image1.Height;
-  // Set Window to top
-  // SetWindowPos(Self.Handle, HWND_TOPMOST, 0, 0, 0, 0,
-  // SWP_NOMOVE Or SWP_NOSIZE Or SWP_NOACTIVATE);
-
-  { TODO :
-    If AppPortableEdition = True Then
-    lblPortable.Visible = True
-    Else
-    lblPortable.Visible = False
-    End If
-
-    lblVersion.Caption = "Version " & App.Major & "." & App.Minor & _
-    "." & App.Revision }
-
-  // Show;
-  // Update;
+  Log('Splash created');
 End;
 
 Procedure TfrmSplash.FormKeyDown(Sender: TObject; Var Key: Word;
