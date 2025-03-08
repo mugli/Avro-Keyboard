@@ -32,7 +32,9 @@ Interface
 Uses
   classes,
   sysutils,
+  RegularExpressions,
   StrUtils;
+
 
 // Skeleton of Class TEnglishToRegEx
 Type
@@ -256,10 +258,27 @@ End;
 
 {$HINTS On}
 
+
+
+
 Function TEnglishToRegEx.Convert(Const EnglishT: String): String;
+var
+
+  theRegex: TRegex;
+  theMatch: TMatch;
+  WideSearchStr: string;
 Begin
   If EnglishT = '' Then
     Exit;
+
+  WideSearchStr := ('^([a-zA-Z])\1\1\1.*$');
+  theRegex := TRegex.Create(WideSearchStr);
+  theMatch := theRegex.Match(EnglishT);
+  If theMatch.Success Then
+  Begin
+    Exit;
+  End;
+
   pEnglishText := EscapeSpecialCharacters(CorrectCase(EnglishT));
   Result := MyConvert;
 End;
