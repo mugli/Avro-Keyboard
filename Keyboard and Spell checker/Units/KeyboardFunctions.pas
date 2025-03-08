@@ -335,15 +335,6 @@ End;
 { =============================================================================== }
 
 Procedure Backspace(KeyRepeat: Integer = 1);
-{ Var
-  I                        : integer;
-
-  Begin
-  If KeyRepeat <= 0 Then KeyRepeat := 1;
-
-  For I := 1 To KeyRepeat Do Begin
-  SendKey_SendInput(VK_Back);
-  End; }
 Var
   I: Integer;
 
@@ -359,6 +350,7 @@ Begin
   For I := 1 To KeyRepeat Do
   Begin
     SendKey_SendInput(VK_Back);
+    SendKey_SendInput(VK_NONAME); // Hack: Unused key to try to avoid key buffering issue (deleting too much)
   End;
 
   RevertCtrlStates;
@@ -382,6 +374,7 @@ Procedure SendKey_SendInput(Const bKey: Integer);
 Begin
   SendInput_Down(bKey);
   SendInput_UP(bKey);
+  Sleep(5);  // Add a small delay to allow processing
 End;
 
 { =============================================================================== }
@@ -448,6 +441,7 @@ Begin
   End;
 
   SendInput(2, KInput[0], SizeOf(KInput[0]));
+  Sleep(5);  // Add a small delay to allow processing
 End;
 
 Procedure RevertAltStates;
