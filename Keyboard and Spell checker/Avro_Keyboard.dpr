@@ -80,7 +80,8 @@ uses
   clsAbbreviation in 'Classes\clsAbbreviation.pas',
   clsUnicodeToBijoy2000 in '..\Unicode to ascii converter\clsUnicodeToBijoy2000.pas',
   ufrmEncodingWarning in 'Forms\ufrmEncodingWarning.pas' {frmEncodingWarning},
-  DebugLog in 'Units\DebugLog.pas';
+  DebugLog in 'Units\DebugLog.pas',
+  UIAutomationClient_TLB in 'Units\UIAutomationClient_TLB.pas';
 
 Var
   Mutex: THandle;

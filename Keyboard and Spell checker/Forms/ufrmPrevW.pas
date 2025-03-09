@@ -48,7 +48,12 @@ Uses
   Buttons,
   Generics.Collections,
   StrUtils,
-  Menus;
+  Menus,
+  UIAutomationClient_TLB,
+  ComObj,
+  ActiveX,
+  OleAcc,
+  DebugLog;
 
 type
   TFollow = record
@@ -109,15 +114,18 @@ Type
     FollowingCaretinThisWindow: Boolean;
     oldx, oldy, mf: Integer;
     MouseDown: Boolean;
-    Function FindCaretPosWindow(Var Position: TPoint;
-      Var HeightCaret: Integer): Integer;
+    Function FindCaretPosWindow(out X, Y: Integer): Boolean;
     Function DecideFollowCaret(Var pX, pY: Integer;
       Var DontShow: Boolean): Boolean;
     Procedure moveMe;
-    Procedure MoveWindow(MeLEFT, MeTOP, CaretHeight: Integer);
+    Procedure MoveWindow(X, Y: Integer);
     Procedure UpdateWindowPosData(NoFUpdate: Boolean = True;
       Nofollow: Boolean = False);
     Procedure MoveForm(xx, yy: Integer);
+
+    function GetCaretScreenPos_UIA(out X, Y: Integer): Boolean;
+    function GetCaretScreenPos_MSAA(out X, Y: Integer): Boolean;
+    function GetCaretScreenPos_Raw(out X, Y: Integer): Boolean;
   Public
     { Public declarations }
     PreviewWVisible: Boolean;
@@ -137,6 +145,10 @@ Type
 Var
   frmPrevW: TfrmPrevW;
 
+const
+  UIA_TextPatternId: Integer = 10014;
+  // Manually define missing constant for UI automation type
+
 Implementation
 
 {$R *.dfm}
@@ -147,30 +159,280 @@ Uses
   uForm1,
   BanglaChars;
 
-Procedure TfrmPrevW.ButtonMouseEnter(Sender: TObject);
+{ =============================================================================== }
+
+// UIA as first/prefered method to find caret position
+function TfrmPrevW.GetCaretScreenPos_UIA(out X, Y: Integer): Boolean;
+var
+  UIAutomation: IUIAutomation;
+  FocusedElement: IUIAutomationElement;
+  TextPattern: IUIAutomationTextPattern;
+  TextRanges: IUIAutomationTextRangeArray;
+  TextRange: IUIAutomationTextRange;
+  Rects: PSafeArray;
+  Bounds: array of Double;
+  LBound, UBound, I: LongInt;
+  RangeCount: SYSINT;
+begin
+  Result := False;
+  X := -1;
+  Y := -1;
+
+  // Initialize UI Automation
+  if Failed(CoCreateInstance(CLASS_CUIAutomation, nil, CLSCTX_INPROC_SERVER,
+    IID_IUIAutomation, UIAutomation)) then
+  begin
+    Log('Error: Failed to initialize UIAutomation');
+    Exit;
+  end;
+
+  // Get the focused UI element
+  if Failed(UIAutomation.GetFocusedElement(FocusedElement)) or
+    (FocusedElement = nil) then
+  begin
+    Log('Error: No focused element found');
+    Exit;
+  end;
+
+  // Check if the element supports TextPattern
+  if Failed(FocusedElement.GetCurrentPattern(UIA_TextPatternId,
+    IUnknown(TextPattern))) or (TextPattern = nil) then
+  begin
+    Log('Error: Element does not support TextPattern');
+    Exit;
+  end;
+
+  // Try getting the selection range
+  if Failed(TextPattern.GetSelection(TextRanges)) or (TextRanges = nil) then
+  begin
+    // Fallback: Try getting the full document range instead
+    if Failed(TextPattern.Get_DocumentRange(TextRange)) or (TextRange = nil)
+    then
+    begin
+      Log('Error: No text selection or document range found');
+      Exit;
+    end;
+  end
+  else
+  begin
+    // Get the number of text ranges
+    if Failed(TextRanges.Get_Length(RangeCount)) or (RangeCount = 0) then
+    begin
+      Log('Error: No text range found');
+      Exit;
+    end;
+
+    // Get first text range
+    if (RangeCount > 0) then
+    begin
+      if Failed(TextRanges.GetElement(0, TextRange)) or (TextRange = nil) then
+      begin
+        Log('Error: Failed to retrieve first text range');
+        Exit;
+      end;
+    end;
+  end;
+
+  // Get bounding rectangle
+  if Succeeded(TextRange.GetBoundingRectangles(Rects)) and (Rects <> nil) then
+  begin
+    SafeArrayGetLBound(Rects, 1, LBound);
+    SafeArrayGetUBound(Rects, 1, UBound);
+    if UBound >= LBound then
+    begin
+      SetLength(Bounds, (UBound - LBound) + 1);
+      for I := LBound to UBound do
+        SafeArrayGetElement(Rects, I, Bounds[I]);
+
+      // Get the first bounding box (caret position)
+      if Length(Bounds) >= 4 then // Ensure we have enough data
+      begin
+        X := Round(Bounds[0]); // Left position
+        Y := Round(Bounds[1] + Bounds[3]); // Top + Height = Bottom position
+        Result := True;
+        Exit;
+      end;
+    end;
+    SafeArrayDestroy(Rects);
+  end;
+
+  // If we reached here, it means bounding rectangles failed
+  Log('Error: No bounding rectangle found');
+end;
+
+{ =============================================================================== }
+
+// Try MSAA if UIA fails
+function TfrmPrevW.GetCaretScreenPos_MSAA(out X, Y: Integer): Boolean;
+var
+  Acc: IAccessible;
+  VarChild: OleVariant;
+  CaretX, CaretY, CaretWidth, CaretHeight: Integer;
+  Handle: HWND;
+  CaretPos: TPoint;
+begin
+  Result := False;
+  X := -1;
+  Y := -1;
+
+  Handle := GetForegroundWindow;
+  if (Handle = 0) or (Handle = self.Handle) then
+    Exit;
+
+  // Try to get the accessibility object
+  if AccessibleObjectFromWindow(Handle, OBJID_CARET, IID_IAccessible, Acc) <> S_OK
+  then
+  begin
+    Log('Error: failed to get accessibility object');
+    Exit; // Return if we fail to get the caret object
+  end;
+
+  if Acc = nil then
+  begin
+    Log('Error: accessibility object is nil');
+    Exit; // Ensure Acc is valid before accessing it
+  end;
+
+  VarChild := CHILDID_SELF; // Properly initialize VarChild
+
+  if (Acc.accLocation(CaretX, CaretY, CaretWidth, CaretHeight, VarChild) = S_OK)
+  then
+  begin
+    X := CaretX;
+    Y := CaretY + CaretHeight; // Move Y to bottom of caret
+    Result := True;
+  end;
+end;
+
+{ =============================================================================== }
+
+// Final Fallback: Raw Caret Position
+function TfrmPrevW.GetCaretScreenPos_Raw(out X, Y: Integer): Boolean;
+var
+  ThreadID: DWORD;
+  GUIInfo: TGUIThreadInfo;
+  CaretPos: TPoint;
+  ForegroundWnd: HWND;
+begin
+  Result := False;
+  X := -1;
+  Y := -1;
+
+  // Get the foreground window
+  ForegroundWnd := GetForegroundWindow;
+  if (ForegroundWnd = 0) or (ForegroundWnd = self.Handle) then
+    Exit;
+
+  // Initialize GUI thread info
+  FillChar(GUIInfo, SizeOf(GUIInfo), 0);
+  GUIInfo.cbSize := SizeOf(GUIInfo);
+
+  // Get the GUI thread info of the foreground window
+  ThreadID := GetWindowThreadProcessId(ForegroundWnd, nil);
+  if (ThreadID = 0) or (not GetGUIThreadInfo(ThreadID, GUIInfo)) then
+    Exit;
+
+  // Check if there is a caret
+  if GUIInfo.hwndCaret = 0 then
+    Exit;
+
+  // Get caret position (relative to the client area)
+  CaretPos.X := GUIInfo.rcCaret.Left;
+  CaretPos.Y := GUIInfo.rcCaret.Bottom;
+
+  // Convert to screen coordinates
+  if Windows.ClientToScreen(GUIInfo.hwndCaret, CaretPos) then
+  begin
+    X := CaretPos.X;
+    Y := CaretPos.Y;
+    Result := True;
+  end;
+end;
+
+{ =============================================================================== }
+
+Function TfrmPrevW.FindCaretPosWindow(out X, Y: Integer): Boolean;
 Begin
-  Button.Picture := ImgButtonOver.Picture;
+  Result := False;
+  X := -1;
+  Y := -1;
+
+  GetCaretScreenPos_UIA(X, Y);
+  if (X > 0) and (Y > 0) then
+  begin
+    Result := True;
+    Exit;
+  end;
+
+  GetCaretScreenPos_MSAA(X, Y);
+  if (X > 0) and (Y > 0) then
+  begin
+    Result := True;
+    Exit;
+  end;
+
+  GetCaretScreenPos_Raw(X, Y);
+  if (X > 0) and (Y > 0) then
+  begin
+    Result := True;
+    Exit;
+  end;
 End;
 
-Procedure TfrmPrevW.ButtonMouseLeave(Sender: TObject);
+{ =============================================================================== }
+
+Procedure TfrmPrevW.moveMe;
+Var
+  X, Y: Integer;
+  caretFound: Boolean;
+  MeTOP, MeLEFT: Integer;
+  DontShow: Boolean;
 Begin
-  Button.Picture := ImgButtonUp.Picture;
+  // Initialization
+  DontShow := False;
+
+  If DecideFollowCaret(MeLEFT, MeTOP, DontShow) = False Then
+  Begin
+    If DontShow = False Then
+      MoveWindow(MeLEFT, MeTOP);
+  End
+  Else
+  Begin
+    If DontShow = False Then
+    Begin
+      caretFound := FindCaretPosWindow(X, Y);
+      If caretFound Then
+        MoveWindow(X, Y);
+    End;
+  End;
+
 End;
 
-Procedure TfrmPrevW.ButtonMouseUp(Sender: TObject; Button: TMouseButton;
-  Shift: TShiftState; X, Y: Integer);
+{ =============================================================================== }
+
+Procedure TfrmPrevW.MoveWindow(X, Y: Integer);
+Var
+  ScrW, ScrH: Integer;
 Begin
-  PopupMenu.Popup(Self.Left + (Sender As TImage).Left,
-    Self.Top + (Sender As TImage).Top + (Sender As TImage).Height);
+  ScrW := Screen.Width;
+  ScrH := Screen.Height;
+
+  // Check Y pos
+  If Y + self.Height > ScrH Then
+    Y := Y - self.Height;
+
+  // Check X pos
+  If X < 0 Then
+    X := 0
+  Else If X + self.Width > ScrW Then
+    X := ScrW - self.Width;
+
+  self.Top := Y;
+  self.Left := X;
+  UpdateWindowPosData(True);
 End;
 
-Procedure TfrmPrevW.CreateParams(Var Params: TCreateParams);
-Begin
-  Inherited CreateParams(Params);
-  Params.ExStyle := Params.ExStyle Or WS_EX_TOPMOST Or WS_EX_NOACTIVATE or
-    WS_EX_TOOLWINDOW;
-  Params.WndParent := GetDesktopwindow;
-End;
+{ =============================================================================== }
 
 Function TfrmPrevW.DecideFollowCaret(Var pX, pY: Integer;
   Var DontShow: Boolean): Boolean;
@@ -181,8 +443,8 @@ Begin
 
   hforewnd := GetForegroundWindow;
 
-  If (hforewnd = 0) Or (hforewnd = Self.Handle) Then
-  Begin // Bypass a nasty bug I have faced
+  If (hforewnd = 0) Or (hforewnd = self.Handle) Then
+  Begin
     DontShow := True;
     Result := False;
     Exit;
@@ -209,65 +471,7 @@ Begin
   End;
 End;
 
-{$HINTS Off}
-
-Function TfrmPrevW.FindCaretPosWindow(Var Position: TPoint;
-  Var HeightCaret: Integer): Integer;
-Var
-  hwndFG, hwndFoc: HWND;
-  TID, mID: DWORD;
-  Ret: Boolean;
-  RetInfo: TGUIThreadInfo;
-Begin
-  // Initialize variables
-  RetInfo.cbSize := Sizeof(RetInfo);
-  Result := 0;
-  Ret := False;
-
-  Ret := GetGUIThreadInfo(GetWindowThreadProcessId(GetForegroundWindow(),
-    Nil), RetInfo);
-  If Ret <> False Then
-    HeightCaret := RetInfo.rcCaret.Top - RetInfo.rcCaret.Bottom;
-  hwndFG := GetForegroundWindow;
-  If (hwndFG <> 0) And (hwndFG <> Self.Handle) Then
-  Begin
-    TID := GetWindowThreadProcessId(hwndFG, Nil);
-    mID := GetCurrentThreadid;
-    If TID <> mID Then
-    Begin
-      If AttachThreadInput(mID, TID, True) <> False Then
-      Begin
-        hwndFoc := GetFocus();
-        If hwndFoc <> 0 Then
-        Begin
-          If GetCaretPos(Position) <> False Then
-          Begin
-            Windows.ClientToScreen(hwndFoc, Position);
-            Result := hwndFoc
-          End;
-        End;
-        AttachThreadInput(mID, TID, False);
-        { DONE : Experimental disable. Check carefully }
-        ForceForegroundWindow(hwndFG);
-        MakeNeverActiveWindow(Self.Handle);
-      End;
-    End
-    Else
-    Begin
-      hwndFoc := GetFocus();
-      If hwndFoc <> 0 Then
-      Begin
-        If GetCaretPos(Position) <> False Then
-        Begin
-          Windows.ClientToScreen(hwndFoc, Position);
-          Result := hwndFoc
-        End;
-      End;
-    End;
-  End;
-End;
-
-{$HINTS On}
+{ =============================================================================== }
 
 Procedure TfrmPrevW.FocusSolverTimer(Sender: TObject);
 Var
@@ -276,38 +480,101 @@ Var
   WndCaption, WndClass: String;
 Begin
   hforewnd := GetForegroundWindow;
-  If (hforewnd = 0) Or (hforewnd = Self.Handle) Then
+  If (hforewnd = 0) Or (hforewnd = self.Handle) Then
     Exit;
   TID := GetWindowThreadProcessId(hforewnd, Nil);
   mID := GetCurrentThreadid;
   If TID = mID Then
     Exit;
 
-  WndCaption := Trim(GetWindowCaption(hforewnd));
-  WndClass := Trim(GetWindowClassName(hforewnd));
+//  WndCaption := Trim(GetWindowCaption(hforewnd));
+//  WndClass := Trim(GetWindowClassName(hforewnd));
+//
+//  If WndCaption = '' Then
+//    Exit;
+//  If ContainsText(WndCaption, 'Start Menu') Then
+//    Exit;
+//  If ContainsText(WndCaption, 'Program Manager') Then
+//    Exit;
+//  If ContainsText(WndClass, 'Progman') Then
+//    Exit;
+//  If ContainsText(WndClass, 'Shell_TrayWnd') Then
+//    Exit;
+//  If ContainsText(WndClass, 'Dv2ControlHost') Then
+//    Exit;
 
-  If WndCaption = '' Then
-    Exit;
-  If ContainsText(WndCaption, 'Start Menu') Then
-    Exit;
-  If ContainsText(WndCaption, 'Program Manager') Then
-    Exit;
-  If ContainsText(WndClass, 'Progman') Then
-    Exit;
-  If ContainsText(WndClass, 'Shell_TrayWnd') Then
-    Exit;
-  If ContainsText(WndClass, 'Dv2ControlHost') Then
-    Exit;
-
-  Self.Show;
+  self.Show;
   FollowingCaretinThisWindow := True;
   moveMe;
-  Self.AlphaBlendValue := 255;
-  Self.AlphaBlendValue := 0;
+  self.AlphaBlendValue := 255;
+  self.AlphaBlendValue := 0;
   Application.ProcessMessages;
   FocusSolver.Enabled := False;
+End;
+
+{ =============================================================================== }
+
+Procedure TfrmPrevW.MoveForm(xx, yy: Integer);
+Var
+  moveleft, movetop: Integer;
+Begin
+  moveleft := self.Left + xx - oldx;
+  movetop := self.Top + yy - oldy;
+
+  If MouseDown Then
+  Begin
+    If mf = 0 Then
+    Begin
+      If (self.Left <> moveleft) Or (self.Top <> movetop) Then
+      Begin
+        self.Left := moveleft;
+        self.Top := movetop;
+        UpdateWindowPosData(False, True);
+      End;
+      mf := 1;
+    End
+    Else
+      mf := 0;
+  End;
+  oldx := xx;
+  oldy := yy;
 
 End;
+
+{ =============================================================================== }
+
+Procedure TfrmPrevW.ButtonMouseEnter(Sender: TObject);
+Begin
+  Button.Picture := ImgButtonOver.Picture;
+End;
+
+{ =============================================================================== }
+
+Procedure TfrmPrevW.ButtonMouseLeave(Sender: TObject);
+Begin
+  Button.Picture := ImgButtonUp.Picture;
+End;
+
+{ =============================================================================== }
+
+Procedure TfrmPrevW.ButtonMouseUp(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+Begin
+  PopupMenu.Popup(self.Left + (Sender As TImage).Left,
+    self.Top + (Sender As TImage).Top + (Sender As TImage).Height);
+End;
+
+{ =============================================================================== }
+
+Procedure TfrmPrevW.CreateParams(Var Params: TCreateParams);
+Begin
+  Inherited CreateParams(Params);
+  Params.ExStyle := Params.ExStyle Or WS_EX_TOPMOST Or WS_EX_NOACTIVATE or
+    WS_EX_TOOLWINDOW;
+  Params.WndParent := GetDesktopwindow;
+End;
+
+{ =============================================================================== }
 
 Procedure TfrmPrevW.FormClose(Sender: TObject; Var Action: TCloseAction);
 Begin
@@ -315,6 +582,8 @@ Begin
   FreeAndNil(FollowDict);
   frmPrevW := Nil;
 End;
+
+{ =============================================================================== }
 
 Procedure TfrmPrevW.FormCreate(Sender: TObject);
 Begin
@@ -355,6 +624,8 @@ Begin
 
 End;
 
+{ =============================================================================== }
+
 Procedure TfrmPrevW.imgPinClick(Sender: TObject);
 Begin
   If FollowingCaretinThisWindow = True Then
@@ -363,11 +634,15 @@ Begin
     UpdateWindowPosData(False, False);
 End;
 
+{ =============================================================================== }
+
 Procedure TfrmPrevW.ImgTitleBarMouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 Begin
   MouseDown := True;
 End;
+
+{ =============================================================================== }
 
 Procedure TfrmPrevW.ImgTitleBarMouseMove(Sender: TObject; Shift: TShiftState;
   X, Y: Integer);
@@ -375,11 +650,15 @@ Begin
   MoveForm(X, Y);
 End;
 
+{ =============================================================================== }
+
 Procedure TfrmPrevW.ImgTitleBarMouseUp(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 Begin
   MouseDown := False;
 End;
+
+{ =============================================================================== }
 
 Procedure TfrmPrevW.lblCaptionMouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
@@ -387,11 +666,15 @@ Begin
   MouseDown := True;
 End;
 
+{ =============================================================================== }
+
 Procedure TfrmPrevW.lblCaptionMouseMove(Sender: TObject; Shift: TShiftState;
   X, Y: Integer);
 Begin
   MoveForm(X, Y);
 End;
+
+{ =============================================================================== }
 
 Procedure TfrmPrevW.lblCaptionMouseUp(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
@@ -399,105 +682,30 @@ Begin
   MouseDown := False;
 End;
 
+{ =============================================================================== }
+
 Procedure TfrmPrevW.ListClick(Sender: TObject);
 Begin
   AvroMainForm1.KeyLayout.SelectCandidate(List.Items[List.ItemIndex]);
 End;
 
+{ =============================================================================== }
+
 Procedure TfrmPrevW.MakeMeHide;
 Begin
-  Self.AlphaBlendValue := 0;
+  self.AlphaBlendValue := 0;
   PreviewWVisible := False;
 End;
 
-Procedure TfrmPrevW.MoveForm(xx, yy: Integer);
-Var
-  moveleft, movetop: Integer;
-Begin
-  moveleft := Self.Left + xx - oldx;
-  movetop := Self.Top + yy - oldy;
-
-  If MouseDown Then
-  Begin
-    If mf = 0 Then
-    Begin
-      If (Self.Left <> moveleft) Or (Self.Top <> movetop) Then
-      Begin
-        Self.Left := moveleft;
-        Self.Top := movetop;
-        UpdateWindowPosData(False, True);
-      End;
-      mf := 1;
-    End
-    Else
-      mf := 0;
-  End;
-  oldx := xx;
-  oldy := yy;
-
-End;
-
-Procedure TfrmPrevW.moveMe;
-Var
-  pos: TPoint;
-  R: Integer;
-  Height: Integer;
-  MeTOP, MeLEFT: Integer;
-  DontShow: Boolean;
-Begin
-  // Initialization
-  DontShow := False;
-
-  If DecideFollowCaret(MeLEFT, MeTOP, DontShow) = False Then
-  Begin
-
-    If DontShow = False Then
-      MoveWindow(MeLEFT, MeTOP, 0);
-  End
-  Else
-  Begin
-    If DontShow = False Then
-    Begin
-      R := FindCaretPosWindow(pos, Height);
-      Height := -1 * Height;
-      MeLEFT := pos.X;
-      MeTOP := pos.Y + Height + 10;
-      { DONE : check this value. Adjust distance from caret }
-      If R <> 0 Then
-        MoveWindow(MeLEFT, MeTOP, Height);
-    End;
-  End;
-
-End;
-
-Procedure TfrmPrevW.MoveWindow(MeLEFT, MeTOP, CaretHeight: Integer);
-Var
-  ScrW, ScrH: Integer;
-Begin
-  ScrW := Screen.Width;
-  ScrH := Screen.Height;
-
-  // Check Y pos
-  If MeTOP + Self.Height > ScrH Then
-    MeTOP := MeTOP - 20 - Self.Height - CaretHeight;
-  { DONE : check this value. Adjust distance from below }
-
-  // Check X pos
-  If MeLEFT < 0 Then
-    MeLEFT := 0
-  Else If MeLEFT + Self.Width > ScrW Then
-    MeLEFT := ScrW - Self.Width;
-
-  Self.Top := MeTOP;
-  Self.Left := MeLEFT;
-  UpdateWindowPosData(True);
-End;
+{ =============================================================================== }
 
 Procedure TfrmPrevW.SelectFirstItem;
 Begin
   List.ItemIndex := 0;
   ListClick(Nil);
 End;
+
+{ =============================================================================== }
 
 Procedure TfrmPrevW.SelectItem(Const Item: String);
 
@@ -569,6 +777,8 @@ Begin
   ListClick(Nil);
 End;
 
+{ =============================================================================== }
+
 Procedure TfrmPrevW.SelectNextItem;
 Var
   I: Integer;
@@ -586,6 +796,8 @@ Begin
   ListClick(Nil);
 End;
 
+{ =============================================================================== }
+
 Procedure TfrmPrevW.SelectNItem(Const ItemNumber: Integer);
 Begin
   If ItemNumber <= List.Count - 1 Then
@@ -594,6 +806,8 @@ Begin
     List.ItemIndex := 0;
   ListClick(Nil);
 End;
+
+{ =============================================================================== }
 
 Procedure TfrmPrevW.SelectPrevItem;
 Var
@@ -611,6 +825,8 @@ Begin
     List.ItemIndex := I;
   ListClick(Nil);
 End;
+
+{ =============================================================================== }
 
 Procedure TfrmPrevW.ShowHideList;
 Begin
@@ -631,16 +847,20 @@ Begin
 
 End;
 
+{ =============================================================================== }
+
 Procedure TfrmPrevW.UpdateMe(Const EnglishT: String);
 Begin
   lblPreview.Caption := EnglishT;
 
   TopMost(frmPrevW.Handle);
   moveMe;
-  Self.AlphaBlendValue := 255;
+  self.AlphaBlendValue := 255;
   PreviewWVisible := True;
   Application.ProcessMessages;
 End;
+
+{ =============================================================================== }
 
 Procedure TfrmPrevW.UpdateWindowPosData(NoFUpdate, Nofollow: Boolean);
 Var
@@ -649,10 +869,10 @@ Var
   Follow, NewFollow: TFollow;
 Begin
   hforewnd := GetForegroundWindow;
-  If (hforewnd = 0) Or (hforewnd = Self.Handle) Then
+  If (hforewnd = 0) Or (hforewnd = self.Handle) Then
     Exit;
-  PosX := Self.Left;
-  PosY := Self.Top;
+  PosX := self.Left;
+  PosY := self.Top;
 
   { ==========================================
     Structure
@@ -699,5 +919,7 @@ Begin
   End;
 
 End;
+
+{ =============================================================================== }
 
 End.
