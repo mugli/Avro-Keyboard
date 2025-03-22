@@ -364,12 +364,18 @@ Begin
     Exit;
   end;
 
-  GetCaretScreenPos_MSAA(X, Y);
-  if (X > 0) and (Y > 0) then
-  begin
+  // This is causing extreme lag, disabling for now
+  // Caret tracking will not work in Chrome, vscode etc if this is disabled,
+  // but enabling means not even being able to type
+
+  {
+    GetCaretScreenPos_MSAA(X, Y);
+    if (X > 0) and (Y > 0) then
+    begin
     Result := True;
     Exit;
-  end;
+    end;
+  }
 
   GetCaretScreenPos_Raw(X, Y);
   if (X > 0) and (Y > 0) then
@@ -402,7 +408,13 @@ Begin
     Begin
       caretFound := FindCaretPosWindow(X, Y);
       If caretFound Then
+      begin
         MoveWindow(X, Y);
+        UpdateWindowPosData(True, True)
+      end
+      else
+        FollowingCaretinThisWindow := False;
+        UpdateWindowPosData(True, False);
     End;
   End;
 
@@ -479,32 +491,28 @@ Var
   TID, mID: DWORD;
   WndCaption, WndClass: String;
 Begin
-  hforewnd := GetForegroundWindow;
-  If (hforewnd = 0) Or (hforewnd = self.Handle) Then
-    Exit;
-  TID := GetWindowThreadProcessId(hforewnd, Nil);
-  mID := GetCurrentThreadid;
-  If TID = mID Then
-    Exit;
+  // TID := GetWindowThreadProcessId(hforewnd, Nil);
+  // mID := GetCurrentThreadid;
+  // If TID = mID Then
+  // Exit;
 
-//  WndCaption := Trim(GetWindowCaption(hforewnd));
-//  WndClass := Trim(GetWindowClassName(hforewnd));
-//
-//  If WndCaption = '' Then
-//    Exit;
-//  If ContainsText(WndCaption, 'Start Menu') Then
-//    Exit;
-//  If ContainsText(WndCaption, 'Program Manager') Then
-//    Exit;
-//  If ContainsText(WndClass, 'Progman') Then
-//    Exit;
-//  If ContainsText(WndClass, 'Shell_TrayWnd') Then
-//    Exit;
-//  If ContainsText(WndClass, 'Dv2ControlHost') Then
-//    Exit;
+  // WndCaption := Trim(GetWindowCaption(hforewnd));
+  // WndClass := Trim(GetWindowClassName(hforewnd));
+  //
+  // If WndCaption = '' Then
+  // Exit;
+  // If ContainsText(WndCaption, 'Start Menu') Then
+  // Exit;
+  // If ContainsText(WndCaption, 'Program Manager') Then
+  // Exit;
+  // If ContainsText(WndClass, 'Progman') Then
+  // Exit;
+  // If ContainsText(WndClass, 'Shell_TrayWnd') Then
+  // Exit;
+  // If ContainsText(WndClass, 'Dv2ControlHost') Then
+  // Exit;
 
   self.Show;
-  FollowingCaretinThisWindow := True;
   moveMe;
   self.AlphaBlendValue := 255;
   self.AlphaBlendValue := 0;
@@ -861,6 +869,8 @@ Begin
 End;
 
 { =============================================================================== }
+
+// TODO: Refactor this!!! Extremely hard to understand double negative and what's going on!!!
 
 Procedure TfrmPrevW.UpdateWindowPosData(NoFUpdate, Nofollow: Boolean);
 Var
