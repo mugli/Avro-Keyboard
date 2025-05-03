@@ -28,255 +28,221 @@
 {$INCLUDE ../ProjectDefines.inc}
 { COMPLETE TRANSFERING }
 
-Unit clsE2BCharBased;
+unit clsE2BCharBased;
 
-Interface
+interface
 
-Uses
-  classes,
-  sysutils,
-  StrUtils,
-  clsEnglishToBangla,
-  clsPhoneticRegExBuilder,
-  Generics.Collections,
-  clsAbbreviation,
-  clsUnicodeToBijoy2000;
+uses
+  classes, sysutils, StrUtils, clsEnglishToBangla, clsPhoneticRegExBuilder,
+  Generics.Collections, clsAbbreviation, clsUnicodeToBijoy2000;
 
-Const
+const
   Max_EnglishLength = 50;
   Max_RegExQueryLength = 5000;
 
-Type
-  TPhoneticCache = Record
-    EnglishT: String;
+type
+  TPhoneticCache = record
+    EnglishT: string;
     Results: TStringList;
-  End;
+  end;
 
   // Skeleton of Class TE2BCharBased
-Type
-  TE2BCharBased = Class
-  Private
+type
+  TE2BCharBased = class
+  private
     Parser: TEnglishToBangla;
     RegExBuilder: TEnglishToRegEx;
     Abbreviation: TAbbreviation;
     Bijoy: TUnicodeToBijoy2000;
-    EnglishT: String;
-    PrevBanglaT: String;
+    EnglishT: string;
+    PrevBanglaT: string;
     BlockLast: boolean;
     WStringList: TStringList;
-    NewBanglaText: String;
+    NewBanglaText: string;
     FAutoCorrect: boolean;
-    CandidateDict: TDictionary<String, String>;
+    CandidateDict: TDictionary<string, string>;
     ManuallySelectedCandidate: boolean;
-    DetermineZWNJ_ZWJ: String;
-    PhoneticCache: Array [1 .. Max_EnglishLength] Of TPhoneticCache;
+    DetermineZWNJ_ZWJ: string;
+    PhoneticCache: array[1..Max_EnglishLength] of TPhoneticCache;
 
-    Procedure Fix_ZWNJ_ZWJ(Var rList: TStringList);
-    Procedure ProcessSpace(Var Block: boolean);
-    Procedure ParseAndSend;
-    Procedure ParseAndSendNow;
-    Procedure ProcessEnter(Var Block: boolean);
-    Procedure DoBackspace(Var Block: boolean);
-    Procedure MyProcessVKeyDown(Const KeyCode: Integer; Var Block: boolean;
-      Const var_IfShift: boolean; Const var_IfTrueShift: boolean);
-    Procedure AddStr(Const Str: String);
+    procedure Fix_ZWNJ_ZWJ(var rList: TStringList);
+    procedure ProcessSpace(var Block: boolean);
+    procedure ParseAndSend;
+    procedure ParseAndSendNow;
+    procedure ProcessEnter(var Block: boolean);
+    procedure DoBackspace(var Block: boolean);
+    procedure MyProcessVKeyDown(const KeyCode: Integer; var Block: boolean; const var_IfShift: boolean; const var_IfTrueShift: boolean);
+    procedure AddStr(const Str: string);
 
-    Procedure LoadCandidateOptions;
-    Procedure SaveCandidateOptions;
-    Procedure UpdateCandidateOption;
+    procedure LoadCandidateOptions;
+    procedure SaveCandidateOptions;
+    procedure UpdateCandidateOption;
 
-    Procedure AddToCache(Const MiddleMain_T: String; Var rList: TStringList);
-    Procedure AddSuffix(Const MiddleMain_T: String; Var rList: TStringList);
+    procedure AddToCache(const MiddleMain_T: string; var rList: TStringList);
+    procedure AddSuffix(const MiddleMain_T: string; var rList: TStringList);
 
-    Procedure CutText(Const inputEStr: String; Var outSIgnore: String;
-      Var outMidMain: String; Var outEIgnore: String);
-    Procedure PadResults(Const Starting_Ignoreable_T, Ending_Ignorable_T
-      : String; Var rList: TStringList);
-    Function EscapeSpecialCharacters(Const inputT: String): String;
+    procedure CutText(const inputEStr: string; var outSIgnore: string; var outMidMain: string; var outEIgnore: string);
+    procedure PadResults(const Starting_Ignoreable_T, Ending_Ignorable_T: string; var rList: TStringList);
+    function EscapeSpecialCharacters(const inputT: string): string;
 
-    Procedure SetAutoCorrectEnabled(Const Value: boolean);
-    Function GetAutoCorrectEnabled: boolean;
+    procedure SetAutoCorrectEnabled(const Value: boolean);
+    function GetAutoCorrectEnabled: boolean;
 
-  Public
-    Constructor Create; // Initializer
-    Destructor Destroy; Override; // Destructor
+  public
+    constructor Create; // Initializer
+    destructor Destroy; override; // Destructor
 
-    Function ProcessVKeyDown(Const KeyCode: Integer;
-      Var Block: boolean): String;
-    Procedure ProcessVKeyUP(Const KeyCode: Integer; Var Block: boolean);
-    Procedure ResetDeadKey;
-    Procedure SelectCandidate(Const Item: String);
+    function ProcessVKeyDown(const KeyCode: Integer; var Block: boolean): string;
+    procedure ProcessVKeyUP(const KeyCode: Integer; var Block: boolean);
+    procedure ResetDeadKey;
+    procedure SelectCandidate(const Item: string);
     // Published
-    Property AutoCorrectEnabled: boolean Read GetAutoCorrectEnabled
-      Write SetAutoCorrectEnabled;
-  End;
+    property AutoCorrectEnabled: boolean read GetAutoCorrectEnabled write SetAutoCorrectEnabled;
+  end;
 
-Implementation
+implementation
 
-Uses
-  KeyboardFunctions,
-  VirtualKeyCode,
-  uForm1,
-  clsLayout,
-  uRegistrySettings,
-  ufrmPrevW,
-  uSimilarSort,
-  uRegExPhoneticSearch,
-  uFileFolderHandling,
-  BanglaChars,
-  uDBase,
-  WindowsVersion;
+uses
+  KeyboardFunctions, VirtualKeyCode, uForm1, clsLayout, uRegistrySettings,
+  ufrmPrevW, uSimilarSort, uRegExPhoneticSearch, uFileFolderHandling,
+  BanglaChars, uDBase, WindowsVersion;
 
 { TE2BCharBased }
 
 { =============================================================================== }
 
-Procedure TE2BCharBased.AddStr(Const Str: String);
-Begin
+procedure TE2BCharBased.AddStr(const Str: string);
+begin
   EnglishT := EnglishT + Str;
 
   ParseAndSend;
 
-  If ShowPrevWindow = 'YES' Then
-    frmPrevW.UpdateMe(EnglishT)
-  Else
-    frmPrevW.MakeMeHide;
+  if ShowPrevWindow = 'YES' then
+    frmPrevW.UpdatePreviewCaption(EnglishT)
+  else
+    frmPrevW.HidePreview;
 
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TE2BCharBased.AddSuffix(Const MiddleMain_T: String;
-  Var rList: TStringList);
-Var
+procedure TE2BCharBased.AddSuffix(const MiddleMain_T: string; var rList: TStringList);
+var
   iLen, J, K: Integer;
-  isSuffix: String;
-  B_Suffix: String;
+  isSuffix: string;
+  B_Suffix: string;
   TempList: TStringList;
-Begin
+begin
   iLen := Length(MiddleMain_T);
   rList.Sorted := True;
   rList.Duplicates := dupIgnore;
 
-  If iLen >= 2 Then
-  Begin
+  if iLen >= 2 then
+  begin
     TempList := TStringList.Create;
-    For J := 2 To iLen Do
-    Begin
+    for J := 2 to iLen do
+    begin
       isSuffix := LowerCase(MidStr(MiddleMain_T, J, iLen));
 
-      If suffix.TryGetValue(isSuffix, B_Suffix) Then
-      Begin
-        If PhoneticCache[iLen - Length(isSuffix)].Results.Count > 0 Then
-        Begin
-          For K := 0 To PhoneticCache[iLen - Length(isSuffix)
-            ].Results.Count - 1 Do
-          Begin
-            If IsVowel(RightStr(PhoneticCache[iLen - Length(isSuffix)
-              ].Results[K], 1)) And (IsKar(LeftStr(B_Suffix, 1))) Then
-            Begin
-              TempList.Add(PhoneticCache[iLen - Length(isSuffix)].Results[K] +
-                b_Y + B_Suffix);
-            End
-            Else
-            Begin
-              If RightStr(PhoneticCache[iLen - Length(isSuffix)].Results[K], 1)
-                = b_Khandatta Then
-                TempList.Add(MidStr(PhoneticCache[iLen - Length(isSuffix)
-                  ].Results[K], 1, Length(PhoneticCache[iLen - Length(isSuffix)
-                  ].Results[K]) - 1) + b_T + B_Suffix)
-              Else If RightStr(PhoneticCache[iLen - Length(isSuffix)
-                ].Results[K], 1) = b_Anushar Then
-                TempList.Add(MidStr(PhoneticCache[iLen - Length(isSuffix)
-                  ].Results[K], 1, Length(PhoneticCache[iLen - Length(isSuffix)
-                  ].Results[K]) - 1) + b_NGA + B_Suffix)
-              Else
-                TempList.Add(PhoneticCache[iLen - Length(isSuffix)].Results[K] +
-                  B_Suffix);
-            End;
-          End;
-        End;
-      End;
-    End;
+      if suffix.TryGetValue(isSuffix, B_Suffix) then
+      begin
+        if PhoneticCache[iLen - Length(isSuffix)].Results.Count > 0 then
+        begin
+          for K := 0 to PhoneticCache[iLen - Length(isSuffix)].Results.Count - 1 do
+          begin
+            if IsVowel(RightStr(PhoneticCache[iLen - Length(isSuffix)].Results[K], 1)) and (IsKar(LeftStr(B_Suffix, 1))) then
+            begin
+              TempList.Add(PhoneticCache[iLen - Length(isSuffix)].Results[K] + b_Y + B_Suffix);
+            end
+            else
+            begin
+              if RightStr(PhoneticCache[iLen - Length(isSuffix)].Results[K], 1) = b_Khandatta then
+                TempList.Add(MidStr(PhoneticCache[iLen - Length(isSuffix)].Results[K], 1, Length(PhoneticCache[iLen - Length(isSuffix)].Results[K]) - 1) + b_T + B_Suffix)
+              else if RightStr(PhoneticCache[iLen - Length(isSuffix)].Results[K], 1) = b_Anushar then
+                TempList.Add(MidStr(PhoneticCache[iLen - Length(isSuffix)].Results[K], 1, Length(PhoneticCache[iLen - Length(isSuffix)].Results[K]) - 1) + b_NGA + B_Suffix)
+              else
+                TempList.Add(PhoneticCache[iLen - Length(isSuffix)].Results[K] + B_Suffix);
+            end;
+          end;
+        end;
+      end;
+    end;
 
-    For J := 0 To TempList.Count - 1 Do
-    Begin
+    for J := 0 to TempList.Count - 1 do
+    begin
       rList.Add(TempList[J]);
-    End;
+    end;
 
     TempList.Clear;
     FreeAndNil(TempList);
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TE2BCharBased.AddToCache(Const MiddleMain_T: String;
-  Var rList: TStringList);
-Var
+procedure TE2BCharBased.AddToCache(const MiddleMain_T: string; var rList: TStringList);
+var
   iLen: Integer;
-Begin
+begin
   iLen := Length(MiddleMain_T);
   PhoneticCache[iLen].EnglishT := MiddleMain_T;
   PhoneticCache[iLen].Results.Clear;
   PhoneticCache[iLen].Results.Assign(rList);
-End;
+end;
 
 { =============================================================================== }
 
-Constructor TE2BCharBased.Create;
-Var
+constructor TE2BCharBased.Create;
+var
   I: Integer;
-Begin
-  Inherited;
+begin
+  inherited;
   Parser := TEnglishToBangla.Create;
   Abbreviation := TAbbreviation.Create;
   Bijoy := TUnicodeToBijoy2000.Create;
   RegExBuilder := TEnglishToRegEx.Create;
   WStringList := TStringList.Create;
-  CandidateDict := TDictionary<String, String>.Create;
+  CandidateDict := TDictionary<string, string>.Create;
   LoadCandidateOptions;
 
-  For I := Low(PhoneticCache) To High(PhoneticCache) Do
-  Begin
+  for I := Low(PhoneticCache) to High(PhoneticCache) do
+  begin
     PhoneticCache[I].Results := TStringList.Create;
-  End;
+  end;
 
   // If IsWinVistaOrLater Then
   DetermineZWNJ_ZWJ := ZWJ;
   // Else
   // DetermineZWNJ_ZWJ := ZWNJ;
 
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TE2BCharBased.CutText(Const inputEStr: String;
-  Var outSIgnore, outMidMain, outEIgnore: String);
-Var
+procedure TE2BCharBased.CutText(const inputEStr: string; var outSIgnore, outMidMain, outEIgnore: string);
+var
   I: Integer;
   p, q: Integer;
   EStrLen: Integer;
   tStr: Char;
-  reverse_inputEStr: String;
-  temporaryString: String;
-Begin
+  reverse_inputEStr: string;
+  temporaryString: string;
+begin
 
   tStr := #0;
   p := 0;
 
   EStrLen := Length(inputEStr);
   // Start Cutting outSIgnore
-  For I := 1 To EStrLen Do
-  Begin
+  for I := 1 to EStrLen do
+  begin
 
     temporaryString := MidStr(inputEStr, I, 1);
-    If Length(temporaryString) > 0 Then
+    if Length(temporaryString) > 0 then
       tStr := temporaryString[1];
 
-    Case tStr Of
-      '~', '!', '@', '#', '%', '&', '*', '(', ')', '-', '_', '=', '+', '[', ']',
-        '{', '}', #39, '"', ';', '<', '>', '/', '?', '|', '\', '.':
+    case tStr of
+      '~', '!', '@', '#', '%', '&', '*', '(', ')', '-', '_', '=', '+', '[', ']', '{', '}', #39, '"', ';', '<', '>', '/', '?', '|', '\', '.':
 
         p := I;
 
@@ -287,11 +253,10 @@ Begin
         Break;
 
       '`':
-        p := I
-    Else
+        p := I     else
       Break;
-    End;
-  End;
+    end;
+  end;
 
   outSIgnore := LeftStr(inputEStr, p);
   // End Cutting outSIgnore
@@ -301,15 +266,14 @@ Begin
   q := 0;
 
   reverse_inputEStr := ReverseString(inputEStr);
-  For I := 1 To EStrLen - p Do
-  Begin
+  for I := 1 to EStrLen - p do
+  begin
     temporaryString := MidStr(reverse_inputEStr, I, 1);
-    If Length(temporaryString) > 0 Then
+    if Length(temporaryString) > 0 then
       tStr := temporaryString[1];
 
-    Case tStr Of
-      '~', '!', '@', '#', '%', '&', '*', '(', ')', '-', '_', '=', '+', '[', ']',
-        '{', '}', #39, #34, ';', '<', '>', '/', '.', '?', '|', '\':
+    case tStr of
+      '~', '!', '@', '#', '%', '&', '*', '(', ')', '-', '_', '=', '+', '[', ']', '{', '}', #39, #34, ';', '<', '>', '/', '.', '?', '|', '\':
         q := I;
       ',':
         q := I;
@@ -320,10 +284,10 @@ Begin
       ':':
         q := I;
 
-    Else
+    else
       Break;
-    End;
-  End;
+    end;
+  end;
 
   outEIgnore := RightStr(inputEStr, q);
   // End Cutting outEIgnore
@@ -333,83 +297,86 @@ Begin
   temporaryString := LeftStr(temporaryString, Length(temporaryString) - q);
   outMidMain := temporaryString;
 
-End;
+end;
 
 { =============================================================================== }
 
-Destructor TE2BCharBased.Destroy;
-Var
+destructor TE2BCharBased.Destroy;
+var
   I: Integer;
-Begin
+begin
   WStringList.Clear;
   FreeAndNil(WStringList);
   FreeAndNil(Bijoy);
   FreeAndNil(Parser);
   FreeAndNil(RegExBuilder);
   FreeAndNil(Abbreviation);
-  If SaveCandidate = 'YES' Then
+  if SaveCandidate = 'YES' then
     SaveCandidateOptions;
   FreeAndNil(CandidateDict);
 
-  For I := Low(PhoneticCache) To High(PhoneticCache) Do
-  Begin
+  for I := Low(PhoneticCache) to High(PhoneticCache) do
+  begin
     PhoneticCache[I].Results.Clear;
     PhoneticCache[I].Results.Free;
-  End;
+  end;
 
-  Inherited;
-End;
+  inherited;
+end;
 
 { =============================================================================== }
 
-Procedure TE2BCharBased.DoBackspace(Var Block: boolean);
-Var
-  BijoyNewBanglaText: String;
-Begin
+procedure TE2BCharBased.DoBackspace(var Block: boolean);
+var
+  BijoyNewBanglaText: string;
+begin
 
-  If (Length(EnglishT) - 1) <= 0 Then
-  Begin
+  if (Length(EnglishT) - 1) <= 0 then
+  begin
 
-    If OutputIsBijoy <> 'YES' Then
-    Begin
-      If (Length(NewBanglaText) - 1) >= 1 Then
+    if OutputIsBijoy <> 'YES' then
+    begin
+      if (Length(NewBanglaText) - 1) >= 1 then
         Backspace(Length(NewBanglaText) - 1);
-    End
-    Else
-    Begin
+    end
+    else
+    begin
       BijoyNewBanglaText := Bijoy.Convert(NewBanglaText);
-      If (Length(BijoyNewBanglaText) - 1) >= 1 Then
+      if (Length(BijoyNewBanglaText) - 1) >= 1 then
         Backspace(Length(BijoyNewBanglaText) - 1);
-    End;
+    end;
 
     ResetDeadKey;
     Block := False;
-  End
-  Else If (Length(EnglishT) - 1) > 0 Then
-  Begin
+  end
+  else if (Length(EnglishT) - 1) > 0 then
+  begin
     Block := True;
     EnglishT := LeftStr(EnglishT, Length(EnglishT) - 1);
     ParseAndSend;
-  End;
+  end;
 
-  If ShowPrevWindow = 'YES' Then
-  Begin
-    If EnglishT <> '' Then
-      frmPrevW.UpdateMe(EnglishT)
-    Else
-      frmPrevW.MakeMeHide;
-  End
-  Else
-    frmPrevW.MakeMeHide;
+  // TODO: Move this settings based logic to the preview window,
+  // it should be able to decide itself if the windows should be visible or not
+  // then make HidePreview private there
+  if ShowPrevWindow = 'YES' then
+  begin
+    if EnglishT <> '' then
+      frmPrevW.UpdatePreviewCaption(EnglishT)
+    else
+      frmPrevW.HidePreview;
+  end
+  else
+    frmPrevW.HidePreview;
 
-End;
+end;
 
 { =============================================================================== }
 
-Function TE2BCharBased.EscapeSpecialCharacters(Const inputT: String): String;
-Var
-  T: String;
-Begin
+function TE2BCharBased.EscapeSpecialCharacters(const inputT: string): string;
+var
+  T: string;
+begin
   T := inputT;
   T := ReplaceStr(T, '\', '');
   T := ReplaceStr(T, '|', '');
@@ -451,746 +418,739 @@ Begin
 
   Result := T;
 
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TE2BCharBased.Fix_ZWNJ_ZWJ(Var rList: TStringList);
-Var
+procedure TE2BCharBased.Fix_ZWNJ_ZWJ(var rList: TStringList);
+var
   I: Integer;
   StartCounter, EndCounter: Integer;
-Begin
+begin
   StartCounter := 0;
   EndCounter := rList.Count - 1;
 
-  If EndCounter <= 0 Then
+  if EndCounter <= 0 then
     exit;
 
   rList.Sorted := False;
 
-  For I := StartCounter To EndCounter Do
-  Begin
-    rList[I] := ReplaceStr(rList[I], b_R + ZWNJ + b_Hasanta + b_Z,
-      b_R + DetermineZWNJ_ZWJ + b_Hasanta + b_Z);
-  End;
-End;
+  for I := StartCounter to EndCounter do
+  begin
+    rList[I] := ReplaceStr(rList[I], b_R + ZWNJ + b_Hasanta + b_Z, b_R + DetermineZWNJ_ZWJ + b_Hasanta + b_Z);
+  end;
+end;
 
 { =============================================================================== }
 
-Function TE2BCharBased.GetAutoCorrectEnabled: boolean;
-Begin
+function TE2BCharBased.GetAutoCorrectEnabled: boolean;
+begin
   Result := Parser.AutoCorrectEnabled;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TE2BCharBased.LoadCandidateOptions;
-Var
+procedure TE2BCharBased.LoadCandidateOptions;
+var
   I, p: Integer;
-  FirstPart, SecondPart: String;
+  FirstPart, SecondPart: string;
   tmpList: TStringList;
-Begin
-  If FileExists(GetAvroDataDir + 'CandidateOptions.dat') = False Then
+begin
+  if FileExists(GetAvroDataDir + 'CandidateOptions.dat') = False then
     exit;
-  Try
-    Try
+  try
+    try
       tmpList := TStringList.Create;
-      tmpList.LoadFromFile(GetAvroDataDir + 'CandidateOptions.dat',
-        TEncoding.UTF8);
-      For I := 1 To tmpList.Count - 1 Do
-      Begin
-        If trim(tmpList[I]) <> '' Then
-        Begin
+      tmpList.LoadFromFile(GetAvroDataDir + 'CandidateOptions.dat', TEncoding.UTF8);
+      for I := 1 to tmpList.Count - 1 do
+      begin
+        if trim(tmpList[I]) <> '' then
+        begin
           p := Pos(' ', trim(tmpList[I]));
           FirstPart := LeftStr(trim(tmpList[I]), p - 1);
-          SecondPart := MidStr(trim(tmpList[I]), p + 1,
-            Length(trim(tmpList[I])));
+          SecondPart := MidStr(trim(tmpList[I]), p + 1, Length(trim(tmpList[I])));
           CandidateDict.AddOrSetValue(FirstPart, SecondPart);
-        End;
-      End;
-    Except
-      On E: Exception Do
-      Begin
+        end;
+      end;
+    except
+      on E: Exception do
+      begin
         // Nothing
-      End;
-    End;
-  Finally
+      end;
+    end;
+  finally
     tmpList.Clear;
     FreeAndNil(tmpList);
-  End;
+  end;
 
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TE2BCharBased.MyProcessVKeyDown(Const KeyCode: Integer;
-  Var Block: boolean; Const var_IfShift, var_IfTrueShift: boolean);
-Begin
+procedure TE2BCharBased.MyProcessVKeyDown(const KeyCode: Integer; var Block: boolean; const var_IfShift, var_IfTrueShift: boolean);
+begin
   Block := False;
-  Case KeyCode Of
+  case KeyCode of
     VK_DECIMAL:
-      Begin
+      begin
         AddStr('.`');
         Block := True;
         exit;
-      End;
+      end;
     VK_DIVIDE:
-      Begin
+      begin
         AddStr('/');
         Block := True;
         exit;
-      End;
+      end;
     VK_MULTIPLY:
-      Begin
+      begin
         AddStr('*');
         Block := True;
         exit;
-      End;
+      end;
     VK_SUBTRACT:
-      Begin
+      begin
         AddStr('-');
         Block := True;
         exit;
-      End;
+      end;
     VK_ADD:
-      Begin
+      begin
         AddStr('+');
         Block := True;
         exit;
-      End;
+      end;
 
     VK_OEM_1:
-      Begin // key ;:
-        If var_IfTrueShift = True Then
+      begin // key ;:
+        if var_IfTrueShift = True then
           AddStr(':');
-        If var_IfTrueShift = False Then
+        if var_IfTrueShift = False then
           AddStr(';');
         Block := True;
         exit;
-      End;
+      end;
     VK_OEM_2:
-      Begin // key /?
-        If var_IfTrueShift = True Then
-        Begin
+      begin // key /?
+        if var_IfTrueShift = True then
+        begin
           AddStr('?');
           Block := True;
-        End;
+        end;
 
-        If var_IfTrueShift = False Then
-        Begin
+        if var_IfTrueShift = False then
+        begin
           AddStr('/');
           Block := True;
-        End;
+        end;
         exit;
-      End;
+      end;
 
     VK_OEM_3:
-      Begin // key `~
-        If var_IfTrueShift = True Then
+      begin // key `~
+        if var_IfTrueShift = True then
           AddStr('~');
-        If var_IfTrueShift = False Then
+        if var_IfTrueShift = False then
           AddStr('`');
         Block := True;
         exit;
-      End;
+      end;
 
     VK_OEM_4:
-      Begin // key [{
-        If var_IfTrueShift = True Then
+      begin // key [{
+        if var_IfTrueShift = True then
           AddStr('{');
-        If var_IfTrueShift = False Then
+        if var_IfTrueShift = False then
           AddStr('[');
         Block := True;
         exit;
-      End;
+      end;
 
     VK_OEM_5:
-      Begin // key \|
-        If var_IfTrueShift = True Then
-        Begin
-          If PipeToDot = 'YES' Then
+      begin // key \|
+        if var_IfTrueShift = True then
+        begin
+          if PipeToDot = 'YES' then
             AddStr('.`') { New dot! }
-          Else
+          else
             AddStr('|');
-        End;
-        If var_IfTrueShift = False Then
+        end;
+        if var_IfTrueShift = False then
           AddStr('\');
         Block := True;
         exit;
-      End;
+      end;
     VK_OEM_6:
-      Begin // key ]}
-        If var_IfTrueShift = True Then
+      begin // key ]}
+        if var_IfTrueShift = True then
           AddStr('}');
-        If var_IfTrueShift = False Then
+        if var_IfTrueShift = False then
           AddStr(']');
         Block := True;
         exit;
-      End;
+      end;
     VK_OEM_7:
-      Begin // key '"
-        If var_IfTrueShift = True Then
+      begin // key '"
+        if var_IfTrueShift = True then
           AddStr('"');
-        If var_IfTrueShift = False Then
+        if var_IfTrueShift = False then
           AddStr(#39);
         Block := True;
         exit;
-      End;
+      end;
     VK_OEM_COMMA:
-      Begin // key ,<
-        If var_IfTrueShift = True Then
+      begin // key ,<
+        if var_IfTrueShift = True then
           AddStr('<');
-        If var_IfTrueShift = False Then
+        if var_IfTrueShift = False then
           AddStr(',');
         Block := True;
         exit;
-      End;
+      end;
     VK_OEM_MINUS:
-      Begin // key - underscore
-        If var_IfTrueShift = True Then
+      begin // key - underscore
+        if var_IfTrueShift = True then
           AddStr('_');
-        If var_IfTrueShift = False Then
+        if var_IfTrueShift = False then
           AddStr('-');
         Block := True;
         exit;
-      End;
+      end;
     VK_OEM_PERIOD:
-      Begin // key . >
-        If var_IfTrueShift = True Then
+      begin // key . >
+        if var_IfTrueShift = True then
           AddStr('>');
-        If var_IfTrueShift = False Then
+        if var_IfTrueShift = False then
           AddStr('.');
         Block := True;
         exit;
-      End;
+      end;
     VK_OEM_PLUS:
-      Begin // key =+
-        If var_IfTrueShift = True Then
+      begin // key =+
+        if var_IfTrueShift = True then
           AddStr('+');
-        If var_IfTrueShift = False Then
+        if var_IfTrueShift = False then
           AddStr('=');
         Block := True;
         exit;
-      End;
+      end;
 
     VK_0:
-      Begin
-        If var_IfTrueShift = True Then
+      begin
+        if var_IfTrueShift = True then
           AddStr(')');
-        If var_IfTrueShift = False Then
+        if var_IfTrueShift = False then
           AddStr('0');
         Block := True;
         exit;
-      End;
+      end;
     VK_1:
-      Begin
-        If var_IfTrueShift = True Then
+      begin
+        if var_IfTrueShift = True then
           AddStr('!');
-        If var_IfTrueShift = False Then
+        if var_IfTrueShift = False then
           AddStr('1');
         Block := True;
         exit;
-      End;
+      end;
     VK_2:
-      Begin
-        If var_IfTrueShift = True Then
+      begin
+        if var_IfTrueShift = True then
           AddStr('@');
-        If var_IfTrueShift = False Then
+        if var_IfTrueShift = False then
           AddStr('2');
         Block := True;
         exit;
-      End;
+      end;
     VK_3:
-      Begin
-        If var_IfTrueShift = True Then
+      begin
+        if var_IfTrueShift = True then
           AddStr('#');
-        If var_IfTrueShift = False Then
+        if var_IfTrueShift = False then
           AddStr('3');
         Block := True;
         exit;
-      End;
+      end;
     VK_4:
-      Begin
-        If var_IfTrueShift = True Then
+      begin
+        if var_IfTrueShift = True then
           AddStr('$');
-        If var_IfTrueShift = False Then
+        if var_IfTrueShift = False then
           AddStr('4');
         Block := True;
         exit;
-      End;
+      end;
     VK_5:
-      Begin
-        If var_IfTrueShift = True Then
+      begin
+        if var_IfTrueShift = True then
           AddStr('%');
-        If var_IfTrueShift = False Then
+        if var_IfTrueShift = False then
           AddStr('5');
         Block := True;
         exit;
-      End;
+      end;
     VK_6:
-      Begin
-        If var_IfTrueShift = True Then
+      begin
+        if var_IfTrueShift = True then
           AddStr('^');
-        If var_IfTrueShift = False Then
+        if var_IfTrueShift = False then
           AddStr('6');
         Block := True;
         exit;
-      End;
+      end;
     VK_7:
-      Begin
-        If var_IfTrueShift = True Then
+      begin
+        if var_IfTrueShift = True then
           AddStr('&');
-        If var_IfTrueShift = False Then
+        if var_IfTrueShift = False then
           AddStr('7');
         Block := True;
         exit;
-      End;
+      end;
     VK_8:
-      Begin
-        If var_IfTrueShift = True Then
+      begin
+        if var_IfTrueShift = True then
           AddStr('*');
-        If var_IfTrueShift = False Then
+        if var_IfTrueShift = False then
           AddStr('8');
         Block := True;
         exit;
-      End;
+      end;
     VK_9:
-      Begin
-        If var_IfTrueShift = True Then
+      begin
+        if var_IfTrueShift = True then
           AddStr('(');
-        If var_IfTrueShift = False Then
+        if var_IfTrueShift = False then
           AddStr('9');
         Block := True;
         exit;
-      End;
+      end;
 
     VK_NUMPAD0:
-      Begin
+      begin
         AddStr('0');
         Block := True;
         exit;
-      End;
+      end;
     VK_NUMPAD1:
-      Begin
+      begin
         AddStr('1');
         Block := True;
         exit;
-      End;
+      end;
     VK_NUMPAD2:
-      Begin
+      begin
         AddStr('2');
         Block := True;
         exit;
-      End;
+      end;
     VK_NUMPAD3:
-      Begin
+      begin
         AddStr('3');
         Block := True;
         exit;
-      End;
+      end;
     VK_NUMPAD4:
-      Begin
+      begin
         AddStr('4');
         Block := True;
         exit;
-      End;
+      end;
     VK_NUMPAD5:
-      Begin
+      begin
         AddStr('5');
         Block := True;
         exit;
-      End;
+      end;
     VK_NUMPAD6:
-      Begin
+      begin
         AddStr('6');
         Block := True;
         exit;
-      End;
+      end;
     VK_NUMPAD7:
-      Begin
+      begin
         AddStr('7');
         Block := True;
         exit;
-      End;
+      end;
     VK_NUMPAD8:
-      Begin
+      begin
         AddStr('8');
         Block := True;
         exit;
-      End;
+      end;
     VK_NUMPAD9:
-      Begin
+      begin
         AddStr('9');
         Block := True;
         exit;
-      End;
+      end;
 
     A_Key:
-      Begin
-        If var_IfShift = True Then
+      begin
+        if var_IfShift = True then
           AddStr('A');
-        If var_IfShift = False Then
+        if var_IfShift = False then
           AddStr('a');
         Block := True;
         exit;
-      End;
+      end;
     B_Key:
-      Begin
-        If var_IfShift = True Then
+      begin
+        if var_IfShift = True then
           AddStr('B');
-        If var_IfShift = False Then
+        if var_IfShift = False then
           AddStr('b');
         Block := True;
         exit;
-      End;
+      end;
     C_Key:
-      Begin
-        If var_IfShift = True Then
+      begin
+        if var_IfShift = True then
           AddStr('C');
-        If var_IfShift = False Then
+        if var_IfShift = False then
           AddStr('c');
         Block := True;
         exit;
-      End;
+      end;
     D_Key:
-      Begin
-        If var_IfShift = True Then
+      begin
+        if var_IfShift = True then
           AddStr('D');
-        If var_IfShift = False Then
+        if var_IfShift = False then
           AddStr('d');
         Block := True;
         exit;
-      End;
+      end;
     E_Key:
-      Begin
-        If var_IfShift = True Then
+      begin
+        if var_IfShift = True then
           AddStr('E');
-        If var_IfShift = False Then
+        if var_IfShift = False then
           AddStr('e');
         Block := True;
         exit;
-      End;
+      end;
     F_Key:
-      Begin
-        If var_IfShift = True Then
+      begin
+        if var_IfShift = True then
           AddStr('F');
-        If var_IfShift = False Then
+        if var_IfShift = False then
           AddStr('f');
         Block := True;
         exit;
-      End;
+      end;
     G_Key:
-      Begin
-        If var_IfShift = True Then
+      begin
+        if var_IfShift = True then
           AddStr('G');
-        If var_IfShift = False Then
+        if var_IfShift = False then
           AddStr('g');
         Block := True;
         exit;
-      End;
+      end;
     H_Key:
-      Begin
-        If var_IfShift = True Then
+      begin
+        if var_IfShift = True then
           AddStr('H');
-        If var_IfShift = False Then
+        if var_IfShift = False then
           AddStr('h');
         Block := True;
         exit;
-      End;
+      end;
     I_Key:
-      Begin
-        If var_IfShift = True Then
+      begin
+        if var_IfShift = True then
           AddStr('I');
-        If var_IfShift = False Then
+        if var_IfShift = False then
           AddStr('i');
         Block := True;
         exit;
-      End;
+      end;
     J_Key:
-      Begin
-        If var_IfShift = True Then
+      begin
+        if var_IfShift = True then
           AddStr('J');
-        If var_IfShift = False Then
+        if var_IfShift = False then
           AddStr('j');
         Block := True;
         exit;
-      End;
+      end;
     K_Key:
-      Begin
-        If var_IfShift = True Then
+      begin
+        if var_IfShift = True then
           AddStr('K');
-        If var_IfShift = False Then
+        if var_IfShift = False then
           AddStr('k');
         Block := True;
         exit;
-      End;
+      end;
     L_Key:
-      Begin
-        If var_IfShift = True Then
+      begin
+        if var_IfShift = True then
           AddStr('L');
-        If var_IfShift = False Then
+        if var_IfShift = False then
           AddStr('l');
         Block := True;
         exit;
-      End;
+      end;
     M_Key:
-      Begin
-        If var_IfShift = True Then
+      begin
+        if var_IfShift = True then
           AddStr('M');
-        If var_IfShift = False Then
+        if var_IfShift = False then
           AddStr('m');
         Block := True;
         exit;
-      End;
+      end;
     N_Key:
-      Begin
-        If var_IfShift = True Then
+      begin
+        if var_IfShift = True then
           AddStr('N');
-        If var_IfShift = False Then
+        if var_IfShift = False then
           AddStr('n');
         Block := True;
         exit;
-      End;
+      end;
     O_Key:
-      Begin
-        If var_IfShift = True Then
+      begin
+        if var_IfShift = True then
           AddStr('O');
-        If var_IfShift = False Then
+        if var_IfShift = False then
           AddStr('o');
         Block := True;
         exit;
-      End;
+      end;
     P_Key:
-      Begin
-        If var_IfShift = True Then
+      begin
+        if var_IfShift = True then
           AddStr('P');
-        If var_IfShift = False Then
+        if var_IfShift = False then
           AddStr('p');
         Block := True;
         exit;
-      End;
+      end;
     Q_Key:
-      Begin
-        If var_IfShift = True Then
+      begin
+        if var_IfShift = True then
           AddStr('Q');
-        If var_IfShift = False Then
+        if var_IfShift = False then
           AddStr('q');
         Block := True;
         exit;
-      End;
+      end;
     R_Key:
-      Begin
-        If var_IfShift = True Then
+      begin
+        if var_IfShift = True then
           AddStr('R');
-        If var_IfShift = False Then
+        if var_IfShift = False then
           AddStr('r');
         Block := True;
         exit;
-      End;
+      end;
     S_Key:
-      Begin
-        If var_IfShift = True Then
+      begin
+        if var_IfShift = True then
           AddStr('S');
-        If var_IfShift = False Then
+        if var_IfShift = False then
           AddStr('s');
         Block := True;
         exit;
-      End;
+      end;
     T_Key:
-      Begin
-        If var_IfShift = True Then
+      begin
+        if var_IfShift = True then
           AddStr('T');
-        If var_IfShift = False Then
+        if var_IfShift = False then
           AddStr('t');
         Block := True;
         exit;
-      End;
+      end;
     U_Key:
-      Begin
-        If var_IfShift = True Then
+      begin
+        if var_IfShift = True then
           AddStr('U');
-        If var_IfShift = False Then
+        if var_IfShift = False then
           AddStr('u');
         Block := True;
         exit;
-      End;
+      end;
     V_Key:
-      Begin
-        If var_IfShift = True Then
+      begin
+        if var_IfShift = True then
           AddStr('V');
-        If var_IfShift = False Then
+        if var_IfShift = False then
           AddStr('v');
         Block := True;
         exit;
-      End;
+      end;
     W_Key:
-      Begin
-        If var_IfShift = True Then
+      begin
+        if var_IfShift = True then
           AddStr('W');
-        If var_IfShift = False Then
+        if var_IfShift = False then
           AddStr('w');
         Block := True;
         exit;
-      End;
+      end;
     X_Key:
-      Begin
-        If var_IfShift = True Then
+      begin
+        if var_IfShift = True then
           AddStr('X');
-        If var_IfShift = False Then
+        if var_IfShift = False then
           AddStr('x');
         Block := True;
         exit;
-      End;
+      end;
     Y_Key:
-      Begin
-        If var_IfShift = True Then
+      begin
+        if var_IfShift = True then
           AddStr('Y');
-        If var_IfShift = False Then
+        if var_IfShift = False then
           AddStr('y');
         Block := True;
         exit;
-      End;
+      end;
     Z_Key:
-      Begin
-        If var_IfShift = True Then
+      begin
+        if var_IfShift = True then
           AddStr('Z');
-        If var_IfShift = False Then
+        if var_IfShift = False then
           AddStr('z');
         Block := True;
         exit;
-      End;
+      end;
 
     // Special cases-------------------->
-    VK_HOME:
-      Begin
+      VK_HOME:
+      begin
         Block := False;
         ResetDeadKey;
         exit;
-      End;
+      end;
     VK_END:
-      Begin
+      begin
         Block := False;
         ResetDeadKey;
         exit;
-      End;
+      end;
     VK_PRIOR:
-      Begin
+      begin
         Block := False;
         ResetDeadKey;
         exit;
-      End;
+      end;
     VK_NEXT:
-      Begin
+      begin
         Block := False;
         ResetDeadKey;
         exit;
-      End;
+      end;
     VK_UP:
-      Begin
-        If (frmPrevW.List.Count > 1) And (EnglishT <> '') Then
-        Begin
+      begin
+        if (frmPrevW.List.Count > 1) and (EnglishT <> '') then
+        begin
           Block := True;
           frmPrevW.SelectPrevItem;
           UpdateCandidateOption;
           exit;
-        End
-        Else
-        Begin
+        end
+        else
+        begin
           Block := False;
           ResetDeadKey;
           exit;
-        End;
-      End;
+        end;
+      end;
     VK_DOWN:
-      Begin
-        If (frmPrevW.List.Count > 1) And (EnglishT <> '') Then
-        Begin
+      begin
+        if (frmPrevW.List.Count > 1) and (EnglishT <> '') then
+        begin
           Block := True;
           frmPrevW.SelectNextItem;
           UpdateCandidateOption;
           exit;
-        End
-        Else
-        Begin
+        end
+        else
+        begin
           Block := False;
           ResetDeadKey;
           exit;
-        End;
-      End;
+        end;
+      end;
     VK_RIGHT:
-      Begin
+      begin
         Block := False;
         ResetDeadKey;
         exit;
-      End;
+      end;
     VK_LEFT:
-      Begin
+      begin
         Block := False;
         ResetDeadKey;
         exit;
-      End;
+      end;
     VK_BACK:
-      Begin
+      begin
         DoBackspace(Block);
         exit;
-      End;
+      end;
     VK_DELETE:
-      Begin
+      begin
         Block := False;
         ResetDeadKey;
         exit;
-      End;
+      end;
     VK_ESCAPE:
-      Begin
-        If (frmPrevW.PreviewWVisible = True) And (EnglishT <> '') Then
-        Begin
+      begin
+        if (frmPrevW.IsPreviewVisible = True) and (EnglishT <> '') then
+        begin
           Block := True;
           ResetDeadKey;
           exit;
-        End;
-      End;
+        end;
+      end;
 
     VK_INSERT:
-      Begin
+      begin
         Block := True;
         exit;
-      End;
-  End;
-End;
+      end;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TE2BCharBased.PadResults(Const Starting_Ignoreable_T,
-  Ending_Ignorable_T: String; Var rList: TStringList);
-Var
-  B_Starting_Ignoreable_T, B_Ending_Ignorable_T: String;
+procedure TE2BCharBased.PadResults(const Starting_Ignoreable_T, Ending_Ignorable_T: string; var rList: TStringList);
+var
+  B_Starting_Ignoreable_T, B_Ending_Ignorable_T: string;
   I: Integer;
-Begin
+begin
   Parser.AutoCorrectEnabled := False;
   B_Starting_Ignoreable_T := Parser.Convert(Starting_Ignoreable_T);
   B_Ending_Ignorable_T := Parser.Convert(Ending_Ignorable_T);
 
   rList.Sorted := False;
-  For I := 0 To rList.Count - 1 Do
-  Begin
+  for I := 0 to rList.Count - 1 do
+  begin
     rList[I] := B_Starting_Ignoreable_T + rList[I] + B_Ending_Ignorable_T;
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TE2BCharBased.ParseAndSend;
-Var
+procedure TE2BCharBased.ParseAndSend;
+var
   I: Integer;
-  RegExQuery: String;
-  TempBanglaText1, TempBanglaText2: String;
-
-  DictionaryFirstItem: String;
-  Starting_Ignoreable_T, Middle_Main_T, Ending_Ignorable_T: String;
-
-  AbbText: String;
-  CandidateItem: String;
-Begin
+  RegExQuery: string;
+  TempBanglaText1, TempBanglaText2: string;
+  DictionaryFirstItem: string;
+  Starting_Ignoreable_T, Middle_Main_T, Ending_Ignorable_T: string;
+  AbbText: string;
+  CandidateItem: string;
+begin
   frmPrevW.List.Items.Clear;
 
   Parser.AutoCorrectEnabled := True;
@@ -1198,10 +1158,10 @@ Begin
   Parser.AutoCorrectEnabled := False;
   TempBanglaText2 := Parser.Convert(EnglishT);
 
-  If TempBanglaText1 = TempBanglaText2 Then
+  if TempBanglaText1 = TempBanglaText2 then
     frmPrevW.List.Items.Add(TempBanglaText1)
-  Else
-  Begin
+  else
+  begin
     // If FAutoCorrect Then Begin
     frmPrevW.List.Items.Add(TempBanglaText1);
     frmPrevW.List.Items.Add(TempBanglaText2);
@@ -1210,45 +1170,43 @@ Begin
     // frmPrevW.List.Items.Add(TempBanglaText2);
     // frmPrevW.List.Items.Add(TempBanglaText1);
     // End;
-  End;
+  end;
 
-  If (PhoneticMode = 'ONLYCHAR') Or (ShowPrevWindow = 'NO') Then
-  Begin
-    If (TempBanglaText1 <> TempBanglaText2) Then
-    Begin
-      If FAutoCorrect Then
+  if (PhoneticMode = 'ONLYCHAR') or (ShowPrevWindow = 'NO') then
+  begin
+    if (TempBanglaText1 <> TempBanglaText2) then
+    begin
+      if FAutoCorrect then
         frmPrevW.SelectItem(EscapeSpecialCharacters(TempBanglaText1))
-      Else
+      else
         frmPrevW.SelectItem(EscapeSpecialCharacters(TempBanglaText2));
-    End
-    Else
+    end
+    else
       frmPrevW.SelectFirstItem;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     CutText(EnglishT, Starting_Ignoreable_T, Middle_Main_T, Ending_Ignorable_T);
-    If (Length(Middle_Main_T) <= Max_EnglishLength) And
-      (Length(Middle_Main_T) > 0) Then
-    Begin
+    if (Length(Middle_Main_T) <= Max_EnglishLength) and (Length(Middle_Main_T) > 0) then
+    begin
 
       WStringList.Clear;
 
-      If Middle_Main_T = PhoneticCache[Length(Middle_Main_T)].EnglishT Then
-      Begin
+      if Middle_Main_T = PhoneticCache[Length(Middle_Main_T)].EnglishT then
+      begin
         WStringList.Assign(PhoneticCache[Length(Middle_Main_T)].Results);
         AddSuffix(Middle_Main_T, WStringList);
         SimilarSort(TempBanglaText2, WStringList);
         AbbText := '';
         AbbText := Abbreviation.CheckConvert(Middle_Main_T);
-        If AbbText <> '' Then
+        if AbbText <> '' then
           WStringList.Add(AbbText);
         PadResults(Starting_Ignoreable_T, Ending_Ignorable_T, WStringList);
-      End
-      Else
-      Begin
+      end
+      else
+      begin
         RegExQuery := RegExBuilder.Convert(Middle_Main_T);
-        uRegExPhoneticSearch.SearchPhonetic(Middle_Main_T, RegExQuery,
-          WStringList);
+        uRegExPhoneticSearch.SearchPhonetic(Middle_Main_T, RegExQuery, WStringList);
 
         Fix_ZWNJ_ZWJ(WStringList);
         AddToCache(Middle_Main_T, WStringList);
@@ -1256,370 +1214,357 @@ Begin
         SimilarSort(TempBanglaText2, WStringList);
         AbbText := '';
         AbbText := Abbreviation.CheckConvert(Middle_Main_T);
-        If AbbText <> '' Then
+        if AbbText <> '' then
           WStringList.Add(AbbText);
         PadResults(Starting_Ignoreable_T, Ending_Ignorable_T, WStringList);
-      End;
+      end;
 
-      If WStringList.Count > 0 Then
+      if WStringList.Count > 0 then
         DictionaryFirstItem := WStringList[0];
 
-      For I := 0 To WStringList.Count - 1 Do
-      Begin
-        If (WStringList[I] <> TempBanglaText1) And
-          (WStringList[I] <> TempBanglaText2) Then
+      for I := 0 to WStringList.Count - 1 do
+      begin
+        if (WStringList[I] <> TempBanglaText1) and (WStringList[I] <> TempBanglaText2) then
           frmPrevW.List.Items.Add(WStringList[I]);
-      End;
+      end;
 
       // Add English option as the last item
       frmPrevW.List.Items.Add(EnglishT);
 
       // frmPrevW.SelectFirstItem;
-      if CandidateDict.TryGetValue(Middle_Main_T, CandidateItem) And
-        (SaveCandidate = 'YES') Then
-      Begin
+      if CandidateDict.TryGetValue(Middle_Main_T, CandidateItem) and (SaveCandidate = 'YES') then
+      begin
         frmPrevW.SelectItem(EscapeSpecialCharacters(CandidateItem));
-      End
-      Else
-      Begin
-        If WStringList.Count > 0 Then
-        Begin
-          If Length(Middle_Main_T) = 1 Then
+      end
+      else
+      begin
+        if WStringList.Count > 0 then
+        begin
+          if Length(Middle_Main_T) = 1 then
             frmPrevW.SelectFirstItem
-          Else
-          Begin
-            If (TempBanglaText1 <> TempBanglaText2) Then
-            Begin
-              If FAutoCorrect Then
+          else
+          begin
+            if (TempBanglaText1 <> TempBanglaText2) then
+            begin
+              if FAutoCorrect then
                 frmPrevW.SelectItem(EscapeSpecialCharacters(TempBanglaText1))
-              Else
-              Begin
-                If PhoneticMode = 'DICT' Then
-                Begin
-                  If DictionaryFirstItem <> '' Then
-                    frmPrevW.SelectItem
-                      (EscapeSpecialCharacters(DictionaryFirstItem))
-                  Else
-                    frmPrevW.SelectItem
-                      (EscapeSpecialCharacters(WStringList[0]));
-                End
-                Else If PhoneticMode = 'CHAR' Then
-                Begin
+              else
+              begin
+                if PhoneticMode = 'DICT' then
+                begin
+                  if DictionaryFirstItem <> '' then
+                    frmPrevW.SelectItem(EscapeSpecialCharacters(DictionaryFirstItem))
+                  else
+                    frmPrevW.SelectItem(EscapeSpecialCharacters(WStringList[0]));
+                end
+                else if PhoneticMode = 'CHAR' then
+                begin
                   frmPrevW.SelectItem(EscapeSpecialCharacters(TempBanglaText2))
-                End;
-              End;
-            End
-            Else
-            Begin
-              If PhoneticMode = 'DICT' Then
-              Begin
-                If DictionaryFirstItem <> '' Then
-                  frmPrevW.SelectItem
-                    (EscapeSpecialCharacters(DictionaryFirstItem))
-                Else
+                end;
+              end;
+            end
+            else
+            begin
+              if PhoneticMode = 'DICT' then
+              begin
+                if DictionaryFirstItem <> '' then
+                  frmPrevW.SelectItem(EscapeSpecialCharacters(DictionaryFirstItem))
+                else
                   frmPrevW.SelectItem(EscapeSpecialCharacters(WStringList[0]));
-              End
-              Else If PhoneticMode = 'CHAR' Then
-              Begin
+              end
+              else if PhoneticMode = 'CHAR' then
+              begin
                 frmPrevW.SelectItem(EscapeSpecialCharacters(TempBanglaText2))
-              End;
-            End;
-          End;
-        End
-        Else
+              end;
+            end;
+          end;
+        end
+        else
           frmPrevW.SelectFirstItem;
-      End;
-    End
-    Else
+      end;
+    end
+    else
       frmPrevW.SelectFirstItem;
-  End;
+  end;
 
-  frmPrevW.ShowHideList;
+  frmPrevW.UpdateListHeight;
 
   ManuallySelectedCandidate := False;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TE2BCharBased.ParseAndSendNow;
-Var
+procedure TE2BCharBased.ParseAndSendNow;
+var
   I, Matched, UnMatched: Integer;
-  BijoyPrevBanglaT, BijoyNewBanglaText: String;
-Begin
+  BijoyPrevBanglaT, BijoyNewBanglaText: string;
+begin
   Matched := 0;
 
-  If OutputIsBijoy <> 'YES' Then
-  Begin
+  if OutputIsBijoy <> 'YES' then
+  begin
     { Output to Unicode }
-    If PrevBanglaT = '' Then
-    Begin
+    if PrevBanglaT = '' then
+    begin
       SendKey_Char(NewBanglaText);
       PrevBanglaT := NewBanglaText;
-    End
-    Else
-    Begin
-      For I := 1 To Length(PrevBanglaT) Do
-      Begin
-        If MidStr(PrevBanglaT, I, 1) = MidStr(NewBanglaText, I, 1) Then
+    end
+    else
+    begin
+      for I := 1 to Length(PrevBanglaT) do
+      begin
+        if MidStr(PrevBanglaT, I, 1) = MidStr(NewBanglaText, I, 1) then
           Matched := Matched + 1
-        Else
+        else
           Break;
-      End;
+      end;
       UnMatched := Length(PrevBanglaT) - Matched;
 
-      If UnMatched >= 1 Then
+      if UnMatched >= 1 then
         Backspace(UnMatched);
       SendKey_Char(MidStr(NewBanglaText, Matched + 1, Length(NewBanglaText)));
       PrevBanglaT := NewBanglaText;
-    End;
+    end;
 
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     { Output to Bijoy }
     BijoyPrevBanglaT := Bijoy.Convert(PrevBanglaT);
     BijoyNewBanglaText := Bijoy.Convert(NewBanglaText);
 
-    If BijoyPrevBanglaT = '' Then
-    Begin
+    if BijoyPrevBanglaT = '' then
+    begin
       SendKey_Char(BijoyNewBanglaText);
       PrevBanglaT := NewBanglaText;
-    End
-    Else
-    Begin
-      For I := 1 To Length(BijoyPrevBanglaT) Do
-      Begin
-        If MidStr(BijoyPrevBanglaT, I, 1) = MidStr(BijoyNewBanglaText,
-          I, 1) Then
+    end
+    else
+    begin
+      for I := 1 to Length(BijoyPrevBanglaT) do
+      begin
+        if MidStr(BijoyPrevBanglaT, I, 1) = MidStr(BijoyNewBanglaText, I, 1) then
           Matched := Matched + 1
-        Else
+        else
           Break;
-      End;
+      end;
       UnMatched := Length(BijoyPrevBanglaT) - Matched;
 
-      If UnMatched >= 1 Then
+      if UnMatched >= 1 then
         Backspace(UnMatched);
-      SendKey_Char(MidStr(BijoyNewBanglaText, Matched + 1,
-        Length(BijoyNewBanglaText)));
+      SendKey_Char(MidStr(BijoyNewBanglaText, Matched + 1, Length(BijoyNewBanglaText)));
       PrevBanglaT := NewBanglaText;
-    End;
+    end;
 
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TE2BCharBased.ProcessEnter(Var Block: boolean);
-Begin
+procedure TE2BCharBased.ProcessEnter(var Block: boolean);
+begin
   ResetDeadKey;
   Block := False;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TE2BCharBased.ProcessSpace(Var Block: boolean);
-Begin
+procedure TE2BCharBased.ProcessSpace(var Block: boolean);
+begin
   ResetDeadKey;
   Block := False;
-End;
+end;
 
 { =============================================================================== }
 
-Function TE2BCharBased.ProcessVKeyDown(Const KeyCode: Integer;
-  Var Block: boolean): String;
-Var
+function TE2BCharBased.ProcessVKeyDown(const KeyCode: Integer; var Block: boolean): string;
+var
   m_Block: boolean;
-Begin
+begin
   m_Block := False;
-  If (IfControl = True) Or (IfAlter = True) Or (IfWinKey = True) Then
-  Begin
+  if (IfControl = True) or (IfAlter = True) or (IfWinKey = True) then
+  begin
     Block := False;
     BlockLast := False;
     ProcessVKeyDown := '';
     exit;
-  End;
+  end;
 
-  If (KeyCode = VK_SHIFT) Or (KeyCode = VK_LSHIFT) Or (KeyCode = VK_RSHIFT) Then
-  Begin
+  if (KeyCode = VK_SHIFT) or (KeyCode = VK_LSHIFT) or (KeyCode = VK_RSHIFT) then
+  begin
     Block := False;
     BlockLast := False;
     ProcessVKeyDown := '';
     exit;
-  End;
+  end;
 
-  If AvroMainForm1.GetMyCurrentKeyboardMode = SysDefault Then
-  Begin
+  if AvroMainForm1.GetMyCurrentKeyboardMode = SysDefault then
+  begin
     Block := False;
     BlockLast := False;
     ProcessVKeyDown := '';
     exit;
-  End
-  Else If AvroMainForm1.GetMyCurrentKeyboardMode = bangla Then
-  Begin
-    If KeyCode = VK_SPACE Then
-    Begin
+  end
+  else if AvroMainForm1.GetMyCurrentKeyboardMode = bangla then
+  begin
+    if KeyCode = VK_SPACE then
+    begin
       ProcessSpace(Block);
       ProcessVKeyDown := '';
       exit;
-    End
-    Else If KeyCode = VK_TAB Then
-    Begin
-      If TabBrowsing = 'YES' Then
-      Begin
-        If (frmPrevW.List.Count > 1) And (EnglishT <> '') Then
-        Begin
+    end
+    else if KeyCode = VK_TAB then
+    begin
+      if TabBrowsing = 'YES' then
+      begin
+        if (frmPrevW.List.Count > 1) and (EnglishT <> '') then
+        begin
           Block := True;
           frmPrevW.SelectNextItem;
           UpdateCandidateOption;
           exit;
-        End
-        Else
-        Begin
+        end
+        else
+        begin
           ResetDeadKey;
           Block := False;
           ProcessVKeyDown := '';
           exit;
-        End;
-      End
-      Else
-      Begin
+        end;
+      end
+      else
+      begin
         ResetDeadKey;
         Block := False;
         ProcessVKeyDown := '';
         exit;
-      End;
-    End
-    Else If KeyCode = VK_RETURN Then
-    Begin
+      end;
+    end
+    else if KeyCode = VK_RETURN then
+    begin
       ProcessEnter(Block);
       ProcessVKeyDown := '';
       exit;
-    End
-    Else
-    Begin
+    end
+    else
+    begin
 
       MyProcessVKeyDown(KeyCode, m_Block, IfShift, IfTrueShift);
       ProcessVKeyDown := '';
 
       Block := m_Block;
       BlockLast := m_Block;
-    End;
-  End;
+    end;
+  end;
 
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TE2BCharBased.ProcessVKeyUP(Const KeyCode: Integer;
-  Var Block: boolean);
-Begin
-  If (KeyCode = VK_SHIFT) Or (KeyCode = VK_RSHIFT) Or (KeyCode = VK_LSHIFT) Or
-    (KeyCode = VK_LCONTROL) Or (KeyCode = VK_RCONTROL) Or (KeyCode = VK_CONTROL)
-    Or (KeyCode = VK_MENU) Or (KeyCode = VK_LMENU) Or (KeyCode = VK_RMENU) Or
-    (IfWinKey = True) Then
-  Begin
+procedure TE2BCharBased.ProcessVKeyUP(const KeyCode: Integer; var Block: boolean);
+begin
+  if (KeyCode = VK_SHIFT) or (KeyCode = VK_RSHIFT) or (KeyCode = VK_LSHIFT) or (KeyCode = VK_LCONTROL) or (KeyCode = VK_RCONTROL) or (KeyCode = VK_CONTROL) or (KeyCode = VK_MENU) or (KeyCode = VK_LMENU) or (KeyCode = VK_RMENU) or (IfWinKey = True) then
+  begin
     Block := False;
     BlockLast := False;
     exit;
-  End;
+  end;
 
-  If AvroMainForm1.GetMyCurrentKeyboardMode = SysDefault Then
-  Begin
+  if AvroMainForm1.GetMyCurrentKeyboardMode = SysDefault then
+  begin
     Block := False;
     BlockLast := False;
-  End
-  Else If AvroMainForm1.GetMyCurrentKeyboardMode = bangla Then
-  Begin
-    If BlockLast = True Then
+  end
+  else if AvroMainForm1.GetMyCurrentKeyboardMode = bangla then
+  begin
+    if BlockLast = True then
       Block := True;
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TE2BCharBased.ResetDeadKey;
-Var
+procedure TE2BCharBased.ResetDeadKey;
+var
   I: Integer;
-Begin
+begin
   PrevBanglaT := '';
   EnglishT := '';
   BlockLast := False;
   NewBanglaText := '';
 
-  For I := Low(PhoneticCache) To High(PhoneticCache) Do
-  Begin
+  for I := Low(PhoneticCache) to High(PhoneticCache) do
+  begin
     PhoneticCache[I].EnglishT := '';
     PhoneticCache[I].Results.Clear;
-  End;
+  end;
 
-  If ShowPrevWindow = 'YES' Then
-    frmPrevW.MakeMeHide;
+  if ShowPrevWindow = 'YES' then
+    frmPrevW.HidePreview;
 
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TE2BCharBased.SaveCandidateOptions;
-Var
-  S: String;
+procedure TE2BCharBased.SaveCandidateOptions;
+var
+  S: string;
   tmpList: TStringList;
-Begin
-  Try
-    Try
+begin
+  try
+    try
       tmpList := TStringList.Create;
-      tmpList.Add
-        ('// Avro Phonetic Candidate Selection Options (Do not remove this line)');
+      tmpList.Add('// Avro Phonetic Candidate Selection Options (Do not remove this line)');
       for S in CandidateDict.Keys do
       begin
         tmpList.Add(S + ' ' + CandidateDict.Items[S]);
-      End;
-      tmpList.SaveToFile(GetAvroDataDir + 'CandidateOptions.dat',
-        TEncoding.UTF8);
-    Except
-      On E: Exception Do
-      Begin
+      end;
+      tmpList.SaveToFile(GetAvroDataDir + 'CandidateOptions.dat', TEncoding.UTF8);
+    except
+      on E: Exception do
+      begin
         // Nothing
-      End;
-    End;
-  Finally
+      end;
+    end;
+  finally
     tmpList.Clear;
     FreeAndNil(tmpList);
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TE2BCharBased.SelectCandidate(Const Item: String);
-Begin
+procedure TE2BCharBased.SelectCandidate(const Item: string);
+begin
   NewBanglaText := Item;
   ParseAndSendNow;
   ManuallySelectedCandidate := True;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TE2BCharBased.SetAutoCorrectEnabled(Const Value: boolean);
-Begin
+procedure TE2BCharBased.SetAutoCorrectEnabled(const Value: boolean);
+begin
   Parser.AutoCorrectEnabled := Value;
   FAutoCorrect := Value;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TE2BCharBased.UpdateCandidateOption;
-Var
-  Dummy, Middle_Main_T: String;
-Begin
+procedure TE2BCharBased.UpdateCandidateOption;
+var
+  Dummy, Middle_Main_T: string;
+begin
   CutText(EnglishT, Dummy, Middle_Main_T, Dummy);
-  If ManuallySelectedCandidate Then
-  Begin
-    If trim(Middle_Main_T) <> '' Then
-    Begin
+  if ManuallySelectedCandidate then
+  begin
+    if trim(Middle_Main_T) <> '' then
+    begin
       CandidateDict.AddOrSetValue(Middle_Main_T, NewBanglaText);
-    End;
-  End;
-End;
+    end;
+  end;
+end;
 
 { =============================================================================== }
 
-End.
+end.
+
