@@ -81,6 +81,10 @@ type
     PreviewWCurrentlyVisible: Boolean;
     MouseDown: Boolean;
 
+    // For debouncing FindCaretPosWindow
+    FLastCaretCheckTime: DWORD;
+    FCachedCaretX, FCachedCaretY: Integer;
+    FCachedCaretResult: Boolean;
     function FindCaretPosWindow(out X, Y: Integer): Boolean;
 
     function GetCaretScreenPos_UIA(out X, Y: Integer): Boolean;
@@ -122,6 +126,8 @@ var
 const
   UIA_TextPatternId: Integer = 10014;
   // Manually define missing constant for UI automation type
+
+  DEBOUNCE_INTERVAL_MS = 200;
 
 implementation
 
@@ -316,39 +322,55 @@ end;
 
 { =============================================================================== }
 
-// TODO: Run this asynchronously and debounce
+// TODO: Run this asynchronously
 function TfrmPrevW.FindCaretPosWindow(out X, Y: Integer): Boolean;
+var
+  NowTime: DWORD;
 begin
-  Result := False;
-  X := -1;
-  Y := -1;
-
-  GetCaretScreenPos_UIA(X, Y);
-  if (X > 0) and (Y > 0) then
+  NowTime := GetTickCount;
+  if (NowTime - FLastCaretCheckTime < DEBOUNCE_INTERVAL_MS) then
   begin
-    Result := True;
+    X := FCachedCaretX;
+    Y := FCachedCaretY;
+    Result := FCachedCaretResult;
     Exit;
   end;
 
-  // This is causing extreme lag, disabling for now
-  // Caret tracking will not work in Chrome, vscode etc if this is disabled,
-  // but enabling means not even being able to type
+  FLastCaretCheckTime := NowTime;
 
-  {
-    GetCaretScreenPos_MSAA(X, Y);
-    if (X > 0) and (Y > 0) then
+  FCachedCaretX := -1;
+  FCachedCaretY := -1;
+  FCachedCaretResult := False;
+
+  // Order:
+  // GetCaretScreenPos_UIA, if fails,
+  // GetCaretScreenPos_MSAA (for Chrome etc), if fails,
+  // GetCaretScreenPos_Raw
+  GetCaretScreenPos_UIA(FCachedCaretX, FCachedCaretY);
+  if (FCachedCaretX > 0) and (FCachedCaretY > 0) then
+  begin
+    FCachedCaretResult := True;
+  end
+  else
+  begin
+    GetCaretScreenPos_MSAA(FCachedCaretX, FCachedCaretY);
+    if (FCachedCaretX > 0) and (FCachedCaretY > 0) then
     begin
-    Result := True;
-    Exit;
+      FCachedCaretResult := True;
+    end
+    else
+    begin
+      GetCaretScreenPos_Raw(FCachedCaretX, FCachedCaretY);
+      if (FCachedCaretX > 0) and (FCachedCaretY > 0) then
+      begin
+        FCachedCaretResult := True;
+      end;
     end;
-  }
-
-  GetCaretScreenPos_Raw(X, Y);
-  if (X > 0) and (Y > 0) then
-  begin
-    Result := True;
-    Exit;
   end;
+
+  X := FCachedCaretX;
+  Y := FCachedCaretY;
+  Result := FCachedCaretResult;
 end;
 
 { =============================================================================== }
