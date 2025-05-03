@@ -650,13 +650,6 @@ object frmPrevW: TfrmPrevW
     TabOrder = 0
     OnClick = ListClick
   end
-  object FocusSolver: TTimer
-    Enabled = False
-    Interval = 200
-    OnTimer = FocusSolverTimer
-    Left = 128
-    Top = 128
-  end
   object PopupMenu: TPopupMenu
     Left = 240
     Top = 8

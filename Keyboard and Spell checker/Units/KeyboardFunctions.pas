@@ -74,6 +74,7 @@ Implementation
 
 Const
   KEYEVENTF_UNICODE: Integer = $4;
+  SENDKEY_DELAY_MS: Integer = 2;
 
   { =========================================================================== }
 
@@ -374,7 +375,7 @@ Procedure SendKey_SendInput(Const bKey: Integer);
 Begin
   SendInput_Down(bKey);
   SendInput_UP(bKey);
-  Sleep(5);  // Add a small delay to allow processing
+  Sleep(SENDKEY_DELAY_MS);  // Add a small delay to allow processing
 End;
 
 { =============================================================================== }
@@ -441,7 +442,7 @@ Begin
   End;
 
   SendInput(2, KInput[0], SizeOf(KInput[0]));
-  Sleep(5);  // Add a small delay to allow processing
+  Sleep(SENDKEY_DELAY_MS);  // Add a small delay to allow processing
 End;
 
 Procedure RevertAltStates;

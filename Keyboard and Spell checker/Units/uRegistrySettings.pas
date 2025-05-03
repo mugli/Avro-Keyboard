@@ -80,6 +80,7 @@ Var
   // Avro Phonetic Settings
   PhoneticAutoCorrect: String;
   ShowPrevWindow: String;
+  FollowCaretByDefault: String;
   PhoneticMode: String;
   SaveCandidate: String;
   AddToPhoneticDict: String;
@@ -188,6 +189,7 @@ Begin
   // Avro Phonetic Settings
   PhoneticAutoCorrect := UpperCase(XML.GetValue('PhoneticAutoCorrect', 'Yes'));
   ShowPrevWindow := UpperCase(XML.GetValue('ShowPrevWindow', 'Yes'));
+  FollowCaretByDefault := UpperCase(XML.GetValue('FollowCaretByDefault', 'Yes'));
   PhoneticMode := UpperCase(XML.GetValue('PhoneticMode', 'CHAR'));
   SaveCandidate := UpperCase(XML.GetValue('SaveCandidate', 'YES'));
   AddToPhoneticDict := UpperCase(XML.GetValue('AddToPhoneticDict', 'YES'));
@@ -270,6 +272,7 @@ Begin
   // Avro Phonetic Settings
   XML.SetValue('PhoneticAutoCorrect', PhoneticAutoCorrect);
   XML.SetValue('ShowPrevWindow', ShowPrevWindow);
+  XML.SetValue('FollowCaretByDefault', FollowCaretByDefault);
   XML.SetValue('PhoneticMode', PhoneticMode);
   XML.SetValue('SaveCandidate', SaveCandidate);
   XML.SetValue('AddToPhoneticDict', AddToPhoneticDict);
@@ -365,6 +368,7 @@ Begin
     PhoneticAutoCorrect :=
       UpperCase(Reg.ReadStringDef('PhoneticAutoCorrect', 'Yes'));
     ShowPrevWindow := UpperCase(Reg.ReadStringDef('ShowPrevWindow', 'Yes'));
+    FollowCaretByDefault := UpperCase(Reg.ReadStringDef('FollowCaretByDefault', 'Yes'));
     PhoneticMode := UpperCase(Reg.ReadStringDef('PhoneticMode', 'CHAR'));
     SaveCandidate := UpperCase(Reg.ReadStringDef('SaveCandidate', 'YES'));
     AddToPhoneticDict :=
@@ -458,6 +462,7 @@ Begin
     // Avro Phonetic Settings
     Reg.WriteString('PhoneticAutoCorrect', PhoneticAutoCorrect);
     Reg.WriteString('ShowPrevWindow', ShowPrevWindow);
+    Reg.WriteString('FollowCaretByDefault', FollowCaretByDefault);
     Reg.WriteString('PhoneticMode', PhoneticMode);
     Reg.WriteString('SaveCandidate', SaveCandidate);
     Reg.WriteString('AddToPhoneticDict', AddToPhoneticDict);
@@ -595,6 +600,8 @@ Begin
     PhoneticAutoCorrect := 'YES';
   If Not((ShowPrevWindow = 'YES') Or (ShowPrevWindow = 'NO')) Then
     ShowPrevWindow := 'YES';
+  If Not((FollowCaretByDefault = 'YES') Or (FollowCaretByDefault = 'NO')) Then
+    FollowCaretByDefault := 'YES';
   If Not((TabBrowsing = 'YES') Or (TabBrowsing = 'NO')) Then
     TabBrowsing := 'YES';
   If Not((PipeToDot = 'YES') Or (PipeToDot = 'NO')) Then
