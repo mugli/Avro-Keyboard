@@ -84,9 +84,6 @@ type
                 ButtonSaveSkin: TButton;
                 Label9: TLabel;
                 Label10: TLabel;
-                Panel2: TPanel;
-                Label11: TLabel;
-                LabelShareLink: TLabel;
                 Panel3: TPanel;
                 Image1: TImage;
                 Label13: TLabel;
@@ -98,7 +95,6 @@ type
                 procedure ButtonPrevClick(Sender: TObject);
                 procedure ButtonSaveSkinClick(Sender: TObject);
                 procedure ButtonHelpClick(Sender: TObject);
-                procedure LabelShareLinkClick(Sender: TObject);
                 procedure ButtonAboutClick(Sender: TObject);
                 procedure ButtonExitClick(Sender: TObject);
         private
@@ -499,11 +495,6 @@ begin
         Self.Show;
         Application.ProcessMessages;
         EditSkinName.SetFocus;
-end;
-
-procedure TfrmSkinCreator.LabelShareLinkClick(Sender: TObject);
-begin
-        Execute_Something('https://www.omicronlab.com/go.php?id=7');
 end;
 
 function TfrmSkinCreator.ValidateNext(Val: Integer): Boolean;
