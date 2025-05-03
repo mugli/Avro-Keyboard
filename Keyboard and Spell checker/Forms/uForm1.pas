@@ -90,8 +90,6 @@ Type
     MoreFreeDownloads1: TMenuItem;
     FreeBanglaFonts1: TMenuItem;
     UsefultoolsforBangla1: TMenuItem;
-    Downloadmoreskins1: TMenuItem;
-    Downloadmorekeyboardlayouts1: TMenuItem;
     AvroKeyboardontheweb1: TMenuItem;
     PortableAvroKeyboardontheweb1: TMenuItem;
     wwwOmicronLabcom1: TMenuItem;
@@ -136,10 +134,7 @@ Type
     N19: TMenuItem;
     MoreFreeDownloads2: TMenuItem;
     FreeBanglaFonts2: TMenuItem;
-    AvroConverter2: TMenuItem;
     UsefultoolsforBangla2: TMenuItem;
-    Downloadmoreskins2: TMenuItem;
-    Downloadmorekeyboardlayouts2: TMenuItem;
     AvroKeyboardontheweb2: TMenuItem;
     PortableAvroKeyboardontheweb2: TMenuItem;
     wwwOmicronLabcom2: TMenuItem;
@@ -198,10 +193,7 @@ Type
     UserForum3: TMenuItem;
     N33: TMenuItem;
     FreeBanglaFonts3: TMenuItem;
-    AvroConverter3: TMenuItem;
     UsefultoolsforBangla3: TMenuItem;
-    Downloadmoreskins3: TMenuItem;
-    Downloadmorekeyboardlayouts3: TMenuItem;
     AvroPhoneticEnglishtoBangla3: TMenuItem;
     N34: TMenuItem;
     Showactivekeyboardlayout3: TMenuItem;
@@ -321,8 +313,6 @@ Type
     Procedure CheckupdateforAvroKeyboard1Click(Sender: TObject);
     Procedure FreeBanglaFonts1Click(Sender: TObject);
     Procedure UsefultoolsforBangla1Click(Sender: TObject);
-    Procedure Downloadmoreskins1Click(Sender: TObject);
-    Procedure Downloadmorekeyboardlayouts1Click(Sender: TObject);
     Procedure Jumptosystemtray1Click(Sender: TObject);
     Procedure Options1Click(Sender: TObject);
     Procedure Configuringyoursystem1Click(Sender: TObject);
@@ -501,6 +491,7 @@ Begin
   ToggleVowelFormat;
 End;
 
+
 Procedure TAvroMainForm1.AvroKeyboardonFacebook1Click(Sender: TObject);
 Begin
   Execute_Something('http://www.omicronlab.com/go.php?id=39');
@@ -604,15 +595,6 @@ Begin
   TopBarDocToTop;
 End;
 
-Procedure TAvroMainForm1.Downloadmorekeyboardlayouts1Click(Sender: TObject);
-Begin
-  Execute_Something('http://www.omicronlab.com/go.php?id=6');
-End;
-
-Procedure TAvroMainForm1.Downloadmoreskins1Click(Sender: TObject);
-Begin
-  Execute_Something('http://www.omicronlab.com/go.php?id=8');
-End;
 
 { =============================================================================== }
 
@@ -1972,7 +1954,7 @@ End;
 
 Procedure TAvroMainForm1.UserForum1Click(Sender: TObject);
 Begin
-  Execute_Something('http://www.omicronlab.com/go.php?id=3');
+  Execute_Something('https://github.com/mugli/Avro-Keyboard/issues');
 End;
 
 Procedure TAvroMainForm1.UseTabforBrowsingSuggestions1Click(Sender: TObject);

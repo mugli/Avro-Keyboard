@@ -97,8 +97,7 @@ Begin
           #10 + '' + #10 + '-> Make sure ''autodict.dct'' file is present in ' +
           Path + ' folder, or' + #10 +
           '-> ''autodict.dct'' file is not corrupt.' + #10 + '' + #10 +
-          'Reinstalling Avro Keyboard may solve this problem.' + #10 +
-          'You may contact OmicronLab (http://www.omicronlab.com/forum/) for free support.'),
+          'Reinstalling Avro Keyboard may solve this problem.'),
           'Avro Keyboard', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
       End;
     End;

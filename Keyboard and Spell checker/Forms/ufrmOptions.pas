@@ -102,7 +102,6 @@ Type
     comboSkin: TComboBox;
     ScrollBox1: TScrollBox;
     SkinPreviewPic: TImage;
-    cmdDownloadSkin: TButton;
     ccmdAboutSkin: TButton;
     AvroMouse_Panel: TPanel;
     GroupBox5: TGroupBox;
@@ -155,7 +154,6 @@ Type
     Procedure checkTopBarTransparentClick(Sender: TObject);
     Procedure TrackBar_TransparencyChange(Sender: TObject);
     Procedure comboSkinChange(Sender: TObject);
-    Procedure cmdDownloadSkinClick(Sender: TObject);
     Procedure CheckShowPrevWindowClick(Sender: TObject);
     Procedure butEditCustomDictClick(Sender: TObject);
     Procedure cmdAutoCorrectClick(Sender: TObject);
@@ -511,13 +509,6 @@ Procedure TfrmOptions.cmdAutoCorrectClick(Sender: TObject);
 Begin
   CheckCreateForm(TfrmAutoCorrect, frmAutoCorrect, 'frmAutoCorrect');
   frmAutoCorrect.Show;
-End;
-
-{ =============================================================================== }
-
-Procedure TfrmOptions.cmdDownloadSkinClick(Sender: TObject);
-Begin
-  Execute_Something('http://www.omicronlab.com/go.php?id=8');
 End;
 
 { =============================================================================== }

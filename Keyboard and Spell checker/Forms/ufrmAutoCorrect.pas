@@ -563,9 +563,7 @@ Begin
       Application.MessageBox(PChar('Cannot save to dictionary!' + #10 + '' + #10
         + '-> Make sure the disk is not write protected, or' + #10 + '-> ' +
         Path + ' file is not ''Read Only'', or' + #10 +
-        '-> You have necessary account privilege to modify content.' + #10 + ''
-        + #10 + 'Please ask your System Administrator or contact' + #10 +
-        'OmicronLab (http://www.omicronlab.com/forum/) to solve of this problem.'),
+        '-> You have necessary account privilege to modify content.'),
         'Auto correct', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
       result := False;
     End;

@@ -418,8 +418,7 @@ Begin
             #10 + '-> Make sure ''Database.db3'' file is present in ' +
             GetAvroDataDir + ' folder, or' + #10 +
             '-> ''Database.db3'' file is not corrupt.' + #10 + '' + #10 +
-            'Reinstalling Avro Keyboard may solve this problem.' + #10 +
-            'You may contact OmicronLab (http://www.omicronlab.com/forum/) for free support.'),
+            'Reinstalling Avro Keyboard may solve this problem.'),
             'Avro Keyboard', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 +
             MB_APPLMODAL);
         End;

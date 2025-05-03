@@ -122,7 +122,7 @@ object AvroMainForm1: TAvroMainForm1
     PopupMenu = Popup_Tray
     OnClick = TrayClick
     OnDblClick = TrayDblClick
-    Left = 360
+    Left = 396
     Top = 232
   end
   object ImageList1: TImageList
@@ -1196,7 +1196,7 @@ object AvroMainForm1: TAvroMainForm1
   object Popup_Web: TPopupMenu
     AutoHotkeys = maManual
     Images = ImageList1
-    Left = 320
+    Left = 332
     Top = 72
     object CheckupdateforAvroKeyboard1: TMenuItem
       Caption = 'Check update for Avro Keyboard'
@@ -1217,16 +1217,6 @@ object AvroMainForm1: TAvroMainForm1
         Caption = 'Useful tools for Bangla...'
         OnClick = UsefultoolsforBangla1Click
       end
-      object Downloadmoreskins1: TMenuItem
-        Caption = 'Download more skins...'
-        ImageIndex = 4
-        OnClick = Downloadmoreskins1Click
-      end
-      object Downloadmorekeyboardlayouts1: TMenuItem
-        Caption = 'Download more keyboard layouts...'
-        ImageIndex = 3
-        OnClick = Downloadmorekeyboardlayouts1Click
-      end
     end
     object AvroKeyboardontheweb1: TMenuItem
       Caption = 'Avro Keyboard on the web'
@@ -1244,7 +1234,7 @@ object AvroMainForm1: TAvroMainForm1
       OnClick = wwwOmicronLabcom1Click
     end
     object UserForum1: TMenuItem
-      Caption = 'User Forum'
+      Caption = 'Report an issue'
       ImageIndex = 10
       OnClick = UserForum1Click
     end
@@ -1292,7 +1282,7 @@ object AvroMainForm1: TAvroMainForm1
   object Popup_Exit: TPopupMenu
     AutoHotkeys = maManual
     Images = ImageList1
-    Left = 440
+    Left = 488
     Top = 72
     object Jumptosystemtray1: TMenuItem
       Caption = 'Jump to system tray'
@@ -1307,7 +1297,7 @@ object AvroMainForm1: TAvroMainForm1
   object Popup_Help: TPopupMenu
     AutoHotkeys = maManual
     Images = ImageList1
-    Left = 384
+    Left = 408
     Top = 72
     object Configuringyoursystem1: TMenuItem
       Caption = 'Configuring your system'
@@ -1469,24 +1459,9 @@ object AvroMainForm1: TAvroMainForm1
           ImageIndex = 0
           OnClick = FreeBanglaFonts1Click
         end
-        object AvroConverter2: TMenuItem
-          Caption = 'Avro Converter...'
-          ImageIndex = 2
-          Visible = False
-        end
         object UsefultoolsforBangla2: TMenuItem
           Caption = 'Useful tools for Bangla...'
           OnClick = UsefultoolsforBangla1Click
-        end
-        object Downloadmoreskins2: TMenuItem
-          Caption = 'Download more skins...'
-          ImageIndex = 4
-          OnClick = Downloadmoreskins1Click
-        end
-        object Downloadmorekeyboardlayouts2: TMenuItem
-          Caption = 'Download more keyboard layouts...'
-          ImageIndex = 3
-          OnClick = Downloadmorekeyboardlayouts1Click
         end
       end
       object AvroKeyboardontheweb2: TMenuItem
@@ -1505,7 +1480,7 @@ object AvroMainForm1: TAvroMainForm1
         OnClick = wwwOmicronLabcom1Click
       end
       object UserForum2: TMenuItem
-        Caption = 'User Forum'
+        Caption = 'Report an issue'
         ImageIndex = 10
         OnClick = UserForum1Click
       end
@@ -1641,7 +1616,7 @@ object AvroMainForm1: TAvroMainForm1
         OnClick = Moredocumentsontheweb1Click
       end
       object FreeOnlineSupport2: TMenuItem
-        Caption = 'Free Online Support...'
+        Caption = 'Report an issue'
         ImageIndex = 10
         OnClick = UserForum1Click
       end
@@ -1822,8 +1797,8 @@ object AvroMainForm1: TAvroMainForm1
   object Popup_Tray: TPopupMenu
     AutoHotkeys = maManual
     Images = ImageList1
-    Left = 304
-    Top = 232
+    Left = 316
+    Top = 220
     object ogglekeyboardmode2: TMenuItem
       Caption = 'Toggle keyboard mode'
       ImageIndex = 12
@@ -2040,24 +2015,9 @@ object AvroMainForm1: TAvroMainForm1
           ImageIndex = 0
           OnClick = FreeBanglaFonts1Click
         end
-        object AvroConverter3: TMenuItem
-          Caption = 'Avro Converter...'
-          ImageIndex = 2
-          Visible = False
-        end
         object UsefultoolsforBangla3: TMenuItem
           Caption = 'Useful tools for Bangla...'
           OnClick = UsefultoolsforBangla1Click
-        end
-        object Downloadmoreskins3: TMenuItem
-          Caption = 'Download more skins...'
-          ImageIndex = 4
-          OnClick = Downloadmoreskins1Click
-        end
-        object Downloadmorekeyboardlayouts3: TMenuItem
-          Caption = 'Download more keyboard layouts...'
-          ImageIndex = 3
-          OnClick = Downloadmorekeyboardlayouts1Click
         end
       end
       object AvroKeyboardontheweb3: TMenuItem
@@ -2076,7 +2036,7 @@ object AvroMainForm1: TAvroMainForm1
         OnClick = wwwOmicronLabcom1Click
       end
       object UserForum3: TMenuItem
-        Caption = 'User Forum'
+        Caption = 'Report an issue'
         ImageIndex = 10
         OnClick = UserForum1Click
       end
@@ -2204,7 +2164,7 @@ object AvroMainForm1: TAvroMainForm1
         OnClick = Moredocumentsontheweb1Click
       end
       object FreeOnlineSupport3: TMenuItem
-        Caption = 'Free Online Support...'
+        Caption = 'Report an issue'
         ImageIndex = 10
         OnClick = UserForum1Click
       end
