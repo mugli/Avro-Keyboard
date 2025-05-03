@@ -49,11 +49,10 @@ Function SearchPhonetic_Spell(SearchIn, SearchStr: String;
 Var
   theRegex: TRegex;
   theMatch: TMatch;
-  theLocale: ansistring;
 
   I: Integer;
   mSearchIn: String;
-  AnsiSearchStr: ansistring;
+  WideSearchStr: String;
 
   StartCounter, EndCounter: Integer;
   TotalSearch: Integer; { For diagnosis purpose }
@@ -64,11 +63,9 @@ Begin
 
   TotalSearch := 0;
 
-  AnsiSearchStr := '^' + utf8encode(SearchStr) + '$';
+  WideSearchStr := '^' + SearchStr + '$';
 
-  theLocale := 'C';
-
-  theRegex := TRegex.Create(AnsiSearchStr);
+  theRegex := TRegex.Create(WideSearchStr);
 
   mSearchIn := LeftStr(LowerCase(SearchIn), 1);
 
@@ -88,7 +85,7 @@ Begin
       theMatch := theRegex.Match(W_A[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_A[I]));
+        wList.Add(W_A[I]);
       End;
     End;
   End;
@@ -108,7 +105,7 @@ Begin
       theMatch := theRegex.Match(W_AA[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_AA[I]));
+        wList.Add(W_AA[I]);
       End;
     End;
   End;
@@ -129,7 +126,7 @@ Begin
       theMatch := theRegex.Match(W_I[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_I[I]));
+        wList.Add(W_I[I]);
       End;
     End;
   End;
@@ -149,7 +146,7 @@ Begin
       theMatch := theRegex.Match(W_II[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_II[I]));
+        wList.Add(W_II[I]);
       End;
     End;
   End;
@@ -169,7 +166,7 @@ Begin
       theMatch := theRegex.Match(W_U[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_U[I]));
+        wList.Add(W_U[I]);
       End;
     End;
   End;
@@ -189,7 +186,7 @@ Begin
       theMatch := theRegex.Match(W_UU[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_UU[I]));
+        wList.Add(W_UU[I]);
       End;
     End;
   End;
@@ -209,7 +206,7 @@ Begin
       theMatch := theRegex.Match(W_RRI[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_RRI[I]));
+        wList.Add(W_RRI[I]);
       End;
     End;
   End;
@@ -231,7 +228,7 @@ Begin
       theMatch := theRegex.Match(W_E[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_E[I]));
+        wList.Add(W_E[I]);
       End;
     End;
   End;
@@ -252,7 +249,7 @@ Begin
       theMatch := theRegex.Match(W_OI[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_OI[I]));
+        wList.Add(W_OI[I]);
       End;
     End;
   End;
@@ -274,7 +271,7 @@ Begin
       theMatch := theRegex.Match(W_O[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_O[I]));
+        wList.Add(W_O[I]);
       End;
     End;
   End;
@@ -295,7 +292,7 @@ Begin
       theMatch := theRegex.Match(W_OU[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_OU[I]));
+        wList.Add(W_OU[I]);
       End;
     End;
   End;
@@ -315,7 +312,7 @@ Begin
       theMatch := theRegex.Match(W_B[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_B[I]));
+        wList.Add(W_B[I]);
       End;
     End;
   End;
@@ -335,7 +332,7 @@ Begin
       theMatch := theRegex.Match(W_BH[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_BH[I]));
+        wList.Add(W_BH[I]);
       End;
     End;
   End;
@@ -355,7 +352,7 @@ Begin
       theMatch := theRegex.Match(W_C[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_C[I]));
+        wList.Add(W_C[I]);
       End;
     End;
   End;
@@ -375,7 +372,7 @@ Begin
       theMatch := theRegex.Match(W_CH[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_CH[I]));
+        wList.Add(W_CH[I]);
       End;
     End;
   End;
@@ -395,7 +392,7 @@ Begin
       theMatch := theRegex.Match(W_D[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_D[I]));
+        wList.Add(W_D[I]);
       End;
     End;
   End;
@@ -415,7 +412,7 @@ Begin
       theMatch := theRegex.Match(W_Dh[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_Dh[I]));
+        wList.Add(W_Dh[I]);
       End;
     End;
   End;
@@ -435,7 +432,7 @@ Begin
       theMatch := theRegex.Match(W_Dd[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_Dd[I]));
+        wList.Add(W_Dd[I]);
       End;
     End;
   End;
@@ -455,7 +452,7 @@ Begin
       theMatch := theRegex.Match(W_Ddh[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_Ddh[I]));
+        wList.Add(W_Ddh[I]);
       End;
     End;
   End;
@@ -475,7 +472,7 @@ Begin
       theMatch := theRegex.Match(W_G[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_G[I]));
+        wList.Add(W_G[I]);
       End;
     End;
   End;
@@ -495,7 +492,7 @@ Begin
       theMatch := theRegex.Match(W_Gh[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_Gh[I]));
+        wList.Add(W_Gh[I]);
       End;
     End;
   End;
@@ -516,7 +513,7 @@ Begin
       theMatch := theRegex.Match(W_H[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_H[I]));
+        wList.Add(W_H[I]);
       End;
     End;
   End;
@@ -537,7 +534,7 @@ Begin
       theMatch := theRegex.Match(W_J[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_J[I]));
+        wList.Add(W_J[I]);
       End;
     End;
   End;
@@ -557,7 +554,7 @@ Begin
       theMatch := theRegex.Match(W_Jh[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_Jh[I]));
+        wList.Add(W_Jh[I]);
       End;
     End;
   End;
@@ -578,7 +575,7 @@ Begin
       theMatch := theRegex.Match(W_K[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_K[I]));
+        wList.Add(W_K[I]);
       End;
     End;
   End;
@@ -598,7 +595,7 @@ Begin
       theMatch := theRegex.Match(W_Kh[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_Kh[I]));
+        wList.Add(W_Kh[I]);
       End;
     End;
   End;
@@ -618,7 +615,7 @@ Begin
       theMatch := theRegex.Match(W_L[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_L[I]));
+        wList.Add(W_L[I]);
       End;
     End;
   End;
@@ -638,7 +635,7 @@ Begin
       theMatch := theRegex.Match(W_M[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_M[I]));
+        wList.Add(W_M[I]);
       End;
     End;
   End;
@@ -658,7 +655,7 @@ Begin
       theMatch := theRegex.Match(W_N[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_N[I]));
+        wList.Add(W_N[I]);
       End;
     End;
   End;
@@ -678,7 +675,7 @@ Begin
       theMatch := theRegex.Match(W_NGA[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_NGA[I]));
+        wList.Add(W_NGA[I]);
       End;
     End;
   End;
@@ -698,7 +695,7 @@ Begin
       theMatch := theRegex.Match(W_NYA[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_NYA[I]));
+        wList.Add(W_NYA[I]);
       End;
     End;
   End;
@@ -718,7 +715,7 @@ Begin
       theMatch := theRegex.Match(W_Nn[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_Nn[I]));
+        wList.Add(W_Nn[I]);
       End;
     End;
   End;
@@ -738,7 +735,7 @@ Begin
       theMatch := theRegex.Match(W_P[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_P[I]));
+        wList.Add(W_P[I]);
       End;
     End;
   End;
@@ -758,7 +755,7 @@ Begin
       theMatch := theRegex.Match(W_Ph[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_Ph[I]));
+        wList.Add(W_Ph[I]);
       End;
     End;
   End;
@@ -778,7 +775,7 @@ Begin
       theMatch := theRegex.Match(W_R[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_R[I]));
+        wList.Add(W_R[I]);
       End;
     End;
   End;
@@ -798,7 +795,7 @@ Begin
       theMatch := theRegex.Match(W_Rr[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_Rr[I]));
+        wList.Add(W_Rr[I]);
       End;
     End;
   End;
@@ -818,7 +815,7 @@ Begin
       theMatch := theRegex.Match(W_Rrh[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_Rrh[I]));
+        wList.Add(W_Rrh[I]);
       End;
     End;
   End;
@@ -838,7 +835,7 @@ Begin
       theMatch := theRegex.Match(W_S[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_S[I]));
+        wList.Add(W_S[I]);
       End;
     End;
   End;
@@ -858,7 +855,7 @@ Begin
       theMatch := theRegex.Match(W_Sh[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_Sh[I]));
+        wList.Add(W_Sh[I]);
       End;
     End;
   End;
@@ -878,7 +875,7 @@ Begin
       theMatch := theRegex.Match(W_Ss[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_Ss[I]));
+        wList.Add(W_Ss[I]);
       End;
     End;
   End;
@@ -898,7 +895,7 @@ Begin
       theMatch := theRegex.Match(W_T[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_T[I]));
+        wList.Add(W_T[I]);
       End;
     End;
   End;
@@ -918,7 +915,7 @@ Begin
       theMatch := theRegex.Match(W_Th[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_Th[I]));
+        wList.Add(W_Th[I]);
       End;
     End;
   End;
@@ -938,7 +935,7 @@ Begin
       theMatch := theRegex.Match(W_Tt[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_Tt[I]));
+        wList.Add(W_Tt[I]);
       End;
     End;
   End;
@@ -958,7 +955,7 @@ Begin
       theMatch := theRegex.Match(W_Tth[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_Tth[I]));
+        wList.Add(W_Tth[I]);
       End;
     End;
   End;
@@ -980,7 +977,7 @@ Begin
       theMatch := theRegex.Match(W_Y[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_Y[I]));
+        wList.Add(W_Y[I]);
       End;
     End;
   End;
@@ -1000,7 +997,7 @@ Begin
       theMatch := theRegex.Match(W_Z[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_Z[I]));
+        wList.Add(W_Z[I]);
       End;
     End;
   End;
@@ -1020,7 +1017,7 @@ Begin
       theMatch := theRegex.Match(W_Khandatta[I]);
       If theMatch.Success Then
       Begin
-        wList.Add(UTF8ToString(W_Khandatta[I]));
+        wList.Add(W_Khandatta[I]);
       End;
     End;
   End;
@@ -1035,7 +1032,7 @@ Begin
 
   For I := StartCounter To EndCounter Do
   Begin
-    theMatch := theRegex.Match(utf8encode(SpellCustomDict[I]));
+    theMatch := theRegex.Match(SpellCustomDict[I]);
     If theMatch.Success Then
     Begin
       wList.Add(SpellCustomDict[I]);

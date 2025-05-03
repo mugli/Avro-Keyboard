@@ -122,7 +122,7 @@ Var
   Begin
     For J := 0 To DB.Count - 1 Do
     Begin
-      StringData := UTF8ToString(DB[J]);
+      StringData := DB[J];
       If EditDistance(Source, StringData) <= Max_Tolerance Then
         SList.Add(StringData);
     End;

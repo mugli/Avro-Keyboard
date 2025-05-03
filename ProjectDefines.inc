@@ -1,3 +1,3 @@
-{.$Define BetaVersion}
+{$Define BetaVersion}
 {.$Define PortableOn}
 {$Define DebugLog}

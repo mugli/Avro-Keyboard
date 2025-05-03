@@ -28,73 +28,63 @@
 {$INCLUDE ../../ProjectDefines.inc}
 { COMPLETE TRANSFERING! }
 
-Unit clsRegistry_XMLSetting;
+unit clsRegistry_XMLSetting;
 
-Interface
+interface
 
-Uses
-  classes,
-  sysutils,
-  StrUtils,
-  XMLIntf, XMLDoc,
-  system.Variants,
-  Forms,
-  Registry,
+uses
+  classes, sysutils, StrUtils, XMLIntf, XMLDoc, system.Variants, Forms, Registry,
   uFileFolderHandling;
 
 // Custom Registry class
-Type
-  TMyRegistry = Class(TRegistry)
-  Public
-    Function ReadStringDef(Const Name: String; DefaultVal: String = ''): String;
-    Function ReadDateDef(Const Name: String; DefaultVal: TDateTime): TDateTime;
-  End;
+type
+  TMyRegistry = class(TRegistry)
+  public
+    function ReadStringDef(const Name: string; DefaultVal: string = ''): string;
+    function ReadDateDef(const Name: string; DefaultVal: TDateTime): TDateTime;
+  end;
 
   // Skeleton of Class TXMLSetting
-Type
-  TXMLSetting = Class
-  Private
+type
+  TXMLSetting = class
+  private
     XML: IXMLDocument;
     child: IXMLNode;
-  Public
-    Constructor Create; // Initializer
-    Destructor Destroy; Override; // Destructor
+  public
+    constructor Create; // Initializer
+    destructor Destroy; override; // Destructor
 
-    Function LoadXMLData(): Boolean;
-    Function GetValue(Const ValueName: UTF8String; DefaultValue: String = '')
-      : String; Overload;
-    Function GetValue(Const ValueName: UTF8String; DefaultValue: TDateTime)
-      : TDateTime; Overload;
-    Procedure CreateNewXMLData;
-    Procedure SetValue(Const ValueName: UTF8String;
-      Const ValueData: String); Overload;
-    Procedure SetValue(Const ValueName: UTF8String;
-      Const ValueData: TDateTime); Overload;
-    Procedure SaveXMLData;
+    function LoadXMLData(): Boolean;
+    function GetValue(const ValueName: UTF8String; DefaultValue: string = ''): string; overload;
+    function GetValue(const ValueName: UTF8String; DefaultValue: TDateTime): TDateTime; overload;
+    procedure CreateNewXMLData;
+    procedure SetValue(const ValueName: UTF8String; const ValueData: string); overload;
+    procedure SetValue(const ValueName: UTF8String; const ValueData: TDateTime); overload;
+    procedure SaveXMLData;
 
-  End;
+  end;
 
-Implementation
+implementation
 
 { =============================================================================== }
 
 { TXMLSetting }
 
-Constructor TXMLSetting.Create;
-Begin
-  Inherited;
+constructor TXMLSetting.Create;
+begin
+  inherited;
 
   XML := TXMLDocument.Create(nil);
   XML.Active := true;
   XML.Encoding := 'UTF-8';
   XML.AddChild('Settings');
 
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TXMLSetting.CreateNewXMLData;
-Begin
+procedure TXMLSetting.CreateNewXMLData;
+begin
   if XML <> nil then
     XML := nil;
 
@@ -103,94 +93,91 @@ Begin
 
   XML.Encoding := 'UTF-8';
   XML.AddChild('Settings');
-End;
+end;
 
 { =============================================================================== }
 
-Destructor TXMLSetting.Destroy;
-Begin
+destructor TXMLSetting.Destroy;
+begin
   XML.Active := false;
   XML := nil;
-  Inherited;
-End;
+  inherited;
+end;
 
 { =============================================================================== }
 
-Function TXMLSetting.GetValue(Const ValueName: UTF8String;
-  DefaultValue: TDateTime): TDateTime;
-Begin
-  Try
+function TXMLSetting.GetValue(const ValueName: UTF8String; DefaultValue: TDateTime): TDateTime;
+begin
+  try
     child := XML.DocumentElement.ChildNodes.FindNode(ValueName);
     if assigned(child) then
       Result := VarToDateTime((child.ChildNodes.Nodes[0].NodeValue))
     else
       Result := DefaultValue;
 
-  Except
-    On E: Exception Do
+  except
+    on E: Exception do
       Result := DefaultValue;
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Function TXMLSetting.GetValue(Const ValueName: UTF8String;
-  DefaultValue: String): String;
-Begin
-  Try
+function TXMLSetting.GetValue(const ValueName: UTF8String; DefaultValue: string): string;
+begin
+  try
 
     child := XML.DocumentElement.ChildNodes.FindNode(ValueName);
 
     if assigned(child) then
     begin
-      If Length(Trim(child.ChildNodes.Nodes[0].NodeValue)) <= 0 Then
+      if Length(Trim(child.ChildNodes.Nodes[0].NodeValue)) <= 0 then
         Result := DefaultValue
-      Else
+      else
         Result := VarToStr(Trim(child.ChildNodes.Nodes[0].NodeValue));
     end
     else
       Result := DefaultValue
-  Except
-    On E: Exception Do
+  except
+    on E: Exception do
       Result := DefaultValue;
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 {$HINTS Off}
 
-Function TXMLSetting.LoadXMLData(): Boolean;
-Var
-  SettingFileName: String;
-Begin
+function TXMLSetting.LoadXMLData(): Boolean;
+var
+  SettingFileName: string;
+begin
   Result := false;
 {$IFNDEF SpellCheckerDll}
   SettingFileName := 'Spell Settings.xml';
 {$ELSE}
   SettingFileName := 'Spell dll Settings.xml';
 {$ENDIF}
-  Try
-    If FileExists(ExtractFilePath(Application.ExeName) + SettingFileName)
-      = true Then
-    Begin
+  try
+    if FileExists(ExtractFilePath(Application.ExeName) + SettingFileName) = true then
+    begin
       XML.LoadFromFile(ExtractFilePath(Application.ExeName) + SettingFileName);
       Result := true;
-    End
-    Else
+    end
+    else
       Result := false;
-  Except
-    On E: Exception Do
+  except
+    on E: Exception do
       Result := false;
-  End;
-End;
+  end;
+end;
 
 {$HINTS On}
 { =============================================================================== }
 
-Procedure TXMLSetting.SaveXMLData;
-Var
-  SettingFileName: String;
-Begin
+procedure TXMLSetting.SaveXMLData;
+var
+  SettingFileName: string;
+begin
   // XML.XmlFormat := xfReadable;
 {$IFNDEF SpellCheckerDll}
   SettingFileName := 'Spell Settings.xml';
@@ -199,42 +186,40 @@ Begin
 {$ENDIF}
   XML.XML.Text := XMLDoc.FormatXMLData(XML.XML.Text);
   XML.Active := true;
-  Try
+  try
     XML.SaveToFile(GetAvroDataDir + SettingFileName);
-  Except
-    On E: Exception Do
-    Begin
+  except
+    on E: Exception do
+    begin
       // Nothing
-    End;
-  End;
-End;
+    end;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TXMLSetting.SetValue(Const ValueName: UTF8String;
-  Const ValueData: TDateTime);
-Var
+procedure TXMLSetting.SetValue(const ValueName: UTF8String; const ValueData: TDateTime);
+var
   CdataChild: IXMLNode;
-Begin
+begin
   child := XML.DocumentElement.AddChild(ValueName);
   CdataChild := XML.CreateNode(DateTimeToStr(ValueData), ntCDATA);
   XML.DocumentElement.ChildNodes.Nodes[ValueName].ChildNodes.Add(CdataChild);
 
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TXMLSetting.SetValue(Const ValueName: UTF8String;
-  const ValueData: String);
-Var
+procedure TXMLSetting.SetValue(const ValueName: UTF8String; const ValueData: string);
+var
   CdataChild: IXMLNode;
-Begin
+begin
 
   child := XML.DocumentElement.AddChild(ValueName);
   CdataChild := XML.CreateNode(ValueData, ntCDATA);
   XML.DocumentElement.ChildNodes.Nodes[ValueName].ChildNodes.Add(CdataChild);
 
-End;
+end;
 
 { =============================================================================== }
 { =============================================================================== }
@@ -244,43 +229,42 @@ End;
 
 { =============================================================================== }
 
-Function TMyRegistry.ReadDateDef(Const Name: String; DefaultVal: TDateTime)
-  : TDateTime;
-Begin
-  Try
-    If ValueExists(Name) = true Then
-    Begin
+function TMyRegistry.ReadDateDef(const Name: string; DefaultVal: TDateTime): TDateTime;
+begin
+  try
+    if ValueExists(Name) = true then
+    begin
       Result := ReadDateTime(Name);
-    End
-    Else
-    Begin
+    end
+    else
+    begin
       Result := DefaultVal;
-    End;
-  Except
-    On E: Exception Do
+    end;
+  except
+    on E: Exception do
       Result := DefaultVal;
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Function TMyRegistry.ReadStringDef(Const Name: String;
-  DefaultVal: String = ''): String;
-Begin
-  Try
-    If ValueExists(Name) = true Then
-    Begin
+function TMyRegistry.ReadStringDef(const Name: string; DefaultVal: string = ''): string;
+begin
+  try
+    if ValueExists(Name) = true then
+    begin
       Result := ReadString(Name);
-    End
-    Else
-    Begin
+    end
+    else
+    begin
       Result := DefaultVal;
-    End;
-  Except
-    On E: Exception Do
-      If Trim(Result) = '' Then
+    end;
+  except
+    on E: Exception do
+      if Trim(Result) = '' then
         Result := DefaultVal;
-  End;
-End;
+  end;
+end;
 
-End.
+end.
+
