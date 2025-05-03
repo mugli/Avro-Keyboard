@@ -1,4 +1,4 @@
-// Copied from http://www.merriampark.com/lddelphi.htm
+// Copied from https://www.merriampark.com/lddelphi.htm
 
 unit Levenshtein;
 

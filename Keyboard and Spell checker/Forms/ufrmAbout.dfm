@@ -6222,7 +6222,7 @@ object frmAbout: TfrmAbout
 
         '     compliance with the License. You may obtain a copy of the L' +
         'icense at'
-      '     http://www.mozilla.org/MPL/'
+      '     https://www.mozilla.org/MPL/'
       ''
 
         '     Software distributed under the License is distributed on an' +
@@ -6243,7 +6243,7 @@ object frmAbout: TfrmAbout
       '     <mhasan@omicronlab.com>.'
       ''
 
-        '     Copyright (C) OmicronLab <http://www.omicronlab.com>. All R' +
+        '     Copyright (C) OmicronLab <https://www.omicronlab.com>. All R' +
         'ights Reserved.'
       ''
       ''
@@ -6289,7 +6289,7 @@ object frmAbout: TfrmAbout
       'Font Fixer:'
       '________________________'
       'M.M. Rifat-Un-Nabi'
-      '(http://www.vistaarc.com/)'
+      '(https://www.vistaarc.com/)'
       ''
       ''
       ''
@@ -6302,7 +6302,7 @@ object frmAbout: TfrmAbout
       'Support and moderation team:'
       '________________________'
       'Nipon Haque '
-      '(http://www.niponwave.com/)'
+      '(https://www.niponwave.com/)'
       ''
       'Shabab Mustafa'
       ''
@@ -6312,7 +6312,7 @@ object frmAbout: TfrmAbout
       'dictionary editor):'
       '________________________'
       'Raiyan Kamal'
-      '(http://www.muktosoft.com/)'
+      '(https://www.muktosoft.com/)'
       ''
       ''
       ''
@@ -6354,7 +6354,7 @@ object frmAbout: TfrmAbout
       'Splash screen:'
       '________________________'
       'Mohammad Mustafizur Rahman'
-      '(http://www.flickr.com/photos/rahmanmm/)'
+      '(https://www.flickr.com/photos/rahmanmm/)'
       ''
       ''
       ''
@@ -6376,7 +6376,7 @@ object frmAbout: TfrmAbout
       ''
       'Unicode is a trademark of '
       'Unicode, Inc'
-      'http://www.unicode.org'
+      'https://www.unicode.org'
       ''
       ''
       ''

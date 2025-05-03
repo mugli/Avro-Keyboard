@@ -4,7 +4,7 @@
   The contents of this file are subject to the Mozilla Public License
   Version 1.1 (the "License"); you may not use this file except in
   compliance with the License. You may obtain a copy of the License at
-  http://www.mozilla.org/MPL/
+  https://www.mozilla.org/MPL/
 
   Software distributed under the License is distributed on an "AS IS"
   basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
@@ -16,7 +16,7 @@
   The Initial Developer of the Original Code is
   Mehdi Hasan Khan <mhasan@omicronlab.com>.
 
-  Copyright (C) OmicronLab <http://www.omicronlab.com>. All Rights Reserved.
+  Copyright (C) OmicronLab <https://www.omicronlab.com>. All Rights Reserved.
 
 
   Contributor(s): ______________________________________.
@@ -434,12 +434,12 @@ Begin
   fConvertedText := ReplaceStr(fConvertedText, zwj, '');
   fConvertedText := ReplaceStr(fConvertedText, zwnj, '');
   // Warning: Hardcoded conversion
-  fConvertedText := ReplaceStr(fConvertedText, 'nè', 'nœ');
-  fConvertedText := ReplaceStr(fConvertedText, 'Kœ', 'Kè');
-  fConvertedText := ReplaceStr(fConvertedText, '¶y', '¶z');
+  fConvertedText := ReplaceStr(fConvertedText, 'nï¿½', 'nï¿½');
+  fConvertedText := ReplaceStr(fConvertedText, 'Kï¿½', 'Kï¿½');
+  fConvertedText := ReplaceStr(fConvertedText, 'ï¿½y', 'ï¿½z');
   fConvertedText := ReplaceStr(fConvertedText, 'Rz', 'Ry');
-  fConvertedText := ReplaceStr(fConvertedText, 'R‚', 'R~');
-  fConvertedText := ReplaceStr(fConvertedText, 'R…', 'R„');
+  fConvertedText := ReplaceStr(fConvertedText, 'Rï¿½', 'R~');
+  fConvertedText := ReplaceStr(fConvertedText, 'Rï¿½', 'Rï¿½');
 End;
 
 Procedure TUnicodeToBijoy2000.ReplaceFullForms;
@@ -749,8 +749,8 @@ Begin
 
   fConvertedText := wSTmp;
 
-  fConvertedText := ReplaceStr(fConvertedText, String('“'), A_StartDoubleQuote);
-  fConvertedText := ReplaceStr(fConvertedText, String('”'), A_EndDoubleQuote);
+  fConvertedText := ReplaceStr(fConvertedText, String('ï¿½'), A_StartDoubleQuote);
+  fConvertedText := ReplaceStr(fConvertedText, String('ï¿½'), A_EndDoubleQuote);
 
 End;
 

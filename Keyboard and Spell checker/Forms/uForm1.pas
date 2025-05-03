@@ -4,7 +4,7 @@
   The contents of this file are subject to the Mozilla Public License
   Version 1.1 (the "License"); you may not use this file except in
   compliance with the License. You may obtain a copy of the License at
-  http://www.mozilla.org/MPL/
+  https://www.mozilla.org/MPL/
 
   Software distributed under the License is distributed on an "AS IS"
   basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
@@ -16,7 +16,7 @@
   The Initial Developer of the Original Code is
   Mehdi Hasan Khan (mhasan@omicronlab.com).
 
-  Copyright (C) OmicronLab (http://www.omicronlab.com). All Rights Reserved.
+  Copyright (C) OmicronLab (https://www.omicronlab.com). All Rights Reserved.
 
 
   Contributor(s): ______________________________________.
@@ -494,12 +494,12 @@ End;
 
 Procedure TAvroMainForm1.AvroKeyboardonFacebook1Click(Sender: TObject);
 Begin
-  Execute_Something('http://www.omicronlab.com/go.php?id=39');
+  Execute_Something('https://www.omicronlab.com/go.php?id=39');
 End;
 
 Procedure TAvroMainForm1.AvroKeyboardontheweb1Click(Sender: TObject);
 Begin
-  Execute_Something('http://www.omicronlab.com/go.php?id=1');
+  Execute_Something('https://www.omicronlab.com/go.php?id=1');
 End;
 
 Procedure TAvroMainForm1.AvroMouseClicknType2Click(Sender: TObject);
@@ -725,7 +725,7 @@ End;
 
 Procedure TAvroMainForm1.FreeBanglaFonts1Click(Sender: TObject);
 Begin
-  Execute_Something('http://www.omicronlab.com/go.php?id=4');
+  Execute_Something('https://www.omicronlab.com/go.php?id=4');
 End;
 
 Procedure TAvroMainForm1.FrequentlyAskedQuestionsFAQ1Click(Sender: TObject);
@@ -737,7 +737,7 @@ End;
 
 Procedure TAvroMainForm1.GetAcrobatReader1Click(Sender: TObject);
 Begin
-  Execute_Something('http://www.omicronlab.com/go.php?id=13');
+  Execute_Something('https://www.omicronlab.com/go.php?id=13');
 End;
 
 Function TAvroMainForm1.GetMyCurrentKeyboardMode: enumMode;
@@ -1222,7 +1222,7 @@ End;
 
 Procedure TAvroMainForm1.Moredocumentsontheweb1Click(Sender: TObject);
 Begin
-  Execute_Something('http://www.omicronlab.com/go.php?id=12');
+  Execute_Something('https://www.omicronlab.com/go.php?id=12');
 End;
 
 Procedure TAvroMainForm1.ogglekeyboardmode2Click(Sender: TObject);
@@ -1234,7 +1234,7 @@ End;
 
 Procedure TAvroMainForm1.OmicronLabonTwitter1Click(Sender: TObject);
 Begin
-  Execute_Something('http://www.omicronlab.com/go.php?id=40');
+  Execute_Something('https://www.omicronlab.com/go.php?id=40');
 End;
 
 { =============================================================================== }
@@ -1248,14 +1248,14 @@ Begin
         Execute_Something(ExtractFilePath(Application.ExeName) +
           'Before You Start.pdf')
       Else
-        Execute_Something('http://www.omicronlab.com/go.php?id=' +
+        Execute_Something('https://www.omicronlab.com/go.php?id=' +
           IntToStr(HelpID));
 
     24:
       If FileExists(ExtractFilePath(Application.ExeName) + 'Overview.pdf') Then
         Execute_Something(ExtractFilePath(Application.ExeName) + 'Overview.pdf')
       Else
-        Execute_Something('http://www.omicronlab.com/go.php?id=' +
+        Execute_Something('https://www.omicronlab.com/go.php?id=' +
           IntToStr(HelpID));
 
     25:
@@ -1264,7 +1264,7 @@ Begin
         Execute_Something(ExtractFilePath(Application.ExeName) +
           'Customizing Avro Keyboard.pdf')
       Else
-        Execute_Something('http://www.omicronlab.com/go.php?id=' +
+        Execute_Something('https://www.omicronlab.com/go.php?id=' +
           IntToStr(HelpID));
 
     26:
@@ -1273,7 +1273,7 @@ Begin
         Execute_Something(ExtractFilePath(Application.ExeName) +
           'Bangla Typing with Avro Phonetic.pdf')
       Else
-        Execute_Something('http://www.omicronlab.com/go.php?id=' +
+        Execute_Something('https://www.omicronlab.com/go.php?id=' +
           IntToStr(HelpID));
 
     27:
@@ -1282,7 +1282,7 @@ Begin
         Execute_Something(ExtractFilePath(Application.ExeName) +
           'Bangla Typing with Fixed Keyboard Layouts.pdf')
       Else
-        Execute_Something('http://www.omicronlab.com/go.php?id=' +
+        Execute_Something('https://www.omicronlab.com/go.php?id=' +
           IntToStr(HelpID));
 
     28:
@@ -1291,14 +1291,14 @@ Begin
         Execute_Something(ExtractFilePath(Application.ExeName) +
           'Bangla Typing with Avro Mouse.pdf')
       Else
-        Execute_Something('http://www.omicronlab.com/go.php?id=' +
+        Execute_Something('https://www.omicronlab.com/go.php?id=' +
           IntToStr(HelpID));
 
     29:
       If FileExists(ExtractFilePath(Application.ExeName) + 'faq.pdf') Then
         Execute_Something(ExtractFilePath(Application.ExeName) + 'faq.pdf')
       Else
-        Execute_Something('http://www.omicronlab.com/go.php?id=' +
+        Execute_Something('https://www.omicronlab.com/go.php?id=' +
           IntToStr(HelpID));
 
     35:
@@ -1307,7 +1307,7 @@ Begin
         Execute_Something(ExtractFilePath(Application.ExeName) +
           'Editing Keyboard Layout.pdf')
       Else
-        Execute_Something('http://www.omicronlab.com/go.php?id=' +
+        Execute_Something('https://www.omicronlab.com/go.php?id=' +
           IntToStr(HelpID));
   End;
 End;
@@ -1364,7 +1364,7 @@ End;
 
 Procedure TAvroMainForm1.PortableAvroKeyboardontheweb1Click(Sender: TObject);
 Begin
-  Execute_Something('http://www.omicronlab.com/go.php?id=22');
+  Execute_Something('https://www.omicronlab.com/go.php?id=22');
 End;
 
 { =============================================================================== }
@@ -1939,7 +1939,7 @@ End;
 
 Procedure TAvroMainForm1.UsefultoolsforBangla1Click(Sender: TObject);
 Begin
-  Execute_Something('http://www.omicronlab.com/go.php?id=15');
+  Execute_Something('https://www.omicronlab.com/go.php?id=15');
 End;
 
 Procedure TAvroMainForm1.UseModernStyleTyping1Click(Sender: TObject);
@@ -2093,7 +2093,7 @@ End;
 
 Procedure TAvroMainForm1.wwwOmicronLabcom1Click(Sender: TObject);
 Begin
-  Execute_Something('http://www.omicronlab.com/go.php?id=2');
+  Execute_Something('https://www.omicronlab.com/go.php?id=2');
 End;
 
 { =============================================================================== }
