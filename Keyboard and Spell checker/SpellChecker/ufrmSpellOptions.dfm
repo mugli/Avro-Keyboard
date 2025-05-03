@@ -1,14 +1,18 @@
 object frmSpellOptions: TfrmSpellOptions
   Left = 0
   Top = 0
+  Margins.Left = 5
+  Margins.Top = 5
+  Margins.Right = 5
+  Margins.Bottom = 5
   BorderStyle = bsDialog
   Caption = 'Spell checker options'
-  ClientHeight = 216
-  ClientWidth = 349
+  ClientHeight = 324
+  ClientWidth = 533
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -17
   Font.Name = 'Tahoma'
   Font.Style = []
   Icon.Data = {
@@ -51,62 +55,91 @@ object frmSpellOptions: TfrmSpellOptions
   Position = poDesktopCenter
   OnClose = FormClose
   OnCreate = FormCreate
-  TextHeight = 13
+  PixelsPerInch = 144
+  TextHeight = 21
   object CheckIgnoreNumber: TCheckBox
-    Left = 28
-    Top = 23
-    Width = 289
-    Height = 17
+    Left = 42
+    Top = 35
+    Width = 434
+    Height = 25
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Ignore Words with Numbers'
     TabOrder = 0
   end
   object CheckIgnoreSingle: TCheckBox
-    Left = 28
-    Top = 92
-    Width = 289
-    Height = 17
+    Left = 42
+    Top = 138
+    Width = 434
+    Height = 26
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Ignore single characters'
     TabOrder = 1
   end
   object CheckBoxFullSuggestion: TCheckBox
-    Left = 28
-    Top = 135
-    Width = 289
-    Height = 17
+    Left = 42
+    Top = 203
+    Width = 434
+    Height = 25
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Always show full suggestion list'
     TabOrder = 2
   end
   object CheckIgnoreAncient: TCheckBox
-    Left = 28
-    Top = 46
-    Width = 289
-    Height = 17
+    Left = 42
+    Top = 69
+    Width = 434
+    Height = 26
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Ignore words with Ancient Bangla characters'
     TabOrder = 3
   end
   object CheckIgnoreAssamese: TCheckBox
-    Left = 28
-    Top = 69
-    Width = 289
-    Height = 17
+    Left = 42
+    Top = 104
+    Width = 434
+    Height = 25
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Ignore words with Assamese characters'
     TabOrder = 4
   end
   object ButtonOk: TButton
-    Left = 168
-    Top = 173
-    Width = 75
-    Height = 25
+    Left = 252
+    Top = 260
+    Width = 113
+    Height = 37
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Ok'
     Default = True
     TabOrder = 5
     OnClick = ButtonOkClick
   end
   object ButtonCancel: TButton
-    Left = 256
-    Top = 173
-    Width = 75
-    Height = 25
+    Left = 384
+    Top = 260
+    Width = 113
+    Height = 37
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Cancel = True
     Caption = 'Cancel'
     TabOrder = 6

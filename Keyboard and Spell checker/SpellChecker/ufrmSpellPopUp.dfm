@@ -1,15 +1,19 @@
 object frmSpellPopUp: TfrmSpellPopUp
   Left = 0
   Top = 0
+  Margins.Left = 5
+  Margins.Top = 5
+  Margins.Right = 5
+  Margins.Bottom = 5
   BorderIcons = []
   BorderStyle = bsSingle
   Caption = 'Avro Spell Check'
-  ClientHeight = 288
-  ClientWidth = 421
+  ClientHeight = 432
+  ClientWidth = 641
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -17
   Font.Name = 'Tahoma'
   Font.Style = []
   Icon.Data = {
@@ -52,120 +56,169 @@ object frmSpellPopUp: TfrmSpellPopUp
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
-  TextHeight = 13
+  PixelsPerInch = 144
+  TextHeight = 21
   object Label1: TLabel
-    Left = 8
-    Top = 8
-    Width = 113
-    Height = 13
+    Left = 12
+    Top = 12
+    Width = 173
+    Height = 21
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Not found in dictionary:'
   end
   object Label2: TLabel
-    Left = 8
-    Top = 68
-    Width = 130
-    Height = 13
+    Left = 12
+    Top = 102
+    Width = 203
+    Height = 21
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = '&Select from  Suggestion(s):'
   end
   object Label3: TLabel
-    Left = 8
-    Top = 226
-    Width = 60
-    Height = 13
+    Left = 12
+    Top = 339
+    Width = 93
+    Height = 21
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Change &to:'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
+    Font.Height = -17
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
   end
   object But_Cancel: TButton
-    Left = 304
-    Top = 249
-    Width = 109
-    Height = 25
+    Left = 456
+    Top = 374
+    Width = 164
+    Height = 37
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Cancel = True
     Caption = 'Close'
     TabOrder = 6
     OnClick = But_CancelClick
   end
   object But_Options: TButton
-    Left = 304
-    Top = 207
-    Width = 109
-    Height = 25
+    Left = 456
+    Top = 311
+    Width = 164
+    Height = 37
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Options...'
     TabOrder = 5
     OnClick = But_OptionsClick
   end
   object But_Ignore: TButton
-    Left = 304
-    Top = 8
-    Width = 109
-    Height = 25
+    Left = 456
+    Top = 12
+    Width = 164
+    Height = 38
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = '&Ignore once'
     TabOrder = 0
     OnClick = But_IgnoreClick
   end
   object But_IgnoreAll: TButton
-    Left = 304
-    Top = 35
-    Width = 109
-    Height = 25
+    Left = 456
+    Top = 53
+    Width = 164
+    Height = 37
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'I&gnore all'
     TabOrder = 1
     OnClick = But_IgnoreAllClick
   end
   object But_AddToDict: TButton
-    Left = 304
-    Top = 62
-    Width = 109
-    Height = 25
+    Left = 456
+    Top = 93
+    Width = 164
+    Height = 38
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = '&Add to dictionary'
     TabOrder = 2
     OnClick = But_AddToDictClick
   end
   object But_Change: TButton
-    Left = 304
-    Top = 115
-    Width = 109
-    Height = 25
+    Left = 456
+    Top = 173
+    Width = 164
+    Height = 37
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = '&Change once'
     Enabled = False
     TabOrder = 3
     OnClick = But_ChangeClick
   end
   object But_ChangeAll: TButton
-    Left = 304
-    Top = 142
-    Width = 109
-    Height = 25
+    Left = 456
+    Top = 213
+    Width = 164
+    Height = 38
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Change a&ll'
     Enabled = False
     TabOrder = 4
     OnClick = But_ChangeAllClick
   end
   object CheckLessPreffered: TCheckBox
-    Left = 115
-    Top = 209
-    Width = 172
-    Height = 17
+    Left = 143
+    Top = 314
+    Width = 291
+    Height = 25
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Always Show full suggestion list'
     TabOrder = 7
     OnClick = CheckLessPrefferedClick
   end
   object List: TListBox
-    Left = 8
-    Top = 87
-    Width = 281
-    Height = 116
-    Font.Charset = ANSI_CHARSET
+    Left = 12
+    Top = 131
+    Width = 422
+    Height = 174
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
+    Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -16
+    Font.Height = -24
     Font.Name = 'Siyam Rupali'
     Font.Style = []
-    ItemHeight = 27
+    ItemHeight = 37
     ParentFont = False
     TabOrder = 8
     OnClick = ListClick
@@ -173,14 +226,18 @@ object frmSpellPopUp: TfrmSpellPopUp
     OnKeyUp = ListKeyUp
   end
   object Edit_NotFound: TEdit
-    Left = 8
-    Top = 27
-    Width = 281
-    Height = 35
+    Left = 12
+    Top = 41
+    Width = 422
+    Height = 45
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     TabStop = False
-    Font.Charset = ANSI_CHARSET
+    Font.Charset = DEFAULT_CHARSET
     Font.Color = clRed
-    Font.Height = -16
+    Font.Height = -24
     Font.Name = 'Siyam Rupali'
     Font.Style = []
     ParentFont = False
@@ -188,13 +245,17 @@ object frmSpellPopUp: TfrmSpellPopUp
     TabOrder = 9
   end
   object Edit_ChangeTo: TEdit
-    Left = 8
-    Top = 245
-    Width = 281
-    Height = 35
-    Font.Charset = ANSI_CHARSET
+    Left = 12
+    Top = 368
+    Width = 422
+    Height = 45
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
+    Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -16
+    Font.Height = -24
     Font.Name = 'Siyam Rupali'
     Font.Style = [fsBold]
     ParentFont = False

@@ -38,7 +38,6 @@ uses
   uFileFolderHandling in '..\Units\uFileFolderHandling.pas',
   uDBase in '..\Units\uDBase.pas',
   clsSpellPhoneticSuggestionBuilder in 'clsSpellPhoneticSuggestionBuilder.pas',
-  Hashing in 'Hashing.pas',
   HashTable in 'HashTable.pas',
   Phonetic_RegExp_Constants_Spell in 'Phonetic_RegExp_Constants_Spell.pas',
   uCustomDictionary in 'uCustomDictionary.pas',
@@ -47,11 +46,11 @@ uses
   uSimilarSort_Spell in 'uSimilarSort_Spell.pas',
   uSpellEditDistanceSearch in 'uSpellEditDistanceSearch.pas',
   uRegistrySettings in 'uRegistrySettings.pas',
-  ufrmAbout in 'ufrmAbout.pas' {frmAbout} ,
+  ufrmAbout in 'ufrmAbout.pas' {frmAbout},
   clsRegistry_XMLSetting in 'clsRegistry_XMLSetting.pas',
   clsFileVersion in '..\Classes\clsFileVersion.pas',
-  ufrmSpellOptions in 'ufrmSpellOptions.pas' {frmSpellOptions} ,
-  ufrmSpellPopUp in 'ufrmSpellPopUp.pas' {frmSpellPopUp} ,
+  ufrmSpellOptions in 'ufrmSpellOptions.pas' {frmSpellOptions},
+  ufrmSpellPopUp in 'ufrmSpellPopUp.pas' {frmSpellPopUp},
   Forms,
   Classes;
 

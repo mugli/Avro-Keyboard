@@ -71,7 +71,6 @@ uses
   Levenshtein in 'Units\Levenshtein.pas',
   uSimilarSort in 'Units\uSimilarSort.pas',
   HashTable in 'SpellChecker\HashTable.pas',
-  Hashing in 'SpellChecker\Hashing.pas',
   clsSkinLayoutConverter in 'Classes\clsSkinLayoutConverter.pas',
   uCmdLineHelper in 'Units\uCmdLineHelper.pas',
   uCommandLineFunctions in 'Units\uCommandLineFunctions.pas',

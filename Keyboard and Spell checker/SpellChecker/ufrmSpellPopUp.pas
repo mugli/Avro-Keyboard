@@ -372,8 +372,9 @@ Procedure TfrmSpellPopUp.ShowSuggestion(FullResult: Boolean);
 
   Function Fix_ZWNJ_ZWJ(inp: String): String;
   Begin
-    result := ReplaceStr(inp, b_R + ZWNJ + b_Hasanta + b_Z,
-      b_R + DetermineZWNJ_ZWJ + b_Hasanta + b_Z);
+//    result := ReplaceStr(inp, b_R + ZWNJ + b_Hasanta + b_Z,
+//      b_R + DetermineZWNJ_ZWJ + b_Hasanta + b_Z);
+      result := inp;
   End;
 
 Var

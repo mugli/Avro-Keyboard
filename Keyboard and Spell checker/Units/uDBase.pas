@@ -25,39 +25,36 @@
   =============================================================================
 }
 
-Unit uDBase;
+unit uDBase;
 
 {$INCLUDE ../../ProjectDefines.inc}
 
-Interface
+interface
 
-Uses
-  SysUtils,
-  Generics.Collections, Classes, FireDAC.Phys.SQLite,
-  Data.DB, FireDAC.Stan.Def, FireDAC.Phys.SQLiteWrapper, FireDAC.Comp.Client,
-  FireDAC.Stan.ExprFuncs,
-  FireDAC.Phys.SQLiteWrapper.Stat, FireDAC.Phys.SQLiteDef, FireDAC.Stan.Intf,
-  FireDAC.Phys,
-  Forms;
+uses
+  SysUtils, Generics.Collections, Classes, FireDAC.Phys.SQLite, Data.DB,
+  FireDAC.Stan.Def, FireDAC.Phys.SQLiteWrapper, FireDAC.Comp.Client,
+  FireDAC.Stan.ExprFuncs, FireDAC.Phys.SQLiteWrapper.Stat,
+  FireDAC.Phys.SQLiteDef, FireDAC.Stan.Intf, FireDAC.Phys, Forms;
 
-Type
-  LongIntArray = Array Of LongInt;
+type
+  LongIntArray = array of LongInt;
+
   IntegerArray = LongIntArray;
-  HashArray = Array Of IntegerArray;
 
-Procedure LoadWordDatabase;
-Procedure UnloadWordDatabase;
-Procedure LoadSuffix;
-Procedure LoadOneDatabase(FileName: String; Var Arr: TStringList;
-  Var HArr: HashArray);
+procedure LoadWordDatabase;
 
-Var
+procedure UnloadWordDatabase;
 
+procedure LoadSuffix;
+
+procedure LoadOneDatabase(FileName: string; var Arr: TStringList; var Dict: TDictionary<string, Boolean>);
+
+var
   FDatabase: TSQLiteDatabase;
   FDatabaseLoaded, FDatabaseLoading: Boolean;
   FDPhysSQLiteDriverLink1: TFDPhysSQLiteDriverLink;
   FDConnection1: TFDConnection;
-
   W_A: TStringList;
   W_AA: TStringList;
   W_I: TStringList;
@@ -69,7 +66,6 @@ Var
   W_OI: TStringList;
   W_O: TStringList;
   W_OU: TStringList;
-
   W_B: TStringList;
   W_BH: TStringList;
   W_C: TStringList;
@@ -106,89 +102,82 @@ Var
   W_Y: TStringList;
   W_Z: TStringList;
   W_Khandatta: TStringList;
-
   Suffix_Spell: TStringList;
-  Suffix: TDictionary<String, String>;
+  Suffix: TDictionary<string, string>;
 
-  // Hash arrays
-Var
-  W_Hash_A: HashArray;
-  W_Hash_AA: HashArray;
-  W_Hash_I: HashArray;
-  W_Hash_II: HashArray;
-  W_Hash_U: HashArray;
-  W_Hash_UU: HashArray;
-  W_Hash_RRI: HashArray;
-  W_Hash_E: HashArray;
-  W_Hash_OI: HashArray;
-  W_Hash_O: HashArray;
-  W_Hash_OU: HashArray;
+  // Hashtables/dictionaries
+var
+  W_Hash_A: TDictionary<string, Boolean>;
+  W_Hash_AA: TDictionary<string, Boolean>;
+  W_Hash_I: TDictionary<string, Boolean>;
+  W_Hash_II: TDictionary<string, Boolean>;
+  W_Hash_U: TDictionary<string, Boolean>;
+  W_Hash_UU: TDictionary<string, Boolean>;
+  W_Hash_RRI: TDictionary<string, Boolean>;
+  W_Hash_E: TDictionary<string, Boolean>;
+  W_Hash_OI: TDictionary<string, Boolean>;
+  W_Hash_O: TDictionary<string, Boolean>;
+  W_Hash_OU: TDictionary<string, Boolean>;
+  W_Hash_B: TDictionary<string, Boolean>;
+  W_Hash_BH: TDictionary<string, Boolean>;
+  W_Hash_C: TDictionary<string, Boolean>;
+  W_Hash_CH: TDictionary<string, Boolean>;
+  W_Hash_D: TDictionary<string, Boolean>;
+  W_Hash_Dh: TDictionary<string, Boolean>;
+  W_Hash_Dd: TDictionary<string, Boolean>;
+  W_Hash_Ddh: TDictionary<string, Boolean>;
+  W_Hash_G: TDictionary<string, Boolean>;
+  W_Hash_Gh: TDictionary<string, Boolean>;
+  W_Hash_H: TDictionary<string, Boolean>;
+  W_Hash_J: TDictionary<string, Boolean>;
+  W_Hash_Jh: TDictionary<string, Boolean>;
+  W_Hash_K: TDictionary<string, Boolean>;
+  W_Hash_Kh: TDictionary<string, Boolean>;
+  W_Hash_L: TDictionary<string, Boolean>;
+  W_Hash_M: TDictionary<string, Boolean>;
+  W_Hash_N: TDictionary<string, Boolean>;
+  W_Hash_NGA: TDictionary<string, Boolean>;
+  W_Hash_NYA: TDictionary<string, Boolean>;
+  W_Hash_Nn: TDictionary<string, Boolean>;
+  W_Hash_P: TDictionary<string, Boolean>;
+  W_Hash_Ph: TDictionary<string, Boolean>;
+  W_Hash_R: TDictionary<string, Boolean>;
+  W_Hash_Rr: TDictionary<string, Boolean>;
+  W_Hash_Rrh: TDictionary<string, Boolean>;
+  W_Hash_S: TDictionary<string, Boolean>;
+  W_Hash_Sh: TDictionary<string, Boolean>;
+  W_Hash_Ss: TDictionary<string, Boolean>;
+  W_Hash_T: TDictionary<string, Boolean>;
+  W_Hash_Th: TDictionary<string, Boolean>;
+  W_Hash_Tt: TDictionary<string, Boolean>;
+  W_Hash_Tth: TDictionary<string, Boolean>;
+  W_Hash_Y: TDictionary<string, Boolean>;
+  W_Hash_Z: TDictionary<string, Boolean>;
+  W_Hash_Khandatta: TDictionary<string, Boolean>;
 
-  W_Hash_B: HashArray;
-  W_Hash_BH: HashArray;
-  W_Hash_C: HashArray;
-  W_Hash_CH: HashArray;
-  W_Hash_D: HashArray;
-  W_Hash_Dh: HashArray;
-  W_Hash_Dd: HashArray;
-  W_Hash_Ddh: HashArray;
-  W_Hash_G: HashArray;
-  W_Hash_Gh: HashArray;
-  W_Hash_H: HashArray;
-  W_Hash_J: HashArray;
-  W_Hash_Jh: HashArray;
-  W_Hash_K: HashArray;
-  W_Hash_Kh: HashArray;
-  W_Hash_L: HashArray;
-  W_Hash_M: HashArray;
-  W_Hash_N: HashArray;
-  W_Hash_NGA: HashArray;
-  W_Hash_NYA: HashArray;
-  W_Hash_Nn: HashArray;
-  W_Hash_P: HashArray;
-  W_Hash_Ph: HashArray;
-  W_Hash_R: HashArray;
-  W_Hash_Rr: HashArray;
-  W_Hash_Rrh: HashArray;
-  W_Hash_S: HashArray;
-  W_Hash_Sh: HashArray;
-  W_Hash_Ss: HashArray;
-  W_Hash_T: HashArray;
-  W_Hash_Th: HashArray;
-  W_Hash_Tt: HashArray;
-  W_Hash_Tth: HashArray;
-  W_Hash_Y: HashArray;
-  W_Hash_Z: HashArray;
-  W_Hash_Khandatta: HashArray;
+implementation
 
-Implementation
-
-Uses
+uses
 
 {$IF Not (Defined(SpellChecker) OR (Defined(SpellCheckerDll))))}
   uForm1,
 
 {$ENDIF}
-  StrUtils,
-  HashTable,
+  StrUtils, HashTable, uFileFolderHandling, windows;
 
-  uFileFolderHandling,
-  windows;
-
-Procedure LoadSuffix;
-Var
-  FirstPart, SecondPart: String;
-
+procedure LoadSuffix;
+var
+  FirstPart, SecondPart: string;
   Stmt: TSQLiteStatement;
-  SelectSQL: String;
-Begin
+  SelectSQL: string;
+begin
   SelectSQL := 'SELECT English, Bangla FROM Suffix;';
 
   Suffix_Spell := TStringList.Create;
   Suffix_Spell.Sorted := True;
   Suffix_Spell.Duplicates := dupIgnore;
 
-  Suffix := TDictionary<String, String>.Create;
+  Suffix := TDictionary<string, string>.Create;
 
   Stmt := TSQLiteStatement.Create(FDatabase);
   Stmt.Prepare(SelectSQL);
@@ -198,8 +187,8 @@ Begin
   while Stmt.Fetch do
   begin
 
-    FirstPart := utf8encode(Stmt.Columns[0].AsString); // English
-    SecondPart := utf8encode(Stmt.Columns[1].AsString); // Bangla
+    FirstPart := Stmt.Columns[0].AsString; // English
+    SecondPart := Stmt.Columns[1].AsString; // Bangla
 
     Suffix_Spell.Add(SecondPart);
 
@@ -209,12 +198,12 @@ Begin
   Suffix_Spell.EndUpdate;
 
   FreeAndNil(Stmt);
-End;
+end;
 
-Procedure UnloadWordDatabase;
-Begin
-  If (not FDatabaseLoading) and FDatabaseLoaded Then
-  Begin
+procedure UnloadWordDatabase;
+begin
+  if (not FDatabaseLoading) and FDatabaseLoaded then
+  begin
 
     FDatabaseLoading := True;
 
@@ -314,6 +303,55 @@ Begin
     W_Khandatta.Clear;
     FreeAndNil(W_Khandatta);
 
+    // Clear dictionaries
+    W_Hash_A.clear;
+    W_Hash_AA.clear;
+    W_Hash_I.clear;
+    W_Hash_II.clear;
+    W_Hash_U.clear;
+    W_Hash_UU.clear;
+    W_Hash_RRI.clear;
+    W_Hash_E.clear;
+    W_Hash_OI.clear;
+    W_Hash_O.clear;
+    W_Hash_OU.clear;
+    W_Hash_B.clear;
+    W_Hash_BH.clear;
+    W_Hash_C.clear;
+    W_Hash_CH.clear;
+    W_Hash_D.clear;
+    W_Hash_Dh.clear;
+    W_Hash_Dd.clear;
+    W_Hash_Ddh.clear;
+    W_Hash_G.clear;
+    W_Hash_Gh.clear;
+    W_Hash_H.clear;
+    W_Hash_J.clear;
+    W_Hash_Jh.clear;
+    W_Hash_K.clear;
+    W_Hash_Kh.clear;
+    W_Hash_L.clear;
+    W_Hash_M.clear;
+    W_Hash_N.clear;
+    W_Hash_NGA.clear;
+    W_Hash_NYA.clear;
+    W_Hash_Nn.clear;
+    W_Hash_P.clear;
+    W_Hash_Ph.clear;
+    W_Hash_R.clear;
+    W_Hash_Rr.clear;
+    W_Hash_Rrh.clear;
+    W_Hash_S.clear;
+    W_Hash_Sh.clear;
+    W_Hash_Ss.clear;
+    W_Hash_T.clear;
+    W_Hash_Th.clear;
+    W_Hash_Tt.clear;
+    W_Hash_Tth.clear;
+    W_Hash_Y.clear;
+    W_Hash_Z.clear;
+    W_Hash_Khandatta.clear;
+
     Suffix_Spell.Clear;
     FreeAndNil(Suffix_Spell);
 
@@ -322,17 +360,17 @@ Begin
 
     FDatabaseLoaded := False;
     FDatabaseLoading := False;
-  End;
+  end;
 
 {$IF Not (Defined(SpellChecker) OR (Defined(SpellCheckerDll))))}
   AvroMainForm1.TrimAppMemorySize;
 
 {$ENDIF}
-End;
+end;
 
-Procedure LoadWordDatabase;
-Begin
-  If FDatabaseLoaded Or FDatabaseLoading Then
+procedure LoadWordDatabase;
+begin
+  if FDatabaseLoaded or FDatabaseLoading then
     exit;
   FDatabaseLoading := True;
 
@@ -350,7 +388,7 @@ Begin
       FDConnection1.Open;
       FDatabase := TSQLiteDatabase(FDConnection1.CliObj);
 
-      Try
+      try
 
         LoadOneDatabase('A', W_A, W_Hash_A);
         LoadOneDatabase('AA', W_AA, W_Hash_AA);
@@ -411,33 +449,25 @@ Begin
 {$ENDIF}
         FDatabaseLoaded := True;
         FDatabaseLoading := False;
-      Except
-        On E: Exception Do
-        Begin
-          Application.MessageBox(Pchar('Cannot load Avro database!' + #10 + '' +
-            #10 + '-> Make sure ''Database.db3'' file is present in ' +
-            GetAvroDataDir + ' folder, or' + #10 +
-            '-> ''Database.db3'' file is not corrupt.' + #10 + '' + #10 +
-            'Reinstalling Avro Keyboard may solve this problem.'),
-            'Avro Keyboard', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 +
-            MB_APPLMODAL);
-        End;
-      End;
-    Finally
+      except
+        on E: Exception do
+        begin
+          Application.MessageBox(Pchar('Cannot load Avro database!' + #10 + '' + #10 + '-> Make sure ''Database.db3'' file is present in ' + GetAvroDataDir + ' folder, or' + #10 + '-> ''Database.db3'' file is not corrupt.' + #10 + '' + #10 + 'Reinstalling Avro Keyboard may solve this problem.'), 'Avro Keyboard', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
+        end;
+      end;
+    finally
       FreeAndNil(FDatabase);
-    End;
+    end;
   end;
 
-End;
+end;
 
-Procedure LoadOneDatabase(FileName: String; Var Arr: TStringList;
-  Var HArr: HashArray);
-Var
+procedure LoadOneDatabase(FileName: string; var Arr: TStringList; var Dict: TDictionary<string, Boolean>);
+var
   Stmt: TSQLiteStatement;
-  SelectSQL: String;
+  SelectSQL: string;
   i: Integer;
-
-Begin
+begin
   SelectSQL := 'SELECT Words FROM ' + FileName + ';';
   // Inititialize Data
   Arr := TStringList.Create;
@@ -451,11 +481,11 @@ Begin
   Stmt.Execute;
 
   while Stmt.Fetch do
-    Arr.Add(utf8encode(Stmt.Columns[0].AsString));
+    Arr.Add(Stmt.Columns[0].AsString);
 
   Arr.EndUpdate;
 
-  BuildOneHashTable(Arr, HArr);
+  BuildOneHashTable(Arr, Dict);
 
   Stmt.Free;
 
@@ -463,22 +493,24 @@ Begin
   Application.ProcessMessages;
 
 {$ENDIF}
-End;
+end;
 
 // ------------------------------------------------------------------------------
 
-Initialization
+initialization
 
 { Initialize the DISQLite3 library prior to using any other DISQLite3
   functionality. See also sqlite3_shutdown() below. }
-sqlite3_initialize;
-FDatabaseLoaded := False;
-FDatabaseLoading := False;
+  sqlite3_initialize;
+  FDatabaseLoaded := False;
+  FDatabaseLoading := False;
 
-Finalization
+
+finalization
 
 { Deallocate any resources that were allocated by
   sqlite3_initialize() above. }
-sqlite3_shutdown;
+  sqlite3_shutdown;
 
-End.
+end.
+

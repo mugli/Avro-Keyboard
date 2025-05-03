@@ -38,8 +38,6 @@ Uses
   uRegExPhoneticSearch_Spell,
   classes;
 
-Type
-  StringArray = Array Of String;
 
 Type
   TPhoneticSpellSuggestion = Class
@@ -70,7 +68,6 @@ Begin
 
   FResult.Clear;
   AddSuffix(rPhoneticText);
-
 End;
 
 Procedure TPhoneticSpellSuggestion.AddSuffix(MainStr: String);
