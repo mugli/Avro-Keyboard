@@ -31,9 +31,10 @@ Unit DebugLog;
 interface
 
 Uses
-  Windows;
+  Windows, System.SysUtils;
 
-Procedure Log(const Msg: string);
+Procedure Log(const Msg: string);overload;
+Procedure Log(const Msg: string; i: LongInt);overload;
 
 implementation
 
@@ -41,6 +42,13 @@ Procedure Log(const Msg: string);
 begin
 {$IFDEF DebugLog}
   OutputDebugString(PChar(Msg));
+{$ENDIF}
+end;
+
+Procedure Log(const Msg: string; i: LongInt);
+begin
+{$IFDEF DebugLog}
+  OutputDebugString(PChar(Msg + IntToStr(i)));
 {$ENDIF}
 end;
 

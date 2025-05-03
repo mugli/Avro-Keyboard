@@ -35,7 +35,8 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, GIFImg, ExtCtrls, StdCtrls, Buttons, Generics.Collections, StrUtils,
-  Menus, UIAutomationClient_TLB, ComObj, ActiveX, OleAcc, DebugLog;
+  Menus, UIAutomationClient_TLB, ComObj, ActiveX, OleAcc, DebugLog,
+  System.Threading, System.SyncObjs;
 
 type
   TfrmPrevW = class(TForm)
@@ -85,6 +86,7 @@ type
     FLastCaretCheckTime: DWORD;
     FCachedCaretX, FCachedCaretY: Integer;
     FCachedCaretResult: Boolean;
+    FWorkerRunning: Integer; // Acts like atomic boolean (0 = no, 1 = yes)
     function FindCaretPosWindow(out X, Y: Integer): Boolean;
 
     function GetCaretScreenPos_UIA(out X, Y: Integer): Boolean;
@@ -243,6 +245,7 @@ var
   CaretX, CaretY, CaretWidth, CaretHeight: Integer;
   Handle: HWND;
   CaretPos: TPoint;
+  LocResult: HRESULT;
 begin
   Result := False;
   X := -1;
@@ -250,7 +253,11 @@ begin
 
   Handle := GetForegroundWindow;
   if (Handle = 0) or (Handle = self.Handle) then
+  begin
+    Log('Ignoring Handle in GetCaretScreenPos_MSAA. Handle = ', Handle);
     Exit;
+  end;
+
 
   // Try to get the accessibility object
   if AccessibleObjectFromWindow(Handle, OBJID_CARET, IID_IAccessible, Acc) <> S_OK then
@@ -267,12 +274,15 @@ begin
 
   VarChild := CHILDID_SELF; // Properly initialize VarChild
 
-  if (Acc.accLocation(CaretX, CaretY, CaretWidth, CaretHeight, VarChild) = S_OK) then
+  LocResult := Acc.accLocation(CaretX, CaretY, CaretWidth, CaretHeight, VarChild);
+  if (LocResult = S_OK) then
   begin
     X := CaretX;
     Y := CaretY + CaretHeight; // Move Y to bottom of caret
     Result := True;
-  end;
+  end
+  else
+    Log('Error: accLocation. LocResult = ', LocResult);
 end;
 
 { =============================================================================== }
@@ -322,11 +332,11 @@ end;
 
 { =============================================================================== }
 
-// TODO: Run this asynchronously
 function TfrmPrevW.FindCaretPosWindow(out X, Y: Integer): Boolean;
 var
   NowTime: DWORD;
 begin
+  // Debounce if called frequently
   NowTime := GetTickCount;
   if (NowTime - FLastCaretCheckTime < DEBOUNCE_INTERVAL_MS) then
   begin
@@ -338,34 +348,34 @@ begin
 
   FLastCaretCheckTime := NowTime;
 
-  FCachedCaretX := -1;
-  FCachedCaretY := -1;
-  FCachedCaretResult := False;
-
-  // Order:
-  // GetCaretScreenPos_UIA, if fails,
-  // GetCaretScreenPos_MSAA (for Chrome etc), if fails,
-  // GetCaretScreenPos_Raw
-  GetCaretScreenPos_UIA(FCachedCaretX, FCachedCaretY);
-  if (FCachedCaretX > 0) and (FCachedCaretY > 0) then
+  // Launch async update, but don't wait for it
+  if TInterlocked.CompareExchange(Integer(FWorkerRunning), 1, 0) = 0 then
   begin
-    FCachedCaretResult := True;
-  end
-  else
-  begin
-    GetCaretScreenPos_MSAA(FCachedCaretX, FCachedCaretY);
-    if (FCachedCaretX > 0) and (FCachedCaretY > 0) then
-    begin
-      FCachedCaretResult := True;
-    end
-    else
-    begin
-      GetCaretScreenPos_Raw(FCachedCaretX, FCachedCaretY);
-      if (FCachedCaretX > 0) and (FCachedCaretY > 0) then
+    TTask.Run(
+      procedure
+      var
+        XTmp, YTmp: Integer;
+        Success: Boolean;
       begin
-        FCachedCaretResult := True;
-      end;
-    end;
+        try
+          XTmp := -1;
+          YTmp := -1;
+          Success := False;
+
+          if GetCaretScreenPos_UIA(XTmp, YTmp) then
+            Success := True
+          else if  GetCaretScreenPos_MSAA(XTmp, YTmp) then
+            Success := True
+          else if GetCaretScreenPos_Raw(XTmp, YTmp) then
+            Success := True;
+
+          FCachedCaretX := XTmp;
+          FCachedCaretY := YTmp;
+          FCachedCaretResult := Success;
+        finally
+          TInterlocked.Exchange(Integer(FWorkerRunning), 0);
+        end;
+      end);
   end;
 
   X := FCachedCaretX;
