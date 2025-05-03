@@ -62,6 +62,7 @@ type
     ShowPreviewWindow1: TMenuItem;
     ShowPreviewWindow2: TMenuItem;
     List: TListBox;
+    CaretTracker: TTimer;
     procedure FormCreate(Sender: TObject);
     procedure ButtonMouseEnter(Sender: TObject);
     procedure ButtonMouseLeave(Sender: TObject);
@@ -75,6 +76,7 @@ type
     procedure lblCaptionMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure ButtonMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure ListClick(Sender: TObject);
+    procedure CaretTrackerTimer(Sender: TObject);
   private
     { Private declarations }
 
@@ -129,7 +131,7 @@ const
   UIA_TextPatternId: Integer = 10014;
   // Manually define missing constant for UI automation type
 
-  DEBOUNCE_INTERVAL_MS = 200;
+  DEBOUNCE_INTERVAL_MS = 100;
 
 implementation
 
@@ -364,7 +366,7 @@ begin
 
           if GetCaretScreenPos_UIA(XTmp, YTmp) then
             Success := True
-          else if  GetCaretScreenPos_MSAA(XTmp, YTmp) then
+          else if GetCaretScreenPos_MSAA(XTmp, YTmp) then
             Success := True
           else if GetCaretScreenPos_Raw(XTmp, YTmp) then
             Success := True;
@@ -529,6 +531,15 @@ begin
 end;
 
 { =============================================================================== }
+
+// Hack: GetCaretScreenPos_UIA doesn't work without the timer calling it frequently
+procedure TfrmPrevW.CaretTrackerTimer(Sender: TObject);
+var
+  X, Y: Integer;
+begin
+  if PreviewWCurrentlyVisible and (FollowCaretByDefault = 'YES') then
+    GetCaretScreenPos_UIA(X, Y);
+end;
 
 procedure TfrmPrevW.CreateParams(var Params: TCreateParams);
 begin

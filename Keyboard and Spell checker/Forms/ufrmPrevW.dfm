@@ -691,4 +691,8 @@ object frmPrevW: TfrmPrevW
       Caption = 'Show Preview Window'
     end
   end
+  object CaretTracker: TTimer
+    Interval = 200
+    OnTimer = CaretTrackerTimer
+  end
 end
