@@ -4,7 +4,7 @@
   The contents of this file are subject to the Mozilla Public License
   Version 1.1 (the "License"); you may not use this file except in
   compliance with the License. You may obtain a copy of the License at
-  http://www.mozilla.org/MPL/
+  https://www.mozilla.org/MPL/
   Software distributed under the License is distributed on an "AS IS"
   basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
   License for the specific language governing rights and limitations
@@ -12,7 +12,7 @@
   The Original Code is Avro Keyboard 5.
   The Initial Developer of the Original Code is
   Mehdi Hasan Khan (mhasan@omicronlab.com).
-  Copyright (C) OmicronLab (http://www.omicronlab.com). All Rights Reserved.
+  Copyright (C) OmicronLab (https://www.omicronlab.com). All Rights Reserved.
   Contributor(s): ______________________________________.
   *****************************************************************************
   =============================================================================
@@ -52,30 +52,26 @@ var
 const
 {$IFDEF BetaVersion}
 {$IFDEF PortableOn}
-  UpdateInfo =
-    'http://www.omicronlab.com/download/liveupdate/portable_avrokeyboard/versioninfo_beta.xml';
+  UpdateInfo = 'https://www.omicronlab.com/download/liveupdate/portable_avrokeyboard/versioninfo_beta.xml';
 {$ELSE}
-  UpdateInfo =
-    'http://www.omicronlab.com/download/liveupdate/avrokeyboard/versioninfo_beta.xml';
+  UpdateInfo = 'https://www.omicronlab.com/download/liveupdate/avrokeyboard/versioninfo_beta.xml';
 {$ENDIF}
 {$ELSE}
 {$IFDEF PortableOn}
-  UpdateInfo =
-    'http://www.omicronlab.com/download/liveupdate/portable_avrokeyboard/versioninfo.xml';
+  UpdateInfo = 'https://www.omicronlab.com/download/liveupdate/portable_avrokeyboard/versioninfo.xml';
 {$ELSE}
-  UpdateInfo =
-    'http://www.omicronlab.com/download/liveupdate/avrokeyboard/versioninfo.xml';
+  UpdateInfo = 'https://www.omicronlab.com/download/liveupdate/avrokeyboard/versioninfo.xml';
 {$ENDIF}
 {$ENDIF}
 
 implementation
 
 uses
-  clsFileVersion, ufrmUpdateNotify, uWindowHandlers, System.Threading;
+  clsFileVersion, ufrmUpdateNotify, uWindowHandlers, System.Threading, DebugLog;
 
 { TUpdateCheck }
 { =============================================================================== }
-Procedure TUpdateCheck.Check;
+procedure TUpdateCheck.Check;
 begin
   if StillDownloading then
     Exit;
@@ -100,9 +96,7 @@ begin
         begin
           StillDownloading := False;
           if Verbose then
-            Application.MessageBox
-              ('There was an error checking for updates. Please try again later.',
-              'Error', MB_OK or MB_ICONHAND or MB_DEFBUTTON1 or MB_SYSTEMMODAL);
+            Application.MessageBox('There was an error checking for updates. Please try again later.', 'Error', MB_OK or MB_ICONHAND or MB_DEFBUTTON1 or MB_SYSTEMMODAL);
         end;
       end;
     end);
@@ -110,8 +104,8 @@ end;
 
 { =============================================================================== }
 
-Procedure TUpdateCheck.CheckSilent;
-Begin
+procedure TUpdateCheck.CheckSilent;
+begin
   if StillDownloading then
     Exit;
 
@@ -135,7 +129,7 @@ Begin
           StillDownloading := False;
       end;
     end);
-End;
+end;
 
 constructor TUpdateCheck.Create;
 begin
@@ -182,31 +176,24 @@ begin
 
     changelogurl := Xml.DocumentElement.ChildNodes['changelogurl'].NodeValue;
     downloadurl := Xml.DocumentElement.ChildNodes['downloadurl'].NodeValue;
-    productpageurl := Xml.DocumentElement.ChildNodes['productpageurl']
-      .NodeValue;
+    productpageurl := Xml.DocumentElement.ChildNodes['productpageurl'].NodeValue;
     releasedate := Xml.DocumentElement.ChildNodes['releasedate'].NodeValue;
 
     if IsUpdate(Major, Minor, Release, Build) then
     begin
       CheckCreateForm(TfrmUpdateNotify, frmUpdateNotify, 'frmUpdateNotify');
-      frmUpdateNotify.SetupAndShow(Format('%d.%d.%d.%d', [Major, Minor, Release,
-        Build]), releasedate, changelogurl, downloadurl);
+      frmUpdateNotify.SetupAndShow(Format('%d.%d.%d.%d', [Major, Minor, Release, Build]), releasedate, changelogurl, downloadurl);
     end
     else if Verbose then
     begin
-      Application.MessageBox
-        ('You are using the latest version of Avro Keyboard.' + #10 +
-        'No update is available at this moment.', 'Avro Keyboard',
-        MB_OK or MB_ICONEXCLAMATION or MB_DEFBUTTON1 or MB_SYSTEMMODAL);
+      Application.MessageBox('You are using the latest version of Avro Keyboard.' + #10 + 'No update is available at this moment.', 'Avro Keyboard', MB_OK or MB_ICONEXCLAMATION or MB_DEFBUTTON1 or MB_SYSTEMMODAL);
     end;
 
   except
     on E: Exception do
     begin
       if Verbose then
-        Application.MessageBox
-          ('There was an error processing update information. Please try again later.',
-          'Error', MB_OK or MB_ICONHAND or MB_DEFBUTTON1 or MB_SYSTEMMODAL);
+        Application.MessageBox('There was an error processing update information. Please try again later.', 'Error', MB_OK or MB_ICONHAND or MB_DEFBUTTON1 or MB_SYSTEMMODAL);
     end;
   end;
 end;
@@ -214,34 +201,30 @@ end;
 { =============================================================================== }
 
 function TUpdateCheck.IsConnected: Boolean;
-Var
+var
   dwConnectionTypes: DWORD;
-Begin
+begin
   Result := False;
-  dwConnectionTypes := INTERNET_CONNECTION_MODEM + INTERNET_CONNECTION_LAN +
-    INTERNET_CONNECTION_PROXY;
+  dwConnectionTypes := INTERNET_CONNECTION_MODEM + INTERNET_CONNECTION_LAN + INTERNET_CONNECTION_PROXY;
 
   Result := InternetGetConnectedState(@dwConnectionTypes, 0);
 end;
 
 { =============================================================================== }
 
-function TUpdateCheck.IsUpdate(const Major, Minor, Release,
-  Build: Integer): Boolean;
+function TUpdateCheck.IsUpdate(const Major, Minor, Release, Build: Integer): Boolean;
 var
   Version: TFileVersion;
 begin
   Version := TFileVersion.Create;
+  Log('IsUpdate check (Remote) Major:' + IntToStr(Major) + ' Minor:' + IntToStr(Minor) + ' Release:' + IntToStr(Release) + ' Build:' + IntToStr(Build));
+  Log('IsUpdate check (Own) Major:' + IntToStr(Version.VerMajor) + ' Minor:' + IntToStr(Version.VerMinor) + ' Release:' + IntToStr(Version.VerRelease) + ' Build:' + IntToStr(Version.VerBuild));
   try
-    Result := (Major > Version.VerMajor) or
-      ((Major = Version.VerMajor) and (Minor > Version.VerMinor)) or
-      ((Major = Version.VerMajor) and (Minor = Version.VerMinor) and
-      (Release > Version.VerRelease)) or
-      ((Major = Version.VerMajor) and (Minor = Version.VerMinor) and
-      (Release = Version.VerRelease) and (Build > Version.VerBuild));
+    Result := (Major > Version.VerMajor) or ((Major = Version.VerMajor) and (Minor > Version.VerMinor)) or ((Major = Version.VerMajor) and (Minor = Version.VerMinor) and (Release > Version.VerRelease)) or ((Major = Version.VerMajor) and (Minor = Version.VerMinor) and (Release = Version.VerRelease) and (Build > Version.VerBuild));
   finally
     Version.Free;
   end;
 end;
 
 end.
+
