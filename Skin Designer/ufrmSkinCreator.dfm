@@ -912,53 +912,6 @@ object frmSkinCreator: TfrmSkinCreator
       TabOrder = 0
       OnClick = ButtonSaveSkinClick
     end
-    object Panel2: TPanel
-      Left = 30
-      Top = 399
-      Width = 692
-      Height = 96
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
-      Color = clWhite
-      ParentBackground = False
-      TabOrder = 1
-      object Label11: TLabel
-        Left = 24
-        Top = 12
-        Width = 632
-        Height = 38
-        Margins.Left = 5
-        Margins.Top = 5
-        Margins.Right = 5
-        Margins.Bottom = 5
-        AutoSize = False
-        Caption = 
-          'You can Share your skin with Avro Keyboard users if you wish. Cl' +
-          'ick on the following link to submit this skin to OmicronLab:'
-        WordWrap = True
-      end
-      object LabelShareLink: TLabel
-        Left = 284
-        Top = 56
-        Width = 86
-        Height = 24
-        Cursor = crHandPoint
-        Margins.Left = 5
-        Margins.Top = 5
-        Margins.Right = 5
-        Margins.Bottom = 5
-        Caption = 'Share it!'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clNavy
-        Font.Height = -20
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold, fsUnderline]
-        ParentFont = False
-        OnClick = LabelShareLinkClick
-      end
-    end
   end
   object Panel1: TPanel
     Left = -3

@@ -4,7 +4,7 @@
   The contents of this file are subject to the Mozilla Public License
   Version 1.1 (the "License"); you may not use this file except in
   compliance with the License. You may obtain a copy of the License at
-  http://www.mozilla.org/MPL/
+  https://www.mozilla.org/MPL/
 
   Software distributed under the License is distributed on an "AS IS"
   basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
@@ -16,7 +16,7 @@
   The Initial Developer of the Original Code is
   Mehdi Hasan Khan <mhasan@omicronlab.com>.
 
-  Copyright (C) OmicronLab <http://www.omicronlab.com>. All Rights Reserved.
+  Copyright (C) OmicronLab <https://www.omicronlab.com>. All Rights Reserved.
 
 
   Contributor(s): ______________________________________.
@@ -84,9 +84,6 @@ type
                 ButtonSaveSkin: TButton;
                 Label9: TLabel;
                 Label10: TLabel;
-                Panel2: TPanel;
-                Label11: TLabel;
-                LabelShareLink: TLabel;
                 Panel3: TPanel;
                 Image1: TImage;
                 Label13: TLabel;
@@ -98,7 +95,6 @@ type
                 procedure ButtonPrevClick(Sender: TObject);
                 procedure ButtonSaveSkinClick(Sender: TObject);
                 procedure ButtonHelpClick(Sender: TObject);
-                procedure LabelShareLinkClick(Sender: TObject);
                 procedure ButtonAboutClick(Sender: TObject);
                 procedure ButtonExitClick(Sender: TObject);
         private
@@ -499,11 +495,6 @@ begin
         Self.Show;
         Application.ProcessMessages;
         EditSkinName.SetFocus;
-end;
-
-procedure TfrmSkinCreator.LabelShareLinkClick(Sender: TObject);
-begin
-        Execute_Something('http://www.omicronlab.com/go.php?id=7');
 end;
 
 function TfrmSkinCreator.ValidateNext(Val: Integer): Boolean;

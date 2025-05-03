@@ -1,15 +1,19 @@
 object frmAutoCorrect: TfrmAutoCorrect
   Left = 0
   Top = 0
+  Margins.Left = 5
+  Margins.Top = 5
+  Margins.Right = 5
+  Margins.Bottom = 5
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Auto Correct Entries for Avro Phonetic'
-  ClientHeight = 371
-  ClientWidth = 308
+  ClientHeight = 557
+  ClientWidth = 471
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -17
   Font.Name = 'Tahoma'
   Font.Style = []
   Icon.Data = {
@@ -62,34 +66,51 @@ object frmAutoCorrect: TfrmAutoCorrect
   OnClose = FormClose
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
-  TextHeight = 13
+  PixelsPerInch = 144
+  TextHeight = 21
   object lblTotalEntries: TLabel
-    Left = 230
-    Top = 314
-    Width = 70
-    Height = 13
+    Left = 340
+    Top = 471
+    Width = 110
+    Height = 21
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Alignment = taRightJustify
     Caption = 'Total entries : '
   end
   object Label2: TLabel
-    Left = 8
-    Top = 8
-    Width = 49
-    Height = 13
+    Left = 12
+    Top = 12
+    Width = 76
+    Height = 21
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Replace: :'
   end
   object Label3: TLabel
-    Left = 159
-    Top = 8
-    Width = 29
-    Height = 13
+    Left = 239
+    Top = 12
+    Width = 45
+    Height = 21
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'With: '
   end
   object List: TListView
-    Left = 8
-    Top = 132
-    Width = 292
-    Height = 176
+    Left = 12
+    Top = 198
+    Width = 438
+    Height = 264
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Columns = <
       item
         Caption = 'Replace:'
@@ -114,50 +135,70 @@ object frmAutoCorrect: TfrmAutoCorrect
     OnSelectItem = ListSelectItem
   end
   object cmdSave: TButton
-    Left = 144
-    Top = 339
-    Width = 75
-    Height = 24
+    Left = 216
+    Top = 509
+    Width = 113
+    Height = 36
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = '&Save'
     Enabled = False
     TabOrder = 1
     OnClick = cmdSaveClick
   end
   object cmdCancel: TButton
-    Left = 225
-    Top = 339
-    Width = 75
-    Height = 24
+    Left = 338
+    Top = 509
+    Width = 112
+    Height = 36
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Close'
     TabOrder = 2
     OnClick = cmdCancelClick
   end
   object CheckOnTop: TCheckBox
-    Left = 8
-    Top = 314
-    Width = 97
-    Height = 16
+    Left = 12
+    Top = 471
+    Width = 146
+    Height = 24
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Show on top'
     TabOrder = 3
     OnClick = CheckOnTopClick
   end
   object GroupBox1: TGroupBox
-    Left = 8
-    Top = 50
-    Width = 292
-    Height = 51
+    Left = 12
+    Top = 75
+    Width = 438
+    Height = 77
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Preview'
     TabOrder = 4
     object R1: TEdit
-      Left = 3
-      Top = 15
-      Width = 142
-      Height = 35
+      Left = 5
+      Top = 23
+      Width = 213
+      Height = 44
       Cursor = crArrow
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Color = clBtnFace
       Font.Charset = ANSI_CHARSET
       Font.Color = clBtnText
-      Font.Height = -21
+      Font.Height = -32
       Font.Name = 'SolaimanLipi'
       Font.Style = []
       ParentFont = False
@@ -165,16 +206,20 @@ object frmAutoCorrect: TfrmAutoCorrect
       TabOrder = 0
     end
     object R2: TEdit
-      Left = 151
-      Top = 15
-      Width = 138
-      Height = 35
+      Left = 227
+      Top = 23
+      Width = 207
+      Height = 44
       Cursor = crArrow
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       BevelInner = bvNone
       Color = clBtnFace
       Font.Charset = ANSI_CHARSET
       Font.Color = clBtnText
-      Font.Height = -21
+      Font.Height = -32
       Font.Name = 'SolaimanLipi'
       Font.Style = []
       ParentFont = False
@@ -183,47 +228,67 @@ object frmAutoCorrect: TfrmAutoCorrect
     end
   end
   object ReplaceT: TEdit
-    Left = 11
-    Top = 27
-    Width = 142
-    Height = 21
+    Left = 17
+    Top = 41
+    Width = 213
+    Height = 29
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     TabOrder = 5
     OnChange = ReplaceTChange
     OnKeyPress = ReplaceTKeyPress
   end
   object WithT: TEdit
-    Left = 159
-    Top = 27
-    Width = 138
-    Height = 21
+    Left = 239
+    Top = 41
+    Width = 207
+    Height = 29
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     TabOrder = 6
     OnChange = WithTChange
     OnKeyPress = WithTKeyPress
   end
   object cmdClear: TButton
-    Left = 8
-    Top = 102
-    Width = 89
-    Height = 25
+    Left = 12
+    Top = 153
+    Width = 134
+    Height = 38
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = '&Clear Textbox'
     Enabled = False
     TabOrder = 7
     OnClick = cmdClearClick
   end
   object cmdDel: TButton
-    Left = 122
-    Top = 102
-    Width = 92
-    Height = 25
+    Left = 183
+    Top = 153
+    Width = 138
+    Height = 38
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = '&Delete Selected'
     TabOrder = 8
     OnClick = cmdDelClick
   end
   object cmdAdd: TButton
-    Left = 219
-    Top = 102
-    Width = 81
-    Height = 25
+    Left = 329
+    Top = 153
+    Width = 121
+    Height = 38
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = '&Add/Update'
     Default = True
     Enabled = False
@@ -231,10 +296,14 @@ object frmAutoCorrect: TfrmAutoCorrect
     OnClick = cmdAddClick
   end
   object cmdImport: TButton
-    Left = 8
-    Top = 339
-    Width = 89
-    Height = 24
+    Left = 12
+    Top = 509
+    Width = 134
+    Height = 36
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = '&Import...'
     TabOrder = 10
     OnClick = cmdImportClick

@@ -1,7 +1,7 @@
 # Avro Keyboard
 
 Unicode compliant open source Bangla typing software (IME).
-Visit: [http://www.omicronlab.com](http://www.omicronlab.com "OmicronLab") for latest version.
+Visit: [https://www.omicronlab.com](https://www.omicronlab.com "OmicronLab") for latest version.
 
 ## Required Delphi Version
 
@@ -33,4 +33,4 @@ or,
 
 ## License
 
-From version 5x, Avro Keyboard goes open source from freeware, licensed under **MOZILLA PUBLIC LICENSE Version 1.1**. You should receive a copy of the license in MPL-1.1.txt file with both binaries and source. An online version of the license can be found at: [http://www.mozilla.org/MPL/](http://www.mozilla.org/MPL/ "http://www.mozilla.org/MPL/")
+From version 5x, Avro Keyboard goes open source from freeware, licensed under **MOZILLA PUBLIC LICENSE Version 1.1**. You should receive a copy of the license in MPL-1.1.txt file with both binaries and source. An online version of the license can be found at: [https://www.mozilla.org/MPL/](https://www.mozilla.org/MPL/ "https://www.mozilla.org/MPL/")

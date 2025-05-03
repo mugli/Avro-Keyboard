@@ -514,185 +514,6 @@ object frmOptions: TfrmOptions
         TabOrder = 4
       end
     end
-    object Interface_Panel: TPanel
-      Left = 5
-      Top = 6
-      Width = 643
-      Height = 420
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
-      BevelKind = bkTile
-      BevelOuter = bvNone
-      TabOrder = 4
-      object Captionl_Transparency: TLabel
-        Left = 24
-        Top = 62
-        Width = 206
-        Height = 21
-        Margins.Left = 5
-        Margins.Top = 5
-        Margins.Right = 5
-        Margins.Bottom = 5
-        Caption = 'Transparency level (0-255):'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -17
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-      end
-      object Label_Transparency: TLabel
-        Left = 579
-        Top = 65
-        Width = 18
-        Height = 21
-        Margins.Left = 5
-        Margins.Top = 5
-        Margins.Right = 5
-        Margins.Bottom = 5
-        Caption = '80'
-      end
-      object checkTopBarTransparent: TCheckBox
-        Left = 24
-        Top = 24
-        Width = 446
-        Height = 26
-        Margins.Left = 5
-        Margins.Top = 5
-        Margins.Right = 5
-        Margins.Bottom = 5
-        Caption = 'Make Top Bar semi transparent when it is inactive'
-        TabOrder = 0
-        OnClick = checkTopBarTransparentClick
-      end
-      object TrackBar_Transparency: TTrackBar
-        Left = 234
-        Top = 59
-        Width = 333
-        Height = 36
-        Margins.Left = 5
-        Margins.Top = 5
-        Margins.Right = 5
-        Margins.Bottom = 5
-        Max = 255
-        TabOrder = 1
-        ThumbLength = 30
-        OnChange = TrackBar_TransparencyChange
-      end
-      object GroupBox2: TGroupBox
-        Left = 20
-        Top = 110
-        Width = 582
-        Height = 292
-        Margins.Left = 5
-        Margins.Top = 5
-        Margins.Right = 5
-        Margins.Bottom = 5
-        Caption = 'Interface Skin'
-        TabOrder = 2
-        object Label5: TLabel
-          Left = 24
-          Top = 38
-          Width = 85
-          Height = 21
-          Margins.Left = 5
-          Margins.Top = 5
-          Margins.Right = 5
-          Margins.Bottom = 5
-          Caption = 'Select skin:'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -17
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentFont = False
-        end
-        object Label6: TLabel
-          Left = 24
-          Top = 72
-          Width = 64
-          Height = 21
-          Margins.Left = 5
-          Margins.Top = 5
-          Margins.Right = 5
-          Margins.Bottom = 5
-          Caption = 'Preview:'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -17
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentFont = False
-        end
-        object comboSkin: TComboBox
-          Left = 134
-          Top = 30
-          Width = 420
-          Height = 29
-          Margins.Left = 5
-          Margins.Top = 5
-          Margins.Right = 5
-          Margins.Bottom = 5
-          Style = csDropDownList
-          TabOrder = 0
-          OnChange = comboSkinChange
-        end
-        object ScrollBox1: TScrollBox
-          Left = 24
-          Top = 101
-          Width = 530
-          Height = 141
-          Margins.Left = 5
-          Margins.Top = 5
-          Margins.Right = 5
-          Margins.Bottom = 5
-          HorzScrollBar.Smooth = True
-          VertScrollBar.Smooth = True
-          Color = clWhite
-          ParentColor = False
-          TabOrder = 1
-          object SkinPreviewPic: TImage
-            Left = 12
-            Top = 12
-            Width = 158
-            Height = 158
-            Margins.Left = 5
-            Margins.Top = 5
-            Margins.Right = 5
-            Margins.Bottom = 5
-            AutoSize = True
-          end
-        end
-        object cmdDownloadSkin: TButton
-          Left = 375
-          Top = 248
-          Width = 177
-          Height = 37
-          Margins.Left = 5
-          Margins.Top = 5
-          Margins.Right = 5
-          Margins.Bottom = 5
-          Caption = 'Download skins...'
-          TabOrder = 2
-          OnClick = cmdDownloadSkinClick
-        end
-        object ccmdAboutSkin: TButton
-          Left = 192
-          Top = 248
-          Width = 174
-          Height = 37
-          Margins.Left = 5
-          Margins.Top = 5
-          Margins.Right = 5
-          Margins.Bottom = 5
-          Caption = 'About this skin...'
-          TabOrder = 3
-          OnClick = ccmdAboutSkinClick
-        end
-      end
-    end
     object AvroMouse_Panel: TPanel
       Left = 2
       Top = 3
@@ -1175,8 +996,8 @@ object frmOptions: TfrmOptions
         object Label10: TLabel
           Left = 48
           Top = 66
-          Width = 529
-          Height = 42
+          Width = 492
+          Height = 21
           Margins.Left = 5
           Margins.Top = 5
           Margins.Right = 5
@@ -1187,8 +1008,8 @@ object frmOptions: TfrmOptions
         object Label11: TLabel
           Left = 48
           Top = 254
-          Width = 517
-          Height = 42
+          Width = 365
+          Height = 21
           Margins.Left = 5
           Margins.Top = 5
           Margins.Right = 5
@@ -1360,7 +1181,7 @@ object frmOptions: TfrmOptions
         object Label1: TLabel
           Left = 84
           Top = 125
-          Width = 493
+          Width = 485
           Height = 42
           Margins.Left = 5
           Margins.Top = 5
@@ -1388,7 +1209,7 @@ object frmOptions: TfrmOptions
         object Label9: TLabel
           Left = 72
           Top = 384
-          Width = 505
+          Width = 487
           Height = 84
           Margins.Left = 5
           Margins.Top = 5
@@ -1404,7 +1225,7 @@ object frmOptions: TfrmOptions
         object Label12: TLabel
           Left = 84
           Top = 298
-          Width = 493
+          Width = 474
           Height = 42
           Margins.Left = 5
           Margins.Top = 5
@@ -1580,6 +1401,172 @@ object frmOptions: TfrmOptions
         Margins.Bottom = 5
         Caption = 'Type Dot (.) with Vertical Line/Pipe Key (|)'
         TabOrder = 3
+      end
+    end
+    object Interface_Panel: TPanel
+      Left = 5
+      Top = 6
+      Width = 643
+      Height = 420
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
+      BevelKind = bkTile
+      BevelOuter = bvNone
+      TabOrder = 4
+      object Captionl_Transparency: TLabel
+        Left = 24
+        Top = 62
+        Width = 206
+        Height = 21
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
+        Caption = 'Transparency level (0-255):'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -17
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+      end
+      object Label_Transparency: TLabel
+        Left = 579
+        Top = 65
+        Width = 18
+        Height = 21
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
+        Caption = '80'
+      end
+      object checkTopBarTransparent: TCheckBox
+        Left = 24
+        Top = 24
+        Width = 446
+        Height = 26
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
+        Caption = 'Make Top Bar semi transparent when it is inactive'
+        TabOrder = 0
+        OnClick = checkTopBarTransparentClick
+      end
+      object TrackBar_Transparency: TTrackBar
+        Left = 234
+        Top = 59
+        Width = 333
+        Height = 36
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
+        Max = 255
+        TabOrder = 1
+        ThumbLength = 30
+        OnChange = TrackBar_TransparencyChange
+      end
+      object GroupBox2: TGroupBox
+        Left = 20
+        Top = 110
+        Width = 582
+        Height = 292
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
+        Caption = 'Interface Skin'
+        TabOrder = 2
+        object Label5: TLabel
+          Left = 24
+          Top = 38
+          Width = 85
+          Height = 21
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Caption = 'Select skin:'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -17
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+        end
+        object Label6: TLabel
+          Left = 24
+          Top = 72
+          Width = 64
+          Height = 21
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Caption = 'Preview:'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -17
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+        end
+        object comboSkin: TComboBox
+          Left = 134
+          Top = 30
+          Width = 420
+          Height = 29
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Style = csDropDownList
+          TabOrder = 0
+          OnChange = comboSkinChange
+        end
+        object ScrollBox1: TScrollBox
+          Left = 24
+          Top = 101
+          Width = 530
+          Height = 141
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          HorzScrollBar.Smooth = True
+          VertScrollBar.Smooth = True
+          Color = clWhite
+          ParentColor = False
+          TabOrder = 1
+          object SkinPreviewPic: TImage
+            Left = 12
+            Top = 12
+            Width = 158
+            Height = 158
+            Margins.Left = 5
+            Margins.Top = 5
+            Margins.Right = 5
+            Margins.Bottom = 5
+            AutoSize = True
+          end
+        end
+        object ccmdAboutSkin: TButton
+          Left = 376
+          Top = 251
+          Width = 175
+          Height = 37
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Caption = 'About this skin...'
+          TabOrder = 2
+          OnClick = ccmdAboutSkinClick
+        end
       end
     end
   end

@@ -4,7 +4,7 @@
   The contents of this file are subject to the Mozilla Public License
   Version 1.1 (the "License"); you may not use this file except in
   compliance with the License. You may obtain a copy of the License at
-  http://www.mozilla.org/MPL/
+  https://www.mozilla.org/MPL/
 
   Software distributed under the License is distributed on an "AS IS"
   basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
@@ -16,7 +16,7 @@
   The Initial Developer of the Original Code is
   Mehdi Hasan Khan (mhasan@omicronlab.com).
 
-  Copyright (C) OmicronLab (http://www.omicronlab.com). All Rights Reserved.
+  Copyright (C) OmicronLab (https://www.omicronlab.com). All Rights Reserved.
 
 
   Contributor(s): ______________________________________.
@@ -97,8 +97,7 @@ Begin
           #10 + '' + #10 + '-> Make sure ''autodict.dct'' file is present in ' +
           Path + ' folder, or' + #10 +
           '-> ''autodict.dct'' file is not corrupt.' + #10 + '' + #10 +
-          'Reinstalling Avro Keyboard may solve this problem.' + #10 +
-          'You may contact OmicronLab (http://www.omicronlab.com/forum/) for free support.'),
+          'Reinstalling Avro Keyboard may solve this problem.'),
           'Avro Keyboard', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
       End;
     End;

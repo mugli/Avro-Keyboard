@@ -4,7 +4,7 @@
   The contents of this file are subject to the Mozilla Public License
   Version 1.1 (the "License"); you may not use this file except in
   compliance with the License. You may obtain a copy of the License at
-  http://www.mozilla.org/MPL/
+  https://www.mozilla.org/MPL/
 
   Software distributed under the License is distributed on an "AS IS"
   basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
@@ -16,7 +16,7 @@
   The Initial Developer of the Original Code is
   Mehdi Hasan Khan (mhasan@omicronlab.com).
 
-  Copyright (C) OmicronLab (http://www.omicronlab.com). All Rights Reserved.
+  Copyright (C) OmicronLab (https://www.omicronlab.com). All Rights Reserved.
 
 
   Contributor(s): ______________________________________.
@@ -102,7 +102,6 @@ Type
     comboSkin: TComboBox;
     ScrollBox1: TScrollBox;
     SkinPreviewPic: TImage;
-    cmdDownloadSkin: TButton;
     ccmdAboutSkin: TButton;
     AvroMouse_Panel: TPanel;
     GroupBox5: TGroupBox;
@@ -155,7 +154,6 @@ Type
     Procedure checkTopBarTransparentClick(Sender: TObject);
     Procedure TrackBar_TransparencyChange(Sender: TObject);
     Procedure comboSkinChange(Sender: TObject);
-    Procedure cmdDownloadSkinClick(Sender: TObject);
     Procedure CheckShowPrevWindowClick(Sender: TObject);
     Procedure butEditCustomDictClick(Sender: TObject);
     Procedure cmdAutoCorrectClick(Sender: TObject);
@@ -511,13 +509,6 @@ Procedure TfrmOptions.cmdAutoCorrectClick(Sender: TObject);
 Begin
   CheckCreateForm(TfrmAutoCorrect, frmAutoCorrect, 'frmAutoCorrect');
   frmAutoCorrect.Show;
-End;
-
-{ =============================================================================== }
-
-Procedure TfrmOptions.cmdDownloadSkinClick(Sender: TObject);
-Begin
-  Execute_Something('http://www.omicronlab.com/go.php?id=8');
 End;
 
 { =============================================================================== }
