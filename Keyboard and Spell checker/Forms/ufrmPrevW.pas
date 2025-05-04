@@ -142,101 +142,146 @@ uses
 
 { =============================================================================== }
 
-// UIA as first/prefered method to find caret position, works with modern Windows applications (like the new Notepad)
+// UIA method to find caret position, works with modern Windows applications (like the new Notepad)
 function TfrmPrevW.GetCaretScreenPos_UIA(out X, Y: Integer): Boolean;
 var
+  hr: HRESULT;
   UIAutomation: IUIAutomation;
   FocusedElement: IUIAutomationElement;
+  PatternAsUnknown: IUnknown; 
   TextPattern: IUIAutomationTextPattern;
   TextRanges: IUIAutomationTextRangeArray;
   TextRange: IUIAutomationTextRange;
   Rects: PSafeArray;
   Bounds: array of Double;
   LBound, UBound, I: LongInt;
-  RangeCount: SYSINT;
+  RangeCount: SYSINT; 
+  pvData: Pointer; 
 begin
+
   Result := False;
-  X := -1;
-  Y := -1;
+  X := Screen.Width div 2;
+  Y := Screen.Height - (Height + 100);
 
-  // Initialize UI Automation
-  if Failed(CoCreateInstance(CLASS_CUIAutomation, nil, CLSCTX_INPROC_SERVER, IID_IUIAutomation, UIAutomation)) then
-  begin
-    Log('Error: Failed to initialize UIAutomation');
-    Exit;
-  end;
+  UIAutomation := nil;
+  FocusedElement := nil;
+  PatternAsUnknown := nil;
+  TextPattern := nil;
+  TextRanges := nil;
+  TextRange := nil;
+  Rects := nil;
+  pvData := nil;
 
-  // Get the focused UI element
-  if Failed(UIAutomation.GetFocusedElement(FocusedElement)) or (FocusedElement = nil) then
-  begin
-    Log('Error: No focused element found');
-    Exit;
-  end;
+  try
 
-  // Check if the element supports TextPattern
-  if Failed(FocusedElement.GetCurrentPattern(UIA_TextPatternId, IUnknown(TextPattern))) or (TextPattern = nil) then
-  begin
-    Log('Error: Element does not support TextPattern');
-    Exit;
-  end;
-
-  // Try getting the selection range
-  if Failed(TextPattern.GetSelection(TextRanges)) or (TextRanges = nil) then
-  begin
-    // Fallback: Try getting the full document range instead
-    if Failed(TextPattern.Get_DocumentRange(TextRange)) or (TextRange = nil) then
+    hr := CoCreateInstance(CLASS_CUIAutomation, nil, CLSCTX_INPROC_SERVER, IID_IUIAutomation, UIAutomation);
+    if Failed(hr) or (UIAutomation = nil) then
     begin
-      Log('Error: No text selection or document range found');
-      Exit;
-    end;
-  end
-  else
-  begin
-    // Get the number of text ranges
-    if Failed(TextRanges.Get_Length(RangeCount)) or (RangeCount = 0) then
-    begin
-      Log('Error: No text range found');
+      Log('Error: Failed to initialize UIAutomation.');
       Exit;
     end;
 
-    // Get first text range
-    if (RangeCount > 0) then
+
+    hr := UIAutomation.GetFocusedElement(FocusedElement);
+    if Failed(hr) or (FocusedElement = nil) then
     begin
-      if Failed(TextRanges.GetElement(0, TextRange)) or (TextRange = nil) then
+      Log('Error: No focused element found.');
+      Exit;
+    end;
+
+
+    hr := FocusedElement.GetCurrentPattern(UIA_TextPatternId, PatternAsUnknown);
+    if Succeeded(hr) and (PatternAsUnknown <> nil) then
+      TextPattern := PatternAsUnknown as IUIAutomationTextPattern;
+
+    if TextPattern = nil then
+    begin
+      Log('Info: Focused element does not support TextPattern. Using default position.');
+      Exit;
+    end;
+
+
+    hr := TextPattern.GetSelection(TextRanges);
+    if Failed(hr) or (TextRanges = nil) then
+    begin
+      Log('Warning: Failed to get text selection.');
+      Exit;
+    end
+    else
+    begin
+
+      hr := TextRanges.Get_Length(RangeCount);
+      if Failed(hr) or (RangeCount = 0) then
       begin
-        Log('Error: Failed to retrieve first text range');
+        Log('Warning: No text ranges found in selection.');
         Exit;
+      end
+      else
+      begin
+        hr := TextRanges.GetElement(0, TextRange);
+        if Failed(hr) or (TextRange = nil) then
+        begin
+          Log('Error: Failed to retrieve first text range');
+          TextRange := nil;
+          Exit;
+        end;
       end;
     end;
-  end;
 
-  // Get bounding rectangle
-  if Succeeded(TextRange.GetBoundingRectangles(Rects)) and (Rects <> nil) then
-  begin
-    SafeArrayGetLBound(Rects, 1, LBound);
-    SafeArrayGetUBound(Rects, 1, UBound);
-    if UBound >= LBound then
+
+    if TextRange = nil then
+      Exit;
+
+
+    hr := TextRange.GetBoundingRectangles(Rects);
+    if Succeeded(hr) and (Rects <> nil) then
     begin
-      SetLength(Bounds, (UBound - LBound) + 1);
-      for I := LBound to UBound do
-        SafeArrayGetElement(Rects, I, Bounds[I]);
+      try
+        hr := SafeArrayGetLBound(Rects, 1, LBound);
+        if Failed(hr) then RaiseLastOSError;
 
-      // Get the first bounding box (caret position)
-      if Length(Bounds) >= 4 then // Ensure we have enough data
-      begin
-        X := Round(Bounds[0]); // Left position
-        Y := Round(Bounds[1] + Bounds[3]); // Top + Height = Bottom position
-        Result := True;
-        Exit;
+        hr := SafeArrayGetUBound(Rects, 1, UBound);
+        if Failed(hr) then RaiseLastOSError;
+
+        if (UBound - LBound + 1) >= 4 then
+        begin
+
+          SetLength(Bounds, (UBound - LBound) + 1);
+          hr := SafeArrayAccessData(Rects, pvData);
+          if Failed(hr) or (pvData = nil) then
+            Log('Error: Failed to access SAFEARRAY data.');
+
+          try
+
+            Move(pvData^, Bounds[0], Length(Bounds) * SizeOf(Double));
+
+          finally
+            SafeArrayUnaccessData(Rects);
+            pvData := nil;
+          end;
+
+          X := Round(Bounds[LBound + 0] +  Bounds[LBound + 2]);
+          Y := Round(Bounds[LBound + 1] + Bounds[LBound + 3]);
+          Result := True;
+          Exit;
+        end
+        else
+        ;
+      finally
+
+        if pvData <> nil then
+          SafeArrayUnaccessData(Rects);
+        Rects := nil;
       end;
-    end;
-    SafeArrayDestroy(Rects);
+    end
+    else
+      Log('Error: No bounding rectangle found');
+
+  finally
+
   end;
 
-  // If we reached here, it means bounding rectangles failed
-  Log('Error: No bounding rectangle found');
 end;
-
 { =============================================================================== }
 
 // Try MSAA if UIA fails, works with Chrome, Firefox etc. A little bit slower UIA
@@ -333,7 +378,6 @@ begin
 end;
 
 { =============================================================================== }
-
 function TfrmPrevW.FindCaretPosWindow(out X, Y: Integer): Boolean;
 var
   NowTime: DWORD;
@@ -364,9 +408,9 @@ begin
           YTmp := -1;
           Success := False;
 
-          if GetCaretScreenPos_UIA(XTmp, YTmp) then
+          if GetCaretScreenPos_MSAA(XTmp, YTmp) then
             Success := True
-          else if GetCaretScreenPos_MSAA(XTmp, YTmp) then
+          else if GetCaretScreenPos_UIA(XTmp, YTmp) then
             Success := True
           else if GetCaretScreenPos_Raw(XTmp, YTmp) then
             Success := True;
@@ -743,14 +787,12 @@ begin
 
   J := -1;
   for I := 0 to List.Count - 1 do
-  begin
     if EscapeSpecialCharacters(List.Items[I]) = Item then
     begin
       List.ItemIndex := I;
       J := I;
       break;
     end;
-  end;
 
   if J < 0 then
     List.ItemIndex := 0;
@@ -829,4 +871,3 @@ begin
 end;
 
 end.
-
