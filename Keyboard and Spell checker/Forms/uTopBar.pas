@@ -450,7 +450,7 @@ End;
 Procedure TTopBar.FormHide(Sender: TObject);
 Begin
   TransparencyTimer.Enabled := False;
-  if not ApplicationClosing then
+  If not ApplicationClosing then
     SaveUISettings;
 End;
 
@@ -1692,539 +1692,767 @@ End;
 
 Procedure TTopBar.TmrAppIconTimer(Sender: TObject);
 Var
-  bf: TBLENDFUNCTION;
+  bf: TBlendFunction;
+  TempBitmap: TBitmap;
+  CurrentSource: TBitmap;
+  TargetCanvas: TCanvas;
 Begin
+  TempBitmap := TBitmap.Create;
+  Try
+    TempBitmap.SetSize(ImgAppIcon.Width, ImgAppIcon.Height);
+    TempBitmap.PixelFormat := pf32bit;
 
-  If AppIcon_MouseIn = True Then
-  Begin
-    // blend to over state
-    AppIcon_TranparentValue := AppIcon_TranparentValue + m_BlendingStep;
-    If AppIcon_TranparentValue >= 255 Then
+    If AppIcon_MouseIn then
     Begin
-      TmrAppIcon.Enabled := False;
-      AppIcon_TranparentValue := 0;
-      AppIcon_DrawState;
-      exit;
+      TempBitmap.Canvas.Draw(0, 0, BMP_AppIcon);
+      CurrentSource := BMP_AppIcon_Over;
+    End
+    else
+    Begin
+      TempBitmap.Canvas.Draw(0, 0, BMP_AppIcon_Over);
+      CurrentSource := BMP_AppIcon;
     End;
 
-    bf.BlendOp := 0;
+    AppIcon_TranparentValue := AppIcon_TranparentValue + m_BlendingStep;
+
+    If AppIcon_TranparentValue >= 255 then
+    Begin
+      TmrAppIcon.Enabled := False;
+      AppIcon_TranparentValue := 255;
+
+
+      If (ImgAppIcon.Picture.Bitmap = nil) or
+         (ImgAppIcon.Picture.Bitmap.Width <> CurrentSource.Width) or
+         (ImgAppIcon.Picture.Bitmap.Height <> CurrentSource.Height) or
+         (ImgAppIcon.Picture.Bitmap.PixelFormat <> pf32bit) then
+      Begin
+         If ImgAppIcon.Picture.Bitmap = nil then ImgAppIcon.Picture.Bitmap := TBitmap.Create;
+         ImgAppIcon.Picture.Bitmap.SetSize(CurrentSource.Width, CurrentSource.Height);
+         ImgAppIcon.Picture.Bitmap.PixelFormat := pf32bit;
+      End;
+
+      If AppIcon_MouseIn then
+        ImgAppIcon.Picture.Bitmap.Canvas.Draw(0, 0, BMP_AppIcon_Over)
+      else
+        ImgAppIcon.Picture.Bitmap.Canvas.Draw(0, 0, BMP_AppIcon);
+
+      AppIcon_TranparentValue := 0;
+      Exit;
+    End;
+
+    bf.BlendOp := AC_SRC_OVER;
     bf.BlendFlags := 0;
     bf.SourceConstantAlpha := AppIcon_TranparentValue;
     bf.AlphaFormat := 0;
 
-    Windows.AlphaBlend(ImgAppIcon.Canvas.Handle, 0, 0, ImgAppIcon.Width,
-      ImgAppIcon.Height, BMP_AppIcon_Over.Canvas.Handle, 0, 0, ImgAppIcon.Width,
-      ImgAppIcon.Height, bf);
-  End
-  Else
-  Begin
-    // blend to up state
-    AppIcon_TranparentValue := AppIcon_TranparentValue + m_BlendingStep;
-    If AppIcon_TranparentValue >= 255 Then
+    TargetCanvas := TempBitmap.Canvas;
+
+    If (CurrentSource <> nil) and (CurrentSource.Canvas <> nil) and (CurrentSource.Handle <> 0) then
     Begin
-      TmrAppIcon.Enabled := False;
-      AppIcon_TranparentValue := 0;
-      AppIcon_DrawState;
-      exit;
+       Windows.AlphaBlend(TargetCanvas.Handle, 0, 0, TempBitmap.Width, TempBitmap.Height,
+                                CurrentSource.Canvas.Handle, 0, 0, CurrentSource.Width, CurrentSource.Height, bf)
+
     End;
 
-    bf.BlendOp := 0;
-    bf.BlendFlags := 0;
-    bf.SourceConstantAlpha := AppIcon_TranparentValue;
-    bf.AlphaFormat := 0;
+    If (ImgAppIcon.Picture.Bitmap = nil) or
+       (ImgAppIcon.Picture.Bitmap.Width <> TempBitmap.Width) or
+       (ImgAppIcon.Picture.Bitmap.Height <> TempBitmap.Height) or
+       (ImgAppIcon.Picture.Bitmap.PixelFormat <> pf32bit) then
+    Begin
+       If ImgAppIcon.Picture.Bitmap = nil then ImgAppIcon.Picture.Bitmap := TBitmap.Create;
+       ImgAppIcon.Picture.Bitmap.SetSize(TempBitmap.Width, TempBitmap.Height);
+       ImgAppIcon.Picture.Bitmap.PixelFormat := pf32bit;
+    End;
 
-    Windows.AlphaBlend(ImgAppIcon.Canvas.Handle, 0, 0, ImgAppIcon.Width,
-      ImgAppIcon.Height, BMP_AppIcon.Canvas.Handle, 0, 0, ImgAppIcon.Width,
-      ImgAppIcon.Height, bf);
+    ImgAppIcon.Picture.Bitmap.Canvas.Draw(0, 0, TempBitmap);
+
+  Finally
+    TempBitmap.Free;
   End;
-
-  ImgAppIcon.Refresh;
 End;
 
 { =============================================================================== }
 
 Procedure TTopBar.TmrButtonHelpTimer(Sender: TObject);
 Var
-  bf: TBLENDFUNCTION;
+  bf: TBlendFunction;
+  TempBitmap: TBitmap;
+  CurrentSource: TBitmap;
+  TargetCanvas: TCanvas;
 Begin
+  TempBitmap := TBitmap.Create;
+  Try
+    TempBitmap.SetSize(ImgButtonHelp.Width, ImgButtonHelp.Height);
+    TempBitmap.PixelFormat := pf32bit;
 
-  If ButtonHelp_MouseIn = True Then
-  Begin
-    // blend to over state
-    ButtonHelp_TranparentValue := ButtonHelp_TranparentValue + m_BlendingStep;
-    If ButtonHelp_TranparentValue >= 255 Then
+    If ButtonHelp_MouseIn then
     Begin
-      TmrButtonHelp.Enabled := False;
-      ButtonHelp_TranparentValue := 0;
-      ButtonHelp_DrawState;
-      exit;
+      TempBitmap.Canvas.Draw(0, 0, BMP_ButtonHelp);
+      CurrentSource := BMP_ButtonHelp_Over;
+    End
+    else
+    Begin
+      TempBitmap.Canvas.Draw(0, 0, BMP_ButtonHelp_Over);
+      CurrentSource := BMP_ButtonHelp;
     End;
 
-    bf.BlendOp := 0;
+    ButtonHelp_TranparentValue := ButtonHelp_TranparentValue + m_BlendingStep;
+
+    If ButtonHelp_TranparentValue >= 255 then
+    Begin
+      TmrButtonHelp.Enabled := False;
+      ButtonHelp_TranparentValue := 255;
+
+
+      If (ImgButtonHelp.Picture.Bitmap = nil) or
+         (ImgButtonHelp.Picture.Bitmap.Width <> CurrentSource.Width) or
+         (ImgButtonHelp.Picture.Bitmap.Height <> CurrentSource.Height) or
+         (ImgButtonHelp.Picture.Bitmap.PixelFormat <> pf32bit) then
+      Begin
+         If ImgButtonHelp.Picture.Bitmap = nil then ImgButtonHelp.Picture.Bitmap := TBitmap.Create;
+         ImgButtonHelp.Picture.Bitmap.SetSize(CurrentSource.Width, CurrentSource.Height);
+         ImgButtonHelp.Picture.Bitmap.PixelFormat := pf32bit;
+      End;
+
+      If ButtonHelp_MouseIn then
+        ImgButtonHelp.Picture.Bitmap.Canvas.Draw(0, 0, BMP_ButtonHelp_Over)
+      else
+        ImgButtonHelp.Picture.Bitmap.Canvas.Draw(0, 0, BMP_ButtonHelp);
+
+      ButtonHelp_TranparentValue := 0;
+      Exit;
+    End;
+
+    bf.BlendOp := AC_SRC_OVER;
     bf.BlendFlags := 0;
     bf.SourceConstantAlpha := ButtonHelp_TranparentValue;
     bf.AlphaFormat := 0;
 
-    Windows.AlphaBlend(ImgButtonHelp.Canvas.Handle, 0, 0, ImgButtonHelp.Width,
-      ImgButtonHelp.Height, BMP_ButtonHelp_Over.Canvas.Handle, 0, 0,
-      ImgButtonHelp.Width, ImgButtonHelp.Height, bf);
-  End
-  Else
-  Begin
-    // blend to up state
-    ButtonHelp_TranparentValue := ButtonHelp_TranparentValue + m_BlendingStep;
-    If ButtonHelp_TranparentValue >= 255 Then
+    TargetCanvas := TempBitmap.Canvas;
+
+    If (CurrentSource <> nil) and (CurrentSource.Canvas <> nil) and (CurrentSource.Handle <> 0) then
     Begin
-      TmrButtonHelp.Enabled := False;
-      ButtonHelp_TranparentValue := 0;
-      ButtonHelp_DrawState;
-      exit;
+       Windows.AlphaBlend(TargetCanvas.Handle, 0, 0, TempBitmap.Width, TempBitmap.Height,
+                                CurrentSource.Canvas.Handle, 0, 0, CurrentSource.Width, CurrentSource.Height, bf)
+
     End;
 
-    bf.BlendOp := 0;
-    bf.BlendFlags := 0;
-    bf.SourceConstantAlpha := ButtonHelp_TranparentValue;
-    bf.AlphaFormat := 0;
+    If (ImgButtonHelp.Picture.Bitmap = nil) or
+       (ImgButtonHelp.Picture.Bitmap.Width <> TempBitmap.Width) or
+       (ImgButtonHelp.Picture.Bitmap.Height <> TempBitmap.Height) or
+       (ImgButtonHelp.Picture.Bitmap.PixelFormat <> pf32bit) then
+    Begin
+       If ImgButtonHelp.Picture.Bitmap = nil then ImgButtonHelp.Picture.Bitmap := TBitmap.Create;
+       ImgButtonHelp.Picture.Bitmap.SetSize(TempBitmap.Width, TempBitmap.Height);
+       ImgButtonHelp.Picture.Bitmap.PixelFormat := pf32bit;
+    End;
 
-    Windows.AlphaBlend(ImgButtonHelp.Canvas.Handle, 0, 0, ImgButtonHelp.Width,
-      ImgButtonHelp.Height, BMP_ButtonHelp.Canvas.Handle, 0, 0,
-      ImgButtonHelp.Width, ImgButtonHelp.Height, bf);
+    ImgButtonHelp.Picture.Bitmap.Canvas.Draw(0, 0, TempBitmap);
+
+  Finally
+    TempBitmap.Free;
   End;
-
-  ImgButtonHelp.Refresh;
 End;
 
 { =============================================================================== }
 
 Procedure TTopBar.TmrButtonLayoutDownTimer(Sender: TObject);
 Var
-  bf: TBLENDFUNCTION;
+  bf: TBlendFunction;
+  TempBitmap: TBitmap;
+  CurrentSource: TBitmap;
+  TargetCanvas: TCanvas;
 Begin
+  TempBitmap := TBitmap.Create;
+  Try
+    TempBitmap.SetSize(ImgButtonLayoutDown.Width, ImgButtonLayoutDown.Height);
+    TempBitmap.PixelFormat := pf32bit;
 
-  If ButtonLayoutDown_MouseIn = True Then
-  Begin
-    // blend to over state
-    ButtonLayoutDown_TranparentValue := ButtonLayoutDown_TranparentValue +
-      m_BlendingStep;
-    If ButtonLayoutDown_TranparentValue >= 255 Then
+    If ButtonLayoutDown_MouseIn then
     Begin
-      TmrButtonLayoutDown.Enabled := False;
-      ButtonLayoutDown_TranparentValue := 0;
-      ButtonLayoutDown_DrawState;
-      exit;
+      TempBitmap.Canvas.Draw(0, 0, BMP_ButtonLayoutDown);
+      CurrentSource := BMP_ButtonLayoutDown_Over;
+    End
+    else
+    Begin
+      TempBitmap.Canvas.Draw(0, 0, BMP_ButtonLayoutDown_Over);
+      CurrentSource := BMP_ButtonLayoutDown;
     End;
 
-    bf.BlendOp := 0;
+    ButtonLayoutDown_TranparentValue := ButtonLayoutDown_TranparentValue + m_BlendingStep;
+
+    If ButtonLayoutDown_TranparentValue >= 255 then
+    Begin
+      TmrButtonLayoutDown.Enabled := False;
+      ButtonLayoutDown_TranparentValue := 255;
+
+
+      If (ImgButtonLayoutDown.Picture.Bitmap = nil) or
+         (ImgButtonLayoutDown.Picture.Bitmap.Width <> CurrentSource.Width) or
+         (ImgButtonLayoutDown.Picture.Bitmap.Height <> CurrentSource.Height) or
+         (ImgButtonLayoutDown.Picture.Bitmap.PixelFormat <> pf32bit) then
+      Begin
+         If ImgButtonLayoutDown.Picture.Bitmap = nil then ImgButtonLayoutDown.Picture.Bitmap := TBitmap.Create;
+         ImgButtonLayoutDown.Picture.Bitmap.SetSize(CurrentSource.Width, CurrentSource.Height);
+         ImgButtonLayoutDown.Picture.Bitmap.PixelFormat := pf32bit;
+      End;
+
+      If ButtonLayoutDown_MouseIn then
+        ImgButtonLayoutDown.Picture.Bitmap.Canvas.Draw(0, 0, BMP_ButtonLayoutDown_Over)
+      else
+        ImgButtonLayoutDown.Picture.Bitmap.Canvas.Draw(0, 0, BMP_ButtonLayoutDown);
+
+      ButtonLayoutDown_TranparentValue := 0;
+      Exit;
+    End;
+
+    bf.BlendOp := AC_SRC_OVER;
     bf.BlendFlags := 0;
     bf.SourceConstantAlpha := ButtonLayoutDown_TranparentValue;
     bf.AlphaFormat := 0;
 
-    Windows.AlphaBlend(ImgButtonLayoutDown.Canvas.Handle, 0, 0,
-      ImgButtonLayoutDown.Width, ImgButtonLayoutDown.Height,
-      BMP_ButtonLayoutDown_Over.Canvas.Handle, 0, 0, ImgButtonLayoutDown.Width,
-      ImgButtonLayoutDown.Height, bf);
-  End
-  Else
-  Begin
-    // blend to up state
-    ButtonLayoutDown_TranparentValue := ButtonLayoutDown_TranparentValue +
-      m_BlendingStep;
-    If ButtonLayoutDown_TranparentValue >= 255 Then
+    TargetCanvas := TempBitmap.Canvas;
+
+    If (CurrentSource <> nil) and (CurrentSource.Canvas <> nil) and (CurrentSource.Handle <> 0) then
     Begin
-      TmrButtonLayoutDown.Enabled := False;
-      ButtonLayoutDown_TranparentValue := 0;
-      ButtonLayoutDown_DrawState;
-      exit;
+       Windows.AlphaBlend(TargetCanvas.Handle, 0, 0, TempBitmap.Width, TempBitmap.Height,
+                                CurrentSource.Canvas.Handle, 0, 0, CurrentSource.Width, CurrentSource.Height, bf)
+
     End;
 
-    bf.BlendOp := 0;
-    bf.BlendFlags := 0;
-    bf.SourceConstantAlpha := ButtonLayoutDown_TranparentValue;
-    bf.AlphaFormat := 0;
+    If (ImgButtonLayoutDown.Picture.Bitmap = nil) or
+       (ImgButtonLayoutDown.Picture.Bitmap.Width <> TempBitmap.Width) or
+       (ImgButtonLayoutDown.Picture.Bitmap.Height <> TempBitmap.Height) or
+       (ImgButtonLayoutDown.Picture.Bitmap.PixelFormat <> pf32bit) then
+    Begin
+       If ImgButtonLayoutDown.Picture.Bitmap = nil then ImgButtonLayoutDown.Picture.Bitmap := TBitmap.Create;
+       ImgButtonLayoutDown.Picture.Bitmap.SetSize(TempBitmap.Width, TempBitmap.Height);
+       ImgButtonLayoutDown.Picture.Bitmap.PixelFormat := pf32bit;
+    End;
 
-    Windows.AlphaBlend(ImgButtonLayoutDown.Canvas.Handle, 0, 0,
-      ImgButtonLayoutDown.Width, ImgButtonLayoutDown.Height,
-      BMP_ButtonLayoutDown.Canvas.Handle, 0, 0, ImgButtonLayoutDown.Width,
-      ImgButtonLayoutDown.Height, bf);
+    ImgButtonLayoutDown.Picture.Bitmap.Canvas.Draw(0, 0, TempBitmap);
+
+  Finally
+    TempBitmap.Free;
   End;
 
-  ImgButtonLayoutDown.Refresh;
 End;
 
 { =============================================================================== }
 
 Procedure TTopBar.TmrButtonLayoutTimer(Sender: TObject);
 Var
-  bf: TBLENDFUNCTION;
+  bf: TBlendFunction;
+  TempBitmap: TBitmap;
+  CurrentSource: TBitmap;
+  TargetCanvas: TCanvas;
 Begin
+  TempBitmap := TBitmap.Create;
+  Try
+    TempBitmap.SetSize(ImgButtonLayout.Width, ImgButtonLayout.Height);
+    TempBitmap.PixelFormat := pf32bit;
 
-  If ButtonLayout_MouseIn = True Then
-  Begin
-    // blend to over state
-    ButtonLayout_TranparentValue := ButtonLayout_TranparentValue +
-      m_BlendingStep;
-    If ButtonLayout_TranparentValue >= 255 Then
+    If ButtonLayout_MouseIn then
     Begin
-      TmrButtonLayout.Enabled := False;
-      ButtonLayout_TranparentValue := 0;
-      ButtonLayout_DrawState;
-      exit;
+      TempBitmap.Canvas.Draw(0, 0, BMP_ButtonLayout);
+      CurrentSource := BMP_ButtonLayout_Over;
+    End
+    else
+    Begin
+      TempBitmap.Canvas.Draw(0, 0, BMP_ButtonLayout_Over);
+      CurrentSource := BMP_ButtonLayout;
     End;
 
-    bf.BlendOp := 0;
+    ButtonLayout_TranparentValue := ButtonLayout_TranparentValue + m_BlendingStep;
+
+    If ButtonLayout_TranparentValue >= 255 then
+    Begin
+      TmrButtonLayout.Enabled := False;
+      ButtonLayout_TranparentValue := 255;
+
+
+      If (ImgButtonLayout.Picture.Bitmap = nil) or
+         (ImgButtonLayout.Picture.Bitmap.Width <> CurrentSource.Width) or
+         (ImgButtonLayout.Picture.Bitmap.Height <> CurrentSource.Height) or
+         (ImgButtonLayout.Picture.Bitmap.PixelFormat <> pf32bit) then
+      Begin
+         If ImgButtonLayout.Picture.Bitmap = nil then ImgButtonLayout.Picture.Bitmap := TBitmap.Create;
+         ImgButtonLayout.Picture.Bitmap.SetSize(CurrentSource.Width, CurrentSource.Height);
+         ImgButtonLayout.Picture.Bitmap.PixelFormat := pf32bit;
+      End;
+
+      If ButtonLayout_MouseIn then
+        ImgButtonLayout.Picture.Bitmap.Canvas.Draw(0, 0, BMP_ButtonLayout_Over)
+      else
+        ImgButtonLayout.Picture.Bitmap.Canvas.Draw(0, 0, BMP_ButtonLayout);
+
+      ButtonLayout_TranparentValue := 0;
+      Exit;
+    End;
+
+    bf.BlendOp := AC_SRC_OVER;
     bf.BlendFlags := 0;
     bf.SourceConstantAlpha := ButtonLayout_TranparentValue;
     bf.AlphaFormat := 0;
 
-    Windows.AlphaBlend(ImgButtonLayout.Canvas.Handle, 0, 0,
-      ImgButtonLayout.Width, ImgButtonLayout.Height,
-      BMP_ButtonLayout_Over.Canvas.Handle, 0, 0, ImgButtonLayout.Width,
-      ImgButtonLayout.Height, bf);
-  End
-  Else
-  Begin
-    // blend to up state
-    ButtonLayout_TranparentValue := ButtonLayout_TranparentValue +
-      m_BlendingStep;
-    If ButtonLayout_TranparentValue >= 255 Then
+    TargetCanvas := TempBitmap.Canvas;
+
+    If (CurrentSource <> nil) and (CurrentSource.Canvas <> nil) and (CurrentSource.Handle <> 0) then
     Begin
-      TmrButtonLayout.Enabled := False;
-      ButtonLayout_TranparentValue := 0;
-      ButtonLayout_DrawState;
-      exit;
+       Windows.AlphaBlend(TargetCanvas.Handle, 0, 0, TempBitmap.Width, TempBitmap.Height,
+                                CurrentSource.Canvas.Handle, 0, 0, CurrentSource.Width, CurrentSource.Height, bf)
+
     End;
 
-    bf.BlendOp := 0;
-    bf.BlendFlags := 0;
-    bf.SourceConstantAlpha := ButtonLayout_TranparentValue;
-    bf.AlphaFormat := 0;
+    If (ImgButtonLayout.Picture.Bitmap = nil) or
+       (ImgButtonLayout.Picture.Bitmap.Width <> TempBitmap.Width) or
+       (ImgButtonLayout.Picture.Bitmap.Height <> TempBitmap.Height) or
+       (ImgButtonLayout.Picture.Bitmap.PixelFormat <> pf32bit) then
+    Begin
+       If ImgButtonLayout.Picture.Bitmap = nil then ImgButtonLayout.Picture.Bitmap := TBitmap.Create;
+       ImgButtonLayout.Picture.Bitmap.SetSize(TempBitmap.Width, TempBitmap.Height);
+       ImgButtonLayout.Picture.Bitmap.PixelFormat := pf32bit;
+    End;
 
-    Windows.AlphaBlend(ImgButtonLayout.Canvas.Handle, 0, 0,
-      ImgButtonLayout.Width, ImgButtonLayout.Height,
-      BMP_ButtonLayout.Canvas.Handle, 0, 0, ImgButtonLayout.Width,
-      ImgButtonLayout.Height, bf);
+    ImgButtonLayout.Picture.Bitmap.Canvas.Draw(0, 0, TempBitmap);
+
+  Finally
+    TempBitmap.Free;
   End;
-
-  ImgButtonLayout.Refresh;
 End;
 
 { =============================================================================== }
 
 Procedure TTopBar.TmrButtonMinimizeTimer(Sender: TObject);
 Var
-  bf: TBLENDFUNCTION;
+  bf: TBlendFunction;
+  TempBitmap: TBitmap;
+  CurrentSource: TBitmap;
+  TargetCanvas: TCanvas;
 Begin
+  TempBitmap := TBitmap.Create;
+  Try
+    TempBitmap.SetSize(ImgButtonMinimize.Width, ImgButtonMinimize.Height);
+    TempBitmap.PixelFormat := pf32bit;
 
-  If ButtonMinimize_MouseIn = True Then
-  Begin
-    // blend to over state
-    ButtonMinimize_TranparentValue := ButtonMinimize_TranparentValue +
-      m_BlendingStep;
-    If ButtonMinimize_TranparentValue >= 255 Then
+    If ButtonMinimize_MouseIn then
     Begin
-      TmrButtonMinimize.Enabled := False;
-      ButtonMinimize_TranparentValue := 0;
-      ButtonMinimize_DrawState;
-      exit;
+      TempBitmap.Canvas.Draw(0, 0, BMP_ButtonMinimize);
+      CurrentSource := BMP_ButtonMinimize_Over;
+    End
+    else
+    Begin
+      TempBitmap.Canvas.Draw(0, 0, BMP_ButtonMinimize_Over);
+      CurrentSource := BMP_ButtonMinimize;
     End;
 
-    bf.BlendOp := 0;
+    ButtonMinimize_TranparentValue := ButtonMinimize_TranparentValue + m_BlendingStep;
+
+    If ButtonMinimize_TranparentValue >= 255 then
+    Begin
+      TmrButtonMinimize.Enabled := False;
+      ButtonMinimize_TranparentValue := 255;
+
+
+      If (ImgButtonMinimize.Picture.Bitmap = nil) or
+         (ImgButtonMinimize.Picture.Bitmap.Width <> CurrentSource.Width) or
+         (ImgButtonMinimize.Picture.Bitmap.Height <> CurrentSource.Height) or
+         (ImgButtonMinimize.Picture.Bitmap.PixelFormat <> pf32bit) then
+      Begin
+         If ImgButtonMinimize.Picture.Bitmap = nil then ImgButtonMinimize.Picture.Bitmap := TBitmap.Create;
+         ImgButtonMinimize.Picture.Bitmap.SetSize(CurrentSource.Width, CurrentSource.Height);
+         ImgButtonMinimize.Picture.Bitmap.PixelFormat := pf32bit;
+      End;
+
+      If ButtonMinimize_MouseIn then
+        ImgButtonMinimize.Picture.Bitmap.Canvas.Draw(0, 0, BMP_ButtonMinimize_Over)
+      else
+        ImgButtonMinimize.Picture.Bitmap.Canvas.Draw(0, 0, BMP_ButtonMinimize);
+
+      ButtonMinimize_TranparentValue := 0;
+      Exit;
+    End;
+
+    bf.BlendOp := AC_SRC_OVER;
     bf.BlendFlags := 0;
     bf.SourceConstantAlpha := ButtonMinimize_TranparentValue;
     bf.AlphaFormat := 0;
 
-    Windows.AlphaBlend(ImgButtonMinimize.Canvas.Handle, 0, 0,
-      ImgButtonMinimize.Width, ImgButtonMinimize.Height,
-      BMP_ButtonMinimize_Over.Canvas.Handle, 0, 0, ImgButtonMinimize.Width,
-      ImgButtonMinimize.Height, bf);
-  End
-  Else
-  Begin
-    // blend to up state
-    ButtonMinimize_TranparentValue := ButtonMinimize_TranparentValue +
-      m_BlendingStep;
-    If ButtonMinimize_TranparentValue >= 255 Then
+    TargetCanvas := TempBitmap.Canvas;
+
+    If (CurrentSource <> nil) and (CurrentSource.Canvas <> nil) and (CurrentSource.Handle <> 0) then
     Begin
-      TmrButtonMinimize.Enabled := False;
-      ButtonMinimize_TranparentValue := 0;
-      ButtonMinimize_DrawState;
-      exit;
+       Windows.AlphaBlend(TargetCanvas.Handle, 0, 0, TempBitmap.Width, TempBitmap.Height,
+                                CurrentSource.Canvas.Handle, 0, 0, CurrentSource.Width, CurrentSource.Height, bf)
+
     End;
 
-    bf.BlendOp := 0;
-    bf.BlendFlags := 0;
-    bf.SourceConstantAlpha := ButtonMinimize_TranparentValue;
-    bf.AlphaFormat := 0;
+    If (ImgButtonMinimize.Picture.Bitmap = nil) or
+       (ImgButtonMinimize.Picture.Bitmap.Width <> TempBitmap.Width) or
+       (ImgButtonMinimize.Picture.Bitmap.Height <> TempBitmap.Height) or
+       (ImgButtonMinimize.Picture.Bitmap.PixelFormat <> pf32bit) then
+    Begin
+       If ImgButtonMinimize.Picture.Bitmap = nil then ImgButtonMinimize.Picture.Bitmap := TBitmap.Create;
+       ImgButtonMinimize.Picture.Bitmap.SetSize(TempBitmap.Width, TempBitmap.Height);
+       ImgButtonMinimize.Picture.Bitmap.PixelFormat := pf32bit;
+    End;
 
-    Windows.AlphaBlend(ImgButtonMinimize.Canvas.Handle, 0, 0,
-      ImgButtonMinimize.Width, ImgButtonMinimize.Height,
-      BMP_ButtonMinimize.Canvas.Handle, 0, 0, ImgButtonMinimize.Width,
-      ImgButtonMinimize.Height, bf);
+    ImgButtonMinimize.Picture.Bitmap.Canvas.Draw(0, 0, TempBitmap);
+
+  Finally
+    TempBitmap.Free;
   End;
-
-  ImgButtonMinimize.Refresh;
 End;
 
 { =============================================================================== }
 
 Procedure TTopBar.TmrButtonModeTimer(Sender: TObject);
 Var
-  bf: TBLENDFUNCTION;
+  bf: TBlendFunction;
+  TempBitmap: TBitmap;
+  CurrentSource: TBitmap;
+  BaseSource: TBitmap;
+  TargetCanvas: TCanvas;
 Begin
-  If ButtonMode_State = State1 Then
-  Begin
-    If ButtonMode_MouseIn Then
+  TempBitmap := TBitmap.Create;
+  Try
+
+    TempBitmap.SetSize(ImgButtonMode.Width, ImgButtonMode.Height);
+    TempBitmap.PixelFormat := pf32bit;
+
+
+    If ButtonMode_State = State1 then
     Begin
-      // blend to over state
-      ButtonMode_TranparentValue := ButtonMode_TranparentValue + m_BlendingStep;
-      If ButtonMode_TranparentValue >= 255 Then
+      If ButtonMode_MouseIn then
       Begin
-        TmrButtonMode.Enabled := False;
-        ButtonMode_TranparentValue := 0;
-        ButtonMode_DrawState;
-        exit;
+        BaseSource := BMP_ButtonModeE;
+        CurrentSource := BMP_ButtonModeE_Over;
+      End
+      else
+      Begin
+        BaseSource := BMP_ButtonModeE_Over;
+        CurrentSource := BMP_ButtonModeE;
       End;
-
-      bf.BlendOp := 0;
-      bf.BlendFlags := 0;
-      bf.SourceConstantAlpha := ButtonMode_TranparentValue;
-      bf.AlphaFormat := 0;
-
-      Windows.AlphaBlend(ImgButtonMode.Canvas.Handle, 0, 0, ImgButtonMode.Width,
-        ImgButtonMode.Height, BMP_ButtonModeE_Over.Canvas.Handle, 0, 0,
-        ImgButtonMode.Width, ImgButtonMode.Height, bf);
     End
-    Else
+    else
     Begin
-      // blend to up state
-      ButtonMode_TranparentValue := ButtonMode_TranparentValue + m_BlendingStep;
-      If ButtonMode_TranparentValue >= 255 Then
+      If ButtonMode_MouseIn then
       Begin
-        TmrButtonMode.Enabled := False;
-        ButtonMode_TranparentValue := 0;
-        ButtonMode_DrawState;
-        exit;
+        BaseSource := BMP_ButtonModeB;
+        CurrentSource := BMP_ButtonModeB_Over;
+      End
+      else
+      Begin
+        BaseSource := BMP_ButtonModeB_Over;
+        CurrentSource := BMP_ButtonModeB;
       End;
-
-      bf.BlendOp := 0;
-      bf.BlendFlags := 0;
-      bf.SourceConstantAlpha := ButtonMode_TranparentValue;
-      bf.AlphaFormat := 0;
-
-      Windows.AlphaBlend(ImgButtonMode.Canvas.Handle, 0, 0, ImgButtonMode.Width,
-        ImgButtonMode.Height, BMP_ButtonModeE.Canvas.Handle, 0, 0,
-        ImgButtonMode.Width, ImgButtonMode.Height, bf);
     End;
-  End
-  Else
-  Begin
-    If ButtonMode_MouseIn Then
-    Begin
-      // blend to over state
-      ButtonMode_TranparentValue := ButtonMode_TranparentValue + m_BlendingStep;
 
-      If ButtonMode_TranparentValue >= 255 Then
+    If Assigned(BaseSource) then
+      TempBitmap.Canvas.Draw(0, 0, BaseSource);
+
+    ButtonMode_TranparentValue := ButtonMode_TranparentValue + m_BlendingStep;
+
+
+    If ButtonMode_TranparentValue >= 255 then
+    Begin
+      TmrButtonMode.Enabled := False;
+      ButtonMode_TranparentValue := 255;
+
+      If (ImgButtonMode.Picture.Bitmap = nil) or
+         (ImgButtonMode.Picture.Bitmap.Width <> CurrentSource.Width) or
+         (ImgButtonMode.Picture.Bitmap.Height <> CurrentSource.Height) or
+         (ImgButtonMode.Picture.Bitmap.PixelFormat <> pf32bit) then
       Begin
-        TmrButtonMode.Enabled := False;
-        ButtonMode_TranparentValue := 0;
-        ButtonMode_DrawState;
-        exit;
+         If ImgButtonMode.Picture.Bitmap = nil then ImgButtonMode.Picture.Bitmap := TBitmap.Create;
+         ImgButtonMode.Picture.Bitmap.SetSize(CurrentSource.Width, CurrentSource.Height);
+         ImgButtonMode.Picture.Bitmap.PixelFormat := pf32bit;
       End;
 
-      bf.BlendOp := 0;
-      bf.BlendFlags := 0;
-      bf.SourceConstantAlpha := ButtonMode_TranparentValue;
-      bf.AlphaFormat := 0;
+      If Assigned(CurrentSource) then
+          ImgButtonMode.Picture.Bitmap.Canvas.Draw(0, 0, CurrentSource);
 
-      Windows.AlphaBlend(ImgButtonMode.Canvas.Handle, 0, 0, ImgButtonMode.Width,
-        ImgButtonMode.Height, BMP_ButtonModeB_Over.Canvas.Handle, 0, 0,
-        ImgButtonMode.Width, ImgButtonMode.Height, bf);
-    End
-    Else
-    Begin
-      // blend to up state
-      ButtonMode_TranparentValue := ButtonMode_TranparentValue + m_BlendingStep;
-
-      If ButtonMode_TranparentValue >= 255 Then
-      Begin
-        TmrButtonMode.Enabled := False;
-        ButtonMode_TranparentValue := 0;
-        ButtonMode_DrawState;
-        exit;
-      End;
-
-      bf.BlendOp := 0;
-      bf.BlendFlags := 0;
-      bf.SourceConstantAlpha := ButtonMode_TranparentValue;
-      bf.AlphaFormat := 0;
-
-      Windows.AlphaBlend(ImgButtonMode.Canvas.Handle, 0, 0, ImgButtonMode.Width,
-        ImgButtonMode.Height, BMP_ButtonModeB.Canvas.Handle, 0, 0,
-        ImgButtonMode.Width, ImgButtonMode.Height, bf);
+      ButtonMode_TranparentValue := 0;
+      Exit;
     End;
+
+    bf.BlendOp := AC_SRC_OVER;
+    bf.BlendFlags := 0;
+    bf.SourceConstantAlpha := ButtonMode_TranparentValue;
+    bf.AlphaFormat := 0;
+
+    TargetCanvas := TempBitmap.Canvas;
+
+    If Assigned(CurrentSource) and (CurrentSource.Canvas <> nil) and (CurrentSource.Handle <> 0) then
+    Begin
+        Windows.AlphaBlend(TargetCanvas.Handle, 0, 0, TempBitmap.Width, TempBitmap.Height,
+                           CurrentSource.Canvas.Handle, 0, 0, CurrentSource.Width, CurrentSource.Height, bf);
+    End;
+
+    If (ImgButtonMode.Picture.Bitmap = nil) or
+       (ImgButtonMode.Picture.Bitmap.Width <> TempBitmap.Width) or
+       (ImgButtonMode.Picture.Bitmap.Height <> TempBitmap.Height) or
+       (ImgButtonMode.Picture.Bitmap.PixelFormat <> pf32bit) then
+    Begin
+       If ImgButtonMode.Picture.Bitmap = nil then ImgButtonMode.Picture.Bitmap := TBitmap.Create;
+       ImgButtonMode.Picture.Bitmap.SetSize(TempBitmap.Width, TempBitmap.Height);
+       ImgButtonMode.Picture.Bitmap.PixelFormat := pf32bit;
+    End;
+
+    ImgButtonMode.Picture.Bitmap.Canvas.Draw(0, 0, TempBitmap);
+
+  Finally
+    TempBitmap.Free;
   End;
-
-  ImgButtonMode.Refresh;
-
 End;
 
 { =============================================================================== }
 
 Procedure TTopBar.TmrButtonMouseTimer(Sender: TObject);
 Var
-  bf: TBLENDFUNCTION;
+  bf: TBlendFunction;
+  TempBitmap: TBitmap;
+  CurrentSource: TBitmap;
+  TargetCanvas: TCanvas;
 Begin
+  TempBitmap := TBitmap.Create;
+  Try
+    TempBitmap.SetSize(ImgButtonMouse.Width, ImgButtonMouse.Height);
+    TempBitmap.PixelFormat := pf32bit;
 
-  If ButtonMouse_MouseIn = True Then
-  Begin
-    // blend to over state
-    ButtonMouse_TranparentValue := ButtonMouse_TranparentValue + m_BlendingStep;
-    If ButtonMouse_TranparentValue >= 255 Then
+    If ButtonMouse_MouseIn then
     Begin
-      TmrButtonMouse.Enabled := False;
-      ButtonMouse_TranparentValue := 0;
-      ButtonMouse_DrawState;
-      exit;
+      TempBitmap.Canvas.Draw(0, 0, BMP_ButtonMouse);
+      CurrentSource := BMP_ButtonMouse_Over;
+    End
+    else
+    Begin
+      TempBitmap.Canvas.Draw(0, 0, BMP_ButtonMouse_Over);
+      CurrentSource := BMP_ButtonMouse;
     End;
 
-    bf.BlendOp := 0;
+    ButtonMouse_TranparentValue := ButtonMouse_TranparentValue + m_BlendingStep;
+
+    If ButtonMouse_TranparentValue >= 255 then
+    Begin
+      TmrButtonMouse.Enabled := False;
+      ButtonMouse_TranparentValue := 255;
+
+
+      If (ImgButtonMouse.Picture.Bitmap = nil) or
+         (ImgButtonMouse.Picture.Bitmap.Width <> CurrentSource.Width) or
+         (ImgButtonMouse.Picture.Bitmap.Height <> CurrentSource.Height) or
+         (ImgButtonMouse.Picture.Bitmap.PixelFormat <> pf32bit) then
+      Begin
+         If ImgButtonMouse.Picture.Bitmap = nil then ImgButtonMouse.Picture.Bitmap := TBitmap.Create;
+         ImgButtonMouse.Picture.Bitmap.SetSize(CurrentSource.Width, CurrentSource.Height);
+         ImgButtonMouse.Picture.Bitmap.PixelFormat := pf32bit;
+      End;
+
+      If ButtonMouse_MouseIn then
+        ImgButtonMouse.Picture.Bitmap.Canvas.Draw(0, 0, BMP_ButtonMouse_Over)
+      else
+        ImgButtonMouse.Picture.Bitmap.Canvas.Draw(0, 0, BMP_ButtonMouse);
+
+      ButtonMouse_TranparentValue := 0;
+      Exit;
+    End;
+
+    bf.BlendOp := AC_SRC_OVER;
     bf.BlendFlags := 0;
     bf.SourceConstantAlpha := ButtonMouse_TranparentValue;
     bf.AlphaFormat := 0;
 
-    Windows.AlphaBlend(ImgButtonMouse.Canvas.Handle, 0, 0, ImgButtonMouse.Width,
-      ImgButtonMouse.Height, BMP_ButtonMouse_Over.Canvas.Handle, 0, 0,
-      ImgButtonMouse.Width, ImgButtonMouse.Height, bf);
-  End
-  Else
-  Begin
-    // blend to up state
-    ButtonMouse_TranparentValue := ButtonMouse_TranparentValue + m_BlendingStep;
-    If ButtonMouse_TranparentValue >= 255 Then
+    TargetCanvas := TempBitmap.Canvas;
+
+    If (CurrentSource <> nil) and (CurrentSource.Canvas <> nil) and (CurrentSource.Handle <> 0) then
     Begin
-      TmrButtonMouse.Enabled := False;
-      ButtonMouse_TranparentValue := 0;
-      ButtonMouse_DrawState;
-      exit;
+       Windows.AlphaBlend(TargetCanvas.Handle, 0, 0, TempBitmap.Width, TempBitmap.Height,
+                                CurrentSource.Canvas.Handle, 0, 0, CurrentSource.Width, CurrentSource.Height, bf)
+
     End;
 
-    bf.BlendOp := 0;
-    bf.BlendFlags := 0;
-    bf.SourceConstantAlpha := ButtonMouse_TranparentValue;
-    bf.AlphaFormat := 0;
+    If (ImgButtonMouse.Picture.Bitmap = nil) or
+       (ImgButtonMouse.Picture.Bitmap.Width <> TempBitmap.Width) or
+       (ImgButtonMouse.Picture.Bitmap.Height <> TempBitmap.Height) or
+       (ImgButtonMouse.Picture.Bitmap.PixelFormat <> pf32bit) then
+    Begin
+       If ImgButtonMouse.Picture.Bitmap = nil then ImgButtonMouse.Picture.Bitmap := TBitmap.Create;
+       ImgButtonMouse.Picture.Bitmap.SetSize(TempBitmap.Width, TempBitmap.Height);
+       ImgButtonMouse.Picture.Bitmap.PixelFormat := pf32bit;
+    End;
 
-    Windows.AlphaBlend(ImgButtonMouse.Canvas.Handle, 0, 0, ImgButtonMouse.Width,
-      ImgButtonMouse.Height, BMP_ButtonMouse.Canvas.Handle, 0, 0,
-      ImgButtonMouse.Width, ImgButtonMouse.Height, bf);
+    ImgButtonMouse.Picture.Bitmap.Canvas.Draw(0, 0, TempBitmap);
+
+  Finally
+    TempBitmap.Free;
   End;
-
-  ImgButtonMouse.Refresh;
 End;
 
 { =============================================================================== }
 
 Procedure TTopBar.TmrButtonToolsTimer(Sender: TObject);
 Var
-  bf: TBLENDFUNCTION;
+  bf: TBlendFunction;
+  TempBitmap: TBitmap;
+  CurrentSource: TBitmap;
+  TargetCanvas: TCanvas;
 Begin
+  TempBitmap := TBitmap.Create;
+  Try
+    TempBitmap.SetSize(ImgButtonTools.Width, ImgButtonTools.Height);
+    TempBitmap.PixelFormat := pf32bit;
 
-  If ButtonTools_MouseIn = True Then
-  Begin
-    // blend to over state
-    ButtonTools_TranparentValue := ButtonTools_TranparentValue + m_BlendingStep;
-    If ButtonTools_TranparentValue >= 255 Then
+    If ButtonTools_MouseIn then
     Begin
-      TmrButtonTools.Enabled := False;
-      ButtonTools_TranparentValue := 0;
-      ButtonTools_DrawState;
-      exit;
+      TempBitmap.Canvas.Draw(0, 0, BMP_ButtonTools);
+      CurrentSource := BMP_ButtonTools_Over;
+    End
+    else
+    Begin
+      TempBitmap.Canvas.Draw(0, 0, BMP_ButtonTools_Over);
+      CurrentSource := BMP_ButtonTools;
     End;
 
-    bf.BlendOp := 0;
+    ButtonTools_TranparentValue := ButtonTools_TranparentValue + m_BlendingStep;
+
+    If ButtonTools_TranparentValue >= 255 then
+    Begin
+      TmrButtonTools.Enabled := False;
+      ButtonTools_TranparentValue := 255;
+
+
+      If (ImgButtonTools.Picture.Bitmap = nil) or
+         (ImgButtonTools.Picture.Bitmap.Width <> CurrentSource.Width) or
+         (ImgButtonTools.Picture.Bitmap.Height <> CurrentSource.Height) or
+         (ImgButtonTools.Picture.Bitmap.PixelFormat <> pf32bit) then
+      Begin
+         If ImgButtonTools.Picture.Bitmap = nil then ImgButtonTools.Picture.Bitmap := TBitmap.Create;
+         ImgButtonTools.Picture.Bitmap.SetSize(CurrentSource.Width, CurrentSource.Height);
+         ImgButtonTools.Picture.Bitmap.PixelFormat := pf32bit;
+      End;
+
+      If ButtonTools_MouseIn then
+        ImgButtonTools.Picture.Bitmap.Canvas.Draw(0, 0, BMP_ButtonTools_Over)
+      else
+        ImgButtonTools.Picture.Bitmap.Canvas.Draw(0, 0, BMP_ButtonTools);
+
+      ButtonTools_TranparentValue := 0;
+      Exit;
+    End;
+
+    bf.BlendOp := AC_SRC_OVER;
     bf.BlendFlags := 0;
     bf.SourceConstantAlpha := ButtonTools_TranparentValue;
     bf.AlphaFormat := 0;
 
-    Windows.AlphaBlend(ImgButtonTools.Canvas.Handle, 0, 0, ImgButtonTools.Width,
-      ImgButtonTools.Height, BMP_ButtonTools_Over.Canvas.Handle, 0, 0,
-      ImgButtonTools.Width, ImgButtonTools.Height, bf);
-  End
-  Else
-  Begin
-    // blend to up state
-    ButtonTools_TranparentValue := ButtonTools_TranparentValue + m_BlendingStep;
-    If ButtonTools_TranparentValue >= 255 Then
+    TargetCanvas := TempBitmap.Canvas;
+
+    If (CurrentSource <> nil) and (CurrentSource.Canvas <> nil) and (CurrentSource.Handle <> 0) then
     Begin
-      TmrButtonTools.Enabled := False;
-      ButtonTools_TranparentValue := 0;
-      ButtonTools_DrawState;
-      exit;
+       Windows.AlphaBlend(TargetCanvas.Handle, 0, 0, TempBitmap.Width, TempBitmap.Height,
+                                CurrentSource.Canvas.Handle, 0, 0, CurrentSource.Width, CurrentSource.Height, bf)
+
     End;
 
-    bf.BlendOp := 0;
-    bf.BlendFlags := 0;
-    bf.SourceConstantAlpha := ButtonTools_TranparentValue;
-    bf.AlphaFormat := 0;
+    If (ImgButtonTools.Picture.Bitmap = nil) or
+       (ImgButtonTools.Picture.Bitmap.Width <> TempBitmap.Width) or
+       (ImgButtonTools.Picture.Bitmap.Height <> TempBitmap.Height) or
+       (ImgButtonTools.Picture.Bitmap.PixelFormat <> pf32bit) then
+    Begin
+       If ImgButtonTools.Picture.Bitmap = nil then ImgButtonTools.Picture.Bitmap := TBitmap.Create;
+       ImgButtonTools.Picture.Bitmap.SetSize(TempBitmap.Width, TempBitmap.Height);
+       ImgButtonTools.Picture.Bitmap.PixelFormat := pf32bit;
+    End;
 
-    Windows.AlphaBlend(ImgButtonTools.Canvas.Handle, 0, 0, ImgButtonTools.Width,
-      ImgButtonTools.Height, BMP_ButtonTools.Canvas.Handle, 0, 0,
-      ImgButtonTools.Width, ImgButtonTools.Height, bf);
+    ImgButtonTools.Picture.Bitmap.Canvas.Draw(0, 0, TempBitmap);
+
+  Finally
+    TempBitmap.Free;
   End;
-
-  ImgButtonTools.Refresh;
 End;
 
 { =============================================================================== }
 
 Procedure TTopBar.TmrButtonWWWTimer(Sender: TObject);
 Var
-  bf: TBLENDFUNCTION;
+  bf: TBlendFunction;
+  TempBitmap: TBitmap;
+  CurrentSource: TBitmap;
+  TargetCanvas: TCanvas;
 Begin
+  TempBitmap := TBitmap.Create;
+  Try
+    TempBitmap.SetSize(ImgButtonWWW.Width, ImgButtonWWW.Height);
+    TempBitmap.PixelFormat := pf32bit;
 
-  If ButtonWWW_MouseIn = True Then
-  Begin
-    // blend to over state
-    ButtonWWW_TranparentValue := ButtonWWW_TranparentValue + m_BlendingStep;
-    If ButtonWWW_TranparentValue >= 255 Then
+    If ButtonWWW_MouseIn then
     Begin
-      TmrButtonWWW.Enabled := False;
-      ButtonWWW_TranparentValue := 0;
-      ButtonWWW_DrawState;
-      exit;
+      TempBitmap.Canvas.Draw(0, 0, BMP_ButtonWWW);
+      CurrentSource := BMP_ButtonWWW_Over;
+    End
+    else
+    Begin
+      TempBitmap.Canvas.Draw(0, 0, BMP_ButtonWWW_Over);
+      CurrentSource := BMP_ButtonWWW;
     End;
 
-    bf.BlendOp := 0;
+    ButtonWWW_TranparentValue := ButtonWWW_TranparentValue + m_BlendingStep;
+
+    If ButtonWWW_TranparentValue >= 255 then
+    Begin
+      TmrButtonWWW.Enabled := False;
+      ButtonWWW_TranparentValue := 255;
+
+
+      If (ImgButtonWWW.Picture.Bitmap = nil) or
+         (ImgButtonWWW.Picture.Bitmap.Width <> CurrentSource.Width) or
+         (ImgButtonWWW.Picture.Bitmap.Height <> CurrentSource.Height) or
+         (ImgButtonWWW.Picture.Bitmap.PixelFormat <> pf32bit) then
+      Begin
+         If ImgButtonWWW.Picture.Bitmap = nil then ImgButtonWWW.Picture.Bitmap := TBitmap.Create;
+         ImgButtonWWW.Picture.Bitmap.SetSize(CurrentSource.Width, CurrentSource.Height);
+         ImgButtonWWW.Picture.Bitmap.PixelFormat := pf32bit;
+      End;
+
+      If ButtonWWW_MouseIn then
+        ImgButtonWWW.Picture.Bitmap.Canvas.Draw(0, 0, BMP_ButtonWWW_Over)
+      else
+        ImgButtonWWW.Picture.Bitmap.Canvas.Draw(0, 0, BMP_ButtonWWW);
+
+      ButtonWWW_TranparentValue := 0;
+      Exit;
+    End;
+
+    bf.BlendOp := AC_SRC_OVER;
     bf.BlendFlags := 0;
     bf.SourceConstantAlpha := ButtonWWW_TranparentValue;
     bf.AlphaFormat := 0;
 
-    Windows.AlphaBlend(ImgButtonWWW.Canvas.Handle, 0, 0, ImgButtonWWW.Width,
-      ImgButtonWWW.Height, BMP_ButtonWWW_Over.Canvas.Handle, 0, 0,
-      ImgButtonWWW.Width, ImgButtonWWW.Height, bf);
-  End
-  Else
-  Begin
-    // blend to up state
-    ButtonWWW_TranparentValue := ButtonWWW_TranparentValue + m_BlendingStep;
-    If ButtonWWW_TranparentValue >= 255 Then
+    TargetCanvas := TempBitmap.Canvas;
+
+    If (CurrentSource <> nil) and (CurrentSource.Canvas <> nil) and (CurrentSource.Handle <> 0) then
     Begin
-      TmrButtonWWW.Enabled := False;
-      ButtonWWW_TranparentValue := 0;
-      ButtonWWW_DrawState;
-      exit;
+       Windows.AlphaBlend(TargetCanvas.Handle, 0, 0, TempBitmap.Width, TempBitmap.Height,
+                                CurrentSource.Canvas.Handle, 0, 0, CurrentSource.Width, CurrentSource.Height, bf)
+
     End;
 
-    bf.BlendOp := 0;
-    bf.BlendFlags := 0;
-    bf.SourceConstantAlpha := ButtonWWW_TranparentValue;
-    bf.AlphaFormat := 0;
+    If (ImgButtonWWW.Picture.Bitmap = nil) or
+       (ImgButtonWWW.Picture.Bitmap.Width <> TempBitmap.Width) or
+       (ImgButtonWWW.Picture.Bitmap.Height <> TempBitmap.Height) or
+       (ImgButtonWWW.Picture.Bitmap.PixelFormat <> pf32bit) then
+    Begin
+       If ImgButtonWWW.Picture.Bitmap = nil then ImgButtonWWW.Picture.Bitmap := TBitmap.Create;
+       ImgButtonWWW.Picture.Bitmap.SetSize(TempBitmap.Width, TempBitmap.Height);
+       ImgButtonWWW.Picture.Bitmap.PixelFormat := pf32bit;
+    End;
 
-    Windows.AlphaBlend(ImgButtonWWW.Canvas.Handle, 0, 0, ImgButtonWWW.Width,
-      ImgButtonWWW.Height, BMP_ButtonWWW.Canvas.Handle, 0, 0,
-      ImgButtonWWW.Width, ImgButtonWWW.Height, bf);
+    ImgButtonWWW.Picture.Bitmap.Canvas.Draw(0, 0, TempBitmap);
+
+  Finally
+    TempBitmap.Free;
   End;
-
-  ImgButtonWWW.Refresh;
 End;
 
 { =============================================================================== }
