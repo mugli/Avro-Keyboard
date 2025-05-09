@@ -34,9 +34,8 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, GIFImg, ExtCtrls, StdCtrls, Buttons, Generics.Collections, StrUtils,
-  Menus, UIAutomationClient_TLB, ComObj, ActiveX, OleAcc, DebugLog,
-  System.Threading, System.SyncObjs;
+  GIFImg, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Dialogs, Buttons, Generics.Collections,
+  StrUtils, Menus, OleAcc, DebugLog, System.Threading, System.SyncObjs;
 
 type
   TfrmPrevW = class(TForm)
@@ -62,7 +61,6 @@ type
     ShowPreviewWindow1: TMenuItem;
     ShowPreviewWindow2: TMenuItem;
     List: TListBox;
-    CaretTracker: TTimer;
     procedure FormCreate(Sender: TObject);
     procedure ButtonMouseEnter(Sender: TObject);
     procedure ButtonMouseLeave(Sender: TObject);
@@ -76,7 +74,6 @@ type
     procedure lblCaptionMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure ButtonMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure ListClick(Sender: TObject);
-    procedure CaretTrackerTimer(Sender: TObject);
   private
     { Private declarations }
 
@@ -84,16 +81,10 @@ type
     PreviewWCurrentlyVisible: Boolean;
     MouseDown: Boolean;
 
-    // For debouncing FindCaretPosWindow
-    FLastCaretCheckTime: DWORD;
-    FCachedCaretX, FCachedCaretY: Integer;
-    FCachedCaretResult: Boolean;
-    FWorkerRunning: Integer; // Acts like atomic boolean (0 = no, 1 = yes)
     function FindCaretPosWindow(out X, Y: Integer): Boolean;
-
-    function GetCaretScreenPos_UIA(out X, Y: Integer): Boolean;
     function GetCaretScreenPos_MSAA(out X, Y: Integer): Boolean;
     function GetCaretScreenPos_Raw(out X, Y: Integer): Boolean;
+    procedure FindCaretAndMoveWindow();
 
     procedure InitPreviewWindowAtAppStart;
     procedure DelayedExecute(DelayMs: Integer; Proc: TThreadMethod);
@@ -127,12 +118,6 @@ type
 var
   frmPrevW: TfrmPrevW;
 
-const
-  UIA_TextPatternId: Integer = 10014;
-  // Manually define missing constant for UI automation type
-
-  DEBOUNCE_INTERVAL_MS = 100;
-
 implementation
 
 {$R *.dfm}
@@ -140,106 +125,10 @@ implementation
 uses
   uWindowHandlers, uTopBar, uForm1, BanglaChars, uRegistrySettings;
 
-{ =============================================================================== }
-
-// UIA as first/prefered method to find caret position, works with modern Windows applications (like the new Notepad)
-function TfrmPrevW.GetCaretScreenPos_UIA(out X, Y: Integer): Boolean;
-var
-  UIAutomation: IUIAutomation;
-  FocusedElement: IUIAutomationElement;
-  TextPattern: IUIAutomationTextPattern;
-  TextRanges: IUIAutomationTextRangeArray;
-  TextRange: IUIAutomationTextRange;
-  Rects: PSafeArray;
-  Bounds: array of Double;
-  LBound, UBound, I: LongInt;
-  RangeCount: SYSINT;
-begin
-  Result := False;
-  X := -1;
-  Y := -1;
-
-  // Initialize UI Automation
-  if Failed(CoCreateInstance(CLASS_CUIAutomation, nil, CLSCTX_INPROC_SERVER, IID_IUIAutomation, UIAutomation)) then
-  begin
-    Log('Error: Failed to initialize UIAutomation');
-    Exit;
-  end;
-
-  // Get the focused UI element
-  if Failed(UIAutomation.GetFocusedElement(FocusedElement)) or (FocusedElement = nil) then
-  begin
-    Log('Error: No focused element found');
-    Exit;
-  end;
-
-  // Check if the element supports TextPattern
-  if Failed(FocusedElement.GetCurrentPattern(UIA_TextPatternId, IUnknown(TextPattern))) or (TextPattern = nil) then
-  begin
-    Log('Error: Element does not support TextPattern');
-    Exit;
-  end;
-
-  // Try getting the selection range
-  if Failed(TextPattern.GetSelection(TextRanges)) or (TextRanges = nil) then
-  begin
-    // Fallback: Try getting the full document range instead
-    if Failed(TextPattern.Get_DocumentRange(TextRange)) or (TextRange = nil) then
-    begin
-      Log('Error: No text selection or document range found');
-      Exit;
-    end;
-  end
-  else
-  begin
-    // Get the number of text ranges
-    if Failed(TextRanges.Get_Length(RangeCount)) or (RangeCount = 0) then
-    begin
-      Log('Error: No text range found');
-      Exit;
-    end;
-
-    // Get first text range
-    if (RangeCount > 0) then
-    begin
-      if Failed(TextRanges.GetElement(0, TextRange)) or (TextRange = nil) then
-      begin
-        Log('Error: Failed to retrieve first text range');
-        Exit;
-      end;
-    end;
-  end;
-
-  // Get bounding rectangle
-  if Succeeded(TextRange.GetBoundingRectangles(Rects)) and (Rects <> nil) then
-  begin
-    SafeArrayGetLBound(Rects, 1, LBound);
-    SafeArrayGetUBound(Rects, 1, UBound);
-    if UBound >= LBound then
-    begin
-      SetLength(Bounds, (UBound - LBound) + 1);
-      for I := LBound to UBound do
-        SafeArrayGetElement(Rects, I, Bounds[I]);
-
-      // Get the first bounding box (caret position)
-      if Length(Bounds) >= 4 then // Ensure we have enough data
-      begin
-        X := Round(Bounds[0]); // Left position
-        Y := Round(Bounds[1] + Bounds[3]); // Top + Height = Bottom position
-        Result := True;
-        Exit;
-      end;
-    end;
-    SafeArrayDestroy(Rects);
-  end;
-
-  // If we reached here, it means bounding rectangles failed
-  Log('Error: No bounding rectangle found');
-end;
 
 { =============================================================================== }
 
-// Try MSAA if UIA fails, works with Chrome, Firefox etc. A little bit slower UIA
+// MSAA works with Chrome, Firefox etc.
 function TfrmPrevW.GetCaretScreenPos_MSAA(out X, Y: Integer): Boolean;
 var
   Acc: IAccessible;
@@ -259,7 +148,6 @@ begin
     Log('Ignoring Handle in GetCaretScreenPos_MSAA. Handle = ', Handle);
     Exit;
   end;
-
 
   // Try to get the accessibility object
   if AccessibleObjectFromWindow(Handle, OBJID_CARET, IID_IAccessible, Acc) <> S_OK then
@@ -289,7 +177,7 @@ end;
 
 { =============================================================================== }
 
-// Final Fallback: Raw Caret Position, works with classic win32 applications (classic Notepad)
+// Fallback: Raw Caret Position, works with classic win32 applications
 function TfrmPrevW.GetCaretScreenPos_Raw(out X, Y: Integer): Boolean;
 var
   ThreadID: DWORD;
@@ -335,54 +223,18 @@ end;
 { =============================================================================== }
 
 function TfrmPrevW.FindCaretPosWindow(out X, Y: Integer): Boolean;
-var
-  NowTime: DWORD;
 begin
-  // Debounce if called frequently
-  NowTime := GetTickCount;
-  if (NowTime - FLastCaretCheckTime < DEBOUNCE_INTERVAL_MS) then
+  if GetCaretScreenPos_MSAA(X, Y) then
   begin
-    X := FCachedCaretX;
-    Y := FCachedCaretY;
-    Result := FCachedCaretResult;
-    Exit;
+    Result := True;
+    Log('Caret found using MSAA. X = ' + IntToStr(X) + ', Y = ' + IntToStr(Y));
+  end
+  else if GetCaretScreenPos_Raw(X, Y) then
+  begin
+    Result := True;
+    Log('Caret found using Raw. X = ' + IntToStr(X) + ', Y = ' + IntToStr(Y));
   end;
 
-  FLastCaretCheckTime := NowTime;
-
-  // Launch async update, but don't wait for it
-  if TInterlocked.CompareExchange(Integer(FWorkerRunning), 1, 0) = 0 then
-  begin
-    TTask.Run(
-      procedure
-      var
-        XTmp, YTmp: Integer;
-        Success: Boolean;
-      begin
-        try
-          XTmp := -1;
-          YTmp := -1;
-          Success := False;
-
-          if GetCaretScreenPos_UIA(XTmp, YTmp) then
-            Success := True
-          else if GetCaretScreenPos_MSAA(XTmp, YTmp) then
-            Success := True
-          else if GetCaretScreenPos_Raw(XTmp, YTmp) then
-            Success := True;
-
-          FCachedCaretX := XTmp;
-          FCachedCaretY := YTmp;
-          FCachedCaretResult := Success;
-        finally
-          TInterlocked.Exchange(Integer(FWorkerRunning), 0);
-        end;
-      end);
-  end;
-
-  X := FCachedCaretX;
-  Y := FCachedCaretY;
-  Result := FCachedCaretResult;
 end;
 
 { =============================================================================== }
@@ -443,15 +295,12 @@ end;
 
 { =============================================================================== }
 
-procedure TfrmPrevW.UpdatePreviewCaption(const EnglishT: string);
+procedure TfrmPrevW.FindCaretAndMoveWindow();
 var
   Handle: HWND;
   X, Y: Integer;
   FoundCaret: Boolean;
 begin
-  lblPreview.Caption := EnglishT;
-
-  // User typed something, update window position if we are following caret
   Handle := GetForegroundWindow;
   if ShouldFollowCaret(Handle) then
   begin
@@ -463,6 +312,19 @@ begin
 
   if ShouldShowWindow then
     ShowPreview;
+end;
+{ =============================================================================== }
+
+procedure TfrmPrevW.UpdatePreviewCaption(const EnglishT: string);
+var
+  Handle: HWND;
+  X, Y: Integer;
+  FoundCaret: Boolean;
+begin
+  lblPreview.Caption := EnglishT;
+
+  // User typed something, update window position if we are following caret
+  DelayedExecute(20, FindCaretAndMoveWindow);
 end;
 
 { =============================================================================== }
@@ -532,20 +394,11 @@ end;
 
 { =============================================================================== }
 
-// Hack: GetCaretScreenPos_UIA doesn't work without the timer calling it frequently
-procedure TfrmPrevW.CaretTrackerTimer(Sender: TObject);
-var
-  X, Y: Integer;
-begin
-  if PreviewWCurrentlyVisible and (FollowCaretByDefault = 'YES') then
-    GetCaretScreenPos_UIA(X, Y);
-end;
-
 procedure TfrmPrevW.CreateParams(var Params: TCreateParams);
 begin
   inherited CreateParams(Params);
   Params.ExStyle := Params.ExStyle or WS_EX_TOPMOST or WS_EX_NOACTIVATE or WS_EX_TOOLWINDOW;
-  Params.WndParent := GetDesktopwindow;
+  Params.WndParent := GetDesktopWindow;
 end;
 
 { =============================================================================== }
@@ -664,6 +517,8 @@ begin
   Result := PreviewWCurrentlyVisible;
 end;
 
+{ =============================================================================== }
+
 procedure TfrmPrevW.ShowPreview;
 begin
   TopMost(frmPrevW.Handle);
@@ -671,6 +526,8 @@ begin
   PreviewWCurrentlyVisible := True;
   Application.ProcessMessages;
 end;
+
+{ =============================================================================== }
 
 procedure TfrmPrevW.HidePreview;
 begin
