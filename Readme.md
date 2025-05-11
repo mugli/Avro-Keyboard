@@ -22,6 +22,8 @@ https://www.embarcadero.com/products/delphi/starter/free-download
 
 ## Building Standard and Portable editions
 
+### Compiler Directives
+
 Open `ProjectDefines.inc` file in the root folder of the source.
 
 For building portable edition, add the following line in this file and compile:
@@ -36,6 +38,14 @@ file or make it a comment like the following and then compile:
 or,
 
     //{$Define PortableOn}
+
+### Building Projects
+
+Delphi community edition doesn't come with command line compiler. In order to build projects:
+
+- Run `build-ce.bat`
+- Open `WholeProject.groupproj` in Delphi IDE and run `Build All` from the project group
+- Built and renamed files will be under `build` directory
 
 ## Notable contributions
 
