@@ -25,11 +25,11 @@
   =============================================================================
 }
 
-Unit clsSpellPhoneticSuggestionBuilder;
+unit clsSpellPhoneticSuggestionBuilder;
 
-Interface
+interface
 
-Uses
+uses
   BanglaChars,
   SysUtils,
   StrUtils,
@@ -38,48 +38,48 @@ Uses
   uRegExPhoneticSearch_Spell,
   classes;
 
+type
+  TPhoneticSpellSuggestion = class
+    private
+      FWord:            string;
+      FReversePhonetic: TReversePhonetic;
+      FEnglishToRegEx:  TEnglishToRegEx;
+      FResult:          TStringList;
 
-Type
-  TPhoneticSpellSuggestion = Class
-  Private
-    FWord: String;
-    FReversePhonetic: TReversePhonetic;
-    FEnglishToRegEx: TEnglishToRegEx;
-    FResult: TStringList;
+      procedure Search;
+      procedure AddSuffix(MainStr: string);
 
-    Procedure Search;
-    Procedure AddSuffix(MainStr: String);
+    public
+      procedure BuildSuggestion(WrongWord: string; var Suggestion: TStringList);
+      constructor Create;
+      destructor Destroy; override;
+  end;
 
-  Public
-    Procedure BuildSuggestion(WrongWord: String; Var Suggestion: TStringList);
-    Constructor Create;
-    Destructor Destroy; Override;
-  End;
+implementation
 
-Implementation
+uses
+  uDBase;
 
-Uses uDBase;
-
-Procedure TPhoneticSpellSuggestion.Search;
-Var
-  rPhoneticText: String;
-Begin
+procedure TPhoneticSpellSuggestion.Search;
+var
+  rPhoneticText: string;
+begin
   rPhoneticText := FReversePhonetic.Convert(FWord);
 
   FResult.Clear;
   AddSuffix(rPhoneticText);
-End;
+end;
 
-Procedure TPhoneticSpellSuggestion.AddSuffix(MainStr: String);
-Var
-  iLen, J, K: Integer;
-  isSuffix, WithoutSuffix: String;
-  B_Suffix: String;
-  TempList: TStringList;
-  ListOfPart: TStringList;
+procedure TPhoneticSpellSuggestion.AddSuffix(MainStr: string);
+var
+  iLen, J, K:              Integer;
+  isSuffix, WithoutSuffix: string;
+  B_Suffix:                string;
+  TempList:                TStringList;
+  ListOfPart:              TStringList;
 
-  rPhoneticRegx: String;
-Begin
+  rPhoneticRegx: string;
+begin
   iLen := Length(MainStr);
   FResult.Sorted := True;
   FResult.Duplicates := dupIgnore;
@@ -95,76 +95,72 @@ Begin
   rPhoneticRegx := FEnglishToRegEx.Convert(MainStr);
   SearchPhonetic_Spell(MainStr, rPhoneticRegx, TempList);
 
-  If iLen >= 2 Then
-  Begin
-    For J := 2 To iLen Do
-    Begin
+  if iLen >= 2 then
+  begin
+    for J := 2 to iLen do
+    begin
       isSuffix := LowerCase(MidStr(MainStr, J, iLen));
-      If Suffix.TryGetValue(isSuffix, B_Suffix) Then
-      Begin
+      if Suffix.TryGetValue(isSuffix, B_Suffix) then
+      begin
         WithoutSuffix := leftstr(MainStr, Length(MainStr) - Length(isSuffix));
 
         ListOfPart.Clear;
         rPhoneticRegx := FEnglishToRegEx.Convert(WithoutSuffix);
         SearchPhonetic_Spell(WithoutSuffix, rPhoneticRegx, ListOfPart);
 
-        For K := 0 To ListOfPart.Count - 1 Do
-        Begin
-          If IsVowel(RightStr(ListOfPart[K], 1)) And
-            (IsKar(leftstr(B_Suffix, 1))) Then
+        for K := 0 to ListOfPart.Count - 1 do
+        begin
+          if IsVowel(RightStr(ListOfPart[K], 1)) and (IsKar(leftstr(B_Suffix, 1))) then
             TempList.Add(ListOfPart[K] + b_Y + B_Suffix)
-          Else
-          Begin
-            If RightStr(ListOfPart[K], 1) = b_Khandatta Then
-              TempList.Add(MidStr(ListOfPart[K], 1, Length(ListOfPart[K]) - 1) +
-                b_T + B_Suffix)
-            Else If RightStr(ListOfPart[K], 1) = b_Anushar Then
-              TempList.Add(MidStr(ListOfPart[K], 1, Length(ListOfPart[K]) - 1) +
-                b_NGA + B_Suffix)
-            Else
+          else
+          begin
+            if RightStr(ListOfPart[K], 1) = b_Khandatta then
+              TempList.Add(MidStr(ListOfPart[K], 1, Length(ListOfPart[K]) - 1) + b_T + B_Suffix)
+            else if RightStr(ListOfPart[K], 1) = b_Anushar then
+              TempList.Add(MidStr(ListOfPart[K], 1, Length(ListOfPart[K]) - 1) + b_NGA + B_Suffix)
+            else
               TempList.Add(ListOfPart[K] + B_Suffix);
-          End;
-        End;
-      End;
-    End;
-  End;
+          end;
+        end;
+      end;
+    end;
+  end;
 
-  For J := 0 To TempList.Count - 1 Do
-  Begin
+  for J := 0 to TempList.Count - 1 do
+  begin
     FResult.Add(TempList[J]);
-  End;
+  end;
 
   TempList.Clear;
   ListOfPart.Clear;
   FreeAndNil(TempList);
   FreeAndNil(ListOfPart);
 
-End;
+end;
 
-Procedure TPhoneticSpellSuggestion.BuildSuggestion(WrongWord: String;
-  Var Suggestion: TStringList);
-Begin
+procedure TPhoneticSpellSuggestion.BuildSuggestion(WrongWord: string; var Suggestion: TStringList);
+begin
   FWord := Trim(WrongWord);
   Search;
   Suggestion.Assign(FResult);
-End;
+end;
 
-Constructor TPhoneticSpellSuggestion.Create;
-Begin
-  Inherited Create;
+constructor TPhoneticSpellSuggestion.Create;
+begin
+  inherited Create;
   FReversePhonetic := TReversePhonetic.Create;
   FEnglishToRegEx := TEnglishToRegEx.Create;
   FResult := TStringList.Create;
-End;
+end;
 
-Destructor TPhoneticSpellSuggestion.Destroy;
-Begin
+destructor TPhoneticSpellSuggestion.Destroy;
+begin
   // FSplittedWord := Nil;
   FreeAndNil(FReversePhonetic);
   FreeAndNil(FEnglishToRegEx);
   FResult.Clear;
   FreeAndNil(FResult);
-  Inherited Destroy;
-End;
+  inherited Destroy;
+end;
 
-End.
+end.

@@ -26,11 +26,11 @@
 }
 
 {$INCLUDE ../ProjectDefines.inc}
-Unit ufrmAboutSkinLayout;
+unit ufrmAboutSkinLayout;
 
-Interface
+interface
 
-Uses
+uses
   Windows,
   Messages,
   SysUtils,
@@ -42,8 +42,8 @@ Uses
   Dialogs,
   StdCtrls;
 
-Type
-  TfrmAboutSkinLayout = Class(TForm)
+type
+  TfrmAboutSkinLayout = class(TForm)
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
@@ -53,53 +53,52 @@ Type
     txtDeveloper: TEdit;
     Button1: TButton;
     txtComment: TMemo;
-    Procedure FormClose(Sender: TObject; Var Action: TCloseAction);
-    Procedure Button1Click(Sender: TObject);
-  Private
-    { Private declarations }
-  Public
-    { Public declarations }
-    Procedure ShowDescription;
-  End;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure Button1Click(Sender: TObject);
+    private
+      { Private declarations }
+    public
+      { Public declarations }
+      procedure ShowDescription;
+  end;
 
-Var
+var
   frmAboutSkinLayout: TfrmAboutSkinLayout;
 
-Implementation
+implementation
 
 {$R *.dfm}
 
-Uses
+uses
   uWindowHandlers,
   uTopBar;
 
 { =============================================================================== }
 
-Procedure TfrmAboutSkinLayout.Button1Click(Sender: TObject);
-Begin
+procedure TfrmAboutSkinLayout.Button1Click(Sender: TObject);
+begin
   Self.Close;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmAboutSkinLayout.FormClose(Sender: TObject;
-  Var Action: TCloseAction);
-Begin
+procedure TfrmAboutSkinLayout.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
   Action := caFree;
 
-  frmAboutSkinLayout := Nil;
-End;
+  frmAboutSkinLayout := nil;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmAboutSkinLayout.ShowDescription;
-Begin
+procedure TfrmAboutSkinLayout.ShowDescription;
+begin
   Self.Show;
   TopMost(Self.Handle);
-  If IsFormVisible('TopBar') = True Then
+  if IsFormVisible('TopBar') = True then
     TopMost(TopBar.Handle);
-End;
+end;
 
 { =============================================================================== }
 
-End.
+end.

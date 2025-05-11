@@ -26,33 +26,33 @@
 }
 
 {$INCLUDE ../ProjectDefines.inc}
-Unit uLocale;
+unit uLocale;
 
-Interface
+interface
 
-Uses
+uses
   Windows,
   SysUtils,
   Messages;
 
-Const
-  LANG_EN_US: String = '00000409';
-  LANG_BN_IN: String = '00000445';
-  LANG_BN_BD: String = '00000845';
-  LANG_Assamese: String = '0000044D';
+const
+  LANG_EN_US: string                  = '00000409';
+  LANG_BN_IN: string                  = '00000445';
+  LANG_BN_BD: string                  = '00000845';
+  LANG_Assamese: string               = '0000044D';
   INPUTLANGCHANGE_SYSCHARSET: Integer = $1;
 
-Procedure ChangeLocaleToBangla(Const TopWnd: HWND);
-Procedure ChangeLocaleToEnglish(Const TopWnd: HWND); // Required for ANSI mode
-Procedure ChangeLocalToAny(Const TargetWin: HWND; FullLocaleMsg: Cardinal);
-Function GetForeignLocale(Const TargetWin: HWND): Cardinal;
-Procedure InstallLocale;
-Function IsBangladeshLocaleInstalled: Boolean;
-Function IsAssameseLocaleInstalled: Boolean;
+procedure ChangeLocaleToBangla(const TopWnd: HWND);
+procedure ChangeLocaleToEnglish(const TopWnd: HWND); // Required for ANSI mode
+procedure ChangeLocalToAny(const TargetWin: HWND; FullLocaleMsg: Cardinal);
+function GetForeignLocale(const TargetWin: HWND): Cardinal;
+procedure InstallLocale;
+function IsBangladeshLocaleInstalled: Boolean;
+function IsAssameseLocaleInstalled: Boolean;
 
-Implementation
+implementation
 
-Uses
+uses
   clsRegistry_XMLSetting,
   uRegistrySettings,
   WindowsVersion;
@@ -60,67 +60,62 @@ Uses
 {$HINTS Off}
 { =============================================================================== }
 
-Function IsAssameseLocaleInstalled: Boolean;
-Var
+function IsAssameseLocaleInstalled: Boolean;
+var
   Reg: TMyRegistry;
-Begin
+begin
   Result := False;
   Reg := TMyRegistry.create;
   Reg.RootKey := HKEY_LOCAL_MACHINE;
 
-  If Reg.KeyExists('SYSTEM\CurrentControlSet\Control\Keyboard Layouts\0000044D')
-    And Reg.KeyExists('SYSTEM\ControlSet001\Control\Keyboard Layouts\0000044D')
-    And Reg.KeyExists
-    ('SYSTEM\ControlSet002\Control\Keyboard Layouts\0000044D') Then
+  if Reg.KeyExists('SYSTEM\CurrentControlSet\Control\Keyboard Layouts\0000044D') and Reg.KeyExists('SYSTEM\ControlSet001\Control\Keyboard Layouts\0000044D') and
+    Reg.KeyExists('SYSTEM\ControlSet002\Control\Keyboard Layouts\0000044D') then
     Result := True
-  Else
+  else
     Result := False;
 
   Reg.Free;
-End;
+end;
 
 {$HINTS On}
 { =============================================================================== }
 
 {$HINTS Off}
 
-Function IsBangladeshLocaleInstalled: Boolean;
-Var
+function IsBangladeshLocaleInstalled: Boolean;
+var
   Reg: TMyRegistry;
-Begin
+begin
   Result := False;
   Reg := TMyRegistry.create;
   Reg.RootKey := HKEY_LOCAL_MACHINE;
 
-  If Reg.KeyExists('SYSTEM\CurrentControlSet\Control\Keyboard Layouts\00000845')
-    And Reg.KeyExists('SYSTEM\ControlSet001\Control\Keyboard Layouts\00000845')
-    And Reg.KeyExists
-    ('SYSTEM\ControlSet002\Control\Keyboard Layouts\00000845') Then
+  if Reg.KeyExists('SYSTEM\CurrentControlSet\Control\Keyboard Layouts\00000845') and Reg.KeyExists('SYSTEM\ControlSet001\Control\Keyboard Layouts\00000845') and
+    Reg.KeyExists('SYSTEM\ControlSet002\Control\Keyboard Layouts\00000845') then
     Result := True
-  Else
+  else
     Result := False;
 
   Reg.Free;
-End;
+end;
 
 {$HINTS On}
 { =============================================================================== }
 
-Procedure InstallLocale;
-Var
-  Reg: TMyRegistry;
-  LayoutDisplayName: String;
-  LayoutFile: String;
-  LayoutText: String;
-Begin
+procedure InstallLocale;
+var
+  Reg:               TMyRegistry;
+  LayoutDisplayName: string;
+  LayoutFile:        string;
+  LayoutText:        string;
+begin
   Reg := TMyRegistry.create;
   Reg.RootKey := HKEY_LOCAL_MACHINE;
 
   // ====================================================================
   // Install Bangla BD
-  If Reg.OpenKey('SYSTEM\CurrentControlSet\Control\Keyboard Layouts\00000845',
-    True) = True Then
-  Begin
+  if Reg.OpenKey('SYSTEM\CurrentControlSet\Control\Keyboard Layouts\00000845', True) = True then
+  begin
     LayoutDisplayName := Reg.ReadStringDef('Layout Display Name', 'Bangla BD');
     LayoutFile := Reg.ReadStringDef('Layout File', 'KBDUS.DLL');
     LayoutText := Reg.ReadStringDef('Layout Text', 'Bangla BD');
@@ -128,13 +123,12 @@ Begin
     Reg.WriteString('Layout Display Name', LayoutDisplayName);
     Reg.WriteString('Layout File', LayoutFile);
     Reg.WriteString('Layout Text', LayoutText);
-  End;
+  end;
   Reg.CloseKey;
 
   Reg.RootKey := HKEY_LOCAL_MACHINE;
-  If Reg.OpenKey('SYSTEM\ControlSet001\Control\Keyboard Layouts\00000845', True)
-    = True Then
-  Begin
+  if Reg.OpenKey('SYSTEM\ControlSet001\Control\Keyboard Layouts\00000845', True) = True then
+  begin
     LayoutDisplayName := Reg.ReadStringDef('Layout Display Name', 'Bangla BD');
     LayoutFile := Reg.ReadStringDef('Layout File', 'KBDUS.DLL');
     LayoutText := Reg.ReadStringDef('Layout Text', 'Bangla BD');
@@ -142,13 +136,12 @@ Begin
     Reg.WriteString('Layout Display Name', LayoutDisplayName);
     Reg.WriteString('Layout File', LayoutFile);
     Reg.WriteString('Layout Text', LayoutText);
-  End;
+  end;
   Reg.CloseKey;
 
   Reg.RootKey := HKEY_LOCAL_MACHINE;
-  If Reg.OpenKey('SYSTEM\ControlSet002\Control\Keyboard Layouts\00000845', True)
-    = True Then
-  Begin
+  if Reg.OpenKey('SYSTEM\ControlSet002\Control\Keyboard Layouts\00000845', True) = True then
+  begin
     LayoutDisplayName := Reg.ReadStringDef('Layout Display Name', 'Bangla BD');
     LayoutFile := Reg.ReadStringDef('Layout File', 'KBDUS.DLL');
     LayoutText := Reg.ReadStringDef('Layout Text', 'Bangla BD');
@@ -156,15 +149,14 @@ Begin
     Reg.WriteString('Layout Display Name', LayoutDisplayName);
     Reg.WriteString('Layout File', LayoutFile);
     Reg.WriteString('Layout Text', LayoutText);
-  End;
+  end;
   Reg.CloseKey;
 
   // ====================================================================' +
   // Install Assamese
   Reg.RootKey := HKEY_LOCAL_MACHINE;
-  If Reg.OpenKey('SYSTEM\CurrentControlSet\Control\Keyboard Layouts\0000044D',
-    True) = True Then
-  Begin
+  if Reg.OpenKey('SYSTEM\CurrentControlSet\Control\Keyboard Layouts\0000044D', True) = True then
+  begin
     LayoutDisplayName := Reg.ReadStringDef('Layout Display Name', 'Assamese');
     LayoutFile := Reg.ReadStringDef('Layout File', 'KBDUS.DLL');
     LayoutText := Reg.ReadStringDef('Layout Text', 'Assamese');
@@ -172,13 +164,12 @@ Begin
     Reg.WriteString('Layout Display Name', LayoutDisplayName);
     Reg.WriteString('Layout File', LayoutFile);
     Reg.WriteString('Layout Text', LayoutText);
-  End;
+  end;
   Reg.CloseKey;
 
   Reg.RootKey := HKEY_LOCAL_MACHINE;
-  If Reg.OpenKey('SYSTEM\ControlSet001\Control\Keyboard Layouts\0000044D', True)
-    = True Then
-  Begin
+  if Reg.OpenKey('SYSTEM\ControlSet001\Control\Keyboard Layouts\0000044D', True) = True then
+  begin
     LayoutDisplayName := Reg.ReadStringDef('Layout Display Name', 'Assamese');
     LayoutFile := Reg.ReadStringDef('Layout File', 'KBDUS.DLL');
     LayoutText := Reg.ReadStringDef('Layout Text', 'Assamese');
@@ -186,13 +177,12 @@ Begin
     Reg.WriteString('Layout Display Name', LayoutDisplayName);
     Reg.WriteString('Layout File', LayoutFile);
     Reg.WriteString('Layout Text', LayoutText);
-  End;
+  end;
   Reg.CloseKey;
 
   Reg.RootKey := HKEY_LOCAL_MACHINE;
-  If Reg.OpenKey('SYSTEM\ControlSet002\Control\Keyboard Layouts\0000044D', True)
-    = True Then
-  Begin
+  if Reg.OpenKey('SYSTEM\ControlSet002\Control\Keyboard Layouts\0000044D', True) = True then
+  begin
     LayoutDisplayName := Reg.ReadStringDef('Layout Display Name', 'Assamese');
     LayoutFile := Reg.ReadStringDef('Layout File', 'KBDUS.DLL');
     LayoutText := Reg.ReadStringDef('Layout Text', 'Assamese');
@@ -200,71 +190,65 @@ Begin
     Reg.WriteString('Layout Display Name', LayoutDisplayName);
     Reg.WriteString('Layout File', LayoutFile);
     Reg.WriteString('Layout Text', LayoutText);
-  End;
+  end;
   Reg.CloseKey;
 
   { ====================================================================
     Install Bangla - India
     Present in WinXp Sp2 or later
     So, don't install on these platforms }
-  If (Not IsWinXPSP2Plus) Or IsWinVistaOrLater Then
-  Begin
+  if (not IsWinXPSP2Plus) or IsWinVistaOrLater then
+  begin
     Reg.RootKey := HKEY_LOCAL_MACHINE;
-    If Reg.OpenKey('SYSTEM\CurrentControlSet\Control\Keyboard Layouts\00000445',
-      True) = True Then
-    Begin
-      LayoutDisplayName := Reg.ReadStringDef('Layout Display Name',
-        'Bangla IN');
+    if Reg.OpenKey('SYSTEM\CurrentControlSet\Control\Keyboard Layouts\00000445', True) = True then
+    begin
+      LayoutDisplayName := Reg.ReadStringDef('Layout Display Name', 'Bangla IN');
       LayoutFile := Reg.ReadStringDef('Layout File', 'KBDUS.DLL');
       LayoutText := Reg.ReadStringDef('Layout Text', 'Bangla IN');
 
       Reg.WriteString('Layout Display Name', LayoutDisplayName);
       Reg.WriteString('Layout File', LayoutFile);
       Reg.WriteString('Layout Text', LayoutText);
-    End;
+    end;
     Reg.CloseKey;
 
     Reg.RootKey := HKEY_LOCAL_MACHINE;
-    If Reg.OpenKey('SYSTEM\ControlSet001\Control\Keyboard Layouts\00000445',
-      True) = True Then
-    Begin
-      LayoutDisplayName := Reg.ReadStringDef('Layout Display Name',
-        'Bangla IN');
+    if Reg.OpenKey('SYSTEM\ControlSet001\Control\Keyboard Layouts\00000445', True) = True then
+    begin
+      LayoutDisplayName := Reg.ReadStringDef('Layout Display Name', 'Bangla IN');
       LayoutFile := Reg.ReadStringDef('Layout File', 'KBDUS.DLL');
       LayoutText := Reg.ReadStringDef('Layout Text', 'Bangla IN');
 
       Reg.WriteString('Layout Display Name', LayoutDisplayName);
       Reg.WriteString('Layout File', LayoutFile);
       Reg.WriteString('Layout Text', LayoutText);
-    End;
+    end;
     Reg.CloseKey;
 
     Reg.RootKey := HKEY_LOCAL_MACHINE;
-    If Reg.OpenKey('SYSTEM\ControlSet002\Control\Keyboard Layouts\00000445',
-      True) = True Then
-    Begin
-      LayoutDisplayName := Reg.ReadStringDef('Layout Display Name',
-        'Bangla IN');
+    if Reg.OpenKey('SYSTEM\ControlSet002\Control\Keyboard Layouts\00000445', True) = True then
+    begin
+      LayoutDisplayName := Reg.ReadStringDef('Layout Display Name', 'Bangla IN');
       LayoutFile := Reg.ReadStringDef('Layout File', 'KBDUS.DLL');
       LayoutText := Reg.ReadStringDef('Layout Text', 'Bangla IN');
 
       Reg.WriteString('Layout Display Name', LayoutDisplayName);
       Reg.WriteString('Layout File', LayoutFile);
       Reg.WriteString('Layout Text', LayoutText);
-    End;
+    end;
     Reg.CloseKey;
-  End;
+  end;
 
   Reg.Free;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure ChangeLocaleToEnglish(Const TopWnd: HWND); // Required for ANSI mode
-Var
-  Local_ID: Integer;
+procedure ChangeLocaleToEnglish(const TopWnd: HWND); // Required for ANSI mode
+var
+  Local_ID:     Integer;
   ParentHandle: HWND;
-Begin
+begin
   { DONE :
     Extensive test needed here:
     Till Vista, KLF_ACTIVATE works ok
@@ -272,8 +256,7 @@ Begin
     'KLF_ACTIVATE OR KLF_NOTELLSHELL' failed, too
     Possible workaround- using KLF_NOTELLSHELL }
   Local_ID := LoadKeyboardLayout(PChar(LANG_EN_US), KLF_NOTELLSHELL);
-  PostMessage(TopWnd, WM_INPUTLANGCHANGEREQUEST, INPUTLANGCHANGE_SYSCHARSET,
-    Local_ID);
+  PostMessage(TopWnd, WM_INPUTLANGCHANGEREQUEST, INPUTLANGCHANGE_SYSCHARSET, Local_ID);
   PostMessage(TopWnd, WM_INPUTLANGCHANGE, 0, Local_ID);
 
   { Request sent. Sometimes this request is not processed if foreground window
@@ -282,30 +265,29 @@ Begin
 
   // Get the parent
   ParentHandle := GetParent(TopWnd);
-  If IsWindow(ParentHandle) Then
-  Begin
-    PostMessage(ParentHandle, WM_INPUTLANGCHANGEREQUEST,
-      INPUTLANGCHANGE_SYSCHARSET, Local_ID);
+  if IsWindow(ParentHandle) then
+  begin
+    PostMessage(ParentHandle, WM_INPUTLANGCHANGEREQUEST, INPUTLANGCHANGE_SYSCHARSET, Local_ID);
     PostMessage(ParentHandle, WM_INPUTLANGCHANGE, 0, Local_ID);
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure ChangeLocaleToBangla(Const TopWnd: HWND);
-Var
-  Local_ID: Integer;
+procedure ChangeLocaleToBangla(const TopWnd: HWND);
+var
+  Local_ID:     Integer;
   ParentHandle: HWND;
-  BanglaLocale: String;
-Begin
+  BanglaLocale: string;
+begin
 
-  If PrefferedLocale = 'BANGLADESH' Then
+  if PrefferedLocale = 'BANGLADESH' then
     BanglaLocale := LANG_BN_BD
-  Else If PrefferedLocale = 'INDIA' Then
+  else if PrefferedLocale = 'INDIA' then
     BanglaLocale := LANG_BN_IN
-  Else If PrefferedLocale = 'ASSAMESE' Then
+  else if PrefferedLocale = 'ASSAMESE' then
     BanglaLocale := LANG_Assamese
-  Else
+  else
     BanglaLocale := LANG_BN_IN;
 
   { DONE :
@@ -315,8 +297,7 @@ Begin
     'KLF_ACTIVATE OR KLF_NOTELLSHELL' failed, too
     Possible workaround- using KLF_NOTELLSHELL }
   Local_ID := LoadKeyboardLayout(PChar(BanglaLocale), KLF_NOTELLSHELL);
-  PostMessage(TopWnd, WM_INPUTLANGCHANGEREQUEST, INPUTLANGCHANGE_SYSCHARSET,
-    Local_ID);
+  PostMessage(TopWnd, WM_INPUTLANGCHANGEREQUEST, INPUTLANGCHANGE_SYSCHARSET, Local_ID);
   PostMessage(TopWnd, WM_INPUTLANGCHANGE, 0, Local_ID);
 
   { Request sent. Sometimes this request is not processed if foreground window
@@ -325,25 +306,23 @@ Begin
 
   // Get the parent
   ParentHandle := GetParent(TopWnd);
-  If IsWindow(ParentHandle) Then
-  Begin
-    PostMessage(ParentHandle, WM_INPUTLANGCHANGEREQUEST,
-      INPUTLANGCHANGE_SYSCHARSET, Local_ID);
+  if IsWindow(ParentHandle) then
+  begin
+    PostMessage(ParentHandle, WM_INPUTLANGCHANGEREQUEST, INPUTLANGCHANGE_SYSCHARSET, Local_ID);
     PostMessage(ParentHandle, WM_INPUTLANGCHANGE, 0, Local_ID);
-  End;
+  end;
 
   { Keyboard Locale Changed in foreign app, now set my locale to English }
   LoadKeyboardLayout(PChar(LANG_EN_US), KLF_ACTIVATE);
-End;
+end;
 
 { =============================================================================== }
 
-Procedure ChangeLocalToAny(Const TargetWin: HWND; FullLocaleMsg: Cardinal);
-Var
+procedure ChangeLocalToAny(const TargetWin: HWND; FullLocaleMsg: Cardinal);
+var
   ParentHandle: HWND;
-Begin
-  PostMessage(TargetWin, WM_INPUTLANGCHANGEREQUEST, INPUTLANGCHANGE_SYSCHARSET,
-    FullLocaleMsg);
+begin
+  PostMessage(TargetWin, WM_INPUTLANGCHANGEREQUEST, INPUTLANGCHANGE_SYSCHARSET, FullLocaleMsg);
   PostMessage(TargetWin, WM_INPUTLANGCHANGE, 0, FullLocaleMsg);
 
   { Request sent. Sometimes this request is not processed if foreground window
@@ -352,24 +331,23 @@ Begin
 
   // Get the parent
   ParentHandle := GetParent(TargetWin);
-  If IsWindow(ParentHandle) Then
-  Begin
-    PostMessage(ParentHandle, WM_INPUTLANGCHANGEREQUEST,
-      INPUTLANGCHANGE_SYSCHARSET, FullLocaleMsg);
+  if IsWindow(ParentHandle) then
+  begin
+    PostMessage(ParentHandle, WM_INPUTLANGCHANGEREQUEST, INPUTLANGCHANGE_SYSCHARSET, FullLocaleMsg);
     PostMessage(ParentHandle, WM_INPUTLANGCHANGE, 0, FullLocaleMsg);
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Function GetForeignLocale(Const TargetWin: HWND): Cardinal;
-Var
+function GetForeignLocale(const TargetWin: HWND): Cardinal;
+var
   TID: Integer;
-Begin
-  TID := GetWindowThreadProcessId(TargetWin, Nil);
+begin
+  TID := GetWindowThreadProcessId(TargetWin, nil);
   Result := GetKeyboardLayout(TID);
-End;
+end;
 
 { =============================================================================== }
 
-End.
+end.

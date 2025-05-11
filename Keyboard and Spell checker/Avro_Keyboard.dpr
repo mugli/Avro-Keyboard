@@ -25,14 +25,14 @@
   =============================================================================
 }
 
-Program Avro_Keyboard;
+program Avro_Keyboard;
 
 uses
   Forms,
   Windows,
-  uForm1 in 'Forms\uForm1.pas' {AvroMainForm1},
+  uForm1 in 'Forms\uForm1.pas' {AvroMainForm1} ,
   BanglaChars in 'Units\BanglaChars.pas',
-  uTopBar in 'Forms\uTopBar.pas' {TopBar},
+  uTopBar in 'Forms\uTopBar.pas' {TopBar} ,
   SkinLoader in 'Units\SkinLoader.pas',
   KeyboardLayoutLoader in 'Units\KeyboardLayoutLoader.pas',
   clsEnglishToBangla in 'Classes\clsEnglishToBangla.pas',
@@ -50,14 +50,14 @@ uses
   uFileFolderHandling in 'Units\uFileFolderHandling.pas',
   u_VirtualFontInstall in 'Units\u_VirtualFontInstall.pas',
   u_Admin in 'Units\u_Admin.pas',
-  ufrmAbout in 'Forms\ufrmAbout.pas' {frmAbout},
-  ufrmAboutSkinLayout in 'Forms\ufrmAboutSkinLayout.pas' {frmAboutSkinLayout},
-  ufrmAutoCorrect in 'Forms\ufrmAutoCorrect.pas' {frmAutoCorrect},
-  ufrmAvroMouse in 'Forms\ufrmAvroMouse.pas' {frmAvroMouse},
-  ufrmOptions in 'Forms\ufrmOptions.pas' {frmOptions},
-  ufrmPrevW in 'Forms\ufrmPrevW.pas' {frmPrevW},
-  ufrmUpdateNotify in 'Forms\ufrmUpdateNotify.pas' {frmUpdateNotify},
-  uLayoutViewer in 'Forms\uLayoutViewer.pas' {LayoutViewer},
+  ufrmAbout in 'Forms\ufrmAbout.pas' {frmAbout} ,
+  ufrmAboutSkinLayout in 'Forms\ufrmAboutSkinLayout.pas' {frmAboutSkinLayout} ,
+  ufrmAutoCorrect in 'Forms\ufrmAutoCorrect.pas' {frmAutoCorrect} ,
+  ufrmAvroMouse in 'Forms\ufrmAvroMouse.pas' {frmAvroMouse} ,
+  ufrmOptions in 'Forms\ufrmOptions.pas' {frmOptions} ,
+  ufrmPrevW in 'Forms\ufrmPrevW.pas' {frmPrevW} ,
+  ufrmUpdateNotify in 'Forms\ufrmUpdateNotify.pas' {frmUpdateNotify} ,
+  uLayoutViewer in 'Forms\uLayoutViewer.pas' {LayoutViewer} ,
   uProcessHandler in 'Units\uProcessHandler.pas',
   uWindowHandlers in 'Units\uWindowHandlers.pas',
   clsUpdateInfoDownloader in 'Classes\clsUpdateInfoDownloader.pas',
@@ -74,46 +74,44 @@ uses
   clsSkinLayoutConverter in 'Classes\clsSkinLayoutConverter.pas',
   uCmdLineHelper in 'Units\uCmdLineHelper.pas',
   uCommandLineFunctions in 'Units\uCommandLineFunctions.pas',
-  ufrmConflict in 'Forms\ufrmConflict.pas' {frmConflict},
-  uFrmSplash in 'Forms\uFrmSplash.pas' {frmSplash},
+  ufrmConflict in 'Forms\ufrmConflict.pas' {frmConflict} ,
+  uFrmSplash in 'Forms\uFrmSplash.pas' {frmSplash} ,
   clsAbbreviation in 'Classes\clsAbbreviation.pas',
   clsUnicodeToBijoy2000 in '..\Unicode to ascii converter\clsUnicodeToBijoy2000.pas',
-  ufrmEncodingWarning in 'Forms\ufrmEncodingWarning.pas' {frmEncodingWarning},
-  DebugLog in 'Units\DebugLog.pas';
+  ufrmEncodingWarning in 'Forms\ufrmEncodingWarning.pas' {frmEncodingWarning} ,
+  DebugLog in 'Units\DebugLog.pas',
+  Vcl.Themes,
+  Vcl.Styles,
+  WindowsDarkMode in 'Units\WindowsDarkMode.pas';
 
-Var
+var
   Mutex: THandle;
 
-{$R *.res}
-{$R docico.res}
+  {$R *.res}
 
-Begin
-  { Disable FPU exceptions. No need to restore, setting is process specific. }
-  Set8087CW($133F);
-
+begin
   /// ////////////////////////////////////////////////////////////////////////////
   // Check parameters
-  If uCommandLineFunctions.HandleAllCommandLine Then
-  Begin
+  if uCommandLineFunctions.HandleAllCommandLine then
+  begin
     Application.Terminate;
     exit;
-  End;
+  end;
 
   /// ///////////////////////////////////////////////////////////////////////////
   { DONE : check for previous instance }
-  Mutex := CreateMutex(Nil, True, 'Avro_Keyboard');
-  If (Mutex = 0) Or (GetLastError <> 0) Then
-  Begin
+  Mutex := CreateMutex(nil, True, 'Avro_Keyboard');
+  if (Mutex = 0) or (GetLastError <> 0) then
+  begin
 
     uCommandLineFunctions.SendCommand('restore');
 
-    Application.MessageBox('Avro Keyboard is already running on this system and'
-      + #10 + 'running more than one instance is not allowed.', 'Avro Keyboard',
+    Application.MessageBox('Avro Keyboard is already running on this system and' + #10 + 'running more than one instance is not allowed.', 'Avro Keyboard',
       MB_OK + MB_ICONEXCLAMATION + MB_DEFBUTTON1 + MB_APPLMODAL);
 
     Application.Terminate;
     exit;
-  End;
+  end;
   /// /////////////////////////////////////////////////////////////
 
   /// ///////////////////////////////////////////////////////////////////////////
@@ -121,9 +119,9 @@ Begin
   Application.Initialize;
 
   // Hide Application from taskbar
+  TStyleManager.TrySetStyle('Windows10');
   Application.Title := 'Launching Avro Keyboard...';
-  SetWindowLong(Application.Handle, GWL_EXSTYLE,
-    GetWindowLong(Application.Handle, GWL_EXSTYLE) Or WS_EX_TOOLWINDOW);
+  SetWindowLong(Application.Handle, GWL_EXSTYLE, GetWindowLong(Application.Handle, GWL_EXSTYLE) or WS_EX_TOOLWINDOW);
   Application.MainFormOnTaskBar := False;
 
   // First item is applications main form
@@ -135,7 +133,7 @@ Begin
   Application.Run;
   /// /////////////////////////////////////////////////////
 
-  If Mutex <> 0 Then
+  if Mutex <> 0 then
     CloseHandle(Mutex);
 
-End.
+end.

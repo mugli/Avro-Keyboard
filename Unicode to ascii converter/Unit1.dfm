@@ -182,4 +182,9 @@ object Form1: TForm1
     TabOrder = 3
     Visible = False
   end
+  object AppEvents: TApplicationEvents
+    OnSettingChange = AppEventsSettingChange
+    Left = 720
+    Top = 192
+  end
 end

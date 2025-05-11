@@ -25,11 +25,11 @@
   =============================================================================
 }
 
-Unit uCommandLineFunctions;
+unit uCommandLineFunctions;
 
-Interface
+interface
 
-Uses
+uses
 
   SysUtils,
   strutils,
@@ -37,18 +37,18 @@ Uses
   windows,
   Messages;
 
-Function HandleAllCommandLine: Boolean;
-Function CheckLocaleParam: Boolean;
-Function CheckSkinInstallParam: Boolean;
-Function CheckLayoutInstallParam: Boolean;
-Function CheckSendCommandParam: Boolean;
+function HandleAllCommandLine: Boolean;
+function CheckLocaleParam: Boolean;
+function CheckSkinInstallParam: Boolean;
+function CheckLayoutInstallParam: Boolean;
+function CheckSendCommandParam: Boolean;
 
-Function SendCommand(cmd: String): Boolean;
+function SendCommand(cmd: string): Boolean;
 { DONE : More functions like change keyboard, change keyboard mode }
 
-Implementation
+implementation
 
-Uses
+uses
   uCmdLineHelper,
   uLocale,
   u_Admin,
@@ -59,178 +59,172 @@ Uses
 
 { =============================================================================== }
 
-Function CheckSendCommandParam: Boolean;
-Begin
+function CheckSendCommandParam: Boolean;
+begin
   result := False;
-  If uCmdLineHelper.GetParamCount <= 0 Then
+  if uCmdLineHelper.GetParamCount <= 0 then
     exit;
 
-  If ParamPresent('toggle') Then
-  Begin
+  if ParamPresent('toggle') then
+  begin
     result := True;
     SendCommand('toggle');
-  End;
+  end;
 
-  If ParamPresent('bn') Then
-  Begin
+  if ParamPresent('bn') then
+  begin
     result := True;
     SendCommand('bn');
-  End;
+  end;
 
-  If ParamPresent('sys') Then
-  Begin
+  if ParamPresent('sys') then
+  begin
     result := True;
     SendCommand('sys');
-  End;
+  end;
 
-  If ParamPresent('minimize') Then
-  Begin
+  if ParamPresent('minimize') then
+  begin
     result := True;
     SendCommand('minimize');
-  End;
+  end;
 
-  If ParamPresent('restore') Then
-  Begin
+  if ParamPresent('restore') then
+  begin
     result := True;
     SendCommand('restore');
-  End;
+  end;
 
-End;
+end;
 
 { =============================================================================== }
 
-Function SendCommand(cmd: String): Boolean;
-Var
+function SendCommand(cmd: string): Boolean;
+var
   copyDataStruct: TCopyDataStruct;
   receiverHandle: THandle;
-Begin
+begin
   result := False;
   copyDataStruct.dwData := 0; // 0=string
   copyDataStruct.cbData := 1 + Length(cmd);
   copyDataStruct.lpData := PChar(cmd);
 
-  receiverHandle := FindWindow(PChar('TAvroMainForm1'), Nil);
-  If receiverHandle = 0 Then
+  receiverHandle := FindWindow(PChar('TAvroMainForm1'), nil);
+  if receiverHandle = 0 then
     exit;
 
   SendMessage(receiverHandle, WM_COPYDATA, 0, Integer(@copyDataStruct));
   result := True;
-End;
+end;
 
 { =============================================================================== }
 
-Function HandleAllCommandLine: Boolean;
-Begin
+function HandleAllCommandLine: Boolean;
+begin
   result := False;
-  If CheckLocaleParam Or CheckSkinInstallParam Or CheckLayoutInstallParam Or
-    CheckSendCommandParam Then
+  if CheckLocaleParam or CheckSkinInstallParam or CheckLayoutInstallParam or CheckSendCommandParam then
     result := True;
-End;
+end;
 
 { =============================================================================== }
 
-Function CheckLayoutInstallParam: Boolean;
-Var
-  i: Integer;
-  FilePath, LayoutDir: String;
-Begin
+function CheckLayoutInstallParam: Boolean;
+var
+  i:                   Integer;
+  FilePath, LayoutDir: string;
+begin
   result := False;
-  If uCmdLineHelper.GetParamCount <= 0 Then
+  if uCmdLineHelper.GetParamCount <= 0 then
     exit;
 
-  For i := 1 To uCmdLineHelper.GetParamCount Do
-  Begin
-    If FileExists(uCmdLineHelper.GetParamStr(i)) Then
-    Begin
-      If uppercase(ExtractFileExt(uCmdLineHelper.GetParamStr(i)))
-        = '.AVROLAYOUT' Then
-      Begin
+  for i := 1 to uCmdLineHelper.GetParamCount do
+  begin
+    if FileExists(uCmdLineHelper.GetParamStr(i)) then
+    begin
+      if uppercase(ExtractFileExt(uCmdLineHelper.GetParamStr(i))) = '.AVROLAYOUT' then
+      begin
         result := True;
 
         // Ignore already installed skins
         FilePath := ExtractFilePath(uCmdLineHelper.GetParamStr(i));
         LayoutDir := GetAvroDataDir + 'Keyboard Layouts\';
 
-        If (uppercase(LayoutDir) <> uppercase(FilePath)) Then
-        Begin
+        if (uppercase(LayoutDir) <> uppercase(FilePath)) then
+        begin
           InstallLayout(uCmdLineHelper.GetParamStr(i));
-        End;
+        end;
 
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
 
   // Refresh keyboard layout lists
   // If Result = True Then
   SendCommand('Refresh_Layout');
 
-End;
+end;
 
 { =============================================================================== }
 
-Function CheckSkinInstallParam: Boolean;
-Var
-  i: Integer;
-  FilePath, SkinDir: String;
-Begin
+function CheckSkinInstallParam: Boolean;
+var
+  i:                 Integer;
+  FilePath, SkinDir: string;
+begin
   result := False;
-  If uCmdLineHelper.GetParamCount <= 0 Then
+  if uCmdLineHelper.GetParamCount <= 0 then
     exit;
 
-  For i := 1 To uCmdLineHelper.GetParamCount Do
-  Begin
-    If FileExists(uCmdLineHelper.GetParamStr(i)) Then
-    Begin
-      If uppercase(ExtractFileExt(uCmdLineHelper.GetParamStr(i)))
-        = '.AVROSKIN' Then
-      Begin
+  for i := 1 to uCmdLineHelper.GetParamCount do
+  begin
+    if FileExists(uCmdLineHelper.GetParamStr(i)) then
+    begin
+      if uppercase(ExtractFileExt(uCmdLineHelper.GetParamStr(i))) = '.AVROSKIN' then
+      begin
         result := True;
 
         // Ignore already installed skins
         FilePath := ExtractFilePath(uCmdLineHelper.GetParamStr(i));
         SkinDir := GetAvroDataDir + 'Skin\';
 
-        If (uppercase(SkinDir) <> uppercase(FilePath)) Then
-        Begin
+        if (uppercase(SkinDir) <> uppercase(FilePath)) then
+        begin
           InstallSkin(uCmdLineHelper.GetParamStr(i));
-        End;
+        end;
 
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
 
-End;
+end;
 
 { =============================================================================== }
 
-Function CheckLocaleParam: Boolean;
-Begin
+function CheckLocaleParam: Boolean;
+begin
   result := False;
-  If uCmdLineHelper.GetParamCount <= 0 Then
+  if uCmdLineHelper.GetParamCount <= 0 then
     exit;
 
-  If ParamPresent('LOCALE') Then
-  Begin
+  if ParamPresent('LOCALE') then
+  begin
     result := True;
     uLocale.InstallLocale;
 
-    If (ParamPresent('V') Or ParamPresent('VERBOSE')) Then
-    Begin
-      If IsAssameseLocaleInstalled And IsBangladeshLocaleInstalled Then
-      Begin
-        Application.MessageBox('Locale installed successfully!',
-          'Avro Keyboard', MB_OK + MB_ICONASTERISK + MB_DEFBUTTON1 +
-          MB_APPLMODAL);
-      End
-      Else
-      Begin
-        Application.MessageBox('Locale installation failed!', 'Avro Keyboard',
-          MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
-      End;
-    End;
-  End;
-End;
+    if (ParamPresent('V') or ParamPresent('VERBOSE')) then
+    begin
+      if IsAssameseLocaleInstalled and IsBangladeshLocaleInstalled then
+      begin
+        Application.MessageBox('Locale installed successfully!', 'Avro Keyboard', MB_OK + MB_ICONASTERISK + MB_DEFBUTTON1 + MB_APPLMODAL);
+      end
+      else
+      begin
+        Application.MessageBox('Locale installation failed!', 'Avro Keyboard', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
+      end;
+    end;
+  end;
+end;
 
 { =============================================================================== }
 
-End.
+end.

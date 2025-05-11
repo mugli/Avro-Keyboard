@@ -1,15 +1,19 @@
 object frmConflict: TfrmConflict
   Left = 0
   Top = 0
+  Margins.Left = 5
+  Margins.Top = 5
+  Margins.Right = 5
+  Margins.Bottom = 5
   BorderIcons = [biMinimize, biMaximize]
   BorderStyle = bsToolWindow
   Caption = 'Which one to keep?'
-  ClientHeight = 178
-  ClientWidth = 502
+  ClientHeight = 267
+  ClientWidth = 753
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -17
   Font.Name = 'Tahoma'
   Font.Style = []
   Icon.Data = {
@@ -60,66 +64,91 @@ object frmConflict: TfrmConflict
   Position = poDesktopCenter
   OnClose = FormClose
   OnShow = FormShow
-  TextHeight = 13
+  PixelsPerInch = 144
+  TextHeight = 21
   object Label2: TLabel
-    Left = 8
-    Top = 11
-    Width = 60
-    Height = 19
+    Left = 12
+    Top = 17
+    Width = 91
+    Height = 29
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Replace:'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -16
+    Font.Height = -24
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
   end
   object Label3: TLabel
-    Left = 8
-    Top = 51
-    Width = 38
-    Height = 19
+    Left = 12
+    Top = 77
+    Width = 56
+    Height = 29
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'With:'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -16
+    Font.Height = -24
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
   end
   object Label4: TLabel
-    Left = 192
-    Top = 78
-    Width = 31
-    Height = 13
+    Left = 288
+    Top = 117
+    Width = 48
+    Height = 21
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Label4'
   end
   object Label5: TLabel
-    Left = 32
-    Top = 79
-    Width = 41
-    Height = 13
+    Left = 48
+    Top = 119
+    Width = 61
+    Height = 21
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Current:'
   end
   object Label6: TLabel
-    Left = 32
-    Top = 131
-    Width = 48
-    Height = 13
+    Left = 48
+    Top = 197
+    Width = 74
+    Height = 21
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Imported:'
   end
   object EditR_P: TEdit
-    Left = 232
-    Top = 8
-    Width = 138
-    Height = 35
+    Left = 348
+    Top = 12
+    Width = 207
+    Height = 44
     Cursor = crArrow
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     TabStop = False
     BevelInner = bvNone
     Color = clBtnFace
     Font.Charset = ANSI_CHARSET
     Font.Color = clBtnText
-    Font.Height = -21
+    Font.Height = -32
     Font.Name = 'SolaimanLipi'
     Font.Style = []
     ParentFont = False
@@ -127,15 +156,19 @@ object frmConflict: TfrmConflict
     TabOrder = 2
   end
   object EditR: TEdit
-    Left = 88
-    Top = 8
-    Width = 138
-    Height = 27
+    Left = 132
+    Top = 12
+    Width = 207
+    Height = 37
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     TabStop = False
     Color = clBtnFace
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -16
+    Font.Height = -24
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
@@ -144,17 +177,21 @@ object frmConflict: TfrmConflict
     Text = 'EditR'
   end
   object EditWC_P: TEdit
-    Left = 232
-    Top = 71
-    Width = 138
-    Height = 35
+    Left = 348
+    Top = 107
+    Width = 207
+    Height = 44
     Cursor = crArrow
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     TabStop = False
     BevelInner = bvNone
     Color = clBtnFace
     Font.Charset = ANSI_CHARSET
     Font.Color = clBtnText
-    Font.Height = -21
+    Font.Height = -32
     Font.Name = 'SolaimanLipi'
     Font.Style = []
     ParentFont = False
@@ -162,15 +199,19 @@ object frmConflict: TfrmConflict
     TabOrder = 4
   end
   object EditWC: TEdit
-    Left = 88
-    Top = 70
-    Width = 138
-    Height = 27
+    Left = 132
+    Top = 105
+    Width = 207
+    Height = 37
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     TabStop = False
     Color = clBtnFace
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -16
+    Font.Height = -24
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
@@ -179,17 +220,21 @@ object frmConflict: TfrmConflict
     Text = 'Edit1'
   end
   object EditWI_P: TEdit
-    Left = 232
-    Top = 123
-    Width = 138
-    Height = 35
+    Left = 348
+    Top = 185
+    Width = 207
+    Height = 44
     Cursor = crArrow
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     TabStop = False
     BevelInner = bvNone
     Color = clBtnFace
     Font.Charset = ANSI_CHARSET
     Font.Color = clBtnText
-    Font.Height = -21
+    Font.Height = -32
     Font.Name = 'SolaimanLipi'
     Font.Style = []
     ParentFont = False
@@ -197,15 +242,19 @@ object frmConflict: TfrmConflict
     TabOrder = 6
   end
   object EditWI: TEdit
-    Left = 88
-    Top = 123
-    Width = 138
-    Height = 27
+    Left = 132
+    Top = 185
+    Width = 207
+    Height = 37
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     TabStop = False
     Color = clBtnFace
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -16
+    Font.Height = -24
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
@@ -214,19 +263,27 @@ object frmConflict: TfrmConflict
     Text = 'Edit1'
   end
   object butImported: TButton
-    Left = 392
-    Top = 123
-    Width = 94
-    Height = 35
+    Left = 588
+    Top = 185
+    Width = 141
+    Height = 52
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Keep imported'
     TabOrder = 1
     OnClick = butImportedClick
   end
   object butCurrent: TButton
-    Left = 392
-    Top = 68
-    Width = 94
-    Height = 35
+    Left = 588
+    Top = 102
+    Width = 141
+    Height = 53
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Keep current'
     TabOrder = 0
     OnClick = butCurrentClick

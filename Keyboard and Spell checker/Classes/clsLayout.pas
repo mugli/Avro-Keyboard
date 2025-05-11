@@ -28,11 +28,11 @@
 {$INCLUDE ../ProjectDefines.inc}
 { COMPLETE TRANSFERING! }
 
-Unit clsLayout;
+unit clsLayout;
 
-Interface
+interface
 
-Uses
+uses
   classes,
   sysutils,
   StrUtils,
@@ -44,84 +44,77 @@ Uses
 
 // --------------------------------------------------------------
 // Enumarated types
-Type
+type
   enumMode = (SysDefault, Bangla);
 
-Type
+type
   // Event types
   // --------------------------------------------------------------
-  TKeyboardModeChanged = Procedure(CurrentMode: enumMode) Of Object;
-  TWordTrackingLost = Procedure Of Object; // Special for Avro phonetic
-  TKeyboardLayoutChanged = Procedure(CurrentKeyboardLayout: String) Of Object;
-  THookSet = Procedure Of Object;
-  THookSettingFailed = Procedure Of Object;
+  TKeyboardModeChanged   = procedure(CurrentMode: enumMode) of object;
+  TWordTrackingLost      = procedure of object; // Special for Avro phonetic
+  TKeyboardLayoutChanged = procedure(CurrentKeyboardLayout: string) of object;
+  THookSet               = procedure of object;
+  THookSettingFailed     = procedure of object;
   // --------------------------------------------------------------
 
-Type
+type
   // Skeleton of TLayout class
   // --------------------------------------------------------------
-  TLayout = Class
-  Private
-    AvroPhonetic: TAvroPhonetic;
-    GenericModernFixed: TGenericLayoutModern;
-    GenericOldFixed: TGenericLayoutOld;
+  TLayout = class
+    private
+      AvroPhonetic:       TAvroPhonetic;
+      GenericModernFixed: TGenericLayoutModern;
+      GenericOldFixed:    TGenericLayoutOld;
 
-    k_Layout: String;
-    k_Mode: enumMode;
+      k_Layout: string;
+      k_Mode:   enumMode;
 
-    // --------------------------------------------------------------
-    // Event types
-    FKeyboardModeChanged: TKeyboardModeChanged;
-    FWordTrackingLost: TWordTrackingLost;
-    FKeyboardLayoutChanged: TKeyboardLayoutChanged;
-    FHookSet: THookSet;
-    FHookSettingFailed: THookSettingFailed;
-    // --------------------------------------------------------------
+      // --------------------------------------------------------------
+      // Event types
+      FKeyboardModeChanged:   TKeyboardModeChanged;
+      FWordTrackingLost:      TWordTrackingLost;
+      FKeyboardLayoutChanged: TKeyboardLayoutChanged;
+      FHookSet:               THookSet;
+      FHookSettingFailed:     THookSettingFailed;
+      // --------------------------------------------------------------
 
-    Procedure SetAutoCorrectEnabled(Const Value: Boolean);
-    Function GetAutoCorrectEnabled: Boolean;
-    Procedure SetCurrentKeyboardLayout(Value: String);
-    Function GetCurrentKeyboardLayout: String;
-    Procedure SetKeyboardMode(Const Value: enumMode);
-    Function GetKeyboardMode: enumMode;
-  Public
-    Constructor Create; // Initializer
-    Destructor Destroy; Override; // Destructor
+      procedure SetAutoCorrectEnabled(const Value: Boolean);
+      function GetAutoCorrectEnabled: Boolean;
+      procedure SetCurrentKeyboardLayout(Value: string);
+      function GetCurrentKeyboardLayout: string;
+      procedure SetKeyboardMode(const Value: enumMode);
+      function GetKeyboardMode: enumMode;
+    public
+      constructor Create;           // Initializer
+      destructor Destroy; override; // Destructor
 
-    Function ProcessVKeyDown(Const KeyCode: Integer;
-      Var Block: Boolean): String;
-    Procedure ProcessVKeyUP(Const KeyCode: Integer; Var Block: Boolean);
-    Procedure ResetDeadKey;
-    Procedure ToggleMode;
-    Procedure BanglaMode;
-    Procedure SysMode;
-    Procedure SelectCandidate(Const Item: String); // For Phonetic
+      function ProcessVKeyDown(const KeyCode: Integer; var Block: Boolean): string;
+      procedure ProcessVKeyUP(const KeyCode: Integer; var Block: Boolean);
+      procedure ResetDeadKey;
+      procedure ToggleMode;
+      procedure BanglaMode;
+      procedure SysMode;
+      procedure SelectCandidate(const Item: string); // For Phonetic
 
-    // Published
-    // --------------------------------------------------------------
-    // event properties
-    Property OnKeyboardModeChanged: TKeyboardModeChanged
-      Read FKeyboardModeChanged Write FKeyboardModeChanged;
-    Property OnWordTrackingLost: TWordTrackingLost Read FWordTrackingLost
-      Write FWordTrackingLost;
-    Property OnKeyboardLayoutChanged: TKeyboardLayoutChanged
-      Read FKeyboardLayoutChanged Write FKeyboardLayoutChanged;
-    Property OnHookSet: THookSet Read FHookSet Write FHookSet;
-    Property OnHookSettingFailed: THookSettingFailed Read FHookSettingFailed
-      Write FHookSettingFailed;
-    // --------------------------------------------------------------
+      // Published
+      // --------------------------------------------------------------
+      // event properties
+      property OnKeyboardModeChanged: TKeyboardModeChanged read FKeyboardModeChanged write FKeyboardModeChanged;
+      property OnWordTrackingLost: TWordTrackingLost read FWordTrackingLost write FWordTrackingLost;
+      property OnKeyboardLayoutChanged: TKeyboardLayoutChanged read FKeyboardLayoutChanged write FKeyboardLayoutChanged;
+      property OnHookSet: THookSet read FHookSet write FHookSet;
+      property OnHookSettingFailed: THookSettingFailed read FHookSettingFailed write FHookSettingFailed;
+      // --------------------------------------------------------------
 
-    Property AutoCorrectEnabled: Boolean Read GetAutoCorrectEnabled
-      Write SetAutoCorrectEnabled;
-    Property CurrentKeyboardLayout: String Read GetCurrentKeyboardLayout
-      Write SetCurrentKeyboardLayout;
-    Property KeyboardMode: enumMode Read GetKeyboardMode Write SetKeyboardMode;
+      property AutoCorrectEnabled: Boolean read GetAutoCorrectEnabled write SetAutoCorrectEnabled;
+      property CurrentKeyboardLayout: string read GetCurrentKeyboardLayout write SetCurrentKeyboardLayout;
+      property KeyboardMode: enumMode read GetKeyboardMode write SetKeyboardMode;
 
-  End;
+  end;
 
-Implementation
+implementation
 
-Uses
+uses
   KeyboardHook,
   KeyboardLayoutLoader,
   uRegistrySettings;
@@ -130,30 +123,30 @@ Uses
 
 { =============================================================================== }
 
-Procedure TLayout.BanglaMode;
-Begin
+procedure TLayout.BanglaMode;
+begin
   Self.KeyboardMode := Bangla;
-End;
+end;
 
 { =============================================================================== }
 
-Constructor TLayout.Create;
-Var
+constructor TLayout.Create;
+var
   RetVal: Integer;
-Begin
-  Inherited;
+begin
+  inherited;
   RetVal := Sethook;
 
-  If RetVal > 0 Then
-  Begin
-    If Assigned(FHookSet) Then
+  if RetVal > 0 then
+  begin
+    if Assigned(FHookSet) then
       FHookSet;
-  End
-  Else
-  Begin
-    If Assigned(FHookSettingFailed) Then
+  end
+  else
+  begin
+    if Assigned(FHookSettingFailed) then
       FHookSettingFailed;
-  End;
+  end;
 
   AvroPhonetic := TAvroPhonetic.Create;
   GenericModernFixed := TGenericLayoutModern.Create;
@@ -161,161 +154,158 @@ Begin
 
   Self.KeyboardMode := SysDefault;
   k_Layout := 'avrophonetic*';
-End;
+end;
 
 { =============================================================================== }
 
-Destructor TLayout.Destroy;
-Begin
+destructor TLayout.Destroy;
+begin
 
   Removehook;
 
   FreeAndNil(AvroPhonetic);
   FreeAndNil(GenericModernFixed);
   FreeAndNil(GenericOldFixed);
-  Inherited;
-End;
+  inherited;
+end;
 
 { =============================================================================== }
 
-Function TLayout.GetAutoCorrectEnabled: Boolean;
-Begin
+function TLayout.GetAutoCorrectEnabled: Boolean;
+begin
   Result := AvroPhonetic.AutoCorrectEnabled;
-End;
+end;
 
 { =============================================================================== }
 
-Function TLayout.GetCurrentKeyboardLayout: String;
-Begin
+function TLayout.GetCurrentKeyboardLayout: string;
+begin
   Result := k_Layout;
-End;
+end;
 
 { =============================================================================== }
 
-Function TLayout.GetKeyboardMode: enumMode;
-Begin
+function TLayout.GetKeyboardMode: enumMode;
+begin
   Result := k_Mode;
-End;
+end;
 
 { =============================================================================== }
 
-Function TLayout.ProcessVKeyDown(Const KeyCode: Integer;
-  Var Block: Boolean): String;
-Begin
-  If Lowercase(k_Layout) = 'avrophonetic*' Then
+function TLayout.ProcessVKeyDown(const KeyCode: Integer; var Block: Boolean): string;
+begin
+  if Lowercase(k_Layout) = 'avrophonetic*' then
     ProcessVKeyDown := AvroPhonetic.ProcessVKeyDown(KeyCode, Block)
-  Else
-  Begin
-    If FullOldStyleTyping <> 'YES' Then
+  else
+  begin
+    if FullOldStyleTyping <> 'YES' then
       ProcessVKeyDown := GenericModernFixed.ProcessVKeyDown(KeyCode, Block)
-    Else
+    else
       ProcessVKeyDown := GenericOldFixed.ProcessVKeyDown(KeyCode, Block);
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TLayout.ProcessVKeyUP(Const KeyCode: Integer; Var Block: Boolean);
-Begin
-  If Lowercase(k_Layout) = 'avrophonetic*' Then
+procedure TLayout.ProcessVKeyUP(const KeyCode: Integer; var Block: Boolean);
+begin
+  if Lowercase(k_Layout) = 'avrophonetic*' then
     AvroPhonetic.ProcessVKeyUP(KeyCode, Block)
-  Else
-  Begin
-    If FullOldStyleTyping <> 'YES' Then
+  else
+  begin
+    if FullOldStyleTyping <> 'YES' then
       GenericModernFixed.ProcessVKeyUP(KeyCode, Block)
-    Else
+    else
       GenericOldFixed.ProcessVKeyUP(KeyCode, Block);
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TLayout.ResetDeadKey;
-Begin
+procedure TLayout.ResetDeadKey;
+begin
   AvroPhonetic.ResetDeadKey;
   GenericModernFixed.ResetDeadKey;
   GenericOldFixed.ResetDeadKey;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TLayout.SelectCandidate(Const Item: String);
-Begin
+procedure TLayout.SelectCandidate(const Item: string);
+begin
   AvroPhonetic.SelectCandidate(Item);
-End;
+end;
 
-Procedure TLayout.SetAutoCorrectEnabled(Const Value: Boolean);
-Begin
+procedure TLayout.SetAutoCorrectEnabled(const Value: Boolean);
+begin
   AvroPhonetic.AutoCorrectEnabled := Value;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TLayout.SetCurrentKeyboardLayout(Value: String);
-Var
+procedure TLayout.SetCurrentKeyboardLayout(Value: string);
+var
   RetVal: Integer;
-Begin
+begin
   Removehook;
 
-  If Lowercase(Value) <> 'avrophonetic*' Then
-  Begin
-    If Init_KeyboardLayout(Value) = False Then
-    Begin
-      Application.MessageBox(PChar('Error Loading ' + Value +
-        ' keyboard layout!' + #10 + '' + #10 +
-        'Layout switched back to Avro Phonetic.'), 'Avro Keyboard',
+  if Lowercase(Value) <> 'avrophonetic*' then
+  begin
+    if Init_KeyboardLayout(Value) = False then
+    begin
+      Application.MessageBox(PChar('Error Loading ' + Value + ' keyboard layout!' + #10 + '' + #10 + 'Layout switched back to Avro Phonetic.'), 'Avro Keyboard',
         MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
       Value := 'AvroPhonetic*';
-    End;
-  End;
+    end;
+  end;
 
   ResetDeadKey;
   k_Layout := Value;
 
-  If Assigned(FKeyboardLayoutChanged) Then
+  if Assigned(FKeyboardLayoutChanged) then
     FKeyboardLayoutChanged(k_Layout);
 
   RetVal := Sethook;
 
-  If RetVal > 0 Then
-  Begin
-    If Assigned(FHookSet) Then
+  if RetVal > 0 then
+  begin
+    if Assigned(FHookSet) then
       FHookSet;
-  End
-  Else
-  Begin
-    If Assigned(FHookSettingFailed) Then
+  end
+  else
+  begin
+    if Assigned(FHookSettingFailed) then
       FHookSettingFailed;
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TLayout.SetKeyboardMode(Const Value: enumMode);
-Begin
+procedure TLayout.SetKeyboardMode(const Value: enumMode);
+begin
   k_Mode := Value;
-  If Assigned(FKeyboardModeChanged) Then
+  if Assigned(FKeyboardModeChanged) then
     FKeyboardModeChanged(k_Mode);
   ResetDeadKey;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TLayout.SysMode;
-Begin
+procedure TLayout.SysMode;
+begin
   Self.KeyboardMode := SysDefault;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TLayout.ToggleMode;
-Begin
-  If Self.KeyboardMode = SysDefault Then
+procedure TLayout.ToggleMode;
+begin
+  if Self.KeyboardMode = SysDefault then
     Self.KeyboardMode := Bangla
-  Else
+  else
     Self.KeyboardMode := SysDefault;
-End;
+end;
 
 { =============================================================================== }
 
-End.
+end.

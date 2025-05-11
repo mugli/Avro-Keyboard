@@ -25,49 +25,49 @@
   =============================================================================
 }
 
-Unit clsAbbreviation;
+unit clsAbbreviation;
 
-Interface
+interface
 
-Uses
+uses
   classes,
   sysutils,
   StrUtils;
 
-Type
-  TAbbreviation = Class
-  Private
+type
+  TAbbreviation = class
+    private
 
-  Public
-    Function CheckConvert(EnglishT: String): String;
-  End;
+    public
+      function CheckConvert(EnglishT: string): string;
+  end;
 
-Implementation
+implementation
 
-Uses
+uses
   BanglaChars;
 
 { TAbbreviation }
 
 { =============================================================================== }
 
-Function TAbbreviation.CheckConvert(EnglishT: String): String;
-Var
-  T: String;
-Begin
+function TAbbreviation.CheckConvert(EnglishT: string): string;
+var
+  T: string;
+begin
   EnglishT := Trim(EnglishT);
 
-  If Length(EnglishT) <= 0 Then
-  Begin
+  if Length(EnglishT) <= 0 then
+  begin
     Result := '';
     exit;
-  End;
+  end;
 
-  If Uppercase(EnglishT) <> EnglishT Then
-  Begin
+  if Uppercase(EnglishT) <> EnglishT then
+  begin
     Result := '';
     exit;
-  End;
+  end;
 
   T := EnglishT;
   T := ReplaceStr(T, 'A', b_E);
@@ -110,8 +110,8 @@ Begin
 
   Result := T;
 
-End;
+end;
 
 { =============================================================================== }
 
-End.
+end.

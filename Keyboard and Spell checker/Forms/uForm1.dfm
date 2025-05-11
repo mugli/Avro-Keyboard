@@ -2221,4 +2221,9 @@ object AvroMainForm1: TAvroMainForm1
     Left = 208
     Top = 136
   end
+  object AppEvents: TApplicationEvents
+    OnSettingChange = AppEventsSettingChange
+    Left = 636
+    Top = 288
+  end
 end

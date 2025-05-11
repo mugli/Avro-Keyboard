@@ -26,11 +26,11 @@
 }
 
 {$INCLUDE ../ProjectDefines.inc}
-Unit uFrmSplash;
+unit uFrmSplash;
 
-Interface
+interface
 
-Uses
+uses
   Windows,
   Messages,
   SysUtils,
@@ -43,83 +43,80 @@ Uses
   jpeg,
   ExtCtrls;
 
-Type
-  TfrmSplash = Class(TForm)
+type
+  TfrmSplash = class(TForm)
     Image1: TImage;
     SplashTimer: TTimer;
-    Procedure FormCreate(Sender: TObject);
-    Procedure SplashTimerTimer(Sender: TObject);
-    Procedure FormClose(Sender: TObject; Var Action: TCloseAction);
-    Procedure FormKeyDown(Sender: TObject; Var Key: Word; Shift: TShiftState);
-    Procedure Image1MouseDown(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
-  Private
-    { Private declarations }
-  Public
-    { Public declarations }
-  Protected
-    Procedure CreateParams(Var Params: TCreateParams); Override;
-  End;
+    procedure FormCreate(Sender: TObject);
+    procedure SplashTimerTimer(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure Image1MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    private
+      { Private declarations }
+    public
+      { Public declarations }
+    protected
+      procedure CreateParams(var Params: TCreateParams); override;
+  end;
 
-Var
+var
   frmSplash: TfrmSplash;
 
-Implementation
+implementation
 
-Uses
+uses
   DebugLog;
 
 {$R *.dfm}
 
-Const
+const
   Show_Window_in_Taskbar = False;
 
-Procedure TfrmSplash.FormClose(Sender: TObject; Var Action: TCloseAction);
-Begin
+procedure TfrmSplash.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
   Action := caFree;
 
-  frmSplash := Nil;
-End;
+  frmSplash := nil;
+end;
 
-Procedure TfrmSplash.FormCreate(Sender: TObject);
-Begin
+procedure TfrmSplash.FormCreate(Sender: TObject);
+begin
   Self.ClientWidth := Image1.Width;
   Self.ClientHeight := Image1.Height;
   Log('Splash created');
-End;
+end;
 
-Procedure TfrmSplash.FormKeyDown(Sender: TObject; Var Key: Word;
-  Shift: TShiftState);
-Begin
+procedure TfrmSplash.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
   Close;
-End;
+end;
 
-Procedure TfrmSplash.Image1MouseDown(Sender: TObject; Button: TMouseButton;
-  Shift: TShiftState; X, Y: Integer);
-Begin
+procedure TfrmSplash.Image1MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
   Close;
-End;
+end;
 
-Procedure TfrmSplash.SplashTimerTimer(Sender: TObject);
-Begin
+procedure TfrmSplash.SplashTimerTimer(Sender: TObject);
+begin
   Close;
-End;
+end;
 
-Procedure TfrmSplash.CreateParams(Var Params: TCreateParams);
-Begin
-  Inherited CreateParams(Params);
-  With Params Do
-  Begin
-    If Show_Window_in_Taskbar Then
-    Begin
-      ExStyle := ExStyle Or WS_EX_APPWINDOW And Not WS_EX_TOOLWINDOW;
+procedure TfrmSplash.CreateParams(var Params: TCreateParams);
+begin
+  inherited CreateParams(Params);
+  with Params do
+  begin
+    if Show_Window_in_Taskbar then
+    begin
+      ExStyle := ExStyle or WS_EX_APPWINDOW and not WS_EX_TOOLWINDOW;
       WndParent := GetDesktopwindow;
-    End
-    Else If Not Show_Window_in_Taskbar Then
-    Begin
-      ExStyle := ExStyle And Not WS_EX_APPWINDOW;
-    End;
-  End;
-End;
+    end
+    else if not Show_Window_in_Taskbar then
+    begin
+      ExStyle := ExStyle and not WS_EX_APPWINDOW;
+    end;
+  end;
+end;
 
-End.
+end.

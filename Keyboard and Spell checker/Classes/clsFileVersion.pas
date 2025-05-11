@@ -25,163 +25,158 @@
   =============================================================================
 }
 
-
 {$INCLUDE ../../ProjectDefines.inc}
-
 { COMPLETE TRANSFERING! }
 
-Unit clsFileVersion;
+unit clsFileVersion;
 
-Interface
+interface
 
-Uses Windows,
+uses
+  Windows,
   SysUtils,
   Classes,
   Forms;
 
-Type
+type
 
   { TFileVersion Class }
-  TFileVersion = Class(TObject)
-  Private
-    FMajor, FMinor, FRelease, FBuild: word;
-    FFileName: String;
-    Procedure SetFFileName(Const AValue: String);
-    Function GetAsString: String;
-    Function GetAsStringZero: String;
-    Function GetAsHex: String;
-    Function GetAsHexDelim: String;
-    Function GetAsInt64: Int64;
-  Protected
-    Procedure GetVersionInfo;
-  Public
-    Constructor Create(Const AFileName: String = '');
-    // Properties
-    Property FileName: String Read FFileName Write SetFFileName;
-    Property VerMajor: word Read FMajor;
-    Property VerMinor: word Read FMinor;
-    Property VerRelease: word Read FRelease;
-    Property VerBuild: word Read FBuild;
-    Property AsString: String Read GetAsString;
-    Property AsStringZero: String Read GetAsStringZero;
-    Property AsHex: String Read GetAsHex;
-    Property AsHexDelim: String Read GetAsHexDelim;
-    Property AsInt64: Int64 Read GetAsInt64;
-  End;
+  TFileVersion = class(TObject)
+    private
+      FMajor, FMinor, FRelease, FBuild: word;
+      FFileName:                        string;
+      procedure SetFFileName(const AValue: string);
+      function GetAsString: string;
+      function GetAsStringZero: string;
+      function GetAsHex: string;
+      function GetAsHexDelim: string;
+      function GetAsInt64: Int64;
+    protected
+      procedure GetVersionInfo;
+    public
+      constructor Create(const AFileName: string = '');
+      // Properties
+      property FileName: string read FFileName write SetFFileName;
+      property VerMajor: word read FMajor;
+      property VerMinor: word read FMinor;
+      property VerRelease: word read FRelease;
+      property VerBuild: word read FBuild;
+      property AsString: string read GetAsString;
+      property AsStringZero: string read GetAsStringZero;
+      property AsHex: string read GetAsHex;
+      property AsHexDelim: string read GetAsHexDelim;
+      property AsInt64: Int64 read GetAsInt64;
+  end;
 
-Implementation
+implementation
 
-Uses
+uses
   uFileFolderHandling;
 
 { =============================================================================== }
 
-Constructor TFileVersion.Create(Const AFileName: String = '');
-Begin
-  Inherited Create;
+constructor TFileVersion.Create(const AFileName: string = '');
+begin
+  inherited Create;
 
-  If AFileName = '' Then
-{$IFNDEF SpellCheckerDll}
+  if AFileName = '' then
+    {$IFNDEF SpellCheckerDll}
     FFileName := Application.ExeName
-{$ELSE}
+    {$ELSE}
     FFileName := GetDllFullPath
-{$ENDIF}
-  Else
+    {$ENDIF}
+  else
     FFileName := AFileName;
 
   GetVersionInfo;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TFileVersion.SetFFileName(Const AValue: String);
-Begin
+procedure TFileVersion.SetFFileName(const AValue: string);
+begin
   FFileName := AValue;
   GetVersionInfo;
-End;
+end;
 
 { =============================================================================== }
 
-Function TFileVersion.GetAsString: String;
-Begin
-  Result := IntToStr(FMajor) + '.' + IntToStr(FMinor) + '.' + IntToStr(FRelease)
-    + '.' + IntToStr(FBuild);
-End;
+function TFileVersion.GetAsString: string;
+begin
+  Result := IntToStr(FMajor) + '.' + IntToStr(FMinor) + '.' + IntToStr(FRelease) + '.' + IntToStr(FBuild);
+end;
 
 { =============================================================================== }
 
-Function TFileVersion.GetAsStringZero: String;
-Begin
-  Result := FormatFloat('000', FMajor Mod 1000) + '.' +
-    FormatFloat('000', FMinor Mod 1000) + '.' + FormatFloat('000',
-    FRelease Mod 1000) + '.' + FormatFloat('000', FBuild Mod 1000);
-End;
+function TFileVersion.GetAsStringZero: string;
+begin
+  Result := FormatFloat('000', FMajor mod 1000) + '.' + FormatFloat('000', FMinor mod 1000) + '.' + FormatFloat('000', FRelease mod 1000) + '.' +
+    FormatFloat('000', FBuild mod 1000);
+end;
 
 { =============================================================================== }
 
-Function TFileVersion.GetAsHex: String;
-Begin
-  Result := IntToHex(FMajor, 4) + IntToHex(FMinor, 4) + IntToHex(FRelease, 4) +
-    IntToHex(FBuild, 4);
-End;
+function TFileVersion.GetAsHex: string;
+begin
+  Result := IntToHex(FMajor, 4) + IntToHex(FMinor, 4) + IntToHex(FRelease, 4) + IntToHex(FBuild, 4);
+end;
 
 { =============================================================================== }
 
-Function TFileVersion.GetAsHexDelim: String;
-Begin
-  Result := IntToHex(FMajor, 4) + '-' + IntToHex(FMinor, 4) + '-' +
-    IntToHex(FRelease, 4) + '-' + IntToHex(FBuild, 4);
-End;
+function TFileVersion.GetAsHexDelim: string;
+begin
+  Result := IntToHex(FMajor, 4) + '-' + IntToHex(FMinor, 4) + '-' + IntToHex(FRelease, 4) + '-' + IntToHex(FBuild, 4);
+end;
 
 { =============================================================================== }
 
-Function TFileVersion.GetAsInt64: Int64;
-Var
+function TFileVersion.GetAsInt64: Int64;
+var
   iResult: Int64;
-Begin
+begin
   iResult := FMajor;
-  iResult := (iResult Shl 16) + FMinor;
-  iResult := (iResult Shl 16) + FRelease;
-  iResult := (iResult Shl 16) + FBuild;
+  iResult := (iResult shl 16) + FMinor;
+  iResult := (iResult shl 16) + FRelease;
+  iResult := (iResult shl 16) + FBuild;
 
   Result := iResult;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TFileVersion.GetVersionInfo;
-Var
+procedure TFileVersion.GetVersionInfo;
+var
   iVerInfoSize, iVerValueSize, iDummy: DWORD;
-  pVerInfo: Pointer;
-  rVerValue: PVSFixedFileInfo;
-Begin
+  pVerInfo:                            Pointer;
+  rVerValue:                           PVSFixedFileInfo;
+begin
   FMajor := 0;
   FMinor := 0;
   FRelease := 0;
   FBuild := 0;
   iVerInfoSize := GetFileVersionInfoSize(PChar(FFileName), iDummy);
 
-  If iVerInfoSize > 0 Then
-  Begin
+  if iVerInfoSize > 0 then
+  begin
     GetMem(pVerInfo, iVerInfoSize);
 
-    Try
+    try
       GetFileVersionInfo(PChar(FFileName), 0, iVerInfoSize, pVerInfo);
       VerQueryValue(pVerInfo, '\', Pointer(rVerValue), iVerValueSize);
 
-      With rVerValue^ Do
-      Begin
-        FMajor := dwFileVersionMS Shr 16;
-        FMinor := dwFileVersionMS And $FFFF;
-        FRelease := dwFileVersionLS Shr 16;
-        FBuild := dwFileVersionLS And $FFFF;
-      End;
-    Finally
+      with rVerValue^ do
+      begin
+        FMajor := dwFileVersionMS shr 16;
+        FMinor := dwFileVersionMS and $FFFF;
+        FRelease := dwFileVersionLS shr 16;
+        FBuild := dwFileVersionLS and $FFFF;
+      end;
+    finally
       FreeMem(pVerInfo, iVerInfoSize);
-    End;
-  End;
-End;
+    end;
+  end;
+end;
 
 { =============================================================================== }
 
-End.
+end.

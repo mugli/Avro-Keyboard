@@ -1,15 +1,19 @@
 object frmUpdateNotify: TfrmUpdateNotify
   Left = 0
   Top = 0
+  Margins.Left = 5
+  Margins.Top = 5
+  Margins.Right = 5
+  Margins.Bottom = 5
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Update available for Avro Keyboard'
-  ClientHeight = 183
-  ClientWidth = 370
+  ClientHeight = 275
+  ClientWidth = 555
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -17
   Font.Name = 'Tahoma'
   Font.Style = []
   Icon.Data = {
@@ -52,12 +56,17 @@ object frmUpdateNotify: TfrmUpdateNotify
   Position = poScreenCenter
   Visible = True
   OnClose = FormClose
-  TextHeight = 13
+  PixelsPerInch = 144
+  TextHeight = 21
   object Image1: TImage
-    Left = 8
-    Top = 8
-    Width = 75
-    Height = 73
+    Left = 12
+    Top = 12
+    Width = 113
+    Height = 110
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Picture.Data = {
       055449636F6E0000010001004040000001002000284200001600000028000000
       4000000080000000010020000000000000400000120B0000120B000000000000
@@ -593,102 +602,146 @@ object frmUpdateNotify: TfrmUpdateNotify
     Transparent = True
   end
   object Label1: TLabel
-    Left = 78
-    Top = 8
-    Width = 183
-    Height = 25
+    Left = 117
+    Top = 12
+    Width = 280
+    Height = 39
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Update available!'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -21
+    Font.Height = -32
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
   end
   object Label2: TLabel
-    Left = 78
-    Top = 39
-    Width = 118
-    Height = 13
+    Left = 117
+    Top = 59
+    Width = 181
+    Height = 21
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'You are running version:'
   end
   object Label3: TLabel
-    Left = 78
-    Top = 58
-    Width = 128
-    Height = 13
+    Left = 117
+    Top = 87
+    Width = 196
+    Height = 21
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Available updated version:'
   end
   object Label4: TLabel
-    Left = 78
-    Top = 77
-    Width = 67
-    Height = 13
+    Left = 117
+    Top = 116
+    Width = 103
+    Height = 21
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Release date:'
   end
   object lblWhatsNew: TLabel
-    Left = 168
-    Top = 96
-    Width = 130
-    Height = 13
+    Left = 252
+    Top = 144
+    Width = 204
+    Height = 21
     Cursor = crHandPoint
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'What'#39's new in this release?'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clNavy
-    Font.Height = -11
+    Font.Height = -17
     Font.Name = 'Tahoma'
     Font.Style = [fsUnderline]
     ParentFont = False
     OnClick = lblWhatsNewClick
   end
   object Label6: TLabel
-    Left = 77
-    Top = 96
-    Width = 85
-    Height = 13
+    Left = 116
+    Top = 144
+    Width = 132
+    Height = 21
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'More information:'
   end
   object lblOldVer: TLabel
-    Left = 202
-    Top = 39
-    Width = 42
-    Height = 13
+    Left = 303
+    Top = 59
+    Width = 67
+    Height = 21
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'lblOldVer'
   end
   object lblNewVer: TLabel
-    Left = 212
-    Top = 58
-    Width = 47
-    Height = 13
+    Left = 318
+    Top = 87
+    Width = 75
+    Height = 21
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'lblNewVer'
   end
   object lblDate: TLabel
-    Left = 151
-    Top = 77
-    Width = 33
-    Height = 13
+    Left = 227
+    Top = 116
+    Width = 53
+    Height = 21
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'lblDate'
   end
   object Button1: TButton
-    Left = 8
-    Top = 134
-    Width = 75
-    Height = 41
+    Left = 12
+    Top = 201
+    Width = 113
+    Height = 62
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Cancel = True
     Caption = 'Close'
     TabOrder = 1
     OnClick = Button1Click
   end
   object but_Download: TButton
-    Left = 227
-    Top = 134
-    Width = 135
-    Height = 41
+    Left = 341
+    Top = 201
+    Width = 202
+    Height = 62
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Download now!'
     Default = True
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
+    Font.Height = -17
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False

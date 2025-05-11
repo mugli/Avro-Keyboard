@@ -26,114 +26,111 @@
 }
 
 {$INCLUDE ../ProjectDefines.inc}
-Unit uShapeInterceptor;
+unit uShapeInterceptor;
 
-Interface
+interface
 
-Uses
-        Windows,
-        SysUtils,
-        Classes,
-        Controls,
-        Graphics,
-        Dialogs,
-        ToolWin,
-        StdCtrls,
-        ExtCtrls;
+uses
+  Windows,
+  SysUtils,
+  Classes,
+  Controls,
+  Graphics,
+  Dialogs,
+  ToolWin,
+  StdCtrls,
+  ExtCtrls;
 
-Type
-        TShape = Class(ExtCtrls.TShape)
-        Private
-                fSelected: Boolean;
-                fKeyName: String;
-                fCaptionNormal: String;
-                fCaptionShift: String;
-                fNormal: String;
-                fShift: String;
-                fAltGr: String;
-                fShiftAltGr: String;
+type
+  TShape = class(ExtCtrls.TShape)
+    private
+      fSelected:      Boolean;
+      fKeyName:       string;
+      fCaptionNormal: string;
+      fCaptionShift:  string;
+      fNormal:        string;
+      fShift:         string;
+      fAltGr:         string;
+      fShiftAltGr:    string;
 
-                Procedure SetSelected(Const Value: Boolean);
-                Procedure SetKeyName(Const Value: String);
-                Procedure SetCaptionNormal(Const Value: String);
-                Procedure SetCaptionShift(Const Value: String);
-                Procedure SetNormal(Const Value: String);
-                Procedure SetShift(Const Value: String);
-                Procedure SetAltGr(Const Value: String);
-                Procedure SetShiftAltGr(Const Value: String);
-        Public
+      procedure SetSelected(const Value: Boolean);
+      procedure SetKeyName(const Value: string);
+      procedure SetCaptionNormal(const Value: string);
+      procedure SetCaptionShift(const Value: string);
+      procedure SetNormal(const Value: string);
+      procedure SetShift(const Value: string);
+      procedure SetAltGr(const Value: string);
+      procedure SetShiftAltGr(const Value: string);
+    public
 
-        Published
-                Property Selected: Boolean Read fSelected Write SetSelected;
-                Property KeyName: String Read fKeyName Write SetKeyName;
-                Property CaptionNormal: String Read fCaptionNormal
-                  Write SetCaptionNormal;
-                Property CaptionShift: String Read fCaptionShift
-                  Write SetCaptionShift;
-                Property Normal: String Read fNormal Write SetNormal;
-                Property Shift: String Read fShift Write SetShift;
-                Property AltGr: String Read fAltGr Write SetAltGr;
-                Property ShiftAltGr: String Read fShiftAltGr
-                  Write SetShiftAltGr;
-        End;
+    published
+      property Selected:      Boolean read fSelected write SetSelected;
+      property KeyName:       string read fKeyName write SetKeyName;
+      property CaptionNormal: string read fCaptionNormal write SetCaptionNormal;
+      property CaptionShift:  string read fCaptionShift write SetCaptionShift;
+      property Normal:        string read fNormal write SetNormal;
+      property Shift:         string read fShift write SetShift;
+      property AltGr:         string read fAltGr write SetAltGr;
+      property ShiftAltGr:    string read fShiftAltGr write SetShiftAltGr;
+  end;
 
-Implementation
+implementation
 
 { TShape }
 
-Procedure TShape.SetCaptionNormal(Const Value: String);
-Begin
-        fCaptionNormal := Value;
-End;
+procedure TShape.SetCaptionNormal(const Value: string);
+begin
+  fCaptionNormal := Value;
+end;
 
-Procedure TShape.SetCaptionShift(Const Value: String);
-Begin
-        fCaptionShift := Value;
-End;
+procedure TShape.SetCaptionShift(const Value: string);
+begin
+  fCaptionShift := Value;
+end;
 
-Procedure TShape.SetKeyName(Const Value: String);
-Begin
-        fKeyName := Value;
-End;
+procedure TShape.SetKeyName(const Value: string);
+begin
+  fKeyName := Value;
+end;
 
-Procedure TShape.SetNormal(Const Value: String);
-Begin
-        fNormal := Value;
-End;
+procedure TShape.SetNormal(const Value: string);
+begin
+  fNormal := Value;
+end;
 
-Procedure TShape.SetSelected(Const Value: Boolean);
-Begin
-        fSelected := Value;
-        If fSelected = True Then
-        Begin
-                If self.Brush.Color <> clYellow Then
-                        self.Brush.Color := clYellow;
-                If self.Brush.Style <> bsFDiagonal Then
-                        self.Brush.Style := bsFDiagonal;
-        End
-        Else
-        Begin
-                If self.Brush.Color <> clYellow Then
-                        self.Brush.Color := clYellow;
-                If self.Brush.Style <> bsClear Then
-                        self.Brush.Style := bsClear;
-        End;
+procedure TShape.SetSelected(const Value: Boolean);
+begin
+  fSelected := Value;
+  if fSelected = True then
+  begin
+    if self.Brush.Color <> clYellow then
+      self.Brush.Color := clYellow;
+    if self.Brush.Style <> bsFDiagonal then
+      self.Brush.Style := bsFDiagonal;
+  end
+  else
+  begin
+    if self.Brush.Color <> clYellow then
+      self.Brush.Color := clYellow;
+    if self.Brush.Style <> bsClear then
+      self.Brush.Style := bsClear;
+  end;
 
-End;
+end;
 
-Procedure TShape.SetShift(Const Value: String);
-Begin
-        fShift := Value;
-End;
+procedure TShape.SetShift(const Value: string);
+begin
+  fShift := Value;
+end;
 
-Procedure TShape.SetAltGr(Const Value: String);
-Begin
-        fAltGr := Value;
-End;
+procedure TShape.SetAltGr(const Value: string);
+begin
+  fAltGr := Value;
+end;
 
-Procedure TShape.SetShiftAltGr(Const Value: String);
-Begin
-        fShiftAltGr := Value;
-End;
+procedure TShape.SetShiftAltGr(const Value: string);
+begin
+  fShiftAltGr := Value;
+end;
 
-End.
+end.

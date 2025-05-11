@@ -25,11 +25,11 @@
   =============================================================================
 }
 
-Unit uSimilarSort_Spell;
+unit uSimilarSort_Spell;
 
-Interface
+interface
 
-Uses
+uses
   Classes,
   uSpellEditDistanceSearch,
   clsReversePhonetic,
@@ -37,45 +37,41 @@ Uses
 
 const
   PhoneticWeight = 9;
-  ManualWeight = 1;
+  ManualWeight   = 1;
 
-Procedure SimilarSort(SourceS: String; Var WList: TStringList);
-Function MyCustomSort(List: TStringList; Index1, Index2: Integer): Integer;
+procedure SimilarSort(SourceS: string; var WList: TStringList);
+function MyCustomSort(List: TStringList; Index1, Index2: Integer): Integer;
 
-Var
-  SourceCompareS: String;
-  RP: TReversePhonetic;
+var
+  SourceCompareS: string;
+  RP:             TReversePhonetic;
 
-Implementation
+implementation
 
-Function MyCustomSort(List: TStringList; Index1, Index2: Integer): Integer;
-Var
-  SRP, i1Rp, i2RP: String;
-Begin
+function MyCustomSort(List: TStringList; Index1, Index2: Integer): Integer;
+var
+  SRP, i1Rp, i2RP: string;
+begin
   SRP := RP.Convert(SourceCompareS);
   i1Rp := RP.Convert(List[Index1]);
   i2RP := RP.Convert(List[Index2]);
-  If ((EditDistance(SourceCompareS, List[Index1]) * ManualWeight) +
-    (EditDistance(SRP, i1Rp) * PhoneticWeight)) <
-    ((EditDistance(SourceCompareS, List[Index2]) * ManualWeight) +
-    (EditDistance(SRP, i2RP) * PhoneticWeight)) Then
+  if ((EditDistance(SourceCompareS, List[Index1]) * ManualWeight) + (EditDistance(SRP, i1Rp) * PhoneticWeight)) <
+    ((EditDistance(SourceCompareS, List[Index2]) * ManualWeight) + (EditDistance(SRP, i2RP) * PhoneticWeight)) then
     Result := -1
-  Else If ((EditDistance(SourceCompareS, List[Index1]) * ManualWeight) +
-    (EditDistance(SRP, i1Rp) * PhoneticWeight)) >
-    ((EditDistance(SourceCompareS, List[Index2]) * ManualWeight) +
-    (EditDistance(SRP, i2RP) * PhoneticWeight)) Then
+  else if ((EditDistance(SourceCompareS, List[Index1]) * ManualWeight) + (EditDistance(SRP, i1Rp) * PhoneticWeight)) >
+    ((EditDistance(SourceCompareS, List[Index2]) * ManualWeight) + (EditDistance(SRP, i2RP) * PhoneticWeight)) then
     Result := 1
-  Else
+  else
     Result := 0;
-End;
+end;
 
-Procedure SimilarSort(SourceS: String; Var WList: TStringList);
-Begin
+procedure SimilarSort(SourceS: string; var WList: TStringList);
+begin
   WList.Sorted := False;
   SourceCompareS := SourceS;
   RP := TReversePhonetic.Create;
   WList.CustomSort(MyCustomSort);
   FreeAndNil(RP);
-End;
+end;
 
-End.
+end.

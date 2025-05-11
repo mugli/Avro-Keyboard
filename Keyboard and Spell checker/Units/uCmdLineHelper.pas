@@ -25,185 +25,183 @@
   =============================================================================
 }
 
-Unit uCmdLineHelper;
+unit uCmdLineHelper;
 
-Interface
+interface
 
-Uses windows,
+uses
+  windows,
   sysutils;
 
 // command line parameters + program path
-Function GetCommandLine: String;
+function GetCommandLine: string;
 // number of parameters
-Function GetParamCount: Integer;
+function GetParamCount: Integer;
 // parameter by index
-Function GetParamStr(Index: Integer): String;
+function GetParamStr(Index: Integer): string;
 
-Function ParamPresent(Param: String): Boolean;
+function ParamPresent(Param: string): Boolean;
 
-Implementation
+implementation
 
 { =============================================================================== }
 
-Function ParamPresent(Param: String): Boolean;
-Var
+function ParamPresent(Param: string): Boolean;
+var
   i: Integer;
-Begin
+begin
   result := False;
-  If uCmdLineHelper.GetParamCount <= 0 Then
+  if uCmdLineHelper.GetParamCount <= 0 then
     exit;
 
-  For i := 1 To uCmdLineHelper.GetParamCount Do
-  Begin
-    If (UpperCase(uCmdLineHelper.GetParamStr(i)) = '/' + UpperCase(Param)) Or
-      (UpperCase(uCmdLineHelper.GetParamStr(i)) = '-' + UpperCase(Param)) Or
-      (UpperCase(uCmdLineHelper.GetParamStr(i)) = '--' + UpperCase(Param)) Or
-      (UpperCase(uCmdLineHelper.GetParamStr(i)) = UpperCase(Param)) Then
-    Begin
+  for i := 1 to uCmdLineHelper.GetParamCount do
+  begin
+    if (UpperCase(uCmdLineHelper.GetParamStr(i)) = '/' + UpperCase(Param)) or (UpperCase(uCmdLineHelper.GetParamStr(i)) = '-' + UpperCase(Param)) or
+      (UpperCase(uCmdLineHelper.GetParamStr(i)) = '--' + UpperCase(Param)) or (UpperCase(uCmdLineHelper.GetParamStr(i)) = UpperCase(Param)) then
+    begin
 
       result := True;
-    End;
-  End;
-End;
+    end;
+  end;
+end;
 
 { =============================================================================== }
 
-Function GetCommandLine: String;
-Begin
+function GetCommandLine: string;
+begin
   result := windows.GetCommandLine;
-End;
+end;
 
 { =============================================================================== }
 
-Function GetNextParam(Var CmdLine: PChar; Buffer: PChar; Len: PInteger)
-  : Boolean;
-Var
-  InQuotedStr, IsOdd: Boolean;
+function GetNextParam(var CmdLine: PChar; Buffer: PChar; Len: PInteger): Boolean;
+var
+  InQuotedStr, IsOdd:      Boolean;
   NumSlashes, NewLen, cnt: Integer;
-Begin
+begin
   result := False;
-  If Len <> Nil Then
+  if Len <> nil then
     Len^ := 0;
-  If CmdLine = Nil Then
+  if CmdLine = nil then
     exit;
-  While (CmdLine^ <= ' ') And (CmdLine^ <> #0) Do
+  while (CmdLine^ <= ' ') and (CmdLine^ <> #0) do
     CmdLine := CharNext(CmdLine);
-  If CmdLine^ = #0 Then
+  if CmdLine^ = #0 then
     exit;
   InQuotedStr := False;
   NewLen := 0;
-  Repeat
-    If CmdLine^ = '\' Then
-    Begin
+  repeat
+    if CmdLine^ = '\' then
+    begin
       NumSlashes := 0;
-      Repeat
+      repeat
         Inc(NumSlashes);
         CmdLine := CharNext(CmdLine);
-      Until CmdLine^ <> '\';
-      If CmdLine^ = '"' Then
-      Begin
-        IsOdd := (NumSlashes Mod 2) <> 0;
-        NumSlashes := NumSlashes Div 2;
+      until CmdLine^ <> '\';
+      if CmdLine^ = '"' then
+      begin
+        IsOdd := (NumSlashes mod 2) <> 0;
+        NumSlashes := NumSlashes div 2;
         Inc(NewLen, NumSlashes);
-        If IsOdd Then
+        if IsOdd then
           Inc(NewLen);
-        If Buffer <> Nil Then
-        Begin
-          For cnt := 0 To NumSlashes - 1 Do
-          Begin
+        if Buffer <> nil then
+        begin
+          for cnt := 0 to NumSlashes - 1 do
+          begin
             Buffer^ := '\';
             Inc(Buffer);
-          End;
-          If IsOdd Then
-          Begin
+          end;
+          if IsOdd then
+          begin
             Buffer^ := '"';
             Inc(Buffer);
-          End;
-        End;
-        If IsOdd Then
+          end;
+        end;
+        if IsOdd then
           CmdLine := CharNext(CmdLine);
-      End
-      Else
-      Begin
+      end
+      else
+      begin
         Inc(NewLen, NumSlashes);
-        If Buffer <> Nil Then
-        Begin
-          For cnt := 0 To NumSlashes - 1 Do
-          Begin
+        if Buffer <> nil then
+        begin
+          for cnt := 0 to NumSlashes - 1 do
+          begin
             Buffer^ := '\';
             Inc(Buffer);
-          End;
-        End;
-      End;
+          end;
+        end;
+      end;
       Continue;
-    End;
-    If CmdLine^ <> '"' Then
-    Begin
-      If (CmdLine^ <= ' ') And (Not InQuotedStr) Then
+    end;
+    if CmdLine^ <> '"' then
+    begin
+      if (CmdLine^ <= ' ') and (not InQuotedStr) then
         Break;
       Inc(NewLen);
-      If Buffer <> Nil Then
-      Begin
+      if Buffer <> nil then
+      begin
         Buffer^ := CmdLine^;
         Inc(Buffer);
-      End;
-    End
-    Else
-      InQuotedStr := Not InQuotedStr;
+      end;
+    end
+    else
+      InQuotedStr := not InQuotedStr;
     CmdLine := CharNext(CmdLine);
-  Until CmdLine^ = #0;
-  If Len <> Nil Then
+  until CmdLine^ = #0;
+  if Len <> nil then
     Len^ := NewLen;
   result := True;
-End;
+end;
 
 { =============================================================================== }
 
-Function GetParamCount: Integer;
-Var
+function GetParamCount: Integer;
+var
   CmdLine: PChar;
-Begin
+begin
   result := 0;
   CmdLine := windows.GetCommandLine;
-  GetNextParam(CmdLine, Nil, Nil);
-  While GetNextParam(CmdLine, Nil, Nil) Do
+  GetNextParam(CmdLine, nil, nil);
+  while GetNextParam(CmdLine, nil, nil) do
     Inc(result);
-End;
+end;
 
 { =============================================================================== }
 
-Function GetParamStr(Index: Integer): String;
-Var
-  Buffer: Array [0 .. MAX_PATH] Of Char;
+function GetParamStr(Index: Integer): string;
+var
+  Buffer:     array [0 .. MAX_PATH] of Char;
   CmdLine, P: PChar;
-  Len: Integer;
-Begin
+  Len:        Integer;
+begin
   result := '';
-  If Index <= 0 Then
-  Begin
+  if index <= 0 then
+  begin
     Len := GetModuleFileName(0, Buffer, MAX_PATH + 1);
     SetString(result, Buffer, Len);
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     CmdLine := windows.GetCommandLine;
-    GetNextParam(CmdLine, Nil, Nil);
-    Repeat
-      Dec(Index);
-      If Index = 0 Then
+    GetNextParam(CmdLine, nil, nil);
+    repeat
+      Dec(index);
+      if index = 0 then
         Break;
-      If Not GetNextParam(CmdLine, Nil, Nil) Then
+      if not GetNextParam(CmdLine, nil, nil) then
         exit;
-    Until False;
+    until False;
     P := CmdLine;
-    If GetNextParam(P, Nil, @Len) Then
-    Begin
+    if GetNextParam(P, nil, @Len) then
+    begin
       SetLength(result, Len);
-      GetNextParam(CmdLine, PChar(result), Nil);
-    End;
-  End;
-End;
+      GetNextParam(CmdLine, PChar(result), nil);
+    end;
+  end;
+end;
 
 { =============================================================================== }
 
-End.
+end.

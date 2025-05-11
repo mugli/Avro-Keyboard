@@ -26,110 +26,130 @@
 }
 
 {$INCLUDE ../ProjectDefines.inc}
-Unit Unit1;
+unit Unit1;
 
-Interface
+interface
 
-Uses
-        Windows,
-        Messages,
-        SysUtils,
-        Variants,
-        Classes,
-        Graphics,
-        Controls,
-        Forms,
-        Dialogs,
-        StdCtrls,
-        clsUnicodeToBijoy2000,
-        ComCtrls;
+uses
+  Windows,
+  Messages,
+  SysUtils,
+  Variants,
+  Classes,
+  Graphics,
+  Controls,
+  Forms,
+  Dialogs,
+  StdCtrls,
+  clsUnicodeToBijoy2000,
+  ComCtrls,
+  Vcl.AppEvnts;
 
-Type
-        TForm1 = Class(TForm)
-                MEMO1: TMemo;
-                MEMO2: TMemo;
-                Label1: TLabel;
-                Button1: TButton;
-                Progress: TProgressBar;
-                Label8: TLabel;
-                Label_OmicronLab: TLabel;
-                Label4: TLabel;
-                Procedure FormCreate(Sender: TObject);
-                Procedure FormClose(Sender: TObject; Var Action: TCloseAction);
-                Procedure Button1Click(Sender: TObject);
-                Procedure Label_OmicronLabClick(Sender: TObject);
-        Private
-                { Private declarations }
-                FUniToBijoy: TUnicodeToBijoy2000;
-        Public
-                { Public declarations }
-        End;
+type
+  TForm1 = class(TForm)
+    MEMO1: TMemo;
+    MEMO2: TMemo;
+    Label1: TLabel;
+    Button1: TButton;
+    Progress: TProgressBar;
+    Label8: TLabel;
+    Label_OmicronLab: TLabel;
+    Label4: TLabel;
+    AppEvents: TApplicationEvents;
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure Button1Click(Sender: TObject);
+    procedure Label_OmicronLabClick(Sender: TObject);
+    procedure AppEventsSettingChange(Sender: TObject; Flag: Integer; const Section: string; var Result: LongInt);
+    private
+      { Private declarations }
+      FUniToBijoy: TUnicodeToBijoy2000;
 
-Var
-        Form1: TForm1;
+      procedure HandleThemes;
+    public
+      { Public declarations }
+  end;
 
-Implementation
+var
+  Form1: TForm1;
+
+implementation
 
 {$R *.dfm}
 
-Uses
-        uFileFolderHandling;
+uses
+  uFileFolderHandling,
+  WindowsDarkMode;
 
 { =============================================================================== }
 
-Procedure TForm1.Button1Click(Sender: TObject);
-Var
-        i, TotalLines: integer;
-Begin
-        MEMO1.Enabled := False;
-        MEMO2.Enabled := False;
-        Button1.Enabled := False;
-        Progress.Visible := True;
-        Progress.Position := 0;
-        MEMO2.Clear;
-        application.ProcessMessages;
-
-        TotalLines := MEMO1.Lines.Count;
-        MEMO2.Lines.BeginUpdate;
-        For i := 0 To TotalLines - 1 Do
-        Begin
-                MEMO2.Lines.Add(FUniToBijoy.Convert(MEMO1.Lines[i]));
-
-                Progress.Position := ((i + 1) * 100) Div (TotalLines + 1);
-
-                application.ProcessMessages;
-        End;
-        MEMO2.Lines.EndUpdate;
-
-        Progress.Visible := False;
-        MEMO1.Enabled := True;
-        MEMO2.Enabled := True;
-        Button1.Enabled := True;
-End;
+procedure TForm1.HandleThemes;
+begin
+  SetAppropriateThemeMode('Windows10 Dark', 'Windows10');
+end;
 
 { =============================================================================== }
 
-Procedure TForm1.FormClose(Sender: TObject; Var Action: TCloseAction);
-Begin
-        FUniToBijoy.Free;
-        Action := caFree;
-        Form1 := Nil;
-End;
+procedure TForm1.AppEventsSettingChange(Sender: TObject; Flag: Integer; const Section: string; var Result: LongInt);
+begin
+  if SameText('ImmersiveColorSet', string(Section)) then
+    HandleThemes;
+end;
+
+procedure TForm1.Button1Click(Sender: TObject);
+var
+  i, TotalLines: Integer;
+begin
+  MEMO1.Enabled := False;
+  MEMO2.Enabled := False;
+  Button1.Enabled := False;
+  Progress.Visible := True;
+  Progress.Position := 0;
+  MEMO2.Clear;
+  application.ProcessMessages;
+
+  TotalLines := MEMO1.Lines.Count;
+  MEMO2.Lines.BeginUpdate;
+  for i := 0 to TotalLines - 1 do
+  begin
+    MEMO2.Lines.Add(FUniToBijoy.Convert(MEMO1.Lines[i]));
+
+    Progress.Position := ((i + 1) * 100) div (TotalLines + 1);
+
+    application.ProcessMessages;
+  end;
+  MEMO2.Lines.EndUpdate;
+
+  Progress.Visible := False;
+  MEMO1.Enabled := True;
+  MEMO2.Enabled := True;
+  Button1.Enabled := True;
+end;
 
 { =============================================================================== }
 
-Procedure TForm1.FormCreate(Sender: TObject);
-Begin
-        FUniToBijoy := TUnicodeToBijoy2000.Create;
-End;
+procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  FUniToBijoy.Free;
+  Action := caFree;
+  Form1 := nil;
+end;
 
 { =============================================================================== }
 
-Procedure TForm1.Label_OmicronLabClick(Sender: TObject);
-Begin
-        Execute_Something('https://www.omicronlab.com');
-End;
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  HandleThemes;
+  FUniToBijoy := TUnicodeToBijoy2000.Create;
+end;
 
 { =============================================================================== }
 
-End.
+procedure TForm1.Label_OmicronLabClick(Sender: TObject);
+begin
+  Execute_Something('https://www.omicronlab.com');
+end;
+
+{ =============================================================================== }
+
+end.

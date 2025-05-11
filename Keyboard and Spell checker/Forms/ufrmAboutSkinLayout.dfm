@@ -1,15 +1,19 @@
 object frmAboutSkinLayout: TfrmAboutSkinLayout
   Left = 0
   Top = 0
+  Margins.Left = 5
+  Margins.Top = 5
+  Margins.Right = 5
+  Margins.Bottom = 5
   BorderIcons = []
   BorderStyle = bsToolWindow
   Caption = 'About...'
-  ClientHeight = 288
-  ClientWidth = 349
+  ClientHeight = 432
+  ClientWidth = 524
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -17
   Font.Name = 'Tahoma'
   Font.Style = []
   Icon.Data = {
@@ -59,83 +63,120 @@ object frmAboutSkinLayout: TfrmAboutSkinLayout
     000000000000000000000000000000000000000000000000000000000000}
   Position = poScreenCenter
   OnClose = FormClose
-  TextHeight = 13
+  PixelsPerInch = 144
+  TextHeight = 21
   object Label1: TLabel
     Left = 8
-    Top = 8
-    Width = 75
-    Height = 13
+    Top = 12
+    Width = 117
+    Height = 21
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Alignment = taRightJustify
     Caption = 'Internal Name :'
   end
   object Label2: TLabel
-    Left = 41
-    Top = 40
-    Width = 42
-    Height = 13
+    Left = 59
+    Top = 60
+    Width = 66
+    Height = 21
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Alignment = taRightJustify
     Caption = 'Version :'
   end
   object Label3: TLabel
-    Left = 27
-    Top = 72
-    Width = 56
-    Height = 13
+    Left = 39
+    Top = 108
+    Width = 86
+    Height = 21
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Alignment = taRightJustify
     Caption = 'Developer :'
   end
   object Label4: TLabel
-    Left = 18
-    Top = 104
-    Width = 65
-    Height = 25
+    Left = 27
+    Top = 156
+    Width = 98
+    Height = 38
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Alignment = taRightJustify
     AutoSize = False
     Caption = 'Developer'#39's comment :'
     WordWrap = True
   end
   object txtName: TEdit
-    Left = 102
-    Top = 8
-    Width = 239
-    Height = 21
+    Left = 153
+    Top = 12
+    Width = 359
+    Height = 29
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Color = clBtnFace
     ReadOnly = True
     TabOrder = 0
   end
   object txtVersion: TEdit
-    Left = 102
-    Top = 40
-    Width = 239
-    Height = 21
+    Left = 153
+    Top = 60
+    Width = 359
+    Height = 29
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Color = clBtnFace
     ReadOnly = True
     TabOrder = 1
   end
   object txtDeveloper: TEdit
-    Left = 102
-    Top = 72
-    Width = 239
-    Height = 21
+    Left = 153
+    Top = 108
+    Width = 359
+    Height = 29
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Color = clBtnFace
     ReadOnly = True
     TabOrder = 2
   end
   object txtComment: TMemo
-    Left = 102
-    Top = 104
-    Width = 239
-    Height = 137
+    Left = 153
+    Top = 156
+    Width = 359
+    Height = 206
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Color = clBtnFace
     ReadOnly = True
     ScrollBars = ssVertical
     TabOrder = 3
   end
   object Button1: TButton
-    Left = 266
-    Top = 255
-    Width = 75
-    Height = 25
+    Left = 399
+    Top = 383
+    Width = 113
+    Height = 37
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Cancel = True
     Caption = '&Close'
     Default = True

@@ -25,272 +25,266 @@
   =============================================================================
 }
 
-Unit uSpellEditDistanceSearch;
+unit uSpellEditDistanceSearch;
 
-Interface
+interface
 
-Uses sysutils,
+uses
+  sysutils,
   Math,
   Classes,
   uCustomDictionary;
 
-Procedure SearchSuggestion(Const Source: String; Var SList: TStringList;
-  Max_Tolerance: Integer);
+procedure SearchSuggestion(const Source: string; var SList: TStringList; Max_Tolerance: Integer);
 
 /// //////////////////////////////////////////
-Procedure SearchSuggestion_Basic(Const Source: String; Var SList: TStringList;
-  Max_Tolerance: Integer);
-Function minimum(a, b, c: Integer): Integer;
-Function EditDistance(s, t: String): Integer;
+procedure SearchSuggestion_Basic(const Source: string; var SList: TStringList; Max_Tolerance: Integer);
+function minimum(a, b, c: Integer): Integer;
+function EditDistance(s, t: string): Integer;
 
-Implementation
+implementation
 
-Uses
+uses
   BanglaChars,
   uDBase,
   clsReversePhonetic,
   StrUtils;
 
-Procedure SearchSuggestion(Const Source: String; Var SList: TStringList;
-  Max_Tolerance: Integer);
-Var
-  iLen, I, Dummy, J: Integer;
-  SearchingPart, IsSuffix, ListItem: String;
-  TempList: TStringList;
-Begin
+procedure SearchSuggestion(const Source: string; var SList: TStringList; Max_Tolerance: Integer);
+var
+  iLen, I, Dummy, J:                 Integer;
+  SearchingPart, IsSuffix, ListItem: string;
+  TempList:                          TStringList;
+begin
   iLen := Length(Source);
-  If iLen <= 0 Then
+  if iLen <= 0 then
     exit;
 
   SearchSuggestion_Basic(Source, SList, Max_Tolerance);
 
-  If iLen < 2 Then
+  if iLen < 2 then
     exit;
 
   TempList := TStringList.Create;
   TempList.Sorted := True;
   TempList.Duplicates := dupIgnore;
 
-  For I := 2 To iLen Do
-  Begin
+  for I := 2 to iLen do
+  begin
     IsSuffix := MidStr(Source, I, iLen);
     SearchingPart := LeftStr(Source, iLen - Length(IsSuffix));
 
     // Valid suffix?
-    If Suffix_Spell.Find(IsSuffix, Dummy) = True Then
-    Begin
+    if Suffix_Spell.Find(IsSuffix, Dummy) = True then
+    begin
       TempList.Clear;
       SearchSuggestion_Basic(SearchingPart, TempList, Max_Tolerance);
-      For J := 0 To TempList.Count - 1 Do
-      Begin
+      for J := 0 to TempList.Count - 1 do
+      begin
         ListItem := TempList[J];
-        If IsVowel(RightStr(ListItem, 1)) And (IsKar(LeftStr(IsSuffix, 1))) Then
+        if IsVowel(RightStr(ListItem, 1)) and (IsKar(LeftStr(IsSuffix, 1))) then
           SList.Add(ListItem + b_Y + IsSuffix)
-        Else
-        Begin
-          If RightStr(ListItem, 1) = b_Khandatta Then
-            TempList.Add(MidStr(ListItem, 1, Length(ListItem) - 1) + b_T
-              + IsSuffix)
-          Else If RightStr(ListItem, 1) = b_Anushar Then
-            TempList.Add(MidStr(ListItem, 1, Length(ListItem) - 1) + b_NGA
-              + IsSuffix)
-          Else
+        else
+        begin
+          if RightStr(ListItem, 1) = b_Khandatta then
+            TempList.Add(MidStr(ListItem, 1, Length(ListItem) - 1) + b_T + IsSuffix)
+          else if RightStr(ListItem, 1) = b_Anushar then
+            TempList.Add(MidStr(ListItem, 1, Length(ListItem) - 1) + b_NGA + IsSuffix)
+          else
             SList.Add(ListItem + IsSuffix);
-        End;
-      End;
+        end;
+      end;
 
-      For J := 0 To TempList.Count - 1 Do
+      for J := 0 to TempList.Count - 1 do
         SList.Add(TempList[J]);
-    End;
-  End;
+    end;
+  end;
 
   TempList.Clear;
   FreeAndNil(TempList);
 
-End;
+end;
 
-Procedure SearchSuggestion_Basic(Const Source: String; Var SList: TStringList;
-  Max_Tolerance: Integer);
-Var
-  Start: Char;
-  I: Integer;
-  StringData: String;
+procedure SearchSuggestion_Basic(const Source: string; var SList: TStringList; Max_Tolerance: Integer);
+var
+  Start:      Char;
+  I:          Integer;
+  StringData: string;
 
-  Procedure SearchInDB(Var DB: TStringList);
-  Var
+  procedure SearchInDB(var DB: TStringList);
+  var
     J: Integer;
-  Begin
-    For J := 0 To DB.Count - 1 Do
-    Begin
+  begin
+    for J := 0 to DB.Count - 1 do
+    begin
       StringData := DB[J];
-      If EditDistance(Source, StringData) <= Max_Tolerance Then
+      if EditDistance(Source, StringData) <= Max_Tolerance then
         SList.Add(StringData);
-    End;
-  End;
+    end;
+  end;
 
-Begin
-  If Length(Source) <= 0 Then
+begin
+  if Length(Source) <= 0 then
     exit;
 
   Start := Source[1];
 
   // Search for "Substitution", "Insertion"
   // "Deletion" errors
-  If Start = b_A Then
+  if Start = b_A then
     SearchInDB(W_A);
-  If Start = b_AA Then
+  if Start = b_AA then
     SearchInDB(W_AA);
-  If Start = b_I Then
+  if Start = b_I then
     SearchInDB(W_I);
-  If Start = b_II Then
+  if Start = b_II then
     SearchInDB(W_II);
-  If Start = b_U Then
+  if Start = b_U then
     SearchInDB(W_U);
-  If Start = b_UU Then
+  if Start = b_UU then
     SearchInDB(W_UU);
-  If Start = b_RRI Then
+  if Start = b_RRI then
     SearchInDB(W_RRI);
-  If Start = b_E Then
+  if Start = b_E then
     SearchInDB(W_E);
-  If Start = b_OI Then
+  if Start = b_OI then
     SearchInDB(W_OI);
-  If Start = b_O Then
+  if Start = b_O then
     SearchInDB(W_O);
-  If Start = b_OU Then
+  if Start = b_OU then
     SearchInDB(W_OU);
 
-  If Start = b_B Then
+  if Start = b_B then
     SearchInDB(W_B);
-  If Start = b_BH Then
+  if Start = b_BH then
     SearchInDB(W_BH);
-  If Start = b_C Then
+  if Start = b_C then
     SearchInDB(W_C);
-  If Start = b_CH Then
+  if Start = b_CH then
     SearchInDB(W_CH);
-  If Start = b_D Then
+  if Start = b_D then
     SearchInDB(W_D);
-  If Start = b_Dh Then
+  if Start = b_Dh then
     SearchInDB(W_Dh);
-  If Start = b_DD Then
+  if Start = b_DD then
     SearchInDB(W_Dd);
-  If Start = b_DDh Then
+  if Start = b_DDh then
     SearchInDB(W_Ddh);
-  If Start = b_G Then
+  if Start = b_G then
     SearchInDB(W_G);
-  If Start = b_Gh Then
+  if Start = b_Gh then
     SearchInDB(W_Gh);
-  If Start = b_H Then
+  if Start = b_H then
     SearchInDB(W_H);
-  If Start = b_J Then
+  if Start = b_J then
     SearchInDB(W_J);
-  If Start = b_Jh Then
+  if Start = b_Jh then
     SearchInDB(W_Jh);
-  If Start = b_K Then
+  if Start = b_K then
     SearchInDB(W_K);
-  If Start = b_Kh Then
+  if Start = b_Kh then
     SearchInDB(W_Kh);
-  If Start = b_L Then
+  if Start = b_L then
     SearchInDB(W_L);
-  If Start = b_M Then
+  if Start = b_M then
     SearchInDB(W_M);
-  If Start = b_N Then
+  if Start = b_N then
     SearchInDB(W_N);
-  If Start = b_NGA Then
+  if Start = b_NGA then
     SearchInDB(W_NGA);
-  If Start = b_NYA Then
+  if Start = b_NYA then
     SearchInDB(W_NYA);
-  If Start = b_Nn Then
+  if Start = b_Nn then
     SearchInDB(W_Nn);
-  If Start = b_P Then
+  if Start = b_P then
     SearchInDB(W_P);
-  If Start = b_Ph Then
+  if Start = b_Ph then
     SearchInDB(W_Ph);
-  If Start = b_R Then
+  if Start = b_R then
     SearchInDB(W_R);
-  If Start = b_Rr Then
+  if Start = b_Rr then
     SearchInDB(W_Rr);
-  If Start = b_Rrh Then
+  if Start = b_Rrh then
     SearchInDB(W_Rrh);
-  If Start = b_S Then
+  if Start = b_S then
     SearchInDB(W_S);
-  If Start = b_Sh Then
+  if Start = b_Sh then
     SearchInDB(W_Sh);
-  If Start = b_Ss Then
+  if Start = b_Ss then
     SearchInDB(W_Ss);
-  If Start = b_T Then
+  if Start = b_T then
     SearchInDB(W_T);
-  If Start = b_Th Then
+  if Start = b_Th then
     SearchInDB(W_Th);
-  If Start = b_Tt Then
+  if Start = b_Tt then
     SearchInDB(W_Tt);
-  If Start = b_Tth Then
+  if Start = b_Tth then
     SearchInDB(W_Tth);
-  If Start = b_Y Then
+  if Start = b_Y then
     SearchInDB(W_Y);
-  If Start = b_Z Then
+  if Start = b_Z then
     SearchInDB(W_Z);
-  If Start = b_Khandatta Then
+  if Start = b_Khandatta then
     SearchInDB(W_Khandatta);
 
   // Search custom dictionary
-  For I := 0 To SpellCustomDict.Count - 1 Do
-  Begin
-    If EditDistance(Source, SpellCustomDict[I]) <= Max_Tolerance Then
+  for I := 0 to SpellCustomDict.Count - 1 do
+  begin
+    if EditDistance(Source, SpellCustomDict[I]) <= Max_Tolerance then
       SList.Add(StringData);
-  End;
+  end;
 
-End;
+end;
 
-Function minimum(a, b, c: Integer): Integer;
-Var
+function minimum(a, b, c: Integer): Integer;
+var
   mi: Integer;
-Begin
+begin
   mi := a;
-  If (b < mi) Then
+  if (b < mi) then
     mi := b;
-  If (c < mi) Then
+  if (c < mi) then
     mi := c;
   Result := mi;
-End;
+end;
 
-Function EditDistance(s, t: String): Integer;
-Var
-  d: Array Of Array Of Integer;
+function EditDistance(s, t: string): Integer;
+var
+  d:                 array of array of Integer;
   n, m, I, J, costo: Integer;
-  s_i, t_j: Char;
-Begin
+  s_i, t_j:          Char;
+begin
   n := Length(s);
   m := Length(t);
-  If (n = 0) Then
-  Begin
+  if (n = 0) then
+  begin
     Result := m;
     exit;
-  End;
-  If m = 0 Then
-  Begin
+  end;
+  if m = 0 then
+  begin
     Result := n;
     exit;
-  End;
+  end;
   setlength(d, n + 1, m + 1);
-  For I := 0 To n Do
+  for I := 0 to n do
     d[I, 0] := I;
-  For J := 0 To m Do
+  for J := 0 to m do
     d[0, J] := J;
-  For I := 1 To n Do
-  Begin
+  for I := 1 to n do
+  begin
     s_i := s[I];
-    For J := 1 To m Do
-    Begin
+    for J := 1 to m do
+    begin
       t_j := t[J];
-      If s_i = t_j Then
+      if s_i = t_j then
         costo := 0
-      Else
+      else
         costo := 1;
-      d[I, J] := minimum(d[I - 1][J] + 1, d[I][J - 1] + 1,
-        d[I - 1][J - 1] + costo);
-    End;
-  End;
+      d[I, J] := minimum(d[I - 1][J] + 1, d[I][J - 1] + 1, d[I - 1][J - 1] + costo);
+    end;
+  end;
   Result := d[n, m];
-End;
+end;
 
-End.
+end.

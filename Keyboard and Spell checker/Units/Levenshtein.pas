@@ -4,11 +4,13 @@ unit Levenshtein;
 
 interface
 
-uses sysutils, Math;
+uses
+  sysutils,
+  Math;
 
 function minimum(a, b, c: Integer): Integer;
 
-function LD(s, t: String): Integer;
+function LD(s, t: string): Integer;
 
 implementation
 
@@ -24,11 +26,11 @@ begin
   Result := mi;
 end;
 
-function LD(s, t: String): Integer;
+function LD(s, t: string): Integer;
 var
-  d: array of array of Integer;
+  d:                 array of array of Integer;
   n, m, i, j, costo: Integer;
-  s_i, t_j: Char;
+  s_i, t_j:          Char;
 begin
   n := Length(s);
   m := Length(t);
@@ -57,8 +59,7 @@ begin
         costo := 0
       else
         costo := 1;
-      d[i, j] := minimum(d[i - 1][j] + 1, d[i][j - 1] + 1,
-        d[i - 1][j - 1] + costo);
+      d[i, j] := minimum(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + costo);
     end;
   end;
   Result := d[n, m];

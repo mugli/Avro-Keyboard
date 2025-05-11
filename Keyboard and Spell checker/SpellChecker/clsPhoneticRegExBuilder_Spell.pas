@@ -25,90 +25,91 @@
   =============================================================================
 }
 
-Unit clsPhoneticRegExBuilder_Spell;
+unit clsPhoneticRegExBuilder_Spell;
 
-Interface
+interface
 
-Uses
+uses
   classes,
   sysutils,
   StrUtils;
 
 // Skeleton of Class TEnglishToRegEx
-Type
-  TEnglishToRegEx = Class
-    pEnglishText: String;
-    ln: Integer; // Length of English String
+type
+  TEnglishToRegEx = class
+    pEnglishText: string;
+    ln: Integer;  // Length of English String
     pos: Integer; // Position of processing at English String
-    RS: String; // Result String
+    RS: string;   // Result String
 
-  Private
-    Function MyConvert(): String;
-    Function Cnv(Const Compare: String; Const IfTrue: String): Boolean;
-    Procedure AddRs(Const T: String);
-    Function PrevT: String;
-    Function NextT: String;
-    Function Vowel(Const T: String): Boolean;
-    Function Consonent(Const T: String): Boolean;
-    Function Begining: Boolean;
-    Procedure A;
-    Procedure B;
-    Procedure C;
-    Procedure D;
-    Procedure E;
-    Procedure F;
-    Procedure G;
-    Procedure H;
-    Procedure I;
-    Procedure J;
-    Procedure K;
-    Procedure L;
-    Procedure M;
-    Procedure N;
-    Procedure O;
-    Procedure P;
-    Procedure Q;
-    Procedure R;
-    Procedure S;
-    Procedure T;
-    Procedure U;
-    Procedure V;
-    Procedure W;
-    Procedure X;
-    Procedure Y;
-    Procedure Z;
+    private
+      function MyConvert(): string;
+      function Cnv(const Compare: string; const IfTrue: string): Boolean;
+      procedure AddRs(const T: string);
+      function PrevT: string;
+      function NextT: string;
+      function Vowel(const T: string): Boolean;
+      function Consonent(const T: string): Boolean;
+      function Begining: Boolean;
+      procedure A;
+      procedure B;
+      procedure C;
+      procedure D;
+      procedure E;
+      procedure F;
+      procedure G;
+      procedure H;
+      procedure I;
+      procedure J;
+      procedure K;
+      procedure L;
+      procedure M;
+      procedure N;
+      procedure O;
+      procedure P;
+      procedure Q;
+      procedure R;
+      procedure S;
+      procedure T;
+      procedure U;
+      procedure V;
+      procedure W;
+      procedure X;
+      procedure Y;
+      procedure Z;
 
-  Public
-    Constructor Create; // Initializer
-    Function Convert(Const EnglishT: String): String;
-    Function CorrectCase(Const inputT: String): String;
-    Function EscapeSpecialCharacters(Const inputT: String): String;
-  End;
+    public
+      constructor Create; // Initializer
+      function Convert(const EnglishT: string): string;
+      function CorrectCase(const inputT: string): string;
+      function EscapeSpecialCharacters(const inputT: string): string;
+  end;
 
-Implementation
+implementation
 
-Uses Phonetic_RegExp_Constants_Spell,
+uses
+  Phonetic_RegExp_Constants_Spell,
   BanglaChars;
 
 { TEnglishToRegEx }
 
-Procedure TEnglishToRegEx.A;
-Begin
-  If Cnv('aa', r_AA) = True Then
+procedure TEnglishToRegEx.A;
+begin
+  if Cnv('aa', r_AA) = True then
     Exit;
-  If Cnv('au', r_AU) = True Then
+  if Cnv('au', r_AU) = True then
     Exit;
-  If Cnv('az', r_AZ) = True Then
+  if Cnv('az', r_AZ) = True then
     Exit;
-  If Cnv('ai', r_AI) = True Then
+  if Cnv('ai', r_AI) = True then
     Exit;
 
-  If Cnv('a', r_A) = True Then
+  if Cnv('a', r_A) = True then
     Exit;
-End;
+end;
 
-Procedure TEnglishToRegEx.AddRs(Const T: String);
-Begin
+procedure TEnglishToRegEx.AddRs(const T: string);
+begin
   { If (Consonent(PrevT) = True) And (Consonent(NextT) = True) Then
     Rs := Rs + T + r_InjectHasanta
     Else Begin
@@ -118,103 +119,101 @@ Begin
     Rs := Rs + T + r_InjectChandraBisharga;
     End; }
 
-  RS := RS + T + r_InjectHasanta + r_InjectFola + r_InjectedVowel +
-    r_InjectChandraBisharga;
+  RS := RS + T + r_InjectHasanta + r_InjectFola + r_InjectedVowel + r_InjectChandraBisharga;
 
   pos := pos + 1;
-End;
+end;
 
-Procedure TEnglishToRegEx.B;
-Begin
-  If Cnv('bdh', r_BDH) = True Then
+procedure TEnglishToRegEx.B;
+begin
+  if Cnv('bdh', r_BDH) = True then
     Exit;
-  If Cnv('bhl', r_BHL) = True Then
-    Exit;
-
-  If Cnv('bh', r_BH) = True Then
-    Exit;
-  If Cnv('bb', r_BB) = True Then
-    Exit;
-  If Cnv('bd', r_BD) = True Then
-    Exit;
-  If Cnv('bv', r_BV) = True Then
+  if Cnv('bhl', r_BHL) = True then
     Exit;
 
-  If Cnv('b', r_BB) = True Then
+  if Cnv('bh', r_BH) = True then
     Exit;
-End;
+  if Cnv('bb', r_BB) = True then
+    Exit;
+  if Cnv('bd', r_BD) = True then
+    Exit;
+  if Cnv('bv', r_BV) = True then
+    Exit;
+
+  if Cnv('b', r_BB) = True then
+    Exit;
+end;
 
 {$HINTS OFF}
 
-Function TEnglishToRegEx.Begining: Boolean;
-Var
-  T: Char;
-  temp: String;
-Begin
+function TEnglishToRegEx.Begining: Boolean;
+var
+  T:    Char;
+  temp: string;
+begin
   Result := False;
   temp := PrevT;
   T := #0;
-  If length(temp) > 0 Then
+  if length(temp) > 0 then
     T := temp[1];
 
-  If length(T) > 0 Then
-  Begin
-    Case T Of
+  if length(T) > 0 then
+  begin
+    case T of
       '0' .. '9':
         Begining := False;
       'A' .. 'Z':
         Begining := False;
       'a' .. 'z':
         Begining := False;
-    Else
-      Begining := True;
-    End;
-  End
-  Else
+      else
+        Begining := True;
+    end;
+  end
+  else
     Begining := True;
-End;
+end;
 {$HINTS ON}
 
-Procedure TEnglishToRegEx.C;
-Begin
-  If Cnv('chchh', r_CHCHH) = True Then
+procedure TEnglishToRegEx.C;
+begin
+  if Cnv('chchh', r_CHCHH) = True then
     Exit;
 
-  If Cnv('cch', r_CCH) = True Then
+  if Cnv('cch', r_CCH) = True then
     Exit;
-  If Cnv('chh', r_CHH) = True Then
+  if Cnv('chh', r_CHH) = True then
     Exit;
-  If Cnv('cng', r_CNG) = True Then
-    Exit;
-
-  If Cnv('ch', r_CH) = True Then
-    Exit;
-  If Cnv('ck', r_CK) = True Then
-    Exit;
-  If Cnv('cc', r_CC) = True Then
-    Exit;
-  If Cnv('cn', r_CN) = True Then
+  if Cnv('cng', r_CNG) = True then
     Exit;
 
-  If Cnv('c', r_CC) = True Then
+  if Cnv('ch', r_CH) = True then
     Exit;
-End;
+  if Cnv('ck', r_CK) = True then
+    Exit;
+  if Cnv('cc', r_CC) = True then
+    Exit;
+  if Cnv('cn', r_CN) = True then
+    Exit;
+
+  if Cnv('c', r_CC) = True then
+    Exit;
+end;
 
 {$HINTS Off}
 
-Function TEnglishToRegEx.Cnv(Const Compare: String;
-  Const IfTrue: String): Boolean;
-Var
-  I: Integer;
-  tmp: String;
-  NextCharacterAfterBlock, LastCharacterOfBlock: String;
-Begin
+function TEnglishToRegEx.Cnv(const Compare: string; const IfTrue: string): Boolean;
+var
+  I:                                             Integer;
+  tmp:                                           string;
+  NextCharacterAfterBlock, LastCharacterOfBlock: string;
+begin
   Result := False;
   I := length(Compare);
   tmp := MidStr(pEnglishText, pos, I);
 
-  If Compare = tmp Then
-  Begin
+  if Compare = tmp then
+  begin
     Cnv := True;
     NextCharacterAfterBlock := MidStr(pEnglishText, pos + I, 1);
     LastCharacterOfBlock := MidStr(pEnglishText, pos + I - 1, 1);
@@ -229,98 +228,96 @@ Begin
       Rs := Rs + IfTrue + r_InjectChandraBisharga;
       End;
     }
-    RS := RS + IfTrue + r_InjectHasanta + r_InjectFola + r_InjectedVowel +
-      r_InjectChandraBisharga;
+    RS := RS + IfTrue + r_InjectHasanta + r_InjectFola + r_InjectedVowel + r_InjectChandraBisharga;
 
     pos := pos + I;
-  End
-  Else
+  end
+  else
     Cnv := False;
-End;
+end;
 {$HINTS ON}
 
-Function TEnglishToRegEx.Consonent(Const T: String): Boolean;
-Var
+function TEnglishToRegEx.Consonent(const T: string): Boolean;
+var
   temp: Char;
-  myT: String;
-Begin
+  myT:  string;
+begin
   myT := LowerCase(T);
   temp := #0;
-  If length(myT) > 0 Then
+  if length(myT) > 0 then
     temp := myT[1];
 
-  Case temp Of
-    'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's',
-      't', 'v', 'w', 'x', 'y', 'z':
+  case temp of
+    'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z':
       Consonent := True;
-  Else
-    Consonent := False;
-  End;
-End;
+    else
+      Consonent := False;
+  end;
+end;
 
-Function TEnglishToRegEx.Convert(Const EnglishT: String): String;
-Begin
-  If EnglishT = '' Then
+function TEnglishToRegEx.Convert(const EnglishT: string): string;
+begin
+  if EnglishT = '' then
     Exit;
   pEnglishText := EscapeSpecialCharacters(CorrectCase(EnglishT));
   Result := MyConvert;
-End;
+end;
 
-Function TEnglishToRegEx.CorrectCase(Const inputT: String): String;
-Begin
+function TEnglishToRegEx.CorrectCase(const inputT: string): string;
+begin
   Result := LowerCase(inputT);
-End;
+end;
 
-Constructor TEnglishToRegEx.Create;
-Begin
+constructor TEnglishToRegEx.Create;
+begin
   Initialize_RVals;
   ln := 0;
   pos := 0;
-End;
+end;
 
-Procedure TEnglishToRegEx.D;
-Begin
-  If Cnv('dhm', r_DHM) = True Then
+procedure TEnglishToRegEx.D;
+begin
+  if Cnv('dhm', r_DHM) = True then
     Exit;
-  If Cnv('dhn', r_DHN) = True Then
+  if Cnv('dhn', r_DHN) = True then
     Exit;
-  If Cnv('dbh', r_DBH) = True Then
+  if Cnv('dbh', r_DBH) = True then
     Exit;
-  If Cnv('ddh', r_DDH) = True Then
+  if Cnv('ddh', r_DDH) = True then
     Exit;
-  If Cnv('dgh', r_DGH) = True Then
-    Exit;
-
-  If Cnv('db', r_DB) = True Then
-    Exit;
-  If Cnv('dd', r_DD) = True Then
-    Exit;
-  If Cnv('dg', r_DG) = True Then
-    Exit;
-  If Cnv('dh', r_DH) = True Then
+  if Cnv('dgh', r_DGH) = True then
     Exit;
 
-  If Cnv('d', r_DD) = True Then
+  if Cnv('db', r_DB) = True then
     Exit;
-End;
-
-Procedure TEnglishToRegEx.E;
-Begin
-  If Cnv('ey', r_EY) = True Then
+  if Cnv('dd', r_DD) = True then
     Exit;
-  If Cnv('ee', r_EE) = True Then
+  if Cnv('dg', r_DG) = True then
+    Exit;
+  if Cnv('dh', r_DH) = True then
     Exit;
 
-  If Cnv('e', r_E) = True Then
+  if Cnv('d', r_DD) = True then
     Exit;
-End;
+end;
+
+procedure TEnglishToRegEx.E;
+begin
+  if Cnv('ey', r_EY) = True then
+    Exit;
+  if Cnv('ee', r_EE) = True then
+    Exit;
+
+  if Cnv('e', r_E) = True then
+    Exit;
+end;
 
 {$WARN NO_RETVAL OFF}
 
-Function TEnglishToRegEx.EscapeSpecialCharacters(Const inputT: String): String;
-Var
-  T: String;
-Begin
+function TEnglishToRegEx.EscapeSpecialCharacters(const inputT: string): string;
+var
+  T: string;
+begin
   (*
     We need to escape the following 14 metacharacters:
     \ | ( ) [ ] { } ^ $ * + ? .
@@ -365,183 +362,182 @@ Begin
   T := ReplaceStr(T, '`', '');
 
   Result := T;
-End;
+end;
 {$WARN NO_RETVAL On}
 
-Procedure TEnglishToRegEx.F;
-Begin
-  If Cnv('ff', r_FF) = True Then
+procedure TEnglishToRegEx.F;
+begin
+  if Cnv('ff', r_FF) = True then
     Exit;
 
-  If Cnv('f', r_FF) = True Then
+  if Cnv('f', r_FF) = True then
     Exit;
-End;
+end;
 
-Procedure TEnglishToRegEx.G;
-Begin
-  If Cnv('ggh', r_GGH) = True Then
+procedure TEnglishToRegEx.G;
+begin
+  if Cnv('ggh', r_GGH) = True then
     Exit;
-  If Cnv('gdh', r_GDH) = True Then
+  if Cnv('gdh', r_GDH) = True then
     Exit;
-  If Cnv('ghn', r_GHN) = True Then
-    Exit;
-
-  If Cnv('gh', r_GH) = True Then
-    Exit;
-  If Cnv('gg', r_GG) = True Then
+  if Cnv('ghn', r_GHN) = True then
     Exit;
 
-  If Cnv('g', r_GG) = True Then
+  if Cnv('gh', r_GH) = True then
     Exit;
-End;
-
-Procedure TEnglishToRegEx.H;
-Begin
-  If Cnv('hl', r_HL) = True Then
-    Exit;
-  If Cnv('hh', r_HH) = True Then
-    Exit;
-  If Cnv('hm', r_HM) = True Then
-    Exit;
-  If Cnv('hn', r_HN) = True Then
+  if Cnv('gg', r_GG) = True then
     Exit;
 
-  If Cnv('h', r_HH) = True Then
+  if Cnv('g', r_GG) = True then
     Exit;
-End;
+end;
 
-Procedure TEnglishToRegEx.I;
-Begin
-  If Cnv('ia', r_IA) = True Then
+procedure TEnglishToRegEx.H;
+begin
+  if Cnv('hl', r_HL) = True then
     Exit;
-
-  If Cnv('i', r_I) = True Then
+  if Cnv('hh', r_HH) = True then
     Exit;
-End;
-
-Procedure TEnglishToRegEx.J;
-Begin
-  If Cnv('jng', r_JNG) = True Then
+  if Cnv('hm', r_HM) = True then
     Exit;
-  If Cnv('jjh', r_JJH) = True Then
+  if Cnv('hn', r_HN) = True then
     Exit;
 
-  If Cnv('jj', r_JJ) = True Then
+  if Cnv('h', r_HH) = True then
     Exit;
-  If Cnv('jh', r_JH) = True Then
+end;
+
+procedure TEnglishToRegEx.I;
+begin
+  if Cnv('ia', r_IA) = True then
     Exit;
 
-  If Cnv('j', r_JJ) = True Then
+  if Cnv('i', r_I) = True then
     Exit;
-End;
+end;
 
-Procedure TEnglishToRegEx.K;
-Begin
-  If Cnv('kshm', r_KSHM) = True Then
+procedure TEnglishToRegEx.J;
+begin
+  if Cnv('jng', r_JNG) = True then
     Exit;
-  If Cnv('kkhm', r_KKHM) = True Then
-    Exit;
-  If Cnv('kshn', r_KSHN) = True Then
-    Exit;
-  If Cnv('kkhn', r_KKHN) = True Then
+  if Cnv('jjh', r_JJH) = True then
     Exit;
 
-  If Cnv('ksh', r_KSH) = True Then
+  if Cnv('jj', r_JJ) = True then
     Exit;
-  If Cnv('kkh', r_KKH) = True Then
-    Exit;
-  If Cnv('kxm', r_KXM) = True Then
-    Exit;
-  If Cnv('kxn', r_KXN) = True Then
+  if Cnv('jh', r_JH) = True then
     Exit;
 
-  If Cnv('kh', r_KH) = True Then
+  if Cnv('j', r_JJ) = True then
     Exit;
-  If Cnv('kk', r_KK) = True Then
+end;
+
+procedure TEnglishToRegEx.K;
+begin
+  if Cnv('kshm', r_KSHM) = True then
     Exit;
-  If Cnv('ks', r_KS) = True Then
+  if Cnv('kkhm', r_KKHM) = True then
     Exit;
-  If Cnv('kx', r_KX) = True Then
+  if Cnv('kshn', r_KSHN) = True then
+    Exit;
+  if Cnv('kkhn', r_KKHN) = True then
     Exit;
 
-  If Cnv('k', r_KK) = True Then
+  if Cnv('ksh', r_KSH) = True then
     Exit;
-End;
-
-Procedure TEnglishToRegEx.L;
-Begin
-  If Cnv('lkh', r_LKH) = True Then
+  if Cnv('kkh', r_KKH) = True then
     Exit;
-  If Cnv('lgh', r_LGH) = True Then
+  if Cnv('kxm', r_KXM) = True then
     Exit;
-  If Cnv('lph', r_LPH) = True Then
-    Exit;
-  If Cnv('ldh', r_LDH) = True Then
-    Exit;
-  If Cnv('lbh', r_LBH) = True Then
+  if Cnv('kxn', r_KXN) = True then
     Exit;
 
-  If Cnv('ll', r_LL) = True Then
+  if Cnv('kh', r_KH) = True then
     Exit;
-  If Cnv('lk', r_LK) = True Then
+  if Cnv('kk', r_KK) = True then
     Exit;
-  If Cnv('lg', r_LG) = True Then
+  if Cnv('ks', r_KS) = True then
     Exit;
-  If Cnv('lp', r_LP) = True Then
-    Exit;
-  If Cnv('ld', r_LD) = True Then
-    Exit;
-  If Cnv('lb', r_LB) = True Then
+  if Cnv('kx', r_KX) = True then
     Exit;
 
-  If Cnv('l', r_LL) = True Then
+  if Cnv('k', r_KK) = True then
     Exit;
-End;
+end;
 
-Procedure TEnglishToRegEx.M;
-Begin
-  If Cnv('mbh', r_MBH) = True Then
+procedure TEnglishToRegEx.L;
+begin
+  if Cnv('lkh', r_LKH) = True then
     Exit;
-  If Cnv('mph', r_MPH) = True Then
+  if Cnv('lgh', r_LGH) = True then
     Exit;
-  If Cnv('mth', r_MTH) = True Then
+  if Cnv('lph', r_LPH) = True then
     Exit;
-
-  If Cnv('mm', r_MM) = True Then
+  if Cnv('ldh', r_LDH) = True then
     Exit;
-  If Cnv('mb', r_MB) = True Then
-    Exit;
-  If Cnv('mp', r_MP) = True Then
-    Exit;
-  If Cnv('mt', r_MT) = True Then
+  if Cnv('lbh', r_LBH) = True then
     Exit;
 
-  If Cnv('m', r_MM) = True Then
+  if Cnv('ll', r_LL) = True then
     Exit;
-End;
+  if Cnv('lk', r_LK) = True then
+    Exit;
+  if Cnv('lg', r_LG) = True then
+    Exit;
+  if Cnv('lp', r_LP) = True then
+    Exit;
+  if Cnv('ld', r_LD) = True then
+    Exit;
+  if Cnv('lb', r_LB) = True then
+    Exit;
 
-Function TEnglishToRegEx.MyConvert: String;
-Var
-  tt: Char;
-  tString: String;
-Begin
+  if Cnv('l', r_LL) = True then
+    Exit;
+end;
+
+procedure TEnglishToRegEx.M;
+begin
+  if Cnv('mbh', r_MBH) = True then
+    Exit;
+  if Cnv('mph', r_MPH) = True then
+    Exit;
+  if Cnv('mth', r_MTH) = True then
+    Exit;
+
+  if Cnv('mm', r_MM) = True then
+    Exit;
+  if Cnv('mb', r_MB) = True then
+    Exit;
+  if Cnv('mp', r_MP) = True then
+    Exit;
+  if Cnv('mt', r_MT) = True then
+    Exit;
+
+  if Cnv('m', r_MM) = True then
+    Exit;
+end;
+
+function TEnglishToRegEx.MyConvert: string;
+var
+  tt:      Char;
+  tString: string;
+begin
   ln := length(pEnglishText);
   pos := 1;
   RS := '';
 
-  Repeat
+  repeat
     tString := MidStr(pEnglishText, pos, 1);
     tt := #0;
-    If length(tString) > 0 Then
+    if length(tString) > 0 then
       tt := tString[1];
 
-    Case tt Of
+    case tt of
 
       // --------START Number Generation---------------
       // 1st, we'll convert numbers. Hassel free :)
       '0':
-        AddRs('((' + b_0 + ')|(0)|(' + b_Sh + b_UUkar + b_N + b_Hasanta +
-          b_Z + '))');
+        AddRs('((' + b_0 + ')|(0)|(' + b_Sh + b_UUkar + b_N + b_Hasanta + b_Z + '))');
       '1':
         AddRs('((' + b_1 + ')|(1)|(' + b_E + b_K + '))');
       '2':
@@ -619,280 +615,279 @@ Begin
       '`':
         pos := pos + 1; // No change made here,just to bypass juktakkhar making
 
-    Else
-      AddRs(tt);
+      else
+        AddRs(tt);
 
-    End;
+    end;
 
-  Until pos > ln;
+  until pos > ln;
 
   MyConvert := RS;
 
-End;
+end;
 
-Procedure TEnglishToRegEx.N;
-Begin
-  If Cnv('ngksh', r_NGKSH) = True Then
+procedure TEnglishToRegEx.N;
+begin
+  if Cnv('ngksh', r_NGKSH) = True then
     Exit;
-  If Cnv('ngkkh', r_NGKKH) = True Then
-    Exit;
-
-  If Cnv('ngch', r_NGCH) = True Then
-    Exit;
-  If Cnv('nggh', r_NGGH) = True Then
-    Exit;
-  If Cnv('ngkx', r_NGKX) = True Then
-    Exit;
-  If Cnv('ngjh', r_NGJH) = True Then
-    Exit;
-  If Cnv('ngkh', r_NGKH) = True Then
+  if Cnv('ngkkh', r_NGKKH) = True then
     Exit;
 
-  If Cnv('nsh', r_NSH) = True Then
+  if Cnv('ngch', r_NGCH) = True then
     Exit;
-  If Cnv('ndh', r_NDH) = True Then
+  if Cnv('nggh', r_NGGH) = True then
     Exit;
-  If Cnv('nkh', r_NKH) = True Then
+  if Cnv('ngkx', r_NGKX) = True then
     Exit;
-  If Cnv('nth', r_NTH) = True Then
+  if Cnv('ngjh', r_NGJH) = True then
     Exit;
-  If Cnv('ngj', r_NGJ) = True Then
-    Exit;
-  If Cnv('ngm', r_NGM) = True Then
-    Exit;
-  If Cnv('ngg', r_NGG) = True Then
-    Exit;
-  If Cnv('ngx', r_NGX) = True Then
-    Exit;
-  If Cnv('ngk', r_NGK) = True Then
-    Exit;
-  If Cnv('ngh', r_NGH) = True Then
-    Exit;
-  If Cnv('nch', r_NCH) = True Then
-    Exit;
-  If Cnv('njh', r_NJH) = True Then
-    Exit;
-  If Cnv('ngc', r_NGC) = True Then
+  if Cnv('ngkh', r_NGKH) = True then
     Exit;
 
-  If Cnv('nc', r_NC) = True Then
+  if Cnv('nsh', r_NSH) = True then
     Exit;
-  If Cnv('nn', r_NN) = True Then
+  if Cnv('ndh', r_NDH) = True then
     Exit;
-  If Cnv('ng', r_NG) = True Then
+  if Cnv('nkh', r_NKH) = True then
     Exit;
-  If Cnv('nk', r_NK) = True Then
+  if Cnv('nth', r_NTH) = True then
     Exit;
-  If Cnv('nj', r_NJ) = True Then
+  if Cnv('ngj', r_NGJ) = True then
     Exit;
-  If Cnv('nd', r_ND) = True Then
+  if Cnv('ngm', r_NGM) = True then
     Exit;
-  If Cnv('nt', r_NT) = True Then
+  if Cnv('ngg', r_NGG) = True then
+    Exit;
+  if Cnv('ngx', r_NGX) = True then
+    Exit;
+  if Cnv('ngk', r_NGK) = True then
+    Exit;
+  if Cnv('ngh', r_NGH) = True then
+    Exit;
+  if Cnv('nch', r_NCH) = True then
+    Exit;
+  if Cnv('njh', r_NJH) = True then
+    Exit;
+  if Cnv('ngc', r_NGC) = True then
     Exit;
 
-  If Cnv('n', r_NN) = True Then
+  if Cnv('nc', r_NC) = True then
     Exit;
-End;
+  if Cnv('nn', r_NN) = True then
+    Exit;
+  if Cnv('ng', r_NG) = True then
+    Exit;
+  if Cnv('nk', r_NK) = True then
+    Exit;
+  if Cnv('nj', r_NJ) = True then
+    Exit;
+  if Cnv('nd', r_ND) = True then
+    Exit;
+  if Cnv('nt', r_NT) = True then
+    Exit;
 
-Function TEnglishToRegEx.NextT: String;
-Begin
+  if Cnv('n', r_NN) = True then
+    Exit;
+end;
+
+function TEnglishToRegEx.NextT: string;
+begin
   NextT := MidStr(pEnglishText, pos + 1, 1);
-End;
+end;
 
-Procedure TEnglishToRegEx.O;
-Begin
-  If Cnv('oo', r_OO) = True Then
+procedure TEnglishToRegEx.O;
+begin
+  if Cnv('oo', r_OO) = True then
     Exit;
-  If Cnv('oi', r_OI) = True Then
+  if Cnv('oi', r_OI) = True then
     Exit;
-  If Cnv('ou', r_OU) = True Then
+  if Cnv('ou', r_OU) = True then
     Exit;
 
-  If Begining Then
-  Begin
-    If Cnv('o', r_OFirst) = True Then
+  if Begining then
+  begin
+    if Cnv('o', r_OFirst) = True then
       Exit;
-  End
-  Else
-  Begin
-    If Cnv('o', r_O) = True Then
+  end
+  else
+  begin
+    if Cnv('o', r_O) = True then
       Exit;
-  End;
+  end;
 
-End;
+end;
 
-Procedure TEnglishToRegEx.P;
-Begin
-  If Cnv('phl', r_PHL) = True Then
+procedure TEnglishToRegEx.P;
+begin
+  if Cnv('phl', r_PHL) = True then
     Exit;
 
-  If Cnv('ph', r_PH) = True Then
+  if Cnv('ph', r_PH) = True then
     Exit;
-  If Cnv('pp', r_PP) = True Then
+  if Cnv('pp', r_PP) = True then
     Exit;
 
-  If Cnv('p', r_PP) = True Then
+  if Cnv('p', r_PP) = True then
     Exit;
-End;
+end;
 
-Function TEnglishToRegEx.PrevT: String;
-Var
+function TEnglishToRegEx.PrevT: string;
+var
   I: Integer;
-Begin
+begin
 
   I := pos - 1;
-  If I < 1 Then
-  Begin
+  if I < 1 then
+  begin
     PrevT := '';
     Exit;
-  End;
+  end;
 
   PrevT := MidStr(pEnglishText, I, 1);
-End;
+end;
 
-Procedure TEnglishToRegEx.Q;
-Begin
-  If Cnv('qq', r_QQ) = True Then
+procedure TEnglishToRegEx.Q;
+begin
+  if Cnv('qq', r_QQ) = True then
     Exit;
 
-  If Cnv('q', r_QQ) = True Then
+  if Cnv('q', r_QQ) = True then
     Exit;
-End;
+end;
 
-Procedure TEnglishToRegEx.R;
-Begin
-  If Cnv('rri', r_RRI) = True Then
-    Exit;
-
-  If Cnv('ri', r_RI) = True Then
-    Exit;
-  If Cnv('rh', r_RH) = True Then
+procedure TEnglishToRegEx.R;
+begin
+  if Cnv('rri', r_RRI) = True then
     Exit;
 
-  If Begining Then
-  Begin
-    If Cnv('r', r_RFirst) = True Then
+  if Cnv('ri', r_RI) = True then
+    Exit;
+  if Cnv('rh', r_RH) = True then
+    Exit;
+
+  if Begining then
+  begin
+    if Cnv('r', r_RFirst) = True then
       Exit;
-  End
-  Else
-  Begin
-    If Cnv('r', r_R) = True Then
+  end
+  else
+  begin
+    if Cnv('r', r_R) = True then
       Exit;
-  End;
-End;
+  end;
+end;
 
-Procedure TEnglishToRegEx.S;
-Begin
-  If Cnv('shsh', r_SHSH) = True Then
-    Exit;
-
-  If Cnv('ssh', r_SSH) = True Then
-    Exit;
-  If Cnv('shm', r_SHM) = True Then
-    Exit;
-  If Cnv('shn', r_SHN) = True Then
+procedure TEnglishToRegEx.S;
+begin
+  if Cnv('shsh', r_SHSH) = True then
     Exit;
 
-  If Cnv('ss', r_SS) = True Then
+  if Cnv('ssh', r_SSH) = True then
     Exit;
-  If Cnv('sh', r_SH) = True Then
+  if Cnv('shm', r_SHM) = True then
     Exit;
-
-  If Cnv('s', r_SS) = True Then
-    Exit;
-End;
-
-Procedure TEnglishToRegEx.T;
-Begin
-  If Cnv('thth', r_THTH) = True Then
+  if Cnv('shn', r_SHN) = True then
     Exit;
 
-  If Cnv('tth', r_TTH) = True Then
+  if Cnv('ss', r_SS) = True then
     Exit;
-  If Cnv('t``', r_T_Acnt_Acnt) = True Then
-    Exit;
-  If Cnv('tth', r_TTH) = True Then
+  if Cnv('sh', r_SH) = True then
     Exit;
 
-  If Cnv('tt', r_TT) = True Then
+  if Cnv('s', r_SS) = True then
     Exit;
-  If Cnv('th', r_TH) = True Then
+end;
+
+procedure TEnglishToRegEx.T;
+begin
+  if Cnv('thth', r_THTH) = True then
     Exit;
 
-  If Cnv('t', r_TT) = True Then
+  if Cnv('tth', r_TTH) = True then
     Exit;
-End;
+  if Cnv('t``', r_T_Acnt_Acnt) = True then
+    Exit;
+  if Cnv('tth', r_TTH) = True then
+    Exit;
 
-Procedure TEnglishToRegEx.U;
-Begin
-  If Cnv('uu', r_UU) = True Then
+  if Cnv('tt', r_TT) = True then
     Exit;
-  If Cnv('u', r_U) = True Then
+  if Cnv('th', r_TH) = True then
     Exit;
-End;
 
-Procedure TEnglishToRegEx.V;
-Begin
-  If Cnv('vv', r_VV) = True Then
+  if Cnv('t', r_TT) = True then
     Exit;
-  If Cnv('v', r_VV) = True Then
+end;
+
+procedure TEnglishToRegEx.U;
+begin
+  if Cnv('uu', r_UU) = True then
     Exit;
-End;
+  if Cnv('u', r_U) = True then
+    Exit;
+end;
+
+procedure TEnglishToRegEx.V;
+begin
+  if Cnv('vv', r_VV) = True then
+    Exit;
+  if Cnv('v', r_VV) = True then
+    Exit;
+end;
 
 {$HINTS Off}
 
-Function TEnglishToRegEx.Vowel(Const T: String): Boolean;
-Var
-  myT: String;
-Begin
+function TEnglishToRegEx.Vowel(const T: string): Boolean;
+var
+  myT: string;
+begin
   Result := False;
   myT := LowerCase(T);
-  If length(myT) > 0 Then
+  if length(myT) > 0 then
     myT := myT[1];
 
-  If (myT = 'a') Or (myT = 'e') Or (myT = 'i') Or (myT = 'o') Or
-    (myT = 'u') Then
+  if (myT = 'a') or (myT = 'e') or (myT = 'i') or (myT = 'o') or (myT = 'u') then
     Vowel := True
-  Else
+  else
     Vowel := False;
-End;
+end;
 {$HINTS ON}
 
-Procedure TEnglishToRegEx.W;
-Begin
-  If Cnv('w', r_W) = True Then
+procedure TEnglishToRegEx.W;
+begin
+  if Cnv('w', r_W) = True then
     Exit;
-End;
+end;
 
-Procedure TEnglishToRegEx.X;
-Begin
-  If Cnv('xm', r_XM) = True Then
+procedure TEnglishToRegEx.X;
+begin
+  if Cnv('xm', r_XM) = True then
     Exit;
-  If Cnv('xn', r_XN) = True Then
-    Exit;
-
-  If Cnv('x', r_X) = True Then
-    Exit;
-End;
-
-Procedure TEnglishToRegEx.Y;
-Begin
-  If Cnv('y', r_Y) = True Then
-    Exit;
-End;
-
-Procedure TEnglishToRegEx.Z;
-Begin
-  If Cnv('zzh', r_ZZH) = True Then
+  if Cnv('xn', r_XN) = True then
     Exit;
 
-  If Cnv('zh', r_ZH) = True Then
+  if Cnv('x', r_X) = True then
     Exit;
-  If Cnv('zz', r_ZZ) = True Then
+end;
+
+procedure TEnglishToRegEx.Y;
+begin
+  if Cnv('y', r_Y) = True then
+    Exit;
+end;
+
+procedure TEnglishToRegEx.Z;
+begin
+  if Cnv('zzh', r_ZZH) = True then
     Exit;
 
-  If Cnv('z', r_ZZ) = True Then
+  if Cnv('zh', r_ZH) = True then
     Exit;
-End;
+  if Cnv('zz', r_ZZ) = True then
+    Exit;
 
-End.
+  if Cnv('z', r_ZZ) = True then
+    Exit;
+end;
+
+end.

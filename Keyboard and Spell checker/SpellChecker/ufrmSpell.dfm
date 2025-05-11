@@ -219,4 +219,9 @@ object frmSpell: TfrmSpell
     Left = 152
     Top = 8
   end
+  object AppEvents: TApplicationEvents
+    OnSettingChange = AppEventsSettingChange
+    Left = 636
+    Top = 252
+  end
 end

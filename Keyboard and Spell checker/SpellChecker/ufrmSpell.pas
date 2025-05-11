@@ -26,11 +26,11 @@
 }
 
 {$INCLUDE ../../ProjectDefines.inc}
-Unit ufrmSpell;
+unit ufrmSpell;
 
-Interface
+interface
 
-Uses
+uses
   Windows,
   Messages,
   SysUtils,
@@ -43,17 +43,18 @@ Uses
   Menus,
   StdCtrls,
   ComCtrls,
-  clsMemoParser;
+  clsMemoParser,
+  Vcl.AppEvnts;
 
-Const
-  UNICODE_BOM = Char($FEFF);
+const
+  UNICODE_BOM         = Char($FEFF);
   UNICODE_BOM_SWAPPED = Char($FFFE);
-  UTF8_BOM = AnsiString(#$EF#$BB#$BF);
+  UTF8_BOM            = AnsiString(#$EF#$BB#$BF);
 
-Type
+type
   TUnicodeStreamCharSet = (csAnsi, csUnicode, csUnicodeSwapped, csUtf8);
 
-  TfrmSpell = Class(TForm)
+  TfrmSpell = class(TForm)
     MainMenu1: TMainMenu;
     File1: TMenuItem;
     Edit1: TMenuItem;
@@ -83,164 +84,165 @@ Type
     Font1: TMenuItem;
     FontDialog: TFontDialog;
     N5: TMenuItem;
-    Procedure Startspellchek1Click(Sender: TObject);
-    Procedure FormCreate(Sender: TObject);
-    Procedure FormClose(Sender: TObject; Var Action: TCloseAction);
-    Procedure Close1Click(Sender: TObject);
-    Procedure Clearall1Click(Sender: TObject);
-    Procedure Cut1Click(Sender: TObject);
-    Procedure Copy1Click(Sender: TObject);
-    Procedure Paste1Click(Sender: TObject);
-    Procedure SelectAll1Click(Sender: TObject);
-    Procedure MEMOChange(Sender: TObject);
-    Procedure New1Click(Sender: TObject);
-    Procedure Save1Click(Sender: TObject);
-    Procedure Open1Click(Sender: TObject);
-    Procedure Saveas1Click(Sender: TObject);
-    Procedure WordWrap1Click(Sender: TObject);
-    Procedure Font1Click(Sender: TObject);
-    Procedure Spellcheckoptions1Click(Sender: TObject);
-    Procedure N5Click(Sender: TObject);
-    Procedure FormCloseQuery(Sender: TObject; Var CanClose: Boolean);
-  Private
-    { Private declarations }
+    AppEvents: TApplicationEvents;
+    procedure Startspellchek1Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure Close1Click(Sender: TObject);
+    procedure Clearall1Click(Sender: TObject);
+    procedure Cut1Click(Sender: TObject);
+    procedure Copy1Click(Sender: TObject);
+    procedure Paste1Click(Sender: TObject);
+    procedure SelectAll1Click(Sender: TObject);
+    procedure MEMOChange(Sender: TObject);
+    procedure New1Click(Sender: TObject);
+    procedure Save1Click(Sender: TObject);
+    procedure Open1Click(Sender: TObject);
+    procedure Saveas1Click(Sender: TObject);
+    procedure WordWrap1Click(Sender: TObject);
+    procedure Font1Click(Sender: TObject);
+    procedure Spellcheckoptions1Click(Sender: TObject);
+    procedure N5Click(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure AppEventsSettingChange(Sender: TObject; Flag: Integer; const Section: string; var Result: LongInt);
+    private
+      { Private declarations }
 
-    // File handling
-    fFileName: String;
-    MemoChanged: Boolean;
-    BOM_Unicode, BOM_UnicodeBE, BOM_UTF8: Boolean;
-    Procedure OpenFile(Const fFile: String);
-    Procedure SaveFile(Const fFile: String; bBOM_Unicode, bBOM_UnicodeBE,
-      bBOM_UTF8: Boolean);
-    Procedure ShowOpenDialog;
-    Procedure ShowSaveDialog;
+      // File handling
+      fFileName:                            string;
+      MemoChanged:                          Boolean;
+      BOM_Unicode, BOM_UnicodeBE, BOM_UTF8: Boolean;
+      procedure OpenFile(const fFile: string);
+      procedure SaveFile(const fFile: string; bBOM_Unicode, bBOM_UnicodeBE, bBOM_UTF8: Boolean);
+      procedure ShowOpenDialog;
+      procedure ShowSaveDialog;
 
-    Function AutoDetectCharacterSet(Stream: TStream): TUnicodeStreamCharSet;
-    Procedure StrSwapByteOrder(Str: PChar);
-    Procedure LoadFromStream_BOM_Return(Stream: TStream; WithBOM: Boolean;
-      Var BOM_Unicode, BOM_UnicodeBE, BOM_UTF8: Boolean);
-    Procedure SaveToStream_BOM_Specify(Stream: TStream; WithBOM: Boolean;
-      BOM_Unicode, BOM_UnicodeBE, BOM_UTF8: Boolean);
+      function AutoDetectCharacterSet(Stream: TStream): TUnicodeStreamCharSet;
+      procedure StrSwapByteOrder(Str: PChar);
+      procedure LoadFromStream_BOM_Return(Stream: TStream; WithBOM: Boolean; var BOM_Unicode, BOM_UnicodeBE, BOM_UTF8: Boolean);
+      procedure SaveToStream_BOM_Specify(Stream: TStream; WithBOM: Boolean; BOM_Unicode, BOM_UnicodeBE, BOM_UTF8: Boolean);
 
-    { MemoParser events }
-    Procedure MP_WordFound(CurrentWord: String);
-    Procedure MP_CompleteParsing;
-    Procedure MP_PositionConflict;
-    Procedure MP_TotalProgress(CurrentProgress: Integer);
-  Public
-    { Public declarations }
-    MP: TMemoParser;
-    CheckingSpell: Boolean;
-    { Procedure ClipboardCopyPaste; }
-    { Procedure ShowMe; }
-  Protected
-    Procedure CreateParams(Var Params: TCreateParams); Override;
-  End;
+      procedure HandleThemes;
 
-Var
+      { MemoParser events }
+      procedure MP_WordFound(CurrentWord: string);
+      procedure MP_CompleteParsing;
+      procedure MP_PositionConflict;
+      procedure MP_TotalProgress(CurrentProgress: Integer);
+    public
+      { Public declarations }
+      MP:            TMemoParser;
+      CheckingSpell: Boolean;
+      { Procedure ClipboardCopyPaste; }
+      { Procedure ShowMe; }
+    protected
+      procedure CreateParams(var Params: TCreateParams); override;
+  end;
+
+var
   frmSpell: TfrmSpell;
 
   /// ////////////////////////////////////////////////////////////////////////////////
   // AvroSpell.dll functions
   /// ////////////////////////////////////////////////////////////////////////////////
 
-Procedure Avro_InitSpell; Stdcall;
-  External 'AvroSpell.dll' Name 'Avro_InitSpell';
-Procedure Avro_RegisterCallback(mCallback: Pointer); Stdcall;
-  External 'AvroSpell.dll' Name 'Avro_RegisterCallback';
-Function Avro_IsWordPresent(Wrd: PChar; Var SAction: Integer): LongBool;
-  Stdcall; External 'AvroSpell.dll' Name 'Avro_IsWordPresent';
-Function Avro_WordPresentInChangeAll(Wrd: PChar): LongBool; Stdcall;
-  External 'AvroSpell.dll' Name 'Avro_WordPresentInChangeAll';
-Procedure Avro_GetCorrection(Wrd: PChar); Stdcall;
-  External 'AvroSpell.dll' Name 'Avro_GetCorrection';
-Procedure Avro_SetWordPosInScreen(xPoint, yPoint: Integer); Stdcall;
-  External 'AvroSpell.dll' Name 'Avro_SetWordPosInScreen';
-Procedure Avro_HideSpeller; Stdcall;
-  External 'AvroSpell.dll' Name 'Avro_HideSpeller';
-Procedure Avro_ShowOptions; Stdcall;
-  External 'AvroSpell.dll' Name 'Avro_ShowOptions';
-Procedure Avro_ShowAbout; Stdcall;
-  External 'AvroSpell.dll' Name 'Avro_ShowAbout';
-Procedure Avro_ForgetChangeIgnore; Stdcall;
-  External 'AvroSpell.dll' Name 'Avro_ForgetChangeIgnore';
-Procedure Avro_UnloadAll; Stdcall;
-  External 'AvroSpell.dll' Name 'Avro_UnloadAll';
+procedure Avro_InitSpell; stdcall; external 'AvroSpell.dll' name 'Avro_InitSpell';
+
+procedure Avro_RegisterCallback(mCallback: Pointer); stdcall; external 'AvroSpell.dll' name 'Avro_RegisterCallback';
+
+function Avro_IsWordPresent(Wrd: PChar; var SAction: Integer): LongBool; stdcall; external 'AvroSpell.dll' name 'Avro_IsWordPresent';
+
+function Avro_WordPresentInChangeAll(Wrd: PChar): LongBool; stdcall; external 'AvroSpell.dll' name 'Avro_WordPresentInChangeAll';
+
+procedure Avro_GetCorrection(Wrd: PChar); stdcall; external 'AvroSpell.dll' name 'Avro_GetCorrection';
+
+procedure Avro_SetWordPosInScreen(xPoint, yPoint: Integer); stdcall; external 'AvroSpell.dll' name 'Avro_SetWordPosInScreen';
+
+procedure Avro_HideSpeller; stdcall; external 'AvroSpell.dll' name 'Avro_HideSpeller';
+
+procedure Avro_ShowOptions; stdcall; external 'AvroSpell.dll' name 'Avro_ShowOptions';
+
+procedure Avro_ShowAbout; stdcall; external 'AvroSpell.dll' name 'Avro_ShowAbout';
+
+procedure Avro_ForgetChangeIgnore; stdcall; external 'AvroSpell.dll' name 'Avro_ForgetChangeIgnore';
+
+procedure Avro_UnloadAll; stdcall; external 'AvroSpell.dll' name 'Avro_UnloadAll';
 /// ////////////////////////////////////////////////////////////////////////////////
 
-Procedure Callback(Wrd: PChar; CWrd: PChar; SAction: Integer); Stdcall;
+procedure Callback(Wrd: PChar; CWrd: PChar; SAction: Integer); stdcall;
 
-Implementation
+implementation
 
 {$R *.dfm}
 
-Uses
+uses
   KeyboardFunctions,
   VirtualKeyCode,
   strutils,
   uRegistrySettings,
-  uWindowHandlers;
+  uWindowHandlers,
+  WindowsDarkMode;
 
-Const
+const
   Show_Window_in_Taskbar = True;
 
-Const
-  SA_Default: Integer = 0;
-  SA_Ignore: Integer = 1;
-  SA_Cancel: Integer = -1;
+const
+  SA_Default: Integer         = 0;
+  SA_Ignore: Integer          = 1;
+  SA_Cancel: Integer          = -1;
   SA_IgnoredByOption: Integer = 2;
-  SA_ReplaceAll: Integer = 3;
+  SA_ReplaceAll: Integer      = 3;
 
-Procedure Callback(Wrd: PChar; CWrd: PChar; SAction: Integer); Stdcall;
-Begin
-  If SAction = SA_Cancel Then
-  Begin { User clicked cancel }
+procedure Callback(Wrd: PChar; CWrd: PChar; SAction: Integer); stdcall;
+begin
+  if SAction = SA_Cancel then
+  begin { User clicked cancel }
     Avro_ForgetChangeIgnore;
     frmSpell.Progress.Visible := False;
     frmSpell.CheckingSpell := False;
     Exit;
-  End
-  Else If (SAction = SA_Default) Or (SAction = SA_ReplaceAll) Then
-  Begin
+  end
+  else if (SAction = SA_Default) or (SAction = SA_ReplaceAll) then
+  begin
     frmSpell.MP.ReplaceCurrentWord(CWrd, Wrd);
-  End;
+  end;
   frmSpell.MP.BeginPursing;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmSpell.MP_WordFound(CurrentWord: String);
-Var
+procedure TfrmSpell.MP_WordFound(CurrentWord: string);
+var
   DummySAction: Integer;
-  PT: TPoint;
-Begin
-  If Not Avro_IsWordPresent(PChar(CurrentWord), DummySAction) Then
-  Begin
+  PT:           TPoint;
+begin
+  if not Avro_IsWordPresent(PChar(CurrentWord), DummySAction) then
+  begin
 
-    If Avro_WordPresentInChangeAll(PChar(CurrentWord)) Then
+    if Avro_WordPresentInChangeAll(PChar(CurrentWord)) then
       Avro_GetCorrection(PChar(CurrentWord))
-    Else
-    Begin
+    else
+    begin
       Avro_GetCorrection(PChar(CurrentWord));
       MP.SelectWord;
       MEMO.SetFocus;
       GetCaretPos(PT);
       PT := MEMO.ClientToScreen(PT);
       Avro_SetWordPosInScreen(PT.X, PT.Y);
-    End;
-  End
-  Else
+    end;
+  end
+  else
     MP.BeginPursing;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmSpell.Clearall1Click(Sender: TObject);
-Begin
+procedure TfrmSpell.Clearall1Click(Sender: TObject);
+begin
   MEMO.SelectAll;
   MEMO.SetFocus;
   SendKey_Basic(VK_Back);
-End;
+end;
 
 { =============================================================================== }
 
@@ -298,78 +300,78 @@ End;
 
 { =============================================================================== }
 
-Procedure TfrmSpell.Close1Click(Sender: TObject);
-Begin
+procedure TfrmSpell.Close1Click(Sender: TObject);
+begin
   Close;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmSpell.Copy1Click(Sender: TObject);
-Begin
+procedure TfrmSpell.Copy1Click(Sender: TObject);
+begin
   MEMO.SetFocus;
   SendInput_Down(VK_Control);
   SendInput_Down(C_KEY);
   SendInput_UP(C_KEY);
   SendInput_UP(VK_Control);
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmSpell.CreateParams(Var Params: TCreateParams);
-Begin
-  Inherited CreateParams(Params);
-  With Params Do
-  Begin
-    If Show_Window_in_Taskbar Then
-    Begin
-      ExStyle := ExStyle Or WS_EX_APPWINDOW And Not WS_EX_TOOLWINDOW;
+procedure TfrmSpell.CreateParams(var Params: TCreateParams);
+begin
+  inherited CreateParams(Params);
+  with Params do
+  begin
+    if Show_Window_in_Taskbar then
+    begin
+      ExStyle := ExStyle or WS_EX_APPWINDOW and not WS_EX_TOOLWINDOW;
       WndParent := GetDesktopwindow;
-    End
-    Else If Not Show_Window_in_Taskbar Then
-    Begin
-      ExStyle := ExStyle And Not WS_EX_APPWINDOW;
-    End;
-  End;
-End;
+    end
+    else if not Show_Window_in_Taskbar then
+    begin
+      ExStyle := ExStyle and not WS_EX_APPWINDOW;
+    end;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmSpell.Cut1Click(Sender: TObject);
-Begin
+procedure TfrmSpell.Cut1Click(Sender: TObject);
+begin
   MEMO.SetFocus;
   SendInput_Down(VK_Control);
   SendInput_Down(X_KEY);
   SendInput_UP(X_KEY);
   SendInput_UP(VK_Control);
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmSpell.Font1Click(Sender: TObject);
-Begin
+procedure TfrmSpell.Font1Click(Sender: TObject);
+begin
   FontDialog.Font.Name := AvroPadFontName;
   FontDialog.Font.Size := StrToInt(AvroPadFontSize);
 
-  If FontDialog.Execute Then
-  Begin
+  if FontDialog.Execute then
+  begin
     MEMO.Font := FontDialog.Font;
     AvroPadFontName := FontDialog.Font.Name;
     AvroPadFontSize := IntToStr(FontDialog.Font.Size);
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmSpell.FormClose(Sender: TObject; Var Action: TCloseAction);
-Begin
+procedure TfrmSpell.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
   AvroPadHeight := IntToStr(Self.Height);
   AvroPadWidth := IntToStr(Self.Width);
   AvroPadTop := IntToStr(Self.Top);
   AvroPadLeft := IntToStr(Self.Left);
-  If Self.WindowState = wsMaximized Then
+  if Self.WindowState = wsMaximized then
     AvroPadState := 'MAXIMIZED'
-  Else
+  else
     AvroPadState := 'NORMAL';
 
   SaveSettings;
@@ -378,50 +380,51 @@ Begin
   Avro_UnloadAll;
 
   Action := caFree;
-  frmSpell := Nil;
-End;
+  frmSpell := nil;
+end;
 
-Procedure TfrmSpell.FormCloseQuery(Sender: TObject; Var CanClose: Boolean);
-Var
+procedure TfrmSpell.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+var
   MSG: Integer;
-Begin
-  If Not((Length(MEMO.Text) <= 0) And (fFileName = '')) Then
-  Begin
-    If (MemoChanged = True) Then
-    Begin
-      MSG := Application.MessageBox('The text in the current file has changed.'
-        + #10 + '' + #10 + 'Do you want to save the changes first?', 'Avro Pad',
+begin
+  if not((Length(MEMO.Text) <= 0) and (fFileName = '')) then
+  begin
+    if (MemoChanged = True) then
+    begin
+      MSG := Application.MessageBox('The text in the current file has changed.' + #10 + '' + #10 + 'Do you want to save the changes first?', 'Avro Pad',
         MB_YESNOCANCEL + MB_ICONQUESTION + MB_DEFBUTTON1 + MB_APPLMODAL);
-      If MSG = ID_YES Then
-      Begin
-        Save1Click(Nil);
-        If MemoChanged = False Then
+      if MSG = ID_YES then
+      begin
+        Save1Click(nil);
+        if MemoChanged = False then
           CanClose := True
-        Else
+        else
           CanClose := False;
-      End
-      Else If MSG = ID_NO Then
-      Begin
+      end
+      else if MSG = ID_NO then
+      begin
         CanClose := True;
-      End
-      Else
+      end
+      else
         CanClose := False;
-    End
-    Else
-    Begin
+    end
+    else
+    begin
       CanClose := True;
-    End;
-  End
-  Else
+    end;
+  end
+  else
     CanClose := True;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmSpell.FormCreate(Sender: TObject);
-Begin
+procedure TfrmSpell.FormCreate(Sender: TObject);
+begin
+  HandleThemes;
+
   CheckingSpell := False;
-  New1Click(Nil);
+  New1Click(nil);
   Avro_InitSpell;
   Avro_RegisterCallback(@Callback);
   LoadSettings;
@@ -431,24 +434,24 @@ Begin
   Self.Top := StrToInt(AvroPadTop);
   Self.Left := StrToInt(AvroPadLeft);
 
-  If AvroPadState = 'MAXIMIZED' Then
+  if AvroPadState = 'MAXIMIZED' then
     Self.WindowState := wsMaximized
-  Else
+  else
     Self.WindowState := wsNormal;
 
   MEMO.Font.Name := AvroPadFontName;
   MEMO.Font.Size := StrToInt(AvroPadFontSize);
 
-  If AvroPadWrap = 'YES' Then
-  Begin
+  if AvroPadWrap = 'YES' then
+  begin
     MEMO.WordWrap := True;
     MEMO.ScrollBars := ssVertical;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     MEMO.WordWrap := False;
     MEMO.ScrollBars := ssBoth;
-  End;
+  end;
 
   Self.Show;
   ForceForegroundWindow(handle);
@@ -458,69 +461,64 @@ Begin
   MP.OnWordFound := MP_WordFound;
   MP.OnCompleteParsing := MP_CompleteParsing;
   MP.OnPositionConflict := MP_PositionConflict;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmSpell.MEMOChange(Sender: TObject);
-Begin
+procedure TfrmSpell.MEMOChange(Sender: TObject);
+begin
   MemoChanged := True;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmSpell.MP_CompleteParsing;
-Begin
-  Application.MessageBox('Spelling check is complete.',
-    'Avro Bangla Spell Checker', MB_OK + MB_ICONEXCLAMATION + MB_DEFBUTTON1 +
-    MB_APPLMODAL);
+procedure TfrmSpell.MP_CompleteParsing;
+begin
+  Application.MessageBox('Spelling check is complete.', 'Avro Bangla Spell Checker', MB_OK + MB_ICONEXCLAMATION + MB_DEFBUTTON1 + MB_APPLMODAL);
   Avro_ForgetChangeIgnore;
   Progress.Visible := False;
   CheckingSpell := False;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmSpell.MP_PositionConflict;
-Begin
+procedure TfrmSpell.MP_PositionConflict;
+begin
   Avro_HideSpeller;
 
-  Application.MessageBox
-    ('Document has been modified above the current spell checking position.' +
-    #10 + '' + #10 + '' + #10 +
-    'Avro Pad will resume spell checking from the beginning.', 'Avro Pad',
-    MB_OK + MB_ICONEXCLAMATION + MB_DEFBUTTON1 + MB_APPLMODAL);
+  Application.MessageBox('Document has been modified above the current spell checking position.' + #10 + '' + #10 + '' + #10 +
+      'Avro Pad will resume spell checking from the beginning.', 'Avro Pad', MB_OK + MB_ICONEXCLAMATION + MB_DEFBUTTON1 + MB_APPLMODAL);
 
   MP.ResetAll;
   CheckingSpell := False;
-  Startspellchek1Click(Nil);
-End;
+  Startspellchek1Click(nil);
+end;
 
 { =============================================================================== }
 
-Procedure TfrmSpell.MP_TotalProgress(CurrentProgress: Integer);
-Begin
+procedure TfrmSpell.MP_TotalProgress(CurrentProgress: Integer);
+begin
   Progress.Position := CurrentProgress;
   Application.ProcessMessages;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmSpell.N5Click(Sender: TObject);
-Begin
+procedure TfrmSpell.N5Click(Sender: TObject);
+begin
   Avro_ShowAbout;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmSpell.New1Click(Sender: TObject);
-Var
+procedure TfrmSpell.New1Click(Sender: TObject);
+var
   MSG: Integer;
-Begin
+begin
   // ShowMe;
 
-  If ((Length(MEMO.Text) <= 0) And (fFileName = '')) Then
-  Begin
+  if ((Length(MEMO.Text) <= 0) and (fFileName = '')) then
+  begin
     fFileName := '';
     MemoChanged := False;
     BOM_Unicode := False;
@@ -528,20 +526,19 @@ Begin
     BOM_UTF8 := False;
     MEMO.Clear;
     Self.Caption := 'Untitled - Avro Pad';
-  End
-  Else
-  Begin
-    If (MemoChanged = True) Then
-    Begin
-      MSG := Application.MessageBox('The text in the current file has changed.'
-        + #10 + '' + #10 + 'Do you want to save the changes first?', 'Avro Pad',
+  end
+  else
+  begin
+    if (MemoChanged = True) then
+    begin
+      MSG := Application.MessageBox('The text in the current file has changed.' + #10 + '' + #10 + 'Do you want to save the changes first?', 'Avro Pad',
         MB_YESNOCANCEL + MB_ICONQUESTION + MB_DEFBUTTON1 + MB_APPLMODAL);
-      If MSG = ID_YES Then
-      Begin
-        Save1Click(Nil);
-      End
-      Else If MSG = ID_NO Then
-      Begin
+      if MSG = ID_YES then
+      begin
+        Save1Click(nil);
+      end
+      else if MSG = ID_NO then
+      begin
         fFileName := '';
         MemoChanged := False;
         BOM_Unicode := False;
@@ -549,12 +546,12 @@ Begin
         BOM_UTF8 := False;
         MEMO.Clear;
         Self.Caption := 'Untitled - Avro Pad';
-      End
-      Else
+      end
+      else
         Exit;
-    End
-    Else
-    Begin
+    end
+    else
+    begin
       fFileName := '';
       MemoChanged := False;
       BOM_Unicode := False;
@@ -562,54 +559,53 @@ Begin
       BOM_UTF8 := False;
       MEMO.Clear;
       Self.Caption := 'Untitled - Avro Pad';
-    End;
-  End;
-End;
+    end;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmSpell.Open1Click(Sender: TObject);
-Var
+procedure TfrmSpell.Open1Click(Sender: TObject);
+var
   MSG: Integer;
-Begin
-  If ((Length(MEMO.Text) <= 0) And (fFileName = '')) Then
-  Begin
+begin
+  if ((Length(MEMO.Text) <= 0) and (fFileName = '')) then
+  begin
     ShowOpenDialog;
-  End
-  Else
-  Begin
-    If (MemoChanged = True) Then
-    Begin
-      MSG := Application.MessageBox('The text in the current file has changed.'
-        + #10 + '' + #10 + 'Do you want to save the changes first?', 'Avro Pad',
+  end
+  else
+  begin
+    if (MemoChanged = True) then
+    begin
+      MSG := Application.MessageBox('The text in the current file has changed.' + #10 + '' + #10 + 'Do you want to save the changes first?', 'Avro Pad',
         MB_YESNOCANCEL + MB_ICONQUESTION + MB_DEFBUTTON1 + MB_APPLMODAL);
-      If MSG = ID_YES Then
-      Begin
-        Save1Click(Nil);
-        If MemoChanged = False Then
+      if MSG = ID_YES then
+      begin
+        Save1Click(nil);
+        if MemoChanged = False then
           ShowOpenDialog;
-      End
-      Else If MSG = ID_NO Then
-      Begin
+      end
+      else if MSG = ID_NO then
+      begin
         ShowOpenDialog;
-      End
-      Else
+      end
+      else
         Exit;
-    End
-    Else
-    Begin
+    end
+    else
+    begin
       ShowOpenDialog;
-    End;
-  End;
-End;
+    end;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmSpell.OpenFile(Const fFile: String);
-Var
+procedure TfrmSpell.OpenFile(const fFile: string);
+var
   fs: TFileStream;
-Begin
-  Try
+begin
+  try
     BOM_Unicode := False;
     BOM_UnicodeBE := False;
     BOM_UTF8 := False;
@@ -619,77 +615,73 @@ Begin
     MemoChanged := False;
     fFileName := fFile;
     Self.Caption := ExtractFileName(fFile) + ' - Avro Pad';
-  Except
-    On e: exception Do
-    Begin
-      Application.MessageBox(PChar('Error opening specified file:' + #10 +
-        fFile), 'Avro Pad', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
-    End;
-  End;
-End;
+  except
+    on e: exception do
+    begin
+      Application.MessageBox(PChar('Error opening specified file:' + #10 + fFile), 'Avro Pad', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
+    end;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmSpell.Paste1Click(Sender: TObject);
-Begin
+procedure TfrmSpell.Paste1Click(Sender: TObject);
+begin
   MEMO.SetFocus;
   SendInput_Down(VK_Control);
   SendInput_Down(V_KEY);
   SendInput_UP(V_KEY);
   SendInput_UP(VK_Control);
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmSpell.Save1Click(Sender: TObject);
-Begin
-  If fFileName = '' Then
+procedure TfrmSpell.Save1Click(Sender: TObject);
+begin
+  if fFileName = '' then
     ShowSaveDialog
-  Else
+  else
     SaveFile(fFileName, BOM_Unicode, BOM_UnicodeBE, BOM_UTF8);
 
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmSpell.Saveas1Click(Sender: TObject);
-Begin
+procedure TfrmSpell.Saveas1Click(Sender: TObject);
+begin
   ShowSaveDialog;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmSpell.SaveFile(Const fFile: String; bBOM_Unicode, bBOM_UnicodeBE,
-  bBOM_UTF8: Boolean);
-Var
+procedure TfrmSpell.SaveFile(const fFile: string; bBOM_Unicode, bBOM_UnicodeBE, bBOM_UTF8: Boolean);
+var
   fs: TFileStream;
-Begin
-  Try
+begin
+  try
     fs := TFileStream.Create(fFile, fmCreate);
-    If bBOM_Unicode Or bBOM_UnicodeBE Or bBOM_UTF8 Then
-      SaveToStream_BOM_Specify(fs, True, bBOM_Unicode, bBOM_UnicodeBE,
-        bBOM_UTF8)
-    Else
+    if bBOM_Unicode or bBOM_UnicodeBE or bBOM_UTF8 then
+      SaveToStream_BOM_Specify(fs, True, bBOM_Unicode, bBOM_UnicodeBE, bBOM_UTF8)
+    else
       SaveToStream_BOM_Specify(fs, True, True, False, False);
     FreeAndNil(fs);
     fFileName := fFile;
     MemoChanged := False;
     Self.Caption := ExtractFileName(fFile) + ' - Avro Pad';
-  Except
-    On e: exception Do
-    Begin
-      Application.MessageBox('Error occured while saving file!', 'Avro Pad',
-        MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
-    End;
-  End;
-End;
+  except
+    on e: exception do
+    begin
+      Application.MessageBox('Error occured while saving file!', 'Avro Pad', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
+    end;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmSpell.SelectAll1Click(Sender: TObject);
-Begin
+procedure TfrmSpell.SelectAll1Click(Sender: TObject);
+begin
   MEMO.SelectAll;
-End;
+end;
 
 { =============================================================================== }
 
@@ -715,69 +707,69 @@ End;
 
 { =============================================================================== }
 
-Procedure TfrmSpell.ShowOpenDialog;
-Begin
+procedure TfrmSpell.ShowOpenDialog;
+begin
 
   OpenDialog.InitialDir := LastDirectory;
   OpenDialog.Files.Clear;
   OpenDialog.FileName := '';
-  If OpenDialog.Execute() Then
-  Begin
+  if OpenDialog.Execute() then
+  begin
     OpenFile(OpenDialog.FileName);
     LastDirectory := ExtractFilepATH(OpenDialog.FileName);
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmSpell.ShowSaveDialog;
-Begin
+procedure TfrmSpell.ShowSaveDialog;
+begin
   SaveDialog.InitialDir := LastDirectory;
   SaveDialog.Files.Clear;
   SaveDialog.FileName := '';
 
-  If BOM_Unicode Then
+  if BOM_Unicode then
     SaveDialog.FilterIndex := 1
-  Else If BOM_UnicodeBE Then
+  else if BOM_UnicodeBE then
     SaveDialog.FilterIndex := 2
-  Else If BOM_UTF8 Then
+  else if BOM_UTF8 then
     SaveDialog.FilterIndex := 3
-  Else
+  else
     SaveDialog.FilterIndex := 1;
 
   BOM_Unicode := False;
   BOM_UnicodeBE := False;
   BOM_UTF8 := False;
 
-  If SaveDialog.Execute() Then
-  Begin
-    If SaveDialog.FilterIndex = 1 Then
+  if SaveDialog.Execute() then
+  begin
+    if SaveDialog.FilterIndex = 1 then
       BOM_Unicode := True
-    Else If SaveDialog.FilterIndex = 2 Then
+    else if SaveDialog.FilterIndex = 2 then
       BOM_UnicodeBE := True
-    Else If SaveDialog.FilterIndex = 3 Then
+    else if SaveDialog.FilterIndex = 3 then
       BOM_UTF8 := True
-    Else
+    else
       BOM_Unicode := True;
 
     LastDirectory := ExtractFilepATH(SaveDialog.FileName);
 
     SaveFile(SaveDialog.FileName, BOM_Unicode, BOM_UnicodeBE, BOM_UTF8);
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmSpell.Spellcheckoptions1Click(Sender: TObject);
-Begin
+procedure TfrmSpell.Spellcheckoptions1Click(Sender: TObject);
+begin
   Avro_ShowOptions;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmSpell.Startspellchek1Click(Sender: TObject);
-Begin
-  If CheckingSpell Then
+procedure TfrmSpell.Startspellchek1Click(Sender: TObject);
+begin
+  if CheckingSpell then
     Exit;
 
   CheckingSpell := True;
@@ -786,176 +778,181 @@ Begin
   Progress.Position := 0;
   MP.ResetAll;
   MP.BeginPursing;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmSpell.WordWrap1Click(Sender: TObject);
-Begin
-  WordWrap1.Checked := Not WordWrap1.Checked;
+procedure TfrmSpell.WordWrap1Click(Sender: TObject);
+begin
+  WordWrap1.Checked := not WordWrap1.Checked;
 
-  If WordWrap1.Checked Then
-  Begin
+  if WordWrap1.Checked then
+  begin
     MEMO.WordWrap := True;
     MEMO.ScrollBars := ssVertical;
     AvroPadWrap := 'YES';
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     MEMO.WordWrap := False;
     MEMO.ScrollBars := ssBoth;
     AvroPadWrap := 'NO';
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Function TfrmSpell.AutoDetectCharacterSet(Stream: TStream)
-  : TUnicodeStreamCharSet;
-Var
+procedure TfrmSpell.AppEventsSettingChange(Sender: TObject; Flag: Integer; const Section: string; var Result: LongInt);
+begin
+  if SameText('ImmersiveColorSet', string(Section)) then
+    HandleThemes;
+end;
+
+function TfrmSpell.AutoDetectCharacterSet(Stream: TStream): TUnicodeStreamCharSet;
+var
   ByteOrderMark: Char;
-  BytesRead: Integer;
-  Utf8Test: Array [0 .. 2] Of AnsiChar;
-Begin
+  BytesRead:     Integer;
+  Utf8Test:      array [0 .. 2] of AnsiChar;
+begin
   // Byte Order Mark
   ByteOrderMark := #0;
-  If (Stream.Size - Stream.Position) >= SizeOf(ByteOrderMark) Then
-  Begin
+  if (Stream.Size - Stream.Position) >= SizeOf(ByteOrderMark) then
+  begin
     BytesRead := Stream.Read(ByteOrderMark, SizeOf(ByteOrderMark));
-    If (ByteOrderMark <> UNICODE_BOM) And
-      (ByteOrderMark <> UNICODE_BOM_SWAPPED) Then
-    Begin
+    if (ByteOrderMark <> UNICODE_BOM) and (ByteOrderMark <> UNICODE_BOM_SWAPPED) then
+    begin
       ByteOrderMark := #0;
       Stream.Seek(-BytesRead, soFromCurrent);
-      If (Stream.Size - Stream.Position) >= Length(Utf8Test) *
-        SizeOf(AnsiChar) Then
-      Begin
-        BytesRead := Stream.Read(Utf8Test[0],
-          Length(Utf8Test) * SizeOf(AnsiChar));
-        If Utf8Test <> UTF8_BOM Then
+      if (Stream.Size - Stream.Position) >= Length(Utf8Test) * SizeOf(AnsiChar) then
+      begin
+        BytesRead := Stream.Read(Utf8Test[0], Length(Utf8Test) * SizeOf(AnsiChar));
+        if Utf8Test <> UTF8_BOM then
           Stream.Seek(-BytesRead, soFromCurrent);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   // Test Byte Order Mark
-  If ByteOrderMark = UNICODE_BOM Then
+  if ByteOrderMark = UNICODE_BOM then
     Result := csUnicode
-  Else If ByteOrderMark = UNICODE_BOM_SWAPPED Then
+  else if ByteOrderMark = UNICODE_BOM_SWAPPED then
     Result := csUnicodeSwapped
-  Else If Utf8Test = UTF8_BOM Then
+  else if Utf8Test = UTF8_BOM then
     Result := csUtf8
-  Else
+  else
     Result := csAnsi;
-End;
+end;
 
-Procedure TfrmSpell.LoadFromStream_BOM_Return(Stream: TStream; WithBOM: Boolean;
-  Var BOM_Unicode, BOM_UnicodeBE, BOM_UTF8: Boolean);
-Var
-  DataLeft: Integer;
+procedure TfrmSpell.LoadFromStream_BOM_Return(Stream: TStream; WithBOM: Boolean; var BOM_Unicode, BOM_UnicodeBE, BOM_UTF8: Boolean);
+var
+  DataLeft:      Integer;
   StreamCharSet: TUnicodeStreamCharSet;
-  SW: String;
-  SA: AnsiString;
-Begin
+  SW:            string;
+  SA:            AnsiString;
+begin
 
-  If WithBOM Then
+  if WithBOM then
     StreamCharSet := AutoDetectCharacterSet(Stream)
-  Else
+  else
     StreamCharSet := csUnicode;
 
-  If StreamCharSet = csUnicode Then
+  if StreamCharSet = csUnicode then
     BOM_Unicode := True
-  Else If StreamCharSet = csUnicodeSwapped Then
+  else if StreamCharSet = csUnicodeSwapped then
     BOM_UnicodeBE := True
-  Else If StreamCharSet = csUtf8 Then
+  else if StreamCharSet = csUtf8 then
     BOM_UTF8 := True;
 
   DataLeft := Stream.Size - Stream.Position;
-  If (StreamCharSet In [csUnicode, csUnicodeSwapped]) Then
-  Begin
+  if (StreamCharSet in [csUnicode, csUnicodeSwapped]) then
+  begin
     // BOM indicates Unicode text stream
-    If DataLeft < SizeOf(Char) Then
+    if DataLeft < SizeOf(Char) then
       SW := ''
-    Else
-    Begin
-      SetLength(SW, DataLeft Div SizeOf(Char));
+    else
+    begin
+      SetLength(SW, DataLeft div SizeOf(Char));
       Stream.Read(PChar(SW)^, DataLeft);
-      If StreamCharSet = csUnicodeSwapped Then
+      if StreamCharSet = csUnicodeSwapped then
         StrSwapByteOrder(PChar(SW));
-    End;
+    end;
     MEMO.Lines.SetText(PChar(SW));
-  End
-  Else If StreamCharSet = csUtf8 Then
-  Begin
+  end
+  else if StreamCharSet = csUtf8 then
+  begin
     // BOM indicates UTF-8 text stream
-    SetLength(SA, DataLeft Div SizeOf(AnsiChar));
+    SetLength(SA, DataLeft div SizeOf(AnsiChar));
     Stream.Read(PAnsiChar(SA)^, DataLeft);
     MEMO.Lines.SetText(PChar(UTF8ToString(SA)));
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     // without byte order mark it is assumed that we are loading ANSI text
-    SetLength(SA, DataLeft Div SizeOf(AnsiChar));
+    SetLength(SA, DataLeft div SizeOf(AnsiChar));
     Stream.Read(PAnsiChar(SA)^, DataLeft);
-    MEMO.Lines.SetText(PChar(String(SA)));
-  End;
+    MEMO.Lines.SetText(PChar(string(SA)));
+  end;
 
-End;
+end;
 
-Procedure TfrmSpell.SaveToStream_BOM_Specify(Stream: TStream;
-  WithBOM, BOM_Unicode, BOM_UnicodeBE, BOM_UTF8: Boolean);
-Var
-  SW: String;
-  UT: utf8string;
+procedure TfrmSpell.HandleThemes;
+begin
+  SetAppropriateThemeMode('Windows10 Dark', 'Windows10');
+end;
+
+procedure TfrmSpell.SaveToStream_BOM_Specify(Stream: TStream; WithBOM, BOM_Unicode, BOM_UnicodeBE, BOM_UTF8: Boolean);
+var
+  SW:  string;
+  UT:  utf8string;
   BOM: Char;
-Begin
-  If WithBOM Then
-  Begin
-    If BOM_Unicode Then
-    Begin
+begin
+  if WithBOM then
+  begin
+    if BOM_Unicode then
+    begin
       BOM := UNICODE_BOM;
       Stream.WriteBuffer(BOM, SizeOf(Char));
       SW := MEMO.Lines.GetText;
       Stream.WriteBuffer(PChar(SW)^, Length(SW) * SizeOf(Char));
-    End
-    Else If BOM_UTF8 Then
-    Begin
+    end
+    else if BOM_UTF8 then
+    begin
       Stream.WriteBuffer(UTF8_BOM, Length(UTF8_BOM) * SizeOf(AnsiChar));
       UT := utf8encode(MEMO.Lines.GetText);
       Stream.WriteBuffer(PAnsiChar(UT)^, Length(UT) * SizeOf(AnsiChar));
-    End
-    Else If BOM_UnicodeBE Then
-    Begin
+    end
+    else if BOM_UnicodeBE then
+    begin
       BOM := UNICODE_BOM_SWAPPED;
       Stream.WriteBuffer(BOM, SizeOf(Char));
       SW := MEMO.Lines.GetText;
       StrSwapByteOrder(PChar(SW));
       Stream.WriteBuffer(PChar(SW)^, Length(SW) * SizeOf(Char));
-    End
-    Else
-    Begin
+    end
+    else
+    begin
       BOM := UNICODE_BOM;
       Stream.WriteBuffer(BOM, SizeOf(Char));
       SW := MEMO.Lines.GetText;
       Stream.WriteBuffer(PChar(SW)^, Length(SW) * SizeOf(Char));
-    End;
-  End
-  Else
-  Begin
+    end;
+  end
+  else
+  begin
     SW := MEMO.Lines.GetText;
     Stream.WriteBuffer(PChar(SW)^, Length(SW) * SizeOf(Char));
-  End;
-End;
+  end;
+end;
 
-Procedure TfrmSpell.StrSwapByteOrder(Str: PChar);
-Var
+procedure TfrmSpell.StrSwapByteOrder(Str: PChar);
+var
   P: PWord;
-Begin
+begin
   P := PWord(Str);
-  While (P^ <> 0) Do
-  Begin
+  while (P^ <> 0) do
+  begin
     P^ := MakeWord(HiByte(P^), LoByte(P^));
     Inc(P);
-  End;
-End;
+  end;
+end;
 
-End.
+end.

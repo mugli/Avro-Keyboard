@@ -33,34 +33,41 @@ unit clsRegistry_XMLSetting;
 interface
 
 uses
-  classes, sysutils, StrUtils, XMLIntf, XMLDoc, system.Variants, Forms, Registry,
+  classes,
+  sysutils,
+  StrUtils,
+  XMLIntf,
+  XMLDoc,
+  system.Variants,
+  Forms,
+  Registry,
   uFileFolderHandling;
 
 // Custom Registry class
 type
   TMyRegistry = class(TRegistry)
-  public
-    function ReadStringDef(const Name: string; DefaultVal: string = ''): string;
-    function ReadDateDef(const Name: string; DefaultVal: TDateTime): TDateTime;
+    public
+      function ReadStringDef(const Name: string; DefaultVal: string = ''): string;
+      function ReadDateDef(const Name: string; DefaultVal: TDateTime): TDateTime;
   end;
 
   // Skeleton of Class TXMLSetting
 type
   TXMLSetting = class
-  private
-    XML: IXMLDocument;
-    child: IXMLNode;
-  public
-    constructor Create; // Initializer
-    destructor Destroy; override; // Destructor
+    private
+      XML:   IXMLDocument;
+      child: IXMLNode;
+    public
+      constructor Create;           // Initializer
+      destructor Destroy; override; // Destructor
 
-    function LoadXMLData(): Boolean;
-    function GetValue(const ValueName: UTF8String; DefaultValue: string = ''): string; overload;
-    function GetValue(const ValueName: UTF8String; DefaultValue: TDateTime): TDateTime; overload;
-    procedure CreateNewXMLData;
-    procedure SetValue(const ValueName: UTF8String; const ValueData: string); overload;
-    procedure SetValue(const ValueName: UTF8String; const ValueData: TDateTime); overload;
-    procedure SaveXMLData;
+      function LoadXMLData(): Boolean;
+      function GetValue(const ValueName: UTF8String; DefaultValue: string = ''): string; overload;
+      function GetValue(const ValueName: UTF8String; DefaultValue: TDateTime): TDateTime; overload;
+      procedure CreateNewXMLData;
+      procedure SetValue(const ValueName: UTF8String; const ValueData: string); overload;
+      procedure SetValue(const ValueName: UTF8String; const ValueData: TDateTime); overload;
+      procedure SaveXMLData;
 
   end;
 
@@ -152,11 +159,11 @@ var
   SettingFileName: string;
 begin
   Result := false;
-{$IFNDEF SpellCheckerDll}
+  {$IFNDEF SpellCheckerDll}
   SettingFileName := 'Spell Settings.xml';
-{$ELSE}
+  {$ELSE}
   SettingFileName := 'Spell dll Settings.xml';
-{$ENDIF}
+  {$ENDIF}
   try
     if FileExists(ExtractFilePath(Application.ExeName) + SettingFileName) = true then
     begin
@@ -179,11 +186,11 @@ var
   SettingFileName: string;
 begin
   // XML.XmlFormat := xfReadable;
-{$IFNDEF SpellCheckerDll}
+  {$IFNDEF SpellCheckerDll}
   SettingFileName := 'Spell Settings.xml';
-{$ELSE}
+  {$ELSE}
   SettingFileName := 'Spell dll Settings.xml';
-{$ENDIF}
+  {$ENDIF}
   XML.XML.Text := XMLDoc.FormatXMLData(XML.XML.Text);
   XML.Active := true;
   try
@@ -232,9 +239,9 @@ end;
 function TMyRegistry.ReadDateDef(const Name: string; DefaultVal: TDateTime): TDateTime;
 begin
   try
-    if ValueExists(Name) = true then
+    if ValueExists(name) = true then
     begin
-      Result := ReadDateTime(Name);
+      Result := ReadDateTime(name);
     end
     else
     begin
@@ -251,9 +258,9 @@ end;
 function TMyRegistry.ReadStringDef(const Name: string; DefaultVal: string = ''): string;
 begin
   try
-    if ValueExists(Name) = true then
+    if ValueExists(name) = true then
     begin
-      Result := ReadString(Name);
+      Result := ReadString(name);
     end
     else
     begin
@@ -267,4 +274,3 @@ begin
 end;
 
 end.
-

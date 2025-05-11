@@ -28,70 +28,68 @@
 {$INCLUDE ../ProjectDefines.inc}
 { COMPLETE TRANSFERING! }
 
-Unit u_Admin;
+unit u_Admin;
 
-Interface
+interface
 
-Uses Windows,
+uses
+  Windows,
   Registry;
 
-Function IsElevated: Boolean;
+function IsElevated: Boolean;
 
 // returns True if the currently logged Windows user has Administrator rights
-Function IsAdmin: Boolean;
+function IsAdmin: Boolean;
 
-Function IsUAC: Boolean;
+function IsUAC: Boolean;
 
-Implementation
+implementation
 
-Uses
+uses
   WindowsVersion;
 
-Const
+const
   SECURITY_NT_AUTHORITY: TSIDIdentifierAuthority = (Value: (0, 0, 0, 0, 0, 5));
 
-Const
+const
   SECURITY_BUILTIN_DOMAIN_RID = $00000020;
-  DOMAIN_ALIAS_RID_ADMINS = $00000220;
+  DOMAIN_ALIAS_RID_ADMINS     = $00000220;
 
-Const
-  TokenElevationType = 18;
-  TokenElevation = 20;
+const
+  TokenElevationType        = 18;
+  TokenElevation            = 20;
   TokenElevationTypeDefault = 1;
-  TokenElevationTypeFull = 2;
+  TokenElevationTypeFull    = 2;
   TokenElevationTypeLimited = 3;
 
-Function IsUAC: Boolean;
-Var
+function IsUAC: Boolean;
+var
   Reg: TRegistry;
-Begin
+begin
   Result := False;
   Reg := TRegistry.Create;
   Reg.RootKey := HKEY_LOCAL_MACHINE;
-  Reg.OpenKeyReadOnly
-    ('SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System');
-  If Reg.ReadInteger('EnableLUA') = 1 Then
+  Reg.OpenKeyReadOnly('SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System');
+  if Reg.ReadInteger('EnableLUA') = 1 then
     Result := True;
   Reg.Free;
-End;
+end;
 {$HINTS Off}
 
-Function IsElevated: Boolean;
+function IsElevated: Boolean;
 
-  Function IsElevatedBasic: Boolean;
-  Var
-    token: THandle;
+  function IsElevatedBasic: Boolean;
+  var
+    token:         THandle;
     ElevationType: Integer;
     // Elevation                : DWord;
     dwSize: Cardinal;
-  Begin
+  begin
     Result := False;
 
-    If OpenProcessToken(GetCurrentProcess, TOKEN_QUERY, token) Then
-      Try
-        If GetTokenInformation(token,
-          TTokenInformationClass(TokenElevationType), @ElevationType,
-          SizeOf(ElevationType), dwSize) Then
+    if OpenProcessToken(GetCurrentProcess, TOKEN_QUERY, token) then
+      try
+        if GetTokenInformation(token, TTokenInformationClass(TokenElevationType), @ElevationType, SizeOf(ElevationType), dwSize) then
           { * If already elevated returns TokenElevationTypeFull.
 
             * If it can be elevated simply by showing the elevation request
@@ -100,17 +98,17 @@ Function IsElevated: Boolean;
             * If running on a non-administrator account that needs to show
             the elevation dialog and enter an admin password,
             it returns TokenElevationTypeDefault. }
-          Case ElevationType Of
+          case ElevationType of
             TokenElevationTypeDefault:
               Result := False;
             TokenElevationTypeFull:
               Result := True;
             TokenElevationTypeLimited:
               Result := False;
-          Else
-            Result := False;
-          End
-        Else
+            else
+              Result := False;
+          end
+        else
           Result := False;
 
         { If GetTokenInformation(token, TTokenInformationClass(TokenElevation), @Elevation, SizeOf(Elevation), dwSize) Then Begin
@@ -121,88 +119,83 @@ Function IsElevated: Boolean;
           End
           Else
           Result := False; }
-      Finally
+      finally
         CloseHandle(token);
-      End
-    Else
+      end
+    else
       Result := False;
-  End;
+  end;
 
-Begin
-  If IsWinVistaOrLater Then
-  Begin
-    If IsUAC Then
-    Begin
-      If IsElevatedBasic Then
+begin
+  if IsWinVistaOrLater then
+  begin
+    if IsUAC then
+    begin
+      if IsElevatedBasic then
         Result := True
-      Else
+      else
         Result := False;
-    End
-    Else
-    Begin
-      If IsAdmin Then
+    end
+    else
+    begin
+      if IsAdmin then
         Result := True
-      Else
+      else
         Result := False;
-    End;
-  End
-  Else
-  Begin
-    If IsAdmin Then
+    end;
+  end
+  else
+  begin
+    if IsAdmin then
       Result := True
-    Else
+    else
       Result := False;
-  End;
-End;
+  end;
+end;
 {$HINTS On}
 
-Function IsAdmin: Boolean;
-Var
-  hAccessToken: THandle;
-  ptgGroups: PTokenGroups;
-  dwInfoBufferSize: DWORD;
+function IsAdmin: Boolean;
+var
+  hAccessToken:       THandle;
+  ptgGroups:          PTokenGroups;
+  dwInfoBufferSize:   DWORD;
   psidAdministrators: PSID;
-  g: Integer;
-  bSuccess: BOOL;
-Begin
+  g:                  Integer;
+  bSuccess:           BOOL;
+begin
   Result := False;
 
-  bSuccess := OpenThreadToken(GetCurrentThread, TOKEN_QUERY, True,
-    hAccessToken);
-  If Not bSuccess Then
-  Begin
-    If GetLastError = ERROR_NO_TOKEN Then
-      bSuccess := OpenProcessToken(GetCurrentProcess, TOKEN_QUERY,
-        hAccessToken);
-  End;
+  bSuccess := OpenThreadToken(GetCurrentThread, TOKEN_QUERY, True, hAccessToken);
+  if not bSuccess then
+  begin
+    if GetLastError = ERROR_NO_TOKEN then
+      bSuccess := OpenProcessToken(GetCurrentProcess, TOKEN_QUERY, hAccessToken);
+  end;
 
-  If bSuccess Then
-  Begin
+  if bSuccess then
+  begin
     GetMem(ptgGroups, 1024);
 
-    bSuccess := GetTokenInformation(hAccessToken, TokenGroups, ptgGroups, 1024,
-      dwInfoBufferSize);
+    bSuccess := GetTokenInformation(hAccessToken, TokenGroups, ptgGroups, 1024, dwInfoBufferSize);
 
     CloseHandle(hAccessToken);
 
-    If bSuccess Then
-    Begin
-      AllocateAndInitializeSid(SECURITY_NT_AUTHORITY, 2,
-        SECURITY_BUILTIN_DOMAIN_RID, DOMAIN_ALIAS_RID_ADMINS, 0, 0, 0, 0, 0, 0,
-        psidAdministrators);
+    if bSuccess then
+    begin
+      AllocateAndInitializeSid(SECURITY_NT_AUTHORITY, 2, SECURITY_BUILTIN_DOMAIN_RID, DOMAIN_ALIAS_RID_ADMINS, 0, 0, 0, 0, 0, 0, psidAdministrators);
 
-      For g := 0 To ptgGroups.GroupCount - 1 Do
-        If EqualSid(psidAdministrators, ptgGroups.Groups[g].Sid) Then
-        Begin
+      for g := 0 to ptgGroups.GroupCount - 1 do
+        if EqualSid(psidAdministrators, ptgGroups.Groups[g].Sid) then
+        begin
           Result := True;
           Break;
-        End;
+        end;
 
       FreeSid(psidAdministrators);
-    End;
+    end;
 
     FreeMem(ptgGroups);
-  End;
-End;
+  end;
+end;
 
-End.
+end.
