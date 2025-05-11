@@ -68,10 +68,12 @@
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
+        <Icon_MainIcon>..\assets\icons\Avro.ico</Icon_MainIcon>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win64)'!=''">
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
+        <Icon_MainIcon>..\assets\icons\Avro.ico</Icon_MainIcon>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1)'!=''">
         <DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
@@ -93,8 +95,8 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win64)'!=''">
         <BT_BuildType>Debug</BT_BuildType>
-        <VerInfo_Build>10</VerInfo_Build>
-        <VerInfo_Keys>CompanyName=OmicronLab;FileDescription=Avro Keyboard - UNICODE compliant Open source Bangla typing software for Windows;FileVersion=5.7.0.10;InternalName=Avro Keyboard;LegalCopyright=© OmicronLab. All rights reserved.;LegalTrademarks=Avro Keyboard;OriginalFilename=Avro Keyboard.exe;ProductName=Avro Keyboard;ProductVersion=5.7.0.0;Comments=Avro Keyboard - UNICODE compliant Open source Bangla typing software for Windows</VerInfo_Keys>
+        <VerInfo_Build>11</VerInfo_Build>
+        <VerInfo_Keys>CompanyName=OmicronLab;FileDescription=Avro Keyboard - UNICODE compliant Open source Bangla typing software for Windows;FileVersion=5.7.0.11;InternalName=Avro Keyboard;LegalCopyright=© OmicronLab. All rights reserved.;LegalTrademarks=Avro Keyboard;OriginalFilename=Avro Keyboard.exe;ProductName=Avro Keyboard;ProductVersion=5.7.0.0;Comments=Avro Keyboard - UNICODE compliant Open source Bangla typing software for Windows</VerInfo_Keys>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
