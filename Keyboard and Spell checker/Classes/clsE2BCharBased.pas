@@ -33,11 +33,17 @@ unit clsE2BCharBased;
 interface
 
 uses
-  classes, sysutils, StrUtils, clsEnglishToBangla, clsPhoneticRegExBuilder,
-  Generics.Collections, clsAbbreviation, clsUnicodeToBijoy2000;
+  classes,
+  sysutils,
+  StrUtils,
+  clsEnglishToBangla,
+  clsPhoneticRegExBuilder,
+  Generics.Collections,
+  clsAbbreviation,
+  clsUnicodeToBijoy2000;
 
 const
-  Max_EnglishLength = 50;
+  Max_EnglishLength    = 50;
   Max_RegExQueryLength = 5000;
 
 type
@@ -49,63 +55,72 @@ type
   // Skeleton of Class TE2BCharBased
 type
   TE2BCharBased = class
-  private
-    Parser: TEnglishToBangla;
-    RegExBuilder: TEnglishToRegEx;
-    Abbreviation: TAbbreviation;
-    Bijoy: TUnicodeToBijoy2000;
-    EnglishT: string;
-    PrevBanglaT: string;
-    BlockLast: boolean;
-    WStringList: TStringList;
-    NewBanglaText: string;
-    FAutoCorrect: boolean;
-    CandidateDict: TDictionary<string, string>;
-    ManuallySelectedCandidate: boolean;
-    DetermineZWNJ_ZWJ: string;
-    PhoneticCache: array[1..Max_EnglishLength] of TPhoneticCache;
+    private
+      Parser:                    TEnglishToBangla;
+      RegExBuilder:              TEnglishToRegEx;
+      Abbreviation:              TAbbreviation;
+      Bijoy:                     TUnicodeToBijoy2000;
+      EnglishT:                  string;
+      PrevBanglaT:               string;
+      BlockLast:                 boolean;
+      WStringList:               TStringList;
+      NewBanglaText:             string;
+      FAutoCorrect:              boolean;
+      CandidateDict:             TDictionary<string, string>;
+      ManuallySelectedCandidate: boolean;
+      DetermineZWNJ_ZWJ:         string;
+      PhoneticCache:             array [1 .. Max_EnglishLength] of TPhoneticCache;
 
-    procedure Fix_ZWNJ_ZWJ(var rList: TStringList);
-    procedure ProcessSpace(var Block: boolean);
-    procedure ParseAndSend;
-    procedure ParseAndSendNow;
-    procedure ProcessEnter(var Block: boolean);
-    procedure DoBackspace(var Block: boolean);
-    procedure MyProcessVKeyDown(const KeyCode: Integer; var Block: boolean; const var_IfShift: boolean; const var_IfTrueShift: boolean);
-    procedure AddStr(const Str: string);
+      procedure Fix_ZWNJ_ZWJ(var rList: TStringList);
+      procedure ProcessSpace(var Block: boolean);
+      procedure ParseAndSend;
+      procedure ParseAndSendNow;
+      procedure ProcessEnter(var Block: boolean);
+      procedure DoBackspace(var Block: boolean);
+      procedure MyProcessVKeyDown(const KeyCode: Integer; var Block: boolean; const var_IfShift: boolean; const var_IfTrueShift: boolean);
+      procedure AddStr(const Str: string);
 
-    procedure LoadCandidateOptions;
-    procedure SaveCandidateOptions;
-    procedure UpdateCandidateOption;
+      procedure LoadCandidateOptions;
+      procedure SaveCandidateOptions;
+      procedure UpdateCandidateOption;
 
-    procedure AddToCache(const MiddleMain_T: string; var rList: TStringList);
-    procedure AddSuffix(const MiddleMain_T: string; var rList: TStringList);
+      procedure AddToCache(const MiddleMain_T: string; var rList: TStringList);
+      procedure AddSuffix(const MiddleMain_T: string; var rList: TStringList);
 
-    procedure CutText(const inputEStr: string; var outSIgnore: string; var outMidMain: string; var outEIgnore: string);
-    procedure PadResults(const Starting_Ignoreable_T, Ending_Ignorable_T: string; var rList: TStringList);
-    function EscapeSpecialCharacters(const inputT: string): string;
+      procedure CutText(const inputEStr: string; var outSIgnore: string; var outMidMain: string; var outEIgnore: string);
+      procedure PadResults(const Starting_Ignoreable_T, Ending_Ignorable_T: string; var rList: TStringList);
+      function EscapeSpecialCharacters(const inputT: string): string;
 
-    procedure SetAutoCorrectEnabled(const Value: boolean);
-    function GetAutoCorrectEnabled: boolean;
+      procedure SetAutoCorrectEnabled(const Value: boolean);
+      function GetAutoCorrectEnabled: boolean;
 
-  public
-    constructor Create; // Initializer
-    destructor Destroy; override; // Destructor
+    public
+      constructor Create;           // Initializer
+      destructor Destroy; override; // Destructor
 
-    function ProcessVKeyDown(const KeyCode: Integer; var Block: boolean): string;
-    procedure ProcessVKeyUP(const KeyCode: Integer; var Block: boolean);
-    procedure ResetDeadKey;
-    procedure SelectCandidate(const Item: string);
-    // Published
-    property AutoCorrectEnabled: boolean read GetAutoCorrectEnabled write SetAutoCorrectEnabled;
+      function ProcessVKeyDown(const KeyCode: Integer; var Block: boolean): string;
+      procedure ProcessVKeyUP(const KeyCode: Integer; var Block: boolean);
+      procedure ResetDeadKey;
+      procedure SelectCandidate(const Item: string);
+      // Published
+      property AutoCorrectEnabled: boolean read GetAutoCorrectEnabled write SetAutoCorrectEnabled;
   end;
 
 implementation
 
 uses
-  KeyboardFunctions, VirtualKeyCode, uForm1, clsLayout, uRegistrySettings,
-  ufrmPrevW, uSimilarSort, uRegExPhoneticSearch, uFileFolderHandling,
-  BanglaChars, uDBase, WindowsVersion;
+  KeyboardFunctions,
+  VirtualKeyCode,
+  uForm1,
+  clsLayout,
+  uRegistrySettings,
+  ufrmPrevW,
+  uSimilarSort,
+  uRegExPhoneticSearch,
+  uFileFolderHandling,
+  BanglaChars,
+  uDBase,
+  WindowsVersion;
 
 { TE2BCharBased }
 
@@ -129,9 +144,9 @@ end;
 procedure TE2BCharBased.AddSuffix(const MiddleMain_T: string; var rList: TStringList);
 var
   iLen, J, K: Integer;
-  isSuffix: string;
-  B_Suffix: string;
-  TempList: TStringList;
+  isSuffix:   string;
+  B_Suffix:   string;
+  TempList:   TStringList;
 begin
   iLen := Length(MiddleMain_T);
   rList.Sorted := True;
@@ -157,9 +172,11 @@ begin
             else
             begin
               if RightStr(PhoneticCache[iLen - Length(isSuffix)].Results[K], 1) = b_Khandatta then
-                TempList.Add(MidStr(PhoneticCache[iLen - Length(isSuffix)].Results[K], 1, Length(PhoneticCache[iLen - Length(isSuffix)].Results[K]) - 1) + b_T + B_Suffix)
+                TempList.Add(MidStr(PhoneticCache[iLen - Length(isSuffix)].Results[K], 1, Length(PhoneticCache[iLen - Length(isSuffix)].Results[K]) - 1) + b_T
+                    + B_Suffix)
               else if RightStr(PhoneticCache[iLen - Length(isSuffix)].Results[K], 1) = b_Anushar then
-                TempList.Add(MidStr(PhoneticCache[iLen - Length(isSuffix)].Results[K], 1, Length(PhoneticCache[iLen - Length(isSuffix)].Results[K]) - 1) + b_NGA + B_Suffix)
+                TempList.Add(MidStr(PhoneticCache[iLen - Length(isSuffix)].Results[K], 1, Length(PhoneticCache[iLen - Length(isSuffix)].Results[K]) - 1) + b_NGA
+                    + B_Suffix)
               else
                 TempList.Add(PhoneticCache[iLen - Length(isSuffix)].Results[K] + B_Suffix);
             end;
@@ -205,7 +222,7 @@ begin
   CandidateDict := TDictionary<string, string>.Create;
   LoadCandidateOptions;
 
-  for I := Low(PhoneticCache) to High(PhoneticCache) do
+  for I := low(PhoneticCache) to high(PhoneticCache) do
   begin
     PhoneticCache[I].Results := TStringList.Create;
   end;
@@ -221,12 +238,12 @@ end;
 
 procedure TE2BCharBased.CutText(const inputEStr: string; var outSIgnore, outMidMain, outEIgnore: string);
 var
-  I: Integer;
-  p, q: Integer;
-  EStrLen: Integer;
-  tStr: Char;
+  I:                 Integer;
+  p, q:              Integer;
+  EStrLen:           Integer;
+  tStr:              Char;
   reverse_inputEStr: string;
-  temporaryString: string;
+  temporaryString:   string;
 begin
 
   tStr := #0;
@@ -253,8 +270,9 @@ begin
         Break;
 
       '`':
-        p := I     else
-      Break;
+        p := I
+      else
+        Break;
     end;
   end;
 
@@ -284,8 +302,8 @@ begin
       ':':
         q := I;
 
-    else
-      Break;
+      else
+        Break;
     end;
   end;
 
@@ -315,7 +333,7 @@ begin
     SaveCandidateOptions;
   FreeAndNil(CandidateDict);
 
-  for I := Low(PhoneticCache) to High(PhoneticCache) do
+  for I := low(PhoneticCache) to high(PhoneticCache) do
   begin
     PhoneticCache[I].Results.Clear;
     PhoneticCache[I].Results.Free;
@@ -424,7 +442,7 @@ end;
 
 procedure TE2BCharBased.Fix_ZWNJ_ZWJ(var rList: TStringList);
 var
-  I: Integer;
+  I:                        Integer;
   StartCounter, EndCounter: Integer;
 begin
   StartCounter := 0;
@@ -452,9 +470,9 @@ end;
 
 procedure TE2BCharBased.LoadCandidateOptions;
 var
-  I, p: Integer;
+  I, p:                  Integer;
   FirstPart, SecondPart: string;
-  tmpList: TStringList;
+  tmpList:               TStringList;
 begin
   if FileExists(GetAvroDataDir + 'CandidateOptions.dat') = False then
     exit;
@@ -1024,7 +1042,7 @@ begin
       end;
 
     // Special cases-------------------->
-      VK_HOME:
+    VK_HOME:
       begin
         Block := False;
         ResetDeadKey;
@@ -1126,7 +1144,7 @@ end;
 procedure TE2BCharBased.PadResults(const Starting_Ignoreable_T, Ending_Ignorable_T: string; var rList: TStringList);
 var
   B_Starting_Ignoreable_T, B_Ending_Ignorable_T: string;
-  I: Integer;
+  I:                                             Integer;
 begin
   Parser.AutoCorrectEnabled := False;
   B_Starting_Ignoreable_T := Parser.Convert(Starting_Ignoreable_T);
@@ -1143,13 +1161,13 @@ end;
 
 procedure TE2BCharBased.ParseAndSend;
 var
-  I: Integer;
-  RegExQuery: string;
-  TempBanglaText1, TempBanglaText2: string;
-  DictionaryFirstItem: string;
+  I:                                                        Integer;
+  RegExQuery:                                               string;
+  TempBanglaText1, TempBanglaText2:                         string;
+  DictionaryFirstItem:                                      string;
   Starting_Ignoreable_T, Middle_Main_T, Ending_Ignorable_T: string;
-  AbbText: string;
-  CandidateItem: string;
+  AbbText:                                                  string;
+  CandidateItem:                                            string;
 begin
   frmPrevW.List.Items.Clear;
 
@@ -1296,7 +1314,7 @@ end;
 
 procedure TE2BCharBased.ParseAndSendNow;
 var
-  I, Matched, UnMatched: Integer;
+  I, Matched, UnMatched:                Integer;
   BijoyPrevBanglaT, BijoyNewBanglaText: string;
 begin
   Matched := 0;
@@ -1462,7 +1480,8 @@ end;
 
 procedure TE2BCharBased.ProcessVKeyUP(const KeyCode: Integer; var Block: boolean);
 begin
-  if (KeyCode = VK_SHIFT) or (KeyCode = VK_RSHIFT) or (KeyCode = VK_LSHIFT) or (KeyCode = VK_LCONTROL) or (KeyCode = VK_RCONTROL) or (KeyCode = VK_CONTROL) or (KeyCode = VK_MENU) or (KeyCode = VK_LMENU) or (KeyCode = VK_RMENU) or (IfWinKey = True) then
+  if (KeyCode = VK_SHIFT) or (KeyCode = VK_RSHIFT) or (KeyCode = VK_LSHIFT) or (KeyCode = VK_LCONTROL) or (KeyCode = VK_RCONTROL) or (KeyCode = VK_CONTROL) or
+    (KeyCode = VK_MENU) or (KeyCode = VK_LMENU) or (KeyCode = VK_RMENU) or (IfWinKey = True) then
   begin
     Block := False;
     BlockLast := False;
@@ -1492,7 +1511,7 @@ begin
   BlockLast := False;
   NewBanglaText := '';
 
-  for I := Low(PhoneticCache) to High(PhoneticCache) do
+  for I := low(PhoneticCache) to high(PhoneticCache) do
   begin
     PhoneticCache[I].EnglishT := '';
     PhoneticCache[I].Results.Clear;
@@ -1507,7 +1526,7 @@ end;
 
 procedure TE2BCharBased.SaveCandidateOptions;
 var
-  S: string;
+  S:       string;
   tmpList: TStringList;
 begin
   try
@@ -1567,4 +1586,3 @@ end;
 { =============================================================================== }
 
 end.
-

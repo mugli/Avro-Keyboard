@@ -25,44 +25,43 @@
   =============================================================================
 }
 
-Unit uSimilarSort;
+unit uSimilarSort;
 
-Interface
+interface
 
-Uses
+uses
   Classes,
   Levenshtein;
 
-Type
-  SimilarRec = Record
-    wS: String;
+type
+  SimilarRec = record
+    wS: string;
     Match: Integer;
-  End;
+  end;
 
-Procedure SimilarSort(SourceS: String; Var WList: TStringList);
-Function MyCustomSort(List: TStringList; Index1, Index2: Integer): Integer;
+procedure SimilarSort(SourceS: string; var WList: TStringList);
+function MyCustomSort(List: TStringList; Index1, Index2: Integer): Integer;
 
-Var
-  SourceCompareS: String;
+var
+  SourceCompareS: string;
 
-Implementation
+implementation
 
-Function MyCustomSort(List: TStringList; Index1, Index2: Integer): Integer;
-Begin
-  If LD(SourceCompareS, List[Index1]) < LD(SourceCompareS, List[Index2]) Then
+function MyCustomSort(List: TStringList; Index1, Index2: Integer): Integer;
+begin
+  if LD(SourceCompareS, List[Index1]) < LD(SourceCompareS, List[Index2]) then
     Result := -1
-  Else If LD(SourceCompareS, List[Index1]) > LD(SourceCompareS,
-    List[Index2]) Then
+  else if LD(SourceCompareS, List[Index1]) > LD(SourceCompareS, List[Index2]) then
     Result := 1
-  Else
+  else
     Result := 0;
-End;
+end;
 
-Procedure SimilarSort(SourceS: String; Var WList: TStringList);
-Begin
+procedure SimilarSort(SourceS: string; var WList: TStringList);
+begin
   WList.Sorted := False;
   SourceCompareS := SourceS;
   WList.CustomSort(MyCustomSort);
-End;
+end;
 
-End.
+end.

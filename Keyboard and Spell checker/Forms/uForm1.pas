@@ -26,11 +26,11 @@
 }
 
 {$INCLUDE ../ProjectDefines.inc}
-Unit uForm1;
+unit uForm1;
 
-Interface
+interface
 
-Uses
+uses
   Windows,
   Messages,
   SysUtils,
@@ -48,24 +48,26 @@ Uses
   Generics.Collections,
   StrUtils,
   clsUpdateInfoDownloader,
-  DateUtils, System.ImageList;
+  DateUtils,
+  System.ImageList,
+  Vcl.AppEvnts;
 
-Type
-  TMenuItemExtended = Class(TMenuItem)
-  Private
-    fValue: String;
-  Published
-    Property Value: String Read fValue Write fValue;
-  End;
+type
+  TMenuItemExtended = class(TMenuItem)
+    private
+      fValue: string;
+    published
+      property Value: string read fValue write fValue;
+  end;
 
-Type
-  TWindowRecord = Record
-    Mode: String;
+type
+  TWindowRecord = record
+    Mode: string;
     Locale: Cardinal;
-  End;
+  end;
 
-Type
-  TAvroMainForm1 = Class(TForm)
+type
+  TAvroMainForm1 = class(TForm)
     Tray: TTrayIcon;
     ImageList1: TImageList;
     Popup_Web: TPopupMenu;
@@ -298,128 +300,129 @@ Type
     N54: TMenuItem;
     AvroKeyboardonFacebook3: TMenuItem;
     OmicronLabonTwitter3: TMenuItem;
-    Procedure FormKeyDown(Sender: TObject; Var Key: Word; Shift: TShiftState);
-    Procedure FormCreate(Sender: TObject);
-    Procedure AvroPhoneticEnglishtoBangla3Click(Sender: TObject);
-    Procedure Exit1Click(Sender: TObject);
-    Procedure ogglekeyboardmode2Click(Sender: TObject);
-    Procedure Docktotop1Click(Sender: TObject);
-    Procedure Showactivekeyboardlayout1Click(Sender: TObject);
-    Procedure AvroMouseClicknType2Click(Sender: TObject);
-    Procedure PortableAvroKeyboardontheweb1Click(Sender: TObject);
-    Procedure AvroKeyboardontheweb1Click(Sender: TObject);
-    Procedure wwwOmicronLabcom1Click(Sender: TObject);
-    Procedure UserForum1Click(Sender: TObject);
-    Procedure CheckupdateforAvroKeyboard1Click(Sender: TObject);
-    Procedure FreeBanglaFonts1Click(Sender: TObject);
-    Procedure UsefultoolsforBangla1Click(Sender: TObject);
-    Procedure Jumptosystemtray1Click(Sender: TObject);
-    Procedure Options1Click(Sender: TObject);
-    Procedure Configuringyoursystem1Click(Sender: TObject);
-    Procedure OTFBanglaFontscamewithAvroKeyboard1Click(Sender: TObject);
-    Procedure Helponhelp1Click(Sender: TObject);
-    Procedure BeforeYouStart1Click(Sender: TObject);
-    Procedure Overview1Click(Sender: TObject);
-    Procedure CustomizingAvroKeyboard1Click(Sender: TObject);
-    Procedure BanglaTypingwithAvroPhonetic1Click(Sender: TObject);
-    Procedure BanglaTypingwithFixedKeyboardLayouts1Click(Sender: TObject);
-    Procedure BanglaTypingwithAvroMouse1Click(Sender: TObject);
-    Procedure FrequentlyAskedQuestionsFAQ1Click(Sender: TObject);
-    Procedure CreatingEditingFixedKeyboardLayouts1Click(Sender: TObject);
-    Procedure Moredocumentsontheweb1Click(Sender: TObject);
-    Procedure GetAcrobatReader1Click(Sender: TObject);
-    Procedure Aboutcurrentkeyboardlayout1Click(Sender: TObject);
-    Procedure AboutAvroKeyboard1Click(Sender: TObject);
-    Procedure RestoreAvroTopBar1Click(Sender: TObject);
-    Procedure EnableOldStyleRephInModernTypingStyle1Click(Sender: TObject);
-    Procedure UseOldStyleTyping1Click(Sender: TObject);
-    Procedure UseModernStyleTyping1Click(Sender: TObject);
-    Procedure AutomaticallyfixChandrapositionInModernTypingStyle1Click
-      (Sender: TObject);
-    Procedure AutomaticVowelFormatingInModernTypingStyle1Click(Sender: TObject);
-    Procedure EnableBanglainNumberPadInFixedkeyboardLayouts1Click
-      (Sender: TObject);
-    Procedure EnableAutoCorrect1Click(Sender: TObject);
-    Procedure ManageAutoCorrectentries1Click(Sender: TObject);
-    Procedure KeyboardLayoutEditorBuildcustomlayouts1Click(Sender: TObject);
-    Procedure SkinDesignerDesignyourownskin1Click(Sender: TObject);
-    Procedure InternetCheckTimer(Sender: TObject);
-    Procedure TrayDblClick(Sender: TObject);
-    Procedure TrayClick(Sender: TObject);
-    Procedure WindowCheckTimer(Sender: TObject);
-    Procedure FormClose(Sender: TObject; Var Action: TCloseAction);
-    Procedure Spellcheck1Click(Sender: TObject);
-    Procedure IdleTimerTimer(Sender: TObject);
-    Procedure AboutCurrentskin1Click(Sender: TObject);
-    Procedure UnicodetoBijoytextconverter1Click(Sender: TObject);
-    Procedure FormCloseQuery(Sender: TObject; Var CanClose: Boolean);
-    Procedure ShowPreviewWindow1Click(Sender: TObject);
-    Procedure Dictionarymodeisdefault1Click(Sender: TObject);
-    Procedure Charactermodeisdefault1Click(Sender: TObject);
-    Procedure Classicphoneticnohint1Click(Sender: TObject);
-    Procedure UseTabforBrowsingSuggestions1Click(Sender: TObject);
-    Procedure Remembermychoiceamongsuggestions1Click(Sender: TObject);
-    Procedure UseVerticalLinePipekeytotypeDot1Click(Sender: TObject);
-    Procedure TypeJoNuktawithShiftJ1Click(Sender: TObject);
-    Procedure OutputasUnicodeRecommended1Click(Sender: TObject);
-    Procedure OutputasANSIAreyousure1Click(Sender: TObject);
-    Procedure AvroKeyboardonFacebook1Click(Sender: TObject);
-    Procedure OmicronLabonTwitter1Click(Sender: TObject);
-  Private
-    { Private declarations }
-    WindowDict: TDictionary<HWND, TWindowRecord>;
-    MyCurrentLayout: String;
-    MyCurrentKeyboardMode: enumMode;
-    LastWindow: HWND;
+    AppEvents: TApplicationEvents;
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure FormCreate(Sender: TObject);
+    procedure AvroPhoneticEnglishtoBangla3Click(Sender: TObject);
+    procedure Exit1Click(Sender: TObject);
+    procedure ogglekeyboardmode2Click(Sender: TObject);
+    procedure Docktotop1Click(Sender: TObject);
+    procedure Showactivekeyboardlayout1Click(Sender: TObject);
+    procedure AvroMouseClicknType2Click(Sender: TObject);
+    procedure PortableAvroKeyboardontheweb1Click(Sender: TObject);
+    procedure AvroKeyboardontheweb1Click(Sender: TObject);
+    procedure wwwOmicronLabcom1Click(Sender: TObject);
+    procedure UserForum1Click(Sender: TObject);
+    procedure CheckupdateforAvroKeyboard1Click(Sender: TObject);
+    procedure FreeBanglaFonts1Click(Sender: TObject);
+    procedure UsefultoolsforBangla1Click(Sender: TObject);
+    procedure Jumptosystemtray1Click(Sender: TObject);
+    procedure Options1Click(Sender: TObject);
+    procedure Configuringyoursystem1Click(Sender: TObject);
+    procedure OTFBanglaFontscamewithAvroKeyboard1Click(Sender: TObject);
+    procedure Helponhelp1Click(Sender: TObject);
+    procedure BeforeYouStart1Click(Sender: TObject);
+    procedure Overview1Click(Sender: TObject);
+    procedure CustomizingAvroKeyboard1Click(Sender: TObject);
+    procedure BanglaTypingwithAvroPhonetic1Click(Sender: TObject);
+    procedure BanglaTypingwithFixedKeyboardLayouts1Click(Sender: TObject);
+    procedure BanglaTypingwithAvroMouse1Click(Sender: TObject);
+    procedure FrequentlyAskedQuestionsFAQ1Click(Sender: TObject);
+    procedure CreatingEditingFixedKeyboardLayouts1Click(Sender: TObject);
+    procedure Moredocumentsontheweb1Click(Sender: TObject);
+    procedure GetAcrobatReader1Click(Sender: TObject);
+    procedure Aboutcurrentkeyboardlayout1Click(Sender: TObject);
+    procedure AboutAvroKeyboard1Click(Sender: TObject);
+    procedure RestoreAvroTopBar1Click(Sender: TObject);
+    procedure EnableOldStyleRephInModernTypingStyle1Click(Sender: TObject);
+    procedure UseOldStyleTyping1Click(Sender: TObject);
+    procedure UseModernStyleTyping1Click(Sender: TObject);
+    procedure AutomaticallyfixChandrapositionInModernTypingStyle1Click(Sender: TObject);
+    procedure AutomaticVowelFormatingInModernTypingStyle1Click(Sender: TObject);
+    procedure EnableBanglainNumberPadInFixedkeyboardLayouts1Click(Sender: TObject);
+    procedure EnableAutoCorrect1Click(Sender: TObject);
+    procedure ManageAutoCorrectentries1Click(Sender: TObject);
+    procedure KeyboardLayoutEditorBuildcustomlayouts1Click(Sender: TObject);
+    procedure SkinDesignerDesignyourownskin1Click(Sender: TObject);
+    procedure InternetCheckTimer(Sender: TObject);
+    procedure TrayDblClick(Sender: TObject);
+    procedure TrayClick(Sender: TObject);
+    procedure WindowCheckTimer(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure Spellcheck1Click(Sender: TObject);
+    procedure IdleTimerTimer(Sender: TObject);
+    procedure AboutCurrentskin1Click(Sender: TObject);
+    procedure UnicodetoBijoytextconverter1Click(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure ShowPreviewWindow1Click(Sender: TObject);
+    procedure Dictionarymodeisdefault1Click(Sender: TObject);
+    procedure Charactermodeisdefault1Click(Sender: TObject);
+    procedure Classicphoneticnohint1Click(Sender: TObject);
+    procedure UseTabforBrowsingSuggestions1Click(Sender: TObject);
+    procedure Remembermychoiceamongsuggestions1Click(Sender: TObject);
+    procedure UseVerticalLinePipekeytotypeDot1Click(Sender: TObject);
+    procedure TypeJoNuktawithShiftJ1Click(Sender: TObject);
+    procedure OutputasUnicodeRecommended1Click(Sender: TObject);
+    procedure OutputasANSIAreyousure1Click(Sender: TObject);
+    procedure AvroKeyboardonFacebook1Click(Sender: TObject);
+    procedure OmicronLabonTwitter1Click(Sender: TObject);
+    procedure AppEventsSettingChange(Sender: TObject; Flag: Integer; const Section: string; var Result: LongInt);
+    private
+      { Private declarations }
+      WindowDict:            TDictionary<HWND, TWindowRecord>;
+      MyCurrentLayout:       string;
+      MyCurrentKeyboardMode: enumMode;
+      LastWindow:            HWND;
 
-    Procedure ChangeTypingStyle(Const sStyle: String);
-    Function IgnorableWindow(Const lngHWND: HWND): Boolean;
+      procedure ChangeTypingStyle(const sStyle: string);
+      function IgnorableWindow(const lngHWND: HWND): Boolean;
 
-    Procedure ToggleAutoCorrect;
-    Procedure ToggleFixChandra;
-    Procedure ToggleNumPadBangla;
-    Procedure ToggleOldStyleReph;
-    Procedure ToggleVowelFormat;
-    Procedure LoadApp;
-    Procedure MenuFixedLayoutClick(Sender: TObject);
-    Procedure KeyLayout_KeyboardLayoutChanged(CurrentKeyboardLayout: String);
-    Procedure KeyLayout_KeyboardModeChanged(CurrentMode: enumMode);
-    Procedure ResetAllWindowLocale;
+      procedure ToggleAutoCorrect;
+      procedure ToggleFixChandra;
+      procedure ToggleNumPadBangla;
+      procedure ToggleOldStyleReph;
+      procedure ToggleVowelFormat;
+      procedure LoadApp;
+      procedure MenuFixedLayoutClick(Sender: TObject);
+      procedure KeyLayout_KeyboardLayoutChanged(CurrentKeyboardLayout: string);
+      procedure KeyLayout_KeyboardModeChanged(CurrentMode: enumMode);
+      procedure ResetAllWindowLocale;
 
-    Procedure WMCopyData(Var Msg: TWMCopyData); Message WM_COPYDATA;
-  Public
-    { Public declarations }
-    KeyboardModeChanged: Boolean;
-    KeyLayout: TLayout;
-    Updater: TUpdateCheck;
+      procedure HandleThemes;
 
-    Function GetMyCurrentKeyboardMode: enumMode;
-    Procedure ExitApp;
-    Function GetMyCurrentLayout: String;
-    Procedure RefreshSettings;
-    Procedure RestoreFromTray;
-    Procedure OpenHelpFile(Const HelpID: Integer);
-    Procedure ShowOnTray;
-    Procedure ToggleMode;
-    Procedure TopBarDocToTop;
-    Function TransferKeyDown(Const KeyCode: Integer;
-      Var Block: Boolean): String;
-    Procedure TransferKeyUp(Const KeyCode: Integer; Var Block: Boolean);
-    Procedure TrimAppMemorySize;
-    Procedure Initmenu;
-    Procedure ToggleOutputEncoding;
-  Protected
-    Procedure CreateParams(Var Params: TCreateParams); Override;
-  End;
+      procedure WMCopyData(var Msg: TWMCopyData); message WM_COPYDATA;
+    public
+      { Public declarations }
+      KeyboardModeChanged: Boolean;
+      KeyLayout:           TLayout;
+      Updater:             TUpdateCheck;
 
-Var
+      function GetMyCurrentKeyboardMode: enumMode;
+      procedure ExitApp;
+      function GetMyCurrentLayout: string;
+      procedure RefreshSettings;
+      procedure RestoreFromTray;
+      procedure OpenHelpFile(const HelpID: Integer);
+      procedure ShowOnTray;
+      procedure ToggleMode;
+      procedure TopBarDocToTop;
+      function TransferKeyDown(const KeyCode: Integer; var Block: Boolean): string;
+      procedure TransferKeyUp(const KeyCode: Integer; var Block: Boolean);
+      procedure TrimAppMemorySize;
+      procedure Initmenu;
+      procedure ToggleOutputEncoding;
+    protected
+      procedure CreateParams(var Params: TCreateParams); override;
+  end;
+
+var
   AvroMainForm1: TAvroMainForm1;
 
-Implementation
+implementation
 
 {$R *.dfm}
 
-Uses
+uses
   uRegistrySettings,
   uProcessHandler,
   uAutoCorrect,
@@ -443,194 +446,190 @@ Uses
   SkinLoader,
   u_VirtualFontInstall,
   ufrmEncodingWarning,
-  DebugLog;
+  DebugLog,
+  WindowsDarkMode;
 
 { =============================================================================== }
 
-Procedure TAvroMainForm1.AboutAvroKeyboard1Click(Sender: TObject);
-Begin
+procedure TAvroMainForm1.AboutAvroKeyboard1Click(Sender: TObject);
+begin
   CheckCreateForm(TfrmAbout, frmAbout, 'frmAbout');
   frmAbout.Show;
-End;
+end;
 
-Procedure TAvroMainForm1.Aboutcurrentkeyboardlayout1Click(Sender: TObject);
-Var
-  KeyboardLayoutPath, KeyboardLayout: String;
-Begin
+procedure TAvroMainForm1.Aboutcurrentkeyboardlayout1Click(Sender: TObject);
+var
+  KeyboardLayoutPath, KeyboardLayout: string;
+begin
   KeyboardLayout := AvroMainForm1.GetMyCurrentLayout;
-  If Lowercase(KeyboardLayout) = 'avrophonetic*' Then
+  if Lowercase(KeyboardLayout) = 'avrophonetic*' then
     KeyboardLayoutPath := KeyboardLayout
-  Else
-    KeyboardLayoutPath := GetAvroDataDir + 'Keyboard Layouts\' + KeyboardLayout
-      + '.avrolayout';
+  else
+    KeyboardLayoutPath := GetAvroDataDir + 'Keyboard Layouts\' + KeyboardLayout + '.avrolayout';
 
   ShowLayoutDescription(KeyboardLayoutPath);
-End;
+end;
 
-Procedure TAvroMainForm1.AboutCurrentskin1Click(Sender: TObject);
-Var
-  SkinPath: String;
-Begin
-  If Lowercase(InterfaceSkin) = 'internalskin*' Then
+procedure TAvroMainForm1.AboutCurrentskin1Click(Sender: TObject);
+var
+  SkinPath: string;
+begin
+  if Lowercase(InterfaceSkin) = 'internalskin*' then
     SkinPath := InterfaceSkin
-  Else
+  else
     SkinPath := GetAvroDataDir + 'Skin\' + InterfaceSkin + '.avroskin';
 
   GetSkinDescription(SkinPath);
-End;
+end;
 
-Procedure TAvroMainForm1.
-  AutomaticallyfixChandrapositionInModernTypingStyle1Click(Sender: TObject);
-Begin
+procedure TAvroMainForm1.AppEventsSettingChange(Sender: TObject; Flag: Integer; const Section: string; var Result: LongInt);
+begin
+  if SameText('ImmersiveColorSet', string(Section)) then
+    HandleThemes;
+end;
+
+procedure TAvroMainForm1.AutomaticallyfixChandrapositionInModernTypingStyle1Click(Sender: TObject);
+begin
   ToggleFixChandra;
-End;
+end;
 
-Procedure TAvroMainForm1.AutomaticVowelFormatingInModernTypingStyle1Click
-  (Sender: TObject);
-Begin
+procedure TAvroMainForm1.AutomaticVowelFormatingInModernTypingStyle1Click(Sender: TObject);
+begin
   ToggleVowelFormat;
-End;
+end;
 
-
-Procedure TAvroMainForm1.AvroKeyboardonFacebook1Click(Sender: TObject);
-Begin
+procedure TAvroMainForm1.AvroKeyboardonFacebook1Click(Sender: TObject);
+begin
   Execute_Something('https://www.omicronlab.com/go.php?id=39');
-End;
+end;
 
-Procedure TAvroMainForm1.AvroKeyboardontheweb1Click(Sender: TObject);
-Begin
+procedure TAvroMainForm1.AvroKeyboardontheweb1Click(Sender: TObject);
+begin
   Execute_Something('https://www.omicronlab.com/go.php?id=1');
-End;
+end;
 
-Procedure TAvroMainForm1.AvroMouseClicknType2Click(Sender: TObject);
-Begin
+procedure TAvroMainForm1.AvroMouseClicknType2Click(Sender: TObject);
+begin
   CheckCreateForm(TfrmAvroMouse, frmAvroMouse, 'frmAvroMouse');
   frmAvroMouse.Show;
-End;
+end;
 
-Procedure TAvroMainForm1.AvroPhoneticEnglishtoBangla3Click(Sender: TObject);
-Begin
+procedure TAvroMainForm1.AvroPhoneticEnglishtoBangla3Click(Sender: TObject);
+begin
   KeyLayout.CurrentKeyboardLayout := 'avrophonetic*';
-End;
+end;
 
-Procedure TAvroMainForm1.BanglaTypingwithAvroMouse1Click(Sender: TObject);
-Begin
+procedure TAvroMainForm1.BanglaTypingwithAvroMouse1Click(Sender: TObject);
+begin
   OpenHelpFile(28);
-End;
+end;
 
-Procedure TAvroMainForm1.BanglaTypingwithAvroPhonetic1Click(Sender: TObject);
-Begin
+procedure TAvroMainForm1.BanglaTypingwithAvroPhonetic1Click(Sender: TObject);
+begin
   OpenHelpFile(26);
-End;
+end;
 
-Procedure TAvroMainForm1.BanglaTypingwithFixedKeyboardLayouts1Click
-  (Sender: TObject);
-Begin
+procedure TAvroMainForm1.BanglaTypingwithFixedKeyboardLayouts1Click(Sender: TObject);
+begin
   OpenHelpFile(27);
-End;
+end;
 
-Procedure TAvroMainForm1.BeforeYouStart1Click(Sender: TObject);
-Begin
+procedure TAvroMainForm1.BeforeYouStart1Click(Sender: TObject);
+begin
   OpenHelpFile(23);
-End;
+end;
 
-Procedure TAvroMainForm1.ChangeTypingStyle(Const sStyle: String);
-Begin
-  If Lowercase(sStyle) = Lowercase('ModernStyle') Then
+procedure TAvroMainForm1.ChangeTypingStyle(const sStyle: string);
+begin
+  if Lowercase(sStyle) = Lowercase('ModernStyle') then
     FullOldStyleTyping := 'NO'
-  Else If Lowercase(sStyle) = Lowercase('OldStyle') Then
+  else if Lowercase(sStyle) = Lowercase('OldStyle') then
     FullOldStyleTyping := 'YES';
   RefreshSettings;
-End;
+end;
 
-Procedure TAvroMainForm1.Charactermodeisdefault1Click(Sender: TObject);
-Begin
+procedure TAvroMainForm1.Charactermodeisdefault1Click(Sender: TObject);
+begin
   PhoneticMode := 'CHAR';
   RefreshSettings;
-End;
+end;
 
-Procedure TAvroMainForm1.CheckupdateforAvroKeyboard1Click(Sender: TObject);
-Begin
+procedure TAvroMainForm1.CheckupdateforAvroKeyboard1Click(Sender: TObject);
+begin
   Updater.Check;
   AvroUpdateLastCheck := Now;
-End;
+end;
 
-Procedure TAvroMainForm1.Classicphoneticnohint1Click(Sender: TObject);
-Begin
+procedure TAvroMainForm1.Classicphoneticnohint1Click(Sender: TObject);
+begin
   PhoneticMode := 'ONLYCHAR';
   RefreshSettings;
-End;
+end;
 
-Procedure TAvroMainForm1.Configuringyoursystem1Click(Sender: TObject);
-Begin
-  Execute_Something(ExtractFilePath(Application.ExeName) +
-    'Configuring_system.htm');
-End;
+procedure TAvroMainForm1.Configuringyoursystem1Click(Sender: TObject);
+begin
+  Execute_Something(ExtractFilePath(Application.ExeName) + 'Configuring_system.htm');
+end;
 
-Procedure TAvroMainForm1.CreateParams(Var Params: TCreateParams);
-Begin
-  Inherited CreateParams(Params);
-  Params.ExStyle := Params.ExStyle Or WS_EX_TOOLWINDOW And Not WS_EX_APPWINDOW;
-End;
+procedure TAvroMainForm1.CreateParams(var Params: TCreateParams);
+begin
+  inherited CreateParams(Params);
+  Params.ExStyle := Params.ExStyle or WS_EX_TOOLWINDOW and not WS_EX_APPWINDOW;
+end;
 
-Procedure TAvroMainForm1.CreatingEditingFixedKeyboardLayouts1Click
-  (Sender: TObject);
-Begin
+procedure TAvroMainForm1.CreatingEditingFixedKeyboardLayouts1Click(Sender: TObject);
+begin
   OpenHelpFile(35);
-End;
+end;
 
-Procedure TAvroMainForm1.CustomizingAvroKeyboard1Click(Sender: TObject);
-Begin
+procedure TAvroMainForm1.CustomizingAvroKeyboard1Click(Sender: TObject);
+begin
   OpenHelpFile(25);
-End;
+end;
 
-Procedure TAvroMainForm1.Dictionarymodeisdefault1Click(Sender: TObject);
-Begin
+procedure TAvroMainForm1.Dictionarymodeisdefault1Click(Sender: TObject);
+begin
   PhoneticMode := 'DICT';
   RefreshSettings;
-End;
+end;
 
-Procedure TAvroMainForm1.Docktotop1Click(Sender: TObject);
-Begin
+procedure TAvroMainForm1.Docktotop1Click(Sender: TObject);
+begin
   TopBarDocToTop;
-End;
-
+end;
 
 { =============================================================================== }
 
-Procedure TAvroMainForm1.EnableAutoCorrect1Click(Sender: TObject);
-Begin
+procedure TAvroMainForm1.EnableAutoCorrect1Click(Sender: TObject);
+begin
   ToggleAutoCorrect;
-End;
+end;
 
-Procedure TAvroMainForm1.EnableBanglainNumberPadInFixedkeyboardLayouts1Click
-  (Sender: TObject);
-Begin
+procedure TAvroMainForm1.EnableBanglainNumberPadInFixedkeyboardLayouts1Click(Sender: TObject);
+begin
   ToggleNumPadBangla;
-End;
+end;
 
-Procedure TAvroMainForm1.EnableOldStyleRephInModernTypingStyle1Click
-  (Sender: TObject);
-Begin
+procedure TAvroMainForm1.EnableOldStyleRephInModernTypingStyle1Click(Sender: TObject);
+begin
   ToggleOldStyleReph;
-End;
+end;
 
-Procedure TAvroMainForm1.Exit1Click(Sender: TObject);
-Begin
+procedure TAvroMainForm1.Exit1Click(Sender: TObject);
+begin
   Self.Close;
-End;
+end;
 
-Procedure TAvroMainForm1.ExitApp;
-Begin
+procedure TAvroMainForm1.ExitApp;
+begin
 
   ResetAllWindowLocale;
   Log('ResetAllWindowLocale');
 
-{$IFDEF PortableOn}
-  RemoveVirtualFont(ExtractFilePath(Application.ExeName) +
-    'Virtual Font\Siyamrupali.ttf');
+  {$IFDEF PortableOn}
+  RemoveVirtualFont(ExtractFilePath(Application.ExeName) + 'Virtual Font\Siyamrupali.ttf');
   Log('Portable: RemoveVirtualFont');
-{$ENDIF}
+  {$ENDIF}
   SaveSettings;
   Log('SaveSettings');
 
@@ -661,13 +660,13 @@ Begin
   Topbar.ApplicationClosing := True;
   Log('Topbar.ApplicationClosing := True');
 
-  If Assigned(Topbar) Then
+  if Assigned(Topbar) then
   begin
     Topbar.Close;
     Log('Topbar.Close');
   end;
 
-  If Assigned(frmPrevW) Then
+  if Assigned(frmPrevW) then
   begin
     frmPrevW.Close;
     Log('frmPrevW.Close');
@@ -680,25 +679,27 @@ Begin
   Log('Application.ProcessMessages');
   ExitProcess(0);
   Log('ExitProcess');
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TAvroMainForm1.FormClose(Sender: TObject; Var Action: TCloseAction);
-Begin
+procedure TAvroMainForm1.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
   Action := caFree;
 
-  AvroMainForm1 := Nil;
-End;
+  AvroMainForm1 := nil;
+end;
 
-Procedure TAvroMainForm1.FormCloseQuery(Sender: TObject; Var CanClose: Boolean);
-Begin
+procedure TAvroMainForm1.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+begin
   ExitApp;
   CanClose := True;
-End;
+end;
 
-Procedure TAvroMainForm1.FormCreate(Sender: TObject);
-Begin
+procedure TAvroMainForm1.FormCreate(Sender: TObject);
+begin
+  HandleThemes;
+
   // Hide the form
   Left := Screen.Width + 5000;
   Show;
@@ -712,291 +713,277 @@ Begin
     End If }
 
   LoadApp;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TAvroMainForm1.FormKeyDown(Sender: TObject; Var Key: Word;
-  Shift: TShiftState);
-Begin
-  If (Key = VK_F4) { And (ssAlt In Shift) } Then
+procedure TAvroMainForm1.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  if (Key = VK_F4) { And (ssAlt In Shift) } then
     Key := 0;
-End;
+end;
 
-Procedure TAvroMainForm1.FreeBanglaFonts1Click(Sender: TObject);
-Begin
+procedure TAvroMainForm1.FreeBanglaFonts1Click(Sender: TObject);
+begin
   Execute_Something('https://www.omicronlab.com/go.php?id=4');
-End;
+end;
 
-Procedure TAvroMainForm1.FrequentlyAskedQuestionsFAQ1Click(Sender: TObject);
-Begin
+procedure TAvroMainForm1.FrequentlyAskedQuestionsFAQ1Click(Sender: TObject);
+begin
   OpenHelpFile(29);
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TAvroMainForm1.GetAcrobatReader1Click(Sender: TObject);
-Begin
+procedure TAvroMainForm1.GetAcrobatReader1Click(Sender: TObject);
+begin
   Execute_Something('https://www.omicronlab.com/go.php?id=13');
-End;
+end;
 
-Function TAvroMainForm1.GetMyCurrentKeyboardMode: enumMode;
-Begin
-  result := MyCurrentKeyboardMode;
-End;
+function TAvroMainForm1.GetMyCurrentKeyboardMode: enumMode;
+begin
+  Result := MyCurrentKeyboardMode;
+end;
 
 { =============================================================================== }
 
-Function TAvroMainForm1.GetMyCurrentLayout: String;
-Begin
-  result := MyCurrentLayout;
-End;
+function TAvroMainForm1.GetMyCurrentLayout: string;
+begin
+  Result := MyCurrentLayout;
+end;
 
-Procedure TAvroMainForm1.Helponhelp1Click(Sender: TObject);
-Begin
+procedure TAvroMainForm1.Helponhelp1Click(Sender: TObject);
+begin
   Execute_Something(ExtractFilePath(Application.ExeName) + 'help_on_help.htm');
-End;
+end;
 
 { =============================================================================== }
 
 {$HINTS Off}
 
-Procedure TAvroMainForm1.IdleTimerTimer(Sender: TObject);
-Var
-  liInfo: TLastInputInfo;
+procedure TAvroMainForm1.IdleTimerTimer(Sender: TObject);
+var
+  liInfo:      TLastInputInfo;
   SecondsIdle: DWord;
-Begin
+begin
   liInfo.cbSize := SizeOf(TLastInputInfo);
   GetLastInputInfo(liInfo);
-  SecondsIdle := (GetTickCount - liInfo.dwTime) Div 1000;
-  If SecondsIdle > 30 Then
+  SecondsIdle := (GetTickCount - liInfo.dwTime) div 1000;
+  if SecondsIdle > 30 then
     TrimAppMemorySize;
-End;
+end;
 
-Function TAvroMainForm1.IgnorableWindow(Const lngHWND: HWND): Boolean;
-Begin
-  result := False;
+function TAvroMainForm1.IgnorableWindow(const lngHWND: HWND): Boolean;
+begin
+  Result := False;
 
   // System tray
-  If (lngHWND = FindWindow('Shell_TrayWnd', Nil)) Or
-    (lngHWND = FindWindowEx(FindWindow('Shell_TrayWnd', Nil), 0,
-    'TrayNotifyWnd', Nil)) Then
-    result := True
-  Else If lngHWND = Self.Handle Then
-    result := True
-  Else If IsFormLoaded('TopBar') Then
-  Begin
-    If lngHWND = Topbar.Handle Then
-      result := True;
-  End
-  Else If IsFormLoaded('frmEncodingWarning') Then
-  Begin
-    If lngHWND = frmEncodingWarning.Handle Then
-      result := True;
-  End
+  if (lngHWND = FindWindow('Shell_TrayWnd', nil)) or (lngHWND = FindWindowEx(FindWindow('Shell_TrayWnd', nil), 0, 'TrayNotifyWnd', nil)) then
+    Result := True
+  else if lngHWND = Self.Handle then
+    Result := True
+  else if IsFormLoaded('TopBar') then
+  begin
+    if lngHWND = Topbar.Handle then
+      Result := True;
+  end
+  else if IsFormLoaded('frmEncodingWarning') then
+  begin
+    if lngHWND = frmEncodingWarning.Handle then
+      Result := True;
+  end
   // Photoshop drag window exception
-  Else If GetWindowClassName(lngHWND) = 'PSDocDragFeedback' Then
-    result := True;
-End;
+  else if GetWindowClassName(lngHWND) = 'PSDocDragFeedback' then
+    Result := True;
+end;
 
 {$HINTS ON}
 { =============================================================================== }
 
-Procedure TAvroMainForm1.Initmenu;
-Var
-  I, J: Integer;
+procedure TAvroMainForm1.Initmenu;
+var
+  I, J:                            Integer;
   TempMenu1, TempMenu2, TempMenu3: TMenuItemExtended;
-  sCaption: String;
-  ItemFound: Boolean;
-Begin
-  For I := KeyboardLayouts.Count - 1 Downto 0 Do
-  Begin
+  sCaption:                        string;
+  ItemFound:                       Boolean;
+begin
+  for I := KeyboardLayouts.Count - 1 downto 0 do
+  begin
 
     sCaption := RemoveExtension(KeyboardLayouts[I]);
 
     /// ////
     ItemFound := False;
-    For J := 0 To Selectkeyboardlayout1.Count - 1 Do
-    Begin
-      If Selectkeyboardlayout1.Items[J].Tag = 9903 Then
-        If Lowercase((Selectkeyboardlayout1.Items[J] As TMenuItemExtended)
-          .Value) = Lowercase(sCaption) Then
+    for J := 0 to Selectkeyboardlayout1.Count - 1 do
+    begin
+      if Selectkeyboardlayout1.Items[J].Tag = 9903 then
+        if Lowercase((Selectkeyboardlayout1.Items[J] as TMenuItemExtended).Value) = Lowercase(sCaption) then
           ItemFound := True;
-    End;
-    If Not(ItemFound) Then
-    Begin
+    end;
+    if not(ItemFound) then
+    begin
       TempMenu1 := TMenuItemExtended.Create(Popup_Tray);
       TempMenu1.Caption := sCaption;
       TempMenu1.Value := sCaption;
       TempMenu1.RadioItem := True;
       TempMenu1.Tag := 9903;
       TempMenu1.OnClick := MenuFixedLayoutClick;
-      Selectkeyboardlayout2.Insert(AvroPhoneticEnglishtoBangla3.MenuIndex + 1,
-        TempMenu1);
-    End;
+      Selectkeyboardlayout2.Insert(AvroPhoneticEnglishtoBangla3.MenuIndex + 1, TempMenu1);
+    end;
 
     /// ///
     ItemFound := False;
-    For J := 0 To Selectkeyboardlayout1.Count - 1 Do
-    Begin
-      If Selectkeyboardlayout1.Items[J].Tag = 9903 Then
-        If Lowercase((Selectkeyboardlayout1.Items[J] As TMenuItemExtended)
-          .Value) = Lowercase(sCaption) Then
+    for J := 0 to Selectkeyboardlayout1.Count - 1 do
+    begin
+      if Selectkeyboardlayout1.Items[J].Tag = 9903 then
+        if Lowercase((Selectkeyboardlayout1.Items[J] as TMenuItemExtended).Value) = Lowercase(sCaption) then
           ItemFound := True;
-    End;
-    If Not(ItemFound) Then
-    Begin
+    end;
+    if not(ItemFound) then
+    begin
       TempMenu2 := TMenuItemExtended.Create(Popup_Main);
       TempMenu2.Caption := sCaption;
       TempMenu2.Value := sCaption;
       TempMenu2.RadioItem := True;
       TempMenu2.Tag := 9903;
       TempMenu2.OnClick := MenuFixedLayoutClick;
-      Selectkeyboardlayout1.Insert(AvroPhoneticEnglishtoBangla2.MenuIndex + 1,
-        TempMenu2);
-    End;
+      Selectkeyboardlayout1.Insert(AvroPhoneticEnglishtoBangla2.MenuIndex + 1, TempMenu2);
+    end;
 
     /// ////
     ItemFound := False;
-    For J := 0 To Popup_LayoutList.Items.Count - 1 Do
-    Begin
-      If Popup_LayoutList.Items.Items[J].Tag = 9903 Then
-        If Lowercase((Popup_LayoutList.Items.Items[J] As TMenuItemExtended)
-          .Value) = Lowercase(sCaption) Then
+    for J := 0 to Popup_LayoutList.Items.Count - 1 do
+    begin
+      if Popup_LayoutList.Items.Items[J].Tag = 9903 then
+        if Lowercase((Popup_LayoutList.Items.Items[J] as TMenuItemExtended).Value) = Lowercase(sCaption) then
           ItemFound := True;
-    End;
-    If Not(ItemFound) Then
-    Begin
+    end;
+    if not(ItemFound) then
+    begin
       TempMenu3 := TMenuItemExtended.Create(Popup_LayoutList);
       TempMenu3.Caption := sCaption;
       TempMenu3.Value := sCaption;
       TempMenu3.RadioItem := True;
       TempMenu3.Tag := 9903;
       TempMenu3.OnClick := MenuFixedLayoutClick;
-      Popup_LayoutList.Items.Insert(AvroPhoneticEnglishtoBangla1.MenuIndex + 1,
-        TempMenu3);
-    End;
-  End;
-End;
+      Popup_LayoutList.Items.Insert(AvroPhoneticEnglishtoBangla1.MenuIndex + 1, TempMenu3);
+    end;
+  end;
+end;
 
 {$HINTS Off}
 
-Procedure TAvroMainForm1.InternetCheckTimer(Sender: TObject);
-Var
+procedure TAvroMainForm1.InternetCheckTimer(Sender: TObject);
+var
   HowMayDay: Integer;
-Begin
+begin
   HowMayDay := 0;
-  If AvroUpdateCheck <> 'YES' Then
+  if AvroUpdateCheck <> 'YES' then
     exit;
 
-  Try
+  try
     HowMayDay := DaysBetween(Now, AvroUpdateLastCheck);
-  Except
+  except
     HowMayDay := 7;
-  End;
+  end;
 
-  If HowMayDay >= 7 Then
-  Begin
-    If Updater.IsConnected = False Then
+  if HowMayDay >= 7 then
+  begin
+    if Updater.IsConnected = False then
       exit;
 
     Updater.CheckSilent;
     AvroUpdateLastCheck := Now;
-  End;
-End;
+  end;
+end;
 
 {$HINTS On}
 
-Procedure TAvroMainForm1.Jumptosystemtray1Click(Sender: TObject);
-Begin
-  If Topbar.Visible = True Then
-  Begin
+procedure TAvroMainForm1.Jumptosystemtray1Click(Sender: TObject);
+begin
+  if Topbar.Visible = True then
+  begin
     Topbar.Hide;
     ShowOnTray;
-  End;
-End;
+  end;
+end;
 
-Procedure TAvroMainForm1.KeyboardLayoutEditorBuildcustomlayouts1Click
-  (Sender: TObject);
-Begin
+procedure TAvroMainForm1.KeyboardLayoutEditorBuildcustomlayouts1Click(Sender: TObject);
+begin
   Execute_Something(ExtractFilePath(Application.ExeName) + 'Layout Editor.exe');
-End;
+end;
 
-Procedure TAvroMainForm1.KeyLayout_KeyboardLayoutChanged
-  (CurrentKeyboardLayout: String);
-Var
+procedure TAvroMainForm1.KeyLayout_KeyboardLayoutChanged(CurrentKeyboardLayout: string);
+var
   I: Integer;
-Begin
-  If Lowercase(CurrentKeyboardLayout) = 'avrophonetic*' Then
-  Begin
+begin
+  if Lowercase(CurrentKeyboardLayout) = 'avrophonetic*' then
+  begin
     AvroPhoneticEnglishtoBangla3.Checked := True;
     AvroPhoneticEnglishtoBangla2.Checked := True;
     AvroPhoneticEnglishtoBangla1.Checked := True;
 
-  End
-  Else
-  Begin
-    For I := 0 To Selectkeyboardlayout2.Count - 1 Do
-    Begin
-      If Selectkeyboardlayout2.Items[I].Tag = 9903 Then
-        If Lowercase((Selectkeyboardlayout2.Items[I] As TMenuItemExtended)
-          .Value) = Lowercase(CurrentKeyboardLayout) Then
+  end
+  else
+  begin
+    for I := 0 to Selectkeyboardlayout2.Count - 1 do
+    begin
+      if Selectkeyboardlayout2.Items[I].Tag = 9903 then
+        if Lowercase((Selectkeyboardlayout2.Items[I] as TMenuItemExtended).Value) = Lowercase(CurrentKeyboardLayout) then
           Selectkeyboardlayout2.Items[I].Checked := True;
-    End;
+    end;
 
-    For I := 0 To Selectkeyboardlayout1.Count - 1 Do
-    Begin
-      If Selectkeyboardlayout1.Items[I].Tag = 9903 Then
-        If Lowercase((Selectkeyboardlayout1.Items[I] As TMenuItemExtended)
-          .Value) = Lowercase(CurrentKeyboardLayout) Then
+    for I := 0 to Selectkeyboardlayout1.Count - 1 do
+    begin
+      if Selectkeyboardlayout1.Items[I].Tag = 9903 then
+        if Lowercase((Selectkeyboardlayout1.Items[I] as TMenuItemExtended).Value) = Lowercase(CurrentKeyboardLayout) then
           Selectkeyboardlayout1.Items[I].Checked := True;
-    End;
+    end;
 
-    For I := 0 To Popup_LayoutList.Items.Count - 1 Do
-    Begin
-      If Popup_LayoutList.Items[I].Tag = 9903 Then
-        If Lowercase((Popup_LayoutList.Items[I] As TMenuItemExtended).Value)
-          = Lowercase(CurrentKeyboardLayout) Then
+    for I := 0 to Popup_LayoutList.Items.Count - 1 do
+    begin
+      if Popup_LayoutList.Items[I].Tag = 9903 then
+        if Lowercase((Popup_LayoutList.Items[I] as TMenuItemExtended).Value) = Lowercase(CurrentKeyboardLayout) then
           Popup_LayoutList.Items[I].Checked := True;
-    End;
+    end;
 
-  End;
+  end;
   MyCurrentLayout := CurrentKeyboardLayout;
-  If IsFormLoaded('LayoutViewer') Then
+  if IsFormLoaded('LayoutViewer') then
     LayoutViewer.UpdateLayout;
   DefaultLayout := CurrentKeyboardLayout;
 
   RefreshSettings;
 
-End;
+end;
 
-Procedure TAvroMainForm1.KeyLayout_KeyboardModeChanged(CurrentMode: enumMode);
-Var
-  hforewnd: Integer;
-  ICN: TIcon;
-  Locale: Cardinal;
-  ParentHwnd: HWND;
+procedure TAvroMainForm1.KeyLayout_KeyboardModeChanged(CurrentMode: enumMode);
+var
+  hforewnd:                                         Integer;
+  ICN:                                              TIcon;
+  Locale:                                           Cardinal;
+  ParentHwnd:                                       HWND;
   WindowRecord, ParenWindowRecord, NewWindowRecord: TWindowRecord;
-Begin
+begin
   { This is for Top Bar, when Keyboard Mode is changed,
     it removes transparency }
-  If CurrentMode <> MyCurrentKeyboardMode Then
+  if CurrentMode <> MyCurrentKeyboardMode then
     KeyboardModeChanged := True;
   hforewnd := GetForegroundWindow;
 
-  If hforewnd = 0 Then
+  if hforewnd = 0 then
     exit;
   { Experimental use }
-  If IsWindow(hforewnd) = False Then
+  if IsWindow(hforewnd) = False then
     exit;
 
-  If IgnorableWindow(hforewnd) Then
-  Begin
+  if IgnorableWindow(hforewnd) then
+  begin
     hforewnd := LastWindow;
-  End;
+  end;
 
-  If Not WindowDict.TryGetValue(hforewnd, WindowRecord) Then
-  Begin
+  if not WindowDict.TryGetValue(hforewnd, WindowRecord) then
+  begin
 
     { This is a new window, so add it in Window collection
       update/add process information }
@@ -1006,36 +993,36 @@ Begin
       get its recorded locale }
     ParentHwnd := GetParent(hforewnd);
 
-    If ParentHwnd <> 0 Then
-    Begin
-      If WindowDict.TryGetValue(ParentHwnd, ParenWindowRecord) Then
-      Begin
+    if ParentHwnd <> 0 then
+    begin
+      if WindowDict.TryGetValue(ParentHwnd, ParenWindowRecord) then
+      begin
         Locale := ParenWindowRecord.Locale;
-      End
-      Else
+      end
+      else
         Locale := GetForeignLocale(hforewnd);
-    End
-    Else
+    end
+    else
       Locale := GetForeignLocale(hforewnd);
 
-    If CurrentMode = bangla Then
-    Begin
-      If (ChangeInputLocale = 'YES') Then
-        If OutputIsBijoy <> 'YES' Then
+    if CurrentMode = bangla then
+    begin
+      if (ChangeInputLocale = 'YES') then
+        if OutputIsBijoy <> 'YES' then
           ChangeLocaleToBangla(hforewnd)
-        Else
+        else
           ChangeLocaleToEnglish(hforewnd);
 
       NewWindowRecord.Locale := Locale;
       NewWindowRecord.Mode := 'B';
       WindowDict.AddOrSetValue(hforewnd, NewWindowRecord);
       MyCurrentKeyboardMode := bangla;
-    End
-    Else If CurrentMode = SysDefault Then
-    Begin
+    end
+    else if CurrentMode = SysDefault then
+    begin
 
-      If WindowDict.ContainsKey(ParentHwnd) Then
-        If ChangeInputLocale = 'YES' Then
+      if WindowDict.ContainsKey(ParentHwnd) then
+        if ChangeInputLocale = 'YES' then
           ChangeLocalToAny(hforewnd, Locale);
 
       NewWindowRecord.Locale := Locale;
@@ -1043,86 +1030,83 @@ Begin
       WindowDict.AddOrSetValue(hforewnd, NewWindowRecord);
 
       MyCurrentKeyboardMode := SysDefault;
-    End;
-  End
-  Else
-  Begin
+    end;
+  end
+  else
+  begin
     // The window already exist, so update information
-    If CurrentMode = bangla Then
-    Begin
+    if CurrentMode = bangla then
+    begin
       // sLocale := GetForeignLocale(hforewnd);
       NewWindowRecord.Locale := WindowRecord.Locale;
       NewWindowRecord.Mode := 'B';
       WindowDict.AddOrSetValue(hforewnd, NewWindowRecord);
 
       MyCurrentKeyboardMode := bangla;
-      If ChangeInputLocale = 'YES' Then
-        If OutputIsBijoy <> 'YES' Then
+      if ChangeInputLocale = 'YES' then
+        if OutputIsBijoy <> 'YES' then
           ChangeLocaleToBangla(hforewnd)
-        Else
+        else
           ChangeLocaleToEnglish(hforewnd);
-    End
-    Else If CurrentMode = SysDefault Then
-    Begin
+    end
+    else if CurrentMode = SysDefault then
+    begin
       NewWindowRecord.Locale := WindowRecord.Locale;
       NewWindowRecord.Mode := 'S';
       WindowDict.AddOrSetValue(hforewnd, NewWindowRecord);
 
       MyCurrentKeyboardMode := SysDefault;
-      If ChangeInputLocale = 'YES' Then
+      if ChangeInputLocale = 'YES' then
         ChangeLocalToAny(hforewnd, NewWindowRecord.Locale);
 
       { Experimental!!!!!!!! }
       { We have changed the locale back in System Language Mode
         now delete Window Data to record new locale info }
       WindowDict.Remove(hforewnd);
-    End;
-  End;
+    end;
+  end;
 
   { Update User inteface }
-  If IsFormVisible('TopBar') = False Then
-  Begin
+  if IsFormVisible('TopBar') = False then
+  begin
     // now icon mode, so update system tray
     ICN := TIcon.Create;
-    If CurrentMode = bangla Then
-    Begin
-      If IsWin2000 = True Then
+    if CurrentMode = bangla then
+    begin
+      if IsWin2000 = True then
         ImageList1.GetIcon(14, ICN)
-      Else
+      else
         ImageList1.GetIcon(20, ICN);
 
-      Tray.Hint := 'Avro Keyboard.' + #13 + 'Running Bangla Keyboard Mode.' +
-        #13 + 'Press ' + ModeSwitchKey + ' to switch to System default.';
-    End
-    Else If CurrentMode = SysDefault Then
-    Begin
-      If IsWin2000 = True Then
+      Tray.Hint := 'Avro Keyboard.' + #13 + 'Running Bangla Keyboard Mode.' + #13 + 'Press ' + ModeSwitchKey + ' to switch to System default.';
+    end
+    else if CurrentMode = SysDefault then
+    begin
+      if IsWin2000 = True then
         ImageList1.GetIcon(19, ICN)
-      Else
+      else
         ImageList1.GetIcon(21, ICN);
 
-      Tray.Hint := 'Avro Keyboard.' + #13 +
-        'Running System default Keyboard Mode.' + #13 + 'Press ' + ModeSwitchKey
-        + ' to switch to Bangla.';
-    End;
+      Tray.Hint := 'Avro Keyboard.' + #13 + 'Running System default Keyboard Mode.' + #13 + 'Press ' + ModeSwitchKey + ' to switch to Bangla.';
+    end;
     Tray.Icon := ICN;
     ICN.Free;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     // Top Bar displayed, so update it
-    If CurrentMode = bangla Then
+    if CurrentMode = bangla then
       Topbar.SetButtonModeState(State2)
-    Else If CurrentMode = SysDefault Then
+    else if CurrentMode = SysDefault then
       Topbar.SetButtonModeState(State1);
-  End;
+  end;
 
-End;
+end;
 
-Procedure TAvroMainForm1.LoadApp;
-Var
-  tempLastUIMode: String;
-Begin
+procedure TAvroMainForm1.LoadApp;
+var
+  tempLastUIMode: string;
+begin
   InstallLocale;
   Set_Process_Priority(HIGH_PRIORITY_CLASS);
 
@@ -1148,270 +1132,245 @@ Begin
   KeyLayout.CurrentKeyboardLayout := DefaultLayout;
   LastUIMode := tempLastUIMode;
 
-  If DefaultUIMode = 'TOP BAR' Then
-  Begin
+  if DefaultUIMode = 'TOP BAR' then
+  begin
     Topbar.Visible := True;
     Tray.Visible := False;
-  End
-  Else If DefaultUIMode = 'ICON' Then
-  Begin
+  end
+  else if DefaultUIMode = 'ICON' then
+  begin
     Topbar.Hide;
     ShowOnTray;
-  End
-  Else If DefaultUIMode = 'LASTUI' Then
-  Begin
-    If LastUIMode = 'TOP BAR' Then
-    Begin
+  end
+  else if DefaultUIMode = 'LASTUI' then
+  begin
+    if LastUIMode = 'TOP BAR' then
+    begin
       Topbar.Visible := True;
       Tray.Visible := False;
-    End
-    Else If LastUIMode = 'ICON' Then
-    Begin
+    end
+    else if LastUIMode = 'ICON' then
+    begin
       Topbar.Hide;
       ShowOnTray;
-    End
-    Else
-    Begin
+    end
+    else
+    begin
       Topbar.Visible := True;
       Tray.Visible := False;
-    End;
-  End
-  Else
-  Begin
+    end;
+  end
+  else
+  begin
     Topbar.Visible := True;
     Tray.Visible := False;
-  End;
+  end;
 
-{$IFDEF PortableOn}
-  InstallVirtualFont(ExtractFilePath(Application.ExeName) +
-    'Virtual Font\Siyamrupali.ttf');
+  {$IFDEF PortableOn}
+  InstallVirtualFont(ExtractFilePath(Application.ExeName) + 'Virtual Font\Siyamrupali.ttf');
 
-{$ENDIF}
-  If AvroUpdateCheck = 'YES' Then
+  {$ENDIF}
+  if AvroUpdateCheck = 'YES' then
     InternetCheck.Enabled := True
-  Else
+  else
     InternetCheck.Enabled := False;
 
-  If (ShowOutputwarning <> 'NO') And (OutputIsBijoy = 'YES') Then
-  Begin
-    CheckCreateForm(TfrmEncodingWarning, frmEncodingWarning,
-      'frmEncodingWarning');
+  if (ShowOutputwarning <> 'NO') and (OutputIsBijoy = 'YES') then
+  begin
+    CheckCreateForm(TfrmEncodingWarning, frmEncodingWarning, 'frmEncodingWarning');
     frmEncodingWarning.ShowModal;
     RefreshSettings;
-  End;
+  end;
 
   Application.ProcessMessages;
-  If ShowSplash = 'YES' Then
-  Begin
+  if ShowSplash = 'YES' then
+  begin
     frmSplash := TfrmSplash.Create(Application);
     frmSplash.Show;
-  End;
+  end;
 
-End;
+end;
 
-Procedure TAvroMainForm1.ManageAutoCorrectentries1Click(Sender: TObject);
-Begin
+procedure TAvroMainForm1.ManageAutoCorrectentries1Click(Sender: TObject);
+begin
   CheckCreateForm(TfrmAutoCorrect, frmAutoCorrect, 'frmAutoCorrect');
   frmAutoCorrect.Show;
-End;
+end;
 
-Procedure TAvroMainForm1.MenuFixedLayoutClick(Sender: TObject);
-Begin
-  KeyLayout.CurrentKeyboardLayout := (Sender As TMenuItemExtended).Value;
-End;
+procedure TAvroMainForm1.MenuFixedLayoutClick(Sender: TObject);
+begin
+  KeyLayout.CurrentKeyboardLayout := (Sender as TMenuItemExtended).Value;
+end;
 
-Procedure TAvroMainForm1.Moredocumentsontheweb1Click(Sender: TObject);
-Begin
+procedure TAvroMainForm1.Moredocumentsontheweb1Click(Sender: TObject);
+begin
   Execute_Something('https://www.omicronlab.com/go.php?id=12');
-End;
+end;
 
-Procedure TAvroMainForm1.ogglekeyboardmode2Click(Sender: TObject);
-Begin
+procedure TAvroMainForm1.ogglekeyboardmode2Click(Sender: TObject);
+begin
   KeyLayout.ToggleMode;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TAvroMainForm1.OmicronLabonTwitter1Click(Sender: TObject);
-Begin
+procedure TAvroMainForm1.OmicronLabonTwitter1Click(Sender: TObject);
+begin
   Execute_Something('https://www.omicronlab.com/go.php?id=40');
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TAvroMainForm1.OpenHelpFile(Const HelpID: Integer);
-Begin
-  Case HelpID Of
+procedure TAvroMainForm1.OpenHelpFile(const HelpID: Integer);
+begin
+  case HelpID of
     23:
-      If FileExists(ExtractFilePath(Application.ExeName) +
-        'Before You Start.pdf') Then
-        Execute_Something(ExtractFilePath(Application.ExeName) +
-          'Before You Start.pdf')
-      Else
-        Execute_Something('https://www.omicronlab.com/go.php?id=' +
-          IntToStr(HelpID));
+      if FileExists(ExtractFilePath(Application.ExeName) + 'Before You Start.pdf') then
+        Execute_Something(ExtractFilePath(Application.ExeName) + 'Before You Start.pdf')
+      else
+        Execute_Something('https://www.omicronlab.com/go.php?id=' + IntToStr(HelpID));
 
     24:
-      If FileExists(ExtractFilePath(Application.ExeName) + 'Overview.pdf') Then
+      if FileExists(ExtractFilePath(Application.ExeName) + 'Overview.pdf') then
         Execute_Something(ExtractFilePath(Application.ExeName) + 'Overview.pdf')
-      Else
-        Execute_Something('https://www.omicronlab.com/go.php?id=' +
-          IntToStr(HelpID));
+      else
+        Execute_Something('https://www.omicronlab.com/go.php?id=' + IntToStr(HelpID));
 
     25:
-      If FileExists(ExtractFilePath(Application.ExeName) +
-        'Customizing Avro Keyboard.pdf') Then
-        Execute_Something(ExtractFilePath(Application.ExeName) +
-          'Customizing Avro Keyboard.pdf')
-      Else
-        Execute_Something('https://www.omicronlab.com/go.php?id=' +
-          IntToStr(HelpID));
+      if FileExists(ExtractFilePath(Application.ExeName) + 'Customizing Avro Keyboard.pdf') then
+        Execute_Something(ExtractFilePath(Application.ExeName) + 'Customizing Avro Keyboard.pdf')
+      else
+        Execute_Something('https://www.omicronlab.com/go.php?id=' + IntToStr(HelpID));
 
     26:
-      If FileExists(ExtractFilePath(Application.ExeName) +
-        'Bangla Typing with Avro Phonetic.pdf') Then
-        Execute_Something(ExtractFilePath(Application.ExeName) +
-          'Bangla Typing with Avro Phonetic.pdf')
-      Else
-        Execute_Something('https://www.omicronlab.com/go.php?id=' +
-          IntToStr(HelpID));
+      if FileExists(ExtractFilePath(Application.ExeName) + 'Bangla Typing with Avro Phonetic.pdf') then
+        Execute_Something(ExtractFilePath(Application.ExeName) + 'Bangla Typing with Avro Phonetic.pdf')
+      else
+        Execute_Something('https://www.omicronlab.com/go.php?id=' + IntToStr(HelpID));
 
     27:
-      If FileExists(ExtractFilePath(Application.ExeName) +
-        'Bangla Typing with Fixed Keyboard Layouts.pdf') Then
-        Execute_Something(ExtractFilePath(Application.ExeName) +
-          'Bangla Typing with Fixed Keyboard Layouts.pdf')
-      Else
-        Execute_Something('https://www.omicronlab.com/go.php?id=' +
-          IntToStr(HelpID));
+      if FileExists(ExtractFilePath(Application.ExeName) + 'Bangla Typing with Fixed Keyboard Layouts.pdf') then
+        Execute_Something(ExtractFilePath(Application.ExeName) + 'Bangla Typing with Fixed Keyboard Layouts.pdf')
+      else
+        Execute_Something('https://www.omicronlab.com/go.php?id=' + IntToStr(HelpID));
 
     28:
-      If FileExists(ExtractFilePath(Application.ExeName) +
-        'Bangla Typing with Avro Mouse.pdf') Then
-        Execute_Something(ExtractFilePath(Application.ExeName) +
-          'Bangla Typing with Avro Mouse.pdf')
-      Else
-        Execute_Something('https://www.omicronlab.com/go.php?id=' +
-          IntToStr(HelpID));
+      if FileExists(ExtractFilePath(Application.ExeName) + 'Bangla Typing with Avro Mouse.pdf') then
+        Execute_Something(ExtractFilePath(Application.ExeName) + 'Bangla Typing with Avro Mouse.pdf')
+      else
+        Execute_Something('https://www.omicronlab.com/go.php?id=' + IntToStr(HelpID));
 
     29:
-      If FileExists(ExtractFilePath(Application.ExeName) + 'faq.pdf') Then
+      if FileExists(ExtractFilePath(Application.ExeName) + 'faq.pdf') then
         Execute_Something(ExtractFilePath(Application.ExeName) + 'faq.pdf')
-      Else
-        Execute_Something('https://www.omicronlab.com/go.php?id=' +
-          IntToStr(HelpID));
+      else
+        Execute_Something('https://www.omicronlab.com/go.php?id=' + IntToStr(HelpID));
 
     35:
-      If FileExists(ExtractFilePath(Application.ExeName) +
-        'Editing Keyboard Layout.pdf') Then
-        Execute_Something(ExtractFilePath(Application.ExeName) +
-          'Editing Keyboard Layout.pdf')
-      Else
-        Execute_Something('https://www.omicronlab.com/go.php?id=' +
-          IntToStr(HelpID));
-  End;
-End;
+      if FileExists(ExtractFilePath(Application.ExeName) + 'Editing Keyboard Layout.pdf') then
+        Execute_Something(ExtractFilePath(Application.ExeName) + 'Editing Keyboard Layout.pdf')
+      else
+        Execute_Something('https://www.omicronlab.com/go.php?id=' + IntToStr(HelpID));
+  end;
+end;
 
-Procedure TAvroMainForm1.Options1Click(Sender: TObject);
-Begin
+procedure TAvroMainForm1.Options1Click(Sender: TObject);
+begin
   CheckCreateForm(TfrmOptions, frmOptions, 'frmOptions');
   frmOptions.Show;
-End;
+end;
 
-Procedure TAvroMainForm1.OTFBanglaFontscamewithAvroKeyboard1Click
-  (Sender: TObject);
-Begin
-  Execute_Something(ExtractFilePath(Application.ExeName) +
-    'open_type_font_list.htm');
-End;
+procedure TAvroMainForm1.OTFBanglaFontscamewithAvroKeyboard1Click(Sender: TObject);
+begin
+  Execute_Something(ExtractFilePath(Application.ExeName) + 'open_type_font_list.htm');
+end;
 
-Procedure TAvroMainForm1.OutputasANSIAreyousure1Click(Sender: TObject);
-Begin
-  If ShowOutputwarning <> 'NO' Then
-  Begin
-    CheckCreateForm(TfrmEncodingWarning, frmEncodingWarning,
-      'frmEncodingWarning');
+procedure TAvroMainForm1.OutputasANSIAreyousure1Click(Sender: TObject);
+begin
+  if ShowOutputwarning <> 'NO' then
+  begin
+    CheckCreateForm(TfrmEncodingWarning, frmEncodingWarning, 'frmEncodingWarning');
     frmEncodingWarning.Show;
-  End
-  Else
+  end
+  else
     OutputIsBijoy := 'YES';
 
   RefreshSettings;
 
-  If MyCurrentKeyboardMode = bangla Then
-    If ChangeInputLocale = 'YES' Then
-      If OutputIsBijoy = 'YES' Then
+  if MyCurrentKeyboardMode = bangla then
+    if ChangeInputLocale = 'YES' then
+      if OutputIsBijoy = 'YES' then
         ChangeLocaleToEnglish(LastWindow);
-End;
+end;
 
-Procedure TAvroMainForm1.OutputasUnicodeRecommended1Click(Sender: TObject);
-Begin
+procedure TAvroMainForm1.OutputasUnicodeRecommended1Click(Sender: TObject);
+begin
   OutputIsBijoy := 'NO';
   RefreshSettings;
 
-  If MyCurrentKeyboardMode = bangla Then
-    If ChangeInputLocale = 'YES' Then
-      If OutputIsBijoy = 'NO' Then
+  if MyCurrentKeyboardMode = bangla then
+    if ChangeInputLocale = 'YES' then
+      if OutputIsBijoy = 'NO' then
         ChangeLocaleToBangla(LastWindow);
-End;
+end;
 
-Procedure TAvroMainForm1.Overview1Click(Sender: TObject);
-Begin
+procedure TAvroMainForm1.Overview1Click(Sender: TObject);
+begin
   OpenHelpFile(24);
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TAvroMainForm1.PortableAvroKeyboardontheweb1Click(Sender: TObject);
-Begin
+procedure TAvroMainForm1.PortableAvroKeyboardontheweb1Click(Sender: TObject);
+begin
   Execute_Something('https://www.omicronlab.com/go.php?id=22');
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TAvroMainForm1.RefreshSettings;
-Begin
+procedure TAvroMainForm1.RefreshSettings;
+begin
 
   // Update Spell Checker Shortcut in Menu
   Spellcheck1.ShortCut := TextToShortcut('Ctrl+' + SpellerLauncherKey);
   Spellcheck2.ShortCut := TextToShortcut('Ctrl+' + SpellerLauncherKey);
   Spellcheck3.ShortCut := TextToShortcut('Ctrl+' + SpellerLauncherKey);
 
-  If VowelFormating = 'NO' Then
-  Begin
+  if VowelFormating = 'NO' then
+  begin
     AutomaticVowelFormatingInModernTypingStyle1.Checked := False;
     AutomaticVowelFormatingInModernTypingStyle2.Checked := False;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     AutomaticVowelFormatingInModernTypingStyle1.Checked := True;
     AutomaticVowelFormatingInModernTypingStyle2.Checked := True;
-  End;
+  end;
 
-  If OldStyleReph = 'NO' Then
-  Begin
+  if OldStyleReph = 'NO' then
+  begin
     EnableOldStyleRephInModernTypingStyle1.Checked := False;
     EnableOldStyleRephInModernTypingStyle2.Checked := False;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     EnableOldStyleRephInModernTypingStyle1.Checked := True;
     EnableOldStyleRephInModernTypingStyle2.Checked := True;
-  End;
+  end;
 
-  If NumPadBangla = 'NO' Then
-  Begin
+  if NumPadBangla = 'NO' then
+  begin
     EnableBanglainNumberPadInFixedkeyboardLayouts1.Checked := False;
     EnableBanglainNumberPadInFixedkeyboardLayouts2.Checked := False;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     EnableBanglainNumberPadInFixedkeyboardLayouts1.Checked := True;
     EnableBanglainNumberPadInFixedkeyboardLayouts2.Checked := True;
-  End;
+  end;
 
-  If ShowPrevWindow = 'YES' Then
-  Begin
+  if ShowPrevWindow = 'YES' then
+  begin
     ShowPreviewWindow1.Checked := True;
     ShowPreviewWindow2.Checked := True;
 
@@ -1425,9 +1384,9 @@ Begin
     UseTabforbrowsingsuggestions2.Enabled := True;
     Remembermychoiceamongsuggestions1.Enabled := True;
     Remembermychoiceamongsuggestions2.Enabled := True;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     ShowPreviewWindow1.Checked := False;
     ShowPreviewWindow2.Checked := False;
 
@@ -1441,10 +1400,10 @@ Begin
     UseTabforbrowsingsuggestions2.Enabled := False;
     Remembermychoiceamongsuggestions1.Enabled := False;
     Remembermychoiceamongsuggestions2.Enabled := False;
-  End;
+  end;
 
-  If Lowercase(MyCurrentLayout) = 'avrophonetic*' Then
-  Begin
+  if Lowercase(MyCurrentLayout) = 'avrophonetic*' then
+  begin
     UseModernStyleTyping1.Enabled := False;
     UseModernStyleTyping2.Enabled := False;
     UseOldStyleTyping1.Enabled := False;
@@ -1480,25 +1439,25 @@ Begin
     ManageAutoCorrectentries1.Enabled := True;
     ManageAutoCorrectentries2.Enabled := True;
 
-    If ShowPrevWindow = 'NO' Then
+    if ShowPrevWindow = 'NO' then
       UnloadWordDatabase
-    Else
-    Begin
-      If PhoneticMode = 'ONLYCHAR' Then
+    else
+    begin
+      if PhoneticMode = 'ONLYCHAR' then
         UnloadWordDatabase
-      Else
+      else
         LoadWordDatabase;
-    End;
-  End
-  Else
-  Begin
+    end;
+  end
+  else
+  begin
     UseModernStyleTyping1.Enabled := True;
     UseModernStyleTyping2.Enabled := True;
     UseOldStyleTyping1.Enabled := True;
     UseOldStyleTyping2.Enabled := True;
 
-    If FullOldStyleTyping = 'NO' Then
-    Begin
+    if FullOldStyleTyping = 'NO' then
+    begin
       UseOldStyleTyping1.Checked := False;
       UseOldStyleTyping2.Checked := False;
       UseModernStyleTyping1.Checked := True;
@@ -1509,9 +1468,9 @@ Begin
       AutomaticVowelFormatingInModernTypingStyle2.Enabled := True;
       AutomaticallyfixChandrapositionInModernTypingStyle1.Enabled := True;
       AutomaticallyfixChandrapositionInModernTypingStyle2.Enabled := True;
-    End
-    Else
-    Begin
+    end
+    else
+    begin
       UseOldStyleTyping1.Checked := True;
       UseOldStyleTyping2.Checked := True;
       UseModernStyleTyping1.Checked := False;
@@ -1522,7 +1481,7 @@ Begin
       AutomaticVowelFormatingInModernTypingStyle2.Enabled := False;
       AutomaticallyfixChandrapositionInModernTypingStyle1.Enabled := False;
       AutomaticallyfixChandrapositionInModernTypingStyle2.Enabled := False;
-    End;
+    end;
 
     EnableBanglainNumberPadInFixedkeyboardLayouts1.Enabled := True;
     EnableBanglainNumberPadInFixedkeyboardLayouts2.Enabled := True;
@@ -1550,174 +1509,178 @@ Begin
     ManageAutoCorrectentries2.Enabled := False;
 
     UnloadWordDatabase;
-  End;
+  end;
 
-  If PhoneticMode = 'DICT' Then
-  Begin
+  if PhoneticMode = 'DICT' then
+  begin
     Dictionarymodeisdefault1.Checked := True;
     Dictionarymodeisdefault2.Checked := True;
     Charactermodeisdefault1.Checked := False;
     Charactermodeisdefault2.Checked := False;
     Classicphoneticnohint1.Checked := False;
     Classicphoneticnohint2.Checked := False;
-  End
-  Else If PhoneticMode = 'CHAR' Then
-  Begin
+  end
+  else if PhoneticMode = 'CHAR' then
+  begin
     Dictionarymodeisdefault1.Checked := False;
     Dictionarymodeisdefault2.Checked := False;
     Charactermodeisdefault1.Checked := True;
     Charactermodeisdefault2.Checked := True;
     Classicphoneticnohint1.Checked := False;
     Classicphoneticnohint2.Checked := False;
-  End
-  Else If PhoneticMode = 'ONLYCHAR' Then
-  Begin
+  end
+  else if PhoneticMode = 'ONLYCHAR' then
+  begin
     Dictionarymodeisdefault1.Checked := False;
     Dictionarymodeisdefault2.Checked := False;
     Charactermodeisdefault1.Checked := False;
     Charactermodeisdefault2.Checked := False;
     Classicphoneticnohint1.Checked := True;
     Classicphoneticnohint2.Checked := True;
-  End;
+  end;
 
-  If SaveCandidate = 'YES' Then
-  Begin
+  if SaveCandidate = 'YES' then
+  begin
     Remembermychoiceamongsuggestions1.Checked := True;
     Remembermychoiceamongsuggestions2.Checked := True;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     Remembermychoiceamongsuggestions1.Checked := False;
     Remembermychoiceamongsuggestions2.Checked := False;
-  End;
+  end;
 
-  If TabBrowsing = 'YES' Then
-  Begin
+  if TabBrowsing = 'YES' then
+  begin
     UseTabforBrowsingSuggestions1.Checked := True;
     UseTabforbrowsingsuggestions2.Checked := True;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     UseTabforBrowsingSuggestions1.Checked := False;
     UseTabforbrowsingsuggestions2.Checked := False;
-  End;
+  end;
 
-  If PipeToDot = 'YES' Then
-  Begin
+  if PipeToDot = 'YES' then
+  begin
     UseVerticalLinePipekeytotypeDot1.Checked := True;
     UseVerticalLinePipekeytotypeDot2.Checked := True;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     UseVerticalLinePipekeytotypeDot1.Checked := False;
     UseVerticalLinePipekeytotypeDot2.Checked := False;
-  End;
+  end;
 
-  If EnableJoNukta = 'YES' Then
-  Begin
+  if EnableJoNukta = 'YES' then
+  begin
     TypeJoNuktawithShiftJ1.Checked := True;
     TypeJoNuktawithShiftJ2.Checked := True;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     TypeJoNuktawithShiftJ1.Checked := False;
     TypeJoNuktawithShiftJ2.Checked := False;
-  End;
+  end;
 
-  If AutomaticallyFixChandra = 'NO' Then
-  Begin
+  if AutomaticallyFixChandra = 'NO' then
+  begin
     AutomaticallyfixChandrapositionInModernTypingStyle1.Checked := False;
     AutomaticallyfixChandrapositionInModernTypingStyle2.Checked := False;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     AutomaticallyfixChandrapositionInModernTypingStyle1.Checked := True;
     AutomaticallyfixChandrapositionInModernTypingStyle2.Checked := True;
-  End;
+  end;
 
-  If IsFormLoaded('LayoutViewer') Then
+  if IsFormLoaded('LayoutViewer') then
     LayoutViewer.SetMyZOrder;
 
-  If PhoneticAutoCorrect = 'YES' Then
-  Begin
+  if PhoneticAutoCorrect = 'YES' then
+  begin
     EnableAutoCorrect1.Checked := True;
     EnableAutoCorrect2.Checked := True;
     KeyLayout.AutoCorrectEnabled := True;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     EnableAutoCorrect1.Checked := False;
     EnableAutoCorrect2.Checked := False;
     KeyLayout.AutoCorrectEnabled := False;
-  End;
+  end;
 
   Topbar.ApplySkin;
 
-  If TopBarTransparent = 'YES' Then
+  if TopBarTransparent = 'YES' then
     Topbar.TransparencyTimer.Enabled := True
-  Else
+  else
     Topbar.TransparencyTimer.Enabled := False;
 
-  If AvroUpdateCheck = 'YES' Then
+  if AvroUpdateCheck = 'YES' then
     InternetCheck.Enabled := True
-  Else
+  else
     InternetCheck.Enabled := False;
 
-  If OutputIsBijoy = 'YES' Then
-  Begin
+  if OutputIsBijoy = 'YES' then
+  begin
     OutputasANSIAreyousure1.Checked := True;
     OutputasANSIAreyousure2.Checked := True;
     OutputasUnicodeRecommended1.Checked := False;
     OutputasUnicodeRecommended2.Checked := False;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     OutputasUnicodeRecommended1.Checked := True;
     OutputasUnicodeRecommended2.Checked := True;
     OutputasANSIAreyousure1.Checked := False;
     OutputasANSIAreyousure2.Checked := False;
-  End;
+  end;
 
   SaveUISettings;
 
-End;
+end;
 
-Procedure TAvroMainForm1.Remembermychoiceamongsuggestions1Click
-  (Sender: TObject);
-Begin
-  If SaveCandidate = 'YES' Then
+procedure TAvroMainForm1.Remembermychoiceamongsuggestions1Click(Sender: TObject);
+begin
+  if SaveCandidate = 'YES' then
     SaveCandidate := 'NO'
-  Else
+  else
     SaveCandidate := 'YES';
 
   RefreshSettings;
-End;
+end;
 
-Procedure TAvroMainForm1.ResetAllWindowLocale;
-Var
+procedure TAvroMainForm1.HandleThemes;
+begin
+  SetAppropriateThemeMode('Windows10 Dark', 'Windows10');
+end;
+
+procedure TAvroMainForm1.ResetAllWindowLocale;
+var
   I: HWND;
-Begin
-  For I In WindowDict.Keys Do
-  Begin
-    If IsWindow(I) Then
+begin
+  for I in WindowDict.Keys do
+  begin
+    if IsWindow(I) then
       ChangeLocalToAny(I, WindowDict.Items[I].Locale);
-  End;
+  end;
 
-End;
+end;
 
-Procedure TAvroMainForm1.RestoreAvroTopBar1Click(Sender: TObject);
-Begin
+procedure TAvroMainForm1.RestoreAvroTopBar1Click(Sender: TObject);
+begin
   RestoreFromTray;
-End;
+end;
 
-Procedure TAvroMainForm1.RestoreFromTray;
-Begin
-  If Topbar.Visible = False Then
-  Begin
+procedure TAvroMainForm1.RestoreFromTray;
+begin
+  if Topbar.Visible = False then
+  begin
 
-    If KeyLayout.KeyboardMode = bangla Then
+    if KeyLayout.KeyboardMode = bangla then
       Topbar.SetButtonModeState(State2)
-    Else If KeyLayout.KeyboardMode = SysDefault Then
+    else if KeyLayout.KeyboardMode = SysDefault then
       Topbar.SetButtonModeState(State1);
 
     Tray.Visible := False;
@@ -1726,270 +1689,263 @@ Begin
     Topbar.Visible := True;
     // SetForegroundWindow(TopBar.Handle);
 
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TAvroMainForm1.Showactivekeyboardlayout1Click(Sender: TObject);
-Begin
+procedure TAvroMainForm1.Showactivekeyboardlayout1Click(Sender: TObject);
+begin
   CheckCreateForm(TLayoutViewer, LayoutViewer, 'LayoutViewer');
   LayoutViewer.Show;
-End;
+end;
 
-Procedure TAvroMainForm1.ShowOnTray;
-Var
+procedure TAvroMainForm1.ShowOnTray;
+var
   ICN: TIcon;
-Begin
+begin
   ICN := TIcon.Create;
-  If KeyLayout.KeyboardMode = bangla Then
-  Begin
-    If IsWin2000 = True Then
+  if KeyLayout.KeyboardMode = bangla then
+  begin
+    if IsWin2000 = True then
       ImageList1.GetIcon(14, ICN)
-    Else
+    else
       ImageList1.GetIcon(20, ICN);
 
-    Tray.Hint := 'Avro Keyboard.' + #13 + 'Running Bangla Keyboard Mode.' + #13
-      + 'Press ' + ModeSwitchKey + ' to switch to System default.';
-  End
-  Else If KeyLayout.KeyboardMode = SysDefault Then
-  Begin
-    If IsWin2000 = True Then
+    Tray.Hint := 'Avro Keyboard.' + #13 + 'Running Bangla Keyboard Mode.' + #13 + 'Press ' + ModeSwitchKey + ' to switch to System default.';
+  end
+  else if KeyLayout.KeyboardMode = SysDefault then
+  begin
+    if IsWin2000 = True then
       ImageList1.GetIcon(19, ICN)
-    Else
+    else
       ImageList1.GetIcon(21, ICN);
 
-    Tray.Hint := 'Avro Keyboard.' + #13 +
-      'Running System default Keyboard Mode.' + #13 + 'Press ' + ModeSwitchKey +
-      ' to switch to Bangla.';
-  End;
+    Tray.Hint := 'Avro Keyboard.' + #13 + 'Running System default Keyboard Mode.' + #13 + 'Press ' + ModeSwitchKey + ' to switch to Bangla.';
+  end;
 
   Tray.Icon := ICN;
   ICN.Free;
   Tray.Visible := True;
 
-  If StrToInt(TrayHintShowTimes) < NumberOfVisibleHints Then
-  Begin
+  if StrToInt(TrayHintShowTimes) < NumberOfVisibleHints then
+  begin
     Tray.BalloonHint := 'Avro Keyboard is running here.';
     Tray.BalloonTimeout := 5000;
     Tray.BalloonTitle := 'Avro Keyboard';
     Tray.ShowBalloonHint;
     TrayHintShowTimes := IntToStr(StrToInt(TrayHintShowTimes) + 1);
-  End;
+  end;
 
   SaveUISettings;
-End;
+end;
 
-Procedure TAvroMainForm1.ShowPreviewWindow1Click(Sender: TObject);
-Begin
-  If ShowPrevWindow = 'YES' Then
+procedure TAvroMainForm1.ShowPreviewWindow1Click(Sender: TObject);
+begin
+  if ShowPrevWindow = 'YES' then
     ShowPrevWindow := 'NO'
-  Else
+  else
     ShowPrevWindow := 'YES';
 
   RefreshSettings;
-End;
+end;
 
-Procedure TAvroMainForm1.SkinDesignerDesignyourownskin1Click(Sender: TObject);
-Begin
+procedure TAvroMainForm1.SkinDesignerDesignyourownskin1Click(Sender: TObject);
+begin
   Execute_Something(ExtractFilePath(Application.ExeName) + 'Skin Designer.exe');
-End;
+end;
 
-Procedure TAvroMainForm1.Spellcheck1Click(Sender: TObject);
-Begin
-  Execute_Something(ExtractFilePath(Application.ExeName) +
-    'Avro Spell checker.exe');
-End;
+procedure TAvroMainForm1.Spellcheck1Click(Sender: TObject);
+begin
+  Execute_Something(ExtractFilePath(Application.ExeName) + 'Avro Spell checker.exe');
+end;
 
 { =============================================================================== }
 
-Procedure TAvroMainForm1.ToggleAutoCorrect;
-Begin
-  If PhoneticAutoCorrect = 'YES' Then
+procedure TAvroMainForm1.ToggleAutoCorrect;
+begin
+  if PhoneticAutoCorrect = 'YES' then
     PhoneticAutoCorrect := 'NO'
-  Else
+  else
     PhoneticAutoCorrect := 'YES';
   RefreshSettings;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TAvroMainForm1.ToggleFixChandra;
-Begin
-  If AutomaticallyFixChandra = 'YES' Then
+procedure TAvroMainForm1.ToggleFixChandra;
+begin
+  if AutomaticallyFixChandra = 'YES' then
     AutomaticallyFixChandra := 'NO'
-  Else
+  else
     AutomaticallyFixChandra := 'YES';
   RefreshSettings;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TAvroMainForm1.ToggleMode;
-Begin
+procedure TAvroMainForm1.ToggleMode;
+begin
   KeyLayout.ToggleMode;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TAvroMainForm1.ToggleNumPadBangla;
-Begin
-  If NumPadBangla = 'YES' Then
+procedure TAvroMainForm1.ToggleNumPadBangla;
+begin
+  if NumPadBangla = 'YES' then
     NumPadBangla := 'NO'
-  Else
+  else
     NumPadBangla := 'YES';
   RefreshSettings;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TAvroMainForm1.ToggleOldStyleReph;
-Begin
-  If OldStyleReph = 'YES' Then
+procedure TAvroMainForm1.ToggleOldStyleReph;
+begin
+  if OldStyleReph = 'YES' then
     OldStyleReph := 'NO'
-  Else
+  else
     OldStyleReph := 'YES';
   RefreshSettings;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TAvroMainForm1.ToggleOutputEncoding;
-Begin
-  If OutputIsBijoy = 'YES' Then
-    OutputasUnicodeRecommended1Click(Nil)
-  Else
-    OutputasANSIAreyousure1Click(Nil);
-End;
+procedure TAvroMainForm1.ToggleOutputEncoding;
+begin
+  if OutputIsBijoy = 'YES' then
+    OutputasUnicodeRecommended1Click(nil)
+  else
+    OutputasANSIAreyousure1Click(nil);
+end;
 
 { =============================================================================== }
 
-Procedure TAvroMainForm1.ToggleVowelFormat;
-Begin
-  If VowelFormating = 'YES' Then
+procedure TAvroMainForm1.ToggleVowelFormat;
+begin
+  if VowelFormating = 'YES' then
     VowelFormating := 'NO'
-  Else
+  else
     VowelFormating := 'YES';
   RefreshSettings;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TAvroMainForm1.TopBarDocToTop;
-Begin
+procedure TAvroMainForm1.TopBarDocToTop;
+begin
   Topbar.Top := 0;
-  If (Topbar.Left + Topbar.Width > Screen.Width) Or (Topbar.Left < 0) Then
+  if (Topbar.Left + Topbar.Width > Screen.Width) or (Topbar.Left < 0) then
     Topbar.Left := Screen.Width - Topbar.Width - 250;
-End;
+end;
 
 { =============================================================================== }
 
-Function TAvroMainForm1.TransferKeyDown(Const KeyCode: Integer;
-  Var Block: Boolean): String;
-Begin
-  result := KeyLayout.ProcessVKeyDown(KeyCode, Block);
-End;
+function TAvroMainForm1.TransferKeyDown(const KeyCode: Integer; var Block: Boolean): string;
+begin
+  Result := KeyLayout.ProcessVKeyDown(KeyCode, Block);
+end;
 
 { =============================================================================== }
 
-Procedure TAvroMainForm1.TransferKeyUp(Const KeyCode: Integer;
-  Var Block: Boolean);
-Begin
+procedure TAvroMainForm1.TransferKeyUp(const KeyCode: Integer; var Block: Boolean);
+begin
   KeyLayout.ProcessVKeyUP(KeyCode, Block);
-End;
+end;
 
-Procedure TAvroMainForm1.TrayClick(Sender: TObject);
-Begin
+procedure TAvroMainForm1.TrayClick(Sender: TObject);
+begin
   KeyLayout.ToggleMode;
-End;
+end;
 
-Procedure TAvroMainForm1.TrayDblClick(Sender: TObject);
-Begin
+procedure TAvroMainForm1.TrayDblClick(Sender: TObject);
+begin
   KeyLayout.ToggleMode;
   RestoreFromTray;
-End;
+end;
 
-Procedure TAvroMainForm1.TrimAppMemorySize;
-Var
+procedure TAvroMainForm1.TrimAppMemorySize;
+var
   MainHandle: THandle;
-Begin
-  Try
+begin
+  try
     MainHandle := OpenProcess(PROCESS_ALL_ACCESS, False, GetCurrentProcessID);
     SetProcessWorkingSetSize(MainHandle, $FFFFFFFF, $FFFFFFFF);
     CloseHandle(MainHandle);
-  Except
-  End;
+  except
+  end;
   Application.ProcessMessages;
-End;
+end;
 
-Procedure TAvroMainForm1.TypeJoNuktawithShiftJ1Click(Sender: TObject);
-Begin
-  If EnableJoNukta = 'YES' Then
+procedure TAvroMainForm1.TypeJoNuktawithShiftJ1Click(Sender: TObject);
+begin
+  if EnableJoNukta = 'YES' then
     EnableJoNukta := 'NO'
-  Else
+  else
     EnableJoNukta := 'YES';
   RefreshSettings;
-End;
+end;
 
-Procedure TAvroMainForm1.UnicodetoBijoytextconverter1Click(Sender: TObject);
-Begin
-  Execute_Something(ExtractFilePath(Application.ExeName) +
-    'Unicode to Bijoy.exe');
-End;
+procedure TAvroMainForm1.UnicodetoBijoytextconverter1Click(Sender: TObject);
+begin
+  Execute_Something(ExtractFilePath(Application.ExeName) + 'Unicode to Bijoy.exe');
+end;
 
-Procedure TAvroMainForm1.UsefultoolsforBangla1Click(Sender: TObject);
-Begin
+procedure TAvroMainForm1.UsefultoolsforBangla1Click(Sender: TObject);
+begin
   Execute_Something('https://www.omicronlab.com/go.php?id=15');
-End;
+end;
 
-Procedure TAvroMainForm1.UseModernStyleTyping1Click(Sender: TObject);
-Begin
+procedure TAvroMainForm1.UseModernStyleTyping1Click(Sender: TObject);
+begin
   ChangeTypingStyle('ModernStyle');
-End;
+end;
 
-Procedure TAvroMainForm1.UseOldStyleTyping1Click(Sender: TObject);
-Begin
+procedure TAvroMainForm1.UseOldStyleTyping1Click(Sender: TObject);
+begin
   ChangeTypingStyle('OldStyle');
-End;
+end;
 
-Procedure TAvroMainForm1.UserForum1Click(Sender: TObject);
-Begin
+procedure TAvroMainForm1.UserForum1Click(Sender: TObject);
+begin
   Execute_Something('https://github.com/mugli/Avro-Keyboard/issues');
-End;
+end;
 
-Procedure TAvroMainForm1.UseTabforBrowsingSuggestions1Click(Sender: TObject);
-Begin
-  If TabBrowsing = 'YES' Then
+procedure TAvroMainForm1.UseTabforBrowsingSuggestions1Click(Sender: TObject);
+begin
+  if TabBrowsing = 'YES' then
     TabBrowsing := 'NO'
-  Else
+  else
     TabBrowsing := 'YES';
   RefreshSettings;
-End;
+end;
 
-Procedure TAvroMainForm1.UseVerticalLinePipekeytotypeDot1Click(Sender: TObject);
-Begin
-  If PipeToDot = 'YES' Then
+procedure TAvroMainForm1.UseVerticalLinePipekeytotypeDot1Click(Sender: TObject);
+begin
+  if PipeToDot = 'YES' then
     PipeToDot := 'NO'
-  Else
+  else
     PipeToDot := 'YES';
   RefreshSettings;
-End;
+end;
 
-Procedure TAvroMainForm1.WindowCheckTimer(Sender: TObject);
-Var
+procedure TAvroMainForm1.WindowCheckTimer(Sender: TObject);
+var
   WindoRecord: TWindowRecord;
-  hforewnd: HWND;
-Begin
+  hforewnd:    HWND;
+begin
 
   hforewnd := GetForegroundWindow;
-  If hforewnd = 0 Then
+  if hforewnd = 0 then
     exit;
-  If IsWindow(hforewnd) = False Then
+  if IsWindow(hforewnd) = False then
     exit; { Experimental use }
 
-  If IgnorableWindow(hforewnd) = True Then
+  if IgnorableWindow(hforewnd) = True then
     exit;
-  If hforewnd = LastWindow Then
+  if hforewnd = LastWindow then
     exit;
 
   // window z-order has been changed
@@ -1998,16 +1954,16 @@ Begin
   RemoveHook;
   Sethook;
 
-  If Topbar.Visible = True Then
+  if Topbar.Visible = True then
     TOPMOST(Topbar.Handle);
   // ==================================
 
-  If Not WindowDict.TryGetValue(hforewnd, WindoRecord) Then
-  Begin
+  if not WindowDict.TryGetValue(hforewnd, WindoRecord) then
+  begin
     // This is a new window, make the keyboard mode English Keyboard
     // If DefaultKeyboardMode = 'SYSTEM' Then Begin
     { Highly experimental! }
-    If KeyLayout.KeyboardMode <> SysDefault Then
+    if KeyLayout.KeyboardMode <> SysDefault then
       KeyLayout.KeyboardMode := SysDefault;
     // End
     // Else Begin
@@ -2015,87 +1971,87 @@ Begin
     // If KeyLayout.KeyboardMode <> bangla Then
     // KeyLayout.KeyboardMode := bangla;
     // End;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     { This window is already being tracked, change keyboard mode
       to the lastly recorded one }
-    If (WindoRecord.Mode = 'B') And (KeyLayout.KeyboardMode = SysDefault) Then
+    if (WindoRecord.Mode = 'B') and (KeyLayout.KeyboardMode = SysDefault) then
       KeyLayout.KeyboardMode := bangla;
-    If (WindoRecord.Mode = 'S') And (KeyLayout.KeyboardMode = bangla) Then
+    if (WindoRecord.Mode = 'S') and (KeyLayout.KeyboardMode = bangla) then
       KeyLayout.KeyboardMode := SysDefault;
-  End;
+  end;
   // A new window came to the top, we must reset dead key now
   KeyLayout.ResetDeadKey;
   LastWindow := hforewnd;
 
-End;
+end;
 
-Procedure TAvroMainForm1.WMCopyData(Var Msg: TWMCopyData);
-Var
-  cmd: String;
-Begin
+procedure TAvroMainForm1.WMCopyData(var Msg: TWMCopyData);
+var
+  cmd: string;
+begin
   cmd := PChar(Msg.CopyDataStruct.lpData);
   cmd := Lowercase(cmd);
 
-  If cmd = 'refresh_layout' Then
-  Begin
+  if cmd = 'refresh_layout' then
+  begin
     FreeAndNil(KeyboardLayouts);
     LoadKeyboardLayoutNames;
     Initmenu;
 
     // Send something back
-    Msg.result := 21;
-  End;
+    Msg.Result := 21;
+  end;
 
-  If cmd = 'toggle' Then
-  Begin
+  if cmd = 'toggle' then
+  begin
     KeyLayout.ToggleMode;
 
     // Send something back
-    Msg.result := 21;
-  End;
+    Msg.Result := 21;
+  end;
 
-  If cmd = 'bn' Then
-  Begin
+  if cmd = 'bn' then
+  begin
     KeyLayout.BanglaMode;
 
     // Send something back
-    Msg.result := 21;
-  End;
+    Msg.Result := 21;
+  end;
 
-  If cmd = 'sys' Then
-  Begin
+  if cmd = 'sys' then
+  begin
     KeyLayout.SysMode;
 
     // Send something back
-    Msg.result := 21;
-  End;
+    Msg.Result := 21;
+  end;
 
-  If cmd = 'minimize' Then
-  Begin
-    Jumptosystemtray1Click(Nil);
+  if cmd = 'minimize' then
+  begin
+    Jumptosystemtray1Click(nil);
 
     // Send something back
-    Msg.result := 21;
-  End;
+    Msg.Result := 21;
+  end;
 
-  If cmd = 'restore' Then
-  Begin
+  if cmd = 'restore' then
+  begin
     RestoreFromTray;
     Topbar.AlphaBlendValue := 255;
 
     // Send something back
-    Msg.result := 21;
-  End;
+    Msg.Result := 21;
+  end;
 
-End;
+end;
 
-Procedure TAvroMainForm1.wwwOmicronLabcom1Click(Sender: TObject);
-Begin
+procedure TAvroMainForm1.wwwOmicronLabcom1Click(Sender: TObject);
+begin
   Execute_Something('https://www.omicronlab.com/go.php?id=2');
-End;
+end;
 
 { =============================================================================== }
 
-End.
+end.

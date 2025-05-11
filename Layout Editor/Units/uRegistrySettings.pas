@@ -26,11 +26,11 @@
 }
 
 {$INCLUDE ../ProjectDefines.inc}
-Unit uRegistrySettings;
+unit uRegistrySettings;
 
-Interface
+interface
 
-Uses
+uses
   Classes,
   Sysutils,
   clsRegistry_XMLSetting,
@@ -38,79 +38,78 @@ Uses
   Forms,
   StrUtils;
 
-Var
-  LETop: String;
-  LELeft: String;
-  LEFontName: String;
-  LEFontSize: String;
-  LELastDir: String;
+var
+  LETop:      string;
+  LELeft:     string;
+  LEFontName: string;
+  LEFontSize: string;
+  LELastDir:  string;
 
-Procedure LoadSettings;
-Procedure ValidateSettings;
-Procedure SaveSettings;
+procedure LoadSettings;
+procedure ValidateSettings;
+procedure SaveSettings;
 
-Procedure LoadSettingsFromFile;
-Procedure SaveSettingsInXML;
+procedure LoadSettingsFromFile;
+procedure SaveSettingsInXML;
 
-Procedure LoadSettingsFromRegistry;
-Procedure SaveSettingsInRegistry;
+procedure LoadSettingsFromRegistry;
+procedure SaveSettingsInRegistry;
 
-Implementation
+implementation
 
-Uses
+uses
   uFileFolderHandling;
 
 { =============================================================================== }
 
-Procedure LoadSettings;
-Begin
-{$IFDEF PortableOn}
+procedure LoadSettings;
+begin
+  {$IFDEF PortableOn}
   LoadSettingsFromFile;
-{$ELSE}
+  {$ELSE}
   LoadSettingsFromRegistry;
-{$ENDIF}
+  {$ENDIF}
   ValidateSettings;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure SaveSettings;
-Begin
-{$IFDEF PortableOn}
+procedure SaveSettings;
+begin
+  {$IFDEF PortableOn}
   SaveSettingsInXML;
-{$ELSE}
+  {$ELSE}
   SaveSettingsInRegistry;
-{$ENDIF}
-End;
+  {$ENDIF}
+end;
 
 { =============================================================================== }
 
-Procedure LoadSettingsFromRegistry;
-Var
+procedure LoadSettingsFromRegistry;
+var
   Reg: TMyRegistry;
-Begin
+begin
   Reg := TMyRegistry.create;
   Reg.RootKey := HKEY_CURRENT_USER;
 
-  If Reg.OpenKey('Software\OmicronLab\Layout Editor', True) = True Then
-  Begin
+  if Reg.OpenKey('Software\OmicronLab\Layout Editor', True) = True then
+  begin
     LETop := Reg.ReadStringDef('LETop', '50');
     LELeft := Reg.ReadStringDef('LELeft', '50');
     LEFontName := UpperCase(Reg.ReadStringDef('LEFontName', 'Siyam Rupali'));
     LEFontSize := Reg.ReadStringDef('LEFontSize', '12');
-    LELastDir := UpperCase(Reg.ReadStringDef('LELastDir',
-      GetAvroDataDir + 'Keyboard Layouts\'));
-  End;
+    LELastDir := UpperCase(Reg.ReadStringDef('LELastDir', GetAvroDataDir + 'Keyboard Layouts\'));
+  end;
 
   Reg.Free;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure LoadSettingsFromFile;
-Var
+procedure LoadSettingsFromFile;
+var
   XML: TXMLSetting;
-Begin
+begin
   XML := TXMLSetting.create;
   XML.LoadXMLData;
 
@@ -118,23 +117,22 @@ Begin
   LELeft := XML.GetValue('LELeft', '50');
   LEFontName := UpperCase(XML.GetValue('LEFontName', 'Siyam Rupali'));
   LEFontSize := XML.GetValue('LEFontSize', '12');
-  LELastDir := UpperCase(XML.GetValue('LELastDir',
-    GetAvroDataDir + 'Keyboard Layouts\'));
+  LELastDir := UpperCase(XML.GetValue('LELastDir', GetAvroDataDir + 'Keyboard Layouts\'));
 
   XML.Free;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure SaveSettingsInRegistry;
-Var
+procedure SaveSettingsInRegistry;
+var
   Reg: TMyRegistry;
-Begin
+begin
   Reg := TMyRegistry.create;
   Reg.RootKey := HKEY_CURRENT_USER;
 
-  If Reg.OpenKey('Software\OmicronLab\Layout Editor', True) = True Then
-  Begin
+  if Reg.OpenKey('Software\OmicronLab\Layout Editor', True) = True then
+  begin
     Reg.WriteString('AppPath', ExtractFileDir(Application.ExeName));
     Reg.WriteString('AppExeName', ExtractFileName(Application.ExeName));
 
@@ -144,17 +142,17 @@ Begin
     Reg.WriteString('LEFontSize', LEFontSize);
     Reg.WriteString('LELastDir', LELastDir);
 
-  End;
+  end;
 
   Reg.Free;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure SaveSettingsInXML;
-Var
+procedure SaveSettingsInXML;
+var
   XML: TXMLSetting;
-Begin
+begin
   XML := TXMLSetting.create;
   XML.CreateNewXMLData;
 
@@ -167,22 +165,22 @@ Begin
 
   XML.SaveXMLData;
   XML.Free;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure ValidateSettings;
-Begin
-  If Not(DirectoryExists(LELastDir)) Then
+procedure ValidateSettings;
+begin
+  if not(DirectoryExists(LELastDir)) then
     LELastDir := GetAvroDataDir + 'Keyboard Layouts\';
-  If Not(StrToInt(LETop) > 0) Then
+  if not(StrToInt(LETop) > 0) then
     LETop := '50';
-  If Not(StrToInt(LELeft) > 0) Then
+  if not(StrToInt(LELeft) > 0) then
     LELeft := '50';
-  If Not(StrToInt(LEFontSize) > 7) Then
+  if not(StrToInt(LEFontSize) > 7) then
     LETop := '10';
-End;
+end;
 
 { =============================================================================== }
 
-End.
+end.

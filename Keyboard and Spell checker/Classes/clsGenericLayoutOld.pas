@@ -28,59 +28,56 @@
 {$INCLUDE ../ProjectDefines.inc}
 { COMPLETE TRANSFERING! }
 
-Unit clsGenericLayoutOld;
+unit clsGenericLayoutOld;
 
-Interface
+interface
 
-Uses
+uses
   classes,
   sysutils,
   StrUtils,
   clsUnicodeToBijoy2000;
 
-Const
+const
   TrackL = 100;
 
   // Skeleton of Class TGenericLayoutOld
-Type
-  TGenericLayoutOld = Class
-  Private
-    Bijoy: TUnicodeToBijoy2000;
-    LastChar: String;
-    DetermineZWNJ_ZWJ: String;
-    LastChars: Array [1 .. TrackL] Of String;
-    PrevBanglaT, NewBanglaText: String;
+type
+  TGenericLayoutOld = class
+    private
+      Bijoy:                      TUnicodeToBijoy2000;
+      LastChar:                   string;
+      DetermineZWNJ_ZWJ:          string;
+      LastChars:                  array [1 .. TrackL] of string;
+      PrevBanglaT, NewBanglaText: string;
 
-    // Kar Variables for Full Old Style Typing
-    EKarActive, IKarActive, OIKarActive: Boolean;
+      // Kar Variables for Full Old Style Typing
+      EKarActive, IKarActive, OIKarActive: Boolean;
 
-    Procedure InternalBackspace(KeyRepeat: Integer = 1);
-    Procedure DoBackspace(Var Block: Boolean);
-    Procedure ParseAndSendNow;
-    Function InsertKar(Const sKar: String): String;
-    Function InsertReph: String;
-    Procedure SetLastChar(Const wChar: String);
-    Procedure DeleteLastCharSteps_Ex(StepCount: Integer);
-    Procedure ResetLastChar;
-    Function MyProcessVKeyDown(Const KeyCode: Integer; Var Block: Boolean;
-      Const var_IfShift, var_IfTrueShift, var_IfAltGr: Boolean): String;
-    Procedure MyProcessVKeyUP(Const KeyCode: Integer; Var Block: Boolean;
-      Const var_IfShift: Boolean; Const var_IfTrueShift: Boolean;
-      Const var_IfAltGr: Boolean);
-    Procedure ResetAllKarsToInactive;
-  Public
-    Constructor Create; // Initializer
-    Destructor Destroy; Override; // Destructor
+      procedure InternalBackspace(KeyRepeat: Integer = 1);
+      procedure DoBackspace(var Block: Boolean);
+      procedure ParseAndSendNow;
+      function InsertKar(const sKar: string): string;
+      function InsertReph: string;
+      procedure SetLastChar(const wChar: string);
+      procedure DeleteLastCharSteps_Ex(StepCount: Integer);
+      procedure ResetLastChar;
+      function MyProcessVKeyDown(const KeyCode: Integer; var Block: Boolean; const var_IfShift, var_IfTrueShift, var_IfAltGr: Boolean): string;
+      procedure MyProcessVKeyUP(const KeyCode: Integer; var Block: Boolean; const var_IfShift: Boolean; const var_IfTrueShift: Boolean;
+        const var_IfAltGr: Boolean);
+      procedure ResetAllKarsToInactive;
+    public
+      constructor Create;           // Initializer
+      destructor Destroy; override; // Destructor
 
-    Function ProcessVKeyDown(Const KeyCode: Integer;
-      Var Block: Boolean): String;
-    Procedure ProcessVKeyUP(Const KeyCode: Integer; Var Block: Boolean);
-    Procedure ResetDeadKey;
-  End;
+      function ProcessVKeyDown(const KeyCode: Integer; var Block: Boolean): string;
+      procedure ProcessVKeyUP(const KeyCode: Integer; var Block: Boolean);
+      procedure ResetDeadKey;
+  end;
 
-Implementation
+implementation
 
-Uses
+uses
   Banglachars,
   KeyboardFunctions,
   uForm1,
@@ -94,9 +91,9 @@ Uses
 
 { TGenericLayoutOld }
 
-Constructor TGenericLayoutOld.Create;
-Begin
-  Inherited;
+constructor TGenericLayoutOld.Create;
+begin
+  inherited;
   ResetLastChar;
 
   // If IsWinVistaOrLater Then
@@ -105,754 +102,741 @@ Begin
   // DetermineZWNJ_ZWJ := ZWNJ;
 
   Bijoy := TUnicodeToBijoy2000.Create;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TGenericLayoutOld.DeleteLastCharSteps_Ex(StepCount: Integer);
-Var
+procedure TGenericLayoutOld.DeleteLastCharSteps_Ex(StepCount: Integer);
+var
   I, J: Integer;
-  t1: String;
-Begin
-  For I := TrackL Downto 1 Do
+  t1:   string;
+begin
+  for I := TrackL downto 1 do
     t1 := t1 + LastChars[I];
 
-  If StepCount > TrackL Then
+  if StepCount > TrackL then
     StepCount := TrackL;
 
   t1 := StringOfChar(' ', StepCount) + LeftStr(t1, Length(t1) - StepCount);
 
-  For I := TrackL Downto 1 Do
-  Begin
+  for I := TrackL downto 1 do
+  begin
     J := TrackL + 1 - I;
     LastChars[I] := MidStr(t1, J, 1);
-  End;
+  end;
   LastChar := LastChars[1];
 
-End;
+end;
 
 { =============================================================================== }
 
-Destructor TGenericLayoutOld.Destroy;
-Begin
+destructor TGenericLayoutOld.Destroy;
+begin
   FreeAndNil(Bijoy);
 
-  Inherited;
-End;
+  inherited;
+end;
 
 { =============================================================================== }
 
-Procedure TGenericLayoutOld.DoBackspace(Var Block: Boolean);
-Var
-  BijoyNewBanglaText: String;
-Begin
-  If (Length(PrevBanglaT) - 1) <= 0 Then
-  Begin
+procedure TGenericLayoutOld.DoBackspace(var Block: Boolean);
+var
+  BijoyNewBanglaText: string;
+begin
+  if (Length(PrevBanglaT) - 1) <= 0 then
+  begin
 
-    If OutputIsBijoy <> 'YES' Then
-    Begin
-      If (Length(NewBanglaText) - 1) >= 1 Then
+    if OutputIsBijoy <> 'YES' then
+    begin
+      if (Length(NewBanglaText) - 1) >= 1 then
         Backspace(Length(NewBanglaText) - 1);
-    End
-    Else
-    Begin
+    end
+    else
+    begin
       BijoyNewBanglaText := Bijoy.Convert(NewBanglaText);
-      If (Length(BijoyNewBanglaText) - 1) >= 1 Then
+      if (Length(BijoyNewBanglaText) - 1) >= 1 then
         Backspace(Length(BijoyNewBanglaText) - 1);
-    End;
+    end;
 
     ResetDeadKey;
     Block := False;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     Block := True;
     InternalBackspace;
     // ParseAndSendNow;
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Function TGenericLayoutOld.InsertKar(Const sKar: String): String;
-Begin
-  If LastChar = b_Chandra Then
-  Begin
-    If LastChars[2] = b_Ekar Then
-    Begin
-      If sKar = b_AAkar Then
-      Begin
+function TGenericLayoutOld.InsertKar(const sKar: string): string;
+begin
+  if LastChar = b_Chandra then
+  begin
+    if LastChars[2] = b_Ekar then
+    begin
+      if sKar = b_AAkar then
+      begin
         InternalBackspace(2);
         InsertKar := b_Okar + b_Chandra;
-      End
-      Else If sKar = b_LengthMark Then
-      Begin
+      end
+      else if sKar = b_LengthMark then
+      begin
         InternalBackspace(2);
         InsertKar := b_OUkar + b_Chandra;
-      End
-      Else
+      end
+      else
         InsertKar := sKar;
-    End
-    Else
-    Begin
+    end
+    else
+    begin
       InsertKar := sKar;
-    End;
-  End
-  Else
+    end;
+  end
+  else
     InsertKar := sKar;
-End;
+end;
 
 { =============================================================================== }
 {$HINTS Off}
 
-Function TGenericLayoutOld.InsertReph: String;
-Var
+function TGenericLayoutOld.InsertReph: string;
+var
   RephMoveable: Boolean;
-  TmpStr: String;
-  I, J: Integer;
-Begin
+  TmpStr:       string;
+  I, J:         Integer;
+begin
   RephMoveable := False;
 
-  If IsPureConsonent(LastChar) = True Then
+  if IsPureConsonent(LastChar) = True then
     RephMoveable := True
-  Else If IsKar(LastChar) = True Then
-  Begin
-    If IsPureConsonent(LastChars[2]) Then
+  else if IsKar(LastChar) = True then
+  begin
+    if IsPureConsonent(LastChars[2]) then
       RephMoveable := True
-    Else
+    else
       RephMoveable := False;
-  End
-  Else If LastChar = b_Chandra Then
-  Begin
-    If IsPureConsonent(LastChars[2]) = True Then
+  end
+  else if LastChar = b_Chandra then
+  begin
+    if IsPureConsonent(LastChars[2]) = True then
       RephMoveable := True
-    Else If (IsKar(LastChars[2]) = True) And
-      (IsPureConsonent(LastChars[3]) = True) Then
+    else if (IsKar(LastChars[2]) = True) and (IsPureConsonent(LastChars[3]) = True) then
       RephMoveable := True
-    Else
+    else
       RephMoveable := False;
-  End
-  Else
+  end
+  else
     RephMoveable := False;
 
-  If Not RephMoveable Then
-  Begin
+  if not RephMoveable then
+  begin
     InsertReph := b_R + b_Hasanta;
     Exit;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     I := 1;
 
-    If (IsKar(LastChar) = True) And
-      (IsPureConsonent(LastChars[I + 1]) = True) Then
+    if (IsKar(LastChar) = True) and (IsPureConsonent(LastChars[I + 1]) = True) then
       I := I + 1
-    Else If LastChar = b_Chandra Then
-    Begin
-      If IsPureConsonent(LastChars[I + 1]) = True Then
+    else if LastChar = b_Chandra then
+    begin
+      if IsPureConsonent(LastChars[I + 1]) = True then
         I := I + 1
-      Else If (IsKar(LastChars[I + 1]) = True) And
-        (IsPureConsonent(LastChars[I + 2]) = True) Then
+      else if (IsKar(LastChars[I + 1]) = True) and (IsPureConsonent(LastChars[I + 2]) = True) then
         I := I + 2;
-    End;
+    end;
 
-    Repeat
-      If LastChars[I + 1] = b_Hasanta Then
-      Begin
-        If IsPureConsonent(LastChars[I + 2]) Then
+    repeat
+      if LastChars[I + 1] = b_Hasanta then
+      begin
+        if IsPureConsonent(LastChars[I + 2]) then
           I := I + 2
-        Else
-        Begin
-          For J := I Downto 1 Do
+        else
+        begin
+          for J := I downto 1 do
             TmpStr := TmpStr + LastChars[J];
 
           InternalBackspace(I);
           InsertReph := b_R + b_Hasanta + TmpStr;
           Exit;
-        End;
-      End
-      Else
-      Begin
-        For J := I Downto 1 Do
+        end;
+      end
+      else
+      begin
+        for J := I downto 1 do
           TmpStr := TmpStr + LastChars[J];
 
         InternalBackspace(I);
         InsertReph := b_R + b_Hasanta + TmpStr;
         Exit;
-      End;
-    Until I >= TrackL;
+      end;
+    until I >= TrackL;
 
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TGenericLayoutOld.InternalBackspace(KeyRepeat: Integer);
-Begin
-  If KeyRepeat <= 0 Then
+procedure TGenericLayoutOld.InternalBackspace(KeyRepeat: Integer);
+begin
+  if KeyRepeat <= 0 then
     KeyRepeat := 1;
-  If KeyRepeat > TrackL Then
+  if KeyRepeat > TrackL then
     KeyRepeat := TrackL;
 
   NewBanglaText := MidStr(PrevBanglaT, 1, Length(PrevBanglaT) - KeyRepeat);
   DeleteLastCharSteps_Ex(KeyRepeat);
-End;
+end;
 
 {$HINTS ON}
 { =============================================================================== }
 
-Function TGenericLayoutOld.MyProcessVKeyDown(Const KeyCode: Integer;
-  Var Block: Boolean; Const var_IfShift, var_IfTrueShift,
-  var_IfAltGr: Boolean): String;
-Var
-  CharForKey, tmpString, PendingKar: String;
-Begin
+function TGenericLayoutOld.MyProcessVKeyDown(const KeyCode: Integer; var Block: Boolean; const var_IfShift, var_IfTrueShift, var_IfAltGr: Boolean): string;
+var
+  CharForKey, tmpString, PendingKar: string;
+begin
 
-  If AvroMainForm1.GetMyCurrentKeyboardMode = SysDefault Then
-  Begin
+  if AvroMainForm1.GetMyCurrentKeyboardMode = SysDefault then
+  begin
 
     Block := False;
     MyProcessVKeyDown := '';
     Exit;
-  End
-  Else If AvroMainForm1.GetMyCurrentKeyboardMode = bangla Then
-  Begin
-    CharForKey := GetCharForKey(KeyCode, var_IfShift, var_IfTrueShift,
-      var_IfAltGr);
+  end
+  else if AvroMainForm1.GetMyCurrentKeyboardMode = bangla then
+  begin
+    CharForKey := GetCharForKey(KeyCode, var_IfShift, var_IfTrueShift, var_IfAltGr);
 
-    If LastChar = b_Hasanta Then
-    Begin
+    if LastChar = b_Hasanta then
+    begin
 
-      If EKarActive Then
+      if EKarActive then
         PendingKar := b_Ekar
-      Else If IKarActive Then
+      else if IKarActive then
         PendingKar := b_Ikar
-      Else If OIKarActive Then
+      else if OIKarActive then
         PendingKar := b_OIkar
-      Else
+      else
         PendingKar := '';
 
-      If CharForKey = b_AAkar Then
-      Begin
+      if CharForKey = b_AAkar then
+      begin
         InternalBackspace;
         MyProcessVKeyDown := InsertKar(PendingKar) + b_AA;
         ResetAllKarsToInactive;
         Exit;
-      End
-      Else If CharForKey = b_Ikar Then
-      Begin
+      end
+      else if CharForKey = b_Ikar then
+      begin
         InternalBackspace;
         MyProcessVKeyDown := InsertKar(PendingKar) + b_I;
         ResetAllKarsToInactive;
         Exit;
-      End
-      Else If CharForKey = b_IIkar Then
-      Begin
+      end
+      else if CharForKey = b_IIkar then
+      begin
         InternalBackspace;
         MyProcessVKeyDown := InsertKar(PendingKar) + b_II;
         ResetAllKarsToInactive;
         Exit;
-      End
-      Else If CharForKey = b_Ukar Then
-      Begin
+      end
+      else if CharForKey = b_Ukar then
+      begin
         InternalBackspace;
         MyProcessVKeyDown := InsertKar(PendingKar) + b_U;
         ResetAllKarsToInactive;
         Exit;
-      End
-      Else If CharForKey = b_UUkar Then
-      Begin
+      end
+      else if CharForKey = b_UUkar then
+      begin
         InternalBackspace;
         MyProcessVKeyDown := InsertKar(PendingKar) + b_UU;
         ResetAllKarsToInactive;
         Exit;
-      End
-      Else If CharForKey = b_RRIkar Then
-      Begin
+      end
+      else if CharForKey = b_RRIkar then
+      begin
         InternalBackspace;
         MyProcessVKeyDown := InsertKar(PendingKar) + b_RRI;
         ResetAllKarsToInactive;
         Exit;
-      End
-      Else If CharForKey = b_Ekar Then
-      Begin
+      end
+      else if CharForKey = b_Ekar then
+      begin
         InternalBackspace;
         MyProcessVKeyDown := InsertKar(PendingKar) + b_E;
         ResetAllKarsToInactive;
         Exit;
-      End
-      Else If CharForKey = b_OIkar Then
-      Begin
+      end
+      else if CharForKey = b_OIkar then
+      begin
         InternalBackspace;
         MyProcessVKeyDown := InsertKar(PendingKar) + b_OI;
         ResetAllKarsToInactive;
         Exit;
-      End
-      Else If CharForKey = b_Okar Then
-      Begin
+      end
+      else if CharForKey = b_Okar then
+      begin
         InternalBackspace;
         MyProcessVKeyDown := InsertKar(PendingKar) + b_O;
         ResetAllKarsToInactive;
         Exit;
-      End
-      Else If CharForKey = b_OUkar Then
-      Begin
+      end
+      else if CharForKey = b_OUkar then
+      begin
         InternalBackspace;
         MyProcessVKeyDown := InsertKar(PendingKar) + b_OU;
         ResetAllKarsToInactive;
         Exit;
-      End
-      Else If CharForKey = b_LengthMark Then
-      Begin
+      end
+      else if CharForKey = b_LengthMark then
+      begin
         InternalBackspace;
         MyProcessVKeyDown := InsertKar(PendingKar) + b_OU;
         ResetAllKarsToInactive;
         Exit;
-      End
-      Else If CharForKey = b_Hasanta Then
-      Begin
+      end
+      else if CharForKey = b_Hasanta then
+      begin
         MyProcessVKeyDown := ZWNJ;
         ResetAllKarsToInactive;
         Exit;
-      End;
-    End;
+      end;
+    end;
 
-    If CharForKey = b_Ekar Then
-    Begin
-      If EKarActive = True Then
-      Begin
+    if CharForKey = b_Ekar then
+    begin
+      if EKarActive = True then
+      begin
         EKarActive := False;
         MyProcessVKeyDown := b_Ekar;
         Exit;
-      End
-      Else
-      Begin
+      end
+      else
+      begin
         ResetAllKarsToInactive;
         EKarActive := True;
         Block := True;
         MyProcessVKeyDown := '';
         Exit;
-      End;
-    End;
+      end;
+    end;
 
-    If CharForKey = b_Ikar Then
-    Begin
-      If IKarActive = True Then
-      Begin
+    if CharForKey = b_Ikar then
+    begin
+      if IKarActive = True then
+      begin
         IKarActive := False;
         MyProcessVKeyDown := b_Ikar;
         Exit;
-      End
-      Else
-      Begin
+      end
+      else
+      begin
         ResetAllKarsToInactive;
         IKarActive := True;
         Block := True;
         MyProcessVKeyDown := '';
         Exit;
-      End;
-    End;
+      end;
+    end;
 
-    If CharForKey = b_OIkar Then
-    Begin
-      If OIKarActive = True Then
-      Begin
+    if CharForKey = b_OIkar then
+    begin
+      if OIKarActive = True then
+      begin
         OIKarActive := False;
         MyProcessVKeyDown := b_OIkar;
         Exit;
-      End
-      Else
-      Begin
+      end
+      else
+      begin
         ResetAllKarsToInactive;
         OIKarActive := True;
         Block := True;
         MyProcessVKeyDown := '';
         Exit;
-      End;
-    End;
+      end;
+    end;
 
-    If CharForKey = b_AAkar Then
-    Begin
-      If LastChar = b_Ekar Then
-      Begin
+    if CharForKey = b_AAkar then
+    begin
+      if LastChar = b_Ekar then
+      begin
         ResetAllKarsToInactive;
         InternalBackspace;
         MyProcessVKeyDown := InsertKar(b_Okar);
         Exit;
-      End;
-    End;
+      end;
+    end;
 
-    If CharForKey = b_LengthMark Then
-    Begin
-      If LastChar = b_Ekar Then
-      Begin
+    if CharForKey = b_LengthMark then
+    begin
+      if LastChar = b_Ekar then
+      begin
         ResetAllKarsToInactive;
         InternalBackspace;
         MyProcessVKeyDown := InsertKar(b_OUkar);
         Exit;
-      End;
-    End;
+      end;
+    end;
 
-    If CharForKey = b_Hasanta Then
-    Begin
-      If LastChar = b_Ekar Then
-      Begin
+    if CharForKey = b_Hasanta then
+    begin
+      if LastChar = b_Ekar then
+      begin
         InternalBackspace;
         EKarActive := True;
         MyProcessVKeyDown := b_Hasanta;
         Exit;
-      End
-      Else If LastChar = b_Ikar Then
-      Begin
+      end
+      else if LastChar = b_Ikar then
+      begin
         InternalBackspace;
         IKarActive := True;
         MyProcessVKeyDown := b_Hasanta;
         Exit;
-      End
-      Else If LastChar = b_OIkar Then
-      Begin
+      end
+      else if LastChar = b_OIkar then
+      begin
         InternalBackspace;
         OIKarActive := True;
         MyProcessVKeyDown := b_Hasanta;
         Exit;
-      End
-      Else
-      Begin
+      end
+      else
+      begin
         MyProcessVKeyDown := b_Hasanta;
         Exit;
-      End;
-    End;
+      end;
+    end;
 
-    Case KeyCode Of
+    case KeyCode of
       VK_RETURN:
-        Begin
+        begin
           Block := False;
           ResetLastChar;
           MyProcessVKeyDown := '';
           Exit;
-        End;
+        end;
       VK_SPACE:
-        Begin
+        begin
           Block := False;
           ResetLastChar;
           MyProcessVKeyDown := '';
           Exit;
-        End;
+        end;
       VK_TAB:
-        Begin
+        begin
           Block := False;
           ResetLastChar;
           MyProcessVKeyDown := '';
           Exit;
-        End;
+        end;
       VK_BACK:
-        Begin
+        begin
           DoBackspace(Block);
           MyProcessVKeyDown := '';
           Exit;
-        End;
-    Else
-      Begin
-        If EKarActive = True Then
-        Begin
-          If CharForKey = b_R + b_Hasanta Then
-          Begin
-            EKarActive := False;
-            MyProcessVKeyDown := InsertReph + InsertKar(b_Ekar);
-            Exit;
-          End
-          Else If CharForKey = b_AAkar Then
-          Begin
-            EKarActive := False;
-            MyProcessVKeyDown := InsertKar(b_Okar);
-            Exit;
-          End
-          Else If CharForKey = b_LengthMark Then
-          Begin
-            EKarActive := False;
-            MyProcessVKeyDown := InsertKar(b_OUkar);
-            Exit;
-          End
-          Else If CharForKey = '' Then
-          Begin
-            ResetLastChar;
-            Block := False;
-            MyProcessVKeyDown := '';
-            Exit;
-          End
-          Else
-          Begin
-            EKarActive := False;
-            MyProcessVKeyDown := CharForKey + InsertKar(b_Ekar);
-            Exit;
-          End;
-        End
-        Else If IKarActive = True Then
-        Begin
-          If CharForKey = b_R + b_Hasanta Then
-          Begin
-            IKarActive := False;
-            MyProcessVKeyDown := InsertReph + InsertKar(b_Ikar);
-            Exit;
-          End
-          Else If CharForKey = '' Then
-          Begin
-            ResetLastChar;
-            Block := False;
-            MyProcessVKeyDown := '';
-            Exit;
-          End
-          Else
-          Begin
-            IKarActive := False;
-            MyProcessVKeyDown := CharForKey + InsertKar(b_Ikar);
-            Exit;
-          End;
-        End
-        Else If OIKarActive = True Then
-        Begin
-          If CharForKey = b_R + b_Hasanta Then
-          Begin
-            OIKarActive := False;
-            MyProcessVKeyDown := InsertReph + InsertKar(b_OIkar);
-            Exit;
-          End
-          Else If CharForKey = '' Then
-          Begin
-            ResetLastChar;
-            Block := False;
-            MyProcessVKeyDown := '';
-            Exit;
-          End
-          Else
-          Begin
-            OIKarActive := False;
-            MyProcessVKeyDown := CharForKey + InsertKar(b_OIkar);
-            Exit;
-          End;
-        End
-        Else
-        Begin
-          If CharForKey = b_R + b_Hasanta Then
-          Begin
-            MyProcessVKeyDown := InsertReph;
-            Exit;
-          End
-          Else If CharForKey = b_AAkar Then
-          Begin
-            If LastChar = b_A Then
-            Begin
-              InternalBackspace;
-              MyProcessVKeyDown := b_AA;
+        end;
+      else
+        begin
+          if EKarActive = True then
+          begin
+            if CharForKey = b_R + b_Hasanta then
+            begin
+              EKarActive := False;
+              MyProcessVKeyDown := InsertReph + InsertKar(b_Ekar);
               Exit;
-            End
-            Else
-            Begin
-              MyProcessVKeyDown := b_AAkar;
+            end
+            else if CharForKey = b_AAkar then
+            begin
+              EKarActive := False;
+              MyProcessVKeyDown := InsertKar(b_Okar);
               Exit;
-            End;
-          End
-          Else If CharForKey = b_Hasanta + b_Z Then
-          Begin
-
-            If (LastChar = b_R) And (LastChars[2] <> b_Hasanta) Then
-            Begin
-              MyProcessVKeyDown := DetermineZWNJ_ZWJ + b_Hasanta + b_Z;
+            end
+            else if CharForKey = b_LengthMark then
+            begin
+              EKarActive := False;
+              MyProcessVKeyDown := InsertKar(b_OUkar);
               Exit;
-            End
-            Else If IsKar(LastChar) Then
-            Begin
-              If (LastChars[2] = b_R) And (LastChars[3] <> b_Hasanta) Then
-              Begin
-                tmpString := LastChar;
+            end
+            else if CharForKey = '' then
+            begin
+              ResetLastChar;
+              Block := False;
+              MyProcessVKeyDown := '';
+              Exit;
+            end
+            else
+            begin
+              EKarActive := False;
+              MyProcessVKeyDown := CharForKey + InsertKar(b_Ekar);
+              Exit;
+            end;
+          end
+          else if IKarActive = True then
+          begin
+            if CharForKey = b_R + b_Hasanta then
+            begin
+              IKarActive := False;
+              MyProcessVKeyDown := InsertReph + InsertKar(b_Ikar);
+              Exit;
+            end
+            else if CharForKey = '' then
+            begin
+              ResetLastChar;
+              Block := False;
+              MyProcessVKeyDown := '';
+              Exit;
+            end
+            else
+            begin
+              IKarActive := False;
+              MyProcessVKeyDown := CharForKey + InsertKar(b_Ikar);
+              Exit;
+            end;
+          end
+          else if OIKarActive = True then
+          begin
+            if CharForKey = b_R + b_Hasanta then
+            begin
+              OIKarActive := False;
+              MyProcessVKeyDown := InsertReph + InsertKar(b_OIkar);
+              Exit;
+            end
+            else if CharForKey = '' then
+            begin
+              ResetLastChar;
+              Block := False;
+              MyProcessVKeyDown := '';
+              Exit;
+            end
+            else
+            begin
+              OIKarActive := False;
+              MyProcessVKeyDown := CharForKey + InsertKar(b_OIkar);
+              Exit;
+            end;
+          end
+          else
+          begin
+            if CharForKey = b_R + b_Hasanta then
+            begin
+              MyProcessVKeyDown := InsertReph;
+              Exit;
+            end
+            else if CharForKey = b_AAkar then
+            begin
+              if LastChar = b_A then
+              begin
                 InternalBackspace;
-                MyProcessVKeyDown := DetermineZWNJ_ZWJ + CharForKey + tmpString;
+                MyProcessVKeyDown := b_AA;
                 Exit;
-              End
-              Else
-              Begin
-                tmpString := LastChar;
-                InternalBackspace;
-                MyProcessVKeyDown := CharForKey + tmpString;
+              end
+              else
+              begin
+                MyProcessVKeyDown := b_AAkar;
                 Exit;
-              End;
-            End
-            Else
-            Begin
-              MyProcessVKeyDown := b_Hasanta + b_Z;
-              Exit;
-            End;
+              end;
+            end
+            else if CharForKey = b_Hasanta + b_Z then
+            begin
 
-          End
-          Else If CharForKey = '' Then
-          Begin
-            ResetLastChar;
-            Block := False;
-            MyProcessVKeyDown := '';
-            Exit;
-          End
-          Else
-          Begin
-            If (Length(CharForKey) > 1) And
-              (LeftStr(CharForKey, 1) = b_Hasanta) Then
-            Begin
-              If IsKar(LastChar) Then
-              Begin
-                tmpString := LastChar;
-                InternalBackspace;
-                MyProcessVKeyDown := CharForKey + tmpString;
+              if (LastChar = b_R) and (LastChars[2] <> b_Hasanta) then
+              begin
+                MyProcessVKeyDown := DetermineZWNJ_ZWJ + b_Hasanta + b_Z;
                 Exit;
-              End;
-            End;
+              end
+              else if IsKar(LastChar) then
+              begin
+                if (LastChars[2] = b_R) and (LastChars[3] <> b_Hasanta) then
+                begin
+                  tmpString := LastChar;
+                  InternalBackspace;
+                  MyProcessVKeyDown := DetermineZWNJ_ZWJ + CharForKey + tmpString;
+                  Exit;
+                end
+                else
+                begin
+                  tmpString := LastChar;
+                  InternalBackspace;
+                  MyProcessVKeyDown := CharForKey + tmpString;
+                  Exit;
+                end;
+              end
+              else
+              begin
+                MyProcessVKeyDown := b_Hasanta + b_Z;
+                Exit;
+              end;
 
-            If IsKar(CharForKey) Then
-            Begin
-              MyProcessVKeyDown := InsertKar(CharForKey);
+            end
+            else if CharForKey = '' then
+            begin
+              ResetLastChar;
+              Block := False;
+              MyProcessVKeyDown := '';
               Exit;
-            End
-            Else
-            Begin
-              MyProcessVKeyDown := CharForKey;
-              Exit;
-            End;
-          End;
-        End;
-      End;
-    End;
-  End;
+            end
+            else
+            begin
+              if (Length(CharForKey) > 1) and (LeftStr(CharForKey, 1) = b_Hasanta) then
+              begin
+                if IsKar(LastChar) then
+                begin
+                  tmpString := LastChar;
+                  InternalBackspace;
+                  MyProcessVKeyDown := CharForKey + tmpString;
+                  Exit;
+                end;
+              end;
 
-End;
+              if IsKar(CharForKey) then
+              begin
+                MyProcessVKeyDown := InsertKar(CharForKey);
+                Exit;
+              end
+              else
+              begin
+                MyProcessVKeyDown := CharForKey;
+                Exit;
+              end;
+            end;
+          end;
+        end;
+    end;
+  end;
+
+end;
 
 { =============================================================================== }
 
-Procedure TGenericLayoutOld.MyProcessVKeyUP(Const KeyCode: Integer;
-  Var Block: Boolean; Const var_IfShift, var_IfTrueShift, var_IfAltGr: Boolean);
-Var
-  CharForKey: String;
-Begin
-  If AvroMainForm1.GetMyCurrentKeyboardMode = SysDefault Then
-  Begin
+procedure TGenericLayoutOld.MyProcessVKeyUP(const KeyCode: Integer; var Block: Boolean; const var_IfShift, var_IfTrueShift, var_IfAltGr: Boolean);
+var
+  CharForKey: string;
+begin
+  if AvroMainForm1.GetMyCurrentKeyboardMode = SysDefault then
+  begin
     Block := False;
     Exit;
-  End
-  Else If AvroMainForm1.GetMyCurrentKeyboardMode = bangla Then
-  Begin
-    CharForKey := GetCharForKey(KeyCode, var_IfShift, var_IfTrueShift,
-      var_IfAltGr);
+  end
+  else if AvroMainForm1.GetMyCurrentKeyboardMode = bangla then
+  begin
+    CharForKey := GetCharForKey(KeyCode, var_IfShift, var_IfTrueShift, var_IfAltGr);
 
-    If CharForKey = '' Then
-    Begin
+    if CharForKey = '' then
+    begin
       Block := False;
       Exit;
-    End
-    Else
-    Begin
+    end
+    else
+    begin
       Block := True;
       Exit;
-    End;
-  End;
+    end;
+  end;
 
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TGenericLayoutOld.ParseAndSendNow;
-Var
-  I, Matched, UnMatched: Integer;
-  BijoyPrevBanglaT, BijoyNewBanglaText: String;
-Begin
+procedure TGenericLayoutOld.ParseAndSendNow;
+var
+  I, Matched, UnMatched:                Integer;
+  BijoyPrevBanglaT, BijoyNewBanglaText: string;
+begin
   Matched := 0;
 
-  If OutputIsBijoy <> 'YES' Then
-  Begin
+  if OutputIsBijoy <> 'YES' then
+  begin
     { Output to Unicode }
-    If PrevBanglaT = '' Then
-    Begin
+    if PrevBanglaT = '' then
+    begin
       SendKey_Char(NewBanglaText);
       PrevBanglaT := NewBanglaText;
-    End
-    Else
-    Begin
-      For I := 1 To Length(PrevBanglaT) Do
-      Begin
-        If MidStr(PrevBanglaT, I, 1) = MidStr(NewBanglaText, I, 1) Then
+    end
+    else
+    begin
+      for I := 1 to Length(PrevBanglaT) do
+      begin
+        if MidStr(PrevBanglaT, I, 1) = MidStr(NewBanglaText, I, 1) then
           Matched := Matched + 1
-        Else
+        else
           Break;
-      End;
+      end;
       UnMatched := Length(PrevBanglaT) - Matched;
 
-      If UnMatched >= 1 Then
+      if UnMatched >= 1 then
         Backspace(UnMatched);
       SendKey_Char(MidStr(NewBanglaText, Matched + 1, Length(NewBanglaText)));
       PrevBanglaT := NewBanglaText;
-    End;
+    end;
 
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     { Output to Bijoy }
     BijoyPrevBanglaT := Bijoy.Convert(PrevBanglaT);
     BijoyNewBanglaText := Bijoy.Convert(NewBanglaText);
 
-    If BijoyPrevBanglaT = '' Then
-    Begin
+    if BijoyPrevBanglaT = '' then
+    begin
       SendKey_Char(BijoyNewBanglaText);
       PrevBanglaT := NewBanglaText;
-    End
-    Else
-    Begin
-      For I := 1 To Length(BijoyPrevBanglaT) Do
-      Begin
-        If MidStr(BijoyPrevBanglaT, I, 1) = MidStr(BijoyNewBanglaText,
-          I, 1) Then
+    end
+    else
+    begin
+      for I := 1 to Length(BijoyPrevBanglaT) do
+      begin
+        if MidStr(BijoyPrevBanglaT, I, 1) = MidStr(BijoyNewBanglaText, I, 1) then
           Matched := Matched + 1
-        Else
+        else
           Break;
-      End;
+      end;
       UnMatched := Length(BijoyPrevBanglaT) - Matched;
 
-      If UnMatched >= 1 Then
+      if UnMatched >= 1 then
         Backspace(UnMatched);
-      SendKey_Char(MidStr(BijoyNewBanglaText, Matched + 1,
-        Length(BijoyNewBanglaText)));
+      SendKey_Char(MidStr(BijoyNewBanglaText, Matched + 1, Length(BijoyNewBanglaText)));
       PrevBanglaT := NewBanglaText;
-    End;
+    end;
 
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Function TGenericLayoutOld.ProcessVKeyDown(Const KeyCode: Integer;
-  Var Block: Boolean): String;
-Var
+function TGenericLayoutOld.ProcessVKeyDown(const KeyCode: Integer; var Block: Boolean): string;
+var
   m_Block: Boolean;
-  m_Str: String;
-Begin
+  m_Str:   string;
+begin
   m_Block := False;
 
-  If (IfWinKey = True) Or (IfOnlyCtrlKey = True) Or
-    (IfOnlyLeftAltKey = True) Then
-  Begin
+  if (IfWinKey = True) or (IfOnlyCtrlKey = True) or (IfOnlyLeftAltKey = True) then
+  begin
     Block := False;
     ProcessVKeyDown := '';
     Exit;
-  End;
+  end;
 
-  If IfIgnorableModifierKey(KeyCode) Then
-  Begin
+  if IfIgnorableModifierKey(KeyCode) then
+  begin
     Block := False;
     ProcessVKeyDown := '';
     Exit;
-  End;
+  end;
 
   m_Str := MyProcessVKeyDown(KeyCode, m_Block, IfShift, IfTrueShift, IfAltGr);
-  If m_Str <> '' Then
-  Begin
+  if m_Str <> '' then
+  begin
     m_Block := True;
     SetLastChar(m_Str);
-  End;
+  end;
 
   NewBanglaText := NewBanglaText + m_Str;
   ParseAndSendNow;
@@ -860,25 +844,23 @@ Begin
   Block := m_Block;
   ProcessVKeyDown := '';
 
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TGenericLayoutOld.ProcessVKeyUP(Const KeyCode: Integer;
-  Var Block: Boolean);
-Begin
-  If (IfWinKey = True) Or (IfOnlyCtrlKey = True) Or
-    (IfOnlyLeftAltKey = True) Then
-  Begin
+procedure TGenericLayoutOld.ProcessVKeyUP(const KeyCode: Integer; var Block: Boolean);
+begin
+  if (IfWinKey = True) or (IfOnlyCtrlKey = True) or (IfOnlyLeftAltKey = True) then
+  begin
     Block := False;
     Exit;
-  End;
+  end;
 
-  If IfIgnorableModifierKey(KeyCode) = True Then
-  Begin
+  if IfIgnorableModifierKey(KeyCode) = True then
+  begin
     Block := False;
     Exit;
-  End;
+  end;
 
   // If BlockedLast Then
   // Block = True
@@ -887,60 +869,60 @@ Begin
   // End If
 
   MyProcessVKeyUP(KeyCode, Block, IfShift, IfTrueShift, IfAltGr);
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TGenericLayoutOld.ResetAllKarsToInactive;
-Begin
+procedure TGenericLayoutOld.ResetAllKarsToInactive;
+begin
   EKarActive := False;
   IKarActive := False;
   OIKarActive := False;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TGenericLayoutOld.ResetDeadKey;
-Begin
+procedure TGenericLayoutOld.ResetDeadKey;
+begin
   ResetLastChar;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TGenericLayoutOld.ResetLastChar;
-Var
+procedure TGenericLayoutOld.ResetLastChar;
+var
   I: Integer;
-Begin
-  For I := 1 To TrackL Do
+begin
+  for I := 1 to TrackL do
     LastChars[I] := ' ';
 
   LastChar := ' ';
   ResetAllKarsToInactive;
   PrevBanglaT := '';
   NewBanglaText := '';
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TGenericLayoutOld.SetLastChar(Const wChar: String);
-Var
-  t1, t2: String;
-  I, J: Integer;
-Begin
-  For I := TrackL Downto 1 Do
+procedure TGenericLayoutOld.SetLastChar(const wChar: string);
+var
+  t1, t2: string;
+  I, J:   Integer;
+begin
+  for I := TrackL downto 1 do
     t1 := t1 + LastChars[I];
 
   t1 := t1 + wChar;
   t2 := RightStr(t1, TrackL);
 
-  For I := TrackL Downto 1 Do
-  Begin
+  for I := TrackL downto 1 do
+  begin
     J := TrackL + 1 - I;
     LastChars[I] := MidStr(t2, J, 1);
-  End;
+  end;
   LastChar := LastChars[1];
-End;
+end;
 
 { =============================================================================== }
 
-End.
+end.

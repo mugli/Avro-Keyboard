@@ -28,45 +28,44 @@
 {$INCLUDE ../ProjectDefines.inc}
 { COMPLETE TRANSFERING! }
 
-Unit clsRegistry_XMLSetting;
+unit clsRegistry_XMLSetting;
 
-Interface
+interface
 
-Uses
+uses
   classes,
   sysutils,
   StrUtils,
   windows,
-  XMLIntf, XMLDoc,
+  XMLIntf,
+  XMLDoc,
   Forms,
   Registry,
   Dialogs,
   system.Variants,
   uFileFolderHandling;
 
-Type
+type
   TMyRegistry = class(TRegistry)
-  public
-    function ReadStringDef(const Name: String; DefaultVal: String = ''): String;
+    public
+      function ReadStringDef(const Name: string; DefaultVal: string = ''): string;
   end;
 
-Type
+type
   TXMLSetting = class
-  private
-    XML: IXMLDocument;
-    child: IXMLNode;
+    private
+      XML:   IXMLDocument;
+      child: IXMLNode;
 
-  public
-    constructor Create;
-    destructor Destroy; override;
+    public
+      constructor Create;
+      destructor Destroy; override;
 
-    function LoadXMLData(): Boolean;
-    function GetValue(const ValueName: UTF8String; DefaultValue: String = '')
-      : String; overload;
-    procedure CreateNewXMLData;
-    procedure SetValue(const ValueName: UTF8String;
-      const ValueData: String); overload;
-    procedure SaveXMLData;
+      function LoadXMLData(): Boolean;
+      function GetValue(const ValueName: UTF8String; DefaultValue: string = ''): string; overload;
+      procedure CreateNewXMLData;
+      procedure SetValue(const ValueName: UTF8String; const ValueData: string); overload;
+      procedure SaveXMLData;
 
   end;
 
@@ -111,8 +110,7 @@ end;
 
 { =============================================================================== }
 
-function TXMLSetting.GetValue(const ValueName: UTF8String;
-  DefaultValue: String): String;
+function TXMLSetting.GetValue(const ValueName: UTF8String; DefaultValue: string): string;
 begin
   try
 
@@ -128,7 +126,7 @@ begin
     else
       Result := DefaultValue
   except
-    On E: Exception do
+    on E: Exception do
       Result := DefaultValue;
   end;
 end;
@@ -138,17 +136,15 @@ function TXMLSetting.LoadXMLData(): Boolean;
 begin
   Result := false;
   try
-    if FileExists(ExtractFilePath(Application.ExeName) +
-      'Layout Editor Settings.xml') = true then
+    if FileExists(ExtractFilePath(Application.ExeName) + 'Layout Editor Settings.xml') = true then
     begin
-      XML.LoadFromFile(ExtractFilePath(Application.ExeName) +
-        'Layout Editor Settings.xml');
+      XML.LoadFromFile(ExtractFilePath(Application.ExeName) + 'Layout Editor Settings.xml');
       Result := true;
     end
     else
       Result := false;
   except
-    On E: Exception do
+    on E: Exception do
       Result := false;
   end;
 end;
@@ -161,7 +157,7 @@ begin
   try
     XML.SaveToFile(GetAvroDataDir + 'Settings.xml');
   except
-    On E: Exception do
+    on E: Exception do
     begin
     end;
   end;
@@ -169,8 +165,7 @@ end;
 
 { =============================================================================== }
 
-procedure TXMLSetting.SetValue(const ValueName: UTF8String;
-  const ValueData: String);
+procedure TXMLSetting.SetValue(const ValueName: UTF8String; const ValueData: string);
 var
   CdataChild: IXMLNode;
 begin
@@ -183,16 +178,15 @@ end;
 
 { TMyRegistry }
 
-function TMyRegistry.ReadStringDef(const Name: String;
-  DefaultVal: String = ''): String;
+function TMyRegistry.ReadStringDef(const Name: string; DefaultVal: string = ''): string;
 begin
   try
-    if ValueExists(Name) = true then
-      Result := ReadString(Name)
+    if ValueExists(name) = true then
+      Result := ReadString(name)
     else
       Result := DefaultVal;
   except
-    On E: Exception do
+    on E: Exception do
       if Trim(Result) = '' then
         Result := DefaultVal;
   end;

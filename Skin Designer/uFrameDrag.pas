@@ -26,11 +26,11 @@
 }
 
 {$INCLUDE ../ProjectDefines.inc}
-Unit uFrameDrag;
+unit uFrameDrag;
 
-Interface
+interface
 
-Uses
+uses
   Windows,
   Messages,
   SysUtils,
@@ -45,8 +45,8 @@ Uses
   ComCtrls,
   GIFImg;
 
-Type
-  TFrameDrag = Class(TFrame)
+type
+  TFrameDrag = class(TFrame)
     ScrollBox1: TScrollBox;
     Panel1: TPanel;
     Background: TImage;
@@ -66,40 +66,35 @@ Type
     Web: TImage;
     Help: TImage;
     Exit: TImage;
-    Procedure AvroIconMouseDown(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
-    Procedure AvroIconMouseMove(Sender: TObject; Shift: TShiftState;
-      X, Y: Integer);
-    Procedure AvroIconMouseUp(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
-    Procedure XPosChange(Sender: TObject);
-    Procedure YPosChange(Sender: TObject);
+    procedure AvroIconMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure AvroIconMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
+    procedure AvroIconMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure XPosChange(Sender: TObject);
+    procedure YPosChange(Sender: TObject);
 
-  Private
-    { Private declarations }
-    PosX, PosY, DragX, DragY: Integer;
-    lMouse: Boolean;
-    CurrentControl: TImage;
+    private
+      { Private declarations }
+      PosX, PosY, DragX, DragY: Integer;
+      lMouse:                   Boolean;
+      CurrentControl:           TImage;
 
-    Procedure SetNumber(Var NumberText: TEdit);
-  Public
-    { Public declarations }
-    Procedure Initialize;
-    Procedure SetImages(pBackground, pAvroIcon, pKM, pKL, pLayoutV, pAvroMouse,
-      pTools, pWeb, pHelp, pExit: String);
-    Function Validate: Boolean;
-  End;
+      procedure SetNumber(var NumberText: TEdit);
+    public
+      { Public declarations }
+      procedure Initialize;
+      procedure SetImages(pBackground, pAvroIcon, pKM, pKL, pLayoutV, pAvroMouse, pTools, pWeb, pHelp, pExit: string);
+      function Validate: Boolean;
+  end;
 
-Implementation
+implementation
 
 {$R *.dfm}
 { TFrameDrag }
 
-Procedure TFrameDrag.AvroIconMouseDown(Sender: TObject; Button: TMouseButton;
-  Shift: TShiftState; X, Y: Integer);
-Begin
-  If (Button = mbLeft) Then
-  Begin
+procedure TFrameDrag.AvroIconMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  if (Button = mbLeft) then
+  begin
 
     PosX := X; // Initial Coordinates
     PosY := Y;
@@ -109,14 +104,13 @@ Begin
     CurrentControl.BringToFront;
     XPos.Text := IntToStr(CurrentControl.Left);
     YPos.Text := IntToStr(CurrentControl.Top);
-  End;
-End;
+  end;
+end;
 
-Procedure TFrameDrag.AvroIconMouseMove(Sender: TObject; Shift: TShiftState;
-  X, Y: Integer);
-Begin
-  If (lMouse) Then
-  Begin
+procedure TFrameDrag.AvroIconMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
+begin
+  if (lMouse) then
+  begin
 
     DragX := X - PosX; // Compute new Coordinates
     DragY := Y - PosY;
@@ -125,27 +119,25 @@ Begin
     XPos.Text := IntToStr(CurrentControl.Left + DragX);
     YPos.Text := IntToStr(CurrentControl.Top + DragY);
 
-  End;
-End;
+  end;
+end;
 
-Procedure TFrameDrag.AvroIconMouseUp(Sender: TObject; Button: TMouseButton;
-  Shift: TShiftState; X, Y: Integer);
-Begin
+procedure TFrameDrag.AvroIconMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
   lMouse := false; // Reset Bool to false
-End;
+end;
 
-Procedure TFrameDrag.Initialize;
-Begin
+procedure TFrameDrag.Initialize;
+begin
   //
   SetNumber(XPos);
   SetNumber(YPos);
-End;
+end;
 
-Procedure TFrameDrag.SetImages(pBackground, pAvroIcon, pKM, pKL, pLayoutV,
-  pAvroMouse, pTools, pWeb, pHelp, pExit: String);
-Var
+procedure TFrameDrag.SetImages(pBackground, pAvroIcon, pKM, pKL, pLayoutV, pAvroMouse, pTools, pWeb, pHelp, pExit: string);
+var
   CurrentWidth: Integer;
-Begin
+begin
   Background.Visible := false;
   AvroIcon.Visible := false;
   KM.Visible := false;
@@ -158,197 +150,183 @@ Begin
 
   CurrentWidth := 8;
 
-  If pBackground <> '' Then
-  Begin
+  if pBackground <> '' then
+  begin
     Background.Picture.LoadFromFile(pBackground);
     Background.Visible := true;
-  End;
+  end;
 
-  If pAvroIcon <> '' Then
-  Begin
+  if pAvroIcon <> '' then
+  begin
     AvroIcon.Picture.LoadFromFile(pAvroIcon);
     AvroIcon.Visible := true;
     AvroIcon.Left := CurrentWidth;
     AvroIcon.Top := 152;
     CurrentWidth := CurrentWidth + AvroIcon.Width + 8;
-  End;
+  end;
 
-  If pKM <> '' Then
-  Begin
+  if pKM <> '' then
+  begin
     KM.Picture.LoadFromFile(pKM);
     KM.Visible := true;
     KM.Left := CurrentWidth;
     KM.Top := 152;
     CurrentWidth := CurrentWidth + KM.Width + 8;
-  End;
+  end;
 
-  If pKL <> '' Then
-  Begin
+  if pKL <> '' then
+  begin
     KL.Picture.LoadFromFile(pKL);
     KL.Visible := true;
     KL.Left := CurrentWidth;
     KL.Top := 152;
     CurrentWidth := CurrentWidth + KL.Width + 8;
-  End;
+  end;
 
-  If pLayoutV <> '' Then
-  Begin
+  if pLayoutV <> '' then
+  begin
     LayoutV.Picture.LoadFromFile(pLayoutV);
     LayoutV.Visible := true;
     LayoutV.Left := CurrentWidth;
     LayoutV.Top := 152;
     CurrentWidth := CurrentWidth + LayoutV.Width + 8;
-  End;
+  end;
 
-  If pAvroMouse <> '' Then
-  Begin
+  if pAvroMouse <> '' then
+  begin
     AvroMouse.Picture.LoadFromFile(pAvroMouse);
     AvroMouse.Visible := true;
     AvroMouse.Left := CurrentWidth;
     AvroMouse.Top := 152;
     CurrentWidth := CurrentWidth + AvroMouse.Width + 8;
-  End;
+  end;
 
-  If pTools <> '' Then
-  Begin
+  if pTools <> '' then
+  begin
     Tools.Picture.LoadFromFile(pTools);
     Tools.Visible := true;
     Tools.Left := CurrentWidth;
     Tools.Top := 152;
     CurrentWidth := CurrentWidth + Tools.Width + 8;
-  End;
+  end;
 
-  If pWeb <> '' Then
-  Begin
+  if pWeb <> '' then
+  begin
     Web.Picture.LoadFromFile(pWeb);
     Web.Visible := true;
     Web.Left := CurrentWidth;
     Web.Top := 152;
     CurrentWidth := CurrentWidth + Web.Width + 8;
-  End;
+  end;
 
-  If pHelp <> '' Then
-  Begin
+  if pHelp <> '' then
+  begin
     Help.Picture.LoadFromFile(pHelp);
     Help.Visible := true;
     Help.Left := CurrentWidth;
     Help.Top := 152;
     CurrentWidth := CurrentWidth + Help.Width + 8;
-  End;
+  end;
 
-  If pExit <> '' Then
-  Begin
+  if pExit <> '' then
+  begin
     Exit.Picture.LoadFromFile(pExit);
     Exit.Visible := true;
     Exit.Left := CurrentWidth;
     Exit.Top := 152;
     CurrentWidth := CurrentWidth + Exit.Width + 8;
-  End;
-End;
+  end;
+end;
 
-Procedure TFrameDrag.SetNumber(Var NumberText: TEdit);
-Var
+procedure TFrameDrag.SetNumber(var NumberText: TEdit);
+var
   curstyle: Integer;
-Begin
+begin
   curstyle := GetWindowLong(NumberText.Handle, GWL_STYLE);
-  curstyle := curstyle Or ES_NUMBER;
+  curstyle := curstyle or ES_NUMBER;
 
   SetWindowLong(NumberText.Handle, GWL_STYLE, curstyle);
-End;
+end;
 
-Function TFrameDrag.Validate: Boolean;
-Var
+function TFrameDrag.Validate: Boolean;
+var
   AnyImageOutSide: Boolean;
-Begin
+begin
   AnyImageOutSide := false;
   Result := false;
 
-  If AvroIcon.Visible Then
-  Begin
-    If (AvroIcon.Top < 0) Or (AvroIcon.Left < 0) Or
-      (AvroIcon.Top + AvroIcon.Height > Background.Height) Or
-      (AvroIcon.Left + AvroIcon.Width > Background.Width) Then
+  if AvroIcon.Visible then
+  begin
+    if (AvroIcon.Top < 0) or (AvroIcon.Left < 0) or (AvroIcon.Top + AvroIcon.Height > Background.Height) or (AvroIcon.Left + AvroIcon.Width > Background.Width)
+    then
       AnyImageOutSide := true;
-  End;
+  end;
 
-  If KM.Visible Then
-  Begin
-    If (KM.Top < 0) Or (KM.Left < 0) Or (KM.Top + KM.Height > Background.Height)
-      Or (KM.Left + KM.Width > Background.Width) Then
+  if KM.Visible then
+  begin
+    if (KM.Top < 0) or (KM.Left < 0) or (KM.Top + KM.Height > Background.Height) or (KM.Left + KM.Width > Background.Width) then
       AnyImageOutSide := true;
-  End;
+  end;
 
-  If KL.Visible Then
-  Begin
-    If (KL.Top < 0) Or (KL.Left < 0) Or (KL.Top + KL.Height > Background.Height)
-      Or (KL.Left + KL.Width > Background.Width) Then
+  if KL.Visible then
+  begin
+    if (KL.Top < 0) or (KL.Left < 0) or (KL.Top + KL.Height > Background.Height) or (KL.Left + KL.Width > Background.Width) then
       AnyImageOutSide := true;
-  End;
+  end;
 
-  If LayoutV.Visible Then
-  Begin
-    If (LayoutV.Top < 0) Or (LayoutV.Left < 0) Or
-      (LayoutV.Top + LayoutV.Height > Background.Height) Or
-      (LayoutV.Left + LayoutV.Width > Background.Width) Then
+  if LayoutV.Visible then
+  begin
+    if (LayoutV.Top < 0) or (LayoutV.Left < 0) or (LayoutV.Top + LayoutV.Height > Background.Height) or (LayoutV.Left + LayoutV.Width > Background.Width) then
       AnyImageOutSide := true;
-  End;
+  end;
 
-  If AvroMouse.Visible Then
-  Begin
-    If (AvroMouse.Top < 0) Or (AvroMouse.Left < 0) Or
-      (AvroMouse.Top + AvroMouse.Height > Background.Height) Or
-      (AvroMouse.Left + AvroMouse.Width > Background.Width) Then
+  if AvroMouse.Visible then
+  begin
+    if (AvroMouse.Top < 0) or (AvroMouse.Left < 0) or (AvroMouse.Top + AvroMouse.Height > Background.Height) or
+      (AvroMouse.Left + AvroMouse.Width > Background.Width) then
       AnyImageOutSide := true;
-  End;
+  end;
 
-  If Tools.Visible Then
-  Begin
-    If (Tools.Top < 0) Or (Tools.Left < 0) Or
-      (Tools.Top + Tools.Height > Background.Height) Or
-      (Tools.Left + Tools.Width > Background.Width) Then
+  if Tools.Visible then
+  begin
+    if (Tools.Top < 0) or (Tools.Left < 0) or (Tools.Top + Tools.Height > Background.Height) or (Tools.Left + Tools.Width > Background.Width) then
       AnyImageOutSide := true;
-  End;
+  end;
 
-  If Help.Visible Then
-  Begin
-    If (Help.Top < 0) Or (Help.Left < 0) Or
-      (Help.Top + Help.Height > Background.Height) Or
-      (Help.Left + Help.Width > Background.Width) Then
+  if Help.Visible then
+  begin
+    if (Help.Top < 0) or (Help.Left < 0) or (Help.Top + Help.Height > Background.Height) or (Help.Left + Help.Width > Background.Width) then
       AnyImageOutSide := true;
-  End;
+  end;
 
-  If Exit.Visible Then
-  Begin
-    If (Exit.Top < 0) Or (Exit.Left < 0) Or
-      (Exit.Top + Exit.Height > Background.Height) Or
-      (Exit.Left + Exit.Width > Background.Width) Then
+  if Exit.Visible then
+  begin
+    if (Exit.Top < 0) or (Exit.Left < 0) or (Exit.Top + Exit.Height > Background.Height) or (Exit.Left + Exit.Width > Background.Width) then
       AnyImageOutSide := true;
-  End;
+  end;
 
   /// ////
-  If AnyImageOutSide Then
-  Begin
-    If Application.MessageBox
-      ('Skin designer detected that at least one button is placed outside TopBar area.'
-      + #10 + '' + #10 + 'Continue anyway?', 'Skin Designer',
-      MB_YESNO + MB_ICONQUESTION + MB_DEFBUTTON2 + MB_APPLMODAL) = ID_YES Then
+  if AnyImageOutSide then
+  begin
+    if Application.MessageBox('Skin designer detected that at least one button is placed outside TopBar area.' + #10 + '' + #10 + 'Continue anyway?',
+      'Skin Designer', MB_YESNO + MB_ICONQUESTION + MB_DEFBUTTON2 + MB_APPLMODAL) = ID_YES then
       Result := true;
-  End
-  Else
+  end
+  else
     Result := true;
 
-End;
+end;
 
-Procedure TFrameDrag.XPosChange(Sender: TObject);
-Begin
-  If Assigned(CurrentControl) Then
+procedure TFrameDrag.XPosChange(Sender: TObject);
+begin
+  if Assigned(CurrentControl) then
     CurrentControl.Left := StrToInt(XPos.Text);
-End;
+end;
 
-Procedure TFrameDrag.YPosChange(Sender: TObject);
-Begin
-  If Assigned(CurrentControl) Then
+procedure TFrameDrag.YPosChange(Sender: TObject);
+begin
+  if Assigned(CurrentControl) then
     CurrentControl.Top := StrToInt(YPos.Text);
-End;
+end;
 
-End.
+end.

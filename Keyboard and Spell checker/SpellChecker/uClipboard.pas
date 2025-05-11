@@ -25,186 +25,186 @@
   =============================================================================
 }
 
-Unit uClipboard;
+unit uClipboard;
 
-Interface
+interface
 
-Uses
+uses
   clipbrd,
   Classes,
   Windows,
   SysUtils;
 
-Procedure LoadClipboard(S: TStream);
-Procedure SaveClipboard(S: TStream);
+procedure LoadClipboard(S: TStream);
+procedure SaveClipboard(S: TStream);
 
-Implementation
+implementation
 
-Procedure CopyStreamToClipboard(fmt: Cardinal; S: TStream);
-Var
+procedure CopyStreamToClipboard(fmt: Cardinal; S: TStream);
+var
   hMem: THandle;
   pMem: Pointer;
-Begin
+begin
   Assert(Assigned(S));
   S.Position := 0;
-  hMem := GlobalAlloc(GHND Or GMEM_DDESHARE, S.Size);
-  If hMem <> 0 Then
-  Begin
+  hMem := GlobalAlloc(GHND or GMEM_DDESHARE, S.Size);
+  if hMem <> 0 then
+  begin
     pMem := GlobalLock(hMem);
-    If pMem <> Nil Then
-    Begin
-      Try
+    if pMem <> nil then
+    begin
+      try
         S.Read(pMem^, S.Size);
         S.Position := 0;
-      Finally
+      finally
         GlobalUnlock(hMem);
-      End;
+      end;
       Clipboard.Open;
-      Try
+      try
         Clipboard.SetAsHandle(fmt, hMem);
-      Finally
+      finally
         Clipboard.Close;
-      End;
-    End { If }
-    Else
-    Begin
+      end;
+    end { If }
+    else
+    begin
       GlobalFree(hMem);
       OutOfMemoryError;
-    End;
-  End { If }
-  Else
+    end;
+  end { If }
+  else
     OutOfMemoryError;
-End; { CopyStreamToClipboard }
+end; { CopyStreamToClipboard }
 
-Procedure CopyStreamFromClipboard(fmt: Cardinal; S: TStream);
-Var
+procedure CopyStreamFromClipboard(fmt: Cardinal; S: TStream);
+var
   hMem: THandle;
   pMem: Pointer;
-Begin
+begin
   Assert(Assigned(S));
   hMem := Clipboard.GetAsHandle(fmt);
-  If hMem <> 0 Then
-  Begin
+  if hMem <> 0 then
+  begin
     pMem := GlobalLock(hMem);
-    If pMem <> Nil Then
-    Begin
-      Try
+    if pMem <> nil then
+    begin
+      try
         S.Write(pMem^, GlobalSize(hMem));
         S.Position := 0;
-      Finally
+      finally
         GlobalUnlock(hMem);
-      End;
-    End; { If }
+      end;
+    end; { If }
     // raise Exception.Create('CopyStreamFromClipboard: could not lock global handle ' +
     // 'obtained from clipboard!');
-  End; { If }
-End; { CopyStreamFromClipboard }
+  end; { If }
+end;   { CopyStreamFromClipboard }
 
-Procedure SaveClipboardFormat(fmt: Word; writer: TWriter);
-Var
-  fmtname: Array [0 .. 128] Of Char;
-  ms: TMemoryStream;
-Begin
+procedure SaveClipboardFormat(fmt: Word; writer: TWriter);
+var
+  fmtname: array [0 .. 128] of Char;
+  ms:      TMemoryStream;
+begin
   Assert(Assigned(writer));
-  If 0 = GetClipboardFormatName(fmt, fmtname, SizeOf(fmtname)) Then
+  if 0 = GetClipboardFormatName(fmt, fmtname, SizeOf(fmtname)) then
     fmtname[0] := #0;
   ms := TMemoryStream.Create;
-  Try
+  try
     CopyStreamFromClipboard(fmt, ms);
-    If ms.Size > 0 Then
-    Begin
+    if ms.Size > 0 then
+    begin
       writer.WriteInteger(fmt);
       writer.WriteString(fmtname);
       writer.WriteInteger(ms.Size);
       writer.Write(ms.Memory^, ms.Size);
-    End; { If }
-  Finally
+    end; { If }
+  finally
     ms.Free
-  End; { Finally }
-End; { SaveClipboardFormat }
+  end; { Finally }
+end;   { SaveClipboardFormat }
 
-Procedure LoadClipboardFormat(reader: TReader);
-Var
-  fmt: Integer;
-  fmtname: String;
-  Size: Integer;
-  ms: TMemoryStream;
-Begin
+procedure LoadClipboardFormat(reader: TReader);
+var
+  fmt:     Integer;
+  fmtname: string;
+  Size:    Integer;
+  ms:      TMemoryStream;
+begin
   Assert(Assigned(reader));
   fmt := reader.ReadInteger;
   fmtname := reader.ReadString;
   Size := reader.ReadInteger;
   ms := TMemoryStream.Create;
-  Try
+  try
     ms.Size := Size;
     reader.Read(ms.Memory^, Size);
-    If Length(fmtname) > 0 Then
+    if Length(fmtname) > 0 then
       fmt := RegisterCLipboardFormat(PChar(fmtname));
-    If fmt <> 0 Then
+    if fmt <> 0 then
       CopyStreamToClipboard(fmt, ms);
-  Finally
+  finally
     ms.Free;
-  End; { Finally }
-End; { LoadClipboardFormat }
+  end; { Finally }
+end;   { LoadClipboardFormat }
 
-Procedure SaveClipboard(S: TStream);
-Var
+procedure SaveClipboard(S: TStream);
+var
   writer: TWriter;
-  i: Integer;
-Begin
+  i:      Integer;
+begin
   Assert(Assigned(S));
   writer := TWriter.Create(S, 4096);
-  Try
-    Try
+  try
+    try
       Clipboard.Open;
-      Try
+      try
         writer.WriteListBegin;
-        For i := 0 To Clipboard.formatcount - 1 Do
+        for i := 0 to Clipboard.formatcount - 1 do
           SaveClipboardFormat(Clipboard.Formats[i], writer);
         writer.WriteListEnd;
-      Finally
+      finally
         Clipboard.Close;
-      End;
+      end;
       { Finally }
-    Except
-      On e: exception Do
-      Begin
+    except
+      on e: exception do
+      begin
         // Nothing
-      End;
-    End;
-  Finally
+      end;
+    end;
+  finally
     writer.Free
-  End; { Finally }
-End; { SaveClipboard }
+  end; { Finally }
+end;   { SaveClipboard }
 
-Procedure LoadClipboard(S: TStream);
-Var
+procedure LoadClipboard(S: TStream);
+var
   reader: TReader;
-Begin
+begin
   Assert(Assigned(S));
   S.Position := 0;
   reader := TReader.Create(S, 4096);
-  Try
-    Try
+  try
+    try
       Clipboard.Open;
-      Try
+      try
         Clipboard.Clear;
         reader.ReadListBegin;
-        While Not reader.EndOfList Do
+        while not reader.EndOfList do
           LoadClipboardFormat(reader);
         reader.ReadListEnd;
-      Finally
+      finally
         Clipboard.Close;
-      End; { Finally }
-    Except
-      On e: exception Do
-      Begin
+      end; { Finally }
+    except
+      on e: exception do
+      begin
         // Nothing
-      End;
-    End;
-  Finally
+      end;
+    end;
+  finally
     reader.Free
-  End; { Finally }
-End; { LoadClipboard }
+  end; { Finally }
+end;   { LoadClipboard }
 
-End.
+end.

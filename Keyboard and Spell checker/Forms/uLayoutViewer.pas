@@ -26,11 +26,11 @@
 }
 
 {$INCLUDE ../ProjectDefines.inc}
-Unit uLayoutViewer;
+unit uLayoutViewer;
 
-Interface
+interface
 
-Uses
+uses
   Windows,
   Messages,
   SysUtils,
@@ -47,12 +47,12 @@ Uses
   Buttons,
   Printers;
 
-Const
-  MINIMUM_WIDTH = 560;
+const
+  MINIMUM_WIDTH  = 560;
   MINIMUM_HEIGHT = 70;
 
-Type
-  TLayoutViewer = Class(TForm)
+type
+  TLayoutViewer = class(TForm)
     picRSetMode: TImage;
     tmpPicture: TImage;
     but_Normal: TSpeedButton;
@@ -63,42 +63,41 @@ Type
     but_About: TBitBtn;
     but_Print: TBitBtn;
     PrintDialog1: TPrintDialog;
-    Procedure FormClose(Sender: TObject; Var Action: TCloseAction);
-    Procedure FormCreate(Sender: TObject);
-    Procedure but_NormalClick(Sender: TObject);
-    Procedure but_AltGrClick(Sender: TObject);
-    Procedure but_ZoomInClick(Sender: TObject);
-    Procedure but_ZoomOutClick(Sender: TObject);
-    Procedure but_OnTopClick(Sender: TObject);
-    Procedure but_PrintClick(Sender: TObject);
-    Procedure but_AboutClick(Sender: TObject);
-  Private
-    { Private declarations }
-    Pic_LayoutNormal, Pic_LayoutAltGr: TBitmap;
-    CurrentSize: Integer;
-    LayerDisplay: Integer; // 1= Normal, 2= AltGr
-    KeyboardLayout: String;
-    Procedure ResizeMe(PICSRC: TImage; picSize: Integer);
-    Procedure ResizeImage(Var SourcePictureBox, DestinationPictureBox: TImage;
-      oldx, oldy, NewX, NewY: Integer);
-  Public
-    { Public declarations }
-    Procedure SetMyZOrder;
-    Procedure UpdateLayout;
-    Procedure UpdateImageSize(picSize: Integer);
-  Protected
-    Procedure CreateParams(Var Params: TCreateParams); Override;
-  End;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure but_NormalClick(Sender: TObject);
+    procedure but_AltGrClick(Sender: TObject);
+    procedure but_ZoomInClick(Sender: TObject);
+    procedure but_ZoomOutClick(Sender: TObject);
+    procedure but_OnTopClick(Sender: TObject);
+    procedure but_PrintClick(Sender: TObject);
+    procedure but_AboutClick(Sender: TObject);
+    private
+      { Private declarations }
+      Pic_LayoutNormal, Pic_LayoutAltGr: TBitmap;
+      CurrentSize:                       Integer;
+      LayerDisplay:                      Integer; // 1= Normal, 2= AltGr
+      KeyboardLayout:                    string;
+      procedure ResizeMe(PICSRC: TImage; picSize: Integer);
+      procedure ResizeImage(var SourcePictureBox, DestinationPictureBox: TImage; oldx, oldy, NewX, NewY: Integer);
+    public
+      { Public declarations }
+      procedure SetMyZOrder;
+      procedure UpdateLayout;
+      procedure UpdateImageSize(picSize: Integer);
+    protected
+      procedure CreateParams(var Params: TCreateParams); override;
+  end;
 
-Var
+var
   LayoutViewer: TLayoutViewer;
 
-Implementation
+implementation
 
 {$R *.dfm}
 {$R ../Layout/Internal_Layout.res}
 
-Uses
+uses
   KeyboardLayoutLoader,
   uForm1,
   BanglaChars,
@@ -108,374 +107,359 @@ Uses
   uWindowHandlers,
   uTopBar;
 
-Const
+const
   Show_Window_in_Taskbar = True;
 
   { TLayoutViewer }
 
   /// /////////////////////////////////////////////////////////////////////
 
-Procedure TLayoutViewer.but_AboutClick(Sender: TObject);
-Var
-  KeyboardLayoutPath: String;
-Begin
+procedure TLayoutViewer.but_AboutClick(Sender: TObject);
+var
+  KeyboardLayoutPath: string;
+begin
   KeyboardLayout := AvroMainForm1.GetMyCurrentLayout;
-  If Lowercase(KeyboardLayout) = 'avrophonetic*' Then
+  if Lowercase(KeyboardLayout) = 'avrophonetic*' then
     KeyboardLayoutPath := KeyboardLayout
-  Else
-    KeyboardLayoutPath := GetAvroDataDir + 'Keyboard Layouts\' + KeyboardLayout
-      + '.avrolayout';
+  else
+    KeyboardLayoutPath := GetAvroDataDir + 'Keyboard Layouts\' + KeyboardLayout + '.avrolayout';
 
   ShowLayoutDescription(KeyboardLayoutPath);
 
-End;
+end;
 
 /// /////////////////////////////////////////////////////////////////////
 
-Procedure TLayoutViewer.but_AltGrClick(Sender: TObject);
-Begin
+procedure TLayoutViewer.but_AltGrClick(Sender: TObject);
+begin
   LayerDisplay := 2;
   UpdateImageSize(CurrentSize);
-End;
+end;
 
 /// /////////////////////////////////////////////////////////////////////
 
-Procedure TLayoutViewer.but_NormalClick(Sender: TObject);
-Begin
+procedure TLayoutViewer.but_NormalClick(Sender: TObject);
+begin
   LayerDisplay := 1;
   UpdateImageSize(CurrentSize);
-End;
+end;
 
-Procedure TLayoutViewer.but_OnTopClick(Sender: TObject);
-Begin
-  If ShowLayoutOnTop = 'YES' Then
+procedure TLayoutViewer.but_OnTopClick(Sender: TObject);
+begin
+  if ShowLayoutOnTop = 'YES' then
     ShowLayoutOnTop := 'NO'
-  Else
+  else
     ShowLayoutOnTop := 'YES';
 
   SetMyZOrder;
-End;
+end;
 
-Procedure TLayoutViewer.but_PrintClick(Sender: TObject);
-Var
-  ScaleX, ScaleY: Integer;
-  RR: TRect;
-  TempShowLayoutOnTop: String;
-Begin
+procedure TLayoutViewer.but_PrintClick(Sender: TObject);
+var
+  ScaleX, ScaleY:      Integer;
+  RR:                  TRect;
+  TempShowLayoutOnTop: string;
+begin
   // Load printer dialog on top
   TempShowLayoutOnTop := ShowLayoutOnTop;
   ShowLayoutOnTop := 'NO';
   SetMyZOrder;
 
   // Open print dialog
-  If PrintDialog1.Execute Then
-  Begin
+  if PrintDialog1.Execute then
+  begin
 
-    If Not(tmpPicture.Picture = Nil) Then
-    Begin
+    if not(tmpPicture.Picture = nil) then
+    begin
       // Print       tmpPicture.Picture;
       Printer.Orientation := poLandscape;
-      With Printer Do
-      Begin
+      with Printer do
+      begin
         BeginDoc;
-        Try
-          ScaleX := GetDeviceCaps(Handle, logPixelsX) Div PixelsPerInch;
-          ScaleY := GetDeviceCaps(Handle, logPixelsY) Div PixelsPerInch;
-          RR := Rect(0, 0, tmpPicture.Picture.Width * ScaleX,
-            tmpPicture.Picture.Height * ScaleY);
+        try
+          ScaleX := GetDeviceCaps(Handle, logPixelsX) div PixelsPerInch;
+          ScaleY := GetDeviceCaps(Handle, logPixelsY) div PixelsPerInch;
+          RR := Rect(0, 0, tmpPicture.Picture.Width * ScaleX, tmpPicture.Picture.Height * ScaleY);
           Canvas.StretchDraw(RR, tmpPicture.Picture.Graphic);
-        Finally
+        finally
           EndDoc;
-        End;
-      End;
-    End
-    Else
-    Begin
+        end;
+      end;
+    end
+    else
+    begin
 
-      Application.MessageBox('This image is not available for Printing!',
-        'Layout Viewer.', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
+      Application.MessageBox('This image is not available for Printing!', 'Layout Viewer.', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
 
-    End;
-  End;
+    end;
+  end;
 
   // Restore on top state
   ShowLayoutOnTop := TempShowLayoutOnTop;
   SetMyZOrder;
-End;
+end;
 
 /// /////////////////////////////////////////////////////////////////////
 
-Procedure TLayoutViewer.but_ZoomInClick(Sender: TObject);
-Begin
+procedure TLayoutViewer.but_ZoomInClick(Sender: TObject);
+begin
   CurrentSize := CurrentSize + 10;
   UpdateImageSize(CurrentSize);
-End;
+end;
 
 /// /////////////////////////////////////////////////////////////////////
 
-Procedure TLayoutViewer.but_ZoomOutClick(Sender: TObject);
-Begin
-  If CurrentSize > 10 Then
-  Begin
+procedure TLayoutViewer.but_ZoomOutClick(Sender: TObject);
+begin
+  if CurrentSize > 10 then
+  begin
     CurrentSize := CurrentSize - 10;
     UpdateImageSize(CurrentSize);
-  End;
-End;
+  end;
+end;
 
 /// /////////////////////////////////////////////////////////////////////
 
-Procedure TLayoutViewer.CreateParams(Var Params: TCreateParams);
-Begin
-  Inherited CreateParams(Params);
-  With Params Do
-  Begin
-    If Show_Window_in_Taskbar Then
-    Begin
-      ExStyle := ExStyle Or WS_EX_APPWINDOW And Not WS_EX_TOOLWINDOW;
-      ExStyle := ExStyle Or WS_EX_TOPMOST Or WS_EX_NOACTIVATE;
+procedure TLayoutViewer.CreateParams(var Params: TCreateParams);
+begin
+  inherited CreateParams(Params);
+  with Params do
+  begin
+    if Show_Window_in_Taskbar then
+    begin
+      ExStyle := ExStyle or WS_EX_APPWINDOW and not WS_EX_TOOLWINDOW;
+      ExStyle := ExStyle or WS_EX_TOPMOST or WS_EX_NOACTIVATE;
       WndParent := GetDesktopwindow;
-    End
-    Else If Not Show_Window_in_Taskbar Then
-    Begin
-      ExStyle := ExStyle And Not WS_EX_APPWINDOW;
-    End;
-  End;
-End;
+    end
+    else if not Show_Window_in_Taskbar then
+    begin
+      ExStyle := ExStyle and not WS_EX_APPWINDOW;
+    end;
+  end;
+end;
 
 /// /////////////////////////////////////////////////////////////////////
 
-Procedure TLayoutViewer.FormClose(Sender: TObject; Var Action: TCloseAction);
-Begin
-  If Self.Top >= 0 Then
+procedure TLayoutViewer.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  if Self.Top >= 0 then
     LayoutViewerPosY := IntToStr(Self.Top);
-  If Self.Left >= 0 Then
+  if Self.Left >= 0 then
     LayoutViewerPosX := IntToStr(Self.Left);
 
   Action := caFree;
 
-  LayoutViewer := Nil;
-End;
+  LayoutViewer := nil;
+end;
 
 /// /////////////////////////////////////////////////////////////////////
 
-Procedure TLayoutViewer.FormCreate(Sender: TObject);
-Var
-  errorPos: Integer;
+procedure TLayoutViewer.FormCreate(Sender: TObject);
+var
+  errorPos:   Integer;
   PosX, PosY: Integer;
-Begin
+begin
 
-  SetWindowLong(Application.Handle, GWL_EXSTYLE,
-    GetWindowLong(Application.Handle, GWL_EXSTYLE) Or WS_EX_APPWINDOW);
+  SetWindowLong(Application.Handle, GWL_EXSTYLE, GetWindowLong(Application.Handle, GWL_EXSTYLE) or WS_EX_APPWINDOW);
 
   Val(LayoutViewerSize, CurrentSize, errorPos);
   PosX := StrToInt(LayoutViewerPosX);
   PosY := StrToInt(LayoutViewerPosY);
 
-  If SavePosLayoutViewer = 'YES' Then
-  Begin
-    If (PosX > Screen.Width) Or (PosX < 0) Then
-      PosX := (Screen.Width Div 2) - (Self.Width Div 2);
+  if SavePosLayoutViewer = 'YES' then
+  begin
+    if (PosX > Screen.Width) or (PosX < 0) then
+      PosX := (Screen.Width div 2) - (Self.Width div 2);
 
-    If (PosY > Screen.Height) Or (PosY < 0) Then
-      PosY := (Screen.Height Div 2) - (Self.Height Div 2);
+    if (PosY > Screen.Height) or (PosY < 0) then
+      PosY := (Screen.Height div 2) - (Self.Height div 2);
 
     Self.Top := PosY;
     Self.Left := PosX;
-  End
-  Else
-  Begin
-    Self.Top := (Screen.Height Div 2) - (Self.Height Div 2);
-    Self.Left := (Screen.Width Div 2) - (Self.Width Div 2);
-  End;
+  end
+  else
+  begin
+    Self.Top := (Screen.Height div 2) - (Self.Height div 2);
+    Self.Left := (Screen.Width div 2) - (Self.Width div 2);
+  end;
 
   LayerDisplay := 1;
   UpdateLayout;
 
   SetMyZOrder;
 
-End;
+end;
 
 /// /////////////////////////////////////////////////////////////////////
 
-Procedure TLayoutViewer.ResizeMe(PICSRC: TImage; picSize: Integer);
-Var
+procedure TLayoutViewer.ResizeMe(PICSRC: TImage; picSize: Integer);
+var
   X, Y: Integer;
-  J: Integer;
+  J:    Integer;
 
-Begin
-  If Self.WindowState = wsMinimized Then
+begin
+  if Self.WindowState = wsMinimized then
     Self.WindowState := wsNormal;
 
-  X := (tmpPicture.ClientWidth Div 100) * picSize;
-  Y := (tmpPicture.ClientHeight Div 100) * picSize;
+  X := (tmpPicture.ClientWidth div 100) * picSize;
+  Y := (tmpPicture.ClientHeight div 100) * picSize;
 
-  If ((X) > Screen.Width) Then
-  Begin
+  if ((X) > Screen.Width) then
+  begin
     J := picSize;
-    While J >= 50 Do
-    Begin
-      X := (tmpPicture.ClientWidth Div 100) * J;
-      Y := (tmpPicture.ClientHeight Div 100) * J;
-      If (X < Screen.Width) Then
-      Begin
+    while J >= 50 do
+    begin
+      X := (tmpPicture.ClientWidth div 100) * J;
+      Y := (tmpPicture.ClientHeight div 100) * J;
+      if (X < Screen.Width) then
+      begin
         LayoutViewerSize := IntToStr(J) + '%';
         CurrentSize := J;
         Break;
-      End;
+      end;
       Dec(J, 10);
-    End;
-  End;
+    end;
+  end;
 
   picRSetMode.Width := X;
   picRSetMode.Height := Y;
-  ResizeImage(PICSRC, picRSetMode, tmpPicture.ClientWidth,
-    tmpPicture.ClientHeight, X, Y);
+  ResizeImage(PICSRC, picRSetMode, tmpPicture.ClientWidth, tmpPicture.ClientHeight, X, Y);
   picRSetMode.Refresh;
 
   // ========================================
 
-  If picRSetMode.Width < MINIMUM_WIDTH Then
+  if picRSetMode.Width < MINIMUM_WIDTH then
     Self.ClientWidth := MINIMUM_WIDTH
-  Else
+  else
     Self.ClientWidth := picRSetMode.Width;
 
-  If (picRSetMode.Top + picRSetMode.Height) < MINIMUM_HEIGHT Then
+  if (picRSetMode.Top + picRSetMode.Height) < MINIMUM_HEIGHT then
     Self.ClientHeight := MINIMUM_HEIGHT
-  Else
+  else
     Self.ClientHeight := picRSetMode.Top + picRSetMode.Height;
 
   picRSetMode.Left := (Self.ClientWidth - picRSetMode.Width) div 2;
 
-End;
+end;
 
 /// /////////////////////////////////////////////////////////////////////
 
-Procedure TLayoutViewer.ResizeImage(Var SourcePictureBox, DestinationPictureBox
-  : TImage; oldx, oldy, NewX, NewY: Integer);
-Begin
-  DestinationPictureBox.Picture := Nil;
+procedure TLayoutViewer.ResizeImage(var SourcePictureBox, DestinationPictureBox: TImage; oldx, oldy, NewX, NewY: Integer);
+begin
+  DestinationPictureBox.Picture := nil;
   SetStretchBltMode(DestinationPictureBox.Canvas.Handle, HALFTONE);
-  StretchBlt(DestinationPictureBox.Canvas.Handle, 0, 0, NewX, NewY,
-    SourcePictureBox.Canvas.Handle, 0, 0, oldx, oldy, SRCCOPY);
+  StretchBlt(DestinationPictureBox.Canvas.Handle, 0, 0, NewX, NewY, SourcePictureBox.Canvas.Handle, 0, 0, oldx, oldy, SRCCOPY);
   DestinationPictureBox.Refresh;
-End;
+end;
 
 /// /////////////////////////////////////////////////////////////////////
 
-Procedure TLayoutViewer.SetMyZOrder;
-Begin
-  If ShowLayoutOnTop = 'YES' Then
-  Begin
+procedure TLayoutViewer.SetMyZOrder;
+begin
+  if ShowLayoutOnTop = 'YES' then
+  begin
     TOPMOST(Self.Handle);
     but_OnTop.Down := True;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     NoTopMost(Self.Handle);
     but_OnTop.Down := False;
-  End;
-  If IsFormVisible('TopBar') = True Then
+  end;
+  if IsFormVisible('TopBar') = True then
     TOPMOST(TopBar.Handle);
-End;
+end;
 
 /// /////////////////////////////////////////////////////////////////////
 
-Procedure TLayoutViewer.UpdateImageSize(picSize: Integer);
-Var
+procedure TLayoutViewer.UpdateImageSize(picSize: Integer);
+var
   CurrentX, CurrentY: Integer;
-Begin
+begin
   LayoutViewerSize := IntToStr(picSize) + '%';
   CurrentSize := picSize;
 
-  If Lowercase(KeyboardLayout) = 'avrophonetic*' Then
-  Begin
-    If LayerDisplay = 1 Then
-    Begin
+  if Lowercase(KeyboardLayout) = 'avrophonetic*' then
+  begin
+    if LayerDisplay = 1 then
+    begin
       tmpPicture.Picture.Assign(Pic_LayoutNormal);
       ResizeMe(tmpPicture, picSize);
-    End
-    Else If LayerDisplay = 2 Then
-    Begin
-      picRSetMode.Picture := Nil;
-      tmpPicture.Picture := Nil;
-      CurrentX := (picRSetMode.ClientWidth Div 2) -
-        (picRSetMode.Canvas.TextWidth('No image To display!') Div 2);
-      CurrentY := (picRSetMode.ClientHeight Div 2) -
-        (picRSetMode.Canvas.TextHeight('No image To display!') Div 2);
+    end
+    else if LayerDisplay = 2 then
+    begin
+      picRSetMode.Picture := nil;
+      tmpPicture.Picture := nil;
+      CurrentX := (picRSetMode.ClientWidth div 2) - (picRSetMode.Canvas.TextWidth('No image To display!') div 2);
+      CurrentY := (picRSetMode.ClientHeight div 2) - (picRSetMode.Canvas.TextHeight('No image To display!') div 2);
       picRSetMode.Canvas.Brush.Style := bsClear;
       picRSetMode.Canvas.TextOut(CurrentX, CurrentY, 'No image To display!');
       picRSetMode.Refresh;
-    End;
-  End
-  Else
-  Begin
-    If LayerDisplay = 1 Then
-    Begin
-      If Not(Pic_LayoutNormal = Nil) Then
-      Begin
+    end;
+  end
+  else
+  begin
+    if LayerDisplay = 1 then
+    begin
+      if not(Pic_LayoutNormal = nil) then
+      begin
         tmpPicture.Picture.Assign(Pic_LayoutNormal);
         ResizeMe(tmpPicture, picSize);
-      End
-      Else
-      Begin
-        picRSetMode.Picture := Nil;
-        tmpPicture.Picture := Nil;
-        CurrentX := (picRSetMode.ClientWidth Div 2) -
-          (picRSetMode.Canvas.TextWidth('No image To display!') Div 2);
-        CurrentY := (picRSetMode.ClientHeight Div 2) -
-          (picRSetMode.Canvas.TextHeight('No image To display!') Div 2);
+      end
+      else
+      begin
+        picRSetMode.Picture := nil;
+        tmpPicture.Picture := nil;
+        CurrentX := (picRSetMode.ClientWidth div 2) - (picRSetMode.Canvas.TextWidth('No image To display!') div 2);
+        CurrentY := (picRSetMode.ClientHeight div 2) - (picRSetMode.Canvas.TextHeight('No image To display!') div 2);
         picRSetMode.Canvas.Brush.Style := bsClear;
         picRSetMode.Canvas.TextOut(CurrentX, CurrentY, 'No image To display!');
         picRSetMode.Refresh;
-      End;
-    End
-    Else If LayerDisplay = 2 Then
-    Begin
-      If Not(Pic_LayoutAltGr = Nil) Then
-      Begin
+      end;
+    end
+    else if LayerDisplay = 2 then
+    begin
+      if not(Pic_LayoutAltGr = nil) then
+      begin
         tmpPicture.Picture.Assign(Pic_LayoutAltGr);
         ResizeMe(tmpPicture, picSize);
-      End
-      Else
-      Begin
-        picRSetMode.Picture := Nil;
-        tmpPicture.Picture := Nil;
-        CurrentX := (picRSetMode.ClientWidth Div 2) -
-          (picRSetMode.Canvas.TextWidth('No image To display!') Div 2);
-        CurrentY := (picRSetMode.ClientHeight Div 2) -
-          (picRSetMode.Canvas.TextHeight('No image To display!') Div 2);
+      end
+      else
+      begin
+        picRSetMode.Picture := nil;
+        tmpPicture.Picture := nil;
+        CurrentX := (picRSetMode.ClientWidth div 2) - (picRSetMode.Canvas.TextWidth('No image To display!') div 2);
+        CurrentY := (picRSetMode.ClientHeight div 2) - (picRSetMode.Canvas.TextHeight('No image To display!') div 2);
         picRSetMode.Canvas.Brush.Style := bsClear;
         picRSetMode.Canvas.TextOut(CurrentX, CurrentY, 'No image To display!');
         picRSetMode.Refresh;
-      End;
-    End;
-  End;
-End;
+      end;
+    end;
+  end;
+end;
 
 /// /////////////////////////////////////////////////////////////////////
 
-Procedure TLayoutViewer.UpdateLayout;
-Var
-  KeyboardLayoutPath: String;
-Begin
+procedure TLayoutViewer.UpdateLayout;
+var
+  KeyboardLayoutPath: string;
+begin
   KeyboardLayout := AvroMainForm1.GetMyCurrentLayout;
-  If Lowercase(KeyboardLayout) = 'avrophonetic*' Then
-  Begin
+  if Lowercase(KeyboardLayout) = 'avrophonetic*' then
+  begin
     Caption := 'Avro Phonetic :: Layout Viewer';
     KeyboardLayoutPath := KeyboardLayout;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     Caption := KeyboardLayout + ' :: Layout Viewer';
-    KeyboardLayoutPath := GetAvroDataDir + 'Keyboard Layouts\' + KeyboardLayout
-      + '.avrolayout';
-  End;
+    KeyboardLayoutPath := GetAvroDataDir + 'Keyboard Layouts\' + KeyboardLayout + '.avrolayout';
+  end;
 
-  LoadKeyboardLayoutImages(KeyboardLayoutPath, Pic_LayoutNormal,
-    Pic_LayoutAltGr);
+  LoadKeyboardLayoutImages(KeyboardLayoutPath, Pic_LayoutNormal, Pic_LayoutAltGr);
   UpdateImageSize(CurrentSize);
-End;
+end;
 
 /// /////////////////////////////////////////////////////////////////////
 
-End.
+end.

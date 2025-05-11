@@ -26,151 +26,147 @@
 }
 
 {$INCLUDE ../ProjectDefines.inc}
-Unit u_VirtualFontInstall;
+unit u_VirtualFontInstall;
 
-Interface
+interface
 
-Uses
+uses
   Windows,
   SysUtils,
   classes,
   Messages;
 
-Procedure InstallVirtualFont(FontFilePath: String);
-Procedure RemoveVirtualFont(FontFilePath: String);
+procedure InstallVirtualFont(FontFilePath: string);
+procedure RemoveVirtualFont(FontFilePath: string);
 
 // Privately used
-Function GetTempDirectory: String;
-Function GetFontName(TTF_Path: String): String;
-Procedure CheckDeleteTempFile(fname: String);
+function GetTempDirectory: string;
+function GetFontName(TTF_Path: string): string;
+procedure CheckDeleteTempFile(fname: string);
 
-Implementation
+implementation
 
-Uses
+uses
   clsRegistry_XMLSetting;
 
 { =============================================================================== }
 
-Function GetTempDirectory: String;
-Var
-  tempFolder: Array [0 .. MAX_PATH] Of Char;
-Begin
+function GetTempDirectory: string;
+var
+  tempFolder: array [0 .. MAX_PATH] of Char;
+begin
   GetTempPath(MAX_PATH, @tempFolder);
   result := StrPas(tempFolder);
-End;
+end;
 
 { =============================================================================== }
 
-Procedure CheckDeleteTempFile(fname: String);
-Begin
-  If fileexists(fname) Then
+procedure CheckDeleteTempFile(fname: string);
+begin
+  if fileexists(fname) then
     DeleteFile(fname);
 
-End;
+end;
 
 { =============================================================================== }
 
-Function GetFontName(TTF_Path: String): String;
-Var
-  TempName, FontName, AInfo: String;
-  S: TFileStream;
-  APos: Integer;
-Begin
+function GetFontName(TTF_Path: string): string;
+var
+  TempName, FontName, AInfo: string;
+  S:                         TFileStream;
+  APos:                      Integer;
+begin
   TempName := GetTempDirectory + 'tmpfntavro.tmp';
   CheckDeleteTempFile(TempName);
 
-  If CreateScalableFontResource(0, // Hidden
-    pchar(TempName), // FON file
-    pchar(TTF_Path), // TTF file
-    Nil) { // Path - not required } Then
-  Begin
+  if CreateScalableFontResource(0, // Hidden
+    pchar(TempName),               // FON file
+    pchar(TTF_Path),               // TTF file
+    nil) { // Path - not required } then
+  begin
 
-  End;
+  end;
 
-  Try
+  try
     FontName := '';
-    S := TFileStream.Create(TempName, fmOpenRead Or fmShareDenyWrite);
-    Try
+    S := TFileStream.Create(TempName, fmOpenRead or fmShareDenyWrite);
+    try
       // Copy resource to string
       SetLength(AInfo, S.Size);
       S.Read(AInfo[1], S.Size);
       // Find FONTRES:
       APos := Pos('FONTRES:', AInfo);
       // This is followed by the font typeface name (null terminated)
-      If APos > 0 Then
+      if APos > 0 then
         FontName := pchar(@AInfo[APos + 8]);
-    Except
-      On e: exception Do
-      Begin
+    except
+      on e: exception do
+      begin
         // nothing
-      End;
-    End;
-  Finally
+      end;
+    end;
+  finally
     S.Free;
     CheckDeleteTempFile(TempName);
-  End;
+  end;
   result := FontName;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure InstallVirtualFont(FontFilePath: String);
-Var
-  PrevDefaultFixedFont, PrevDefaultPropFont, VirtualFontName: String;
-  Reg: TMyRegistry;
-Begin
+procedure InstallVirtualFont(FontFilePath: string);
+var
+  PrevDefaultFixedFont, PrevDefaultPropFont, VirtualFontName: string;
+  Reg:                                                        TMyRegistry;
+begin
   Reg := TMyRegistry.Create;
   AddFontResource(pchar(FontFilePath));
   VirtualFontName := GetFontName(FontFilePath);
 
   Reg.RootKey := HKEY_CURRENT_USER;
-  If Reg.OpenKey
-    ('Software\Microsoft\Internet Explorer\International\Scripts\11', True)
-    = True Then
-  Begin
+  if Reg.OpenKey('Software\Microsoft\Internet Explorer\International\Scripts\11', True) = True then
+  begin
     PrevDefaultFixedFont := trim(Reg.ReadString('IEFixedFontName'));
     PrevDefaultPropFont := trim(Reg.ReadString('IEPropFontName'));
 
-    If PrevDefaultFixedFont = '' Then
+    if PrevDefaultFixedFont = '' then
       PrevDefaultFixedFont := 'none';
-    If PrevDefaultPropFont = '' Then
+    if PrevDefaultPropFont = '' then
       PrevDefaultPropFont := 'none';
 
-    If trim(Reg.ReadString('IEFixedFontName_Prev')) = '' Then
+    if trim(Reg.ReadString('IEFixedFontName_Prev')) = '' then
       Reg.WriteString('IEFixedFontName_Prev', PrevDefaultFixedFont);
 
-    If trim(Reg.ReadString('IEPropFontName_Prev')) = '' Then
+    if trim(Reg.ReadString('IEPropFontName_Prev')) = '' then
       Reg.WriteString('IEPropFontName_Prev', PrevDefaultPropFont);
 
     Reg.WriteString('IEFixedFontName', VirtualFontName);
     Reg.WriteString('IEPropFontName', VirtualFontName);
 
-  End;
+  end;
 
   SendMessage(HWND_BROADCAST, WM_FONTCHANGE, 0, 0);
   FreeAndNil(Reg);
-End;
+end;
 
 { =============================================================================== }
 
-Procedure RemoveVirtualFont(FontFilePath: String);
-Var
-  PrevDefaultFixedFont, PrevDefaultPropFont: String;
-  Reg: TMyRegistry;
-Begin
+procedure RemoveVirtualFont(FontFilePath: string);
+var
+  PrevDefaultFixedFont, PrevDefaultPropFont: string;
+  Reg:                                       TMyRegistry;
+begin
   Reg := TMyRegistry.Create;
   RemoveFontResource(pchar(FontFilePath));
 
-  If Reg.OpenKey
-    ('Software\Microsoft\Internet Explorer\International\Scripts\11', True)
-    = True Then
-  Begin
+  if Reg.OpenKey('Software\Microsoft\Internet Explorer\International\Scripts\11', True) = True then
+  begin
     PrevDefaultFixedFont := trim(Reg.ReadString('IEFixedFontName_Prev'));
     PrevDefaultPropFont := trim(Reg.ReadString('IEPropFontName_Prev'));
 
-    If PrevDefaultFixedFont = 'none' Then
+    if PrevDefaultFixedFont = 'none' then
       PrevDefaultFixedFont := '';
-    If PrevDefaultPropFont = 'none' Then
+    if PrevDefaultPropFont = 'none' then
       PrevDefaultPropFont := '';
 
     Reg.DeleteValue('IEFixedFontName_Prev');
@@ -179,10 +175,10 @@ Begin
     Reg.WriteString('IEFixedFontName', PrevDefaultFixedFont);
     Reg.WriteString('IEPropFontName', PrevDefaultPropFont);
 
-  End;
+  end;
 
   SendMessage(HWND_BROADCAST, WM_FONTCHANGE, 0, 0);
   FreeAndNil(Reg);
-End;
+end;
 
-End.
+end.

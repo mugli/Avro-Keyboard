@@ -34,29 +34,29 @@
 // NORMAL_PRIORITY_CLASS
 // REALTIME_PRIORITY_CLASS
 
-Unit uProcessHandler;
+unit uProcessHandler;
 
-Interface
+interface
 
-Uses
+uses
   Windows;
 
-Procedure Set_Process_Priority(Const xPriority: Integer);
+procedure Set_Process_Priority(const xPriority: Integer);
 
-Implementation
+implementation
 
 { =============================================================================== }
 
-Procedure Set_Process_Priority(Const xPriority: Integer);
-Begin
+procedure Set_Process_Priority(const xPriority: Integer);
+begin
   // Supported values:
   // HIGH_PRIORITY_CLASS
   // IDLE_PRIORITY_CLASS
   // NORMAL_PRIORITY_CLASS
   // REALTIME_PRIORITY_CLASS
   SetPriorityClass(GetCurrentProcess(), xPriority);
-End;
+end;
 
 { =============================================================================== }
 
-End.
+end.

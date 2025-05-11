@@ -25,7 +25,7 @@
   =============================================================================
 }
 
-Program Avro_Spell_Checker;
+program Avro_Spell_Checker;
 
 uses
   Forms,
@@ -40,15 +40,19 @@ uses
   uWindowHandlers in '..\Units\uWindowHandlers.pas',
   clsFileVersion in '..\Classes\clsFileVersion.pas',
   clsRegistry_XMLSetting in 'clsRegistry_XMLSetting.pas',
-  WindowsVersion in '..\Units\WindowsVersion.pas';
+  WindowsVersion in '..\Units\WindowsVersion.pas',
+  WindowsDarkMode in '..\Units\WindowsDarkMode.pas',
+  Vcl.Themes,
+  Vcl.Styles;
 
 {$R *.res}
 
-Begin
+begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
+  TStyleManager.TrySetStyle('Windows10');
   Application.Title := 'Avro Spell Checker';
   Application.CreateForm(TfrmSpell, frmSpell);
   Application.Run;
 
-End.
+end.

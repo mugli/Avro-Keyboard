@@ -28,11 +28,11 @@
 {$INCLUDE ../ProjectDefines.inc}
 { COMPLETE TRANSFERING! }
 
-Unit uAutoCorrect;
+unit uAutoCorrect;
 
-Interface
+interface
 
-Uses
+uses
   Windows,
   Classes,
   SysUtils,
@@ -41,72 +41,69 @@ Uses
   Forms,
   uFileFolderHandling;
 
-Procedure InitDict;
-Procedure LoadDict;
-Procedure DestroyDict;
+procedure InitDict;
+procedure LoadDict;
+procedure DestroyDict;
 
-Var
-  Dict: TDictionary<String, String>;
+var
+  Dict: TDictionary<string, string>;
 
-Implementation
+implementation
 
 { =============================================================================== }
 
-Procedure InitDict;
-Begin
-  Dict := TDictionary<String, String>.create;
+procedure InitDict;
+begin
+  Dict := TDictionary<string, string>.create;
   LoadDict;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure DestroyDict;
-Begin
+procedure DestroyDict;
+begin
   FreeAndNil(Dict);
-End;
+end;
 
 { =============================================================================== }
 
-Procedure LoadDict;
-Var
-  List: TStringList;
-  I, P: Integer;
-  Path: String;
-  FirstPart, SecondPart: String;
-Begin
-  Try
-    Try
+procedure LoadDict;
+var
+  List:                  TStringList;
+  I, P:                  Integer;
+  Path:                  string;
+  FirstPart, SecondPart: string;
+begin
+  try
+    try
       List := TStringList.create;
       Path := GetAvroDataDir + 'autodict.dct';
       List.LoadFromFile(Path);
 
-      For I := 0 To List.Count - 1 Do
-      Begin
-        If (LeftStr(Trim(List[I]), 1) <> '/') And (Trim(List[I]) <> '') Then
-        Begin
+      for I := 0 to List.Count - 1 do
+      begin
+        if (LeftStr(Trim(List[I]), 1) <> '/') and (Trim(List[I]) <> '') then
+        begin
           P := Pos(' ', Trim(List[I]));
           FirstPart := LeftStr(Trim(List[I]), P - 1);
           SecondPart := MidStr(Trim(List[I]), P + 1, Length(Trim(List[I])));
           Dict.AddOrSetValue(FirstPart, SecondPart);
-        End;
-      End;
-    Except
-      On E: Exception Do
-      Begin
-        Application.MessageBox(Pchar('Cannot load auto-correct dictionary!' +
-          #10 + '' + #10 + '-> Make sure ''autodict.dct'' file is present in ' +
-          Path + ' folder, or' + #10 +
-          '-> ''autodict.dct'' file is not corrupt.' + #10 + '' + #10 +
-          'Reinstalling Avro Keyboard may solve this problem.'),
+        end;
+      end;
+    except
+      on E: Exception do
+      begin
+        Application.MessageBox(Pchar('Cannot load auto-correct dictionary!' + #10 + '' + #10 + '-> Make sure ''autodict.dct'' file is present in ' + Path +
+              ' folder, or' + #10 + '-> ''autodict.dct'' file is not corrupt.' + #10 + '' + #10 + 'Reinstalling Avro Keyboard may solve this problem.'),
           'Avro Keyboard', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
-      End;
-    End;
-  Finally
+      end;
+    end;
+  finally
     FreeAndNil(List);
-  End;
+  end;
 
-End;
+end;
 
 { =============================================================================== }
 
-End.
+end.

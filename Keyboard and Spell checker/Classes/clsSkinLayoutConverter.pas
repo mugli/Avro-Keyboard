@@ -25,14 +25,15 @@
   =============================================================================
 }
 
-Unit clsSkinLayoutConverter;
+unit clsSkinLayoutConverter;
 
-Interface
+interface
 
-Uses
+uses
   classes,
   dialogs,
-  XMLIntf, XMLDoc,
+  XMLIntf,
+  XMLDoc,
   Soap.EncdDecd,
   jpeg,
   GIFImg,
@@ -41,52 +42,52 @@ Uses
   StrUtils,
   Forms;
 
-Type
-  TSkinLayoutConverter = Class
-  Private
-    mPath: String;
-    OldXML, NewXML: IXMLDocument;
-    OldNode: IXmlNode;
+type
+  TSkinLayoutConverter = class
+    private
+      mPath:          string;
+      OldXML, NewXML: IXMLDocument;
+      OldNode:        IXmlNode;
 
-    child: IXmlNode;
-    CdataChild: IXmlNode;
-    KeyData: IXmlNode;
+      child:      IXmlNode;
+      CdataChild: IXmlNode;
+      KeyData:    IXmlNode;
 
-    Procedure CopyCDataNode(Nodename: UTF8String);
-    Procedure CopyNode(Nodename: UTF8String);
-    Procedure CreateVersionNode;
-    Procedure CopyImageNode(Nodename: UTF8String);
-    Procedure CopyKeyDataNodes;
-    Function NeedConversion: Boolean;
-    Procedure CheckCreateXMLObject;
-  Public
-    Constructor Create; // Initializer
-    Destructor Destroy; Override;
-    Function CheckConvertSkin(Path: String): Boolean;
-    Function CheckConvertLayout(Path: String): Boolean;
-  End;
+      procedure CopyCDataNode(Nodename: UTF8String);
+      procedure CopyNode(Nodename: UTF8String);
+      procedure CreateVersionNode;
+      procedure CopyImageNode(Nodename: UTF8String);
+      procedure CopyKeyDataNodes;
+      function NeedConversion: Boolean;
+      procedure CheckCreateXMLObject;
+    public
+      constructor Create; // Initializer
+      destructor Destroy; override;
+      function CheckConvertSkin(Path: string): Boolean;
+      function CheckConvertLayout(Path: string): Boolean;
+  end;
 
-Const
-  AvroKeyboardVersion: String = '5';
+const
+  AvroKeyboardVersion: string = '5';
 
-Implementation
+implementation
 
 { TSkinLayoutConverter }
 
 { =============================================================================== }
 
-Function TSkinLayoutConverter.CheckConvertLayout(Path: String): Boolean;
-Begin
+function TSkinLayoutConverter.CheckConvertLayout(Path: string): Boolean;
+begin
   result := False;
   mPath := Path;
   CheckCreateXMLObject;
 
-  Try
-    Try
+  try
+    try
       OldXML.LoadFromFile(mPath);
       Application.ProcessMessages;
 
-      If Not NeedConversion Then
+      if not NeedConversion then
         exit;
 
       // NewXML.Root.Name := 'Layout';
@@ -103,40 +104,40 @@ Begin
       CopyKeyDataNodes;
 
       OldXML.Active := False;
-      OldXML := Nil;
+      OldXML := nil;
       NewXML.XML.Text := XMLDoc.FormatXMLData(NewXML.XML.Text);
       NewXML.Active := true;
       NewXML.SaveToFile(Path);
       result := true;
-    Except
-      On E: Exception Do
-      Begin
+    except
+      on E: Exception do
+      begin
         result := False;
-      End;
-    End;
-  Finally
+      end;
+    end;
+  finally
     OldXML.Active := False;
-    OldXML := Nil;
+    OldXML := nil;
     NewXML.Active := False;
-    NewXML := Nil;
+    NewXML := nil;
     Application.ProcessMessages;
-  End;
+  end;
 
-End;
+end;
 
 { =============================================================================== }
 
-Function TSkinLayoutConverter.CheckConvertSkin(Path: String): Boolean;
-Begin
+function TSkinLayoutConverter.CheckConvertSkin(Path: string): Boolean;
+begin
   result := False;
   mPath := Path;
   CheckCreateXMLObject;
 
-  Try
-    Try
+  try
+    try
       OldXML.LoadFromFile(mPath);
 
-      If Not NeedConversion Then
+      if not NeedConversion then
         exit;
 
       // NewXML.Root.Name := 'Layout';
@@ -250,36 +251,36 @@ Begin
       CopyNode('ExitTop');
 
       OldXML.Active := False;
-      OldXML := Nil;
+      OldXML := nil;
       NewXML.XML.Text := XMLDoc.FormatXMLData(NewXML.XML.Text);
       NewXML.Active := true;
       NewXML.SaveToFile(Path);
       result := true;
-    Except
-      On E: Exception Do
-      Begin
+    except
+      on E: Exception do
+      begin
         result := False;
-      End;
-    End;
-  Finally
+      end;
+    end;
+  finally
 
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TSkinLayoutConverter.CheckCreateXMLObject;
-Begin
+procedure TSkinLayoutConverter.CheckCreateXMLObject;
+begin
   if OldXML <> nil then
   begin
 
     OldXML.Active := False;
-    OldXML := Nil;
+    OldXML := nil;
   end;
   if NewXML <> nil then
   begin
     NewXML.Active := False;
-    NewXML := Nil;
+    NewXML := nil;
   end;
 
   OldXML := TXMLDocument.Create(nil);
@@ -293,63 +294,61 @@ Begin
   NewXML.Encoding := 'UTF-8';
 
   Application.ProcessMessages;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TSkinLayoutConverter.CopyCDataNode(Nodename: UTF8String);
-Begin
-  Try
+procedure TSkinLayoutConverter.CopyCDataNode(Nodename: UTF8String);
+begin
+  try
     child := NewXML.DocumentElement.AddChild(Nodename);
     CdataChild := child.AddChild(Nodename);
     // CdataChild.ElementType := xeCData;
-    CdataChild.NodeValue := OldXML.DocumentElement.ChildNodes.Nodes[0]
-      .ChildNodes.FindNode(Nodename).ChildNodes.Nodes[0].NodeValue;
-  Except
-    On E: Exception Do
-    Begin
+    CdataChild.NodeValue := OldXML.DocumentElement.ChildNodes.Nodes[0].ChildNodes.FindNode(Nodename).ChildNodes.Nodes[0].NodeValue;
+  except
+    on E: Exception do
+    begin
 
-    End;
-  End;
+    end;
+  end;
   Application.ProcessMessages;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TSkinLayoutConverter.CopyImageNode(Nodename: UTF8String);
-Var
+procedure TSkinLayoutConverter.CopyImageNode(Nodename: UTF8String);
+var
   OldSStream, NewSStream: TStringStream;
-  JpegImg: TjpegImage;
-  GIFImg: TGifImage;
-  BMPImg, Bitmap: TBitmap;
-  Successful: Boolean;
+  JpegImg:                TjpegImage;
+  GIFImg:                 TGifImage;
+  BMPImg, Bitmap:         TBitmap;
+  Successful:             Boolean;
 
 var
   s, Encoded: string;
 
-Begin
-  Try
+begin
+  try
 
-    s := OldXML.DocumentElement.ChildNodes.Nodes[0].ChildNodes.FindNode
-      (Nodename).NodeValue;
+    s := OldXML.DocumentElement.ChildNodes.Nodes[0].ChildNodes.FindNode(Nodename).NodeValue;
 
     OldSStream := TStringStream.Create(EncodeBase64(pchar(s), length(s)));
-  Except
-    On E: Exception Do
-    Begin
+  except
+    on E: Exception do
+    begin
 
-    End;
-  End;
+    end;
+  end;
   Application.ProcessMessages;
 
-  If OldSStream.Size > 0 Then
-  Begin
+  if OldSStream.Size > 0 then
+  begin
     Successful := False;
 
     // Try Gif
-    If Not Successful Then
-    Begin
-      Try
+    if not Successful then
+    begin
+      try
         GIFImg := TGifImage.Create;
         OldSStream.Position := 0;
         GIFImg.LoadFromStream(OldSStream);
@@ -361,19 +360,19 @@ Begin
         FreeAndNil(GIFImg);
         FreeAndNil(Bitmap);
         Successful := true;
-      Except
-        On E: Exception Do
-        Begin
+      except
+        on E: Exception do
+        begin
           Successful := False;
-        End;
-      End;
-    End;
+        end;
+      end;
+    end;
     Application.ProcessMessages;
 
     // Try JPG
-    If Not Successful Then
-    Begin
-      Try
+    if not Successful then
+    begin
+      try
         JpegImg := TjpegImage.Create;
         OldSStream.Position := 0;
         JpegImg.LoadFromStream(OldSStream);
@@ -385,19 +384,19 @@ Begin
         FreeAndNil(JpegImg);
         FreeAndNil(Bitmap);
         Successful := true;
-      Except
-        On E: Exception Do
-        Begin
+      except
+        on E: Exception do
+        begin
           Successful := False;
-        End;
-      End;
-    End;
+        end;
+      end;
+    end;
     Application.ProcessMessages;
 
     // Try BMP
-    If Not Successful Then
-    Begin
-      Try
+    if not Successful then
+    begin
+      try
         BMPImg := TBitmap.Create;
         OldSStream.Position := 0;
         BMPImg.LoadFromStream(OldSStream);
@@ -406,188 +405,179 @@ Begin
         BMPImg.SaveToStream(NewSStream);
         FreeAndNil(BMPImg);
         Successful := true;
-      Except
-        On E: Exception Do
-        Begin
+      except
+        on E: Exception do
+        begin
           Successful := False;
-        End;
-      End;
-    End;
+        end;
+      end;
+    end;
 
     Application.ProcessMessages;
 
-  End;
+  end;
 
-  Try
+  try
     child := NewXML.DocumentElement.AddChild(Nodename);
     // child.BinaryEncoding := xbeBase64;
     child.NodeValue := NewSStream.DataString;
-  Except
-    On E: Exception Do
-    Begin
+  except
+    on E: Exception do
+    begin
 
-    End;
-  End;
+    end;
+  end;
   Application.ProcessMessages;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TSkinLayoutConverter.CopyKeyDataNodes;
-Var
+procedure TSkinLayoutConverter.CopyKeyDataNodes;
+var
   I: Integer;
-Begin
-  Try
+begin
+  try
     KeyData := NewXML.DocumentElement.AddChild('KeyData');
     OldNode := OldXML.DocumentElement.ChildNodes.FindNode('KeyData');
 
-    For I := 0 To OldNode.ChildNodes.Count - 1 Do
-    Begin
+    for I := 0 to OldNode.ChildNodes.Count - 1 do
+    begin
 
       Application.ProcessMessages;
 
-      If LowerCase(LeftStr(String(OldNode.ChildNodes.Nodes[I].Nodename), 3)) <>
-        'num' Then
-      Begin
-        If OldNode.ChildNodes.Nodes[I].ChildNodes.Count <= 0 Then
-        Begin
+      if LowerCase(LeftStr(string(OldNode.ChildNodes.Nodes[I].Nodename), 3)) <> 'num' then
+      begin
+        if OldNode.ChildNodes.Nodes[I].ChildNodes.Count <= 0 then
+        begin
           // If item has no cdata
-          child := KeyData.AddChild('Key_' + OldNode.ChildNodes.Nodes[I]
-            .Nodename);
-          CdataChild := child.AddChild('Key_' + OldNode.ChildNodes.Nodes[I]
-            .Nodename);
+          child := KeyData.AddChild('Key_' + OldNode.ChildNodes.Nodes[I].Nodename);
+          CdataChild := child.AddChild('Key_' + OldNode.ChildNodes.Nodes[I].Nodename);
           // CdataChild.ElementType := xeCData;
           CdataChild.NodeValue := '';
-        End
-        Else
-        Begin
+        end
+        else
+        begin
           // if item has cdata
-          child := KeyData.AddChild('Key_' + OldNode.ChildNodes.Nodes[I]
-            .Nodename);
-          CdataChild := child.AddChild('Key_' + OldNode.ChildNodes.Nodes[I]
-            .Nodename);
+          child := KeyData.AddChild('Key_' + OldNode.ChildNodes.Nodes[I].Nodename);
+          CdataChild := child.AddChild('Key_' + OldNode.ChildNodes.Nodes[I].Nodename);
           // CdataChild.ElementType := xeCData;
-          CdataChild.NodeValue := OldNode.ChildNodes.Nodes[I].ChildNodes.Nodes
-            [0].NodeValue;
-        End;
-      End
-      Else
-      Begin
-        If OldNode.ChildNodes.Nodes[I].ChildNodes.Count <= 0 Then
-        Begin
+          CdataChild.NodeValue := OldNode.ChildNodes.Nodes[I].ChildNodes.Nodes[0].NodeValue;
+        end;
+      end
+      else
+      begin
+        if OldNode.ChildNodes.Nodes[I].ChildNodes.Count <= 0 then
+        begin
           // If item has no cdata
           child := KeyData.AddChild(OldNode.ChildNodes.Nodes[I].Nodename);
           CdataChild := child.AddChild(OldNode.ChildNodes.Nodes[I].Nodename);
           // CdataChild.ElementType := xeCData;
           CdataChild.NodeValue := '';
-        End
-        Else
-        Begin
+        end
+        else
+        begin
           // if item has cdata
           child := KeyData.AddChild(OldNode.ChildNodes.Nodes[I].Nodename);
           CdataChild := child.AddChild(OldNode.ChildNodes.Nodes[I].Nodename);
           // CdataChild.ElementType := xeCData;
-          CdataChild.NodeValue := OldNode.ChildNodes.Nodes[I].ChildNodes.Nodes
-            [0].NodeValue;
-        End;
-      End;
-    End;
-  Except
-    On E: Exception Do
-    Begin
+          CdataChild.NodeValue := OldNode.ChildNodes.Nodes[I].ChildNodes.Nodes[0].NodeValue;
+        end;
+      end;
+    end;
+  except
+    on E: Exception do
+    begin
 
-    End;
+    end;
 
-  End;
+  end;
 
   Application.ProcessMessages;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TSkinLayoutConverter.CopyNode(Nodename: UTF8String);
-Begin
-  Try
+procedure TSkinLayoutConverter.CopyNode(Nodename: UTF8String);
+begin
+  try
     child := NewXML.DocumentElement.AddChild(Nodename);
-    child.NodeValue := OldXML.DocumentElement.ChildNodes.Nodes[0]
-      .ChildNodes.FindNode(Nodename).NodeValue;
-  Except
-    On E: Exception Do
-    Begin
+    child.NodeValue := OldXML.DocumentElement.ChildNodes.Nodes[0].ChildNodes.FindNode(Nodename).NodeValue;
+  except
+    on E: Exception do
+    begin
 
-    End;
-  End;
-End;
+    end;
+  end;
+end;
 
 { =============================================================================== }
 
-Constructor TSkinLayoutConverter.Create;
-Begin
-  Inherited; // Call the parent Create method
+constructor TSkinLayoutConverter.Create;
+begin
+  inherited; // Call the parent Create method
 
   CheckCreateXMLObject;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TSkinLayoutConverter.CreateVersionNode;
-Begin
-  Try
+procedure TSkinLayoutConverter.CreateVersionNode;
+begin
+  try
     child := NewXML.DocumentElement.AddChild('AvroKeyboardVersion');
     child.NodeValue := AvroKeyboardVersion;
-  Except
-    On E: Exception Do
-    Begin
+  except
+    on E: Exception do
+    begin
 
-    End;
-  End;
+    end;
+  end;
   Application.ProcessMessages;
-End;
+end;
 
 { =============================================================================== }
 
-Destructor TSkinLayoutConverter.Destroy;
-Begin
+destructor TSkinLayoutConverter.Destroy;
+begin
   if OldXML <> nil then
   begin
     OldXML.Active := False;
-    OldXML := Nil;
+    OldXML := nil;
   end;
   if NewXML <> nil then
   begin
     NewXML.Active := False;
-    NewXML := Nil;
+    NewXML := nil;
   end;
   // Always call the parent destructor after running all codes
-  Inherited;
-End;
+  inherited;
+end;
 
 { =============================================================================== }
 
-Function TSkinLayoutConverter.NeedConversion: Boolean;
-Var
-  AvroVer: String;
-Begin
-  Try
+function TSkinLayoutConverter.NeedConversion: Boolean;
+var
+  AvroVer: string;
+begin
+  try
 
-    AvroVer := trim(OldXML.DocumentElement.ChildNodes.FindNode
-      ('AvroKeyboardVersion').NodeValue);
-  Except
-    On E: Exception Do
-    Begin
+    AvroVer := trim(OldXML.DocumentElement.ChildNodes.FindNode('AvroKeyboardVersion').NodeValue);
+  except
+    on E: Exception do
+    begin
 
-    End;
-  End;
+    end;
+  end;
 
-  If AvroVer = '4' Then
+  if AvroVer = '4' then
     result := true
-  Else If AvroVer = '5' Then
+  else if AvroVer = '5' then
     result := False
-  Else
+  else
     result := False;
 
-End;
+end;
 
 { =============================================================================== }
 
-End.
+end.

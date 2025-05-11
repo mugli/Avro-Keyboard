@@ -33,9 +33,26 @@ unit ufrmPrevW;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  GIFImg, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Dialogs, Buttons, Generics.Collections,
-  StrUtils, Menus, OleAcc, DebugLog, System.Threading, System.SyncObjs;
+  Windows,
+  Messages,
+  SysUtils,
+  Variants,
+  Classes,
+  Graphics,
+  Controls,
+  Forms,
+  GIFImg,
+  Vcl.ExtCtrls,
+  Vcl.StdCtrls,
+  Vcl.Dialogs,
+  Buttons,
+  Generics.Collections,
+  StrUtils,
+  Menus,
+  OleAcc,
+  DebugLog,
+  System.Threading,
+  System.SyncObjs;
 
 type
   TfrmPrevW = class(TForm)
@@ -74,44 +91,44 @@ type
     procedure lblCaptionMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure ButtonMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure ListClick(Sender: TObject);
-  private
-    { Private declarations }
+    private
+      { Private declarations }
 
-    // Globals
-    PreviewWCurrentlyVisible: Boolean;
-    MouseDown: Boolean;
+      // Globals
+      PreviewWCurrentlyVisible: Boolean;
+      MouseDown:                Boolean;
 
-    function FindCaretPosWindow(out X, Y: Integer): Boolean;
-    function GetCaretScreenPos_MSAA(out X, Y: Integer): Boolean;
-    function GetCaretScreenPos_Raw(out X, Y: Integer): Boolean;
-    procedure FindCaretAndMoveWindow();
+      function FindCaretPosWindow(out X, Y: Integer): Boolean;
+      function GetCaretScreenPos_MSAA(out X, Y: Integer): Boolean;
+      function GetCaretScreenPos_Raw(out X, Y: Integer): Boolean;
+      procedure FindCaretAndMoveWindow();
 
-    procedure InitPreviewWindowAtAppStart;
-    procedure DelayedExecute(DelayMs: Integer; Proc: TThreadMethod);
+      procedure InitPreviewWindowAtAppStart;
+      procedure DelayedExecute(DelayMs: Integer; Proc: TThreadMethod);
 
-    function ShouldShowWindow(): Boolean;
-    function ShouldFollowCaret(hforewnd: HWND): Boolean;
-    procedure ToggleFollowCaret();
-    procedure TurnOffFollowingCaret();
+      function ShouldShowWindow(): Boolean;
+      function ShouldFollowCaret(hforewnd: HWND): Boolean;
+      procedure ToggleFollowCaret();
+      procedure TurnOffFollowingCaret();
 
-    procedure MoveWindow(X, Y: Integer);
-  public
-    { Public declarations }
+      procedure MoveWindow(X, Y: Integer);
+    public
+      { Public declarations }
 
-    function IsPreviewVisible(): Boolean;
-    procedure UpdatePreviewCaption(const EnglishT: string);
+      function IsPreviewVisible(): Boolean;
+      procedure UpdatePreviewCaption(const EnglishT: string);
 
-    procedure HidePreview;
-    procedure ShowPreview;
-    procedure UpdateListHeight;
+      procedure HidePreview;
+      procedure ShowPreview;
+      procedure UpdateListHeight;
 
-    procedure SelectFirstItem;
-    procedure SelectNItem(const ItemNumber: Integer);
-    procedure SelectItem(const Item: string);
-    procedure SelectNextItem;
-    procedure SelectPrevItem;
-  protected
-    procedure CreateParams(var Params: TCreateParams); override;
+      procedure SelectFirstItem;
+      procedure SelectNItem(const ItemNumber: Integer);
+      procedure SelectItem(const Item: string);
+      procedure SelectNextItem;
+      procedure SelectPrevItem;
+    protected
+      procedure CreateParams(var Params: TCreateParams); override;
 
   end;
 
@@ -123,20 +140,23 @@ implementation
 {$R *.dfm}
 
 uses
-  uWindowHandlers, uTopBar, uForm1, BanglaChars, uRegistrySettings;
-
+  uWindowHandlers,
+  uTopBar,
+  uForm1,
+  BanglaChars,
+  uRegistrySettings;
 
 { =============================================================================== }
 
 // MSAA works with Chrome, Firefox etc.
 function TfrmPrevW.GetCaretScreenPos_MSAA(out X, Y: Integer): Boolean;
 var
-  Acc: IAccessible;
-  VarChild: OleVariant;
+  Acc:                                     IAccessible;
+  VarChild:                                OleVariant;
   CaretX, CaretY, CaretWidth, CaretHeight: Integer;
-  Handle: HWND;
-  CaretPos: TPoint;
-  LocResult: HRESULT;
+  Handle:                                  HWND;
+  CaretPos:                                TPoint;
+  LocResult:                               HRESULT;
 begin
   Result := False;
   X := -1;
@@ -180,9 +200,9 @@ end;
 // Fallback: Raw Caret Position, works with classic win32 applications
 function TfrmPrevW.GetCaretScreenPos_Raw(out X, Y: Integer): Boolean;
 var
-  ThreadID: DWORD;
-  GUIInfo: TGUIThreadInfo;
-  CaretPos: TPoint;
+  ThreadID:      DWORD;
+  GUIInfo:       TGUIThreadInfo;
+  CaretPos:      TPoint;
   ForegroundWnd: HWND;
 begin
   Result := False;
@@ -265,10 +285,10 @@ end;
 function TfrmPrevW.ShouldFollowCaret(hforewnd: HWND): Boolean;
 begin
   // No need to follow if the preview is turned off in settings
-  if not (ShowPrevWindow = 'YES') then
+  if not(ShowPrevWindow = 'YES') then
   begin
     Result := False;
-    exit;
+    Exit;
   end;
 
   if (hforewnd = 0) or (hforewnd = self.Handle) then
@@ -297,8 +317,8 @@ end;
 
 procedure TfrmPrevW.FindCaretAndMoveWindow();
 var
-  Handle: HWND;
-  X, Y: Integer;
+  Handle:     HWND;
+  X, Y:       Integer;
   FoundCaret: Boolean;
 begin
   Handle := GetForegroundWindow;
@@ -317,8 +337,8 @@ end;
 
 procedure TfrmPrevW.UpdatePreviewCaption(const EnglishT: string);
 var
-  Handle: HWND;
-  X, Y: Integer;
+  Handle:     HWND;
+  X, Y:       Integer;
   FoundCaret: Boolean;
 begin
   lblPreview.Caption := EnglishT;
@@ -361,8 +381,8 @@ end;
 
 procedure TfrmPrevW.InitPreviewWindowAtAppStart();
 var
-  hforewnd: HWND;
-  TID, mID: DWORD;
+  hforewnd:             HWND;
+  TID, mID:             DWORD;
   WndCaption, WndClass: string;
 begin
   self.Show;
@@ -464,7 +484,7 @@ procedure TfrmPrevW.ImgTitleBarMouseMove(Sender: TObject; Shift: TShiftState; X,
 begin
   if MouseDown then
   begin
-    MoveWindow(Self.Left + X, Self.Top + Y);
+    MoveWindow(self.Left + X, self.Top + Y);
 
     TurnOffFollowingCaret;
   end;
@@ -490,7 +510,7 @@ procedure TfrmPrevW.lblCaptionMouseMove(Sender: TObject; Shift: TShiftState; X, 
 begin
   if MouseDown then
   begin
-    MoveWindow(Self.Left + X, Self.Top + Y);
+    MoveWindow(self.Left + X, self.Top + Y);
 
     TurnOffFollowingCaret;
   end;
@@ -619,7 +639,7 @@ end;
 
 procedure TfrmPrevW.SelectNextItem;
 var
-  I: Integer;
+  I:     Integer;
   Total: Integer;
 begin
   I := List.ItemIndex;
@@ -649,7 +669,7 @@ end;
 
 procedure TfrmPrevW.SelectPrevItem;
 var
-  I: Integer;
+  I:     Integer;
   Total: Integer;
 begin
   I := List.ItemIndex;
@@ -686,4 +706,3 @@ begin
 end;
 
 end.
-

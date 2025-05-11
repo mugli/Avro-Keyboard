@@ -28,11 +28,11 @@
 {$INCLUDE ../ProjectDefines.inc}
 { COMPLETE TRANSFERING! }
 
-Unit ufrmAutoCorrect;
+unit ufrmAutoCorrect;
 
-Interface
+interface
 
-Uses
+uses
   Windows,
   Messages,
   SysUtils,
@@ -51,8 +51,8 @@ Uses
   StrUtils,
   Generics.Collections;
 
-Type
-  TfrmAutoCorrect = Class(TForm)
+type
+  TfrmAutoCorrect = class(TForm)
     List: TListView;
     cmdSave: TButton;
     cmdCancel: TButton;
@@ -70,109 +70,108 @@ Type
     cmdAdd: TButton;
     cmdImport: TButton;
     OpenDialog1: TOpenDialog;
-    Procedure FormCreate(Sender: TObject);
-    Procedure ListSelectItem(Sender: TObject; Item: TListItem;
-      Selected: Boolean);
-    Procedure ReplaceTChange(Sender: TObject);
-    Procedure WithTChange(Sender: TObject);
-    Procedure WithTKeyPress(Sender: TObject; Var Key: Char);
-    Procedure ReplaceTKeyPress(Sender: TObject; Var Key: Char);
-    Procedure FormClose(Sender: TObject; Var Action: TCloseAction);
-    Procedure cmdCancelClick(Sender: TObject);
-    Procedure cmdClearClick(Sender: TObject);
-    Procedure cmdDelClick(Sender: TObject);
-    Procedure cmdAddClick(Sender: TObject);
-    Procedure cmdSaveClick(Sender: TObject);
-    Procedure CheckOnTopClick(Sender: TObject);
-    Procedure FormKeyDown(Sender: TObject; Var Key: Word; Shift: TShiftState);
-    Procedure cmdImportClick(Sender: TObject);
-  Private
-    { Private declarations }
-    Phonetic: TEnglishToBangla;
-    Function FindListItem(Const SearchStr: String): TListItem;
-    Procedure ButtonState;
-    Function Save: Boolean;
+    procedure FormCreate(Sender: TObject);
+    procedure ListSelectItem(Sender: TObject; Item: TListItem; Selected: Boolean);
+    procedure ReplaceTChange(Sender: TObject);
+    procedure WithTChange(Sender: TObject);
+    procedure WithTKeyPress(Sender: TObject; var Key: Char);
+    procedure ReplaceTKeyPress(Sender: TObject; var Key: Char);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure cmdCancelClick(Sender: TObject);
+    procedure cmdClearClick(Sender: TObject);
+    procedure cmdDelClick(Sender: TObject);
+    procedure cmdAddClick(Sender: TObject);
+    procedure cmdSaveClick(Sender: TObject);
+    procedure CheckOnTopClick(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure cmdImportClick(Sender: TObject);
+    private
+      { Private declarations }
+      Phonetic: TEnglishToBangla;
+      function FindListItem(const SearchStr: string): TListItem;
+      procedure ButtonState;
+      function Save: Boolean;
 
-  Public
-    { Public declarations }
-  Protected
-    Procedure CreateParams(Var Params: TCreateParams); Override;
-  End;
+    public
+      { Public declarations }
+    protected
+      procedure CreateParams(var Params: TCreateParams); override;
+  end;
 
-Var
+var
   frmAutoCorrect: TfrmAutoCorrect;
 
-Implementation
+implementation
 
-Uses
+uses
   ufrmConflict;
 
 {$R *.dfm}
 
-Const
+const
   Show_Window_in_Taskbar = True;
 
   { =============================================================================== }
 
-Procedure TfrmAutoCorrect.ButtonState;
-Begin
-  If (Trim(ReplaceT.text) <> '') And (Trim(WithT.text) <> '') Then
+procedure TfrmAutoCorrect.ButtonState;
+begin
+  if (Trim(ReplaceT.text) <> '') and (Trim(WithT.text) <> '') then
     cmdAdd.Enabled := True
-  Else
+  else
     cmdAdd.Enabled := False;
 
-  If (Trim(ReplaceT.text) <> '') Or (Trim(WithT.text) <> '') Then
+  if (Trim(ReplaceT.text) <> '') or (Trim(WithT.text) <> '') then
     cmdClear.Enabled := True
-  Else
+  else
     cmdClear.Enabled := False;
 
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmAutoCorrect.CheckOnTopClick(Sender: TObject);
-Begin
-  If CheckOnTop.Checked Then
+procedure TfrmAutoCorrect.CheckOnTopClick(Sender: TObject);
+begin
+  if CheckOnTop.Checked then
     TOPMOST(Self.Handle)
-  Else
+  else
     NoTOPMOST(Self.Handle);
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmAutoCorrect.cmdAddClick(Sender: TObject);
-Var
+procedure TfrmAutoCorrect.cmdAddClick(Sender: TObject);
+var
   thisItem: TListItem;
-Begin
+begin
   ReplaceT.text := Trim(ReplaceT.text);
   WithT.text := Trim(WithT.text);
 
-  If ReplaceT.text <> WithT.text Then
-  Begin
+  if ReplaceT.text <> WithT.text then
+  begin
     ReplaceT.text := Trim(Phonetic.CorrectCase(ReplaceT.text));
     WithT.text := Trim(Phonetic.CorrectCase(WithT.text));
-  End;
+  end;
 
-  thisItem := Nil;
+  thisItem := nil;
   thisItem := FindListItem(ReplaceT.text);
 
-  If (thisItem = Nil) Then
-  Begin
+  if (thisItem = nil) then
+  begin
     thisItem := List.Items.Add;
     thisItem.Caption := ReplaceT.text;
     thisItem.SubItems.Add(WithT.text);
-    List.Selected := Nil;
+    List.Selected := nil;
     List.Selected := thisItem;
     thisItem.MakeVisible(False);
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     thisItem.Caption := ReplaceT.text;
     thisItem.SubItems[0] := WithT.text;
-    List.Selected := Nil;
+    List.Selected := nil;
     List.Selected := thisItem;
     thisItem.MakeVisible(False);
-  End;
+  end;
 
   WithT.text := '';
   ReplaceT.text := '';
@@ -182,139 +181,133 @@ Begin
 
   lblTotalEntries.Caption := 'Total entries : ' + IntToStr(List.Items.Count);
 
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmAutoCorrect.cmdCancelClick(Sender: TObject);
-Var
+procedure TfrmAutoCorrect.cmdCancelClick(Sender: TObject);
+var
   Msg: Integer;
-Begin
-  If cmdSave.Enabled = True Then
-  Begin
-    Msg := Application.MessageBox
-      ('Save changes in the auto-correct dictionary?', 'Confirmation',
-      MB_YESNOCANCEL + MB_ICONQUESTION + MB_DEFBUTTON1 + MB_APPLMODAL);
-    If Msg = ID_YES Then
+begin
+  if cmdSave.Enabled = True then
+  begin
+    Msg := Application.MessageBox('Save changes in the auto-correct dictionary?', 'Confirmation', MB_YESNOCANCEL + MB_ICONQUESTION + MB_DEFBUTTON1 +
+        MB_APPLMODAL);
+    if Msg = ID_YES then
       Save();
-    If Msg = ID_CANCEL Then
+    if Msg = ID_CANCEL then
       Exit;
-  End;
+  end;
 
   Self.Close;
 
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmAutoCorrect.cmdClearClick(Sender: TObject);
-Begin
+procedure TfrmAutoCorrect.cmdClearClick(Sender: TObject);
+begin
   ReplaceT.text := '';
   WithT.text := '';
 
   ReplaceT.SetFocus;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmAutoCorrect.cmdDelClick(Sender: TObject);
-Var
+procedure TfrmAutoCorrect.cmdDelClick(Sender: TObject);
+var
   Msg: Integer;
-Begin
-  If Not(List.Selected = Nil) Then
-  Begin
-    Msg := Application.MessageBox(PChar('Delete ' + List.Selected.Caption +
-      ' = ' + List.Selected.SubItems[0] + '?'), 'Auto correct',
+begin
+  if not(List.Selected = nil) then
+  begin
+    Msg := Application.MessageBox(PChar('Delete ' + List.Selected.Caption + ' = ' + List.Selected.SubItems[0] + '?'), 'Auto correct',
       MB_YESNO + MB_ICONQUESTION + MB_DEFBUTTON2 + MB_APPLMODAL);
-    If Msg = ID_NO Then
+    if Msg = ID_NO then
       Exit;
 
     List.Items.Delete(List.Selected.Index);
     ReplaceT.text := '';
     WithT.text := '';
     cmdSave.Enabled := True;
-  End
-  Else
-  Begin
-    Application.MessageBox('No item is selected in the list!', 'Auto correct',
-      MB_OK + MB_ICONEXCLAMATION + MB_DEFBUTTON1 + MB_APPLMODAL);
-  End;
+  end
+  else
+  begin
+    Application.MessageBox('No item is selected in the list!', 'Auto correct', MB_OK + MB_ICONEXCLAMATION + MB_DEFBUTTON1 + MB_APPLMODAL);
+  end;
   lblTotalEntries.Caption := 'Total entries : ' + IntToStr(List.Items.Count);
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmAutoCorrect.cmdImportClick(Sender: TObject);
+procedure TfrmAutoCorrect.cmdImportClick(Sender: TObject);
 
 {$HINTS Off}
-  Function LoadIDict(Path: String;
-    Var idict: TDictionary<String, String>): Boolean;
-  Var
-    List: TStringList;
-    I, P: Integer;
-    FirstPart, SecondPart: String;
-  Begin
+  function LoadIDict(Path: string; var idict: TDictionary<string, string>): Boolean;
+  var
+    List:                  TStringList;
+    I, P:                  Integer;
+    FirstPart, SecondPart: string;
+  begin
     result := False;
-    Try
-      Try
+    try
+      try
         List := TStringList.Create;
         List.LoadFromFile(Path);
 
-        For I := 0 To List.Count - 1 Do
-        Begin
-          If (LeftStr(Trim(List[I]), 1) <> '/') And (Trim(List[I]) <> '') Then
-          Begin
+        for I := 0 to List.Count - 1 do
+        begin
+          if (LeftStr(Trim(List[I]), 1) <> '/') and (Trim(List[I]) <> '') then
+          begin
             P := Pos(' ', Trim(List[I]));
             FirstPart := LeftStr(Trim(List[I]), P - 1);
             SecondPart := MidStr(Trim(List[I]), P + 1, Length(Trim(List[I])));
             idict.AddOrSetValue(FirstPart, SecondPart);
-          End;
-        End;
+          end;
+        end;
         result := True;
-      Except
-        On E: Exception Do
-        Begin
-          Application.MessageBox
-            (PChar('Cannot import auto-correct dictionary!'), 'Avro Keyboard',
-            MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
+      except
+        on E: Exception do
+        begin
+          Application.MessageBox(PChar('Cannot import auto-correct dictionary!'), 'Avro Keyboard', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
           result := False;
-        End;
-      End;
-    Finally
+        end;
+      end;
+    finally
       FreeAndNil(List);
-    End;
+    end;
 
-  End;
+  end;
 
 {$HINTS On}
 
 { =============================================================================== }
-Var
-  idict: TDictionary<String, String>;
-  S: String;
-  Rs, Ws: String;
-  thisItem: TListItem;
+var
+  idict:       TDictionary<string, string>;
+  S:           string;
+  Rs, Ws:      string;
+  thisItem:    TListItem;
   ResultModal: Integer;
-  DictItem: String;
-Begin
-  If OpenDialog1.Execute(Self.Handle) Then
-  Begin
-    idict := TDictionary<String, String>.Create;
+  DictItem:    string;
+begin
+  if OpenDialog1.Execute(Self.Handle) then
+  begin
+    idict := TDictionary<string, string>.Create;
 
-    If LoadIDict(OpenDialog1.FileName, idict) = False Then
+    if LoadIDict(OpenDialog1.FileName, idict) = False then
       Exit;
 
-    For S in idict.Keys Do
-    Begin
+    for S in idict.Keys do
+    begin
 
       Rs := S;
       Ws := idict.Items[S];
 
-      If dict.TryGetValue(Rs, DictItem) Then
-      Begin
+      if dict.TryGetValue(Rs, DictItem) then
+      begin
         // There may be a conflict
-        If DictItem <> Ws Then
-        Begin
+        if DictItem <> Ws then
+        begin
           // Conflict!! items are not same
           // CheckCreateForm(TfrmConflict, frmConflict, 'frmConflict');
           Application.CreateForm(TfrmConflict, frmConflict);
@@ -323,36 +316,36 @@ Begin
           frmConflict.EditWC.text := DictItem;
           frmConflict.EditWC_P.text := Phonetic.Convert(DictItem);
           frmConflict.EditWI.text := Ws;
-          If Rs <> Ws Then
+          if Rs <> Ws then
             frmConflict.EditWI_P.text := Phonetic.Convert(Ws)
-          Else
+          else
             frmConflict.EditWI_P.text := Ws;
 
           ResultModal := frmConflict.ShowModal;
 
-          If ResultModal = mrCancel Then
-          Begin
+          if ResultModal = mrCancel then
+          begin
             // Keep current, do nothing
-          End
-          Else If ResultModal = mrOk Then
-          Begin
+          end
+          else if ResultModal = mrOk then
+          begin
             // Update current with imported
-            thisItem := Nil;
+            thisItem := nil;
             thisItem := FindListItem(Rs);
 
             thisItem.Caption := Rs;
             thisItem.SubItems[0] := Ws;
-          End;
-        End;
-      End
-      Else
-      Begin
+          end;
+        end;
+      end
+      else
+      begin
         // No conflict, new item->import this
         thisItem := List.Items.Add;
         thisItem.Caption := Rs;
         thisItem.SubItems.Add(Ws);
-      End;
-    End;
+      end;
+    end;
     WithT.text := '';
     ReplaceT.text := '';
     cmdSave.Enabled := True;
@@ -360,181 +353,178 @@ Begin
     ReplaceT.SetFocus;
 
     lblTotalEntries.Caption := 'Total entries : ' + IntToStr(List.Items.Count);
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmAutoCorrect.cmdSaveClick(Sender: TObject);
-Begin
-  If Save = True Then
-  Begin
+procedure TfrmAutoCorrect.cmdSaveClick(Sender: TObject);
+begin
+  if Save = True then
+  begin
     cmdSave.Enabled := False;
     ReplaceT.SetFocus;
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmAutoCorrect.CreateParams(Var Params: TCreateParams);
-Begin
-  Inherited CreateParams(Params);
-  With Params Do
-  Begin
-    If Show_Window_in_Taskbar Then
-    Begin
-      ExStyle := ExStyle Or WS_EX_APPWINDOW And Not WS_EX_TOOLWINDOW;
+procedure TfrmAutoCorrect.CreateParams(var Params: TCreateParams);
+begin
+  inherited CreateParams(Params);
+  with Params do
+  begin
+    if Show_Window_in_Taskbar then
+    begin
+      ExStyle := ExStyle or WS_EX_APPWINDOW and not WS_EX_TOOLWINDOW;
       WndParent := GetDesktopwindow;
-    End
-    Else If Not Show_Window_in_Taskbar Then
-    Begin
-      ExStyle := ExStyle And Not WS_EX_APPWINDOW;
-    End;
-  End;
-End;
+    end
+    else if not Show_Window_in_Taskbar then
+    begin
+      ExStyle := ExStyle and not WS_EX_APPWINDOW;
+    end;
+  end;
+end;
 
 { =============================================================================== }
 
-Function TfrmAutoCorrect.FindListItem(Const SearchStr: String): TListItem;
-Var
+function TfrmAutoCorrect.FindListItem(const SearchStr: string): TListItem;
+var
   thisItem: TListItem;
-  Found: Boolean;
-  InIndex: Integer;
-Begin
+  Found:    Boolean;
+  InIndex:  Integer;
+begin
   InIndex := 0;
 
-  thisItem := Nil;
+  thisItem := nil;
   Found := False;
 
-  Repeat
+  repeat
     thisItem := List.FindCaption(InIndex, SearchStr, False, True, False);
 
-    If Not(thisItem = Nil) Then
-    Begin
+    if not(thisItem = nil) then
+    begin
       // Make it case sensitive
-      If thisItem.Caption <> SearchStr Then
+      if thisItem.Caption <> SearchStr then
         // Find again
         InIndex := thisItem.Index + 1
-      Else
+      else
         Found := True;
-    End;
-  Until ((Found = True) Or (thisItem = Nil));
+    end;
+  until ((Found = True) or (thisItem = nil));
 
   result := thisItem;
 
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmAutoCorrect.FormClose(Sender: TObject; Var Action: TCloseAction);
-Begin
+procedure TfrmAutoCorrect.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
   FreeAndNil(Phonetic);
 
   Action := caFree;
 
-  frmAutoCorrect := Nil;
-End;
+  frmAutoCorrect := nil;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmAutoCorrect.FormCreate(Sender: TObject);
-Var
-  S: String;
+procedure TfrmAutoCorrect.FormCreate(Sender: TObject);
+var
+  S:        string;
   thisItem: TListItem;
-Begin
+begin
   Phonetic := TEnglishToBangla.Create;
   Phonetic.AutoCorrectEnabled := False;
 
   List.Items.BeginUpdate;
-  For S in dict.Keys Do
-  Begin
+  for S in dict.Keys do
+  begin
     thisItem := List.Items.Add;
     thisItem.Caption := S;
     thisItem.SubItems.Add(dict.Items[S]);
-  End;
+  end;
   List.SortType := stText;
   List.Items.EndUpdate;
 
   lblTotalEntries.Caption := 'Total entries : ' + IntToStr(List.Items.Count);
 
   DisableCloseButton(Self.Handle);
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmAutoCorrect.FormKeyDown(Sender: TObject; Var Key: Word;
-  Shift: TShiftState);
-Begin
-  If (Key = VK_F4) And (ssAlt In Shift) Then
+procedure TfrmAutoCorrect.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  if (Key = VK_F4) and (ssAlt in Shift) then
     Key := 0;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmAutoCorrect.ListSelectItem(Sender: TObject; Item: TListItem;
-  Selected: Boolean);
-Begin
+procedure TfrmAutoCorrect.ListSelectItem(Sender: TObject; Item: TListItem; Selected: Boolean);
+begin
   ReplaceT.text := Item.Caption;
   ReplaceT.SelStart := Length(ReplaceT.text);
   WithT.text := Item.SubItems[0];
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmAutoCorrect.ReplaceTChange(Sender: TObject);
-Var
+procedure TfrmAutoCorrect.ReplaceTChange(Sender: TObject);
+var
   thisItem: TListItem;
-Begin
-  thisItem := Nil;
+begin
+  thisItem := nil;
   thisItem := FindListItem(ReplaceT.text);
 
-  If (thisItem = Nil) Then
-  Begin
+  if (thisItem = nil) then
+  begin
     WithT.text := '';
-  End
-  Else
-  Begin
-    List.Selected := Nil;
+  end
+  else
+  begin
+    List.Selected := nil;
     List.Selected := thisItem;
     thisItem.MakeVisible(False);
     WithT.text := thisItem.SubItems[0];
-  End;
+  end;
 
-  ReplaceT.text := StringReplace(ReplaceT.text, ' ', '',
-    [rfReplaceAll, rfIgnoreCase]);
+  ReplaceT.text := StringReplace(ReplaceT.text, ' ', '', [rfReplaceAll, rfIgnoreCase]);
   ButtonState();
   R1.text := Phonetic.Convert(ReplaceT.text);
 
-  If ReplaceT.text = '' Then
+  if ReplaceT.text = '' then
     R1.text := '';
 
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmAutoCorrect.ReplaceTKeyPress(Sender: TObject; Var Key: Char);
-Begin
-  If Key = #32 Then
+procedure TfrmAutoCorrect.ReplaceTKeyPress(Sender: TObject; var Key: Char);
+begin
+  if Key = #32 then
     Key := #0;
-  If Key = #13 Then
+  if Key = #13 then
     Key := #0;
-End;
+end;
 
 {$HINTS Off}
 { =============================================================================== }
 
-Function TfrmAutoCorrect.Save: Boolean;
-Var
-  T: TStringList;
-  I: Integer;
-  Path: String;
-Begin
+function TfrmAutoCorrect.Save: Boolean;
+var
+  T:    TStringList;
+  I:    Integer;
+  Path: string;
+begin
   result := False;
   T := TStringList.Create;
 
   T.BeginUpdate;
-  With T Do
-  Begin
+  with T do
+  begin
     Add('/ **************************************');
     Add('/ Avro Phonetic Autocorrect dictionary');
     Add('/ Copyright (c) OmicronLab. All rights reserved.');
@@ -543,59 +533,57 @@ Begin
     Add('/ Warning: DO NOT EDIT THIS FILE MANUALLY');
     Add('/ **************************************');
 
-    For I := 0 To List.Items.Count - 1 Do
-    Begin
+    for I := 0 to List.Items.Count - 1 do
+    begin
       Add(List.Items.Item[I].Caption + ' ' + List.Items.Item[I].SubItems[0]);
-    End;
-  End;
+    end;
+  end;
   T.EndUpdate;
 
-  Try
+  try
     Path := GetAvroDataDir + 'autodict.dct';
     T.SaveToFile(Path);
     DestroyDict;
     InitDict;
     LoadDict;
     result := True;
-  Except
-    On E: Exception Do
-    Begin
-      Application.MessageBox(PChar('Cannot save to dictionary!' + #10 + '' + #10
-        + '-> Make sure the disk is not write protected, or' + #10 + '-> ' +
-        Path + ' file is not ''Read Only'', or' + #10 +
-        '-> You have necessary account privilege to modify content.'),
-        'Auto correct', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
+  except
+    on E: Exception do
+    begin
+      Application.MessageBox(PChar('Cannot save to dictionary!' + #10 + '' + #10 + '-> Make sure the disk is not write protected, or' + #10 + '-> ' + Path +
+            ' file is not ''Read Only'', or' + #10 + '-> You have necessary account privilege to modify content.'), 'Auto correct',
+        MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
       result := False;
-    End;
-  End;
+    end;
+  end;
 
   T.Free;
 
-End;
+end;
 
 {$HINTS On}
 { =============================================================================== }
 
-Procedure TfrmAutoCorrect.WithTChange(Sender: TObject);
-Begin
+procedure TfrmAutoCorrect.WithTChange(Sender: TObject);
+begin
   ButtonState;
-  If WithT.text = ReplaceT.text Then
+  if WithT.text = ReplaceT.text then
     R2.text := WithT.text
-  Else
+  else
     R2.text := Phonetic.Convert(WithT.text);
 
-  If WithT.text = '' Then
+  if WithT.text = '' then
     R2.text := '';
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmAutoCorrect.WithTKeyPress(Sender: TObject; Var Key: Char);
-Begin
-  If Key = #13 Then
+procedure TfrmAutoCorrect.WithTKeyPress(Sender: TObject; var Key: Char);
+begin
+  if Key = #13 then
     Key := #0;
-End;
+end;
 
 { =============================================================================== }
 
-End.
+end.

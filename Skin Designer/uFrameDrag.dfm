@@ -1,49 +1,70 @@
 object FrameDrag: TFrameDrag
   Left = 0
   Top = 0
-  Width = 455
-  Height = 308
+  Width = 683
+  Height = 462
+  Margins.Left = 5
+  Margins.Top = 5
+  Margins.Right = 5
+  Margins.Bottom = 5
   TabOrder = 0
+  PixelsPerInch = 144
   object Label1: TLabel
-    Left = 118
-    Top = 258
-    Width = 25
-    Height = 13
+    Left = 177
+    Top = 387
+    Width = 40
+    Height = 21
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Left:'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
+    Font.Height = -17
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
   end
   object Label2: TLabel
-    Left = 318
-    Top = 258
-    Width = 24
-    Height = 13
+    Left = 477
+    Top = 387
+    Width = 38
+    Height = 21
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Top:'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
+    Font.Height = -17
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
   end
   object Label3: TLabel
-    Left = 55
-    Top = 286
-    Width = 426
-    Height = 15
+    Left = 83
+    Top = 429
+    Width = 635
+    Height = 25
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 
       'Note: All coordinate values are related to Top-Left corner of To' +
       'p Bar, in Pixel unit.'
   end
   object ScrollBox1: TScrollBox
-    Left = 3
-    Top = 3
-    Width = 446
-    Height = 246
+    Left = 5
+    Top = 5
+    Width = 669
+    Height = 369
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     HorzScrollBar.Smooth = True
     HorzScrollBar.Tracking = True
     VertScrollBar.Smooth = True
@@ -52,112 +73,156 @@ object FrameDrag: TFrameDrag
     object Panel1: TPanel
       Left = 0
       Top = 0
-      Width = 1000
-      Height = 300
+      Width = 1500
+      Height = 450
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Color = clWhite
       ParentBackground = False
       TabOrder = 0
       object Background: TImage
         Left = 0
         Top = 0
-        Width = 339
-        Height = 29
+        Width = 509
+        Height = 44
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         AutoSize = True
       end
       object AvroIcon: TImage
-        Left = 8
-        Top = 152
-        Width = 26
-        Height = 27
+        Left = 12
+        Top = 228
+        Width = 39
+        Height = 41
         Cursor = crSizeAll
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         AutoSize = True
         OnMouseDown = AvroIconMouseDown
         OnMouseMove = AvroIconMouseMove
         OnMouseUp = AvroIconMouseUp
       end
       object KM: TImage
-        Left = 40
-        Top = 152
-        Width = 87
-        Height = 29
+        Left = 60
+        Top = 228
+        Width = 131
+        Height = 44
         Cursor = crSizeAll
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         AutoSize = True
         OnMouseDown = AvroIconMouseDown
         OnMouseMove = AvroIconMouseMove
         OnMouseUp = AvroIconMouseUp
       end
       object KL: TImage
-        Left = 133
-        Top = 151
-        Width = 18
-        Height = 29
+        Left = 200
+        Top = 227
+        Width = 27
+        Height = 43
         Cursor = crSizeAll
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         AutoSize = True
         OnMouseDown = AvroIconMouseDown
         OnMouseMove = AvroIconMouseMove
         OnMouseUp = AvroIconMouseUp
       end
       object LayoutV: TImage
-        Left = 157
-        Top = 152
-        Width = 28
-        Height = 29
+        Left = 236
+        Top = 228
+        Width = 42
+        Height = 44
         Cursor = crSizeAll
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         AutoSize = True
         OnMouseDown = AvroIconMouseDown
         OnMouseMove = AvroIconMouseMove
         OnMouseUp = AvroIconMouseUp
       end
       object AvroMouse: TImage
-        Left = 191
-        Top = 152
-        Width = 28
-        Height = 29
+        Left = 287
+        Top = 228
+        Width = 42
+        Height = 44
         Cursor = crSizeAll
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         AutoSize = True
         OnMouseDown = AvroIconMouseDown
         OnMouseMove = AvroIconMouseMove
         OnMouseUp = AvroIconMouseUp
       end
       object Tools: TImage
-        Left = 225
-        Top = 152
-        Width = 28
-        Height = 29
+        Left = 338
+        Top = 228
+        Width = 42
+        Height = 44
         Cursor = crSizeAll
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         AutoSize = True
         OnMouseDown = AvroIconMouseDown
         OnMouseMove = AvroIconMouseMove
         OnMouseUp = AvroIconMouseUp
       end
       object Web: TImage
-        Left = 259
-        Top = 152
-        Width = 28
-        Height = 29
+        Left = 389
+        Top = 228
+        Width = 42
+        Height = 44
         Cursor = crSizeAll
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         AutoSize = True
         OnMouseDown = AvroIconMouseDown
         OnMouseMove = AvroIconMouseMove
         OnMouseUp = AvroIconMouseUp
       end
       object Help: TImage
-        Left = 293
-        Top = 152
-        Width = 28
-        Height = 29
+        Left = 440
+        Top = 228
+        Width = 42
+        Height = 44
         Cursor = crSizeAll
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         AutoSize = True
         OnMouseDown = AvroIconMouseDown
         OnMouseMove = AvroIconMouseMove
         OnMouseUp = AvroIconMouseUp
       end
       object Exit: TImage
-        Left = 327
-        Top = 152
-        Width = 28
-        Height = 29
+        Left = 491
+        Top = 228
+        Width = 42
+        Height = 44
         Cursor = crSizeAll
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
         AutoSize = True
         OnMouseDown = AvroIconMouseDown
         OnMouseMove = AvroIconMouseMove
@@ -166,10 +231,14 @@ object FrameDrag: TFrameDrag
     end
   end
   object UpDown1: TUpDown
-    Left = 230
-    Top = 255
-    Width = 17
-    Height = 21
+    Left = 345
+    Top = 383
+    Width = 26
+    Height = 31
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Associate = XPos
     Min = -5000
     Max = 5000
@@ -177,10 +246,14 @@ object FrameDrag: TFrameDrag
     Thousands = False
   end
   object UpDown2: TUpDown
-    Left = 430
-    Top = 255
-    Width = 21
-    Height = 21
+    Left = 645
+    Top = 383
+    Width = 32
+    Height = 31
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Associate = YPos
     Min = -5000
     Max = 5000
@@ -188,19 +261,27 @@ object FrameDrag: TFrameDrag
     Thousands = False
   end
   object XPos: TEdit
-    Left = 149
-    Top = 255
-    Width = 81
-    Height = 23
+    Left = 224
+    Top = 383
+    Width = 121
+    Height = 33
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     TabOrder = 3
     Text = '0'
     OnChange = XPosChange
   end
   object YPos: TEdit
-    Left = 349
-    Top = 255
-    Width = 81
-    Height = 23
+    Left = 524
+    Top = 383
+    Width = 121
+    Height = 33
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     TabOrder = 4
     Text = '0'
     OnChange = YPosChange

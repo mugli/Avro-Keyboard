@@ -25,272 +25,257 @@
   =============================================================================
 }
 
-
 {$INCLUDE ../../ProjectDefines.inc}
-
 { COMPLETE TRANSFERING }
 
-Unit WindowsVersion;
+unit WindowsVersion;
 
-Interface
+interface
 
-Uses
+uses
   Windows,
   Sysutils;
 
-Function GetOSVersionInfo(Var Info: TOSVersionInfoEx): Boolean;
+function GetOSVersionInfo(var Info: TOSVersionInfoEx): Boolean;
 
-Function IsWin2000: Boolean;
-Function IsWin2000Plus: Boolean;
-Function IsWin2000OrLater: Boolean;
-Function IsWin2003Server: Boolean;
-Function IsWinNT4: Boolean;
-Function IsWinNT4OrLater: Boolean;
-Function IsWinVista: Boolean;
-Function IsWinVistaOrLater: Boolean;
-Function IsWinXP: Boolean;
-Function IsWinXPSP2: Boolean;
-Function IsWinXPSP2Plus: Boolean;
-Function IsWinXPSP3Plus: Boolean;
+function IsWin2000: Boolean;
+function IsWin2000Plus: Boolean;
+function IsWin2000OrLater: Boolean;
+function IsWin2003Server: Boolean;
+function IsWinNT4: Boolean;
+function IsWinNT4OrLater: Boolean;
+function IsWinVista: Boolean;
+function IsWinVistaOrLater: Boolean;
+function IsWinXP: Boolean;
+function IsWinXPSP2: Boolean;
+function IsWinXPSP2Plus: Boolean;
+function IsWinXPSP3Plus: Boolean;
 
-Implementation
+implementation
 
 {$HINTS Off}
 
-Function GetOSVersionInfo(Var Info: TOSVersionInfoEx): Boolean;
-Begin
+function GetOSVersionInfo(var Info: TOSVersionInfoEx): Boolean;
+begin
   Result := False;
   FillChar(Info, SizeOf(TOSVersionInfoEx), 0);
   Info.dwOSVersionInfoSize := SizeOf(TOSVersionInfoEx);
   Result := GetVersionEx(TOSVersionInfo(Addr(Info)^));
-  If (Not Result) Then
-  Begin
+  if (not Result) then
+  begin
     FillChar(Info, SizeOf(TOSVersionInfoEx), 0);
     Info.dwOSVersionInfoSize := SizeOf(TOSVersionInfoEx);
     Result := GetVersionEx(TOSVersionInfo(Addr(Info)^));
-    If (Not Result) Then
+    if (not Result) then
       Info.dwOSVersionInfoSize := 0;
-  End;
-End;
+  end;
+end;
 
-Function IsWin2000: Boolean;
-Var
+function IsWin2000: Boolean;
+var
   osv: TOSVersionInfo;
-Begin
+begin
   Result := False;
   osv.dwOSVersionInfoSize := SizeOf(TOSVersionInfo);
 
-  If GetVersionEx(osv) Then
-  Begin
-    Result := (osv.dwPlatformID = VER_PLATFORM_WIN32_NT) And
-      ((osv.dwMajorVersion = 5) And (osv.dwMinorVersion = 0)) And
-      (osv.dwBuildNumber >= 2195);
-  End
-  Else
+  if GetVersionEx(osv) then
+  begin
+    Result := (osv.dwPlatformID = VER_PLATFORM_WIN32_NT) and ((osv.dwMajorVersion = 5) and (osv.dwMinorVersion = 0)) and (osv.dwBuildNumber >= 2195);
+  end
+  else
     Result := False;
-End;
+end;
 
-Function IsWin2000OrLater: Boolean;
-Var
+function IsWin2000OrLater: Boolean;
+var
   osv: TOSVersionInfo;
-Begin
+begin
   Result := False;
   osv.dwOSVersionInfoSize := SizeOf(TOSVersionInfo);
 
-  If GetVersionEx(osv) Then
-  Begin
-    Result := (osv.dwPlatformID = VER_PLATFORM_WIN32_NT) And
-      (osv.dwMajorVersion >= 5);
-  End
-  Else
+  if GetVersionEx(osv) then
+  begin
+    Result := (osv.dwPlatformID = VER_PLATFORM_WIN32_NT) and (osv.dwMajorVersion >= 5);
+  end
+  else
     Result := False;
-End;
+end;
 
-Function IsWin2000Plus: Boolean;
-Var
+function IsWin2000Plus: Boolean;
+var
   osv: TOSVersionInfo;
-Begin
+begin
   Result := False;
   osv.dwOSVersionInfoSize := SizeOf(TOSVersionInfo);
 
-  If GetVersionEx(osv) Then
-  Begin
-    Result := (osv.dwPlatformID = VER_PLATFORM_WIN32_NT) And
-      (osv.dwMajorVersion = 5);
-  End
-  Else
+  if GetVersionEx(osv) then
+  begin
+    Result := (osv.dwPlatformID = VER_PLATFORM_WIN32_NT) and (osv.dwMajorVersion = 5);
+  end
+  else
     Result := False;
 
-End;
+end;
 
-Function IsWin2003Server: Boolean;
-Var
+function IsWin2003Server: Boolean;
+var
   osv: TOSVersionInfo;
-Begin
+begin
   Result := False;
   osv.dwOSVersionInfoSize := SizeOf(TOSVersionInfo);
 
-  If GetVersionEx(osv) Then
-  Begin
-    Result := (osv.dwPlatformID = VER_PLATFORM_WIN32_NT) And
-      ((osv.dwMajorVersion = 5) And (osv.dwMinorVersion = 2)) And
-      (osv.dwBuildNumber = 3790);
-  End
-  Else
+  if GetVersionEx(osv) then
+  begin
+    Result := (osv.dwPlatformID = VER_PLATFORM_WIN32_NT) and ((osv.dwMajorVersion = 5) and (osv.dwMinorVersion = 2)) and (osv.dwBuildNumber = 3790);
+  end
+  else
     Result := False;
 
-End;
+end;
 
-Function IsWinNT4: Boolean;
-Var
+function IsWinNT4: Boolean;
+var
   osv: TOSVersionInfo;
-Begin
+begin
   Result := False;
   osv.dwOSVersionInfoSize := SizeOf(TOSVersionInfo);
 
-  If GetVersionEx(osv) Then
-  Begin
-    Result := (osv.dwPlatformID = VER_PLATFORM_WIN32_NT) And
-      ((osv.dwMajorVersion = 4) And (osv.dwMinorVersion = 0)) And
-      (osv.dwBuildNumber >= 1381);
-  End
-  Else
+  if GetVersionEx(osv) then
+  begin
+    Result := (osv.dwPlatformID = VER_PLATFORM_WIN32_NT) and ((osv.dwMajorVersion = 4) and (osv.dwMinorVersion = 0)) and (osv.dwBuildNumber >= 1381);
+  end
+  else
     Result := False;
-End;
+end;
 
-Function IsWinNT4OrLater: Boolean;
-Var
+function IsWinNT4OrLater: Boolean;
+var
   osv: TOSVersionInfo;
-Begin
+begin
   Result := False;
   osv.dwOSVersionInfoSize := SizeOf(TOSVersionInfo);
 
-  If GetVersionEx(osv) Then
-  Begin
-    Result := (osv.dwPlatformID = VER_PLATFORM_WIN32_NT) And
-      (osv.dwMajorVersion >= 4);
-  End
-  Else
+  if GetVersionEx(osv) then
+  begin
+    Result := (osv.dwPlatformID = VER_PLATFORM_WIN32_NT) and (osv.dwMajorVersion >= 4);
+  end
+  else
     Result := False;
 
-End;
+end;
 
-Function IsWinVista: Boolean;
-Var
+function IsWinVista: Boolean;
+var
   osv: TOSVersionInfo;
-Begin
+begin
   Result := False;
   osv.dwOSVersionInfoSize := SizeOf(TOSVersionInfo);
 
-  If GetVersionEx(osv) Then
-  Begin
-    Result := (osv.dwPlatformID = VER_PLATFORM_WIN32_NT) And
-      (osv.dwMajorVersion = 6);
-  End
-  Else
+  if GetVersionEx(osv) then
+  begin
+    Result := (osv.dwPlatformID = VER_PLATFORM_WIN32_NT) and (osv.dwMajorVersion = 6);
+  end
+  else
     Result := False;
 
-End;
+end;
 
-Function IsWinVistaOrLater: Boolean;
-Var
+function IsWinVistaOrLater: Boolean;
+var
   osv: TOSVersionInfo;
-Begin
+begin
   Result := False;
   osv.dwOSVersionInfoSize := SizeOf(TOSVersionInfo);
-  If GetVersionEx(osv) Then
-  Begin
-    Result := (osv.dwPlatformID = VER_PLATFORM_WIN32_NT) And
-      (osv.dwMajorVersion >= 6);
-  End
-  Else
+  if GetVersionEx(osv) then
+  begin
+    Result := (osv.dwPlatformID = VER_PLATFORM_WIN32_NT) and (osv.dwMajorVersion >= 6);
+  end
+  else
     Result := False;
 
-End;
+end;
 
-Function IsWinXP: Boolean;
-Var
+function IsWinXP: Boolean;
+var
   osv: TOSVersionInfo;
-Begin
+begin
   Result := False;
   osv.dwOSVersionInfoSize := SizeOf(TOSVersionInfo);
-  If GetVersionEx(osv) Then
-  Begin
-    Result := (osv.dwPlatformID = VER_PLATFORM_WIN32_NT) And
-      ((osv.dwMajorVersion = 5) And (osv.dwMinorVersion = 1)) And
-      (osv.dwBuildNumber >= 2600);
-  End
-  Else
+  if GetVersionEx(osv) then
+  begin
+    Result := (osv.dwPlatformID = VER_PLATFORM_WIN32_NT) and ((osv.dwMajorVersion = 5) and (osv.dwMinorVersion = 1)) and (osv.dwBuildNumber >= 2600);
+  end
+  else
     Result := False;
-End;
+end;
 
-Function IsWinXPSP2: Boolean;
-Var
+function IsWinXPSP2: Boolean;
+var
   osv: TOSVersionInfoEx;
-Begin
+begin
 
   Result := False;
-  If IsWinXP Then
-  Begin
-    If GetOSVersionInfo(osv) Then
-    Begin
-      If pos(osv.szCSDVersion, 'Service Pack 2') > 0 Then
+  if IsWinXP then
+  begin
+    if GetOSVersionInfo(osv) then
+    begin
+      if pos(osv.szCSDVersion, 'Service Pack 2') > 0 then
         Result := True;
-    End;
-  End;
-End;
+    end;
+  end;
+end;
 
-Function IsWinXPSP2Plus: Boolean;
-Var
+function IsWinXPSP2Plus: Boolean;
+var
   osv: TOSVersionInfoEx;
-Begin
+begin
 
   Result := False;
-  If IsWinXP Then
-  Begin
-    If GetOSVersionInfo(osv) Then
-    Begin
-      If pos(osv.szCSDVersion, 'Service Pack 2') > 0 Then
+  if IsWinXP then
+  begin
+    if GetOSVersionInfo(osv) then
+    begin
+      if pos(osv.szCSDVersion, 'Service Pack 2') > 0 then
         Result := True
-      Else If pos(osv.szCSDVersion, ('Service Pack 3')) > 0 Then
+      else if pos(osv.szCSDVersion, ('Service Pack 3')) > 0 then
         Result := True
-      Else If pos(osv.szCSDVersion, 'Service Pack 4') > 0 Then
+      else if pos(osv.szCSDVersion, 'Service Pack 4') > 0 then
         Result := True
-      Else If pos(osv.szCSDVersion, 'Service Pack 5') > 0 Then
+      else if pos(osv.szCSDVersion, 'Service Pack 5') > 0 then
         Result := True
-      Else If pos(osv.szCSDVersion, 'Service Pack 6') > 0 Then
+      else if pos(osv.szCSDVersion, 'Service Pack 6') > 0 then
         Result := True;
-    End;
-  End;
-End;
+    end;
+  end;
+end;
 
-Function IsWinXPSP3Plus: Boolean;
-Var
+function IsWinXPSP3Plus: Boolean;
+var
   osv: TOSVersionInfoEx;
-Begin
+begin
 
   Result := False;
-  If IsWinXP Then
-  Begin
-    If GetOSVersionInfo(osv) Then
-    Begin
-      If pos(osv.szCSDVersion, 'Service Pack 3') > 0 Then
+  if IsWinXP then
+  begin
+    if GetOSVersionInfo(osv) then
+    begin
+      if pos(osv.szCSDVersion, 'Service Pack 3') > 0 then
         Result := True
-      Else If pos(osv.szCSDVersion, 'Service Pack 4') > 0 Then
+      else if pos(osv.szCSDVersion, 'Service Pack 4') > 0 then
         Result := True
-      Else If pos(osv.szCSDVersion, 'Service Pack 5') > 0 Then
+      else if pos(osv.szCSDVersion, 'Service Pack 5') > 0 then
         Result := True
-      Else If pos(osv.szCSDVersion, 'Service Pack 6') > 0 Then
+      else if pos(osv.szCSDVersion, 'Service Pack 6') > 0 then
         Result := True
-      Else If pos(osv.szCSDVersion, 'Service Pack 7') > 0 Then
+      else if pos(osv.szCSDVersion, 'Service Pack 7') > 0 then
         Result := True
-      Else If pos(osv.szCSDVersion, 'Service Pack 8') > 0 Then
+      else if pos(osv.szCSDVersion, 'Service Pack 8') > 0 then
         Result := True
-      Else If pos(osv.szCSDVersion, 'Service Pack 9') > 0 Then
+      else if pos(osv.szCSDVersion, 'Service Pack 9') > 0 then
         Result := True;
-    End;
-  End;
-End;
+    end;
+  end;
+end;
 {$HINTS On}
 
-End.
+end.

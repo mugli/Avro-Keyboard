@@ -25,38 +25,36 @@
   =============================================================================
 }
 
-Unit uRegExPhoneticSearch_Spell;
+unit uRegExPhoneticSearch_Spell;
 
-Interface
+interface
 
-Uses
+uses
   Classes;
 
-Function SearchPhonetic_Spell(SearchIn, SearchStr: String;
-  Var wList: TStringList): Integer;
+function SearchPhonetic_Spell(SearchIn, SearchStr: string; var wList: TStringList): Integer;
 
-Implementation
+implementation
 
-Uses
+uses
   RegularExpressions,
   uDBase,
   StrUtils,
   SysUtils,
   uCustomDictionary;
 
-Function SearchPhonetic_Spell(SearchIn, SearchStr: String;
-  Var wList: TStringList): Integer;
-Var
+function SearchPhonetic_Spell(SearchIn, SearchStr: string; var wList: TStringList): Integer;
+var
   theRegex: TRegex;
   theMatch: TMatch;
 
-  I: Integer;
-  mSearchIn: String;
-  WideSearchStr: String;
+  I:             Integer;
+  mSearchIn:     string;
+  WideSearchStr: string;
 
   StartCounter, EndCounter: Integer;
-  TotalSearch: Integer; { For diagnosis purpose }
-Begin
+  TotalSearch:              Integer; { For diagnosis purpose }
+begin
   wList.Clear;
   wList.Sorted := True;
   wList.Duplicates := dupIgnore;
@@ -73,954 +71,942 @@ Begin
 
   { ***************************************** }
   { Search W_A }
-  If (mSearchIn = 'o') Or (mSearchIn = 'a') or (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 'o') or (mSearchIn = 'a') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_A.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_A[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_A[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_AA }
-  If (mSearchIn = 'a') Or (mSearchIn = 'i') or (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 'a') or (mSearchIn = 'i') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_AA.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_AA[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_AA[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_I }
-  If (mSearchIn = 'y') Or (mSearchIn = 'e') Or (mSearchIn = 'i') or
-    (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 'y') or (mSearchIn = 'e') or (mSearchIn = 'i') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_I.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_I[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_I[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_II }
-  If (mSearchIn = 'i') Or (mSearchIn = 'e') or (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 'i') or (mSearchIn = 'e') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_II.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_II[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_II[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_U }
-  If (mSearchIn = 'o') Or (mSearchIn = 'u') or (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 'o') or (mSearchIn = 'u') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_U.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_U[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_U[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_UU }
-  If (mSearchIn = 'o') Or (mSearchIn = 'u') or (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 'o') or (mSearchIn = 'u') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_UU.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_UU[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_UU[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_RRI }
-  If (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_RRI.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_RRI[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_RRI[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_E }
-  If (mSearchIn = 'x') Or (mSearchIn = 'o') Or (mSearchIn = 'a') Or
-    (mSearchIn = 'i') Or (mSearchIn = 'e') Or (mSearchIn = 'u') or
-    (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 'x') or (mSearchIn = 'o') or (mSearchIn = 'a') or (mSearchIn = 'i') or (mSearchIn = 'e') or (mSearchIn = 'u') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_E.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_E[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_E[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_OI }
-  If (mSearchIn = 'o') Or (mSearchIn = 'a') Or (mSearchIn = 'i') Or
-    (mSearchIn = 'e') Or (mSearchIn = 'u') or (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 'o') or (mSearchIn = 'a') or (mSearchIn = 'i') or (mSearchIn = 'e') or (mSearchIn = 'u') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_OI.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_OI[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_OI[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_O }
-  If (mSearchIn = 'w') Or (mSearchIn = 'o') Or (mSearchIn = 'a') Or
-    (mSearchIn = 'i') Or (mSearchIn = 'e') Or (mSearchIn = 'u') or
-    (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 'w') or (mSearchIn = 'o') or (mSearchIn = 'a') or (mSearchIn = 'i') or (mSearchIn = 'e') or (mSearchIn = 'u') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_O.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_O[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_O[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_OU }
-  If (mSearchIn = 'o') Or (mSearchIn = 'a') Or (mSearchIn = 'i') Or
-    (mSearchIn = 'e') Or (mSearchIn = 'u') or (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 'o') or (mSearchIn = 'a') or (mSearchIn = 'i') or (mSearchIn = 'e') or (mSearchIn = 'u') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_OU.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_OU[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_OU[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_B }
-  If (mSearchIn = 'b') or (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 'b') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_B.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_B[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_B[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_BH }
-  If (mSearchIn = 'b') Or (mSearchIn = 'v') or (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 'b') or (mSearchIn = 'v') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_BH.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_BH[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_BH[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_C }
-  If (mSearchIn = 'c') or (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 'c') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_C.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_C[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_C[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_CH }
-  If (mSearchIn = 'c') or (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 'c') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_CH.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_CH[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_CH[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_D }
-  If (mSearchIn = 'd') or (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 'd') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_D.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_D[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_D[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_Dh }
-  If (mSearchIn = 'd') or (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 'd') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_Dh.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_Dh[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_Dh[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_Dd }
-  If (mSearchIn = 'd') or (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 'd') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_Dd.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_Dd[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_Dd[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_Ddh }
-  If (mSearchIn = 'd') or (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 'd') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_Ddh.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_Ddh[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_Ddh[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_G }
-  If (mSearchIn = 'g') or (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 'g') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_G.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_G[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_G[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_Gh }
-  If (mSearchIn = 'g') or (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 'g') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_Gh.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_Gh[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_Gh[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_H }
-  If (mSearchIn = 'z') Or (mSearchIn = 'r') Or (mSearchIn = 'm') Or
-    (mSearchIn = 'h') or (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 'z') or (mSearchIn = 'r') or (mSearchIn = 'm') or (mSearchIn = 'h') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_H.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_H[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_H[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_J }
-  If (mSearchIn = 'z') Or (mSearchIn = 'j') Or (mSearchIn = 'g') or
-    (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 'z') or (mSearchIn = 'j') or (mSearchIn = 'g') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_J.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_J[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_J[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_Jh }
-  If (mSearchIn = 'j') Or (mSearchIn = 'z') or (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 'j') or (mSearchIn = 'z') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_Jh.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_Jh[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_Jh[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_K }
-  If (mSearchIn = 'x') Or (mSearchIn = 'q') Or (mSearchIn = 'k') Or
-    (mSearchIn = 'c') or (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 'x') or (mSearchIn = 'q') or (mSearchIn = 'k') or (mSearchIn = 'c') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_K.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_K[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_K[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_Kh }
-  If (mSearchIn = 'k') or (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 'k') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_Kh.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_Kh[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_Kh[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_L }
-  If (mSearchIn = 'l') or (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 'l') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_L.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_L[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_L[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_M }
-  If (mSearchIn = 'm') or (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 'm') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_M.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_M[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_M[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_N }
-  If (mSearchIn = 'n') or (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 'n') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_N.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_N[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_N[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_NGA }
-  If (mSearchIn = 'n') or (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 'n') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_NGA.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_NGA[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_NGA[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_NYA }
-  If (mSearchIn = 'n') Or (mSearchIn = 'a') or (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 'n') or (mSearchIn = 'a') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_NYA.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_NYA[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_NYA[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_Nn }
-  If (mSearchIn = 'n') or (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 'n') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_Nn.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_Nn[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_Nn[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_P }
-  If (mSearchIn = 'p') or (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 'p') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_P.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_P[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_P[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_Ph }
-  If (mSearchIn = 'p') Or (mSearchIn = 'f') or (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 'p') or (mSearchIn = 'f') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_Ph.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_Ph[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_Ph[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_R }
-  If (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_R.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_R[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_R[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_Rr }
-  If (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_Rr.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_Rr[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_Rr[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_Rrh }
-  If (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_Rrh.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_Rrh[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_Rrh[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_S }
-  If (mSearchIn = 's') or (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 's') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_S.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_S[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_S[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_Sh }
-  If (mSearchIn = 's') or (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 's') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_Sh.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_Sh[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_Sh[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_Ss }
-  If (mSearchIn = 's') or (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 's') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_Ss.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_Ss[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_Ss[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_T }
-  If (mSearchIn = 't') or (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 't') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_T.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_T[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_T[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_Th }
-  If (mSearchIn = 't') or (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 't') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_Th.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_Th[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_Th[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_Tt }
-  If (mSearchIn = 't') or (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 't') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_Tt.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_Tt[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_Tt[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_Tth }
-  If (mSearchIn = 't') or (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 't') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_Tth.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_Tth[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_Tth[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_Y }
-  If (mSearchIn = 'u') Or (mSearchIn = 'o') Or (mSearchIn = 'i') Or
-    (mSearchIn = 'e') Or (mSearchIn = 'a') or (mSearchIn = 'y') or
-    (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 'u') or (mSearchIn = 'o') or (mSearchIn = 'i') or (mSearchIn = 'e') or (mSearchIn = 'a') or (mSearchIn = 'y') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_Y.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_Y[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_Y[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_Z }
-  If (mSearchIn = 'j') Or (mSearchIn = 'z') or (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 'j') or (mSearchIn = 'z') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_Z.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_Z[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_Z[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
   { Search W_Khandatta }
-  If (mSearchIn = 't') or (mSearchIn = 'r') Then
-  Begin
+  if (mSearchIn = 't') or (mSearchIn = 'r') then
+  begin
 
     StartCounter := 0;
     EndCounter := W_Khandatta.Count - 1;
     TotalSearch := TotalSearch + EndCounter + 1;
 
-    For I := StartCounter To EndCounter Do
-    Begin
+    for I := StartCounter to EndCounter do
+    begin
       theMatch := theRegex.Match(W_Khandatta[I]);
-      If theMatch.Success Then
-      Begin
+      if theMatch.Success then
+      begin
         wList.Add(W_Khandatta[I]);
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
   { ***************************************** }
 
   { ***************************************** }
@@ -1030,18 +1016,18 @@ Begin
   EndCounter := SpellCustomDict.Count - 1;
   TotalSearch := TotalSearch + EndCounter + 1;
 
-  For I := StartCounter To EndCounter Do
-  Begin
+  for I := StartCounter to EndCounter do
+  begin
     theMatch := theRegex.Match(SpellCustomDict[I]);
-    If theMatch.Success Then
-    Begin
+    if theMatch.Success then
+    begin
       wList.Add(SpellCustomDict[I]);
-    End;
-  End;
+    end;
+  end;
 
   wList.EndUpdate;
 
   Result := TotalSearch;
-End;
+end;
 
-End.
+end.

@@ -28,11 +28,11 @@
 {$INCLUDE ../ProjectDefines.inc}
 { COMPLETE TRANSFERING! }
 
-Unit ufrmAvroMouse;
+unit ufrmAvroMouse;
 
-Interface
+interface
 
-Uses
+uses
   Windows,
   Messages,
   SysUtils,
@@ -46,8 +46,8 @@ Uses
   Buttons,
   ExtCtrls;
 
-Type
-  TfrmAvroMouse = Class(TForm)
+type
+  TfrmAvroMouse = class(TForm)
     Panel1: TPanel;
     BitBtn3: TBitBtn;
     BitBtn1: TBitBtn;
@@ -165,44 +165,42 @@ Type
     btnEnter: TButton;
     BitBtn89: TBitBtn;
     BitBtn90: TBitBtn;
-    Procedure FormClose(Sender: TObject; Var Action: TCloseAction);
-    Procedure BitBtn1Click(Sender: TObject);
-    Procedure btnTabClick(Sender: TObject);
-    Procedure But_KSsClick(Sender: TObject);
-    Procedure But_NGKClick(Sender: TObject);
-    Procedure But_NgGClick(Sender: TObject);
-    Procedure But_JNYAClick(Sender: TObject);
-    Procedure But_NYACClick(Sender: TObject);
-    Procedure But_NYAChClick(Sender: TObject);
-    Procedure But_NYAJClick(Sender: TObject);
-    Procedure But_T_TClick(Sender: TObject);
-    Procedure But_SsNYAClick(Sender: TObject);
-    Procedure But_HMClick(Sender: TObject);
-    Procedure But_NDClick(Sender: TObject);
-    Procedure But_RFolaClick(Sender: TObject);
-    Procedure But_ZFolaClick(Sender: TObject);
-    Procedure FormCreate(Sender: TObject);
-  Private
-    { Private declarations }
-    Procedure TypeIt(Const tStr: String);
-    Procedure DetectLeftClickOnTitleBar(Var Msg: TWMNCLButtonDown);
-      Message WM_NCLBUTTONDOWN;
-    Procedure DetectRightClickOnTitleBar(Var Msg: TWMNCLButtonDown);
-      Message WM_NCRBUTTONDOWN;
-  Public
-    { Public declarations }
-  Protected
-    Procedure CreateParams(Var Params: TCreateParams); Override;
-  End;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure btnTabClick(Sender: TObject);
+    procedure But_KSsClick(Sender: TObject);
+    procedure But_NGKClick(Sender: TObject);
+    procedure But_NgGClick(Sender: TObject);
+    procedure But_JNYAClick(Sender: TObject);
+    procedure But_NYACClick(Sender: TObject);
+    procedure But_NYAChClick(Sender: TObject);
+    procedure But_NYAJClick(Sender: TObject);
+    procedure But_T_TClick(Sender: TObject);
+    procedure But_SsNYAClick(Sender: TObject);
+    procedure But_HMClick(Sender: TObject);
+    procedure But_NDClick(Sender: TObject);
+    procedure But_RFolaClick(Sender: TObject);
+    procedure But_ZFolaClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    private
+      { Private declarations }
+      procedure TypeIt(const tStr: string);
+      procedure DetectLeftClickOnTitleBar(var Msg: TWMNCLButtonDown); message WM_NCLBUTTONDOWN;
+      procedure DetectRightClickOnTitleBar(var Msg: TWMNCLButtonDown); message WM_NCRBUTTONDOWN;
+    public
+      { Public declarations }
+    protected
+      procedure CreateParams(var Params: TCreateParams); override;
+  end;
 
-Var
+var
   frmAvroMouse: TfrmAvroMouse;
 
-Implementation
+implementation
 
 {$R *.dfm}
 
-Uses
+uses
   uForm1,
   BanglaChars,
   KeyboardFunctions,
@@ -210,163 +208,161 @@ Uses
   uRegistrySettings,
   clsLayout;
 
-Const
+const
   Show_Window_in_Taskbar = True;
 
-Procedure TfrmAvroMouse.BitBtn1Click(Sender: TObject);
-Var
+procedure TfrmAvroMouse.BitBtn1Click(Sender: TObject);
+var
   WC: Char;
-Begin
-  WC := Char((Sender As TBitBtn).Tag);
+begin
+  WC := Char((Sender as TBitBtn).Tag);
   TypeIt(WC);
-End;
+end;
 
-Procedure TfrmAvroMouse.btnTabClick(Sender: TObject);
-Begin
-  SendKey_SendInput((Sender As TButton).Tag);
-End;
+procedure TfrmAvroMouse.btnTabClick(Sender: TObject);
+begin
+  SendKey_SendInput((Sender as TButton).Tag);
+end;
 
-Procedure TfrmAvroMouse.But_HMClick(Sender: TObject);
-Begin
+procedure TfrmAvroMouse.But_HMClick(Sender: TObject);
+begin
   TypeIt(b_H + b_Hasanta + b_M);
-End;
+end;
 
-Procedure TfrmAvroMouse.But_JNYAClick(Sender: TObject);
-Begin
+procedure TfrmAvroMouse.But_JNYAClick(Sender: TObject);
+begin
   TypeIt(b_J + b_Hasanta + b_NYA);
-End;
+end;
 
-Procedure TfrmAvroMouse.But_KSsClick(Sender: TObject);
-Begin
+procedure TfrmAvroMouse.But_KSsClick(Sender: TObject);
+begin
   TypeIt(b_K + b_Hasanta + b_Ss);
-End;
+end;
 
-Procedure TfrmAvroMouse.But_NDClick(Sender: TObject);
-Begin
+procedure TfrmAvroMouse.But_NDClick(Sender: TObject);
+begin
   TypeIt(b_Nn + b_Hasanta + b_Dd);
-End;
+end;
 
-Procedure TfrmAvroMouse.But_NgGClick(Sender: TObject);
-Begin
+procedure TfrmAvroMouse.But_NgGClick(Sender: TObject);
+begin
   TypeIt(b_NGA + b_Hasanta + b_G);
-End;
+end;
 
-Procedure TfrmAvroMouse.But_NGKClick(Sender: TObject);
-Begin
+procedure TfrmAvroMouse.But_NGKClick(Sender: TObject);
+begin
   TypeIt(b_NGA + b_Hasanta + b_K);
-End;
+end;
 
-Procedure TfrmAvroMouse.But_NYACClick(Sender: TObject);
-Begin
+procedure TfrmAvroMouse.But_NYACClick(Sender: TObject);
+begin
   TypeIt(b_NYA + b_Hasanta + b_C);
-End;
+end;
 
-Procedure TfrmAvroMouse.But_NYAChClick(Sender: TObject);
-Begin
+procedure TfrmAvroMouse.But_NYAChClick(Sender: TObject);
+begin
   TypeIt(b_NYA + b_Hasanta + b_CH);
-End;
+end;
 
-Procedure TfrmAvroMouse.But_NYAJClick(Sender: TObject);
-Begin
+procedure TfrmAvroMouse.But_NYAJClick(Sender: TObject);
+begin
   TypeIt(b_NYA + b_Hasanta + b_J);
-End;
+end;
 
-Procedure TfrmAvroMouse.But_RFolaClick(Sender: TObject);
-Begin
+procedure TfrmAvroMouse.But_RFolaClick(Sender: TObject);
+begin
   TypeIt(b_Hasanta + b_R);
-End;
+end;
 
-Procedure TfrmAvroMouse.But_SsNYAClick(Sender: TObject);
-Begin
+procedure TfrmAvroMouse.But_SsNYAClick(Sender: TObject);
+begin
   TypeIt(b_Ss + b_Hasanta + b_Nn);
-End;
+end;
 
-Procedure TfrmAvroMouse.But_T_TClick(Sender: TObject);
-Begin
+procedure TfrmAvroMouse.But_T_TClick(Sender: TObject);
+begin
   TypeIt(b_T + b_Hasanta + b_T);
-End;
+end;
 
-Procedure TfrmAvroMouse.But_ZFolaClick(Sender: TObject);
-Begin
+procedure TfrmAvroMouse.But_ZFolaClick(Sender: TObject);
+begin
   TypeIt(b_Hasanta + b_Z);
-End;
+end;
 
-Procedure TfrmAvroMouse.CreateParams(Var Params: TCreateParams);
-Begin
-  Inherited CreateParams(Params);
-  With Params Do
-  Begin
-    If Show_Window_in_Taskbar Then
-    Begin
-      ExStyle := ExStyle Or WS_EX_APPWINDOW And Not WS_EX_TOOLWINDOW;
-      ExStyle := ExStyle Or WS_EX_TOPMOST Or WS_EX_NOACTIVATE;
+procedure TfrmAvroMouse.CreateParams(var Params: TCreateParams);
+begin
+  inherited CreateParams(Params);
+  with Params do
+  begin
+    if Show_Window_in_Taskbar then
+    begin
+      ExStyle := ExStyle or WS_EX_APPWINDOW and not WS_EX_TOOLWINDOW;
+      ExStyle := ExStyle or WS_EX_TOPMOST or WS_EX_NOACTIVATE;
       WndParent := GetDesktopwindow;
-    End
-    Else If Not Show_Window_in_Taskbar Then
-    Begin
-      ExStyle := ExStyle And Not WS_EX_APPWINDOW;
-    End;
-  End;
-End;
+    end
+    else if not Show_Window_in_Taskbar then
+    begin
+      ExStyle := ExStyle and not WS_EX_APPWINDOW;
+    end;
+  end;
+end;
 
-Procedure TfrmAvroMouse.DetectLeftClickOnTitleBar(Var Msg: TWMNCLButtonDown);
-Begin
-  If (Msg.HitTest = htCaption) Then
+procedure TfrmAvroMouse.DetectLeftClickOnTitleBar(var Msg: TWMNCLButtonDown);
+begin
+  if (Msg.HitTest = htCaption) then
     SetForegroundWindow(Self.Handle);
-  Inherited;
-End;
+  inherited;
+end;
 
-Procedure TfrmAvroMouse.DetectRightClickOnTitleBar(Var Msg: TWMNCLButtonDown);
-Begin
-  If (Msg.HitTest = htCaption) Then
+procedure TfrmAvroMouse.DetectRightClickOnTitleBar(var Msg: TWMNCLButtonDown);
+begin
+  if (Msg.HitTest = htCaption) then
     SetForegroundWindow(Self.Handle);
-  Inherited;
-End;
+  inherited;
+end;
 
-Procedure TfrmAvroMouse.FormClose(Sender: TObject; Var Action: TCloseAction);
-Begin
-  If Self.Top >= 0 Then
+procedure TfrmAvroMouse.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  if Self.Top >= 0 then
     AvroMousePosX := intToStr(Self.Top);
-  If Self.Left >= 0 Then
+  if Self.Left >= 0 then
     AvroMousePosY := intToStr(Self.Left);
 
   Action := caFree;
 
-  frmAvroMouse := Nil;
-End;
+  frmAvroMouse := nil;
+end;
 
-Procedure TfrmAvroMouse.FormCreate(Sender: TObject);
-Begin
-  Try
-    If (StrToInt(AvroMousePosX) > Screen.Width) Or
-      (StrToInt(AvroMousePosX) < 0) Then
+procedure TfrmAvroMouse.FormCreate(Sender: TObject);
+begin
+  try
+    if (StrToInt(AvroMousePosX) > Screen.Width) or (StrToInt(AvroMousePosX) < 0) then
       AvroMousePosX := '0';
-    If (StrToInt(AvroMousePosY) > Screen.Height) Or
-      (StrToInt(AvroMousePosY) < 0) Then
+    if (StrToInt(AvroMousePosY) > Screen.Height) or (StrToInt(AvroMousePosY) < 0) then
       AvroMousePosY := '0';
 
     Self.Top := StrToInt(AvroMousePosX);
     Self.Left := StrToInt(AvroMousePosY);
-  Except
-    On E: Exception Do
-    Begin
+  except
+    on E: Exception do
+    begin
       AvroMousePosX := '0';
       AvroMousePosY := '0';
       Self.Top := 0;
       Self.Left := 0;
-    End;
-  End;
-End;
+    end;
+  end;
+end;
 
-Procedure TfrmAvroMouse.TypeIt(Const tStr: String);
-Begin
-  If AvroMouseChangeModeLocale = 'YES' Then
-  Begin
-    If AvroMainForm1.GetMyCurrentKeyboardMode <> bangla Then
+procedure TfrmAvroMouse.TypeIt(const tStr: string);
+begin
+  if AvroMouseChangeModeLocale = 'YES' then
+  begin
+    if AvroMainForm1.GetMyCurrentKeyboardMode <> bangla then
       AvroMainForm1.ToggleMode;
-  End;
+  end;
 
   SendKey_Char(tStr);
-End;
+end;
 
-End.
+end.

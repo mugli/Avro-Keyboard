@@ -28,18 +28,19 @@
 {$INCLUDE ../ProjectDefines.inc}
 { COMPLETE TRANSFERING Except layout conversion }
 
-Unit KeyboardLayoutLoader;
+unit KeyboardLayoutLoader;
 
-Interface
+interface
 
-Uses
+uses
   Classes,
   SysUtils,
   Forms,
   system.Variants,
   Windows,
   Soap.EncdDecd,
-  XMLIntf, XMLDoc,
+  XMLIntf,
+  XMLDoc,
   BanglaChars,
   VirtualKeyCode,
   uRegistrySettings,
@@ -48,36 +49,33 @@ Uses
   StrUtils,
   Generics.Collections;
 
-Function LoadLayout(Const LayoutPath: String): Boolean;
-Function Init_KeyboardLayout(Const KeyboardLayoutName: String): Boolean;
-Procedure Destroy_KeyboardLayoutData;
-Procedure Init_KeyboardLayoutData;
-Function GetCharForKey(Const KeyCode: Integer;
-  Const var_IfShift, var_IfTrueShift, var_IfAltGr: Boolean): String;
-Procedure ShowLayoutDescription(Const LayoutPath: String);
-Procedure LoadKeyboardLayoutNames;
-Procedure LoadKeyboardLayoutImages(Const LayoutPath: String;
-  Var Pic_LayoutNormal: TBitmap; Var Pic_LayoutAltGr: TBitmap);
-Function InstallLayout(Const LayoutPath: String): Boolean;
+function LoadLayout(const LayoutPath: string): Boolean;
+function Init_KeyboardLayout(const KeyboardLayoutName: string): Boolean;
+procedure Destroy_KeyboardLayoutData;
+procedure Init_KeyboardLayoutData;
+function GetCharForKey(const KeyCode: Integer; const var_IfShift, var_IfTrueShift, var_IfAltGr: Boolean): string;
+procedure ShowLayoutDescription(const LayoutPath: string);
+procedure LoadKeyboardLayoutNames;
+procedure LoadKeyboardLayoutImages(const LayoutPath: string; var Pic_LayoutNormal: TBitmap; var Pic_LayoutAltGr: TBitmap);
+function InstallLayout(const LayoutPath: string): Boolean;
 
-Var
-  KeyData: TDictionary<String, String>;
+var
+  KeyData:         TDictionary<string, string>;
   KeyboardLayouts: TStringList;
 
-Implementation
+implementation
 
-Uses
+uses
   uWindowHandlers,
   ufrmAboutSkinLayout,
   clsSkinLayoutConverter;
 { =============================================================================== }
 
-Function GetCharForKey(Const KeyCode: Integer;
-  Const var_IfShift, var_IfTrueShift, var_IfAltGr: Boolean): String;
-Var
-  KC_Key: String;
-Begin
-  Case KeyCode Of
+function GetCharForKey(const KeyCode: Integer; const var_IfShift, var_IfTrueShift, var_IfAltGr: Boolean): string;
+var
+  KC_Key: string;
+begin
+  case KeyCode of
     VK_ADD:
       KC_Key := 'NumAdd';
     VK_DECIMAL:
@@ -206,167 +204,164 @@ Begin
       KC_Key := 'Y';
     Z_Key:
       KC_Key := 'Z';
-  End;
+  end;
 
-  If KC_Key = '' Then
-  Begin
+  if KC_Key = '' then
+  begin
     GetCharForKey := '';
     Exit;
-  End;
+  end;
 
   { Version 5 }
-  If LowerCase(LeftStr(KC_Key, 3)) <> 'num' Then
+  if LowerCase(LeftStr(KC_Key, 3)) <> 'num' then
     KC_Key := 'Key_' + KC_Key;
 
   // Process Numpad
-  If Pos('Num', KC_Key) > 0 Then
-  Begin
-    If NumPadBangla = 'YES' Then
-    Begin
-      If (var_IfShift = False) And (var_IfTrueShift = False) And
-        (var_IfAltGr = False) Then
-      Begin
+  if Pos('Num', KC_Key) > 0 then
+  begin
+    if NumPadBangla = 'YES' then
+    begin
+      if (var_IfShift = False) and (var_IfTrueShift = False) and (var_IfAltGr = False) then
+      begin
         // In Numpad, no modifier is allowed for Bangla Layout
         GetCharForKey := KeyData.Items[KC_Key];
         Exit;
-      End
-      Else
-      Begin
+      end
+      else
+      begin
         GetCharForKey := '';
         Exit;
-      End;
-    End
-    Else
-    Begin
+      end;
+    end
+    else
+    begin
       GetCharForKey := '';
       Exit;
-    End;
-  End;
+    end;
+  end;
 
   // Process OEM and Number Keys
-  If (KC_Key = '1') Or (KC_Key = '2') Or (KC_Key = '3') Or (KC_Key = '4') Or
-    (KC_Key = '5') Or (KC_Key = '6') Or (KC_Key = '7') Or (KC_Key = '8') Or
-    (KC_Key = '9') Or (KC_Key = '0') Or (Pos('OEM', KC_Key) > 0) Then
-  Begin
-    If (var_IfTrueShift = False) And (var_IfAltGr = False) Then
-    Begin
+  if (KC_Key = '1') or (KC_Key = '2') or (KC_Key = '3') or (KC_Key = '4') or (KC_Key = '5') or (KC_Key = '6') or (KC_Key = '7') or (KC_Key = '8') or
+    (KC_Key = '9') or (KC_Key = '0') or (Pos('OEM', KC_Key) > 0) then
+  begin
+    if (var_IfTrueShift = False) and (var_IfAltGr = False) then
+    begin
       // In OEM Keys, Capslock has no value
       // Normal State
       KC_Key := KC_Key + '_Normal';
       GetCharForKey := KeyData.Items[KC_Key];
       Exit;
-    End
-    Else If (var_IfTrueShift = True) And (var_IfAltGr = False) Then
-    Begin
+    end
+    else if (var_IfTrueShift = True) and (var_IfAltGr = False) then
+    begin
       // True Shift State
       KC_Key := KC_Key + '_Shift';
       GetCharForKey := KeyData.Items[KC_Key];
       Exit;
-    End
-    Else If (var_IfTrueShift = False) And (var_IfAltGr = True) Then
-    Begin
+    end
+    else if (var_IfTrueShift = False) and (var_IfAltGr = True) then
+    begin
       // AltGr state
       KC_Key := KC_Key + '_AltGr';
       GetCharForKey := KeyData.Items[KC_Key];
       Exit;
-    End
-    Else If (var_IfTrueShift = True) And (var_IfAltGr = True) Then
-    Begin
+    end
+    else if (var_IfTrueShift = True) and (var_IfAltGr = True) then
+    begin
       // Shift+AltGr state
       KC_Key := KC_Key + '_ShiftAltGr';
       GetCharForKey := KeyData.Items[KC_Key];
       Exit;
-    End;
-  End;
+    end;
+  end;
 
   // Process Alpha Keys
-  If (var_IfShift = False) And (var_IfAltGr = False) Then
-  Begin
+  if (var_IfShift = False) and (var_IfAltGr = False) then
+  begin
     // All Normal
     KC_Key := KC_Key + '_Normal';
     GetCharForKey := KeyData.Items[KC_Key];
     Exit;
-  End
-  Else If (var_IfShift = True) And (var_IfAltGr = False) Then
-  Begin
+  end
+  else if (var_IfShift = True) and (var_IfAltGr = False) then
+  begin
     // Shift State
     KC_Key := KC_Key + '_Shift';
     GetCharForKey := KeyData.Items[KC_Key];
     Exit;
-  End
-  Else If (var_IfShift = False) And (var_IfAltGr = True) Then
-  Begin
+  end
+  else if (var_IfShift = False) and (var_IfAltGr = True) then
+  begin
     // AltGr State
     KC_Key := KC_Key + '_AltGr';
     // Debug.Print 'KeyName is:' & KC_Key & ' AltGr=' & var_IfAltGr
     GetCharForKey := KeyData.Items[KC_Key];
     Exit;
-  End
-  Else If (var_IfShift = True) And (var_IfAltGr = True) Then
-  Begin
+  end
+  else if (var_IfShift = True) and (var_IfAltGr = True) then
+  begin
     // Shift+AltGr State
     KC_Key := KC_Key + '_ShiftAltGr';
     // Debug.Print 'KeyName is:' & KC_Key & ' AltGr=' & var_IfAltGr
     GetCharForKey := KeyData.Items[KC_Key];
     Exit;
-  End;
+  end;
 
-End;
+end;
 
 { =============================================================================== }
 
 {$HINTS Off}
 
-Function Init_KeyboardLayout(Const KeyboardLayoutName: String): Boolean;
-Var
-  LayoutPath: String;
+function Init_KeyboardLayout(const KeyboardLayoutName: string): Boolean;
+var
+  LayoutPath: string;
 
-Begin
+begin
   Result := False;
   Destroy_KeyboardLayoutData;
   Init_KeyboardLayoutData;
 
-  LayoutPath := GetAvroDataDir + 'Keyboard Layouts\' + KeyboardLayoutName +
-    '.avrolayout';
+  LayoutPath := GetAvroDataDir + 'Keyboard Layouts\' + KeyboardLayoutName + '.avrolayout';
 
-  If FileExists(LayoutPath) Then
+  if FileExists(LayoutPath) then
     Result := LoadLayout(LayoutPath)
-  Else
+  else
     Result := False;
 
-End;
+end;
 
 {$HINTS On}
 { =============================================================================== }
 
-Procedure Init_KeyboardLayoutData;
-Begin
-  KeyData := TDictionary<String, String>.create;
-End;
+procedure Init_KeyboardLayoutData;
+begin
+  KeyData := TDictionary<string, string>.create;
+end;
 
 { =============================================================================== }
 
-Procedure Destroy_KeyboardLayoutData;
-Begin
+procedure Destroy_KeyboardLayoutData;
+begin
   KeyData.Free;
-End;
+end;
 
 { =============================================================================== }
 
 {$HINTS Off}
 
-Function LoadLayout(Const LayoutPath: String): Boolean;
-Var
-  XML: IXMLDocument;
+function LoadLayout(const LayoutPath: string): Boolean;
+var
+  XML:  IXMLDocument;
   Node: IXmlNode;
-  I: Integer;
+  I:    Integer;
 
   m_Converter: TSkinLayoutConverter;
-Begin
+begin
   Result := False;
 
-  Try
-    Try
+  try
+    try
 
       XML := TXMLDocument.create(nil);
       XML.Active := True;
@@ -377,12 +372,11 @@ Begin
 
       // ----------------------------------------------
       // Check if the skin is a compatible one
-      If trim(XML.DocumentElement.childnodes.FindNode('AvroKeyboardVersion')
-        .nodevalue) <> '5' Then
-      Begin
+      if trim(XML.DocumentElement.childnodes.FindNode('AvroKeyboardVersion').nodevalue) <> '5' then
+      begin
 
         XML.Active := False;
-        XML := Nil;
+        XML := nil;
 
         m_Converter := TSkinLayoutConverter.create;
         m_Converter.CheckConvertLayout(LayoutPath);
@@ -396,17 +390,14 @@ Begin
         Application.ProcessMessages;
 
         // Check again
-        If trim(XML.DocumentElement.childnodes.FindNode('AvroKeyboardVersion')
-          .nodevalue) <> '5' Then
-        Begin
-          Application.MessageBox
-            ('This Keyboard Layout is not compatible with current version of Avro Keyboard.',
-            'Error loading keyboard layout...', MB_OK + MB_ICONHAND +
-            MB_DEFBUTTON1 + MB_APPLMODAL);
+        if trim(XML.DocumentElement.childnodes.FindNode('AvroKeyboardVersion').nodevalue) <> '5' then
+        begin
+          Application.MessageBox('This Keyboard Layout is not compatible with current version of Avro Keyboard.', 'Error loading keyboard layout...',
+            MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
           Result := False;
           Exit;
-        End;
-      End;
+        end;
+      end;
       // ----------------------------------------------
 
       Application.ProcessMessages;
@@ -415,57 +406,55 @@ Begin
       // Load Key Data
       Node := XML.DocumentElement.childnodes.FindNode('KeyData');
       Application.ProcessMessages;
-      For I := 0 To Node.childnodes.Count - 1 Do
-      Begin
+      for I := 0 to Node.childnodes.Count - 1 do
+      begin
         // showmessage( inttostr(Node.childnodes.nodes[I].childnodes.Count );
-        If Node.childnodes.nodes[I].childnodes.Count <= 0 Then
+        if Node.childnodes.nodes[I].childnodes.Count <= 0 then
           // If item has no cdata
-          KeyData.AddOrSetValue(String(Node.childnodes.nodes[I].nodename), '')
-        Else
+          KeyData.AddOrSetValue(string(Node.childnodes.nodes[I].nodename), '')
+        else
           // if item has cdata
-          KeyData.AddOrSetValue(String(Node.childnodes.nodes[I].nodename),
-            VartoStr(Node.childnodes.nodes[I].childnodes.nodes[0].nodevalue));
+          KeyData.AddOrSetValue(string(Node.childnodes.nodes[I].nodename), VartoStr(Node.childnodes.nodes[I].childnodes.nodes[0].nodevalue));
         Application.ProcessMessages;
-      End;
+      end;
 
       Result := True;
-    Except
-      On E: Exception Do
-      Begin
+    except
+      on E: Exception do
+      begin
         Result := False;
         Application.ProcessMessages;
-      End;
-    End;
-  Finally
+      end;
+    end;
+  finally
 
     XML.Active := False;
-    XML := Nil;
+    XML := nil;
     Application.ProcessMessages;
-  End;
-End;
+  end;
+end;
 
 {$HINTS On}
 { =============================================================================== }
 
-Procedure LoadKeyboardLayoutImages(Const LayoutPath: String;
-  Var Pic_LayoutNormal: TBitmap; Var Pic_LayoutAltGr: TBitmap);
-Var
-  XML: IXMLDocument;
-  Stream: TStringStream;
+procedure LoadKeyboardLayoutImages(const LayoutPath: string; var Pic_LayoutNormal: TBitmap; var Pic_LayoutAltGr: TBitmap);
+var
+  XML:      IXMLDocument;
+  Stream:   TStringStream;
   Resource: TResourceStream;
 
   m_Converter: TSkinLayoutConverter;
 
-Begin
+begin
 
   FreeAndNil(Pic_LayoutNormal);
   FreeAndNil(Pic_LayoutAltGr);
   Application.ProcessMessages;
 
-  Try
-    Try
-      If LowerCase(LayoutPath) <> 'avrophonetic*' Then
-      Begin
+  try
+    try
+      if LowerCase(LayoutPath) <> 'avrophonetic*' then
+      begin
 
         XML := TXMLDocument.create(nil);
         XML.Active := True;
@@ -476,12 +465,11 @@ Begin
 
         // ----------------------------------------------
         // Check if the layout is a compatible one
-        If trim(XML.DocumentElement.childnodes.FindNode('AvroKeyboardVersion')
-          .nodevalue { UnicodeStr } ) <> '5' Then
-        Begin
+        if trim(XML.DocumentElement.childnodes.FindNode('AvroKeyboardVersion').nodevalue { UnicodeStr } ) <> '5' then
+        begin
 
           XML.Active := False;
-          XML := Nil;
+          XML := nil;
 
           m_Converter := TSkinLayoutConverter.create;
           m_Converter.CheckConvertLayout(LayoutPath);
@@ -495,45 +483,36 @@ Begin
           Application.ProcessMessages;
 
           // Check again
-          If trim(XML.DocumentElement.childnodes.FindNode('AvroKeyboardVersion')
-            .nodevalue { UnicodeStr } ) <> '5' Then
-          Begin
-            Application.MessageBox
-              ('This Keyboard Layout is not compatible with current version of Avro Keyboard.',
-              'Error loading keyboard layout...', MB_OK + MB_ICONHAND +
-              MB_DEFBUTTON1 + MB_APPLMODAL);
+          if trim(XML.DocumentElement.childnodes.FindNode('AvroKeyboardVersion').nodevalue { UnicodeStr } ) <> '5' then
+          begin
+            Application.MessageBox('This Keyboard Layout is not compatible with current version of Avro Keyboard.', 'Error loading keyboard layout...',
+              MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
             Exit;
-          End;
-        End;
+          end;
+        end;
         // ----------------------------------------------
         Application.ProcessMessages;
         Application.ProcessMessages;
-        if (VarIsNull(XML.DocumentElement.childnodes.FindNode
-          ('ImageNormalShift').nodevalue) = False) then
+        if (VarIsNull(XML.DocumentElement.childnodes.FindNode('ImageNormalShift').nodevalue) = False) then
         begin
-          Stream := TStringStream.create
-            (DecodeBase64(XML.DocumentElement.childnodes.FindNode
-            ('ImageNormalShift').nodevalue));
+          Stream := TStringStream.create(DecodeBase64(XML.DocumentElement.childnodes.FindNode('ImageNormalShift').nodevalue));
           Pic_LayoutNormal := TBitmap.create;
-          If Stream.Size > 0 Then
+          if Stream.Size > 0 then
             Pic_LayoutNormal.LoadFromStream(Stream)
-          Else
+          else
             FreeAndNil(Pic_LayoutNormal);
           Application.ProcessMessages;
           FreeAndNil(Stream);
         end;
 
-        if (VarIsNull(XML.DocumentElement.childnodes.FindNode('ImageAltGrShift')
-          .nodevalue) = False) then
+        if (VarIsNull(XML.DocumentElement.childnodes.FindNode('ImageAltGrShift').nodevalue) = False) then
         begin
 
-          Stream := TStringStream.create
-            (DecodeBase64(XML.DocumentElement.childnodes.FindNode
-            ('ImageAltGrShift').nodevalue));
+          Stream := TStringStream.create(DecodeBase64(XML.DocumentElement.childnodes.FindNode('ImageAltGrShift').nodevalue));
           Pic_LayoutAltGr := TBitmap.create;
-          If Stream.Size > 0 Then
+          if Stream.Size > 0 then
             Pic_LayoutAltGr.LoadFromStream(Stream)
-          Else
+          else
             FreeAndNil(Pic_LayoutAltGr);
 
           Application.ProcessMessages;
@@ -542,42 +521,42 @@ Begin
         end;
 
         XML.Active := False;
-        XML := Nil;
+        XML := nil;
 
-      End
-      Else
-      Begin
+      end
+      else
+      begin
         Resource := TResourceStream.create(Hinstance, 'PHONETIC0', RT_RCDATA);
         Pic_LayoutNormal := TBitmap.create;
         Pic_LayoutNormal.LoadFromStream(Resource);
         FreeAndNil(Resource);
         Application.ProcessMessages;
-      End;
+      end;
 
-    Except
-      On E: Exception Do
-      Begin
+    except
+      on E: Exception do
+      begin
         // Do nothing
-      End;
-    End;
-  Finally
+      end;
+    end;
+  finally
     //
-  End;
+  end;
 
-End;
+end;
 
 { =============================================================================== }
 
-Procedure ShowLayoutDescription(Const LayoutPath: String);
-Var
-  XML: IXMLDocument;
-  InternalName, Developer, Version, Comment: String;
-  m_Converter: TSkinLayoutConverter;
-Begin
-  Try
-    Try
-      If LowerCase(LayoutPath) <> 'avrophonetic*' Then
-      Begin
+procedure ShowLayoutDescription(const LayoutPath: string);
+var
+  XML:                                       IXMLDocument;
+  InternalName, Developer, Version, Comment: string;
+  m_Converter:                               TSkinLayoutConverter;
+begin
+  try
+    try
+      if LowerCase(LayoutPath) <> 'avrophonetic*' then
+      begin
 
         XML := TXMLDocument.create(nil);
         XML.Active := True;
@@ -587,12 +566,11 @@ Begin
 
         // ----------------------------------------------
         // Check if the layout is a compatible one
-        If trim(XML.DocumentElement.childnodes.FindNode('AvroKeyboardVersion')
-          .nodevalue { UnicodeStr } ) <> '5' Then
-        Begin
+        if trim(XML.DocumentElement.childnodes.FindNode('AvroKeyboardVersion').nodevalue { UnicodeStr } ) <> '5' then
+        begin
 
           XML.Active := False;
-          XML := Nil;
+          XML := nil;
 
           m_Converter := TSkinLayoutConverter.create;
           m_Converter.CheckConvertLayout(LayoutPath);
@@ -608,45 +586,36 @@ Begin
           Application.ProcessMessages;
 
           // Check again
-          If trim(XML.DocumentElement.childnodes.FindNode('AvroKeyboardVersion')
-            .nodevalue { UnicodeStr } ) <> '5' Then
-          Begin
-            Application.MessageBox
-              ('This Keyboard Layout is not compatible with current version of Avro Keyboard.',
-              'Error loading keyboard layout...', MB_OK + MB_ICONHAND +
-              MB_DEFBUTTON1 + MB_APPLMODAL);
+          if trim(XML.DocumentElement.childnodes.FindNode('AvroKeyboardVersion').nodevalue { UnicodeStr } ) <> '5' then
+          begin
+            Application.MessageBox('This Keyboard Layout is not compatible with current version of Avro Keyboard.', 'Error loading keyboard layout...',
+              MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
             Exit;
-          End;
-        End;
+          end;
+        end;
         // ----------------------------------------------
         Application.ProcessMessages;
 
-        InternalName := XML.DocumentElement.childnodes.FindNode('LayoutName')
-          .childnodes.nodes[0].nodevalue; // UnicodeStr
+        InternalName := XML.DocumentElement.childnodes.FindNode('LayoutName').childnodes.nodes[0].nodevalue; // UnicodeStr
         Application.ProcessMessages;
-        Developer := XML.DocumentElement.childnodes.FindNode('DeveloperName')
-          .childnodes.nodes[0].nodevalue; // UnicodeStr
+        Developer := XML.DocumentElement.childnodes.FindNode('DeveloperName').childnodes.nodes[0].nodevalue; // UnicodeStr
         Application.ProcessMessages;
-        Version := XML.DocumentElement.childnodes.FindNode('LayoutVersion')
-          .childnodes.nodes[0].nodevalue; // UnicodeStr
+        Version := XML.DocumentElement.childnodes.FindNode('LayoutVersion').childnodes.nodes[0].nodevalue; // UnicodeStr
         Application.ProcessMessages;
-        Comment := XML.DocumentElement.childnodes.FindNode('DeveloperComment')
-          .childnodes.nodes[0].nodevalue; // UnicodeStr
+        Comment := XML.DocumentElement.childnodes.FindNode('DeveloperComment').childnodes.nodes[0].nodevalue; // UnicodeStr
         Application.ProcessMessages;
-      End
-      Else
-      Begin
+      end
+      else
+      begin
         InternalName := 'Avro Phonetic';
         Developer := 'Mehdi Hasan (OmicronLab)';
         Version := '4';
-        Comment :=
-          'In technical definition, Avro Phonetic is not a fixed keyboard layout. '
-          + 'This is actually a text parser which takes input as english text and produce bangla '
-          + 'characters with similarity matching phonetic converter algorithm of OmicronLab.';
-      End;
+        Comment := 'In technical definition, Avro Phonetic is not a fixed keyboard layout. ' +
+          'This is actually a text parser which takes input as english text and produce bangla ' +
+          'characters with similarity matching phonetic converter algorithm of OmicronLab.';
+      end;
 
-      CheckCreateForm(TfrmAboutSkinLayout, frmAboutSkinLayout,
-        'frmAboutSkinLayout');
+      CheckCreateForm(TfrmAboutSkinLayout, frmAboutSkinLayout, 'frmAboutSkinLayout');
 
       frmAboutSkinLayout.txtName.text := InternalName;
       frmAboutSkinLayout.txtVersion.text := Version;
@@ -654,135 +623,118 @@ Begin
       frmAboutSkinLayout.txtComment.text := Comment;
 
       frmAboutSkinLayout.ShowDescription;
-    Except
-      On E: Exception Do
-      Begin
+    except
+      on E: Exception do
+      begin
         // Do nothing
-      End;
-    End;
-  Finally
+      end;
+    end;
+  finally
     XML.Active := False;
-    XML := Nil;
+    XML := nil;
 
-  End;
+  end;
 
-End;
+end;
 
 { =============================================================================== }
 
-Function InstallLayout(Const LayoutPath: String): Boolean;
-Var
-  XML: IXMLDocument;
-  InternalName, Developer, Version, Comment: String;
-  m_Converter: TSkinLayoutConverter;
-  FileName: String;
-  Overwrite: Boolean;
-Begin
+function InstallLayout(const LayoutPath: string): Boolean;
+var
+  XML:                                       IXMLDocument;
+  InternalName, Developer, Version, Comment: string;
+  m_Converter:                               TSkinLayoutConverter;
+  FileName:                                  string;
+  Overwrite:                                 Boolean;
+begin
   Result := False;
-  Try
-    Try
+  try
+    try
       XML := TXMLDocument.create(nil);
       XML.Active := True;
       XML.Encoding := 'UTF-8';
       XML.LoadFromFile(LayoutPath);
       Application.ProcessMessages;
 
-      InternalName := XML.DocumentElement.childnodes.FindNode('LayoutName')
-        .childnodes.nodes[0].nodevalue; // UnicodeStr
+      InternalName := XML.DocumentElement.childnodes.FindNode('LayoutName').childnodes.nodes[0].nodevalue; // UnicodeStr
       Application.ProcessMessages;
-      Developer := XML.DocumentElement.childnodes.FindNode('DeveloperName')
-        .childnodes.nodes[0].nodevalue; // UnicodeStr
+      Developer := XML.DocumentElement.childnodes.FindNode('DeveloperName').childnodes.nodes[0].nodevalue; // UnicodeStr
       Application.ProcessMessages;
-      Version := XML.DocumentElement.childnodes.FindNode('LayoutVersion')
-        .childnodes.nodes[0].nodevalue; // UnicodeStr
+      Version := XML.DocumentElement.childnodes.FindNode('LayoutVersion').childnodes.nodes[0].nodevalue; // UnicodeStr
       Application.ProcessMessages;
-      Comment := XML.DocumentElement.childnodes.FindNode('DeveloperComment')
-        .childnodes.nodes[0].nodevalue; // UnicodeStr
+      Comment := XML.DocumentElement.childnodes.FindNode('DeveloperComment').childnodes.nodes[0].nodevalue; // UnicodeStr
       Application.ProcessMessages;
 
       XML.Active := False;
-      XML := Nil;
+      XML := nil;
 
       FileName := ExtractFilename(LayoutPath);
 
-      If FileExists(GetAvroDataDir + 'Keyboard Layouts\' + FileName) Then
-      Begin
-        If Application.MessageBox(pchar('Keyboard layout "' + FileName +
-          '" is already installed.' + #10 + 'Do you want to overwrite it?'),
-          'Avro Keyboard', MB_YESNO + MB_ICONQUESTION + MB_DEFBUTTON2 +
-          MB_SYSTEMMODAL) = ID_YES Then
+      if FileExists(GetAvroDataDir + 'Keyboard Layouts\' + FileName) then
+      begin
+        if Application.MessageBox(pchar('Keyboard layout "' + FileName + '" is already installed.' + #10 + 'Do you want to overwrite it?'), 'Avro Keyboard',
+          MB_YESNO + MB_ICONQUESTION + MB_DEFBUTTON2 + MB_SYSTEMMODAL) = ID_YES then
           Overwrite := True
-        Else
+        else
           Overwrite := False;
-      End;
+      end;
 
-      If MyCopyFile(LayoutPath, GetAvroDataDir + 'Keyboard Layouts\' + FileName,
-        Overwrite) Then
-      Begin
+      if MyCopyFile(LayoutPath, GetAvroDataDir + 'Keyboard Layouts\' + FileName, Overwrite) then
+      begin
         Result := True;
-        Application.MessageBox(pchar('Keyboard layout "' + FileName +
-          '" has been installed successfully!' + #10 + '' + #10 +
-          'Layout name: ' + InternalName + #10 + 'Version: ' + Version + #10 +
-          'Developer: ' + Developer + #10 + 'Comment: ' + Comment + #10),
-          'Avro Keyboard', MB_OK + MB_ICONASTERISK + MB_DEFBUTTON1 +
-          MB_SYSTEMMODAL);
+        Application.MessageBox(pchar('Keyboard layout "' + FileName + '" has been installed successfully!' + #10 + '' + #10 + 'Layout name: ' + InternalName +
+              #10 + 'Version: ' + Version + #10 + 'Developer: ' + Developer + #10 + 'Comment: ' + Comment + #10), 'Avro Keyboard',
+          MB_OK + MB_ICONASTERISK + MB_DEFBUTTON1 + MB_SYSTEMMODAL);
 
         // Check and convert the skin
         m_Converter := TSkinLayoutConverter.create;
-        m_Converter.CheckConvertLayout(GetAvroDataDir + 'Keyboard Layouts\' +
-          FileName);
+        m_Converter.CheckConvertLayout(GetAvroDataDir + 'Keyboard Layouts\' + FileName);
         FreeAndNil(m_Converter);
         Application.ProcessMessages;
 
-      End
-      Else
-      Begin
+      end
+      else
+      begin
         Result := False;
-        Application.MessageBox(pchar('Keyboard layout "' + FileName +
-          '" was not installed!'), 'Avro Keyboard', MB_OK + MB_ICONHAND +
-          MB_DEFBUTTON1 + MB_SYSTEMMODAL);
-      End;
+        Application.MessageBox(pchar('Keyboard layout "' + FileName + '" was not installed!'), 'Avro Keyboard',
+          MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_SYSTEMMODAL);
+      end;
 
-    Except
-      On E: Exception Do
-      Begin
+    except
+      on E: Exception do
+      begin
         Result := False;
 
-        Application.MessageBox(pchar('Error installing keyboard layout!' + #10 +
-          '' + #10 + '' + #10 + 'Make sure this is a valid keyboard layout file'
-          + #10 + 'or,' + #10 +
-          'You have enough permission to write in keyboard layouts folder' + #10
-          + 'or,' + #10 + 'Keyboard layouts directory is writable'),
-          'Avro Keyboard', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 +
-          MB_SYSTEMMODAL);
+        Application.MessageBox(pchar('Error installing keyboard layout!' + #10 + '' + #10 + '' + #10 + 'Make sure this is a valid keyboard layout file' + #10 +
+              'or,' + #10 + 'You have enough permission to write in keyboard layouts folder' + #10 + 'or,' + #10 + 'Keyboard layouts directory is writable'),
+          'Avro Keyboard', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_SYSTEMMODAL);
 
-      End;
-    End;
-  Finally
+      end;
+    end;
+  finally
     XML.Active := False;
-    XML := Nil;
+    XML := nil;
 
-  End;
+  end;
 
-End;
+end;
 
 { =============================================================================== }
 
-Procedure LoadKeyboardLayoutNames;
-Var
+procedure LoadKeyboardLayoutNames;
+var
   I, Count: Integer;
-Begin
+begin
   KeyboardLayouts := TStringList.create;
-  Count := GetFileList(GetAvroDataDir + 'Keyboard Layouts\*.avrolayout',
-    KeyboardLayouts);
+  Count := GetFileList(GetAvroDataDir + 'Keyboard Layouts\*.avrolayout', KeyboardLayouts);
 
-  If Count <= 0 Then
+  if Count <= 0 then
     Exit;
 
-  For I := 0 To Count - 1 Do
-  Begin
+  for I := 0 to Count - 1 do
+  begin
     KeyboardLayouts[I] := RemoveExtension(KeyboardLayouts[I]);
-  End;
-End;
+  end;
+end;
 
-End.
+end.

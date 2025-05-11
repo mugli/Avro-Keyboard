@@ -49,10 +49,13 @@ uses
   ExtDlgs,
   StrUtils,
   uShapeInterceptor,
-  XMLIntf, XMLDoc,
-  System.NetEncoding, System.Generics.Collections,
+  XMLIntf,
+  XMLDoc,
+  System.NetEncoding,
+  System.Generics.Collections,
   Soap.EncdDecd,
-  ImgList {Always must be the last};
+  ImgList,
+  Vcl.AppEvnts {Always must be the last};
 
 type
   TfrmMain = class(TForm)
@@ -157,9 +160,9 @@ type
     ToolButton4: TToolButton;
     Label7: TLabel;
     Source: TImage;
+    AppEvents: TApplicationEvents;
     procedure FormCreate(Sender: TObject);
-    procedure Shape_QMouseDown(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
+    procedure Shape_QMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure txtLayoutNameEnter(Sender: TObject);
     procedure txtCommentEnter(Sender: TObject);
     procedure txtNormalEnter(Sender: TObject);
@@ -178,21 +181,23 @@ type
     procedure butAboutClick(Sender: TObject);
     procedure butOpenClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure AppEventsSettingChange(Sender: TObject; Flag: Integer; const Section: string; var Result: LongInt);
 
-  private
-    { Private declarations }
-    fDirty: Boolean;
-    fSelected: TShape;
-    fFileName: String;
-    procedure SetSelectedKey(ControlName: String);
-    procedure InitializeKeys;
-    procedure NewLayout;
-    procedure BuildLayout;
-    function NoErrorFound: Boolean;
-    procedure EncodeAndSaveImage(XML: IXMLDocument; NodeName: string;
-      FileName: string);
-  public
-    { Public declarations }
+    private
+      { Private declarations }
+      fDirty:    Boolean;
+      fSelected: TShape;
+      fFileName: string;
+      procedure SetSelectedKey(ControlName: string);
+      procedure InitializeKeys;
+      procedure NewLayout;
+      procedure BuildLayout;
+      function NoErrorFound: Boolean;
+      procedure EncodeAndSaveImage(XML: IXMLDocument; NodeName: string; FileName: string);
+
+      procedure HandleThemes;
+    public
+      { Public declarations }
   end;
 
 var
@@ -206,9 +211,16 @@ uses
   uFileFolderHandling,
   uFrmAbout,
   clsSkinLayoutConverter,
-  uRegistrySettings;
+  uRegistrySettings,
+  WindowsDarkMode;
 
 { =============================================================================== }
+
+procedure TfrmMain.AppEventsSettingChange(Sender: TObject; Flag: Integer; const Section: string; var Result: LongInt);
+begin
+  if SameText('ImmersiveColorSet', string(Section)) then
+    HandleThemes;
+end;
 
 procedure TfrmMain.BuildLayout;
 const
@@ -223,15 +235,14 @@ const
   b_8: Char = #$9EE;
   b_9: Char = #$9EF;
 var
-  XML: IXMLDocument;
-  Child: IXMLNode;
-  KeyData: IXMLNode;
-  I: Int64;
-  FStream: TFileStream;
-  SStream: TStringStream;
+  XML:         IXMLDocument;
+  Child:       IXMLNode;
+  KeyData:     IXMLNode;
+  I:           Int64;
+  FStream:     TFileStream;
+  SStream:     TStringStream;
   ImageStream: TMemoryStream;
-  TempStr: String;
-
+  TempStr:     string;
 begin
   XML := TXMLDocument.Create(nil);
   XML.Active := True;
@@ -254,12 +265,10 @@ begin
   Child := XML.DocumentElement.AddChild('DeveloperComment');
   Child.NodeValue := txtComment.Text;
 
-  EncodeAndSaveImage(XML, 'ImageNormalShift',
-    GetAvroDataDir + 'tmpImage_Normal_Shift.bmp');
+  EncodeAndSaveImage(XML, 'ImageNormalShift', GetAvroDataDir + 'tmpImage_Normal_Shift.bmp');
   txtImageNormalShift.Text := GetAvroDataDir + 'tmpImage_Normal_Shift.bmp';
 
-  EncodeAndSaveImage(XML, 'ImageAltGrShift',
-    GetAvroDataDir + 'tmpImage_AltGr_Shift.bmp');
+  EncodeAndSaveImage(XML, 'ImageAltGrShift', GetAvroDataDir + 'tmpImage_AltGr_Shift.bmp');
   txtImageAltGrShift.Text := GetAvroDataDir + 'tmpImage_AltGr_Shift.bmp';
 
   KeyData := XML.DocumentElement.AddChild('KeyData');
@@ -267,20 +276,16 @@ begin
   for I := 0 to ComponentCount - 1 do
     if Components[I] is TShape then
     begin
-      Child := KeyData.AddChild('Key_' + UpperCase((Components[I] as TShape)
-        .KeyName) + '_Normal');
+      Child := KeyData.AddChild('Key_' + UpperCase((Components[I] as TShape).KeyName) + '_Normal');
       Child.NodeValue := (Components[I] as TShape).Normal;
 
-      Child := KeyData.AddChild('Key_' + UpperCase((Components[I] as TShape)
-        .KeyName) + '_Shift');
+      Child := KeyData.AddChild('Key_' + UpperCase((Components[I] as TShape).KeyName) + '_Shift');
       Child.NodeValue := (Components[I] as TShape).Shift;
 
-      Child := KeyData.AddChild('Key_' + UpperCase((Components[I] as TShape)
-        .KeyName) + '_AltGr');
+      Child := KeyData.AddChild('Key_' + UpperCase((Components[I] as TShape).KeyName) + '_AltGr');
       Child.NodeValue := (Components[I] as TShape).AltGr;
 
-      Child := KeyData.AddChild('Key_' + UpperCase((Components[I] as TShape)
-        .KeyName) + '_ShiftAltGr');
+      Child := KeyData.AddChild('Key_' + UpperCase((Components[I] as TShape).KeyName) + '_ShiftAltGr');
       Child.NodeValue := (Components[I] as TShape).ShiftAltGr;
     end;
 
@@ -332,11 +337,9 @@ begin
   try
     XML.SaveToFile(fFileName);
   except
-    On E: Exception do
+    on E: Exception do
     begin
-      Application.MessageBox(PChar('Error occurred!' + #10 + #10 + E.Message),
-        PChar('Layout Editor'), MB_OK + MB_ICONHAND + MB_DEFBUTTON1 +
-        MB_APPLMODAL);
+      Application.MessageBox(PChar('Error occurred!' + #10 + #10 + E.Message), PChar('Layout Editor'), MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
     end;
   end;
   XML := nil;
@@ -345,13 +348,19 @@ end;
 
 { =============================================================================== }
 
-procedure TfrmMain.EncodeAndSaveImage(XML: IXMLDocument; NodeName: string;
-  FileName: string);
+procedure TfrmMain.HandleThemes;
+begin
+  SetAppropriateThemeMode('Windows10 Dark', 'Windows10');
+end;
+
+{ =============================================================================== }
+
+procedure TfrmMain.EncodeAndSaveImage(XML: IXMLDocument; NodeName: string; FileName: string);
 var
-  FStream: TFileStream;
-  ImageStream: TMemoryStream;
+  FStream:       TFileStream;
+  ImageStream:   TMemoryStream;
   EncodedString: string;
-  Node: IXMLNode;
+  Node:          IXMLNode;
 begin
   if FileExists(Trim(FileName)) then
   begin
@@ -365,8 +374,7 @@ begin
         FreeAndNil(FStream);
       end;
 
-      EncodedString := TNetEncoding.Base64.EncodeBytesToString
-        (ImageStream.Memory, ImageStream.Size);
+      EncodedString := TNetEncoding.Base64.EncodeBytesToString(ImageStream.Memory, ImageStream.Size);
 
       Node := XML.DocumentElement.AddChild(NodeName);
       Node.NodeValue := EncodedString;
@@ -383,7 +391,7 @@ begin
   try
     frmAbout.ShowModal;
   except
-    On E: Exception do
+    on E: Exception do
     begin
       // Nothing
     end;
@@ -414,10 +422,8 @@ end;
 
 procedure TfrmMain.butHelpClick(Sender: TObject);
 begin
-  if FileExists(ExtractFilePath(Application.ExeName) +
-    'Editing Keyboard Layout.pdf') then
-    Execute_Something(ExtractFilePath(Application.ExeName) +
-      'Editing Keyboard Layout.pdf')
+  if FileExists(ExtractFilePath(Application.ExeName) + 'Editing Keyboard Layout.pdf') then
+    Execute_Something(ExtractFilePath(Application.ExeName) + 'Editing Keyboard Layout.pdf')
   else
     Execute_Something('https://www.omicronlab.com/go.php?id=' + IntToStr(35));
 end;
@@ -431,11 +437,9 @@ begin
     if OpenPictureDialog1.Execute(Self.Handle) then
       txtImageAltGrShift.Text := OpenPictureDialog1.FileName;
   except
-    On E: Exception do
+    on E: Exception do
     begin
-      Application.MessageBox(PChar('Error occured!' + #10 + #10 + E.Message),
-        PChar('Layout Editor'), MB_OK + MB_ICONHAND + MB_DEFBUTTON1 +
-        MB_APPLMODAL);
+      Application.MessageBox(PChar('Error occured!' + #10 + #10 + E.Message), PChar('Layout Editor'), MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
     end;
   end;
 end;
@@ -450,11 +454,9 @@ begin
       txtImageNormalShift.Text := OpenPictureDialog1.FileName;
 
   except
-    On E: Exception do
+    on E: Exception do
     begin
-      Application.MessageBox(PChar('Error occured!' + #10 + #10 + E.Message),
-        PChar('Layout Editor'), MB_OK + MB_ICONHAND + MB_DEFBUTTON1 +
-        MB_APPLMODAL);
+      Application.MessageBox(PChar('Error occured!' + #10 + #10 + E.Message), PChar('Layout Editor'), MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
     end;
   end;
 end;
@@ -470,16 +472,16 @@ end;
 
 procedure TfrmMain.butOpenClick(Sender: TObject);
 var
-  XML: IXMLDocument;
-  Node: IXMLNode;
-  I: Int64;
-  KeyName, Layer, TrimLeftString: String;
-  tmpShape: TShape;
-  FStream: TFileStream;
-  SStream: TStringStream;
-  DecodedData: TBytes;
-  m_Converter: TSkinLayoutConverter;
-  P: Integer;
+  XML:                            IXMLDocument;
+  Node:                           IXMLNode;
+  I:                              Int64;
+  KeyName, Layer, TrimLeftString: string;
+  tmpShape:                       TShape;
+  FStream:                        TFileStream;
+  SStream:                        TStringStream;
+  DecodedData:                    TBytes;
+  m_Converter:                    TSkinLayoutConverter;
+  P:                              Integer;
 begin
   OpenDialog1.InitialDir := LELastDir;
   if OpenDialog1.Execute(Self.Handle) = False then
@@ -500,45 +502,30 @@ begin
 
       // ----------------------------------------------
       // Check if the layout is a compatible one
-      if Trim(VarToStr(XML.DocumentElement.ChildNodes.FindNode
-        ('AvroKeyboardVersion').NodeValue)) <> '5' then
+      if Trim(VarToStr(XML.DocumentElement.ChildNodes.FindNode('AvroKeyboardVersion').NodeValue)) <> '5' then
       begin
-        Application.MessageBox
-          ('This Keyboard Layout is not compatible with the current version of Avro Keyboard.',
-          'Error loading keyboard layout...', MB_OK + MB_ICONHAND +
-          MB_DEFBUTTON1 + MB_APPLMODAL);
+        Application.MessageBox('This Keyboard Layout is not compatible with the current version of Avro Keyboard.', 'Error loading keyboard layout...',
+          MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
         exit;
       end;
       // ----------------------------------------------
 
       // Load basic information
-      txtLayoutName.Text :=
-        VarToStr(XML.DocumentElement.ChildNodes.FindNode('LayoutName')
-        .ChildNodes[0].NodeValue);
-      txtDeveloper.Text :=
-        VarToStr(XML.DocumentElement.ChildNodes.FindNode('DeveloperName')
-        .ChildNodes[0].NodeValue);
-      txtVersion.Text :=
-        VarToStr(XML.DocumentElement.ChildNodes.FindNode('LayoutVersion')
-        .ChildNodes[0].NodeValue);
-      txtComment.Text :=
-        VarToStr(XML.DocumentElement.ChildNodes.FindNode('DeveloperComment')
-        .ChildNodes[0].NodeValue);
+      txtLayoutName.Text := VarToStr(XML.DocumentElement.ChildNodes.FindNode('LayoutName').ChildNodes[0].NodeValue);
+      txtDeveloper.Text := VarToStr(XML.DocumentElement.ChildNodes.FindNode('DeveloperName').ChildNodes[0].NodeValue);
+      txtVersion.Text := VarToStr(XML.DocumentElement.ChildNodes.FindNode('LayoutVersion').ChildNodes[0].NodeValue);
+      txtComment.Text := VarToStr(XML.DocumentElement.ChildNodes.FindNode('DeveloperComment').ChildNodes[0].NodeValue);
 
       // Extract images
-      if XML.DocumentElement.ChildNodes.FindNode('ImageNormalShift') <> Nil then
+      if XML.DocumentElement.ChildNodes.FindNode('ImageNormalShift') <> nil then
       begin
-        SStream := TStringStream.Create
-          (VarToStr(XML.DocumentElement.ChildNodes.FindNode('ImageNormalShift')
-          .NodeValue));
+        SStream := TStringStream.Create(VarToStr(XML.DocumentElement.ChildNodes.FindNode('ImageNormalShift').NodeValue));
         try
           DecodedData := DecodeBase64(SStream.DataString);
-          FStream := TFileStream.Create(GetAvroDataDir +
-            'tmpImage_Normal_Shift.bmp', fmCreate);
+          FStream := TFileStream.Create(GetAvroDataDir + 'tmpImage_Normal_Shift.bmp', fmCreate);
           try
             FStream.WriteBuffer(DecodedData[0], Length(DecodedData));
-            txtImageNormalShift.Text := GetAvroDataDir +
-              'tmpImage_Normal_Shift.bmp';
+            txtImageNormalShift.Text := GetAvroDataDir + 'tmpImage_Normal_Shift.bmp';
           finally
             FreeAndNil(FStream);
           end;
@@ -547,20 +534,16 @@ begin
         end;
       end;
 
-      if XML.DocumentElement.ChildNodes.FindNode('ImageAltGrShift') <> Nil then
+      if XML.DocumentElement.ChildNodes.FindNode('ImageAltGrShift') <> nil then
       begin
-        SStream := TStringStream.Create
-          (VarToStr(XML.DocumentElement.ChildNodes.FindNode('ImageAltGrShift')
-          .NodeValue));
+        SStream := TStringStream.Create(VarToStr(XML.DocumentElement.ChildNodes.FindNode('ImageAltGrShift').NodeValue));
 
         try
           DecodedData := DecodeBase64(SStream.DataString);
-          FStream := TFileStream.Create(GetAvroDataDir +
-            'tmpImage_AltGr_Shift.bmp', fmCreate);
+          FStream := TFileStream.Create(GetAvroDataDir + 'tmpImage_AltGr_Shift.bmp', fmCreate);
           try
             FStream.WriteBuffer(DecodedData[0], Length(DecodedData));
-            txtImageAltGrShift.Text := GetAvroDataDir +
-              'tmpImage_AltGr_Shift.bmp';
+            txtImageAltGrShift.Text := GetAvroDataDir + 'tmpImage_AltGr_Shift.bmp';
           finally
             FreeAndNil(FStream)
           end;
@@ -577,13 +560,11 @@ begin
         begin
 
           // Structure: Key_OEM1_Normal
-          TrimLeftString := MidStr(Node.ChildNodes[I].NodeName, 5,
-            Length(Node.ChildNodes[I].NodeName));
+          TrimLeftString := MidStr(Node.ChildNodes[I].NodeName, 5, Length(Node.ChildNodes[I].NodeName));
           // OEM1_normal
           P := Pos('_', TrimLeftString);
           KeyName := MidStr(TrimLeftString, 1, P - 1); // OEM
-          Layer := LowerCase(MidStr(TrimLeftString, P + 1,
-            Length(TrimLeftString)));
+          Layer := LowerCase(MidStr(TrimLeftString, P + 1, Length(TrimLeftString)));
           // normal/Shift/AltGr/ShiftAltGr
 
           tmpShape := FindComponent('Shape_' + KeyName) as TShape;
@@ -604,26 +585,20 @@ begin
           begin
             // if item has cdata
             if Layer = 'normal' then
-              tmpShape.Normal :=
-                VarToStr(Node.ChildNodes[I].ChildNodes[0].NodeValue);
+              tmpShape.Normal := VarToStr(Node.ChildNodes[I].ChildNodes[0].NodeValue);
             if Layer = 'shift' then
-              tmpShape.Shift :=
-                VarToStr(Node.ChildNodes[I].ChildNodes[0].NodeValue);
+              tmpShape.Shift := VarToStr(Node.ChildNodes[I].ChildNodes[0].NodeValue);
             if Layer = 'altgr' then
-              tmpShape.AltGr :=
-                VarToStr(Node.ChildNodes[I].ChildNodes[0].NodeValue);
+              tmpShape.AltGr := VarToStr(Node.ChildNodes[I].ChildNodes[0].NodeValue);
             if Layer = 'shiftaltgr' then
-              tmpShape.ShiftAltGr :=
-                VarToStr(Node.ChildNodes[I].ChildNodes[0].NodeValue);
+              tmpShape.ShiftAltGr := VarToStr(Node.ChildNodes[I].ChildNodes[0].NodeValue);
           end;
         end;
 
     except
-      On E: Exception do
+      on E: Exception do
       begin
-        Application.MessageBox(PChar('Error occurred!' + #10 + #10 + E.Message),
-          PChar('Layout Editor'), MB_OK + MB_ICONHAND + MB_DEFBUTTON1 +
-          MB_APPLMODAL);
+        Application.MessageBox(PChar('Error occurred!' + #10 + #10 + E.Message), PChar('Layout Editor'), MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
         NewLayout;
       end;
     end;
@@ -652,11 +627,9 @@ begin
     end;
 
   except
-    On E: Exception do
+    on E: Exception do
     begin
-      Application.MessageBox(PChar('Error occured!' + #10 + #10 + E.Message),
-        PChar('Layout Editor'), MB_OK + MB_ICONHAND + MB_DEFBUTTON1 +
-        MB_APPLMODAL);
+      Application.MessageBox(PChar('Error occured!' + #10 + #10 + E.Message), PChar('Layout Editor'), MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
     end;
   end;
 end;
@@ -669,7 +642,7 @@ begin
     exit;
 
   if fFileName = '' then
-    ButSaveAsClick(Nil)
+    ButSaveAsClick(nil)
   else
     BuildLayout;
 end;
@@ -681,13 +654,15 @@ begin
   SaveSettings;
 
   Action := caFree;
-  frmMain := Nil;
+  frmMain := nil;
 end;
 
 { =============================================================================== }
 
 procedure TfrmMain.FormCreate(Sender: TObject);
 begin
+  HandleThemes;
+
   InitializeKeys;
   NewLayout;
   fDirty := False;
@@ -711,157 +686,157 @@ procedure TfrmMain.InitializeKeys;
 var
   I: Integer;
 begin
-{$REGION 'Initializing stuffs'}
+  {$REGION 'Initializing stuffs'}
   with Shape_OEM3 do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := '`';
     CaptionShift := '~';
   end;
 
   with Shape_1 do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := '1';
     CaptionShift := '!';
   end;
 
   with Shape_2 do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := '2';
     CaptionShift := '@';
   end;
 
   with Shape_3 do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := '3';
     CaptionShift := '#';
   end;
 
   with Shape_4 do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := '4';
     CaptionShift := '$';
   end;
 
   with Shape_4 do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := '4';
     CaptionShift := '$';
   end;
 
   with Shape_5 do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := '5';
     CaptionShift := '%';
   end;
 
   with Shape_6 do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := '6';
     CaptionShift := '^';
   end;
 
   with Shape_7 do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := '7';
     CaptionShift := '&';
   end;
 
   with Shape_8 do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := '8';
     CaptionShift := '*';
   end;
 
   with Shape_9 do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := '9';
     CaptionShift := '(';
   end;
 
   with Shape_0 do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := '0';
     CaptionShift := ')';
   end;
 
   with Shape_MINUS do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := '-';
     CaptionShift := '_';
   end;
 
   with Shape_PLUS do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := '=';
     CaptionShift := '+';
   end;
 
   with Shape_OEM4 do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := '[';
     CaptionShift := '{';
   end;
 
   with Shape_OEM6 do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := ']';
     CaptionShift := '}';
   end;
 
   with Shape_OEM5 do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := '\';
     CaptionShift := '|';
   end;
 
   with Shape_COMMA do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := ',';
     CaptionShift := '<';
   end;
 
   with Shape_PERIOD do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := '.';
     CaptionShift := '>';
   end;
 
   with Shape_OEM2 do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := '/';
     CaptionShift := '?';
   end;
 
   with Shape_OEM1 do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := ';';
     CaptionShift := ':';
   end;
 
   with Shape_OEM7 do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := #39;
     CaptionShift := '"';
   end;
@@ -872,11 +847,11 @@ begin
       if (Components[I] as TShape).KeyName = '' then
         with (Components[I] as TShape) do
         begin
-          KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+          KeyName := UpperCase(MidStr(name, 7, Length(name)));
           CaptionNormal := LowerCase(KeyName);
           CaptionShift := UpperCase(CaptionNormal);
         end;
-{$ENDREGION}
+  {$ENDREGION}
 end;
 
 { =============================================================================== }
@@ -887,13 +862,12 @@ var
 begin
   if fDirty then
   begin
-    retVal := Application.MessageBox
-      ('Save changes to the current keyboard layout?', 'Layout Editor',
-      MB_YESNOCANCEL + +MB_ICONQUESTION + MB_DEFBUTTON1 + MB_APPLMODAL);
+    retVal := Application.MessageBox('Save changes to the current keyboard layout?', 'Layout Editor', MB_YESNOCANCEL + +MB_ICONQUESTION + MB_DEFBUTTON1 +
+        MB_APPLMODAL);
     if retVal = ID_YES then
     begin
       if NoErrorFound = True then
-        ButSaveClick(Nil)
+        ButSaveClick(nil)
       else
         exit;
     end
@@ -923,36 +897,32 @@ end;
 
 function TfrmMain.NoErrorFound: Boolean;
 begin
-  result := False;
-  if (Trim(txtLayoutName.Text) = '') or
-    (Trim(txtLayoutName.Text) = '[My Layout]') then
+  Result := False;
+  if (Trim(txtLayoutName.Text) = '') or (Trim(txtLayoutName.Text) = '[My Layout]') then
   begin
-    Application.MessageBox('Please give a name to your layout first.',
-      'Layout Editor', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
+    Application.MessageBox('Please give a name to your layout first.', 'Layout Editor', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
     txtLayoutName.SetFocus;
     txtLayoutName.SelectAll;
     exit;
   end;
   if Trim(txtImageNormalShift.Text) = '' then
   begin
-    Application.MessageBox
-      ('Please add bitmap images for Layout Viewer of Avro Keyboard before building keyboard layout.',
-      'Layout Editor', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
+    Application.MessageBox('Please add bitmap images for Layout Viewer of Avro Keyboard before building keyboard layout.', 'Layout Editor',
+      MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
     exit;
   end;
   if Trim(txtImageAltGrShift.Text) = '' then
   begin
-    Application.MessageBox
-      ('Please add bitmap images for Layout Viewer of Avro Keyboard before building keyboard layout.',
-      'Layout Editor', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
+    Application.MessageBox('Please add bitmap images for Layout Viewer of Avro Keyboard before building keyboard layout.', 'Layout Editor',
+      MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
     exit;
   end;
-  result := True;
+  Result := True;
 end;
 
 { =============================================================================== }
 
-procedure TfrmMain.SetSelectedKey(ControlName: String);
+procedure TfrmMain.SetSelectedKey(ControlName: string);
 var
   I: Integer;
 begin
@@ -983,8 +953,7 @@ end;
 
 { =============================================================================== }
 
-procedure TfrmMain.Shape_QMouseDown(Sender: TObject; Button: TMouseButton;
-  Shift: TShiftState; X, Y: Integer);
+procedure TfrmMain.Shape_QMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
   SetSelectedKey((Sender as TShape).Name);
 end;

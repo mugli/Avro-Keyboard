@@ -3,7 +3,7 @@
         <ProjectGuid>{0219940E-5F78-48B1-8960-2C65283492DA}</ProjectGuid>
         <MainSource>Avro_Keyboard.dpr</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Debug</Config>
+        <Config Condition="'$(Config)'==''">Release</Config>
         <ProjectName Condition="'$(ProjectName)'==''">Avro_Keyboard</ProjectName>
         <TargetedPlatforms>3</TargetedPlatforms>
         <AppType>Application</AppType>
@@ -27,6 +27,12 @@
     <PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_1)'!=''">
         <Cfg_1>true</Cfg_1>
         <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win64' and '$(Cfg_1)'=='true') or '$(Cfg_1_Win64)'!=''">
+        <Cfg_1_Win64>true</Cfg_1_Win64>
+        <CfgParent>Cfg_1</CfgParent>
+        <Cfg_1>true</Cfg_1>
         <Base>true</Base>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_2)'!=''">
@@ -64,20 +70,28 @@
         <VerInfo_MajorVer>5</VerInfo_MajorVer>
         <VerInfo_MinorVer>7</VerInfo_MinorVer>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
+        <Custom_Styles>Windows10|VCLSTYLE|$(BDSCOMMONDIR)\Styles\Windows10.vsf;&quot;Windows10 Dark|VCLSTYLE|$(BDSCOMMONDIR)\Styles\Windows10Dark.vsf&quot;</Custom_Styles>
+        <DCC_ExeOutput>.\..\build\</DCC_ExeOutput>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
-        <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
+        <AppDPIAwarenessMode>system</AppDPIAwarenessMode>
+        <Icon_MainIcon>..\assets\icons\Avro.ico</Icon_MainIcon>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win64)'!=''">
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
-        <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
+        <AppDPIAwarenessMode>system</AppDPIAwarenessMode>
+        <Icon_MainIcon>..\assets\icons\Avro.ico</Icon_MainIcon>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1)'!=''">
         <DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
         <DCC_DebugInformation>0</DCC_DebugInformation>
         <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
         <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_1_Win64)'!=''">
+        <VerInfo_Build>3</VerInfo_Build>
+        <VerInfo_Keys>CompanyName=OmicronLab;FileDescription=Avro Keyboard - UNICODE compliant Open source Bangla typing software for Windows;FileVersion=5.7.0.3;InternalName=Avro Keyboard;LegalCopyright=© OmicronLab. All rights reserved.;LegalTrademarks=Avro Keyboard;OriginalFilename=Avro Keyboard.exe;ProductName=Avro Keyboard;ProductVersion=5.7.0.0;Comments=Avro Keyboard - UNICODE compliant Open source Bangla typing software for Windows</VerInfo_Keys>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
@@ -93,8 +107,8 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win64)'!=''">
         <BT_BuildType>Debug</BT_BuildType>
-        <VerInfo_Build>10</VerInfo_Build>
-        <VerInfo_Keys>CompanyName=OmicronLab;FileDescription=Avro Keyboard - UNICODE compliant Open source Bangla typing software for Windows;FileVersion=5.7.0.10;InternalName=Avro Keyboard;LegalCopyright=© OmicronLab. All rights reserved.;LegalTrademarks=Avro Keyboard;OriginalFilename=Avro Keyboard.exe;ProductName=Avro Keyboard;ProductVersion=5.7.0.0;Comments=Avro Keyboard - UNICODE compliant Open source Bangla typing software for Windows</VerInfo_Keys>
+        <VerInfo_Build>18</VerInfo_Build>
+        <VerInfo_Keys>CompanyName=OmicronLab;FileDescription=Avro Keyboard - UNICODE compliant Open source Bangla typing software for Windows;FileVersion=5.7.0.18;InternalName=Avro Keyboard;LegalCopyright=© OmicronLab. All rights reserved.;LegalTrademarks=Avro Keyboard;OriginalFilename=Avro Keyboard.exe;ProductName=Avro Keyboard;ProductVersion=5.7.0.0;Comments=Avro Keyboard - UNICODE compliant Open source Bangla typing software for Windows</VerInfo_Keys>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
@@ -176,6 +190,7 @@
             <Form>frmEncodingWarning</Form>
         </DCCReference>
         <DCCReference Include="Units\DebugLog.pas"/>
+        <DCCReference Include="Units\WindowsDarkMode.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

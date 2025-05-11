@@ -23,51 +23,63 @@ unit clsUpdateInfoDownloader;
 interface
 
 uses
-  System.SysUtils, System.Classes, System.Net.HttpClient, System.Net.URLClient,
-  System.Net.HttpClientComponent, Xml.XMLIntf, Xml.XMLDoc, System.Variants,
-  Vcl.Forms, Windows, Winapi.WinInet;
+  System.SysUtils,
+  System.Classes,
+  System.Net.HttpClient,
+  System.Net.URLClient,
+  System.Net.HttpClientComponent,
+  Xml.XMLIntf,
+  Xml.XMLDoc,
+  System.Variants,
+  Vcl.Forms,
+  Windows,
+  Winapi.WinInet;
 
 type
   TUpdateCheck = class
-  private
-    HttpClient: TNetHTTPClient;
-    HttpRequest: TNetHTTPRequest;
-    Xml: IXMLDocument;
-    StillDownloading: Boolean;
-    Verbose: Boolean;
+    private
+      HttpClient:       TNetHTTPClient;
+      HttpRequest:      TNetHTTPRequest;
+      Xml:              IXMLDocument;
+      StillDownloading: Boolean;
+      Verbose:          Boolean;
 
-    function IsUpdate(const Major, Minor, Release, Build: Integer): Boolean;
-    procedure ProcessResponse(const Response: string);
-  public
-    function IsConnected: Boolean;
-    procedure Check;
-    procedure CheckSilent;
-    constructor Create;
-    destructor Destroy; override;
+      function IsUpdate(const Major, Minor, Release, Build: Integer): Boolean;
+      procedure ProcessResponse(const Response: string);
+    public
+      function IsConnected: Boolean;
+      procedure Check;
+      procedure CheckSilent;
+      constructor Create;
+      destructor Destroy; override;
   end;
 
 var
   Updater: TUpdateCheck;
 
 const
-{$IFDEF BetaVersion}
-{$IFDEF PortableOn}
+  {$IFDEF BetaVersion}
+  {$IFDEF PortableOn}
   UpdateInfo = 'https://www.omicronlab.com/download/liveupdate/portable_avrokeyboard/versioninfo_beta.xml';
-{$ELSE}
+  {$ELSE}
   UpdateInfo = 'https://www.omicronlab.com/download/liveupdate/avrokeyboard/versioninfo_beta.xml';
-{$ENDIF}
-{$ELSE}
-{$IFDEF PortableOn}
+  {$ENDIF}
+  {$ELSE}
+  {$IFDEF PortableOn}
   UpdateInfo = 'https://www.omicronlab.com/download/liveupdate/portable_avrokeyboard/versioninfo.xml';
-{$ELSE}
+  {$ELSE}
   UpdateInfo = 'https://www.omicronlab.com/download/liveupdate/avrokeyboard/versioninfo.xml';
-{$ENDIF}
-{$ENDIF}
+  {$ENDIF}
+  {$ENDIF}
 
 implementation
 
 uses
-  clsFileVersion, ufrmUpdateNotify, uWindowHandlers, System.Threading, DebugLog;
+  clsFileVersion,
+  ufrmUpdateNotify,
+  uWindowHandlers,
+  System.Threading,
+  DebugLog;
 
 { TUpdateCheck }
 { =============================================================================== }
@@ -80,14 +92,14 @@ begin
   StillDownloading := True;
 
   TTask.Run(
-    procedure
+      procedure
     var
       Response: string;
     begin
       try
         Response := HttpClient.Get(UpdateInfo).ContentAsString();
         TThread.Queue(nil,
-          procedure
+            procedure
           begin
             ProcessResponse(Response);
           end);
@@ -96,7 +108,8 @@ begin
         begin
           StillDownloading := False;
           if Verbose then
-            Application.MessageBox('There was an error checking for updates. Please try again later.', 'Error', MB_OK or MB_ICONHAND or MB_DEFBUTTON1 or MB_SYSTEMMODAL);
+            Application.MessageBox('There was an error checking for updates. Please try again later.', 'Error', MB_OK or MB_ICONHAND or MB_DEFBUTTON1 or
+              MB_SYSTEMMODAL);
         end;
       end;
     end);
@@ -120,7 +133,7 @@ begin
       try
         Response := HttpClient.Get(UpdateInfo).ContentAsString();
         TThread.Queue(nil,
-          procedure
+            procedure
           begin
             ProcessResponse(Response);
           end);
@@ -155,7 +168,7 @@ end;
 
 procedure TUpdateCheck.ProcessResponse(const Response: string);
 var
-  Major, Minor, Release, Build: Integer;
+  Major, Minor, Release, Build:                           Integer;
   changelogurl, downloadurl, productpageurl, releasedate: string;
 begin
   StillDownloading := False;
@@ -186,14 +199,16 @@ begin
     end
     else if Verbose then
     begin
-      Application.MessageBox('You are using the latest version of Avro Keyboard.' + #10 + 'No update is available at this moment.', 'Avro Keyboard', MB_OK or MB_ICONEXCLAMATION or MB_DEFBUTTON1 or MB_SYSTEMMODAL);
+      Application.MessageBox('You are using the latest version of Avro Keyboard.' + #10 + 'No update is available at this moment.', 'Avro Keyboard',
+        MB_OK or MB_ICONEXCLAMATION or MB_DEFBUTTON1 or MB_SYSTEMMODAL);
     end;
 
   except
     on E: Exception do
     begin
       if Verbose then
-        Application.MessageBox('There was an error processing update information. Please try again later.', 'Error', MB_OK or MB_ICONHAND or MB_DEFBUTTON1 or MB_SYSTEMMODAL);
+        Application.MessageBox('There was an error processing update information. Please try again later.', 'Error', MB_OK or MB_ICONHAND or MB_DEFBUTTON1 or
+          MB_SYSTEMMODAL);
     end;
   end;
 end;
@@ -218,13 +233,15 @@ var
 begin
   Version := TFileVersion.Create;
   Log('IsUpdate check (Remote) Major:' + IntToStr(Major) + ' Minor:' + IntToStr(Minor) + ' Release:' + IntToStr(Release) + ' Build:' + IntToStr(Build));
-  Log('IsUpdate check (Own) Major:' + IntToStr(Version.VerMajor) + ' Minor:' + IntToStr(Version.VerMinor) + ' Release:' + IntToStr(Version.VerRelease) + ' Build:' + IntToStr(Version.VerBuild));
+  Log('IsUpdate check (Own) Major:' + IntToStr(Version.VerMajor) + ' Minor:' + IntToStr(Version.VerMinor) + ' Release:' + IntToStr(Version.VerRelease) +
+    ' Build:' + IntToStr(Version.VerBuild));
   try
-    Result := (Major > Version.VerMajor) or ((Major = Version.VerMajor) and (Minor > Version.VerMinor)) or ((Major = Version.VerMajor) and (Minor = Version.VerMinor) and (Release > Version.VerRelease)) or ((Major = Version.VerMajor) and (Minor = Version.VerMinor) and (Release = Version.VerRelease) and (Build > Version.VerBuild));
+    Result := (Major > Version.VerMajor) or ((Major = Version.VerMajor) and (Minor > Version.VerMinor)) or
+      ((Major = Version.VerMajor) and (Minor = Version.VerMinor) and (Release > Version.VerRelease)) or
+      ((Major = Version.VerMajor) and (Minor = Version.VerMinor) and (Release = Version.VerRelease) and (Build > Version.VerBuild));
   finally
     Version.Free;
   end;
 end;
 
 end.
-

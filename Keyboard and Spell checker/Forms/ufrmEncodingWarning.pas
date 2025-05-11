@@ -26,11 +26,11 @@
 }
 
 {$INCLUDE ../ProjectDefines.inc}
-Unit ufrmEncodingWarning;
+unit ufrmEncodingWarning;
 
-Interface
+interface
 
-Uses
+uses
   Windows,
   Messages,
   SysUtils,
@@ -43,8 +43,8 @@ Uses
   StdCtrls,
   ExtCtrls;
 
-Type
-  TfrmEncodingWarning = Class(TForm)
+type
+  TfrmEncodingWarning = class(TForm)
     Panel1: TPanel;
     Label1: TLabel;
     Label2: TLabel;
@@ -59,63 +59,62 @@ Type
     Button1: TButton;
     Button2: TButton;
     CheckBox_ShowWarning: TCheckBox;
-    Procedure FormCreate(Sender: TObject);
-    Procedure Button1Click(Sender: TObject);
-    Procedure Button2Click(Sender: TObject);
-    Procedure FormClose(Sender: TObject; Var Action: TCloseAction);
-  Private
-    { Private declarations }
-  Public
-    { Public declarations }
-  End;
+    procedure FormCreate(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    private
+      { Private declarations }
+    public
+      { Public declarations }
+  end;
 
-Var
+var
   frmEncodingWarning: TfrmEncodingWarning;
 
-Implementation
+implementation
 
 {$R *.dfm}
 
-Uses
+uses
   uWindowHandlers,
   uRegistrySettings,
   uform1;
 
-Procedure TfrmEncodingWarning.Button1Click(Sender: TObject);
-Begin
+procedure TfrmEncodingWarning.Button1Click(Sender: TObject);
+begin
   OutputIsBijoy := 'NO';
-  If CheckBox_ShowWarning.Checked Then
+  if CheckBox_ShowWarning.Checked then
     ShowOutputwarning := 'YES'
-  Else
+  else
     ShowOutputwarning := 'NO';
 
   AvroMainForm1.RefreshSettings;
   Self.Close;
-End;
+end;
 
-Procedure TfrmEncodingWarning.Button2Click(Sender: TObject);
-Begin
+procedure TfrmEncodingWarning.Button2Click(Sender: TObject);
+begin
   OutputIsBijoy := 'YES';
-  If CheckBox_ShowWarning.Checked Then
+  if CheckBox_ShowWarning.Checked then
     ShowOutputwarning := 'YES'
-  Else
+  else
     ShowOutputwarning := 'NO';
 
   AvroMainForm1.RefreshSettings;
   Self.Close;
-End;
+end;
 
-Procedure TfrmEncodingWarning.FormClose(Sender: TObject;
-  Var Action: TCloseAction);
-Begin
+procedure TfrmEncodingWarning.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
   Action := caFree;
-  frmEncodingWarning := Nil;
-End;
+  frmEncodingWarning := nil;
+end;
 
-Procedure TfrmEncodingWarning.FormCreate(Sender: TObject);
-Begin
+procedure TfrmEncodingWarning.FormCreate(Sender: TObject);
+begin
   DisableCloseButton(Self.Handle);
   TOPMOST(Self.Handle);
-End;
+end;
 
-End.
+end.

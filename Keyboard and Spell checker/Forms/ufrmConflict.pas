@@ -25,11 +25,11 @@
   =============================================================================
 }
 
-Unit ufrmConflict;
+unit ufrmConflict;
 
-Interface
+interface
 
-Uses
+uses
   Windows,
   Messages,
   SysUtils,
@@ -41,8 +41,8 @@ Uses
   Dialogs,
   StdCtrls;
 
-Type
-  TfrmConflict = Class(TForm)
+type
+  TfrmConflict = class(TForm)
     EditR_P: TEdit;
     Label2: TLabel;
     EditR: TEdit;
@@ -56,51 +56,51 @@ Type
     Label6: TLabel;
     butImported: TButton;
     butCurrent: TButton;
-    Procedure FormClose(Sender: TObject; Var Action: TCloseAction);
-    Procedure FormShow(Sender: TObject);
-    Procedure butCurrentClick(Sender: TObject);
-    Procedure butImportedClick(Sender: TObject);
-  Private
-    { Private declarations }
-  Public
-    { Public declarations }
-  End;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormShow(Sender: TObject);
+    procedure butCurrentClick(Sender: TObject);
+    procedure butImportedClick(Sender: TObject);
+    private
+      { Private declarations }
+    public
+      { Public declarations }
+  end;
 
-Var
+var
   frmConflict: TfrmConflict;
 
-Implementation
+implementation
 
 {$R *.dfm}
 { =============================================================================== }
 
-Procedure TfrmConflict.butCurrentClick(Sender: TObject);
-Begin
+procedure TfrmConflict.butCurrentClick(Sender: TObject);
+begin
   self.ModalResult := mrCancel;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmConflict.butImportedClick(Sender: TObject);
-Begin
+procedure TfrmConflict.butImportedClick(Sender: TObject);
+begin
   self.ModalResult := mrOk;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmConflict.FormClose(Sender: TObject; Var Action: TCloseAction);
-Begin
+procedure TfrmConflict.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
   Action := caFree;
-  frmConflict := Nil;
-End;
+  frmConflict := nil;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmConflict.FormShow(Sender: TObject);
-Begin
+procedure TfrmConflict.FormShow(Sender: TObject);
+begin
   self.Visible := True;
-End;
+end;
 
 { =============================================================================== }
 
-End.
+end.

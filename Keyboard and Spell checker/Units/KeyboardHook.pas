@@ -26,40 +26,39 @@
 }
 
 {$INCLUDE ../ProjectDefines.inc}
-Unit KeyboardHook;
+unit KeyboardHook;
 
-Interface
+interface
 
-Uses
+uses
   Windows,
   SysUtils,
   Dialogs;
 
-Function Sethook(): Integer;
-Procedure Removehook();
-Function LowLevelKeyboardProc(nCode: Integer; wParam: wParam; lParam: lParam)
-  : longword; Stdcall;
+function Sethook(): Integer;
+procedure Removehook();
+function LowLevelKeyboardProc(nCode: Integer; wParam: wParam; lParam: lParam): longword; stdcall;
 
-Type
+type
   pKBDLLHOOKSTRUCT = ^TKBDLLHOOKSTRUCT;
 
-  TKBDLLHOOKSTRUCT = Record
+  TKBDLLHOOKSTRUCT = record
     vkCode: Integer;
     scancode: Integer;
     flags: Integer;
     time: Integer;
     dwExtraInfo: Integer;
-  End;
+  end;
 
-Var
+var
   HookRetVal: Integer;
 
-Const
+const
   LLKHF_INJECTED = $10;
 
-Implementation
+implementation
 
-Uses
+uses
   uForm1,
   KeyboardFunctions,
   VirtualKeycode,
@@ -69,104 +68,101 @@ Uses
 
 { =============================================================================== }
 
-Var
+var
   IsHook: Boolean;
 
   { =============================================================================== }
 
-Function Sethook(): Integer;
-Var
+function Sethook(): Integer;
+var
   WH_KEYBOARD_LL: Integer;
-Begin
-  Try
-    If IsHook = True Then
+begin
+  try
+    if IsHook = True then
       Removehook;
 
     WH_KEYBOARD_LL := 13;
-    HookRetVal := SetWindowsHookEx(WH_KEYBOARD_LL, @LowLevelKeyboardProc,
-      hInstance, 0);
-    If HookRetVal <> 0 Then
-    Begin
+    HookRetVal := SetWindowsHookEx(WH_KEYBOARD_LL, @LowLevelKeyboardProc, hInstance, 0);
+    if HookRetVal <> 0 then
+    begin
       Result := HookRetVal;
       IsHook := True;
-    End
-    Else
-    Begin
+    end
+    else
+    begin
       Result := 0;
       IsHook := False;
-    End;
-  Except
-    On e: exception Do
-    Begin
+    end;
+  except
+    on e: exception do
+    begin
       // A ghost range check error is coming
       IsHook := False;
       Result := 0;
-    End;
-  End;
-End;
+    end;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure Removehook();
-Begin
+procedure Removehook();
+begin
   UnhookWindowsHookEx(HookRetVal);
-End;
+end;
 
 { =============================================================================== }
 
-Function LowLevelKeyboardProc(nCode: Integer; wParam: wParam; lParam: lParam)
-  : longword; Stdcall;
-Var
-  kbdllhs: pKBDLLHOOKSTRUCT;
+function LowLevelKeyboardProc(nCode: Integer; wParam: wParam; lParam: lParam): longword; stdcall;
+var
+  kbdllhs:     pKBDLLHOOKSTRUCT;
   ShouldBlock: Boolean;
-  T: String;
+  T:           string;
 
-Label
+label
   ExitHere;
 
-Begin
+begin
 
   ShouldBlock := False;
   T := '';
 
   kbdllhs := Ptr(lParam);
 
-  If nCode = HC_ACTION Then
-  Begin
+  if nCode = HC_ACTION then
+  begin
 
-{$REGION 'Error fixes'}
+    {$REGION 'Error fixes'}
     // ----------------------------------------------
     // Ignore injected keys
     // ----------------------------------------------
-    If kbdllhs.flags And LLKHF_INJECTED <> 0 Then
-    Begin
+    if kbdllhs.flags and LLKHF_INJECTED <> 0 then
+    begin
       LowLevelKeyboardProc := CallNextHookEx(HookRetVal, nCode, wParam, lParam);
       Exit;
-    End;
+    end;
 
     // ----------------------------------------------
     // Don't Prcess VK_Packet
     // ----------------------------------------------
-    If kbdllhs.vkCode = VK_PACKET Then
-    Begin
+    if kbdllhs.vkCode = VK_PACKET then
+    begin
       LowLevelKeyboardProc := CallNextHookEx(HookRetVal, nCode, wParam, lParam);
       Exit;
-    End;
+    end;
 
     // ----------------------------------------------
     // Vista Error Fix: Ghost 144 (Dec) key is coming
     // ----------------------------------------------
-    If kbdllhs.vkCode = 144 Then
-    Begin
+    if kbdllhs.vkCode = 144 then
+    begin
       LowLevelKeyboardProc := CallNextHookEx(HookRetVal, nCode, wParam, lParam);
       Exit;
-    End;
+    end;
 
-{$ENDREGION}
-{$REGION 'Control and alter key management for AltGr support'}
-    If (AvroMainForm1.GetMyCurrentKeyboardMode = Bangla) And
-      (lowercase(AvroMainForm1.GetMyCurrentLayout) <> 'avrophonetic*') Then
-    Begin
+    {$ENDREGION}
+    {$REGION 'Control and alter key management for AltGr support'}
+    if (AvroMainForm1.GetMyCurrentKeyboardMode = Bangla) and (lowercase(AvroMainForm1.GetMyCurrentLayout) <> 'avrophonetic*') then
+    begin
 
       { //Alt+BAckspace problem fix
         If kbdllhs.vkCode = VK_BACk Then Begin
@@ -189,61 +185,58 @@ Begin
       // 'Check if Alter Key State is Changed
       // '----------------------------------------------
 
-      If kbdllhs.vkCode = VK_RMENU Then
-      Begin
-        If (wParam = 257) Or (wParam = 261) Then
-        Begin // ' Keyup
+      if kbdllhs.vkCode = VK_RMENU then
+      begin
+        if (wParam = 257) or (wParam = 261) then
+        begin // ' Keyup
           RightAlterKeyDown := False;
-          LowLevelKeyboardProc := CallNextHookEx(HookRetVal, nCode,
-            wParam, lParam);
+          LowLevelKeyboardProc := CallNextHookEx(HookRetVal, nCode, wParam, lParam);
           Exit;
-        End
-        Else If (wParam = 256) Or (wParam = 260) Then
-        Begin // ' KeyDown
+        end
+        else if (wParam = 256) or (wParam = 260) then
+        begin // ' KeyDown
           RightAlterKeyDown := True;
           LowLevelKeyboardProc := 1;
           SendInput_UP(VK_RMENU);
           SendInput_UP(vk_menu);
           Exit;
-        End;
-      End;
+        end;
+      end;
 
-      If kbdllhs.vkCode = vk_menu Then
-      Begin
-        If (wParam = 257) Or (wParam = 261) Then
-        Begin // ' Keyup
+      if kbdllhs.vkCode = vk_menu then
+      begin
+        if (wParam = 257) or (wParam = 261) then
+        begin // ' Keyup
           GeneralAlterKeyDown := False;
-          LowLevelKeyboardProc := CallNextHookEx(HookRetVal, nCode,
-            wParam, lParam);
+          LowLevelKeyboardProc := CallNextHookEx(HookRetVal, nCode, wParam, lParam);
           Exit;
-        End
-        Else If (wParam = 256) Or (wParam = 260) Then
-        Begin // ' KeyDown
+        end
+        else if (wParam = 256) or (wParam = 260) then
+        begin // ' KeyDown
           GeneralAlterKeyDown := True;
           LowLevelKeyboardProc := 1;
           SendInput_UP(vk_menu);
           Exit;
-        End;
-      End;
+        end;
+      end;
 
-      If kbdllhs.vkCode = VK_LMENU Then
-      Begin
-        If (wParam = 257) Or (wParam = 261) Then
-        Begin // ' Keyup
+      if kbdllhs.vkCode = VK_LMENU then
+      begin
+        if (wParam = 257) or (wParam = 261) then
+        begin // ' Keyup
           LeftAlterKeyDown := False;
-          LowLevelKeyboardProc := CallNextHookEx(HookRetVal, nCode,
-            wParam, lParam);
+          LowLevelKeyboardProc := CallNextHookEx(HookRetVal, nCode, wParam, lParam);
           Exit;
-        End
-        Else If (wParam = 256) Or (wParam = 260) Then
-        Begin // ' KeyDown
+        end
+        else if (wParam = 256) or (wParam = 260) then
+        begin // ' KeyDown
           LeftAlterKeyDown := True;
           LowLevelKeyboardProc := 1;
           SendInput_UP(VK_LMENU);
           SendInput_UP(vk_menu);
           Exit;
-        End;
-      End;
+        end;
+      end;
 
       // End;
       // '----------------------------------------------
@@ -255,674 +248,591 @@ Begin
       // 'Check if Control Key State is Changed
       // '----------------------------------------------
 
-      If kbdllhs.vkCode = VK_RCONTROL Then
-      Begin
-        If (wParam = 257) Or (wParam = 261) Then
-        Begin // ' Keyup
+      if kbdllhs.vkCode = VK_RCONTROL then
+      begin
+        if (wParam = 257) or (wParam = 261) then
+        begin // ' Keyup
           RightCtrlKeyDown := False;
-          LowLevelKeyboardProc := CallNextHookEx(HookRetVal, nCode,
-            wParam, lParam);
+          LowLevelKeyboardProc := CallNextHookEx(HookRetVal, nCode, wParam, lParam);
           Exit;
-        End
-        Else If (wParam = 256) Or (wParam = 260) Then
-        Begin // ' KeyDown
+        end
+        else if (wParam = 256) or (wParam = 260) then
+        begin // ' KeyDown
 
           RightCtrlKeyDown := True;
-          LowLevelKeyboardProc := CallNextHookEx(HookRetVal, nCode,
-            wParam, lParam);
+          LowLevelKeyboardProc := CallNextHookEx(HookRetVal, nCode, wParam, lParam);
           Exit;
-        End;
-      End;
+        end;
+      end;
 
-      If kbdllhs.vkCode = VK_CONTROL Then
-      Begin
-        If (wParam = 257) Or (wParam = 261) Then
-        Begin // ' Keyup
+      if kbdllhs.vkCode = VK_CONTROL then
+      begin
+        if (wParam = 257) or (wParam = 261) then
+        begin // ' Keyup
           GeneralCtrlKeyDown := False;
-          LowLevelKeyboardProc := CallNextHookEx(HookRetVal, nCode,
-            wParam, lParam);
+          LowLevelKeyboardProc := CallNextHookEx(HookRetVal, nCode, wParam, lParam);
           Exit;
-        End
-        Else If (wParam = 256) Or (wParam = 260) Then
-        Begin // ' KeyDown
+        end
+        else if (wParam = 256) or (wParam = 260) then
+        begin // ' KeyDown
           GeneralCtrlKeyDown := True;
-          LowLevelKeyboardProc := CallNextHookEx(HookRetVal, nCode,
-            wParam, lParam);
+          LowLevelKeyboardProc := CallNextHookEx(HookRetVal, nCode, wParam, lParam);
           Exit;
-        End;
-      End;
+        end;
+      end;
 
-      If kbdllhs.vkCode = VK_LCONTROL Then
-      Begin
-        If (wParam = 257) Or (wParam = 261) Then
-        Begin // ' Keyup
+      if kbdllhs.vkCode = VK_LCONTROL then
+      begin
+        if (wParam = 257) or (wParam = 261) then
+        begin // ' Keyup
           LeftCtrlKeyDown := False;
-          LowLevelKeyboardProc := CallNextHookEx(HookRetVal, nCode,
-            wParam, lParam);
+          LowLevelKeyboardProc := CallNextHookEx(HookRetVal, nCode, wParam, lParam);
           Exit;
-        End
-        Else If (wParam = 256) Or (wParam = 260) Then
-        Begin // ' KeyDown
+        end
+        else if (wParam = 256) or (wParam = 260) then
+        begin // ' KeyDown
           LeftCtrlKeyDown := True;
-          LowLevelKeyboardProc := CallNextHookEx(HookRetVal, nCode,
-            wParam, lParam);
+          LowLevelKeyboardProc := CallNextHookEx(HookRetVal, nCode, wParam, lParam);
           Exit;
-        End;
-      End;
+        end;
+      end;
 
       // '----------------------------------------------
       // 'End Check if Control Key State is Changed
       // '----------------------------------------------
 
-    End; { Bangla mode and fixed keyboard layout }
+    end; { Bangla mode and fixed keyboard layout }
 
-{$ENDREGION}
-{$REGION 'Keyboard layout management'}
-    If (wParam = 257) Or (wParam = 261) Then
-    Begin // Key Up
+    {$ENDREGION}
+    {$REGION 'Keyboard layout management'}
+    if (wParam = 257) or (wParam = 261) then
+    begin // Key Up
       AvroMainForm1.TransferKeyUp(kbdllhs.vkCode, ShouldBlock);
-      If ShouldBlock = True Then
-        Goto ExitHere;
-    End
-    Else If (wParam = 256) Or (wParam = 260) Then
-    Begin // KeyDown
+      if ShouldBlock = True then
+        goto ExitHere;
+    end
+    else if (wParam = 256) or (wParam = 260) then
+    begin // KeyDown
       T := AvroMainForm1.TransferKeyDown(kbdllhs.vkCode, ShouldBlock);
-      If T <> '' Then
+      if T <> '' then
         SendKey_Char(T);
-      If ShouldBlock = True Then
-        Goto ExitHere;
-    End;
+      if ShouldBlock = True then
+        goto ExitHere;
+    end;
 
-{$ENDREGION}
-{$REGION 'Keyboard mode management'}
-    If ((wParam = 256) or (wParam = 260)) Then
-    Begin // Keydown
-      If kbdllhs.vkCode = VK_F1 Then
-      Begin
-        If (ModeSwitchKey = 'F1') And (IfTrueShift = False) And
-          (IfControl = False) And (IfAlter = False) Then
-        Begin
+    {$ENDREGION}
+    {$REGION 'Keyboard mode management'}
+    if ((wParam = 256) or (wParam = 260)) then
+    begin // Keydown
+      if kbdllhs.vkCode = VK_F1 then
+      begin
+        if (ModeSwitchKey = 'F1') and (IfTrueShift = False) and (IfControl = False) and (IfAlter = False) then
+        begin
           AvroMainForm1.ToggleMode;
           ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (ToggleOutputModeKey = 'F1') And IfTrueShift And (IfControl = False)
-          And (IfAlter = False) Then
-        Begin
+          goto ExitHere;
+        end;
+        if (ToggleOutputModeKey = 'F1') and IfTrueShift and (IfControl = False) and (IfAlter = False) then
+        begin
           AvroMainForm1.ToggleOutputEncoding;
           ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (SpellerLauncherKey = 'F1') And (IfTrueShift = False) And
-          IfControl And (IfAlter = False) Then
-        Begin
-          AvroMainForm1.Spellcheck1Click(Nil);
+          goto ExitHere;
+        end;
+        if (SpellerLauncherKey = 'F1') and (IfTrueShift = False) and IfControl and (IfAlter = False) then
+        begin
+          AvroMainForm1.Spellcheck1Click(nil);
           ShouldBlock := True;
-          Goto ExitHere;
-        End;
-      End
-      Else If kbdllhs.vkCode = VK_F2 Then
-      Begin
-        If (ModeSwitchKey = 'F2') And (IfTrueShift = False) And
-          (IfControl = False) And (IfAlter = False) Then
-        Begin
+          goto ExitHere;
+        end;
+      end
+      else if kbdllhs.vkCode = VK_F2 then
+      begin
+        if (ModeSwitchKey = 'F2') and (IfTrueShift = False) and (IfControl = False) and (IfAlter = False) then
+        begin
           AvroMainForm1.ToggleMode;
           ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (ToggleOutputModeKey = 'F2') And IfTrueShift And (IfControl = False)
-          And (IfAlter = False) Then
-        Begin
+          goto ExitHere;
+        end;
+        if (ToggleOutputModeKey = 'F2') and IfTrueShift and (IfControl = False) and (IfAlter = False) then
+        begin
           AvroMainForm1.ToggleOutputEncoding;
           ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (SpellerLauncherKey = 'F2') And (IfTrueShift = False) And
-          IfControl And (IfAlter = False) Then
-        Begin
-          AvroMainForm1.Spellcheck1Click(Nil);
+          goto ExitHere;
+        end;
+        if (SpellerLauncherKey = 'F2') and (IfTrueShift = False) and IfControl and (IfAlter = False) then
+        begin
+          AvroMainForm1.Spellcheck1Click(nil);
           ShouldBlock := True;
-          Goto ExitHere;
-        End;
-      End
-      Else If kbdllhs.vkCode = VK_F3 Then
-      Begin
-        If (ModeSwitchKey = 'F3') And (IfTrueShift = False) And
-          (IfControl = False) And (IfAlter = False) Then
-        Begin
+          goto ExitHere;
+        end;
+      end
+      else if kbdllhs.vkCode = VK_F3 then
+      begin
+        if (ModeSwitchKey = 'F3') and (IfTrueShift = False) and (IfControl = False) and (IfAlter = False) then
+        begin
           AvroMainForm1.ToggleMode;
           ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (ToggleOutputModeKey = 'F3') And IfTrueShift And (IfControl = False)
-          And (IfAlter = False) Then
-        Begin
+          goto ExitHere;
+        end;
+        if (ToggleOutputModeKey = 'F3') and IfTrueShift and (IfControl = False) and (IfAlter = False) then
+        begin
           AvroMainForm1.ToggleOutputEncoding;
           ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (SpellerLauncherKey = 'F3') And (IfTrueShift = False) And
-          IfControl And (IfAlter = False) Then
-        Begin
-          AvroMainForm1.Spellcheck1Click(Nil);
+          goto ExitHere;
+        end;
+        if (SpellerLauncherKey = 'F3') and (IfTrueShift = False) and IfControl and (IfAlter = False) then
+        begin
+          AvroMainForm1.Spellcheck1Click(nil);
           ShouldBlock := True;
-          Goto ExitHere;
-        End;
-      End
-      Else If kbdllhs.vkCode = VK_F4 Then
-      Begin
-        If (ModeSwitchKey = 'F4') And (IfTrueShift = False) And
-          (IfControl = False) And (IfAlter = False) Then
-        Begin
+          goto ExitHere;
+        end;
+      end
+      else if kbdllhs.vkCode = VK_F4 then
+      begin
+        if (ModeSwitchKey = 'F4') and (IfTrueShift = False) and (IfControl = False) and (IfAlter = False) then
+        begin
           AvroMainForm1.ToggleMode;
           ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (ToggleOutputModeKey = 'F4') And IfTrueShift And (IfControl = False)
-          And (IfAlter = False) Then
-        Begin
+          goto ExitHere;
+        end;
+        if (ToggleOutputModeKey = 'F4') and IfTrueShift and (IfControl = False) and (IfAlter = False) then
+        begin
           AvroMainForm1.ToggleOutputEncoding;
           ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (SpellerLauncherKey = 'F4') And (IfTrueShift = False) And
-          IfControl And (IfAlter = False) Then
-        Begin
-          AvroMainForm1.Spellcheck1Click(Nil);
+          goto ExitHere;
+        end;
+        if (SpellerLauncherKey = 'F4') and (IfTrueShift = False) and IfControl and (IfAlter = False) then
+        begin
+          AvroMainForm1.Spellcheck1Click(nil);
           ShouldBlock := True;
-          Goto ExitHere;
-        End;
-      End
-      Else If kbdllhs.vkCode = VK_F5 Then
-      Begin
-        If (ModeSwitchKey = 'F5') And (IfTrueShift = False) And
-          (IfControl = False) And (IfAlter = False) Then
-        Begin
+          goto ExitHere;
+        end;
+      end
+      else if kbdllhs.vkCode = VK_F5 then
+      begin
+        if (ModeSwitchKey = 'F5') and (IfTrueShift = False) and (IfControl = False) and (IfAlter = False) then
+        begin
           AvroMainForm1.ToggleMode;
           ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (ToggleOutputModeKey = 'F5') And IfTrueShift And (IfControl = False)
-          And (IfAlter = False) Then
-        Begin
+          goto ExitHere;
+        end;
+        if (ToggleOutputModeKey = 'F5') and IfTrueShift and (IfControl = False) and (IfAlter = False) then
+        begin
           AvroMainForm1.ToggleOutputEncoding;
           ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (SpellerLauncherKey = 'F5') And (IfTrueShift = False) And
-          IfControl And (IfAlter = False) Then
-        Begin
-          AvroMainForm1.Spellcheck1Click(Nil);
+          goto ExitHere;
+        end;
+        if (SpellerLauncherKey = 'F5') and (IfTrueShift = False) and IfControl and (IfAlter = False) then
+        begin
+          AvroMainForm1.Spellcheck1Click(nil);
           ShouldBlock := True;
-          Goto ExitHere;
-        End;
-      End
-      Else If kbdllhs.vkCode = VK_F6 Then
-      Begin
-        If (ModeSwitchKey = 'F6') And (IfTrueShift = False) And
-          (IfControl = False) And (IfAlter = False) Then
-        Begin
+          goto ExitHere;
+        end;
+      end
+      else if kbdllhs.vkCode = VK_F6 then
+      begin
+        if (ModeSwitchKey = 'F6') and (IfTrueShift = False) and (IfControl = False) and (IfAlter = False) then
+        begin
           AvroMainForm1.ToggleMode;
           ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (ToggleOutputModeKey = 'F6') And IfTrueShift And (IfControl = False)
-          And (IfAlter = False) Then
-        Begin
+          goto ExitHere;
+        end;
+        if (ToggleOutputModeKey = 'F6') and IfTrueShift and (IfControl = False) and (IfAlter = False) then
+        begin
           AvroMainForm1.ToggleOutputEncoding;
           ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (SpellerLauncherKey = 'F6') And (IfTrueShift = False) And
-          IfControl And (IfAlter = False) Then
-        Begin
-          AvroMainForm1.Spellcheck1Click(Nil);
+          goto ExitHere;
+        end;
+        if (SpellerLauncherKey = 'F6') and (IfTrueShift = False) and IfControl and (IfAlter = False) then
+        begin
+          AvroMainForm1.Spellcheck1Click(nil);
           ShouldBlock := True;
-          Goto ExitHere;
-        End;
-      End
-      Else If kbdllhs.vkCode = VK_F7 Then
-      Begin
-        If (ModeSwitchKey = 'F7') And (IfTrueShift = False) And
-          (IfControl = False) And (IfAlter = False) Then
-        Begin
+          goto ExitHere;
+        end;
+      end
+      else if kbdllhs.vkCode = VK_F7 then
+      begin
+        if (ModeSwitchKey = 'F7') and (IfTrueShift = False) and (IfControl = False) and (IfAlter = False) then
+        begin
           AvroMainForm1.ToggleMode;
           ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (ToggleOutputModeKey = 'F7') And IfTrueShift And (IfControl = False)
-          And (IfAlter = False) Then
-        Begin
+          goto ExitHere;
+        end;
+        if (ToggleOutputModeKey = 'F7') and IfTrueShift and (IfControl = False) and (IfAlter = False) then
+        begin
           AvroMainForm1.ToggleOutputEncoding;
           ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (SpellerLauncherKey = 'F7') And (IfTrueShift = False) And
-          IfControl And (IfAlter = False) Then
-        Begin
-          AvroMainForm1.Spellcheck1Click(Nil);
+          goto ExitHere;
+        end;
+        if (SpellerLauncherKey = 'F7') and (IfTrueShift = False) and IfControl and (IfAlter = False) then
+        begin
+          AvroMainForm1.Spellcheck1Click(nil);
           ShouldBlock := True;
-          Goto ExitHere;
-        End;
-      End
-      Else If kbdllhs.vkCode = VK_F8 Then
-      Begin
-        If (ModeSwitchKey = 'F8') And (IfTrueShift = False) And
-          (IfControl = False) And (IfAlter = False) Then
-        Begin
+          goto ExitHere;
+        end;
+      end
+      else if kbdllhs.vkCode = VK_F8 then
+      begin
+        if (ModeSwitchKey = 'F8') and (IfTrueShift = False) and (IfControl = False) and (IfAlter = False) then
+        begin
           AvroMainForm1.ToggleMode;
           ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (ToggleOutputModeKey = 'F8') And IfTrueShift And (IfControl = False)
-          And (IfAlter = False) Then
-        Begin
+          goto ExitHere;
+        end;
+        if (ToggleOutputModeKey = 'F8') and IfTrueShift and (IfControl = False) and (IfAlter = False) then
+        begin
           AvroMainForm1.ToggleOutputEncoding;
           ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (SpellerLauncherKey = 'F8') And (IfTrueShift = False) And
-          IfControl And (IfAlter = False) Then
-        Begin
-          AvroMainForm1.Spellcheck1Click(Nil);
+          goto ExitHere;
+        end;
+        if (SpellerLauncherKey = 'F8') and (IfTrueShift = False) and IfControl and (IfAlter = False) then
+        begin
+          AvroMainForm1.Spellcheck1Click(nil);
           ShouldBlock := True;
-          Goto ExitHere;
-        End;
-      End
-      Else If kbdllhs.vkCode = VK_F9 Then
-      Begin
-        If (ModeSwitchKey = 'F9') And (IfTrueShift = False) And
-          (IfControl = False) And (IfAlter = False) Then
-        Begin
+          goto ExitHere;
+        end;
+      end
+      else if kbdllhs.vkCode = VK_F9 then
+      begin
+        if (ModeSwitchKey = 'F9') and (IfTrueShift = False) and (IfControl = False) and (IfAlter = False) then
+        begin
           AvroMainForm1.ToggleMode;
           ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (ToggleOutputModeKey = 'F9') And IfTrueShift And (IfControl = False)
-          And (IfAlter = False) Then
-        Begin
+          goto ExitHere;
+        end;
+        if (ToggleOutputModeKey = 'F9') and IfTrueShift and (IfControl = False) and (IfAlter = False) then
+        begin
           AvroMainForm1.ToggleOutputEncoding;
           ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (SpellerLauncherKey = 'F9') And (IfTrueShift = False) And
-          IfControl And (IfAlter = False) Then
-        Begin
-          AvroMainForm1.Spellcheck1Click(Nil);
+          goto ExitHere;
+        end;
+        if (SpellerLauncherKey = 'F9') and (IfTrueShift = False) and IfControl and (IfAlter = False) then
+        begin
+          AvroMainForm1.Spellcheck1Click(nil);
           ShouldBlock := True;
-          Goto ExitHere;
-        End;
-      End
-      Else If kbdllhs.vkCode = VK_F10 Then
-      Begin
-        If (ModeSwitchKey = 'F10') And (IfTrueShift = False) And
-          (IfControl = False) And (IfAlter = False) Then
-        Begin
+          goto ExitHere;
+        end;
+      end
+      else if kbdllhs.vkCode = VK_F10 then
+      begin
+        if (ModeSwitchKey = 'F10') and (IfTrueShift = False) and (IfControl = False) and (IfAlter = False) then
+        begin
           AvroMainForm1.ToggleMode;
           ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (ToggleOutputModeKey = 'F10') And IfTrueShift And (IfControl = False)
-          And (IfAlter = False) Then
-        Begin
+          goto ExitHere;
+        end;
+        if (ToggleOutputModeKey = 'F10') and IfTrueShift and (IfControl = False) and (IfAlter = False) then
+        begin
           AvroMainForm1.ToggleOutputEncoding;
           ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (SpellerLauncherKey = 'F10') And (IfTrueShift = False) And
-          IfControl And (IfAlter = False) Then
-        Begin
-          AvroMainForm1.Spellcheck1Click(Nil);
+          goto ExitHere;
+        end;
+        if (SpellerLauncherKey = 'F10') and (IfTrueShift = False) and IfControl and (IfAlter = False) then
+        begin
+          AvroMainForm1.Spellcheck1Click(nil);
           ShouldBlock := True;
-          Goto ExitHere;
-        End;
-      End
-      Else If kbdllhs.vkCode = VK_F11 Then
-      Begin
-        If (ModeSwitchKey = 'F11') And (IfTrueShift = False) And
-          (IfControl = False) And (IfAlter = False) Then
-        Begin
+          goto ExitHere;
+        end;
+      end
+      else if kbdllhs.vkCode = VK_F11 then
+      begin
+        if (ModeSwitchKey = 'F11') and (IfTrueShift = False) and (IfControl = False) and (IfAlter = False) then
+        begin
           AvroMainForm1.ToggleMode;
           ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (ToggleOutputModeKey = 'F11') And IfTrueShift And (IfControl = False)
-          And (IfAlter = False) Then
-        Begin
+          goto ExitHere;
+        end;
+        if (ToggleOutputModeKey = 'F11') and IfTrueShift and (IfControl = False) and (IfAlter = False) then
+        begin
           AvroMainForm1.ToggleOutputEncoding;
           ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (SpellerLauncherKey = 'F11') And (IfTrueShift = False) And
-          IfControl And (IfAlter = False) Then
-        Begin
-          AvroMainForm1.Spellcheck1Click(Nil);
+          goto ExitHere;
+        end;
+        if (SpellerLauncherKey = 'F11') and (IfTrueShift = False) and IfControl and (IfAlter = False) then
+        begin
+          AvroMainForm1.Spellcheck1Click(nil);
           ShouldBlock := True;
-          Goto ExitHere;
-        End;
-      End
-      Else If kbdllhs.vkCode = VK_F12 Then
-      Begin
-        If (ModeSwitchKey = 'F12') And (IfTrueShift = False) And
-          (IfControl = False) And (IfAlter = False) Then
-        Begin
+          goto ExitHere;
+        end;
+      end
+      else if kbdllhs.vkCode = VK_F12 then
+      begin
+        if (ModeSwitchKey = 'F12') and (IfTrueShift = False) and (IfControl = False) and (IfAlter = False) then
+        begin
           AvroMainForm1.ToggleMode;
           ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (ToggleOutputModeKey = 'F12') And IfTrueShift And (IfControl = False)
-          And (IfAlter = False) Then
-        Begin
+          goto ExitHere;
+        end;
+        if (ToggleOutputModeKey = 'F12') and IfTrueShift and (IfControl = False) and (IfAlter = False) then
+        begin
           AvroMainForm1.ToggleOutputEncoding;
           ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (SpellerLauncherKey = 'F12') And (IfTrueShift = False) And
-          IfControl And (IfAlter = False) Then
-        Begin
-          AvroMainForm1.Spellcheck1Click(Nil);
+          goto ExitHere;
+        end;
+        if (SpellerLauncherKey = 'F12') and (IfTrueShift = False) and IfControl and (IfAlter = False) then
+        begin
+          AvroMainForm1.Spellcheck1Click(nil);
           ShouldBlock := True;
-          Goto ExitHere;
-        End;
-      End
-      Else If kbdllhs.vkCode = VK_SPACE Then
-      Begin
-        If (ModeSwitchKey = 'CTRL+SPACE') And (IfTrueShift = False) And
-          IfControl And (IfAlter = False) Then
-        Begin
-          AvroMainForm1.ToggleMode;
-          ShouldBlock := True;
-          Goto ExitHere;
-        End;
-      End;
-    End
-
-    Else If ((wParam = 257) Or (wParam = 261)) Then
-    Begin // Keyup
-
-      If kbdllhs.vkCode = VK_F1 Then
-      Begin
-        If (ModeSwitchKey = 'F1') And (IfTrueShift = False) And
-          (IfControl = False) And (IfAlter = False) Then
-        Begin
-          ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (ToggleOutputModeKey = 'F1') And IfTrueShift And (IfControl = False)
-          And (IfAlter = False) Then
-        Begin
-          ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (SpellerLauncherKey = 'F1') And (IfTrueShift = False) And
-          IfControl And (IfAlter = False) Then
-        Begin
-          ShouldBlock := True;
-          Goto ExitHere;
-        End;
-      End
-      Else If kbdllhs.vkCode = VK_F2 Then
-      Begin
-        If (ModeSwitchKey = 'F2') And (IfTrueShift = False) And
-          (IfControl = False) And (IfAlter = False) Then
-        Begin
-          ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (ToggleOutputModeKey = 'F2') And IfTrueShift And (IfControl = False)
-          And (IfAlter = False) Then
-        Begin
-          ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (SpellerLauncherKey = 'F2') And (IfTrueShift = False) And
-          IfControl And (IfAlter = False) Then
-        Begin
-          ShouldBlock := True;
-          Goto ExitHere;
-        End;
-      End
-      Else If kbdllhs.vkCode = VK_F3 Then
-      Begin
-        If (ModeSwitchKey = 'F3') And (IfTrueShift = False) And
-          (IfControl = False) And (IfAlter = False) Then
-        Begin
-          ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (ToggleOutputModeKey = 'F3') And IfTrueShift And (IfControl = False)
-          And (IfAlter = False) Then
-        Begin
-          ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (SpellerLauncherKey = 'F3') And (IfTrueShift = False) And
-          IfControl And (IfAlter = False) Then
-        Begin
-          ShouldBlock := True;
-          Goto ExitHere;
-        End;
-      End
-      Else If kbdllhs.vkCode = VK_F4 Then
-      Begin
-        If (ModeSwitchKey = 'F4') And (IfTrueShift = False) And
-          (IfControl = False) And (IfAlter = False) Then
-        Begin
-          ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (ToggleOutputModeKey = 'F4') And IfTrueShift And (IfControl = False)
-          And (IfAlter = False) Then
-        Begin
-          ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (SpellerLauncherKey = 'F4') And (IfTrueShift = False) And
-          IfControl And (IfAlter = False) Then
-        Begin
-          ShouldBlock := True;
-          Goto ExitHere;
-        End;
-      End
-      Else If kbdllhs.vkCode = VK_F5 Then
-      Begin
-        If (ModeSwitchKey = 'F5') And (IfTrueShift = False) And
-          (IfControl = False) And (IfAlter = False) Then
-        Begin
-          ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (ToggleOutputModeKey = 'F5') And IfTrueShift And (IfControl = False)
-          And (IfAlter = False) Then
-        Begin
-          ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (SpellerLauncherKey = 'F5') And (IfTrueShift = False) And
-          IfControl And (IfAlter = False) Then
-        Begin
-          ShouldBlock := True;
-          Goto ExitHere;
-        End;
-      End
-      Else If kbdllhs.vkCode = VK_F6 Then
-      Begin
-        If (ModeSwitchKey = 'F6') And (IfTrueShift = False) And
-          (IfControl = False) And (IfAlter = False) Then
-        Begin
-          ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (ToggleOutputModeKey = 'F6') And IfTrueShift And (IfControl = False)
-          And (IfAlter = False) Then
-        Begin
-          ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (SpellerLauncherKey = 'F6') And (IfTrueShift = False) And
-          IfControl And (IfAlter = False) Then
-        Begin
-          ShouldBlock := True;
-          Goto ExitHere;
-        End;
-      End
-      Else If kbdllhs.vkCode = VK_F7 Then
-      Begin
-        If (ModeSwitchKey = 'F7') And (IfTrueShift = False) And
-          (IfControl = False) And (IfAlter = False) Then
-        Begin
-          ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (ToggleOutputModeKey = 'F7') And IfTrueShift And (IfControl = False)
-          And (IfAlter = False) Then
-        Begin
-          ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (SpellerLauncherKey = 'F7') And (IfTrueShift = False) And
-          IfControl And (IfAlter = False) Then
-        Begin
-          ShouldBlock := True;
-          Goto ExitHere;
-        End;
-      End
-      Else If kbdllhs.vkCode = VK_F8 Then
-      Begin
-        If (ModeSwitchKey = 'F8') And (IfTrueShift = False) And
-          (IfControl = False) And (IfAlter = False) Then
-        Begin
-          ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (ToggleOutputModeKey = 'F8') And IfTrueShift And (IfControl = False)
-          And (IfAlter = False) Then
-        Begin
-          ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (SpellerLauncherKey = 'F8') And (IfTrueShift = False) And
-          IfControl And (IfAlter = False) Then
-        Begin
-          ShouldBlock := True;
-          Goto ExitHere;
-        End;
-      End
-      Else If kbdllhs.vkCode = VK_F9 Then
-      Begin
-        If (ModeSwitchKey = 'F9') And (IfTrueShift = False) And
-          (IfControl = False) And (IfAlter = False) Then
-        Begin
-          ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (ToggleOutputModeKey = 'F9') And IfTrueShift And (IfControl = False)
-          And (IfAlter = False) Then
-        Begin
-          ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (SpellerLauncherKey = 'F9') And (IfTrueShift = False) And
-          IfControl And (IfAlter = False) Then
-        Begin
-          ShouldBlock := True;
-          Goto ExitHere;
-        End;
-      End
-      Else If kbdllhs.vkCode = VK_F10 Then
-      Begin
-        If (ModeSwitchKey = 'F10') And (IfTrueShift = False) And
-          (IfControl = False) And (IfAlter = False) Then
-        Begin
-          ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (ToggleOutputModeKey = 'F10') And IfTrueShift And (IfControl = False)
-          And (IfAlter = False) Then
-        Begin
-          ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (SpellerLauncherKey = 'F10') And (IfTrueShift = False) And
-          IfControl And (IfAlter = False) Then
-        Begin
-          ShouldBlock := True;
-          Goto ExitHere;
-        End;
-      End
-      Else If kbdllhs.vkCode = VK_F11 Then
-      Begin
-        If (ModeSwitchKey = 'F11') And (IfTrueShift = False) And
-          (IfControl = False) And (IfAlter = False) Then
-        Begin
-          ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (ToggleOutputModeKey = 'F11') And IfTrueShift And (IfControl = False)
-          And (IfAlter = False) Then
-        Begin
-          ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (SpellerLauncherKey = 'F11') And (IfTrueShift = False) And
-          IfControl And (IfAlter = False) Then
-        Begin
-          ShouldBlock := True;
-          Goto ExitHere;
-        End;
-      End
-      Else If kbdllhs.vkCode = VK_F12 Then
-      Begin
-        If (ModeSwitchKey = 'F12') And (IfTrueShift = False) And
-          (IfControl = False) And (IfAlter = False) Then
-        Begin
-          ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (ToggleOutputModeKey = 'F12') And IfTrueShift And (IfControl = False)
-          And (IfAlter = False) Then
-        Begin
-          ShouldBlock := True;
-          Goto ExitHere;
-        End;
-        If (SpellerLauncherKey = 'F12') And (IfTrueShift = False) And
-          IfControl And (IfAlter = False) Then
-        Begin
-          ShouldBlock := True;
-          Goto ExitHere;
-        End;
-      End
+          goto ExitHere;
+        end;
+      end
       else if kbdllhs.vkCode = VK_SPACE then
       begin
-        If (ModeSwitchKey = 'CTRL+SPACE') And (IfTrueShift = False) And
-          IfControl And (IfAlter = False) Then
-        Begin
+        if (ModeSwitchKey = 'CTRL+SPACE') and (IfTrueShift = False) and IfControl and (IfAlter = False) then
+        begin
+          AvroMainForm1.ToggleMode;
           ShouldBlock := True;
-          Goto ExitHere;
-        End;
+          goto ExitHere;
+        end;
       end;
-    End;
+    end
 
-  End; { nCode = HC_ACTION }
+    else if ((wParam = 257) or (wParam = 261)) then
+    begin // Keyup
+
+      if kbdllhs.vkCode = VK_F1 then
+      begin
+        if (ModeSwitchKey = 'F1') and (IfTrueShift = False) and (IfControl = False) and (IfAlter = False) then
+        begin
+          ShouldBlock := True;
+          goto ExitHere;
+        end;
+        if (ToggleOutputModeKey = 'F1') and IfTrueShift and (IfControl = False) and (IfAlter = False) then
+        begin
+          ShouldBlock := True;
+          goto ExitHere;
+        end;
+        if (SpellerLauncherKey = 'F1') and (IfTrueShift = False) and IfControl and (IfAlter = False) then
+        begin
+          ShouldBlock := True;
+          goto ExitHere;
+        end;
+      end
+      else if kbdllhs.vkCode = VK_F2 then
+      begin
+        if (ModeSwitchKey = 'F2') and (IfTrueShift = False) and (IfControl = False) and (IfAlter = False) then
+        begin
+          ShouldBlock := True;
+          goto ExitHere;
+        end;
+        if (ToggleOutputModeKey = 'F2') and IfTrueShift and (IfControl = False) and (IfAlter = False) then
+        begin
+          ShouldBlock := True;
+          goto ExitHere;
+        end;
+        if (SpellerLauncherKey = 'F2') and (IfTrueShift = False) and IfControl and (IfAlter = False) then
+        begin
+          ShouldBlock := True;
+          goto ExitHere;
+        end;
+      end
+      else if kbdllhs.vkCode = VK_F3 then
+      begin
+        if (ModeSwitchKey = 'F3') and (IfTrueShift = False) and (IfControl = False) and (IfAlter = False) then
+        begin
+          ShouldBlock := True;
+          goto ExitHere;
+        end;
+        if (ToggleOutputModeKey = 'F3') and IfTrueShift and (IfControl = False) and (IfAlter = False) then
+        begin
+          ShouldBlock := True;
+          goto ExitHere;
+        end;
+        if (SpellerLauncherKey = 'F3') and (IfTrueShift = False) and IfControl and (IfAlter = False) then
+        begin
+          ShouldBlock := True;
+          goto ExitHere;
+        end;
+      end
+      else if kbdllhs.vkCode = VK_F4 then
+      begin
+        if (ModeSwitchKey = 'F4') and (IfTrueShift = False) and (IfControl = False) and (IfAlter = False) then
+        begin
+          ShouldBlock := True;
+          goto ExitHere;
+        end;
+        if (ToggleOutputModeKey = 'F4') and IfTrueShift and (IfControl = False) and (IfAlter = False) then
+        begin
+          ShouldBlock := True;
+          goto ExitHere;
+        end;
+        if (SpellerLauncherKey = 'F4') and (IfTrueShift = False) and IfControl and (IfAlter = False) then
+        begin
+          ShouldBlock := True;
+          goto ExitHere;
+        end;
+      end
+      else if kbdllhs.vkCode = VK_F5 then
+      begin
+        if (ModeSwitchKey = 'F5') and (IfTrueShift = False) and (IfControl = False) and (IfAlter = False) then
+        begin
+          ShouldBlock := True;
+          goto ExitHere;
+        end;
+        if (ToggleOutputModeKey = 'F5') and IfTrueShift and (IfControl = False) and (IfAlter = False) then
+        begin
+          ShouldBlock := True;
+          goto ExitHere;
+        end;
+        if (SpellerLauncherKey = 'F5') and (IfTrueShift = False) and IfControl and (IfAlter = False) then
+        begin
+          ShouldBlock := True;
+          goto ExitHere;
+        end;
+      end
+      else if kbdllhs.vkCode = VK_F6 then
+      begin
+        if (ModeSwitchKey = 'F6') and (IfTrueShift = False) and (IfControl = False) and (IfAlter = False) then
+        begin
+          ShouldBlock := True;
+          goto ExitHere;
+        end;
+        if (ToggleOutputModeKey = 'F6') and IfTrueShift and (IfControl = False) and (IfAlter = False) then
+        begin
+          ShouldBlock := True;
+          goto ExitHere;
+        end;
+        if (SpellerLauncherKey = 'F6') and (IfTrueShift = False) and IfControl and (IfAlter = False) then
+        begin
+          ShouldBlock := True;
+          goto ExitHere;
+        end;
+      end
+      else if kbdllhs.vkCode = VK_F7 then
+      begin
+        if (ModeSwitchKey = 'F7') and (IfTrueShift = False) and (IfControl = False) and (IfAlter = False) then
+        begin
+          ShouldBlock := True;
+          goto ExitHere;
+        end;
+        if (ToggleOutputModeKey = 'F7') and IfTrueShift and (IfControl = False) and (IfAlter = False) then
+        begin
+          ShouldBlock := True;
+          goto ExitHere;
+        end;
+        if (SpellerLauncherKey = 'F7') and (IfTrueShift = False) and IfControl and (IfAlter = False) then
+        begin
+          ShouldBlock := True;
+          goto ExitHere;
+        end;
+      end
+      else if kbdllhs.vkCode = VK_F8 then
+      begin
+        if (ModeSwitchKey = 'F8') and (IfTrueShift = False) and (IfControl = False) and (IfAlter = False) then
+        begin
+          ShouldBlock := True;
+          goto ExitHere;
+        end;
+        if (ToggleOutputModeKey = 'F8') and IfTrueShift and (IfControl = False) and (IfAlter = False) then
+        begin
+          ShouldBlock := True;
+          goto ExitHere;
+        end;
+        if (SpellerLauncherKey = 'F8') and (IfTrueShift = False) and IfControl and (IfAlter = False) then
+        begin
+          ShouldBlock := True;
+          goto ExitHere;
+        end;
+      end
+      else if kbdllhs.vkCode = VK_F9 then
+      begin
+        if (ModeSwitchKey = 'F9') and (IfTrueShift = False) and (IfControl = False) and (IfAlter = False) then
+        begin
+          ShouldBlock := True;
+          goto ExitHere;
+        end;
+        if (ToggleOutputModeKey = 'F9') and IfTrueShift and (IfControl = False) and (IfAlter = False) then
+        begin
+          ShouldBlock := True;
+          goto ExitHere;
+        end;
+        if (SpellerLauncherKey = 'F9') and (IfTrueShift = False) and IfControl and (IfAlter = False) then
+        begin
+          ShouldBlock := True;
+          goto ExitHere;
+        end;
+      end
+      else if kbdllhs.vkCode = VK_F10 then
+      begin
+        if (ModeSwitchKey = 'F10') and (IfTrueShift = False) and (IfControl = False) and (IfAlter = False) then
+        begin
+          ShouldBlock := True;
+          goto ExitHere;
+        end;
+        if (ToggleOutputModeKey = 'F10') and IfTrueShift and (IfControl = False) and (IfAlter = False) then
+        begin
+          ShouldBlock := True;
+          goto ExitHere;
+        end;
+        if (SpellerLauncherKey = 'F10') and (IfTrueShift = False) and IfControl and (IfAlter = False) then
+        begin
+          ShouldBlock := True;
+          goto ExitHere;
+        end;
+      end
+      else if kbdllhs.vkCode = VK_F11 then
+      begin
+        if (ModeSwitchKey = 'F11') and (IfTrueShift = False) and (IfControl = False) and (IfAlter = False) then
+        begin
+          ShouldBlock := True;
+          goto ExitHere;
+        end;
+        if (ToggleOutputModeKey = 'F11') and IfTrueShift and (IfControl = False) and (IfAlter = False) then
+        begin
+          ShouldBlock := True;
+          goto ExitHere;
+        end;
+        if (SpellerLauncherKey = 'F11') and (IfTrueShift = False) and IfControl and (IfAlter = False) then
+        begin
+          ShouldBlock := True;
+          goto ExitHere;
+        end;
+      end
+      else if kbdllhs.vkCode = VK_F12 then
+      begin
+        if (ModeSwitchKey = 'F12') and (IfTrueShift = False) and (IfControl = False) and (IfAlter = False) then
+        begin
+          ShouldBlock := True;
+          goto ExitHere;
+        end;
+        if (ToggleOutputModeKey = 'F12') and IfTrueShift and (IfControl = False) and (IfAlter = False) then
+        begin
+          ShouldBlock := True;
+          goto ExitHere;
+        end;
+        if (SpellerLauncherKey = 'F12') and (IfTrueShift = False) and IfControl and (IfAlter = False) then
+        begin
+          ShouldBlock := True;
+          goto ExitHere;
+        end;
+      end
+      else if kbdllhs.vkCode = VK_SPACE then
+      begin
+        if (ModeSwitchKey = 'CTRL+SPACE') and (IfTrueShift = False) and IfControl and (IfAlter = False) then
+        begin
+          ShouldBlock := True;
+          goto ExitHere;
+        end;
+      end;
+    end;
+
+  end; { nCode = HC_ACTION }
 
 ExitHere:
-  If ShouldBlock = True Then
+  if ShouldBlock = True then
     LowLevelKeyboardProc := 1
-  Else
-  Begin
-    If (AvroMainForm1.GetMyCurrentKeyboardMode = Bangla) And
-      (lowercase(AvroMainForm1.GetMyCurrentLayout) <> 'avrophonetic*') Then
-    Begin
-      If ((wParam = 256) Or (wParam = 260)) And
-        ((kbdllhs.vkCode <> VK_Shift) And (kbdllhs.vkCode <> VK_LShift) And
-        (kbdllhs.vkCode <> VK_RShift)) Then
-      Begin
+  else
+  begin
+    if (AvroMainForm1.GetMyCurrentKeyboardMode = Bangla) and (lowercase(AvroMainForm1.GetMyCurrentLayout) <> 'avrophonetic*') then
+    begin
+      if ((wParam = 256) or (wParam = 260)) and ((kbdllhs.vkCode <> VK_Shift) and (kbdllhs.vkCode <> VK_LShift) and (kbdllhs.vkCode <> VK_RShift)) then
+      begin
         RevertAltStates;
-      End;
-    End;
+      end;
+    end;
     LowLevelKeyboardProc := CallNextHookEx(HookRetVal, nCode, wParam, lParam);
-  End;
+  end;
 
-End;
+end;
 
-End.
+end.

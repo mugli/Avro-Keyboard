@@ -1,15 +1,19 @@
 object frmAvroMouse: TfrmAvroMouse
   Left = 0
   Top = 0
+  Margins.Left = 5
+  Margins.Top = 5
+  Margins.Right = 5
+  Margins.Bottom = 5
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Avro Mouse - Click '#39'n Type!'
-  ClientHeight = 280
-  ClientWidth = 631
+  ClientHeight = 420
+  ClientWidth = 947
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -17
   Font.Name = 'Tahoma'
   Font.Style = []
   Icon.Data = {
@@ -59,21 +63,26 @@ object frmAvroMouse: TfrmAvroMouse
     0000E0030000E0035A56E0075757800F5656801F555B00FF615F83FF1900}
   OnClose = FormClose
   OnCreate = FormCreate
-  TextHeight = 13
+  PixelsPerInch = 144
+  TextHeight = 21
   object Panel1: TPanel
-    Left = -1
+    Left = -2
     Top = 0
-    Width = 315
-    Height = 155
+    Width = 473
+    Height = 233
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     BevelEdges = []
     BevelOuter = bvNone
     TabOrder = 0
     object BitBtn3: TBitBtn
       Tag = 2454
-      Left = 39
-      Top = 6
-      Width = 32
-      Height = 29
+      Left = 59
+      Top = 9
+      Width = 48
+      Height = 44
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -130,10 +139,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn1: TBitBtn
       Tag = 2453
-      Left = 6
-      Top = 6
-      Width = 32
-      Height = 29
+      Left = 9
+      Top = 9
+      Width = 48
+      Height = 44
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -189,10 +198,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn2: TBitBtn
       Tag = 2458
-      Left = 6
-      Top = 35
-      Width = 32
-      Height = 29
+      Left = 9
+      Top = 53
+      Width = 48
+      Height = 43
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -247,10 +256,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn4: TBitBtn
       Tag = 2459
-      Left = 38
-      Top = 35
-      Width = 32
-      Height = 29
+      Left = 57
+      Top = 53
+      Width = 48
+      Height = 43
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -306,10 +315,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn5: TBitBtn
       Tag = 2468
-      Left = 6
-      Top = 93
-      Width = 32
-      Height = 29
+      Left = 9
+      Top = 140
+      Width = 48
+      Height = 43
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -365,10 +374,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn6: TBitBtn
       Tag = 2463
-      Left = 6
-      Top = 64
-      Width = 32
-      Height = 29
+      Left = 9
+      Top = 96
+      Width = 48
+      Height = 44
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -424,10 +433,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn7: TBitBtn
       Tag = 2464
-      Left = 39
-      Top = 64
-      Width = 32
-      Height = 29
+      Left = 59
+      Top = 96
+      Width = 48
+      Height = 44
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -484,10 +493,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn8: TBitBtn
       Tag = 2469
-      Left = 39
-      Top = 93
-      Width = 32
-      Height = 29
+      Left = 59
+      Top = 140
+      Width = 48
+      Height = 43
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -544,10 +553,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn9: TBitBtn
       Tag = 2474
-      Left = 6
-      Top = 122
-      Width = 32
-      Height = 29
+      Left = 9
+      Top = 183
+      Width = 48
+      Height = 44
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -603,10 +612,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn10: TBitBtn
       Tag = 2475
-      Left = 39
-      Top = 122
-      Width = 32
-      Height = 29
+      Left = 59
+      Top = 183
+      Width = 48
+      Height = 44
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -662,10 +671,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn11: TBitBtn
       Tag = 2455
-      Left = 72
-      Top = 6
-      Width = 32
-      Height = 29
+      Left = 108
+      Top = 9
+      Width = 48
+      Height = 44
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -722,10 +731,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn12: TBitBtn
       Tag = 2456
-      Left = 105
-      Top = 6
-      Width = 32
-      Height = 29
+      Left = 158
+      Top = 9
+      Width = 48
+      Height = 44
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -781,10 +790,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn13: TBitBtn
       Tag = 2461
-      Left = 105
-      Top = 35
-      Width = 32
-      Height = 29
+      Left = 158
+      Top = 53
+      Width = 48
+      Height = 43
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -841,10 +850,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn14: TBitBtn
       Tag = 2460
-      Left = 72
-      Top = 35
-      Width = 32
-      Height = 29
+      Left = 108
+      Top = 53
+      Width = 48
+      Height = 43
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -901,10 +910,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn15: TBitBtn
       Tag = 2465
-      Left = 72
-      Top = 64
-      Width = 32
-      Height = 29
+      Left = 108
+      Top = 96
+      Width = 48
+      Height = 44
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -960,10 +969,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn16: TBitBtn
       Tag = 2466
-      Left = 105
-      Top = 64
-      Width = 32
-      Height = 29
+      Left = 158
+      Top = 96
+      Width = 48
+      Height = 44
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -1018,10 +1027,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn17: TBitBtn
       Tag = 2471
-      Left = 105
-      Top = 93
-      Width = 32
-      Height = 29
+      Left = 158
+      Top = 140
+      Width = 48
+      Height = 43
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -1077,10 +1086,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn18: TBitBtn
       Tag = 2470
-      Left = 72
-      Top = 93
-      Width = 32
-      Height = 29
+      Left = 108
+      Top = 140
+      Width = 48
+      Height = 43
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -1135,10 +1144,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn19: TBitBtn
       Tag = 2476
-      Left = 72
-      Top = 122
-      Width = 32
-      Height = 29
+      Left = 108
+      Top = 183
+      Width = 48
+      Height = 44
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -1193,10 +1202,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn20: TBitBtn
       Tag = 2477
-      Left = 105
-      Top = 122
-      Width = 32
-      Height = 29
+      Left = 158
+      Top = 183
+      Width = 48
+      Height = 44
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -1252,10 +1261,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn21: TBitBtn
       Tag = 2457
-      Left = 137
-      Top = 6
-      Width = 32
-      Height = 29
+      Left = 206
+      Top = 9
+      Width = 48
+      Height = 44
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -1312,10 +1321,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn24: TBitBtn
       Tag = 2462
-      Left = 138
-      Top = 35
-      Width = 32
-      Height = 29
+      Left = 207
+      Top = 53
+      Width = 48
+      Height = 43
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -1374,10 +1383,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn25: TBitBtn
       Tag = 2467
-      Left = 137
-      Top = 64
-      Width = 32
-      Height = 29
+      Left = 206
+      Top = 96
+      Width = 48
+      Height = 44
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -1433,10 +1442,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn28: TBitBtn
       Tag = 2472
-      Left = 138
-      Top = 93
-      Width = 32
-      Height = 29
+      Left = 207
+      Top = 140
+      Width = 48
+      Height = 43
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -1491,10 +1500,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn29: TBitBtn
       Tag = 2478
-      Left = 138
-      Top = 122
-      Width = 32
-      Height = 29
+      Left = 207
+      Top = 183
+      Width = 48
+      Height = 44
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -1550,10 +1559,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn22: TBitBtn
       Tag = 2509
-      Left = 173
-      Top = 6
-      Width = 32
-      Height = 145
+      Left = 260
+      Top = 9
+      Width = 48
+      Height = 218
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -1635,10 +1644,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn23: TBitBtn
       Tag = 2479
-      Left = 208
-      Top = 6
-      Width = 32
-      Height = 29
+      Left = 312
+      Top = 9
+      Width = 48
+      Height = 44
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -1693,10 +1702,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn26: TBitBtn
       Tag = 2480
-      Left = 241
-      Top = 6
-      Width = 32
-      Height = 29
+      Left = 362
+      Top = 9
+      Width = 48
+      Height = 44
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -1752,10 +1761,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn27: TBitBtn
       Tag = 2482
-      Left = 274
-      Top = 6
-      Width = 32
-      Height = 29
+      Left = 411
+      Top = 9
+      Width = 48
+      Height = 44
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -1811,10 +1820,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn30: TBitBtn
       Tag = 2486
-      Left = 208
-      Top = 35
-      Width = 32
-      Height = 29
+      Left = 312
+      Top = 53
+      Width = 48
+      Height = 43
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -1870,10 +1879,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn31: TBitBtn
       Tag = 2489
-      Left = 209
-      Top = 64
-      Width = 32
-      Height = 29
+      Left = 314
+      Top = 96
+      Width = 48
+      Height = 44
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -1929,10 +1938,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn32: TBitBtn
       Tag = 2527
-      Left = 208
-      Top = 93
-      Width = 32
-      Height = 29
+      Left = 312
+      Top = 140
+      Width = 48
+      Height = 43
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -1988,10 +1997,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn33: TBitBtn
       Tag = 2435
-      Left = 208
-      Top = 122
-      Width = 32
-      Height = 29
+      Left = 312
+      Top = 183
+      Width = 48
+      Height = 44
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -2046,10 +2055,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn34: TBitBtn
       Tag = 2510
-      Left = 241
-      Top = 93
-      Width = 32
-      Height = 29
+      Left = 362
+      Top = 140
+      Width = 48
+      Height = 43
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -2104,10 +2113,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn35: TBitBtn
       Tag = 2524
-      Left = 241
-      Top = 64
-      Width = 32
-      Height = 29
+      Left = 362
+      Top = 96
+      Width = 48
+      Height = 44
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -2164,10 +2173,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn36: TBitBtn
       Tag = 2487
-      Left = 241
-      Top = 35
-      Width = 32
-      Height = 29
+      Left = 362
+      Top = 53
+      Width = 48
+      Height = 43
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -2223,10 +2232,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn37: TBitBtn
       Tag = 2488
-      Left = 274
-      Top = 35
-      Width = 32
-      Height = 29
+      Left = 411
+      Top = 53
+      Width = 48
+      Height = 43
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -2282,10 +2291,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn38: TBitBtn
       Tag = 2525
-      Left = 274
-      Top = 64
-      Width = 32
-      Height = 29
+      Left = 411
+      Top = 96
+      Width = 48
+      Height = 44
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -2341,10 +2350,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn39: TBitBtn
       Tag = 2434
-      Left = 274
-      Top = 93
-      Width = 32
-      Height = 29
+      Left = 411
+      Top = 140
+      Width = 48
+      Height = 43
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -2397,10 +2406,10 @@ object frmAvroMouse: TfrmAvroMouse
       OnClick = BitBtn1Click
     end
     object BitBtn41: TBitBtn
-      Left = 241
-      Top = 122
-      Width = 32
-      Height = 29
+      Left = 362
+      Top = 183
+      Width = 48
+      Height = 44
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -2455,18 +2464,22 @@ object frmAvroMouse: TfrmAvroMouse
     end
   end
   object Panel2: TPanel
-    Left = -11
-    Top = 154
-    Width = 389
-    Height = 73
+    Left = -17
+    Top = 231
+    Width = 584
+    Height = 110
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     BevelOuter = bvNone
     TabOrder = 1
     object BitBtn40: TBitBtn
       Tag = 2437
-      Left = 16
-      Top = 35
-      Width = 33
-      Height = 30
+      Left = 24
+      Top = 53
+      Width = 50
+      Height = 45
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -2526,10 +2539,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn42: TBitBtn
       Tag = 2438
-      Left = 49
-      Top = 35
-      Width = 33
-      Height = 30
+      Left = 74
+      Top = 53
+      Width = 49
+      Height = 45
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -2590,10 +2603,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn43: TBitBtn
       Tag = 2439
-      Left = 82
-      Top = 35
-      Width = 33
-      Height = 30
+      Left = 123
+      Top = 53
+      Width = 50
+      Height = 45
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -2651,10 +2664,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn44: TBitBtn
       Tag = 2440
-      Left = 115
-      Top = 35
-      Width = 33
-      Height = 30
+      Left = 173
+      Top = 53
+      Width = 49
+      Height = 45
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -2713,10 +2726,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn45: TBitBtn
       Tag = 2441
-      Left = 148
-      Top = 35
-      Width = 33
-      Height = 30
+      Left = 222
+      Top = 53
+      Width = 50
+      Height = 45
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -2776,10 +2789,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn46: TBitBtn
       Tag = 2442
-      Left = 181
-      Top = 35
-      Width = 33
-      Height = 30
+      Left = 272
+      Top = 53
+      Width = 49
+      Height = 45
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -2838,10 +2851,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn47: TBitBtn
       Tag = 2443
-      Left = 214
-      Top = 35
-      Width = 33
-      Height = 30
+      Left = 321
+      Top = 53
+      Width = 50
+      Height = 45
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -2901,10 +2914,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn48: TBitBtn
       Tag = 2447
-      Left = 247
-      Top = 35
-      Width = 33
-      Height = 30
+      Left = 371
+      Top = 53
+      Width = 49
+      Height = 45
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -2961,10 +2974,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn49: TBitBtn
       Tag = 2448
-      Left = 280
-      Top = 35
-      Width = 33
-      Height = 30
+      Left = 420
+      Top = 53
+      Width = 50
+      Height = 45
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -3024,10 +3037,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn50: TBitBtn
       Tag = 2451
-      Left = 313
-      Top = 35
-      Width = 33
-      Height = 30
+      Left = 470
+      Top = 53
+      Width = 49
+      Height = 45
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -3085,10 +3098,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn51: TBitBtn
       Tag = 2452
-      Left = 346
-      Top = 35
-      Width = 33
-      Height = 30
+      Left = 519
+      Top = 53
+      Width = 50
+      Height = 45
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -3148,10 +3161,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn52: TBitBtn
       Tag = 2508
-      Left = 346
-      Top = 5
-      Width = 33
-      Height = 30
+      Left = 519
+      Top = 8
+      Width = 50
+      Height = 45
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -3210,10 +3223,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn53: TBitBtn
       Tag = 2494
-      Left = 49
-      Top = 5
-      Width = 33
-      Height = 30
+      Left = 74
+      Top = 8
+      Width = 49
+      Height = 45
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -3267,10 +3280,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn54: TBitBtn
       Tag = 2495
-      Left = 82
-      Top = 5
-      Width = 33
-      Height = 30
+      Left = 123
+      Top = 8
+      Width = 50
+      Height = 45
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -3326,10 +3339,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn55: TBitBtn
       Tag = 2496
-      Left = 115
-      Top = 5
-      Width = 33
-      Height = 30
+      Left = 173
+      Top = 8
+      Width = 49
+      Height = 45
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -3385,10 +3398,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn56: TBitBtn
       Tag = 2497
-      Left = 148
-      Top = 5
-      Width = 33
-      Height = 30
+      Left = 222
+      Top = 8
+      Width = 50
+      Height = 45
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -3441,10 +3454,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn57: TBitBtn
       Tag = 2498
-      Left = 181
-      Top = 5
-      Width = 33
-      Height = 30
+      Left = 272
+      Top = 8
+      Width = 49
+      Height = 45
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -3497,10 +3510,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn58: TBitBtn
       Tag = 2499
-      Left = 214
-      Top = 5
-      Width = 33
-      Height = 30
+      Left = 321
+      Top = 8
+      Width = 50
+      Height = 45
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -3552,10 +3565,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn59: TBitBtn
       Tag = 2503
-      Left = 247
-      Top = 5
-      Width = 33
-      Height = 30
+      Left = 371
+      Top = 8
+      Width = 49
+      Height = 45
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -3609,10 +3622,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn60: TBitBtn
       Tag = 2504
-      Left = 280
-      Top = 5
-      Width = 33
-      Height = 30
+      Left = 420
+      Top = 8
+      Width = 50
+      Height = 45
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -3667,10 +3680,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn61: TBitBtn
       Tag = 2507
-      Left = 313
-      Top = 5
-      Width = 33
-      Height = 30
+      Left = 470
+      Top = 8
+      Width = 49
+      Height = 45
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -3728,18 +3741,22 @@ object frmAvroMouse: TfrmAvroMouse
     end
   end
   object Panel3: TPanel
-    Left = 314
-    Top = 3
-    Width = 57
-    Height = 121
+    Left = 471
+    Top = 5
+    Width = 86
+    Height = 181
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     BevelOuter = bvNone
     TabOrder = 2
     object BitBtn62: TBitBtn
       Tag = 2534
-      Left = 1
-      Top = 3
-      Width = 25
-      Height = 23
+      Left = 2
+      Top = 5
+      Width = 37
+      Height = 34
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -3791,10 +3808,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn63: TBitBtn
       Tag = 2535
-      Left = 1
-      Top = 27
-      Width = 25
-      Height = 23
+      Left = 2
+      Top = 41
+      Width = 37
+      Height = 34
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -3846,10 +3863,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn64: TBitBtn
       Tag = 2536
-      Left = 1
-      Top = 50
-      Width = 25
-      Height = 23
+      Left = 2
+      Top = 75
+      Width = 37
+      Height = 35
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -3901,10 +3918,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn65: TBitBtn
       Tag = 2537
-      Left = 1
-      Top = 73
-      Width = 25
-      Height = 23
+      Left = 2
+      Top = 110
+      Width = 37
+      Height = 34
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -3957,10 +3974,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn66: TBitBtn
       Tag = 2538
-      Left = 1
-      Top = 96
-      Width = 25
-      Height = 23
+      Left = 2
+      Top = 144
+      Width = 37
+      Height = 35
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -4013,10 +4030,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn67: TBitBtn
       Tag = 2543
-      Left = 26
-      Top = 96
-      Width = 25
-      Height = 23
+      Left = 39
+      Top = 144
+      Width = 38
+      Height = 35
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -4069,10 +4086,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn68: TBitBtn
       Tag = 2542
-      Left = 26
-      Top = 73
-      Width = 25
-      Height = 23
+      Left = 39
+      Top = 110
+      Width = 38
+      Height = 34
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -4124,10 +4141,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn69: TBitBtn
       Tag = 2541
-      Left = 26
-      Top = 50
-      Width = 25
-      Height = 23
+      Left = 39
+      Top = 75
+      Width = 38
+      Height = 35
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -4179,10 +4196,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn70: TBitBtn
       Tag = 2540
-      Left = 26
-      Top = 27
-      Width = 25
-      Height = 23
+      Left = 39
+      Top = 41
+      Width = 38
+      Height = 34
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -4235,10 +4252,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn71: TBitBtn
       Tag = 2539
-      Left = 26
-      Top = 3
-      Width = 25
-      Height = 23
+      Left = 39
+      Top = 5
+      Width = 38
+      Height = 34
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -4291,18 +4308,22 @@ object frmAvroMouse: TfrmAvroMouse
     end
   end
   object GroupBox1: TGroupBox
-    Left = 5
-    Top = 222
-    Width = 620
-    Height = 51
+    Left = 8
+    Top = 333
+    Width = 930
+    Height = 77
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Extra Characters (Less used)'
     TabOrder = 3
     object BitBtn72: TBitBtn
       Tag = 2444
-      Left = 4
-      Top = 16
-      Width = 33
-      Height = 30
+      Left = 6
+      Top = 24
+      Width = 50
+      Height = 45
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -4360,10 +4381,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn73: TBitBtn
       Tag = 2492
-      Left = 40
-      Top = 16
-      Width = 33
-      Height = 30
+      Left = 60
+      Top = 24
+      Width = 50
+      Height = 45
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -4409,10 +4430,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn74: TBitBtn
       Tag = 2493
-      Left = 76
-      Top = 16
-      Width = 33
-      Height = 30
+      Left = 114
+      Top = 24
+      Width = 50
+      Height = 45
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -4458,10 +4479,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn75: TBitBtn
       Tag = 2500
-      Left = 112
-      Top = 16
-      Width = 33
-      Height = 30
+      Left = 168
+      Top = 24
+      Width = 50
+      Height = 45
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -4517,10 +4538,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn76: TBitBtn
       Tag = 2519
-      Left = 148
-      Top = 16
-      Width = 33
-      Height = 30
+      Left = 222
+      Top = 24
+      Width = 50
+      Height = 45
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -4576,10 +4597,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn77: TBitBtn
       Tag = 2528
-      Left = 184
-      Top = 16
-      Width = 33
-      Height = 30
+      Left = 276
+      Top = 24
+      Width = 50
+      Height = 45
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -4635,10 +4656,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn78: TBitBtn
       Tag = 2529
-      Left = 220
-      Top = 16
-      Width = 33
-      Height = 30
+      Left = 330
+      Top = 24
+      Width = 50
+      Height = 45
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -4698,10 +4719,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn79: TBitBtn
       Tag = 2530
-      Left = 256
-      Top = 16
-      Width = 33
-      Height = 30
+      Left = 384
+      Top = 24
+      Width = 50
+      Height = 45
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -4759,10 +4780,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn80: TBitBtn
       Tag = 2553
-      Left = 544
-      Top = 16
-      Width = 33
-      Height = 30
+      Left = 816
+      Top = 24
+      Width = 50
+      Height = 45
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -4821,10 +4842,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn81: TBitBtn
       Tag = 2552
-      Left = 508
-      Top = 16
-      Width = 33
-      Height = 30
+      Left = 762
+      Top = 24
+      Width = 50
+      Height = 45
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -4884,10 +4905,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn82: TBitBtn
       Tag = 2551
-      Left = 472
-      Top = 16
-      Width = 33
-      Height = 30
+      Left = 708
+      Top = 24
+      Width = 50
+      Height = 45
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -4944,10 +4965,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn83: TBitBtn
       Tag = 2550
-      Left = 436
-      Top = 16
-      Width = 33
-      Height = 30
+      Left = 654
+      Top = 24
+      Width = 50
+      Height = 45
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -5007,10 +5028,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn84: TBitBtn
       Tag = 2549
-      Left = 400
-      Top = 16
-      Width = 33
-      Height = 30
+      Left = 600
+      Top = 24
+      Width = 50
+      Height = 45
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -5068,10 +5089,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn85: TBitBtn
       Tag = 2548
-      Left = 364
-      Top = 16
-      Width = 33
-      Height = 30
+      Left = 546
+      Top = 24
+      Width = 50
+      Height = 45
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -5127,10 +5148,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn86: TBitBtn
       Tag = 2546
-      Left = 328
-      Top = 16
-      Width = 33
-      Height = 30
+      Left = 492
+      Top = 24
+      Width = 50
+      Height = 45
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -5185,10 +5206,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn87: TBitBtn
       Tag = 2531
-      Left = 292
-      Top = 16
-      Width = 33
-      Height = 30
+      Left = 438
+      Top = 24
+      Width = 50
+      Height = 45
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -5249,10 +5270,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
     object BitBtn88: TBitBtn
       Tag = 2554
-      Left = 581
-      Top = 16
-      Width = 33
-      Height = 30
+      Left = 872
+      Top = 24
+      Width = 49
+      Height = 45
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -5308,17 +5329,21 @@ object frmAvroMouse: TfrmAvroMouse
     end
   end
   object GroupBox2: TGroupBox
-    Left = 377
-    Top = 3
-    Width = 248
-    Height = 86
+    Left = 566
+    Top = 5
+    Width = 372
+    Height = 129
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Few conjuncts'
     TabOrder = 4
     object But_KSs: TBitBtn
-      Left = 21
-      Top = 17
-      Width = 32
-      Height = 29
+      Left = 32
+      Top = 26
+      Width = 48
+      Height = 43
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -5373,10 +5398,10 @@ object frmAvroMouse: TfrmAvroMouse
       OnClick = But_KSsClick
     end
     object But_NGK: TBitBtn
-      Left = 56
-      Top = 17
-      Width = 32
-      Height = 29
+      Left = 84
+      Top = 26
+      Width = 48
+      Height = 43
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -5431,10 +5456,10 @@ object frmAvroMouse: TfrmAvroMouse
       OnClick = But_NGKClick
     end
     object But_NgG: TBitBtn
-      Left = 92
-      Top = 17
-      Width = 32
-      Height = 29
+      Left = 138
+      Top = 26
+      Width = 48
+      Height = 43
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -5489,10 +5514,10 @@ object frmAvroMouse: TfrmAvroMouse
       OnClick = But_NgGClick
     end
     object But_JNYA: TBitBtn
-      Left = 128
-      Top = 17
-      Width = 32
-      Height = 29
+      Left = 192
+      Top = 26
+      Width = 48
+      Height = 43
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -5548,10 +5573,10 @@ object frmAvroMouse: TfrmAvroMouse
       OnClick = But_JNYAClick
     end
     object But_NYAC: TBitBtn
-      Left = 164
-      Top = 17
-      Width = 32
-      Height = 29
+      Left = 246
+      Top = 26
+      Width = 48
+      Height = 43
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -5608,10 +5633,10 @@ object frmAvroMouse: TfrmAvroMouse
       OnClick = But_NYACClick
     end
     object But_NYACh: TBitBtn
-      Left = 199
-      Top = 17
-      Width = 32
-      Height = 29
+      Left = 299
+      Top = 26
+      Width = 48
+      Height = 43
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -5669,10 +5694,10 @@ object frmAvroMouse: TfrmAvroMouse
       OnClick = But_NYAChClick
     end
     object But_NYAJ: TBitBtn
-      Left = 40
-      Top = 48
-      Width = 32
-      Height = 29
+      Left = 60
+      Top = 72
+      Width = 48
+      Height = 44
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -5729,10 +5754,10 @@ object frmAvroMouse: TfrmAvroMouse
       OnClick = But_NYAJClick
     end
     object But_T_T: TBitBtn
-      Left = 76
-      Top = 48
-      Width = 32
-      Height = 29
+      Left = 114
+      Top = 72
+      Width = 48
+      Height = 44
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -5787,10 +5812,10 @@ object frmAvroMouse: TfrmAvroMouse
       OnClick = But_T_TClick
     end
     object But_SsNYA: TBitBtn
-      Left = 112
-      Top = 48
-      Width = 32
-      Height = 29
+      Left = 168
+      Top = 72
+      Width = 48
+      Height = 44
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -5847,10 +5872,10 @@ object frmAvroMouse: TfrmAvroMouse
       OnClick = But_SsNYAClick
     end
     object But_HM: TBitBtn
-      Left = 148
-      Top = 48
-      Width = 32
-      Height = 29
+      Left = 222
+      Top = 72
+      Width = 48
+      Height = 44
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -5907,10 +5932,10 @@ object frmAvroMouse: TfrmAvroMouse
       OnClick = But_HMClick
     end
     object But_ND: TBitBtn
-      Left = 184
-      Top = 48
-      Width = 32
-      Height = 29
+      Left = 276
+      Top = 72
+      Width = 48
+      Height = 44
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
@@ -5966,10 +5991,10 @@ object frmAvroMouse: TfrmAvroMouse
     end
   end
   object But_ZFola: TBitBtn
-    Left = 417
-    Top = 92
-    Width = 68
-    Height = 29
+    Left = 626
+    Top = 138
+    Width = 102
+    Height = 44
     Margins.Left = 0
     Margins.Top = 0
     Margins.Right = 0
@@ -6033,10 +6058,10 @@ object frmAvroMouse: TfrmAvroMouse
     OnClick = But_ZFolaClick
   end
   object But_RFola: TBitBtn
-    Left = 525
-    Top = 92
-    Width = 68
-    Height = 29
+    Left = 788
+    Top = 138
+    Width = 102
+    Height = 44
     Margins.Left = 0
     Margins.Top = 0
     Margins.Right = 0
@@ -6101,10 +6126,10 @@ object frmAvroMouse: TfrmAvroMouse
   end
   object BitBtn102: TBitBtn
     Tag = 2433
-    Left = 241
-    Top = 122
-    Width = 32
-    Height = 29
+    Left = 362
+    Top = 183
+    Width = 48
+    Height = 44
     Margins.Left = 0
     Margins.Top = 0
     Margins.Right = 0
@@ -6158,10 +6183,10 @@ object frmAvroMouse: TfrmAvroMouse
   end
   object BitBtn103: TBitBtn
     Tag = 8204
-    Left = 576
-    Top = 126
-    Width = 39
-    Height = 29
+    Left = 864
+    Top = 189
+    Width = 59
+    Height = 44
     Margins.Left = 0
     Margins.Top = 0
     Margins.Right = 0
@@ -6169,7 +6194,7 @@ object frmAvroMouse: TfrmAvroMouse
     Caption = 'ZWNJ'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
+    Font.Height = -17
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
@@ -6180,10 +6205,10 @@ object frmAvroMouse: TfrmAvroMouse
   end
   object BitBtn104: TBitBtn
     Tag = 2547
-    Left = 433
-    Top = 126
-    Width = 32
-    Height = 29
+    Left = 650
+    Top = 189
+    Width = 48
+    Height = 44
     Margins.Left = 0
     Margins.Top = 0
     Margins.Right = 0
@@ -6239,10 +6264,10 @@ object frmAvroMouse: TfrmAvroMouse
   end
   object BitBtn105: TBitBtn
     Tag = 2544
-    Left = 468
-    Top = 126
-    Width = 32
-    Height = 29
+    Left = 702
+    Top = 189
+    Width = 48
+    Height = 44
     Margins.Left = 0
     Margins.Top = 0
     Margins.Right = 0
@@ -6298,10 +6323,10 @@ object frmAvroMouse: TfrmAvroMouse
   end
   object BitBtn106: TBitBtn
     Tag = 2545
-    Left = 503
-    Top = 126
-    Width = 32
-    Height = 29
+    Left = 755
+    Top = 189
+    Width = 48
+    Height = 44
     Margins.Left = 0
     Margins.Top = 0
     Margins.Right = 0
@@ -6358,14 +6383,18 @@ object frmAvroMouse: TfrmAvroMouse
   end
   object btnTab: TButton
     Tag = 9
-    Left = 399
-    Top = 164
-    Width = 102
-    Height = 25
+    Left = 599
+    Top = 246
+    Width = 153
+    Height = 38
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Tab --->'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
+    Font.Height = -17
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
@@ -6375,14 +6404,18 @@ object frmAvroMouse: TfrmAvroMouse
   end
   object btnBackspace: TButton
     Tag = 8
-    Left = 505
-    Top = 164
-    Width = 102
-    Height = 25
+    Left = 758
+    Top = 246
+    Width = 153
+    Height = 38
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = '<--- Backspace'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
+    Font.Height = -17
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
@@ -6392,14 +6425,18 @@ object frmAvroMouse: TfrmAvroMouse
   end
   object btnSpace: TButton
     Tag = 32
-    Left = 399
-    Top = 194
-    Width = 102
-    Height = 25
+    Left = 599
+    Top = 291
+    Width = 153
+    Height = 38
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'S  P  A  C  E'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
+    Font.Height = -17
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
@@ -6409,14 +6446,18 @@ object frmAvroMouse: TfrmAvroMouse
   end
   object btnEnter: TButton
     Tag = 13
-    Left = 505
-    Top = 194
-    Width = 102
-    Height = 25
+    Left = 758
+    Top = 291
+    Width = 153
+    Height = 38
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Enter'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
+    Font.Height = -17
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
@@ -6426,10 +6467,10 @@ object frmAvroMouse: TfrmAvroMouse
   end
   object BitBtn89: TBitBtn
     Tag = 8205
-    Left = 537
-    Top = 126
-    Width = 37
-    Height = 29
+    Left = 806
+    Top = 189
+    Width = 55
+    Height = 44
     Margins.Left = 0
     Margins.Top = 0
     Margins.Right = 0
@@ -6437,7 +6478,7 @@ object frmAvroMouse: TfrmAvroMouse
     Caption = 'ZWJ'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
+    Font.Height = -17
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
@@ -6448,10 +6489,10 @@ object frmAvroMouse: TfrmAvroMouse
   end
   object BitBtn90: TBitBtn
     Tag = 2404
-    Left = 399
-    Top = 126
-    Width = 32
-    Height = 29
+    Left = 599
+    Top = 189
+    Width = 48
+    Height = 44
     Margins.Left = 0
     Margins.Top = 0
     Margins.Right = 0

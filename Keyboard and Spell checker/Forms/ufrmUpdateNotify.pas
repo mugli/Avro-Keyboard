@@ -26,11 +26,11 @@
 }
 
 {$INCLUDE ../ProjectDefines.inc}
-Unit ufrmUpdateNotify;
+unit ufrmUpdateNotify;
 
-Interface
+interface
 
-Uses
+uses
   Windows,
   Messages,
   SysUtils,
@@ -44,8 +44,8 @@ Uses
   Buttons,
   ExtCtrls;
 
-Type
-  TfrmUpdateNotify = Class(TForm)
+type
+  TfrmUpdateNotify = class(TForm)
     Image1: TImage;
     Label1: TLabel;
     Label2: TLabel;
@@ -58,98 +58,96 @@ Type
     lblNewVer: TLabel;
     lblDate: TLabel;
     but_Download: TButton;
-    Procedure FormClose(Sender: TObject; Var Action: TCloseAction);
-    Procedure lblWhatsNewClick(Sender: TObject);
-    Procedure Button1Click(Sender: TObject);
-    Procedure but_DownloadClick(Sender: TObject);
-  Private
-    { Private declarations }
-    WhatsNewURL: String;
-    DownloadURL: String;
-  Public
-    { Public declarations }
-    Procedure SetupAndShow(Const mNewVer, mDate, mWhatsNew, mDownload: String);
-  Protected
-    Procedure CreateParams(Var Params: TCreateParams); Override;
-  End;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure lblWhatsNewClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure but_DownloadClick(Sender: TObject);
+    private
+      { Private declarations }
+      WhatsNewURL: string;
+      DownloadURL: string;
+    public
+      { Public declarations }
+      procedure SetupAndShow(const mNewVer, mDate, mWhatsNew, mDownload: string);
+    protected
+      procedure CreateParams(var Params: TCreateParams); override;
+  end;
 
-Var
+var
   frmUpdateNotify: TfrmUpdateNotify;
 
-Implementation
+implementation
 
 {$R *.dfm}
 
-Uses
+uses
   uFileFolderHandling,
   clsFileVersion,
   uWindowHandlers;
 
-Const
+const
   Show_Window_in_Taskbar = True;
 
   { =============================================================================== }
 
-Procedure TfrmUpdateNotify.Button1Click(Sender: TObject);
-Begin
+procedure TfrmUpdateNotify.Button1Click(Sender: TObject);
+begin
   self.Close;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmUpdateNotify.but_DownloadClick(Sender: TObject);
-Begin
+procedure TfrmUpdateNotify.but_DownloadClick(Sender: TObject);
+begin
   Execute_Something(DownloadURL);
   self.Close;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmUpdateNotify.CreateParams(Var Params: TCreateParams);
-Begin
-  Inherited CreateParams(Params);
-  With Params Do
-  Begin
-    If Show_Window_in_Taskbar Then
-    Begin
-      ExStyle := ExStyle Or WS_EX_APPWINDOW And Not WS_EX_TOOLWINDOW;
-      ExStyle := ExStyle Or WS_EX_TOPMOST Or WS_EX_NOACTIVATE;
+procedure TfrmUpdateNotify.CreateParams(var Params: TCreateParams);
+begin
+  inherited CreateParams(Params);
+  with Params do
+  begin
+    if Show_Window_in_Taskbar then
+    begin
+      ExStyle := ExStyle or WS_EX_APPWINDOW and not WS_EX_TOOLWINDOW;
+      ExStyle := ExStyle or WS_EX_TOPMOST or WS_EX_NOACTIVATE;
       WndParent := GetDesktopwindow;
-    End
-    Else If Not Show_Window_in_Taskbar Then
-    Begin
-      ExStyle := ExStyle And Not WS_EX_APPWINDOW;
-    End;
-  End;
-End;
+    end
+    else if not Show_Window_in_Taskbar then
+    begin
+      ExStyle := ExStyle and not WS_EX_APPWINDOW;
+    end;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmUpdateNotify.FormClose(Sender: TObject; Var Action: TCloseAction);
-Begin
+procedure TfrmUpdateNotify.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
   Action := caFree;
 
-  frmUpdateNotify := Nil;
-End;
+  frmUpdateNotify := nil;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmUpdateNotify.lblWhatsNewClick(Sender: TObject);
-Begin
+procedure TfrmUpdateNotify.lblWhatsNewClick(Sender: TObject);
+begin
   Execute_Something(WhatsNewURL);
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmUpdateNotify.SetupAndShow(Const mNewVer, mDate, mWhatsNew,
-  mDownload: String);
-Var
+procedure TfrmUpdateNotify.SetupAndShow(const mNewVer, mDate, mWhatsNew, mDownload: string);
+var
   Version: TFileVersion;
-  mOldVer: String;
-Begin
+  mOldVer: string;
+begin
   Version := TFileVersion.Create();
-  mOldVer := IntToStr(Version.VerMajor) + '.' + IntToStr(Version.VerMinor) + '.'
-    + IntToStr(Version.VerRelease) + '.' + IntToStr(Version.VerBuild);
+  mOldVer := IntToStr(Version.VerMajor) + '.' + IntToStr(Version.VerMinor) + '.' + IntToStr(Version.VerRelease) + '.' + IntToStr(Version.VerBuild);
   lblOldVer.Caption := '';
   lblNewVer.Caption := '';
   lblDate.Caption := '';
@@ -162,7 +160,7 @@ Begin
   DownloadURL := mDownload;
   TOPMOST(self.Handle);
   self.Show;
-End;
+end;
 { =============================================================================== }
 
-End.
+end.

@@ -26,11 +26,11 @@
 }
 
 {$INCLUDE ../ProjectDefines.inc}
-Unit ufrmAbout;
+unit ufrmAbout;
 
-Interface
+interface
 
-Uses
+uses
   Windows,
   Messages,
   SysUtils,
@@ -44,8 +44,8 @@ Uses
   jpeg,
   ExtCtrls;
 
-Type
-  TfrmAbout = Class(TForm)
+type
+  TfrmAbout = class(TForm)
     Shape1: TShape;
     Image1: TImage;
     Label1: TLabel;
@@ -67,37 +67,37 @@ Type
     Image2: TImage;
     Label3: TLabel;
     EditDataDirectory: TEdit;
-    Procedure FormClose(Sender: TObject; Var Action: TCloseAction);
-    Procedure FormCreate(Sender: TObject);
-    Procedure tmrScrollTimer(Sender: TObject);
-    Procedure pbScrollBoxMouseEnter(Sender: TObject);
-    Procedure pbScrollBoxMouseLeave(Sender: TObject);
-    Procedure ButtonCloseClick(Sender: TObject);
-    Procedure FormShow(Sender: TObject);
-    Procedure Label_OmicronLabClick(Sender: TObject);
-    Procedure Label_LicenseClick(Sender: TObject);
-    Procedure Label_UpdateClick(Sender: TObject);
-    Procedure LabelViewCreditClick(Sender: TObject);
-    Procedure FormActivate(Sender: TObject);
-    Procedure FormPaint(Sender: TObject);
-    Procedure EditDataDirectoryClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    procedure tmrScrollTimer(Sender: TObject);
+    procedure pbScrollBoxMouseEnter(Sender: TObject);
+    procedure pbScrollBoxMouseLeave(Sender: TObject);
+    procedure ButtonCloseClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure Label_OmicronLabClick(Sender: TObject);
+    procedure Label_LicenseClick(Sender: TObject);
+    procedure Label_UpdateClick(Sender: TObject);
+    procedure LabelViewCreditClick(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure FormPaint(Sender: TObject);
+    procedure EditDataDirectoryClick(Sender: TObject);
 
-  Private
-    { Private declarations }
-    TheY: integer;
-    Procedure DrawLine;
-  Public
-    { Public declarations }
-  End;
+    private
+      { Private declarations }
+      TheY: integer;
+      procedure DrawLine;
+    public
+      { Public declarations }
+  end;
 
-Var
+var
   frmAbout: TfrmAbout;
 
-Implementation
+implementation
 
 {$R *.dfm}
 
-Uses
+uses
   uWindowHandlers,
   uFileFolderHandling,
   clsFileVersion,
@@ -106,17 +106,17 @@ Uses
 
 { =============================================================================== }
 
-Procedure TfrmAbout.ButtonCloseClick(Sender: TObject);
-Begin
+procedure TfrmAbout.ButtonCloseClick(Sender: TObject);
+begin
   Self.Close;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmAbout.DrawLine;
-Begin
-  With Self.Canvas Do
-  Begin
+procedure TfrmAbout.DrawLine;
+begin
+  with Self.Canvas do
+  begin
     Pen.Color := clBlack;
     Pen.Style := psDashDotDot;
     Pen.Mode := pmBlack;
@@ -135,38 +135,38 @@ Begin
     LineTo(Self.Width - 1, Self.Height);
 
     Refresh;
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmAbout.EditDataDirectoryClick(Sender: TObject);
-Begin
+procedure TfrmAbout.EditDataDirectoryClick(Sender: TObject);
+begin
   EditDataDirectory.SelectAll;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmAbout.FormActivate(Sender: TObject);
-Begin
+procedure TfrmAbout.FormActivate(Sender: TObject);
+begin
 
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmAbout.FormClose(Sender: TObject; Var Action: TCloseAction);
-Begin
+procedure TfrmAbout.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
   Action := caFree;
 
-  frmAbout := Nil;
-End;
+  frmAbout := nil;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmAbout.FormCreate(Sender: TObject);
-Var
+procedure TfrmAbout.FormCreate(Sender: TObject);
+var
   Version: TFileVersion;
-Begin
+begin
   Self.Width := Shape1.Width;
   Self.Height := Shape1.Height;
   pbScrollBox.Canvas.Font.Name := 'Courier New';
@@ -178,95 +178,94 @@ Begin
   tmrScroll.Enabled := True;
 
   Version := TFileVersion.Create();
-  LabelVersion.Caption := Version.AsString{$IFDEF BetaVersion} +
-    ' BETA'{$ENDIF}{$IFDEF PortableOn} + ' (Portable)'{$ENDIF};
+  LabelVersion.Caption := Version.AsString{$IFDEF BetaVersion} + ' BETA'{$ENDIF}{$IFDEF PortableOn} + ' (Portable)'{$ENDIF};
   Version.Free;
   Label_Update.Left := LabelVersion.Left + LabelVersion.Width + 10;
   EditDataDirectory.text := GetAvroDataDir;
 
-End;
+end;
 
-Procedure TfrmAbout.FormPaint(Sender: TObject);
-Begin
+procedure TfrmAbout.FormPaint(Sender: TObject);
+begin
   DrawLine;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmAbout.FormShow(Sender: TObject);
-Begin
+procedure TfrmAbout.FormShow(Sender: TObject);
+begin
   TOPMOST(Self.Handle);
   DrawLine;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmAbout.LabelViewCreditClick(Sender: TObject);
-Begin
+procedure TfrmAbout.LabelViewCreditClick(Sender: TObject);
+begin
   MemoLicense.Visible := False;
   pbScrollBox.Visible := True;
   tmrScroll.Enabled := True;
   Label5.Visible := True;
   Label_License.Visible := True;
   LabelViewCredit.Visible := False;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmAbout.Label_LicenseClick(Sender: TObject);
-Begin
+procedure TfrmAbout.Label_LicenseClick(Sender: TObject);
+begin
   MemoLicense.Visible := True;
   pbScrollBox.Visible := False;
   tmrScroll.Enabled := False;
   Label5.Visible := False;
   Label_License.Visible := False;
   LabelViewCredit.Visible := True;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmAbout.Label_OmicronLabClick(Sender: TObject);
-Begin
+procedure TfrmAbout.Label_OmicronLabClick(Sender: TObject);
+begin
   Execute_Something('https://www.omicronlab.com');
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmAbout.Label_UpdateClick(Sender: TObject);
-Begin
-  AvroMainForm1.CheckupdateforAvroKeyboard1Click(Nil);
-End;
+procedure TfrmAbout.Label_UpdateClick(Sender: TObject);
+begin
+  AvroMainForm1.CheckupdateforAvroKeyboard1Click(nil);
+end;
 
 { =============================================================================== }
 
-Procedure TfrmAbout.pbScrollBoxMouseEnter(Sender: TObject);
-Begin
+procedure TfrmAbout.pbScrollBoxMouseEnter(Sender: TObject);
+begin
   tmrScroll.Enabled := False;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmAbout.pbScrollBoxMouseLeave(Sender: TObject);
-Begin
+procedure TfrmAbout.pbScrollBoxMouseLeave(Sender: TObject);
+begin
   tmrScroll.Enabled := True;
-End;
+end;
 
 { =============================================================================== }
 {$HINTS Off}
 
-Procedure TfrmAbout.tmrScrollTimer(Sender: TObject);
-Var
-  textSize: TSize;
+procedure TfrmAbout.tmrScrollTimer(Sender: TObject);
+var
+  textSize:       TSize;
   i, blockHeight: integer;
 
-Begin
+begin
   pbScrollBox.Canvas.Brush.Color := clwhite;
 
   pbScrollBox.Canvas.FillRect(pbScrollBox.ClientRect);
 
-  If TheY <= -lblText.Height Then
+  if TheY <= -lblText.Height then
     TheY := pbScrollBox.ClientHeight
-  Else
+  else
     TheY := TheY - 1;
 
   // see how high our block of text is going to be, based on the font the canvas
@@ -276,22 +275,20 @@ Begin
   blockHeight := blockHeight;
 
   // go through each line and output it
-  For i := 0 To Credit.Lines.Count - 1 Do
-  Begin
+  for i := 0 to Credit.Lines.Count - 1 do
+  begin
     // we need the width of each line, so we can center it on the canvas
     textSize := pbScrollBox.Canvas.TextExtent(Credit.Lines[i]);
     // render the text
 
-    If (((textSize.cy * i) + TheY) < pbScrollBox.ClientHeight) And
-      (((textSize.cy * i) + TheY) > -textSize.cy) Then
-    Begin
-      pbScrollBox.Canvas.TextOut((pbScrollBox.Width Div 2) -
-        (textSize.cx Div 2), (textSize.cy * i) + TheY, Credit.Lines[i]);
-    End;
-  End;
+    if (((textSize.cy * i) + TheY) < pbScrollBox.ClientHeight) and (((textSize.cy * i) + TheY) > -textSize.cy) then
+    begin
+      pbScrollBox.Canvas.TextOut((pbScrollBox.Width div 2) - (textSize.cx div 2), (textSize.cy * i) + TheY, Credit.Lines[i]);
+    end;
+  end;
   pbScrollBox.Canvas.Refresh;
-End;
+end;
 {$HINTS On}
 { =============================================================================== }
 
-End.
+end.
