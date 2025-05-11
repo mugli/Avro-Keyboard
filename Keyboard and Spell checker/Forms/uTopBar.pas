@@ -25,11 +25,11 @@
   =============================================================================
 }
 {$INCLUDE ../ProjectDefines.inc}
-Unit uTopBar;
+unit uTopBar;
 
-Interface
+interface
 
-Uses
+uses
   Windows,
   Messages,
   SysUtils,
@@ -44,17 +44,17 @@ Uses
   DateUtils,
   SHELLAPI;
 
-Type
+type
 
   ButtonState = (State1, State2);
 
-Const
-  m_GlowEffect: Boolean = True;
-  m_BlendingStep: Integer = 51; { 255/51=5 step }
+const
+  m_GlowEffect: Boolean    = True;
+  m_BlendingStep: Integer  = 51; { 255/51=5 step }
   m_TimerInterval: Integer = 30; { 5 step in 30*5=150 milisecond }
 
-Type
-  TTopBar = Class(TForm)
+type
+  TTopBar = class(TForm)
     ImgMain: TImage;
     ImgAppIcon: TImage;
     ImgButtonMode: TImage;
@@ -78,214 +78,196 @@ Type
 
     HintTimer: TTimer;
     BalloonHint1: TBalloonHint;
-    Procedure FormCreate(Sender: TObject);
-    Procedure ImgAppIconMouseEnter(Sender: TObject);
-    Procedure ImgButtonModeMouseEnter(Sender: TObject);
-    Procedure ImgButtonLayoutDownMouseEnter(Sender: TObject);
-    Procedure ImgButtonLayoutMouseEnter(Sender: TObject);
-    Procedure ImgButtonMouseMouseEnter(Sender: TObject);
-    Procedure ImgButtonToolsMouseEnter(Sender: TObject);
-    Procedure ImgButtonWWWMouseEnter(Sender: TObject);
-    Procedure ImgButtonHelpMouseEnter(Sender: TObject);
-    Procedure ImgButtonMinimizeMouseEnter(Sender: TObject);
-    Procedure ImgAppIconMouseLeave(Sender: TObject);
-    Procedure ImgButtonModeMouseLeave(Sender: TObject);
-    Procedure ImgButtonLayoutDownMouseLeave(Sender: TObject);
-    Procedure ImgButtonLayoutMouseLeave(Sender: TObject);
-    Procedure ImgButtonMouseMouseLeave(Sender: TObject);
-    Procedure ImgButtonToolsMouseLeave(Sender: TObject);
-    Procedure ImgButtonWWWMouseLeave(Sender: TObject);
-    Procedure ImgButtonHelpMouseLeave(Sender: TObject);
-    Procedure ImgButtonMinimizeMouseLeave(Sender: TObject);
-    Procedure ImgAppIconDblClick(Sender: TObject);
-    Procedure ImgButtonModeDblClick(Sender: TObject);
-    Procedure ImgButtonLayoutDownDblClick(Sender: TObject);
-    Procedure ImgButtonLayoutDblClick(Sender: TObject);
-    Procedure ImgButtonMouseDblClick(Sender: TObject);
-    Procedure ImgButtonToolsDblClick(Sender: TObject);
-    Procedure ImgButtonWWWDblClick(Sender: TObject);
-    Procedure ImgButtonHelpDblClick(Sender: TObject);
-    Procedure ImgButtonMinimizeDblClick(Sender: TObject);
-    Procedure ImgAppIconMouseUp(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
-    Procedure ImgButtonModeMouseUp(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
-    Procedure ImgButtonLayoutDownMouseUp(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
-    Procedure ImgButtonLayoutMouseUp(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
-    Procedure ImgButtonMouseMouseUp(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
-    Procedure ImgButtonToolsMouseUp(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
-    Procedure ImgButtonWWWMouseUp(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
-    Procedure ImgButtonHelpMouseUp(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
-    Procedure ImgButtonMinimizeMouseUp(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
-    Procedure ImgAppIconMouseDown(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
-    Procedure ImgButtonModeMouseDown(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
-    Procedure ImgButtonLayoutDownMouseDown(Sender: TObject;
-      Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-    Procedure ImgButtonLayoutMouseDown(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
-    Procedure ImgButtonMouseMouseDown(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
-    Procedure ImgButtonToolsMouseDown(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
-    Procedure ImgButtonWWWMouseDown(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
-    Procedure ImgButtonHelpMouseDown(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
-    Procedure ImgButtonMinimizeMouseDown(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
-    Procedure TmrButtonModeTimer(Sender: TObject);
-    Procedure TmrAppIconTimer(Sender: TObject);
-    Procedure TmrButtonLayoutTimer(Sender: TObject);
-    Procedure TmrButtonLayoutDownTimer(Sender: TObject);
-    Procedure TmrButtonMouseTimer(Sender: TObject);
-    Procedure TmrButtonToolsTimer(Sender: TObject);
-    Procedure TmrButtonWWWTimer(Sender: TObject);
-    Procedure TmrButtonHelpTimer(Sender: TObject);
-    Procedure TmrButtonMinimizeTimer(Sender: TObject);
-    Procedure FormClose(Sender: TObject; Var Action: TCloseAction);
-    Procedure FormKeyDown(Sender: TObject; Var Key: Word; Shift: TShiftState);
-    Procedure TransparencyTimerTimer(Sender: TObject);
-    Procedure FormShow(Sender: TObject);
-    Procedure FormHide(Sender: TObject);
-    Procedure HintTimerTimer(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure ImgAppIconMouseEnter(Sender: TObject);
+    procedure ImgButtonModeMouseEnter(Sender: TObject);
+    procedure ImgButtonLayoutDownMouseEnter(Sender: TObject);
+    procedure ImgButtonLayoutMouseEnter(Sender: TObject);
+    procedure ImgButtonMouseMouseEnter(Sender: TObject);
+    procedure ImgButtonToolsMouseEnter(Sender: TObject);
+    procedure ImgButtonWWWMouseEnter(Sender: TObject);
+    procedure ImgButtonHelpMouseEnter(Sender: TObject);
+    procedure ImgButtonMinimizeMouseEnter(Sender: TObject);
+    procedure ImgAppIconMouseLeave(Sender: TObject);
+    procedure ImgButtonModeMouseLeave(Sender: TObject);
+    procedure ImgButtonLayoutDownMouseLeave(Sender: TObject);
+    procedure ImgButtonLayoutMouseLeave(Sender: TObject);
+    procedure ImgButtonMouseMouseLeave(Sender: TObject);
+    procedure ImgButtonToolsMouseLeave(Sender: TObject);
+    procedure ImgButtonWWWMouseLeave(Sender: TObject);
+    procedure ImgButtonHelpMouseLeave(Sender: TObject);
+    procedure ImgButtonMinimizeMouseLeave(Sender: TObject);
+    procedure ImgAppIconDblClick(Sender: TObject);
+    procedure ImgButtonModeDblClick(Sender: TObject);
+    procedure ImgButtonLayoutDownDblClick(Sender: TObject);
+    procedure ImgButtonLayoutDblClick(Sender: TObject);
+    procedure ImgButtonMouseDblClick(Sender: TObject);
+    procedure ImgButtonToolsDblClick(Sender: TObject);
+    procedure ImgButtonWWWDblClick(Sender: TObject);
+    procedure ImgButtonHelpDblClick(Sender: TObject);
+    procedure ImgButtonMinimizeDblClick(Sender: TObject);
+    procedure ImgAppIconMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure ImgButtonModeMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure ImgButtonLayoutDownMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure ImgButtonLayoutMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure ImgButtonMouseMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure ImgButtonToolsMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure ImgButtonWWWMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure ImgButtonHelpMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure ImgButtonMinimizeMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure ImgAppIconMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure ImgButtonModeMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure ImgButtonLayoutDownMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure ImgButtonLayoutMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure ImgButtonMouseMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure ImgButtonToolsMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure ImgButtonWWWMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure ImgButtonHelpMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure ImgButtonMinimizeMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure TmrButtonModeTimer(Sender: TObject);
+    procedure TmrAppIconTimer(Sender: TObject);
+    procedure TmrButtonLayoutTimer(Sender: TObject);
+    procedure TmrButtonLayoutDownTimer(Sender: TObject);
+    procedure TmrButtonMouseTimer(Sender: TObject);
+    procedure TmrButtonToolsTimer(Sender: TObject);
+    procedure TmrButtonWWWTimer(Sender: TObject);
+    procedure TmrButtonHelpTimer(Sender: TObject);
+    procedure TmrButtonMinimizeTimer(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure TransparencyTimerTimer(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormHide(Sender: TObject);
+    procedure HintTimerTimer(Sender: TObject);
 
-  Private
-    { Private declarations }
+    private
+      { Private declarations }
 
-    PrevSkin: String;
+      PrevSkin: string;
 
-    ButtonMode_State: ButtonState;
+      ButtonMode_State: ButtonState;
 
-    AppIcon_MouseIn: Boolean;
-    ButtonMode_MouseIn: Boolean;
-    ButtonLayoutDown_MouseIn: Boolean;
-    ButtonLayout_MouseIn: Boolean;
-    ButtonMouse_MouseIn: Boolean;
-    ButtonTools_MouseIn: Boolean;
-    ButtonWWW_MouseIn: Boolean;
-    ButtonHelp_MouseIn: Boolean;
-    ButtonMinimize_MouseIn: Boolean;
+      AppIcon_MouseIn:          Boolean;
+      ButtonMode_MouseIn:       Boolean;
+      ButtonLayoutDown_MouseIn: Boolean;
+      ButtonLayout_MouseIn:     Boolean;
+      ButtonMouse_MouseIn:      Boolean;
+      ButtonTools_MouseIn:      Boolean;
+      ButtonWWW_MouseIn:        Boolean;
+      ButtonHelp_MouseIn:       Boolean;
+      ButtonMinimize_MouseIn:   Boolean;
 
-    AppIcon_MouseDown: Boolean;
-    ButtonMode_MouseDown: Boolean;
-    ButtonLayoutDown_MouseDown: Boolean;
-    ButtonLayout_MouseDown: Boolean;
-    ButtonMouse_MouseDown: Boolean;
-    ButtonTools_MouseDown: Boolean;
-    ButtonWWW_MouseDown: Boolean;
-    ButtonHelp_MouseDown: Boolean;
-    ButtonMinimize_MouseDown: Boolean;
+      AppIcon_MouseDown:          Boolean;
+      ButtonMode_MouseDown:       Boolean;
+      ButtonLayoutDown_MouseDown: Boolean;
+      ButtonLayout_MouseDown:     Boolean;
+      ButtonMouse_MouseDown:      Boolean;
+      ButtonTools_MouseDown:      Boolean;
+      ButtonWWW_MouseDown:        Boolean;
+      ButtonHelp_MouseDown:       Boolean;
+      ButtonMinimize_MouseDown:   Boolean;
 
-    AppIcon_TranparentValue: Integer;
-    ButtonMode_TranparentValue: Integer;
-    ButtonLayoutDown_TranparentValue: Integer;
-    ButtonLayout_TranparentValue: Integer;
-    ButtonMouse_TranparentValue: Integer;
-    ButtonTools_TranparentValue: Integer;
-    ButtonWWW_TranparentValue: Integer;
-    ButtonHelp_TranparentValue: Integer;
-    ButtonMinimize_TranparentValue: Integer;
+      AppIcon_TranparentValue:          Integer;
+      ButtonMode_TranparentValue:       Integer;
+      ButtonLayoutDown_TranparentValue: Integer;
+      ButtonLayout_TranparentValue:     Integer;
+      ButtonMouse_TranparentValue:      Integer;
+      ButtonTools_TranparentValue:      Integer;
+      ButtonWWW_TranparentValue:        Integer;
+      ButtonHelp_TranparentValue:       Integer;
+      ButtonMinimize_TranparentValue:   Integer;
 
-    Procedure AppIcon_DrawState;
-    Procedure ButtonMode_DrawState;
-    Procedure ButtonLayoutDown_DrawState;
-    Procedure ButtonLayout_DrawState;
-    Procedure ButtonMouse_DrawState;
-    Procedure ButtonTools_DrawState;
-    Procedure ButtonWWW_DrawState;
-    Procedure ButtonHelp_DrawState;
-    Procedure ButtonMinimize_DrawState;
+      procedure AppIcon_DrawState;
+      procedure ButtonMode_DrawState;
+      procedure ButtonLayoutDown_DrawState;
+      procedure ButtonLayout_DrawState;
+      procedure ButtonMouse_DrawState;
+      procedure ButtonTools_DrawState;
+      procedure ButtonWWW_DrawState;
+      procedure ButtonHelp_DrawState;
+      procedure ButtonMinimize_DrawState;
 
-    Procedure AppIcon_DrawDown;
-    Procedure ButtonMode_DrawDown;
-    Procedure ButtonLayoutDown_DrawDown;
-    Procedure ButtonLayout_DrawDown;
-    Procedure ButtonMouse_DrawDown;
-    Procedure ButtonTools_DrawDown;
-    Procedure ButtonWWW_DrawDown;
-    Procedure ButtonHelp_DrawDown;
-    Procedure ButtonMinimize_DrawDown;
+      procedure AppIcon_DrawDown;
+      procedure ButtonMode_DrawDown;
+      procedure ButtonLayoutDown_DrawDown;
+      procedure ButtonLayout_DrawDown;
+      procedure ButtonMouse_DrawDown;
+      procedure ButtonTools_DrawDown;
+      procedure ButtonWWW_DrawDown;
+      procedure ButtonHelp_DrawDown;
+      procedure ButtonMinimize_DrawDown;
 
-    Procedure AppIcon_DrawUpOver;
-    Procedure ButtonMode_DrawUpOver;
-    Procedure ButtonLayoutDown_DrawUpOver;
-    Procedure ButtonLayout_DrawUpOver;
-    Procedure ButtonMouse_DrawUpOver;
-    Procedure ButtonTools_DrawUpOver;
-    Procedure ButtonWWW_DrawUpOver;
-    Procedure ButtonHelp_DrawUpOver;
-    Procedure ButtonMinimize_DrawUpOver;
+      procedure AppIcon_DrawUpOver;
+      procedure ButtonMode_DrawUpOver;
+      procedure ButtonLayoutDown_DrawUpOver;
+      procedure ButtonLayout_DrawUpOver;
+      procedure ButtonMouse_DrawUpOver;
+      procedure ButtonTools_DrawUpOver;
+      procedure ButtonWWW_DrawUpOver;
+      procedure ButtonHelp_DrawUpOver;
+      procedure ButtonMinimize_DrawUpOver;
 
-    Procedure WMDROPFILES(Var msg: TWMDropFiles); Message WM_DROPFILES;
+      procedure WMDROPFILES(var msg: TWMDropFiles); message WM_DROPFILES;
 
-  Public
-    { Public declarations }
-    BMP_AppIcon: TBitmap;
-    BMP_AppIcon_Over: TBitmap;
-    BMP_AppIcon_Down: TBitmap;
+    public
+      { Public declarations }
+      BMP_AppIcon:      TBitmap;
+      BMP_AppIcon_Over: TBitmap;
+      BMP_AppIcon_Down: TBitmap;
 
-    BMP_ButtonModeE: TBitmap;
-    BMP_ButtonModeE_Over: TBitmap;
-    BMP_ButtonModeE_Down: TBitmap;
-    BMP_ButtonModeB: TBitmap;
-    BMP_ButtonModeB_Over: TBitmap;
-    BMP_ButtonModeB_Down: TBitmap;
+      BMP_ButtonModeE:      TBitmap;
+      BMP_ButtonModeE_Over: TBitmap;
+      BMP_ButtonModeE_Down: TBitmap;
+      BMP_ButtonModeB:      TBitmap;
+      BMP_ButtonModeB_Over: TBitmap;
+      BMP_ButtonModeB_Down: TBitmap;
 
-    BMP_ButtonLayoutDown: TBitmap;
-    BMP_ButtonLayoutDown_Over: TBitmap;
-    BMP_ButtonLayoutDown_Down: TBitmap;
+      BMP_ButtonLayoutDown:      TBitmap;
+      BMP_ButtonLayoutDown_Over: TBitmap;
+      BMP_ButtonLayoutDown_Down: TBitmap;
 
-    BMP_ButtonLayout: TBitmap;
-    BMP_ButtonLayout_Over: TBitmap;
-    BMP_ButtonLayout_Down: TBitmap;
+      BMP_ButtonLayout:      TBitmap;
+      BMP_ButtonLayout_Over: TBitmap;
+      BMP_ButtonLayout_Down: TBitmap;
 
-    BMP_ButtonMouse: TBitmap;
-    BMP_ButtonMouse_Over: TBitmap;
-    BMP_ButtonMouse_Down: TBitmap;
+      BMP_ButtonMouse:      TBitmap;
+      BMP_ButtonMouse_Over: TBitmap;
+      BMP_ButtonMouse_Down: TBitmap;
 
-    BMP_ButtonTools: TBitmap;
-    BMP_ButtonTools_Over: TBitmap;
-    BMP_ButtonTools_Down: TBitmap;
+      BMP_ButtonTools:      TBitmap;
+      BMP_ButtonTools_Over: TBitmap;
+      BMP_ButtonTools_Down: TBitmap;
 
-    BMP_ButtonWWW: TBitmap;
-    BMP_ButtonWWW_Over: TBitmap;
-    BMP_ButtonWWW_Down: TBitmap;
+      BMP_ButtonWWW:      TBitmap;
+      BMP_ButtonWWW_Over: TBitmap;
+      BMP_ButtonWWW_Down: TBitmap;
 
-    BMP_ButtonHelp: TBitmap;
-    BMP_ButtonHelp_Over: TBitmap;
-    BMP_ButtonHelp_Down: TBitmap;
+      BMP_ButtonHelp:      TBitmap;
+      BMP_ButtonHelp_Over: TBitmap;
+      BMP_ButtonHelp_Down: TBitmap;
 
-    BMP_ButtonMinimize: TBitmap;
-    BMP_ButtonMinimize_Over: TBitmap;
-    BMP_ButtonMinimize_Down: TBitmap;
+      BMP_ButtonMinimize:      TBitmap;
+      BMP_ButtonMinimize_Over: TBitmap;
+      BMP_ButtonMinimize_Down: TBitmap;
 
-    ApplicationClosing: Boolean;
+      ApplicationClosing: Boolean;
 
-    Procedure ApplySkin;
-    Procedure SetButtonModeState(ST: ButtonState);
-    Procedure InitHints;
-  Protected
-    Procedure CreateParams(Var Params: TCreateParams); Override;
+      procedure ApplySkin;
+      procedure SetButtonModeState(ST: ButtonState);
+      procedure InitHints;
+    protected
+      procedure CreateParams(var Params: TCreateParams); override;
 
-  End;
+  end;
 
-Var
+var
   TopBar: TTopBar;
 
-Implementation
+implementation
 
 {$R *.dfm}
 
-Uses
+uses
   SkinLoader,
   uForm1,
   uFileFolderHandling,
@@ -295,26 +277,23 @@ Uses
 
 { =============================================================================== }
 
-Procedure TTopBar.ApplySkin;
-Begin
-  If LowerCase(PrevSkin) = LowerCase(InterfaceSkin) Then
+procedure TTopBar.ApplySkin;
+begin
+  if LowerCase(PrevSkin) = LowerCase(InterfaceSkin) then
     exit;
 
-  If LowerCase(InterfaceSkin) = 'internalskin*' Then
+  if LowerCase(InterfaceSkin) = 'internalskin*' then
     LoadSkin('internalskin*')
-  Else
-  Begin
-    If LoadSkin(GetAvroDataDir + 'Skin\' + InterfaceSkin + '.avroskin')
-      = False Then
-    Begin
-      Application.MessageBox(PChar('Error loading' + GetAvroDataDir + 'Skin\' +
-        InterfaceSkin + '.avroskin' + #10 + '' + #10 +
-        'Skin switched back to Default one.'), 'Avro Keyboard',
-        MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
+  else
+  begin
+    if LoadSkin(GetAvroDataDir + 'Skin\' + InterfaceSkin + '.avroskin') = False then
+    begin
+      Application.MessageBox(PChar('Error loading' + GetAvroDataDir + 'Skin\' + InterfaceSkin + '.avroskin' + #10 + '' + #10 +
+            'Skin switched back to Default one.'), 'Avro Keyboard', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
       InterfaceSkin := 'internalskin*';
       LoadSkin('internalskin*');
-    End;
-  End;
+    end;
+  end;
   PrevSkin := InterfaceSkin;
 
   ImgAppIcon.Picture.Bitmap.Assign(BMP_AppIcon);
@@ -327,12 +306,12 @@ Begin
   ImgButtonHelp.Picture.Bitmap.Assign(BMP_ButtonHelp);
   ImgButtonMinimize.Picture.Bitmap.Assign(BMP_ButtonMinimize);
 
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.FormClose(Sender: TObject; Var Action: TCloseAction);
-Begin
+procedure TTopBar.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
 
   SaveUISettings;
 
@@ -377,11 +356,11 @@ Begin
 
   Action := cafree;
 
-  TopBar := Nil
-End;
+  TopBar := nil
+end;
 
-Procedure TTopBar.FormCreate(Sender: TObject);
-Begin
+procedure TTopBar.FormCreate(Sender: TObject);
+begin
   BMP_AppIcon := TBitmap.Create;
   BMP_AppIcon_Over := TBitmap.Create;
   BMP_AppIcon_Down := TBitmap.Create;
@@ -444,248 +423,226 @@ Begin
 
   Self.Top := 0;
   HintTimer.Enabled := True;
-End;
+end;
 
-Procedure TTopBar.FormHide(Sender: TObject);
-Begin
+procedure TTopBar.FormHide(Sender: TObject);
+begin
   TransparencyTimer.Enabled := False;
-  If not ApplicationClosing then
+  if not ApplicationClosing then
     SaveUISettings;
-End;
+end;
 
-Procedure TTopBar.FormKeyDown(Sender: TObject; Var Key: Word;
-  Shift: TShiftState);
-Begin
-  If (Key = VK_F4) { And (ssAlt In Shift) } Then
+procedure TTopBar.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  if (Key = VK_F4) { And (ssAlt In Shift) } then
     Key := 0;
-End;
+end;
 
-Procedure TTopBar.FormShow(Sender: TObject);
-Begin
+procedure TTopBar.FormShow(Sender: TObject);
+begin
   ApplySkin;
 
   TransparencyTimer.Enabled := True;
 
-  If (Left + Width > Screen.Width) Or (Left < 0) Then
+  if (Left + Width > Screen.Width) or (Left < 0) then
     Left := Screen.Width - Width - 250;
 
   Application.ProcessMessages;
   SaveUISettings;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.HintTimerTimer(Sender: TObject);
-Begin
+procedure TTopBar.HintTimerTimer(Sender: TObject);
+begin
   HintTimer.Enabled := False;
-  If Self.Visible Then
-  Begin
-    If StrToInt(TopHintShowTimes) < NumberOfVisibleHints Then
-    Begin
-      BalloonHint1.Title := 'Click here to start Bangla typing' + #13 +
-        'or Press ' + ModeSwitchKey;
+  if Self.Visible then
+  begin
+    if StrToInt(TopHintShowTimes) < NumberOfVisibleHints then
+    begin
+      BalloonHint1.Title := 'Click here to start Bangla typing' + #13 + 'or Press ' + ModeSwitchKey;
       BalloonHint1.ShowHint(ImgButtonMode);
       TopHintShowTimes := IntToStr(StrToInt(TopHintShowTimes) + 1);
-    End;
-  End;
-End;
+    end;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgAppIconMouseDown(Sender: TObject; Button: TMouseButton;
-  Shift: TShiftState; X, Y: Integer);
-Var
+procedure TTopBar.ImgAppIconMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+var
   MeTop, MeLeft: Integer;
-Begin
+begin
   AppIcon_MouseDown := True;
   AppIcon_DrawState;
 
-  If Button = mbleft Then
-  Begin
+  if Button = mbleft then
+  begin
     MeTop := Self.Top;
     MeLeft := Self.Left;
 
     ReleaseCapture;
     SendMessage(Self.Handle, WM_SYSCOMMAND, $F012, 0); // SC_DRAGMOVE = $F012;
 
-    If Not(GetKeyState(VK_LBUTTON) < 0) Then
-    Begin
+    if not(GetKeyState(VK_LBUTTON) < 0) then
+    begin
       AppIcon_MouseDown := False;
       AppIcon_DrawState;
 
       // Fix XP Snap window bug
-      If Self.Top < 0 Then
+      if Self.Top < 0 then
         Self.Top := 0;
 
       // Was form moved? If not, show menu
-      If ((MeTop = Self.Top) And (MeLeft = Self.Left)) Then
+      if ((MeTop = Self.Top) and (MeLeft = Self.Left)) then
         // Form wasn't moved. Show menu
-        AvroMainForm1.Popup_Main.Popup(ImgAppIcon.Left + Left,
-          ImgAppIcon.Top + ImgAppIcon.Height + Top);
+        AvroMainForm1.Popup_Main.Popup(ImgAppIcon.Left + Left, ImgAppIcon.Top + ImgAppIcon.Height + Top);
 
-    End;
+    end;
 
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgAppIconMouseUp(Sender: TObject; Button: TMouseButton;
-  Shift: TShiftState; X, Y: Integer);
-Begin
+procedure TTopBar.ImgAppIconMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
   AppIcon_MouseDown := False;
   AppIcon_DrawState;
 
-  If Button <> mbleft Then
-    AvroMainForm1.Popup_Main.Popup(ImgAppIcon.Left + Left,
-      ImgAppIcon.Top + ImgAppIcon.Height + Top);
-End;
+  if Button <> mbleft then
+    AvroMainForm1.Popup_Main.Popup(ImgAppIcon.Left + Left, ImgAppIcon.Top + ImgAppIcon.Height + Top);
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgButtonHelpMouseUp(Sender: TObject; Button: TMouseButton;
-  Shift: TShiftState; X, Y: Integer);
-Begin
+procedure TTopBar.ImgButtonHelpMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
   ButtonHelp_MouseDown := False;
   ButtonHelp_DrawState;
 
-  AvroMainForm1.Popup_Help.Popup(Left + ImgButtonHelp.Left,
-    Top + ImgButtonHelp.Top + ImgButtonHelp.Height)
-End;
+  AvroMainForm1.Popup_Help.Popup(Left + ImgButtonHelp.Left, Top + ImgButtonHelp.Top + ImgButtonHelp.Height)
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgButtonLayoutDownMouseUp(Sender: TObject;
-  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-Begin
+procedure TTopBar.ImgButtonLayoutDownMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
   ButtonLayoutDown_MouseDown := False;
   ButtonLayoutDown_DrawState;
 
-  AvroMainForm1.Popup_LayoutList.Popup(Left + ImgButtonLayoutDown.Left,
-    ImgButtonLayoutDown.Top + ImgButtonLayoutDown.Height + Top);
-End;
+  AvroMainForm1.Popup_LayoutList.Popup(Left + ImgButtonLayoutDown.Left, ImgButtonLayoutDown.Top + ImgButtonLayoutDown.Height + Top);
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgButtonLayoutMouseUp(Sender: TObject; Button: TMouseButton;
-  Shift: TShiftState; X, Y: Integer);
-Begin
+procedure TTopBar.ImgButtonLayoutMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
   ButtonLayout_MouseDown := False;
   ButtonLayout_DrawState;
 
-  If Button = mbleft Then
-    AvroMainForm1.Showactivekeyboardlayout1Click(Nil)
-  Else
-    AvroMainForm1.Popup_LayoutList.Popup(Left + ImgButtonLayout.Left,
-      ImgButtonLayout.Top + ImgButtonLayout.Height + Top);
+  if Button = mbleft then
+    AvroMainForm1.Showactivekeyboardlayout1Click(nil)
+  else
+    AvroMainForm1.Popup_LayoutList.Popup(Left + ImgButtonLayout.Left, ImgButtonLayout.Top + ImgButtonLayout.Height + Top);
 
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgButtonMinimizeMouseUp(Sender: TObject;
-  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-Begin
+procedure TTopBar.ImgButtonMinimizeMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
   ButtonMinimize_MouseDown := False;
   ButtonMinimize_DrawState;
 
-  If TopBarXButton = 'SHOW MENU' Then
-    AvroMainForm1.Popup_Exit.Popup(Left + ImgButtonMinimize.Left,
-      Top + ImgButtonMinimize.Top + ImgButtonMinimize.Height)
-  Else If TopBarXButton = 'MINIMIZE' Then
-  Begin
+  if TopBarXButton = 'SHOW MENU' then
+    AvroMainForm1.Popup_Exit.Popup(Left + ImgButtonMinimize.Left, Top + ImgButtonMinimize.Top + ImgButtonMinimize.Height)
+  else if TopBarXButton = 'MINIMIZE' then
+  begin
     TopBar.Hide;
     AvroMainForm1.ShowOnTray;
-  End
-  Else If TopBarXButton = 'EXIT' Then
+  end
+  else if TopBarXButton = 'EXIT' then
     AvroMainForm1.ExitApp;
 
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgButtonModeMouseUp(Sender: TObject; Button: TMouseButton;
-  Shift: TShiftState; X, Y: Integer);
-Begin
+procedure TTopBar.ImgButtonModeMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
   ButtonMode_MouseDown := False;
   ButtonMode_DrawState;
 
   AvroMainForm1.ToggleMode;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgButtonMouseMouseUp(Sender: TObject; Button: TMouseButton;
-  Shift: TShiftState; X, Y: Integer);
-Begin
+procedure TTopBar.ImgButtonMouseMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
   ButtonMouse_MouseDown := False;
   ButtonMouse_DrawState;
 
-  AvroMainForm1.AvroMouseClicknType2Click(Nil);
-End;
+  AvroMainForm1.AvroMouseClicknType2Click(nil);
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgButtonToolsMouseUp(Sender: TObject; Button: TMouseButton;
-  Shift: TShiftState; X, Y: Integer);
-Begin
+procedure TTopBar.ImgButtonToolsMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
   ButtonTools_MouseDown := False;
   ButtonTools_DrawState;
 
-  AvroMainForm1.Popup_Tools.Popup(Left + ImgButtonTools.Left,
-    Top + ImgButtonTools.Top + ImgButtonTools.Height);
-End;
+  AvroMainForm1.Popup_Tools.Popup(Left + ImgButtonTools.Left, Top + ImgButtonTools.Top + ImgButtonTools.Height);
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgButtonWWWMouseUp(Sender: TObject; Button: TMouseButton;
-  Shift: TShiftState; X, Y: Integer);
-Begin
+procedure TTopBar.ImgButtonWWWMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
   ButtonWWW_MouseDown := False;
   ButtonWWW_DrawState;
 
-  AvroMainForm1.Popup_Web.Popup(Left + ImgButtonWWW.Left,
-    Top + ImgButtonWWW.Top + ImgButtonWWW.Height);
-End;
+  AvroMainForm1.Popup_Web.Popup(Left + ImgButtonWWW.Left, Top + ImgButtonWWW.Top + ImgButtonWWW.Height);
+end;
 
-Procedure TTopBar.InitHints;
-Begin
+procedure TTopBar.InitHints;
+begin
   ImgAppIcon.Hint := 'Drag to move TopBar.' + #13 + 'Click for menu.';
-  ImgButtonMode.Hint := 'Click to start typing Bangla' + #13 + 'or Press ' +
-    ModeSwitchKey + '.';
+  ImgButtonMode.Hint := 'Click to start typing Bangla' + #13 + 'or Press ' + ModeSwitchKey + '.';
   ImgButtonLayoutDown.Hint := 'Select your Bangla keyboard layout.';
   ImgButtonLayout.Hint := 'View current keyboard layout with Layout Viewer.';
-  ImgButtonMouse.Hint :=
-    'Click and type Bangla with Avro Mouse (onscreen Bangla keyboard).';
+  ImgButtonMouse.Hint := 'Click and type Bangla with Avro Mouse (onscreen Bangla keyboard).';
   ImgButtonTools.Hint := 'Tools and settings.';
   ImgButtonWWW.Hint := 'Check for update or visit OmicronLab';
   ImgButtonHelp.Hint := 'Help menu';
   ImgButtonMinimize.Hint := 'Minimize or exit Avro Keyboard';
-End;
+end;
 
-Procedure TTopBar.SetButtonModeState(ST: ButtonState);
-Begin
+procedure TTopBar.SetButtonModeState(ST: ButtonState);
+begin
   ButtonMode_State := ST;
   ButtonMode_DrawState;
-End;
+end;
 {$HINTS Off}
 
-Procedure TTopBar.TransparencyTimerTimer(Sender: TObject);
-Var
-  pos: TPoint;
-  X, Y, i: Integer;
+procedure TTopBar.TransparencyTimerTimer(Sender: TObject);
+var
+  pos:        TPoint;
+  X, Y, i:    Integer;
   ThisResult: Boolean;
-Const
-{$WRITEABLECONST ON}
+const
+  {$WRITEABLECONST ON}
   EnableTime: TDateTime = 0;
-  LastResult: Boolean = True;
-{$WRITEABLECONST OFF}
-Begin
+  LastResult: Boolean   = True;
+  {$WRITEABLECONST OFF}
+begin
   ThisResult := False;
-  If EnableTime = 0 Then
+  if EnableTime = 0 then
     EnableTime := now;
 
-  If TopBar.Visible = False Then
+  if TopBar.Visible = False then
     exit;
 
   GetCursorPos(pos);
@@ -693,146 +650,145 @@ Begin
   X := pos.X;
   Y := pos.Y;
 
-  If TopBarTransparent = 'NO' Then
+  if TopBarTransparent = 'NO' then
     ThisResult := True
-  Else
-  Begin
-    If GetForegroundWindow = Self.Handle Then
-    Begin
+  else
+  begin
+    if GetForegroundWindow = Self.Handle then
+    begin
       ThisResult := True;
       EnableTime := now;
-    End
-    Else If AvroMainForm1.KeyboardModeChanged = True Then
-    Begin
+    end
+    else if AvroMainForm1.KeyboardModeChanged = True then
+    begin
       AvroMainForm1.KeyboardModeChanged := False;
       ThisResult := True;
       EnableTime := now;
-    End
-    Else
-    Begin
-      If (X < 0) Or (Y < 0) Then
+    end
+    else
+    begin
+      if (X < 0) or (Y < 0) then
         ThisResult := False
-      Else If (X > Self.Width) Or (Y > Self.Height) Then
+      else if (X > Self.Width) or (Y > Self.Height) then
         ThisResult := False
-      Else
-      Begin
+      else
+      begin
         ThisResult := True;
         EnableTime := now;
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
 
-  If LastResult <> ThisResult Then
-  Begin
-    If ThisResult = True Then
-    Begin
-      While Self.AlphaBlendValue < 255 Do
-      Begin
-        If (Self.AlphaBlendValue + 50) > 255 Then
+  if LastResult <> ThisResult then
+  begin
+    if ThisResult = True then
+    begin
+      while Self.AlphaBlendValue < 255 do
+      begin
+        if (Self.AlphaBlendValue + 50) > 255 then
           Self.AlphaBlendValue := 255
-        Else
+        else
           Self.AlphaBlendValue := Self.AlphaBlendValue + 50;
         Application.ProcessMessages;
         SysUtils.Sleep(50);
-      End;
+      end;
 
       LastResult := ThisResult;
-    End
-    Else
-    Begin
-      If SecondsBetween(now, EnableTime) >= 5 Then
-      Begin
-        While Self.AlphaBlendValue > StrToInt(TopBarTransparencyLevel) Do
-        Begin
-          If (Self.AlphaBlendValue - 50) <
-            StrToInt(TopBarTransparencyLevel) Then
+    end
+    else
+    begin
+      if SecondsBetween(now, EnableTime) >= 5 then
+      begin
+        while Self.AlphaBlendValue > StrToInt(TopBarTransparencyLevel) do
+        begin
+          if (Self.AlphaBlendValue - 50) < StrToInt(TopBarTransparencyLevel) then
             Self.AlphaBlendValue := StrToInt(TopBarTransparencyLevel)
-          Else
+          else
             Self.AlphaBlendValue := Self.AlphaBlendValue - 50;
           Application.ProcessMessages;
           SysUtils.Sleep(50);
-        End;
+        end;
 
         LastResult := ThisResult;
-      End;
-    End;
-  End;
+      end;
+    end;
+  end;
 
-End;
+end;
 
-Procedure TTopBar.WMDROPFILES(Var msg: TWMDropFiles);
+procedure TTopBar.WMDROPFILES(var msg: TWMDropFiles);
 
-  Function CheckLayoutInstall(FileName: String): Boolean;
-  Var
-    FilePath, LayoutDir: String;
-  Begin
+  function CheckLayoutInstall(FileName: string): Boolean;
+  var
+    FilePath, LayoutDir: string;
+  begin
     result := False;
-    If Not FileExists(FileName) Then
+    if not FileExists(FileName) then
       exit;
 
-    If uppercase(ExtractFileExt(FileName)) = '.AVROLAYOUT' Then
-    Begin
+    if uppercase(ExtractFileExt(FileName)) = '.AVROLAYOUT' then
+    begin
 
       // Ignore already installed skins
       FilePath := ExtractFilePath(FileName);
       LayoutDir := GetAvroDataDir + 'Keyboard Layouts\';
 
-      If (uppercase(LayoutDir) <> uppercase(FilePath)) Then
-      Begin
+      if (uppercase(LayoutDir) <> uppercase(FilePath)) then
+      begin
         result := InstallLayout(FileName);
-      End;
+      end;
 
       FreeAndNil(KeyboardLayouts);
       LoadKeyboardLayoutNames;
       AvroMainForm1.InitMenu;
-    End;
+    end;
 
-  End;
+  end;
 
-  Function CheckSkinInstall(FileName: String): Boolean;
-  Var
-    FilePath, SkinDir: String;
-  Begin
+  function CheckSkinInstall(FileName: string): Boolean;
+  var
+    FilePath, SkinDir: string;
+  begin
     result := False;
-    If Not FileExists(FileName) Then
+    if not FileExists(FileName) then
       exit;
 
-    If uppercase(ExtractFileExt(FileName)) = '.AVROSKIN' Then
-    Begin
+    if uppercase(ExtractFileExt(FileName)) = '.AVROSKIN' then
+    begin
 
       // Ignore already installed skins
       FilePath := ExtractFilePath(FileName);
       SkinDir := GetAvroDataDir + 'Skin\';
 
-      If (uppercase(SkinDir) <> uppercase(FilePath)) Then
-      Begin
+      if (uppercase(SkinDir) <> uppercase(FilePath)) then
+      begin
         result := InstallSkin(FileName);
-      End;
+      end;
 
-    End;
-  End;
+    end;
+  end;
 
-Const
+const
   MAXFILENAME = 255;
-Var
+var
   cnt, fileCount: Integer;
-  FileName: Array [0 .. MAXFILENAME] Of char;
-Begin
+  FileName:       array [0 .. MAXFILENAME] of char;
+begin
   // how many files dropped?
   fileCount := DragQueryFile(msg.Drop, $FFFFFFFF, FileName, MAXFILENAME);
 
   // query for file names
-  For cnt := 0 To fileCount - 1 Do
-  Begin
+  for cnt := 0 to fileCount - 1 do
+  begin
     DragQueryFile(msg.Drop, cnt, FileName, MAXFILENAME);
 
     CheckLayoutInstall(FileName);
     CheckSkinInstall(FileName);
-  End;
+  end;
 
   // release memory
   DragFinish(msg.Drop);
-End;
+end;
 {$HINTS On}
 {$REGION 'Skining code only - TOPBAR SKINING SECTION '}
 /// ////////////////////////////////////////////////////////////////////////////
@@ -843,901 +799,891 @@ End;
 
 { =============================================================================== }
 
-Procedure TTopBar.AppIcon_DrawDown;
-Begin
+procedure TTopBar.AppIcon_DrawDown;
+begin
   TmrAppIcon.Enabled := False;
 
   ImgAppIcon.Picture.Bitmap.Assign(BMP_AppIcon_Down);
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.AppIcon_DrawState;
-Begin
-  If AppIcon_MouseDown = False Then
-  Begin
+procedure TTopBar.AppIcon_DrawState;
+begin
+  if AppIcon_MouseDown = False then
+  begin
     AppIcon_DrawUpOver;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     AppIcon_DrawDown;
-  End;
+  end;
   ImgAppIcon.Refresh;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.AppIcon_DrawUpOver;
-Begin
+procedure TTopBar.AppIcon_DrawUpOver;
+begin
   TmrAppIcon.Enabled := False;
-  If AppIcon_MouseIn Then
-  Begin
+  if AppIcon_MouseIn then
+  begin
     // draw over state
     ImgAppIcon.Picture.Bitmap.Assign(BMP_AppIcon_Over);
 
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     // draw up state
     ImgAppIcon.Picture.Bitmap.Assign(BMP_AppIcon);
 
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ButtonHelp_DrawDown;
-Begin
+procedure TTopBar.ButtonHelp_DrawDown;
+begin
   TmrButtonHelp.Enabled := False;
 
   ImgButtonHelp.Picture.Bitmap.Assign(BMP_ButtonHelp_Down);
 
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ButtonHelp_DrawState;
-Begin
-  If ButtonHelp_MouseDown = False Then
-  Begin
+procedure TTopBar.ButtonHelp_DrawState;
+begin
+  if ButtonHelp_MouseDown = False then
+  begin
     ButtonHelp_DrawUpOver;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     ButtonHelp_DrawDown;
-  End;
+  end;
   ImgButtonHelp.Refresh;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ButtonHelp_DrawUpOver;
-Begin
+procedure TTopBar.ButtonHelp_DrawUpOver;
+begin
   TmrButtonHelp.Enabled := False;
-  If ButtonHelp_MouseIn Then
-  Begin
+  if ButtonHelp_MouseIn then
+  begin
     // draw over state
     ImgButtonHelp.Picture.Bitmap.Assign(BMP_ButtonHelp_Over);
 
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     // draw up state
     ImgButtonHelp.Picture.Bitmap.Assign(BMP_ButtonHelp);
 
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ButtonLayoutDown_DrawDown;
-Begin
+procedure TTopBar.ButtonLayoutDown_DrawDown;
+begin
   TmrButtonLayoutDown.Enabled := False;
 
   ImgButtonLayoutDown.Picture.Bitmap.Assign(BMP_ButtonLayoutDown_Down);
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ButtonLayoutDown_DrawState;
-Begin
-  If ButtonLayoutDown_MouseDown = False Then
-  Begin
+procedure TTopBar.ButtonLayoutDown_DrawState;
+begin
+  if ButtonLayoutDown_MouseDown = False then
+  begin
     ButtonLayoutDown_DrawUpOver;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     ButtonLayoutDown_DrawDown;
-  End;
+  end;
   ImgButtonLayoutDown.Refresh;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ButtonLayoutDown_DrawUpOver;
-Begin
+procedure TTopBar.ButtonLayoutDown_DrawUpOver;
+begin
   TmrButtonLayoutDown.Enabled := False;
-  If ButtonLayoutDown_MouseIn Then
-  Begin
+  if ButtonLayoutDown_MouseIn then
+  begin
     // draw over state
     ImgButtonLayoutDown.Picture.Bitmap.Assign(BMP_ButtonLayoutDown_Over);
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     // draw up state
     ImgButtonLayoutDown.Picture.Bitmap.Assign(BMP_ButtonLayoutDown);
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ButtonLayout_DrawDown;
-Begin
+procedure TTopBar.ButtonLayout_DrawDown;
+begin
   TmrButtonLayout.Enabled := False;
 
   ImgButtonLayout.Picture.Bitmap.Assign(BMP_ButtonLayout_Down);
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ButtonLayout_DrawState;
-Begin
-  If ButtonLayout_MouseDown = False Then
-  Begin
+procedure TTopBar.ButtonLayout_DrawState;
+begin
+  if ButtonLayout_MouseDown = False then
+  begin
     ButtonLayout_DrawUpOver;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     ButtonLayout_DrawDown;
-  End;
+  end;
   ImgButtonLayout.Refresh;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ButtonLayout_DrawUpOver;
-Begin
+procedure TTopBar.ButtonLayout_DrawUpOver;
+begin
   TmrButtonLayout.Enabled := False;
-  If ButtonLayout_MouseIn = True Then
-  Begin
+  if ButtonLayout_MouseIn = True then
+  begin
     // draw over state
     ImgButtonLayout.Picture.Bitmap.Assign(BMP_ButtonLayout_Over);
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     // draw up state
     ImgButtonLayout.Picture.Bitmap.Assign(BMP_ButtonLayout);
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ButtonMinimize_DrawDown;
-Begin
+procedure TTopBar.ButtonMinimize_DrawDown;
+begin
   TmrButtonMinimize.Enabled := False;
 
   ImgButtonMinimize.Picture.Bitmap.Assign(BMP_ButtonMinimize_Down);
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ButtonMinimize_DrawState;
-Begin
-  If ButtonMinimize_MouseDown = False Then
-  Begin
+procedure TTopBar.ButtonMinimize_DrawState;
+begin
+  if ButtonMinimize_MouseDown = False then
+  begin
     ButtonMinimize_DrawUpOver;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     ButtonMinimize_DrawDown;
-  End;
+  end;
   ImgButtonMinimize.Refresh;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ButtonMinimize_DrawUpOver;
-Begin
+procedure TTopBar.ButtonMinimize_DrawUpOver;
+begin
   TmrButtonMinimize.Enabled := False;
-  If ButtonMinimize_MouseIn Then
-  Begin
+  if ButtonMinimize_MouseIn then
+  begin
     // draw over state
     ImgButtonMinimize.Picture.Bitmap.Assign(BMP_ButtonMinimize_Over);
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     // draw up state
     ImgButtonMinimize.Picture.Bitmap.Assign(BMP_ButtonMinimize);
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ButtonMode_DrawDown;
-Begin
+procedure TTopBar.ButtonMode_DrawDown;
+begin
   TmrButtonMode.Enabled := False;
 
-  If ButtonMode_State = State1 Then
-  Begin
+  if ButtonMode_State = State1 then
+  begin
     ImgButtonMode.Picture.Bitmap.Assign(BMP_ButtonModeE_Down);
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     ImgButtonMode.Picture.Bitmap.Assign(BMP_ButtonModeB_Down);
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ButtonMode_DrawUpOver;
-Begin
+procedure TTopBar.ButtonMode_DrawUpOver;
+begin
   TmrButtonMode.Enabled := False;
-  If ButtonMode_MouseIn Then
-  Begin
+  if ButtonMode_MouseIn then
+  begin
     // draw over state
-    If ButtonMode_State = State1 Then
-    Begin
+    if ButtonMode_State = State1 then
+    begin
       ImgButtonMode.Picture.Bitmap.Assign(BMP_ButtonModeE_Over);
-    End
-    Else
-    Begin
+    end
+    else
+    begin
       ImgButtonMode.Picture.Bitmap.Assign(BMP_ButtonModeB_Over);
-    End;
-  End
-  Else
-  Begin
+    end;
+  end
+  else
+  begin
     // draw up state
-    If ButtonMode_State = State1 Then
-    Begin
+    if ButtonMode_State = State1 then
+    begin
       ImgButtonMode.Picture.Bitmap.Assign(BMP_ButtonModeE);
-    End
-    Else
-    Begin
+    end
+    else
+    begin
       ImgButtonMode.Picture.Bitmap.Assign(BMP_ButtonModeB);
-    End;
-  End;
-End;
+    end;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ButtonMode_DrawState;
-Begin
-  If ButtonMode_MouseDown = False Then
-  Begin
+procedure TTopBar.ButtonMode_DrawState;
+begin
+  if ButtonMode_MouseDown = False then
+  begin
     ButtonMode_DrawUpOver;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     ButtonMode_DrawDown;
-  End;
+  end;
   ImgButtonMode.Refresh;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ButtonMouse_DrawDown;
-Begin
+procedure TTopBar.ButtonMouse_DrawDown;
+begin
   TmrButtonMouse.Enabled := False;
 
   ImgButtonMouse.Picture.Bitmap.Assign(BMP_ButtonMouse_Down);
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ButtonMouse_DrawState;
-Begin
-  If ButtonMouse_MouseDown = False Then
-  Begin
+procedure TTopBar.ButtonMouse_DrawState;
+begin
+  if ButtonMouse_MouseDown = False then
+  begin
     ButtonMouse_DrawUpOver;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     ButtonMouse_DrawDown;
-  End;
+  end;
   ImgButtonMouse.Refresh;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ButtonMouse_DrawUpOver;
-Begin
+procedure TTopBar.ButtonMouse_DrawUpOver;
+begin
   TmrButtonMouse.Enabled := False;
-  If ButtonMouse_MouseIn Then
-  Begin
+  if ButtonMouse_MouseIn then
+  begin
     // draw over state
     ImgButtonMouse.Picture.Bitmap.Assign(BMP_ButtonMouse_Over);
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     // draw up state
     ImgButtonMouse.Picture.Bitmap.Assign(BMP_ButtonMouse);
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ButtonTools_DrawDown;
-Begin
+procedure TTopBar.ButtonTools_DrawDown;
+begin
   TmrButtonTools.Enabled := False;
 
   ImgButtonTools.Picture.Bitmap.Assign(BMP_ButtonTools_Down);
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ButtonTools_DrawState;
-Begin
-  If ButtonTools_MouseDown = False Then
-  Begin
+procedure TTopBar.ButtonTools_DrawState;
+begin
+  if ButtonTools_MouseDown = False then
+  begin
     ButtonTools_DrawUpOver;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     ButtonTools_DrawDown;
-  End;
+  end;
   ImgButtonTools.Refresh;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ButtonTools_DrawUpOver;
-Begin
+procedure TTopBar.ButtonTools_DrawUpOver;
+begin
   TmrButtonTools.Enabled := False;
-  If ButtonTools_MouseIn Then
-  Begin
+  if ButtonTools_MouseIn then
+  begin
     // draw over state
     ImgButtonTools.Picture.Bitmap.Assign(BMP_ButtonTools_Over);
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     // draw up state
     ImgButtonTools.Picture.Bitmap.Assign(BMP_ButtonTools);
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ButtonWWW_DrawDown;
-Begin
+procedure TTopBar.ButtonWWW_DrawDown;
+begin
   TmrButtonWWW.Enabled := False;
 
   ImgButtonWWW.Picture.Bitmap.Assign(BMP_ButtonWWW_Down);
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ButtonWWW_DrawState;
-Begin
-  If ButtonWWW_MouseDown = False Then
-  Begin
+procedure TTopBar.ButtonWWW_DrawState;
+begin
+  if ButtonWWW_MouseDown = False then
+  begin
     ButtonWWW_DrawUpOver;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     ButtonWWW_DrawDown;
-  End;
+  end;
   ImgButtonWWW.Refresh;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ButtonWWW_DrawUpOver;
-Begin
+procedure TTopBar.ButtonWWW_DrawUpOver;
+begin
   TmrButtonWWW.Enabled := False;
-  If ButtonWWW_MouseIn Then
-  Begin
+  if ButtonWWW_MouseIn then
+  begin
     // draw over state
     ImgButtonWWW.Picture.Bitmap.Assign(BMP_ButtonWWW_Over);
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     // draw up state
     ImgButtonWWW.Picture.Bitmap.Assign(BMP_ButtonWWW);
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.CreateParams(Var Params: TCreateParams);
-Begin
-  Inherited CreateParams(Params);
-  Params.ExStyle := Params.ExStyle Or WS_EX_TOPMOST;
-  Params.ExStyle := Params.ExStyle Or WS_EX_TOOLWINDOW And Not WS_EX_APPWINDOW;
+procedure TTopBar.CreateParams(var Params: TCreateParams);
+begin
+  inherited CreateParams(Params);
+  Params.ExStyle := Params.ExStyle or WS_EX_TOPMOST;
+  Params.ExStyle := Params.ExStyle or WS_EX_TOOLWINDOW and not WS_EX_APPWINDOW;
   Params.WndParent := GetDesktopwindow;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgAppIconDblClick(Sender: TObject);
-Begin
+procedure TTopBar.ImgAppIconDblClick(Sender: TObject);
+begin
   AppIcon_DrawDown;
   ImgAppIcon.Refresh;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgAppIconMouseEnter(Sender: TObject);
-Begin
+procedure TTopBar.ImgAppIconMouseEnter(Sender: TObject);
+begin
   AppIcon_MouseIn := True;
   AppIcon_TranparentValue := 0;
-  If m_GlowEffect = True Then
-  Begin
+  if m_GlowEffect = True then
+  begin
     TmrAppIcon.Enabled := True;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     AppIcon_DrawState;
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgAppIconMouseLeave(Sender: TObject);
-Begin
+procedure TTopBar.ImgAppIconMouseLeave(Sender: TObject);
+begin
   AppIcon_MouseIn := False;
   AppIcon_MouseDown := False;
   AppIcon_TranparentValue := 0;
-  If m_GlowEffect Then
-  Begin
+  if m_GlowEffect then
+  begin
     TmrAppIcon.Enabled := True;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     AppIcon_DrawState;
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgButtonHelpDblClick(Sender: TObject);
-Begin
+procedure TTopBar.ImgButtonHelpDblClick(Sender: TObject);
+begin
   ButtonHelp_DrawDown;
   ImgButtonHelp.Refresh;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgButtonHelpMouseDown(Sender: TObject; Button: TMouseButton;
-  Shift: TShiftState; X, Y: Integer);
-Begin
+procedure TTopBar.ImgButtonHelpMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
   ButtonHelp_MouseDown := True;
   ButtonHelp_DrawState;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgButtonHelpMouseEnter(Sender: TObject);
-Begin
+procedure TTopBar.ImgButtonHelpMouseEnter(Sender: TObject);
+begin
   ButtonHelp_MouseIn := True;
   ButtonHelp_TranparentValue := 0;
-  If m_GlowEffect = True Then
-  Begin
+  if m_GlowEffect = True then
+  begin
     TmrButtonHelp.Enabled := True;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     ButtonHelp_DrawState;
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgButtonHelpMouseLeave(Sender: TObject);
-Begin
+procedure TTopBar.ImgButtonHelpMouseLeave(Sender: TObject);
+begin
   ButtonHelp_MouseIn := False;
   ButtonHelp_MouseDown := False;
   ButtonHelp_TranparentValue := 0;
-  If m_GlowEffect Then
-  Begin
+  if m_GlowEffect then
+  begin
     TmrButtonHelp.Enabled := True;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     ButtonHelp_DrawState;
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgButtonLayoutDblClick(Sender: TObject);
-Begin
+procedure TTopBar.ImgButtonLayoutDblClick(Sender: TObject);
+begin
   ButtonLayout_DrawDown;
   ImgButtonLayout.Refresh;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgButtonLayoutDownDblClick(Sender: TObject);
-Begin
+procedure TTopBar.ImgButtonLayoutDownDblClick(Sender: TObject);
+begin
   ButtonLayoutDown_DrawDown;
   ImgButtonLayoutDown.Refresh;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgButtonLayoutDownMouseDown(Sender: TObject;
-  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-Begin
+procedure TTopBar.ImgButtonLayoutDownMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
   ButtonLayoutDown_MouseDown := True;
   ButtonLayoutDown_DrawState;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgButtonLayoutDownMouseEnter(Sender: TObject);
-Begin
+procedure TTopBar.ImgButtonLayoutDownMouseEnter(Sender: TObject);
+begin
   ButtonLayoutDown_MouseIn := True;
   ButtonLayoutDown_TranparentValue := 0;
-  If m_GlowEffect = True Then
-  Begin
+  if m_GlowEffect = True then
+  begin
     TmrButtonLayoutDown.Enabled := True;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     ButtonLayoutDown_DrawState;
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgButtonLayoutDownMouseLeave(Sender: TObject);
-Begin
+procedure TTopBar.ImgButtonLayoutDownMouseLeave(Sender: TObject);
+begin
   ButtonLayoutDown_MouseIn := False;
   ButtonLayoutDown_MouseDown := False;
   ButtonLayoutDown_TranparentValue := 0;
-  If m_GlowEffect Then
-  Begin
+  if m_GlowEffect then
+  begin
     TmrButtonLayoutDown.Enabled := True;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     ButtonLayoutDown_DrawState;
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgButtonLayoutMouseDown(Sender: TObject;
-  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-Begin
+procedure TTopBar.ImgButtonLayoutMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
   ButtonLayout_MouseDown := True;
   ButtonLayout_DrawState;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgButtonLayoutMouseEnter(Sender: TObject);
-Begin
+procedure TTopBar.ImgButtonLayoutMouseEnter(Sender: TObject);
+begin
   ButtonLayout_MouseIn := True;
   ButtonLayout_TranparentValue := 0;
-  If m_GlowEffect = True Then
-  Begin
+  if m_GlowEffect = True then
+  begin
     TmrButtonLayout.Enabled := True;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     ButtonLayout_DrawState;
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgButtonLayoutMouseLeave(Sender: TObject);
-Begin
+procedure TTopBar.ImgButtonLayoutMouseLeave(Sender: TObject);
+begin
   ButtonLayout_MouseIn := False;
   ButtonLayout_MouseDown := False;
   ButtonLayout_TranparentValue := 0;
-  If m_GlowEffect Then
-  Begin
+  if m_GlowEffect then
+  begin
     TmrButtonLayout.Enabled := True;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     ButtonLayout_DrawState;
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgButtonMinimizeDblClick(Sender: TObject);
-Begin
+procedure TTopBar.ImgButtonMinimizeDblClick(Sender: TObject);
+begin
   ButtonMinimize_DrawDown;
   ImgButtonMinimize.Refresh;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgButtonMinimizeMouseDown(Sender: TObject;
-  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-Begin
+procedure TTopBar.ImgButtonMinimizeMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
   ButtonMinimize_MouseDown := True;
   ButtonMinimize_DrawState;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgButtonMinimizeMouseEnter(Sender: TObject);
-Begin
+procedure TTopBar.ImgButtonMinimizeMouseEnter(Sender: TObject);
+begin
   ButtonMinimize_MouseIn := True;
   ButtonMinimize_TranparentValue := 0;
-  If m_GlowEffect = True Then
-  Begin
+  if m_GlowEffect = True then
+  begin
     TmrButtonMinimize.Enabled := True;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     ButtonMinimize_DrawState;
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgButtonMinimizeMouseLeave(Sender: TObject);
-Begin
+procedure TTopBar.ImgButtonMinimizeMouseLeave(Sender: TObject);
+begin
   ButtonMinimize_MouseIn := False;
   ButtonMinimize_MouseDown := False;
   ButtonMinimize_TranparentValue := 0;
-  If m_GlowEffect Then
-  Begin
+  if m_GlowEffect then
+  begin
     TmrButtonMinimize.Enabled := True;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     ButtonMinimize_DrawState;
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgButtonModeDblClick(Sender: TObject);
-Begin
+procedure TTopBar.ImgButtonModeDblClick(Sender: TObject);
+begin
   ButtonMode_DrawDown;
   ImgButtonMode.Refresh;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgButtonModeMouseDown(Sender: TObject; Button: TMouseButton;
-  Shift: TShiftState; X, Y: Integer);
-Begin
+procedure TTopBar.ImgButtonModeMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
   ButtonMode_MouseDown := True;
   ButtonMode_DrawState;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgButtonModeMouseEnter(Sender: TObject);
-Begin
+procedure TTopBar.ImgButtonModeMouseEnter(Sender: TObject);
+begin
   ButtonMode_MouseIn := True;
   ButtonMode_TranparentValue := 0;
-  If m_GlowEffect = True Then
-  Begin
+  if m_GlowEffect = True then
+  begin
     TmrButtonMode.Enabled := True;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     ButtonMode_DrawState;
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgButtonModeMouseLeave(Sender: TObject);
-Begin
+procedure TTopBar.ImgButtonModeMouseLeave(Sender: TObject);
+begin
   ButtonMode_MouseIn := False;
   ButtonMode_MouseDown := False;
   ButtonMode_TranparentValue := 0;
-  If m_GlowEffect Then
-  Begin
+  if m_GlowEffect then
+  begin
     TmrButtonMode.Enabled := True;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     ButtonMode_DrawState;
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgButtonMouseDblClick(Sender: TObject);
-Begin
+procedure TTopBar.ImgButtonMouseDblClick(Sender: TObject);
+begin
   ButtonMouse_DrawDown;
   ImgButtonMouse.Refresh;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgButtonMouseMouseDown(Sender: TObject; Button: TMouseButton;
-  Shift: TShiftState; X, Y: Integer);
-Begin
+procedure TTopBar.ImgButtonMouseMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
   ButtonMouse_MouseDown := True;
   ButtonMouse_DrawState;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgButtonMouseMouseEnter(Sender: TObject);
-Begin
+procedure TTopBar.ImgButtonMouseMouseEnter(Sender: TObject);
+begin
   ButtonMouse_MouseIn := True;
   ButtonMouse_TranparentValue := 0;
-  If m_GlowEffect = True Then
-  Begin
+  if m_GlowEffect = True then
+  begin
     TmrButtonMouse.Enabled := True;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     ButtonMouse_DrawState;
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgButtonMouseMouseLeave(Sender: TObject);
-Begin
+procedure TTopBar.ImgButtonMouseMouseLeave(Sender: TObject);
+begin
   ButtonMouse_MouseIn := False;
   ButtonMouse_MouseDown := False;
   ButtonMouse_TranparentValue := 0;
-  If m_GlowEffect Then
-  Begin
+  if m_GlowEffect then
+  begin
     TmrButtonMouse.Enabled := True;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     ButtonMouse_DrawState;
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgButtonToolsDblClick(Sender: TObject);
-Begin
+procedure TTopBar.ImgButtonToolsDblClick(Sender: TObject);
+begin
   ButtonTools_DrawDown;
   ImgButtonTools.Refresh;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgButtonToolsMouseDown(Sender: TObject; Button: TMouseButton;
-  Shift: TShiftState; X, Y: Integer);
-Begin
+procedure TTopBar.ImgButtonToolsMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
   ButtonTools_MouseDown := True;
   ButtonTools_DrawState;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgButtonToolsMouseEnter(Sender: TObject);
-Begin
+procedure TTopBar.ImgButtonToolsMouseEnter(Sender: TObject);
+begin
   ButtonTools_MouseIn := True;
   ButtonTools_TranparentValue := 0;
-  If m_GlowEffect = True Then
-  Begin
+  if m_GlowEffect = True then
+  begin
     TmrButtonTools.Enabled := True;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     ButtonTools_DrawState;
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgButtonToolsMouseLeave(Sender: TObject);
-Begin
+procedure TTopBar.ImgButtonToolsMouseLeave(Sender: TObject);
+begin
   ButtonTools_MouseIn := False;
   ButtonTools_MouseDown := False;
   ButtonTools_TranparentValue := 0;
-  If m_GlowEffect Then
-  Begin
+  if m_GlowEffect then
+  begin
     TmrButtonTools.Enabled := True;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     ButtonTools_DrawState;
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgButtonWWWDblClick(Sender: TObject);
-Begin
+procedure TTopBar.ImgButtonWWWDblClick(Sender: TObject);
+begin
   ButtonWWW_DrawDown;
   ImgButtonWWW.Refresh;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgButtonWWWMouseDown(Sender: TObject; Button: TMouseButton;
-  Shift: TShiftState; X, Y: Integer);
-Begin
+procedure TTopBar.ImgButtonWWWMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
   ButtonWWW_MouseDown := True;
   ButtonWWW_DrawState;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgButtonWWWMouseEnter(Sender: TObject);
-Begin
+procedure TTopBar.ImgButtonWWWMouseEnter(Sender: TObject);
+begin
   ButtonWWW_MouseIn := True;
   ButtonWWW_TranparentValue := 0;
-  If m_GlowEffect = True Then
-  Begin
+  if m_GlowEffect = True then
+  begin
     TmrButtonWWW.Enabled := True;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     ButtonWWW_DrawState;
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.ImgButtonWWWMouseLeave(Sender: TObject);
-Begin
+procedure TTopBar.ImgButtonWWWMouseLeave(Sender: TObject);
+begin
   ButtonWWW_MouseIn := False;
   ButtonWWW_MouseDown := False;
   ButtonWWW_TranparentValue := 0;
-  If m_GlowEffect Then
-  Begin
+  if m_GlowEffect then
+  begin
     TmrButtonWWW.Enabled := True;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     ButtonWWW_DrawState;
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.TmrAppIconTimer(Sender: TObject);
-Var
-  bf: TBlendFunction;
-  TempBitmap: TBitmap;
+procedure TTopBar.TmrAppIconTimer(Sender: TObject);
+var
+  bf:            TBlendFunction;
+  TempBitmap:    TBitmap;
   CurrentSource: TBitmap;
-  TargetCanvas: TCanvas;
-Begin
+  TargetCanvas:  TCanvas;
+begin
   TempBitmap := TBitmap.Create;
-  Try
+  try
     TempBitmap.SetSize(ImgAppIcon.Width, ImgAppIcon.Height);
     TempBitmap.PixelFormat := pf32bit;
 
-    If AppIcon_MouseIn then
-    Begin
+    if AppIcon_MouseIn then
+    begin
       TempBitmap.Canvas.Draw(0, 0, BMP_AppIcon);
       CurrentSource := BMP_AppIcon_Over;
-    End
+    end
     else
-    Begin
+    begin
       TempBitmap.Canvas.Draw(0, 0, BMP_AppIcon_Over);
       CurrentSource := BMP_AppIcon;
-    End;
+    end;
 
     AppIcon_TranparentValue := AppIcon_TranparentValue + m_BlendingStep;
 
-    If AppIcon_TranparentValue >= 255 then
-    Begin
+    if AppIcon_TranparentValue >= 255 then
+    begin
       TmrAppIcon.Enabled := False;
       AppIcon_TranparentValue := 255;
 
+      if (ImgAppIcon.Picture.Bitmap = nil) or (ImgAppIcon.Picture.Bitmap.Width <> CurrentSource.Width) or
+        (ImgAppIcon.Picture.Bitmap.Height <> CurrentSource.Height) or (ImgAppIcon.Picture.Bitmap.PixelFormat <> pf32bit) then
+      begin
+        if ImgAppIcon.Picture.Bitmap = nil then
+          ImgAppIcon.Picture.Bitmap := TBitmap.Create;
+        ImgAppIcon.Picture.Bitmap.SetSize(CurrentSource.Width, CurrentSource.Height);
+        ImgAppIcon.Picture.Bitmap.PixelFormat := pf32bit;
+      end;
 
-      If (ImgAppIcon.Picture.Bitmap = nil) or
-         (ImgAppIcon.Picture.Bitmap.Width <> CurrentSource.Width) or
-         (ImgAppIcon.Picture.Bitmap.Height <> CurrentSource.Height) or
-         (ImgAppIcon.Picture.Bitmap.PixelFormat <> pf32bit) then
-      Begin
-         If ImgAppIcon.Picture.Bitmap = nil then ImgAppIcon.Picture.Bitmap := TBitmap.Create;
-         ImgAppIcon.Picture.Bitmap.SetSize(CurrentSource.Width, CurrentSource.Height);
-         ImgAppIcon.Picture.Bitmap.PixelFormat := pf32bit;
-      End;
-
-      If AppIcon_MouseIn then
+      if AppIcon_MouseIn then
         ImgAppIcon.Picture.Bitmap.Canvas.Draw(0, 0, BMP_AppIcon_Over)
       else
         ImgAppIcon.Picture.Bitmap.Canvas.Draw(0, 0, BMP_AppIcon);
 
       AppIcon_TranparentValue := 0;
-      Exit;
-    End;
+      exit;
+    end;
 
     bf.BlendOp := AC_SRC_OVER;
     bf.BlendFlags := 0;
@@ -1746,81 +1692,78 @@ Begin
 
     TargetCanvas := TempBitmap.Canvas;
 
-    If (CurrentSource <> nil) and (CurrentSource.Canvas <> nil) and (CurrentSource.Handle <> 0) then
-    Begin
-       Windows.AlphaBlend(TargetCanvas.Handle, 0, 0, TempBitmap.Width, TempBitmap.Height,
-                                CurrentSource.Canvas.Handle, 0, 0, CurrentSource.Width, CurrentSource.Height, bf)
+    if (CurrentSource <> nil) and (CurrentSource.Canvas <> nil) and (CurrentSource.Handle <> 0) then
+    begin
+      Windows.AlphaBlend(TargetCanvas.Handle, 0, 0, TempBitmap.Width, TempBitmap.Height, CurrentSource.Canvas.Handle, 0, 0, CurrentSource.Width,
+        CurrentSource.Height, bf)
 
-    End;
+    end;
 
-    If (ImgAppIcon.Picture.Bitmap = nil) or
-       (ImgAppIcon.Picture.Bitmap.Width <> TempBitmap.Width) or
-       (ImgAppIcon.Picture.Bitmap.Height <> TempBitmap.Height) or
-       (ImgAppIcon.Picture.Bitmap.PixelFormat <> pf32bit) then
-    Begin
-       If ImgAppIcon.Picture.Bitmap = nil then ImgAppIcon.Picture.Bitmap := TBitmap.Create;
-       ImgAppIcon.Picture.Bitmap.SetSize(TempBitmap.Width, TempBitmap.Height);
-       ImgAppIcon.Picture.Bitmap.PixelFormat := pf32bit;
-    End;
+    if (ImgAppIcon.Picture.Bitmap = nil) or (ImgAppIcon.Picture.Bitmap.Width <> TempBitmap.Width) or (ImgAppIcon.Picture.Bitmap.Height <> TempBitmap.Height) or
+      (ImgAppIcon.Picture.Bitmap.PixelFormat <> pf32bit) then
+    begin
+      if ImgAppIcon.Picture.Bitmap = nil then
+        ImgAppIcon.Picture.Bitmap := TBitmap.Create;
+      ImgAppIcon.Picture.Bitmap.SetSize(TempBitmap.Width, TempBitmap.Height);
+      ImgAppIcon.Picture.Bitmap.PixelFormat := pf32bit;
+    end;
 
     ImgAppIcon.Picture.Bitmap.Canvas.Draw(0, 0, TempBitmap);
 
-  Finally
+  finally
     TempBitmap.Free;
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.TmrButtonHelpTimer(Sender: TObject);
-Var
-  bf: TBlendFunction;
-  TempBitmap: TBitmap;
+procedure TTopBar.TmrButtonHelpTimer(Sender: TObject);
+var
+  bf:            TBlendFunction;
+  TempBitmap:    TBitmap;
   CurrentSource: TBitmap;
-  TargetCanvas: TCanvas;
-Begin
+  TargetCanvas:  TCanvas;
+begin
   TempBitmap := TBitmap.Create;
-  Try
+  try
     TempBitmap.SetSize(ImgButtonHelp.Width, ImgButtonHelp.Height);
     TempBitmap.PixelFormat := pf32bit;
 
-    If ButtonHelp_MouseIn then
-    Begin
+    if ButtonHelp_MouseIn then
+    begin
       TempBitmap.Canvas.Draw(0, 0, BMP_ButtonHelp);
       CurrentSource := BMP_ButtonHelp_Over;
-    End
+    end
     else
-    Begin
+    begin
       TempBitmap.Canvas.Draw(0, 0, BMP_ButtonHelp_Over);
       CurrentSource := BMP_ButtonHelp;
-    End;
+    end;
 
     ButtonHelp_TranparentValue := ButtonHelp_TranparentValue + m_BlendingStep;
 
-    If ButtonHelp_TranparentValue >= 255 then
-    Begin
+    if ButtonHelp_TranparentValue >= 255 then
+    begin
       TmrButtonHelp.Enabled := False;
       ButtonHelp_TranparentValue := 255;
 
+      if (ImgButtonHelp.Picture.Bitmap = nil) or (ImgButtonHelp.Picture.Bitmap.Width <> CurrentSource.Width) or
+        (ImgButtonHelp.Picture.Bitmap.Height <> CurrentSource.Height) or (ImgButtonHelp.Picture.Bitmap.PixelFormat <> pf32bit) then
+      begin
+        if ImgButtonHelp.Picture.Bitmap = nil then
+          ImgButtonHelp.Picture.Bitmap := TBitmap.Create;
+        ImgButtonHelp.Picture.Bitmap.SetSize(CurrentSource.Width, CurrentSource.Height);
+        ImgButtonHelp.Picture.Bitmap.PixelFormat := pf32bit;
+      end;
 
-      If (ImgButtonHelp.Picture.Bitmap = nil) or
-         (ImgButtonHelp.Picture.Bitmap.Width <> CurrentSource.Width) or
-         (ImgButtonHelp.Picture.Bitmap.Height <> CurrentSource.Height) or
-         (ImgButtonHelp.Picture.Bitmap.PixelFormat <> pf32bit) then
-      Begin
-         If ImgButtonHelp.Picture.Bitmap = nil then ImgButtonHelp.Picture.Bitmap := TBitmap.Create;
-         ImgButtonHelp.Picture.Bitmap.SetSize(CurrentSource.Width, CurrentSource.Height);
-         ImgButtonHelp.Picture.Bitmap.PixelFormat := pf32bit;
-      End;
-
-      If ButtonHelp_MouseIn then
+      if ButtonHelp_MouseIn then
         ImgButtonHelp.Picture.Bitmap.Canvas.Draw(0, 0, BMP_ButtonHelp_Over)
       else
         ImgButtonHelp.Picture.Bitmap.Canvas.Draw(0, 0, BMP_ButtonHelp);
 
       ButtonHelp_TranparentValue := 0;
-      Exit;
-    End;
+      exit;
+    end;
 
     bf.BlendOp := AC_SRC_OVER;
     bf.BlendFlags := 0;
@@ -1829,81 +1772,78 @@ Begin
 
     TargetCanvas := TempBitmap.Canvas;
 
-    If (CurrentSource <> nil) and (CurrentSource.Canvas <> nil) and (CurrentSource.Handle <> 0) then
-    Begin
-       Windows.AlphaBlend(TargetCanvas.Handle, 0, 0, TempBitmap.Width, TempBitmap.Height,
-                                CurrentSource.Canvas.Handle, 0, 0, CurrentSource.Width, CurrentSource.Height, bf)
+    if (CurrentSource <> nil) and (CurrentSource.Canvas <> nil) and (CurrentSource.Handle <> 0) then
+    begin
+      Windows.AlphaBlend(TargetCanvas.Handle, 0, 0, TempBitmap.Width, TempBitmap.Height, CurrentSource.Canvas.Handle, 0, 0, CurrentSource.Width,
+        CurrentSource.Height, bf)
 
-    End;
+    end;
 
-    If (ImgButtonHelp.Picture.Bitmap = nil) or
-       (ImgButtonHelp.Picture.Bitmap.Width <> TempBitmap.Width) or
-       (ImgButtonHelp.Picture.Bitmap.Height <> TempBitmap.Height) or
-       (ImgButtonHelp.Picture.Bitmap.PixelFormat <> pf32bit) then
-    Begin
-       If ImgButtonHelp.Picture.Bitmap = nil then ImgButtonHelp.Picture.Bitmap := TBitmap.Create;
-       ImgButtonHelp.Picture.Bitmap.SetSize(TempBitmap.Width, TempBitmap.Height);
-       ImgButtonHelp.Picture.Bitmap.PixelFormat := pf32bit;
-    End;
+    if (ImgButtonHelp.Picture.Bitmap = nil) or (ImgButtonHelp.Picture.Bitmap.Width <> TempBitmap.Width) or
+      (ImgButtonHelp.Picture.Bitmap.Height <> TempBitmap.Height) or (ImgButtonHelp.Picture.Bitmap.PixelFormat <> pf32bit) then
+    begin
+      if ImgButtonHelp.Picture.Bitmap = nil then
+        ImgButtonHelp.Picture.Bitmap := TBitmap.Create;
+      ImgButtonHelp.Picture.Bitmap.SetSize(TempBitmap.Width, TempBitmap.Height);
+      ImgButtonHelp.Picture.Bitmap.PixelFormat := pf32bit;
+    end;
 
     ImgButtonHelp.Picture.Bitmap.Canvas.Draw(0, 0, TempBitmap);
 
-  Finally
+  finally
     TempBitmap.Free;
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.TmrButtonLayoutDownTimer(Sender: TObject);
-Var
-  bf: TBlendFunction;
-  TempBitmap: TBitmap;
+procedure TTopBar.TmrButtonLayoutDownTimer(Sender: TObject);
+var
+  bf:            TBlendFunction;
+  TempBitmap:    TBitmap;
   CurrentSource: TBitmap;
-  TargetCanvas: TCanvas;
-Begin
+  TargetCanvas:  TCanvas;
+begin
   TempBitmap := TBitmap.Create;
-  Try
+  try
     TempBitmap.SetSize(ImgButtonLayoutDown.Width, ImgButtonLayoutDown.Height);
     TempBitmap.PixelFormat := pf32bit;
 
-    If ButtonLayoutDown_MouseIn then
-    Begin
+    if ButtonLayoutDown_MouseIn then
+    begin
       TempBitmap.Canvas.Draw(0, 0, BMP_ButtonLayoutDown);
       CurrentSource := BMP_ButtonLayoutDown_Over;
-    End
+    end
     else
-    Begin
+    begin
       TempBitmap.Canvas.Draw(0, 0, BMP_ButtonLayoutDown_Over);
       CurrentSource := BMP_ButtonLayoutDown;
-    End;
+    end;
 
     ButtonLayoutDown_TranparentValue := ButtonLayoutDown_TranparentValue + m_BlendingStep;
 
-    If ButtonLayoutDown_TranparentValue >= 255 then
-    Begin
+    if ButtonLayoutDown_TranparentValue >= 255 then
+    begin
       TmrButtonLayoutDown.Enabled := False;
       ButtonLayoutDown_TranparentValue := 255;
 
+      if (ImgButtonLayoutDown.Picture.Bitmap = nil) or (ImgButtonLayoutDown.Picture.Bitmap.Width <> CurrentSource.Width) or
+        (ImgButtonLayoutDown.Picture.Bitmap.Height <> CurrentSource.Height) or (ImgButtonLayoutDown.Picture.Bitmap.PixelFormat <> pf32bit) then
+      begin
+        if ImgButtonLayoutDown.Picture.Bitmap = nil then
+          ImgButtonLayoutDown.Picture.Bitmap := TBitmap.Create;
+        ImgButtonLayoutDown.Picture.Bitmap.SetSize(CurrentSource.Width, CurrentSource.Height);
+        ImgButtonLayoutDown.Picture.Bitmap.PixelFormat := pf32bit;
+      end;
 
-      If (ImgButtonLayoutDown.Picture.Bitmap = nil) or
-         (ImgButtonLayoutDown.Picture.Bitmap.Width <> CurrentSource.Width) or
-         (ImgButtonLayoutDown.Picture.Bitmap.Height <> CurrentSource.Height) or
-         (ImgButtonLayoutDown.Picture.Bitmap.PixelFormat <> pf32bit) then
-      Begin
-         If ImgButtonLayoutDown.Picture.Bitmap = nil then ImgButtonLayoutDown.Picture.Bitmap := TBitmap.Create;
-         ImgButtonLayoutDown.Picture.Bitmap.SetSize(CurrentSource.Width, CurrentSource.Height);
-         ImgButtonLayoutDown.Picture.Bitmap.PixelFormat := pf32bit;
-      End;
-
-      If ButtonLayoutDown_MouseIn then
+      if ButtonLayoutDown_MouseIn then
         ImgButtonLayoutDown.Picture.Bitmap.Canvas.Draw(0, 0, BMP_ButtonLayoutDown_Over)
       else
         ImgButtonLayoutDown.Picture.Bitmap.Canvas.Draw(0, 0, BMP_ButtonLayoutDown);
 
       ButtonLayoutDown_TranparentValue := 0;
-      Exit;
-    End;
+      exit;
+    end;
 
     bf.BlendOp := AC_SRC_OVER;
     bf.BlendFlags := 0;
@@ -1912,82 +1852,79 @@ Begin
 
     TargetCanvas := TempBitmap.Canvas;
 
-    If (CurrentSource <> nil) and (CurrentSource.Canvas <> nil) and (CurrentSource.Handle <> 0) then
-    Begin
-       Windows.AlphaBlend(TargetCanvas.Handle, 0, 0, TempBitmap.Width, TempBitmap.Height,
-                                CurrentSource.Canvas.Handle, 0, 0, CurrentSource.Width, CurrentSource.Height, bf)
+    if (CurrentSource <> nil) and (CurrentSource.Canvas <> nil) and (CurrentSource.Handle <> 0) then
+    begin
+      Windows.AlphaBlend(TargetCanvas.Handle, 0, 0, TempBitmap.Width, TempBitmap.Height, CurrentSource.Canvas.Handle, 0, 0, CurrentSource.Width,
+        CurrentSource.Height, bf)
 
-    End;
+    end;
 
-    If (ImgButtonLayoutDown.Picture.Bitmap = nil) or
-       (ImgButtonLayoutDown.Picture.Bitmap.Width <> TempBitmap.Width) or
-       (ImgButtonLayoutDown.Picture.Bitmap.Height <> TempBitmap.Height) or
-       (ImgButtonLayoutDown.Picture.Bitmap.PixelFormat <> pf32bit) then
-    Begin
-       If ImgButtonLayoutDown.Picture.Bitmap = nil then ImgButtonLayoutDown.Picture.Bitmap := TBitmap.Create;
-       ImgButtonLayoutDown.Picture.Bitmap.SetSize(TempBitmap.Width, TempBitmap.Height);
-       ImgButtonLayoutDown.Picture.Bitmap.PixelFormat := pf32bit;
-    End;
+    if (ImgButtonLayoutDown.Picture.Bitmap = nil) or (ImgButtonLayoutDown.Picture.Bitmap.Width <> TempBitmap.Width) or
+      (ImgButtonLayoutDown.Picture.Bitmap.Height <> TempBitmap.Height) or (ImgButtonLayoutDown.Picture.Bitmap.PixelFormat <> pf32bit) then
+    begin
+      if ImgButtonLayoutDown.Picture.Bitmap = nil then
+        ImgButtonLayoutDown.Picture.Bitmap := TBitmap.Create;
+      ImgButtonLayoutDown.Picture.Bitmap.SetSize(TempBitmap.Width, TempBitmap.Height);
+      ImgButtonLayoutDown.Picture.Bitmap.PixelFormat := pf32bit;
+    end;
 
     ImgButtonLayoutDown.Picture.Bitmap.Canvas.Draw(0, 0, TempBitmap);
 
-  Finally
+  finally
     TempBitmap.Free;
-  End;
+  end;
 
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.TmrButtonLayoutTimer(Sender: TObject);
-Var
-  bf: TBlendFunction;
-  TempBitmap: TBitmap;
+procedure TTopBar.TmrButtonLayoutTimer(Sender: TObject);
+var
+  bf:            TBlendFunction;
+  TempBitmap:    TBitmap;
   CurrentSource: TBitmap;
-  TargetCanvas: TCanvas;
-Begin
+  TargetCanvas:  TCanvas;
+begin
   TempBitmap := TBitmap.Create;
-  Try
+  try
     TempBitmap.SetSize(ImgButtonLayout.Width, ImgButtonLayout.Height);
     TempBitmap.PixelFormat := pf32bit;
 
-    If ButtonLayout_MouseIn then
-    Begin
+    if ButtonLayout_MouseIn then
+    begin
       TempBitmap.Canvas.Draw(0, 0, BMP_ButtonLayout);
       CurrentSource := BMP_ButtonLayout_Over;
-    End
+    end
     else
-    Begin
+    begin
       TempBitmap.Canvas.Draw(0, 0, BMP_ButtonLayout_Over);
       CurrentSource := BMP_ButtonLayout;
-    End;
+    end;
 
     ButtonLayout_TranparentValue := ButtonLayout_TranparentValue + m_BlendingStep;
 
-    If ButtonLayout_TranparentValue >= 255 then
-    Begin
+    if ButtonLayout_TranparentValue >= 255 then
+    begin
       TmrButtonLayout.Enabled := False;
       ButtonLayout_TranparentValue := 255;
 
+      if (ImgButtonLayout.Picture.Bitmap = nil) or (ImgButtonLayout.Picture.Bitmap.Width <> CurrentSource.Width) or
+        (ImgButtonLayout.Picture.Bitmap.Height <> CurrentSource.Height) or (ImgButtonLayout.Picture.Bitmap.PixelFormat <> pf32bit) then
+      begin
+        if ImgButtonLayout.Picture.Bitmap = nil then
+          ImgButtonLayout.Picture.Bitmap := TBitmap.Create;
+        ImgButtonLayout.Picture.Bitmap.SetSize(CurrentSource.Width, CurrentSource.Height);
+        ImgButtonLayout.Picture.Bitmap.PixelFormat := pf32bit;
+      end;
 
-      If (ImgButtonLayout.Picture.Bitmap = nil) or
-         (ImgButtonLayout.Picture.Bitmap.Width <> CurrentSource.Width) or
-         (ImgButtonLayout.Picture.Bitmap.Height <> CurrentSource.Height) or
-         (ImgButtonLayout.Picture.Bitmap.PixelFormat <> pf32bit) then
-      Begin
-         If ImgButtonLayout.Picture.Bitmap = nil then ImgButtonLayout.Picture.Bitmap := TBitmap.Create;
-         ImgButtonLayout.Picture.Bitmap.SetSize(CurrentSource.Width, CurrentSource.Height);
-         ImgButtonLayout.Picture.Bitmap.PixelFormat := pf32bit;
-      End;
-
-      If ButtonLayout_MouseIn then
+      if ButtonLayout_MouseIn then
         ImgButtonLayout.Picture.Bitmap.Canvas.Draw(0, 0, BMP_ButtonLayout_Over)
       else
         ImgButtonLayout.Picture.Bitmap.Canvas.Draw(0, 0, BMP_ButtonLayout);
 
       ButtonLayout_TranparentValue := 0;
-      Exit;
-    End;
+      exit;
+    end;
 
     bf.BlendOp := AC_SRC_OVER;
     bf.BlendFlags := 0;
@@ -1996,81 +1933,78 @@ Begin
 
     TargetCanvas := TempBitmap.Canvas;
 
-    If (CurrentSource <> nil) and (CurrentSource.Canvas <> nil) and (CurrentSource.Handle <> 0) then
-    Begin
-       Windows.AlphaBlend(TargetCanvas.Handle, 0, 0, TempBitmap.Width, TempBitmap.Height,
-                                CurrentSource.Canvas.Handle, 0, 0, CurrentSource.Width, CurrentSource.Height, bf)
+    if (CurrentSource <> nil) and (CurrentSource.Canvas <> nil) and (CurrentSource.Handle <> 0) then
+    begin
+      Windows.AlphaBlend(TargetCanvas.Handle, 0, 0, TempBitmap.Width, TempBitmap.Height, CurrentSource.Canvas.Handle, 0, 0, CurrentSource.Width,
+        CurrentSource.Height, bf)
 
-    End;
+    end;
 
-    If (ImgButtonLayout.Picture.Bitmap = nil) or
-       (ImgButtonLayout.Picture.Bitmap.Width <> TempBitmap.Width) or
-       (ImgButtonLayout.Picture.Bitmap.Height <> TempBitmap.Height) or
-       (ImgButtonLayout.Picture.Bitmap.PixelFormat <> pf32bit) then
-    Begin
-       If ImgButtonLayout.Picture.Bitmap = nil then ImgButtonLayout.Picture.Bitmap := TBitmap.Create;
-       ImgButtonLayout.Picture.Bitmap.SetSize(TempBitmap.Width, TempBitmap.Height);
-       ImgButtonLayout.Picture.Bitmap.PixelFormat := pf32bit;
-    End;
+    if (ImgButtonLayout.Picture.Bitmap = nil) or (ImgButtonLayout.Picture.Bitmap.Width <> TempBitmap.Width) or
+      (ImgButtonLayout.Picture.Bitmap.Height <> TempBitmap.Height) or (ImgButtonLayout.Picture.Bitmap.PixelFormat <> pf32bit) then
+    begin
+      if ImgButtonLayout.Picture.Bitmap = nil then
+        ImgButtonLayout.Picture.Bitmap := TBitmap.Create;
+      ImgButtonLayout.Picture.Bitmap.SetSize(TempBitmap.Width, TempBitmap.Height);
+      ImgButtonLayout.Picture.Bitmap.PixelFormat := pf32bit;
+    end;
 
     ImgButtonLayout.Picture.Bitmap.Canvas.Draw(0, 0, TempBitmap);
 
-  Finally
+  finally
     TempBitmap.Free;
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.TmrButtonMinimizeTimer(Sender: TObject);
-Var
-  bf: TBlendFunction;
-  TempBitmap: TBitmap;
+procedure TTopBar.TmrButtonMinimizeTimer(Sender: TObject);
+var
+  bf:            TBlendFunction;
+  TempBitmap:    TBitmap;
   CurrentSource: TBitmap;
-  TargetCanvas: TCanvas;
-Begin
+  TargetCanvas:  TCanvas;
+begin
   TempBitmap := TBitmap.Create;
-  Try
+  try
     TempBitmap.SetSize(ImgButtonMinimize.Width, ImgButtonMinimize.Height);
     TempBitmap.PixelFormat := pf32bit;
 
-    If ButtonMinimize_MouseIn then
-    Begin
+    if ButtonMinimize_MouseIn then
+    begin
       TempBitmap.Canvas.Draw(0, 0, BMP_ButtonMinimize);
       CurrentSource := BMP_ButtonMinimize_Over;
-    End
+    end
     else
-    Begin
+    begin
       TempBitmap.Canvas.Draw(0, 0, BMP_ButtonMinimize_Over);
       CurrentSource := BMP_ButtonMinimize;
-    End;
+    end;
 
     ButtonMinimize_TranparentValue := ButtonMinimize_TranparentValue + m_BlendingStep;
 
-    If ButtonMinimize_TranparentValue >= 255 then
-    Begin
+    if ButtonMinimize_TranparentValue >= 255 then
+    begin
       TmrButtonMinimize.Enabled := False;
       ButtonMinimize_TranparentValue := 255;
 
+      if (ImgButtonMinimize.Picture.Bitmap = nil) or (ImgButtonMinimize.Picture.Bitmap.Width <> CurrentSource.Width) or
+        (ImgButtonMinimize.Picture.Bitmap.Height <> CurrentSource.Height) or (ImgButtonMinimize.Picture.Bitmap.PixelFormat <> pf32bit) then
+      begin
+        if ImgButtonMinimize.Picture.Bitmap = nil then
+          ImgButtonMinimize.Picture.Bitmap := TBitmap.Create;
+        ImgButtonMinimize.Picture.Bitmap.SetSize(CurrentSource.Width, CurrentSource.Height);
+        ImgButtonMinimize.Picture.Bitmap.PixelFormat := pf32bit;
+      end;
 
-      If (ImgButtonMinimize.Picture.Bitmap = nil) or
-         (ImgButtonMinimize.Picture.Bitmap.Width <> CurrentSource.Width) or
-         (ImgButtonMinimize.Picture.Bitmap.Height <> CurrentSource.Height) or
-         (ImgButtonMinimize.Picture.Bitmap.PixelFormat <> pf32bit) then
-      Begin
-         If ImgButtonMinimize.Picture.Bitmap = nil then ImgButtonMinimize.Picture.Bitmap := TBitmap.Create;
-         ImgButtonMinimize.Picture.Bitmap.SetSize(CurrentSource.Width, CurrentSource.Height);
-         ImgButtonMinimize.Picture.Bitmap.PixelFormat := pf32bit;
-      End;
-
-      If ButtonMinimize_MouseIn then
+      if ButtonMinimize_MouseIn then
         ImgButtonMinimize.Picture.Bitmap.Canvas.Draw(0, 0, BMP_ButtonMinimize_Over)
       else
         ImgButtonMinimize.Picture.Bitmap.Canvas.Draw(0, 0, BMP_ButtonMinimize);
 
       ButtonMinimize_TranparentValue := 0;
-      Exit;
-    End;
+      exit;
+    end;
 
     bf.BlendOp := AC_SRC_OVER;
     bf.BlendFlags := 0;
@@ -2079,101 +2013,97 @@ Begin
 
     TargetCanvas := TempBitmap.Canvas;
 
-    If (CurrentSource <> nil) and (CurrentSource.Canvas <> nil) and (CurrentSource.Handle <> 0) then
-    Begin
-       Windows.AlphaBlend(TargetCanvas.Handle, 0, 0, TempBitmap.Width, TempBitmap.Height,
-                                CurrentSource.Canvas.Handle, 0, 0, CurrentSource.Width, CurrentSource.Height, bf)
+    if (CurrentSource <> nil) and (CurrentSource.Canvas <> nil) and (CurrentSource.Handle <> 0) then
+    begin
+      Windows.AlphaBlend(TargetCanvas.Handle, 0, 0, TempBitmap.Width, TempBitmap.Height, CurrentSource.Canvas.Handle, 0, 0, CurrentSource.Width,
+        CurrentSource.Height, bf)
 
-    End;
+    end;
 
-    If (ImgButtonMinimize.Picture.Bitmap = nil) or
-       (ImgButtonMinimize.Picture.Bitmap.Width <> TempBitmap.Width) or
-       (ImgButtonMinimize.Picture.Bitmap.Height <> TempBitmap.Height) or
-       (ImgButtonMinimize.Picture.Bitmap.PixelFormat <> pf32bit) then
-    Begin
-       If ImgButtonMinimize.Picture.Bitmap = nil then ImgButtonMinimize.Picture.Bitmap := TBitmap.Create;
-       ImgButtonMinimize.Picture.Bitmap.SetSize(TempBitmap.Width, TempBitmap.Height);
-       ImgButtonMinimize.Picture.Bitmap.PixelFormat := pf32bit;
-    End;
+    if (ImgButtonMinimize.Picture.Bitmap = nil) or (ImgButtonMinimize.Picture.Bitmap.Width <> TempBitmap.Width) or
+      (ImgButtonMinimize.Picture.Bitmap.Height <> TempBitmap.Height) or (ImgButtonMinimize.Picture.Bitmap.PixelFormat <> pf32bit) then
+    begin
+      if ImgButtonMinimize.Picture.Bitmap = nil then
+        ImgButtonMinimize.Picture.Bitmap := TBitmap.Create;
+      ImgButtonMinimize.Picture.Bitmap.SetSize(TempBitmap.Width, TempBitmap.Height);
+      ImgButtonMinimize.Picture.Bitmap.PixelFormat := pf32bit;
+    end;
 
     ImgButtonMinimize.Picture.Bitmap.Canvas.Draw(0, 0, TempBitmap);
 
-  Finally
+  finally
     TempBitmap.Free;
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.TmrButtonModeTimer(Sender: TObject);
-Var
-  bf: TBlendFunction;
-  TempBitmap: TBitmap;
+procedure TTopBar.TmrButtonModeTimer(Sender: TObject);
+var
+  bf:            TBlendFunction;
+  TempBitmap:    TBitmap;
   CurrentSource: TBitmap;
-  BaseSource: TBitmap;
-  TargetCanvas: TCanvas;
-Begin
+  BaseSource:    TBitmap;
+  TargetCanvas:  TCanvas;
+begin
   TempBitmap := TBitmap.Create;
-  Try
+  try
 
     TempBitmap.SetSize(ImgButtonMode.Width, ImgButtonMode.Height);
     TempBitmap.PixelFormat := pf32bit;
 
-
-    If ButtonMode_State = State1 then
-    Begin
-      If ButtonMode_MouseIn then
-      Begin
+    if ButtonMode_State = State1 then
+    begin
+      if ButtonMode_MouseIn then
+      begin
         BaseSource := BMP_ButtonModeE;
         CurrentSource := BMP_ButtonModeE_Over;
-      End
+      end
       else
-      Begin
+      begin
         BaseSource := BMP_ButtonModeE_Over;
         CurrentSource := BMP_ButtonModeE;
-      End;
-    End
+      end;
+    end
     else
-    Begin
-      If ButtonMode_MouseIn then
-      Begin
+    begin
+      if ButtonMode_MouseIn then
+      begin
         BaseSource := BMP_ButtonModeB;
         CurrentSource := BMP_ButtonModeB_Over;
-      End
+      end
       else
-      Begin
+      begin
         BaseSource := BMP_ButtonModeB_Over;
         CurrentSource := BMP_ButtonModeB;
-      End;
-    End;
+      end;
+    end;
 
-    If Assigned(BaseSource) then
+    if Assigned(BaseSource) then
       TempBitmap.Canvas.Draw(0, 0, BaseSource);
 
     ButtonMode_TranparentValue := ButtonMode_TranparentValue + m_BlendingStep;
 
-
-    If ButtonMode_TranparentValue >= 255 then
-    Begin
+    if ButtonMode_TranparentValue >= 255 then
+    begin
       TmrButtonMode.Enabled := False;
       ButtonMode_TranparentValue := 255;
 
-      If (ImgButtonMode.Picture.Bitmap = nil) or
-         (ImgButtonMode.Picture.Bitmap.Width <> CurrentSource.Width) or
-         (ImgButtonMode.Picture.Bitmap.Height <> CurrentSource.Height) or
-         (ImgButtonMode.Picture.Bitmap.PixelFormat <> pf32bit) then
-      Begin
-         If ImgButtonMode.Picture.Bitmap = nil then ImgButtonMode.Picture.Bitmap := TBitmap.Create;
-         ImgButtonMode.Picture.Bitmap.SetSize(CurrentSource.Width, CurrentSource.Height);
-         ImgButtonMode.Picture.Bitmap.PixelFormat := pf32bit;
-      End;
+      if (ImgButtonMode.Picture.Bitmap = nil) or (ImgButtonMode.Picture.Bitmap.Width <> CurrentSource.Width) or
+        (ImgButtonMode.Picture.Bitmap.Height <> CurrentSource.Height) or (ImgButtonMode.Picture.Bitmap.PixelFormat <> pf32bit) then
+      begin
+        if ImgButtonMode.Picture.Bitmap = nil then
+          ImgButtonMode.Picture.Bitmap := TBitmap.Create;
+        ImgButtonMode.Picture.Bitmap.SetSize(CurrentSource.Width, CurrentSource.Height);
+        ImgButtonMode.Picture.Bitmap.PixelFormat := pf32bit;
+      end;
 
-      If Assigned(CurrentSource) then
-          ImgButtonMode.Picture.Bitmap.Canvas.Draw(0, 0, CurrentSource);
+      if Assigned(CurrentSource) then
+        ImgButtonMode.Picture.Bitmap.Canvas.Draw(0, 0, CurrentSource);
 
       ButtonMode_TranparentValue := 0;
-      Exit;
-    End;
+      exit;
+    end;
 
     bf.BlendOp := AC_SRC_OVER;
     bf.BlendFlags := 0;
@@ -2182,80 +2112,77 @@ Begin
 
     TargetCanvas := TempBitmap.Canvas;
 
-    If Assigned(CurrentSource) and (CurrentSource.Canvas <> nil) and (CurrentSource.Handle <> 0) then
-    Begin
-        Windows.AlphaBlend(TargetCanvas.Handle, 0, 0, TempBitmap.Width, TempBitmap.Height,
-                           CurrentSource.Canvas.Handle, 0, 0, CurrentSource.Width, CurrentSource.Height, bf);
-    End;
+    if Assigned(CurrentSource) and (CurrentSource.Canvas <> nil) and (CurrentSource.Handle <> 0) then
+    begin
+      Windows.AlphaBlend(TargetCanvas.Handle, 0, 0, TempBitmap.Width, TempBitmap.Height, CurrentSource.Canvas.Handle, 0, 0, CurrentSource.Width,
+        CurrentSource.Height, bf);
+    end;
 
-    If (ImgButtonMode.Picture.Bitmap = nil) or
-       (ImgButtonMode.Picture.Bitmap.Width <> TempBitmap.Width) or
-       (ImgButtonMode.Picture.Bitmap.Height <> TempBitmap.Height) or
-       (ImgButtonMode.Picture.Bitmap.PixelFormat <> pf32bit) then
-    Begin
-       If ImgButtonMode.Picture.Bitmap = nil then ImgButtonMode.Picture.Bitmap := TBitmap.Create;
-       ImgButtonMode.Picture.Bitmap.SetSize(TempBitmap.Width, TempBitmap.Height);
-       ImgButtonMode.Picture.Bitmap.PixelFormat := pf32bit;
-    End;
+    if (ImgButtonMode.Picture.Bitmap = nil) or (ImgButtonMode.Picture.Bitmap.Width <> TempBitmap.Width) or
+      (ImgButtonMode.Picture.Bitmap.Height <> TempBitmap.Height) or (ImgButtonMode.Picture.Bitmap.PixelFormat <> pf32bit) then
+    begin
+      if ImgButtonMode.Picture.Bitmap = nil then
+        ImgButtonMode.Picture.Bitmap := TBitmap.Create;
+      ImgButtonMode.Picture.Bitmap.SetSize(TempBitmap.Width, TempBitmap.Height);
+      ImgButtonMode.Picture.Bitmap.PixelFormat := pf32bit;
+    end;
 
     ImgButtonMode.Picture.Bitmap.Canvas.Draw(0, 0, TempBitmap);
 
-  Finally
+  finally
     TempBitmap.Free;
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.TmrButtonMouseTimer(Sender: TObject);
-Var
-  bf: TBlendFunction;
-  TempBitmap: TBitmap;
+procedure TTopBar.TmrButtonMouseTimer(Sender: TObject);
+var
+  bf:            TBlendFunction;
+  TempBitmap:    TBitmap;
   CurrentSource: TBitmap;
-  TargetCanvas: TCanvas;
-Begin
+  TargetCanvas:  TCanvas;
+begin
   TempBitmap := TBitmap.Create;
-  Try
+  try
     TempBitmap.SetSize(ImgButtonMouse.Width, ImgButtonMouse.Height);
     TempBitmap.PixelFormat := pf32bit;
 
-    If ButtonMouse_MouseIn then
-    Begin
+    if ButtonMouse_MouseIn then
+    begin
       TempBitmap.Canvas.Draw(0, 0, BMP_ButtonMouse);
       CurrentSource := BMP_ButtonMouse_Over;
-    End
+    end
     else
-    Begin
+    begin
       TempBitmap.Canvas.Draw(0, 0, BMP_ButtonMouse_Over);
       CurrentSource := BMP_ButtonMouse;
-    End;
+    end;
 
     ButtonMouse_TranparentValue := ButtonMouse_TranparentValue + m_BlendingStep;
 
-    If ButtonMouse_TranparentValue >= 255 then
-    Begin
+    if ButtonMouse_TranparentValue >= 255 then
+    begin
       TmrButtonMouse.Enabled := False;
       ButtonMouse_TranparentValue := 255;
 
+      if (ImgButtonMouse.Picture.Bitmap = nil) or (ImgButtonMouse.Picture.Bitmap.Width <> CurrentSource.Width) or
+        (ImgButtonMouse.Picture.Bitmap.Height <> CurrentSource.Height) or (ImgButtonMouse.Picture.Bitmap.PixelFormat <> pf32bit) then
+      begin
+        if ImgButtonMouse.Picture.Bitmap = nil then
+          ImgButtonMouse.Picture.Bitmap := TBitmap.Create;
+        ImgButtonMouse.Picture.Bitmap.SetSize(CurrentSource.Width, CurrentSource.Height);
+        ImgButtonMouse.Picture.Bitmap.PixelFormat := pf32bit;
+      end;
 
-      If (ImgButtonMouse.Picture.Bitmap = nil) or
-         (ImgButtonMouse.Picture.Bitmap.Width <> CurrentSource.Width) or
-         (ImgButtonMouse.Picture.Bitmap.Height <> CurrentSource.Height) or
-         (ImgButtonMouse.Picture.Bitmap.PixelFormat <> pf32bit) then
-      Begin
-         If ImgButtonMouse.Picture.Bitmap = nil then ImgButtonMouse.Picture.Bitmap := TBitmap.Create;
-         ImgButtonMouse.Picture.Bitmap.SetSize(CurrentSource.Width, CurrentSource.Height);
-         ImgButtonMouse.Picture.Bitmap.PixelFormat := pf32bit;
-      End;
-
-      If ButtonMouse_MouseIn then
+      if ButtonMouse_MouseIn then
         ImgButtonMouse.Picture.Bitmap.Canvas.Draw(0, 0, BMP_ButtonMouse_Over)
       else
         ImgButtonMouse.Picture.Bitmap.Canvas.Draw(0, 0, BMP_ButtonMouse);
 
       ButtonMouse_TranparentValue := 0;
-      Exit;
-    End;
+      exit;
+    end;
 
     bf.BlendOp := AC_SRC_OVER;
     bf.BlendFlags := 0;
@@ -2264,81 +2191,78 @@ Begin
 
     TargetCanvas := TempBitmap.Canvas;
 
-    If (CurrentSource <> nil) and (CurrentSource.Canvas <> nil) and (CurrentSource.Handle <> 0) then
-    Begin
-       Windows.AlphaBlend(TargetCanvas.Handle, 0, 0, TempBitmap.Width, TempBitmap.Height,
-                                CurrentSource.Canvas.Handle, 0, 0, CurrentSource.Width, CurrentSource.Height, bf)
+    if (CurrentSource <> nil) and (CurrentSource.Canvas <> nil) and (CurrentSource.Handle <> 0) then
+    begin
+      Windows.AlphaBlend(TargetCanvas.Handle, 0, 0, TempBitmap.Width, TempBitmap.Height, CurrentSource.Canvas.Handle, 0, 0, CurrentSource.Width,
+        CurrentSource.Height, bf)
 
-    End;
+    end;
 
-    If (ImgButtonMouse.Picture.Bitmap = nil) or
-       (ImgButtonMouse.Picture.Bitmap.Width <> TempBitmap.Width) or
-       (ImgButtonMouse.Picture.Bitmap.Height <> TempBitmap.Height) or
-       (ImgButtonMouse.Picture.Bitmap.PixelFormat <> pf32bit) then
-    Begin
-       If ImgButtonMouse.Picture.Bitmap = nil then ImgButtonMouse.Picture.Bitmap := TBitmap.Create;
-       ImgButtonMouse.Picture.Bitmap.SetSize(TempBitmap.Width, TempBitmap.Height);
-       ImgButtonMouse.Picture.Bitmap.PixelFormat := pf32bit;
-    End;
+    if (ImgButtonMouse.Picture.Bitmap = nil) or (ImgButtonMouse.Picture.Bitmap.Width <> TempBitmap.Width) or
+      (ImgButtonMouse.Picture.Bitmap.Height <> TempBitmap.Height) or (ImgButtonMouse.Picture.Bitmap.PixelFormat <> pf32bit) then
+    begin
+      if ImgButtonMouse.Picture.Bitmap = nil then
+        ImgButtonMouse.Picture.Bitmap := TBitmap.Create;
+      ImgButtonMouse.Picture.Bitmap.SetSize(TempBitmap.Width, TempBitmap.Height);
+      ImgButtonMouse.Picture.Bitmap.PixelFormat := pf32bit;
+    end;
 
     ImgButtonMouse.Picture.Bitmap.Canvas.Draw(0, 0, TempBitmap);
 
-  Finally
+  finally
     TempBitmap.Free;
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.TmrButtonToolsTimer(Sender: TObject);
-Var
-  bf: TBlendFunction;
-  TempBitmap: TBitmap;
+procedure TTopBar.TmrButtonToolsTimer(Sender: TObject);
+var
+  bf:            TBlendFunction;
+  TempBitmap:    TBitmap;
   CurrentSource: TBitmap;
-  TargetCanvas: TCanvas;
-Begin
+  TargetCanvas:  TCanvas;
+begin
   TempBitmap := TBitmap.Create;
-  Try
+  try
     TempBitmap.SetSize(ImgButtonTools.Width, ImgButtonTools.Height);
     TempBitmap.PixelFormat := pf32bit;
 
-    If ButtonTools_MouseIn then
-    Begin
+    if ButtonTools_MouseIn then
+    begin
       TempBitmap.Canvas.Draw(0, 0, BMP_ButtonTools);
       CurrentSource := BMP_ButtonTools_Over;
-    End
+    end
     else
-    Begin
+    begin
       TempBitmap.Canvas.Draw(0, 0, BMP_ButtonTools_Over);
       CurrentSource := BMP_ButtonTools;
-    End;
+    end;
 
     ButtonTools_TranparentValue := ButtonTools_TranparentValue + m_BlendingStep;
 
-    If ButtonTools_TranparentValue >= 255 then
-    Begin
+    if ButtonTools_TranparentValue >= 255 then
+    begin
       TmrButtonTools.Enabled := False;
       ButtonTools_TranparentValue := 255;
 
+      if (ImgButtonTools.Picture.Bitmap = nil) or (ImgButtonTools.Picture.Bitmap.Width <> CurrentSource.Width) or
+        (ImgButtonTools.Picture.Bitmap.Height <> CurrentSource.Height) or (ImgButtonTools.Picture.Bitmap.PixelFormat <> pf32bit) then
+      begin
+        if ImgButtonTools.Picture.Bitmap = nil then
+          ImgButtonTools.Picture.Bitmap := TBitmap.Create;
+        ImgButtonTools.Picture.Bitmap.SetSize(CurrentSource.Width, CurrentSource.Height);
+        ImgButtonTools.Picture.Bitmap.PixelFormat := pf32bit;
+      end;
 
-      If (ImgButtonTools.Picture.Bitmap = nil) or
-         (ImgButtonTools.Picture.Bitmap.Width <> CurrentSource.Width) or
-         (ImgButtonTools.Picture.Bitmap.Height <> CurrentSource.Height) or
-         (ImgButtonTools.Picture.Bitmap.PixelFormat <> pf32bit) then
-      Begin
-         If ImgButtonTools.Picture.Bitmap = nil then ImgButtonTools.Picture.Bitmap := TBitmap.Create;
-         ImgButtonTools.Picture.Bitmap.SetSize(CurrentSource.Width, CurrentSource.Height);
-         ImgButtonTools.Picture.Bitmap.PixelFormat := pf32bit;
-      End;
-
-      If ButtonTools_MouseIn then
+      if ButtonTools_MouseIn then
         ImgButtonTools.Picture.Bitmap.Canvas.Draw(0, 0, BMP_ButtonTools_Over)
       else
         ImgButtonTools.Picture.Bitmap.Canvas.Draw(0, 0, BMP_ButtonTools);
 
       ButtonTools_TranparentValue := 0;
-      Exit;
-    End;
+      exit;
+    end;
 
     bf.BlendOp := AC_SRC_OVER;
     bf.BlendFlags := 0;
@@ -2347,81 +2271,78 @@ Begin
 
     TargetCanvas := TempBitmap.Canvas;
 
-    If (CurrentSource <> nil) and (CurrentSource.Canvas <> nil) and (CurrentSource.Handle <> 0) then
-    Begin
-       Windows.AlphaBlend(TargetCanvas.Handle, 0, 0, TempBitmap.Width, TempBitmap.Height,
-                                CurrentSource.Canvas.Handle, 0, 0, CurrentSource.Width, CurrentSource.Height, bf)
+    if (CurrentSource <> nil) and (CurrentSource.Canvas <> nil) and (CurrentSource.Handle <> 0) then
+    begin
+      Windows.AlphaBlend(TargetCanvas.Handle, 0, 0, TempBitmap.Width, TempBitmap.Height, CurrentSource.Canvas.Handle, 0, 0, CurrentSource.Width,
+        CurrentSource.Height, bf)
 
-    End;
+    end;
 
-    If (ImgButtonTools.Picture.Bitmap = nil) or
-       (ImgButtonTools.Picture.Bitmap.Width <> TempBitmap.Width) or
-       (ImgButtonTools.Picture.Bitmap.Height <> TempBitmap.Height) or
-       (ImgButtonTools.Picture.Bitmap.PixelFormat <> pf32bit) then
-    Begin
-       If ImgButtonTools.Picture.Bitmap = nil then ImgButtonTools.Picture.Bitmap := TBitmap.Create;
-       ImgButtonTools.Picture.Bitmap.SetSize(TempBitmap.Width, TempBitmap.Height);
-       ImgButtonTools.Picture.Bitmap.PixelFormat := pf32bit;
-    End;
+    if (ImgButtonTools.Picture.Bitmap = nil) or (ImgButtonTools.Picture.Bitmap.Width <> TempBitmap.Width) or
+      (ImgButtonTools.Picture.Bitmap.Height <> TempBitmap.Height) or (ImgButtonTools.Picture.Bitmap.PixelFormat <> pf32bit) then
+    begin
+      if ImgButtonTools.Picture.Bitmap = nil then
+        ImgButtonTools.Picture.Bitmap := TBitmap.Create;
+      ImgButtonTools.Picture.Bitmap.SetSize(TempBitmap.Width, TempBitmap.Height);
+      ImgButtonTools.Picture.Bitmap.PixelFormat := pf32bit;
+    end;
 
     ImgButtonTools.Picture.Bitmap.Canvas.Draw(0, 0, TempBitmap);
 
-  Finally
+  finally
     TempBitmap.Free;
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TTopBar.TmrButtonWWWTimer(Sender: TObject);
-Var
-  bf: TBlendFunction;
-  TempBitmap: TBitmap;
+procedure TTopBar.TmrButtonWWWTimer(Sender: TObject);
+var
+  bf:            TBlendFunction;
+  TempBitmap:    TBitmap;
   CurrentSource: TBitmap;
-  TargetCanvas: TCanvas;
-Begin
+  TargetCanvas:  TCanvas;
+begin
   TempBitmap := TBitmap.Create;
-  Try
+  try
     TempBitmap.SetSize(ImgButtonWWW.Width, ImgButtonWWW.Height);
     TempBitmap.PixelFormat := pf32bit;
 
-    If ButtonWWW_MouseIn then
-    Begin
+    if ButtonWWW_MouseIn then
+    begin
       TempBitmap.Canvas.Draw(0, 0, BMP_ButtonWWW);
       CurrentSource := BMP_ButtonWWW_Over;
-    End
+    end
     else
-    Begin
+    begin
       TempBitmap.Canvas.Draw(0, 0, BMP_ButtonWWW_Over);
       CurrentSource := BMP_ButtonWWW;
-    End;
+    end;
 
     ButtonWWW_TranparentValue := ButtonWWW_TranparentValue + m_BlendingStep;
 
-    If ButtonWWW_TranparentValue >= 255 then
-    Begin
+    if ButtonWWW_TranparentValue >= 255 then
+    begin
       TmrButtonWWW.Enabled := False;
       ButtonWWW_TranparentValue := 255;
 
+      if (ImgButtonWWW.Picture.Bitmap = nil) or (ImgButtonWWW.Picture.Bitmap.Width <> CurrentSource.Width) or
+        (ImgButtonWWW.Picture.Bitmap.Height <> CurrentSource.Height) or (ImgButtonWWW.Picture.Bitmap.PixelFormat <> pf32bit) then
+      begin
+        if ImgButtonWWW.Picture.Bitmap = nil then
+          ImgButtonWWW.Picture.Bitmap := TBitmap.Create;
+        ImgButtonWWW.Picture.Bitmap.SetSize(CurrentSource.Width, CurrentSource.Height);
+        ImgButtonWWW.Picture.Bitmap.PixelFormat := pf32bit;
+      end;
 
-      If (ImgButtonWWW.Picture.Bitmap = nil) or
-         (ImgButtonWWW.Picture.Bitmap.Width <> CurrentSource.Width) or
-         (ImgButtonWWW.Picture.Bitmap.Height <> CurrentSource.Height) or
-         (ImgButtonWWW.Picture.Bitmap.PixelFormat <> pf32bit) then
-      Begin
-         If ImgButtonWWW.Picture.Bitmap = nil then ImgButtonWWW.Picture.Bitmap := TBitmap.Create;
-         ImgButtonWWW.Picture.Bitmap.SetSize(CurrentSource.Width, CurrentSource.Height);
-         ImgButtonWWW.Picture.Bitmap.PixelFormat := pf32bit;
-      End;
-
-      If ButtonWWW_MouseIn then
+      if ButtonWWW_MouseIn then
         ImgButtonWWW.Picture.Bitmap.Canvas.Draw(0, 0, BMP_ButtonWWW_Over)
       else
         ImgButtonWWW.Picture.Bitmap.Canvas.Draw(0, 0, BMP_ButtonWWW);
 
       ButtonWWW_TranparentValue := 0;
-      Exit;
-    End;
+      exit;
+    end;
 
     bf.BlendOp := AC_SRC_OVER;
     bf.BlendFlags := 0;
@@ -2430,31 +2351,30 @@ Begin
 
     TargetCanvas := TempBitmap.Canvas;
 
-    If (CurrentSource <> nil) and (CurrentSource.Canvas <> nil) and (CurrentSource.Handle <> 0) then
-    Begin
-       Windows.AlphaBlend(TargetCanvas.Handle, 0, 0, TempBitmap.Width, TempBitmap.Height,
-                                CurrentSource.Canvas.Handle, 0, 0, CurrentSource.Width, CurrentSource.Height, bf)
+    if (CurrentSource <> nil) and (CurrentSource.Canvas <> nil) and (CurrentSource.Handle <> 0) then
+    begin
+      Windows.AlphaBlend(TargetCanvas.Handle, 0, 0, TempBitmap.Width, TempBitmap.Height, CurrentSource.Canvas.Handle, 0, 0, CurrentSource.Width,
+        CurrentSource.Height, bf)
 
-    End;
+    end;
 
-    If (ImgButtonWWW.Picture.Bitmap = nil) or
-       (ImgButtonWWW.Picture.Bitmap.Width <> TempBitmap.Width) or
-       (ImgButtonWWW.Picture.Bitmap.Height <> TempBitmap.Height) or
-       (ImgButtonWWW.Picture.Bitmap.PixelFormat <> pf32bit) then
-    Begin
-       If ImgButtonWWW.Picture.Bitmap = nil then ImgButtonWWW.Picture.Bitmap := TBitmap.Create;
-       ImgButtonWWW.Picture.Bitmap.SetSize(TempBitmap.Width, TempBitmap.Height);
-       ImgButtonWWW.Picture.Bitmap.PixelFormat := pf32bit;
-    End;
+    if (ImgButtonWWW.Picture.Bitmap = nil) or (ImgButtonWWW.Picture.Bitmap.Width <> TempBitmap.Width) or
+      (ImgButtonWWW.Picture.Bitmap.Height <> TempBitmap.Height) or (ImgButtonWWW.Picture.Bitmap.PixelFormat <> pf32bit) then
+    begin
+      if ImgButtonWWW.Picture.Bitmap = nil then
+        ImgButtonWWW.Picture.Bitmap := TBitmap.Create;
+      ImgButtonWWW.Picture.Bitmap.SetSize(TempBitmap.Width, TempBitmap.Height);
+      ImgButtonWWW.Picture.Bitmap.PixelFormat := pf32bit;
+    end;
 
     ImgButtonWWW.Picture.Bitmap.Canvas.Draw(0, 0, TempBitmap);
 
-  Finally
+  finally
     TempBitmap.Free;
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 {$ENDREGION}
 
-End.
+end.

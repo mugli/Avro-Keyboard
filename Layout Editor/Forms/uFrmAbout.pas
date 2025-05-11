@@ -26,11 +26,11 @@
 }
 
 {$INCLUDE ../ProjectDefines.inc}
-Unit uFrmAbout;
+unit uFrmAbout;
 
-Interface
+interface
 
-Uses
+uses
   Windows,
   Messages,
   SysUtils,
@@ -41,10 +41,11 @@ Uses
   Forms,
   Dialogs,
   ExtCtrls,
-  StdCtrls, jpeg;
+  StdCtrls,
+  jpeg;
 
-Type
-  TfrmAbout = Class(TForm)
+type
+  TfrmAbout = class(TForm)
     Label3: TLabel;
     Memo1: TMemo;
     lblOmicronLab: TLabel;
@@ -55,53 +56,52 @@ Type
     lblVer: TLabel;
     Label8: TLabel;
     Label5: TLabel;
-    Procedure FormClose(Sender: TObject; Var Action: TCloseAction);
-    Procedure butCloseClick(Sender: TObject);
-    Procedure lblOmicronLabClick(Sender: TObject);
-    Procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure butCloseClick(Sender: TObject);
+    procedure lblOmicronLabClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
 
-  Private
-    { Private declarations }
-  Public
-    { Public declarations }
-  End;
+    private
+      { Private declarations }
+    public
+      { Public declarations }
+  end;
 
-Var
+var
   frmAbout: TfrmAbout;
 
-Implementation
+implementation
 
 {$R *.dfm}
 
-Uses
+uses
   uFileFolderHandling,
   clsFileVersion;
 
-Procedure TfrmAbout.butCloseClick(Sender: TObject);
-Begin
+procedure TfrmAbout.butCloseClick(Sender: TObject);
+begin
   Self.Close;
-End;
+end;
 
-Procedure TfrmAbout.FormClose(Sender: TObject; Var Action: TCloseAction);
-Begin
+procedure TfrmAbout.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
   Action := caFree;
-  frmAbout := Nil;
-End;
+  frmAbout := nil;
+end;
 
-Procedure TfrmAbout.FormCreate(Sender: TObject);
-Var
+procedure TfrmAbout.FormCreate(Sender: TObject);
+var
   FileVar: TFileVersion;
-Begin
+begin
   FileVar := TFileVersion.Create();
   lblVer.Caption := lblVer.Caption + ' ' + FileVar.AsString
-{$IFDEF BetaVersion} + ' BETA'{$ENDIF}{$IFDEF PortableOn} +
-    ' (Portable)'{$ENDIF};
+  {$IFDEF BetaVersion} + ' BETA'{$ENDIF}{$IFDEF PortableOn} + ' (Portable)'{$ENDIF};
   FileVar.Free;
-End;
+end;
 
-Procedure TfrmAbout.lblOmicronLabClick(Sender: TObject);
-Begin
+procedure TfrmAbout.lblOmicronLabClick(Sender: TObject);
+begin
   Execute_Something('https://www.omicronlab.com/');
-End;
+end;
 
-End.
+end.

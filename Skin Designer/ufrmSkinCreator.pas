@@ -100,17 +100,17 @@ type
     procedure ButtonAboutClick(Sender: TObject);
     procedure ButtonExitClick(Sender: TObject);
     procedure AppEventsSettingChange(Sender: TObject; Flag: Integer; const Section: string; var Result: LongInt);
-  private
-                { Private declarations }
-    Index: Integer;
-    function ValidateNext(Val: Integer): Boolean;
-    function Validate_1To2_Page: Boolean;
-    function Validate_2To3_Page: Boolean;
-    function Validate_3To4_Page: Boolean;
+    private
+      { Private declarations }
+      Index: Integer;
+      function ValidateNext(Val: Integer): Boolean;
+      function Validate_1To2_Page: Boolean;
+      function Validate_2To3_Page: Boolean;
+      function Validate_3To4_Page: Boolean;
 
-    procedure HandleThemes;
-  public
-                { Public declarations }
+      procedure HandleThemes;
+    public
+      { Public declarations }
   end;
 
 var
@@ -154,47 +154,47 @@ end;
 
 procedure TfrmSkinCreator.ButtonHelpClick(Sender: TObject);
 begin
-        { TODO : Write help and make this button Visible! }
+  { TODO : Write help and make this button Visible! }
 end;
 
 procedure TfrmSkinCreator.ButtonNextClick(Sender: TObject);
 begin
-  if ValidateNext(Index + 1) = False then
+  if ValidateNext(index + 1) = False then
     System.Exit;
-  Inc(Index);
+  Inc(index);
 
-  if Index = 4 then
+  if index = 4 then
     ButtonNext.Enabled := False
   else
     ButtonNext.Enabled := True;
 
-  if Index = 1 then
+  if index = 1 then
     ButtonPrev.Enabled := False
   else
     ButtonPrev.Enabled := True;
 
-  (FindComponent('GroupBox' + IntToStr(Index)) as TGroupBox).BringToFront;
+  (FindComponent('GroupBox' + IntToStr(index)) as TGroupBox).BringToFront;
 
 end;
 
 procedure TfrmSkinCreator.ButtonPrevClick(Sender: TObject);
 begin
-  if Index <= 1 then
+  if index <= 1 then
     System.Exit;
 
-  Dec(Index);
+  Dec(index);
 
-  if Index = 4 then
+  if index = 4 then
     ButtonNext.Enabled := False
   else
     ButtonNext.Enabled := True;
 
-  if Index = 1 then
+  if index = 1 then
     ButtonPrev.Enabled := False
   else
     ButtonPrev.Enabled := True;
 
-  (FindComponent('GroupBox' + IntToStr(Index)) as TGroupBox).BringToFront;
+  (FindComponent('GroupBox' + IntToStr(index)) as TGroupBox).BringToFront;
 
 end;
 
@@ -221,7 +221,7 @@ procedure TfrmSkinCreator.ButtonSaveSkinClick(Sender: TObject);
     FileStream: TFileStream;
     ByteStream: TBytesStream;
     EncodedStr: string;
-    ImageNode: IXMLNode;
+    ImageNode:  IXMLNode;
   begin
     Result := False;
     ImagePath := Trim(ImagePath);
@@ -262,7 +262,7 @@ procedure TfrmSkinCreator.ButtonSaveSkinClick(Sender: TObject);
   end;
 
 var
-  XMLDoc: IXMLDocument;
+  XMLDoc:              IXMLDocument;
   RootNode, ChildNode: IXMLNode;
 begin
   XMLDoc := NewXMLDocument;
@@ -271,21 +271,21 @@ begin
 
   RootNode := XMLDoc.AddChild('Skin');
 
-        // Avro version
+  // Avro version
   ChildNode := RootNode.AddChild('AvroKeyboardVersion');
   ChildNode.Text := '5';
 
-        // Skin info
+  // Skin info
   NewCDataNode(XMLDoc, RootNode, 'SkinName', EditSkinName.Text);
   NewCDataNode(XMLDoc, RootNode, 'SkinVersion', EditSkinVer.Text);
   NewCDataNode(XMLDoc, RootNode, 'DesignerName', EditDesignerName.Text);
   NewCDataNode(XMLDoc, RootNode, 'DesignerComment', EditComment.Text);
 
-        // Preview Image
+  // Preview Image
   if not ImageToXml(XMLDoc, RootNode, 'Preview', FrameImageAdd1.Preview.Text) then
     Exit;
 
-        // Button info
+  // Button info
   NewNode(XMLDoc, RootNode, 'AvroIconAdded', MyBoolToStr(CheckAvroIcon.Checked));
   NewNode(XMLDoc, RootNode, 'KeyboardModeAdded', MyBoolToStr(CheckKM.Checked));
   NewNode(XMLDoc, RootNode, 'KeyboardLayoutAdded', MyBoolToStr(CheckKL.Checked));
@@ -296,13 +296,13 @@ begin
   NewNode(XMLDoc, RootNode, 'HelpAdded', MyBoolToStr(CheckHelp.Checked));
   NewNode(XMLDoc, RootNode, 'ExitAdded', MyBoolToStr(CheckExit.Checked));
 
-        // Main Image
+  // Main Image
   if not ImageToXml(XMLDoc, RootNode, 'TopBarMain', FrameImageAdd1.ImagePath_TopBar.Text) then
     Exit;
   NewNode(XMLDoc, RootNode, 'TopBarHeight', IntToStr(FrameDrag1.Background.Height));
   NewNode(XMLDoc, RootNode, 'TopBarWidth', IntToStr(FrameDrag1.Background.Width));
 
-        // Avro Icon
+  // Avro Icon
   if not ImageToXml(XMLDoc, RootNode, 'AvroIconNormal', FrameImageAdd1.AvroIcon.Text) then
     Exit;
   if not ImageToXml(XMLDoc, RootNode, 'AvroIconOver', FrameImageAdd1.AvroIconOver.Text) then
@@ -314,7 +314,7 @@ begin
   NewNode(XMLDoc, RootNode, 'AvroIconLeft', IntToStr(FrameDrag1.AvroIcon.Left));
   NewNode(XMLDoc, RootNode, 'AvroIconTop', IntToStr(FrameDrag1.AvroIcon.Top));
 
-        // Keyboard Mode
+  // Keyboard Mode
   if not ImageToXml(XMLDoc, RootNode, 'KeyboardModeEnglishNormal', FrameImageAdd1.KMSys.Text) then
     Exit;
   if not ImageToXml(XMLDoc, RootNode, 'KeyboardModeEnglishOver', FrameImageAdd1.KMSysOver.Text) then
@@ -332,7 +332,7 @@ begin
   NewNode(XMLDoc, RootNode, 'KeyboardModeLeft', IntToStr(FrameDrag1.KM.Left));
   NewNode(XMLDoc, RootNode, 'KeyboardModeTop', IntToStr(FrameDrag1.KM.Top));
 
-        // Keyboard Layout
+  // Keyboard Layout
   if not ImageToXml(XMLDoc, RootNode, 'KeyboardLayoutNormal', FrameImageAdd1.KL.Text) then
     Exit;
   if not ImageToXml(XMLDoc, RootNode, 'KeyboardLayoutOver', FrameImageAdd1.KLOver.Text) then
@@ -344,7 +344,7 @@ begin
   NewNode(XMLDoc, RootNode, 'KeyboardLayoutLeft', IntToStr(FrameDrag1.KL.Left));
   NewNode(XMLDoc, RootNode, 'KeyboardLayoutTop', IntToStr(FrameDrag1.KL.Top));
 
-        // LayoutViewer
+  // LayoutViewer
   if not ImageToXml(XMLDoc, RootNode, 'LayoutViewerNormal', FrameImageAdd1.LayoutV.Text) then
     Exit;
   if not ImageToXml(XMLDoc, RootNode, 'LayoutViewerOver', FrameImageAdd1.LayoutVOver.Text) then
@@ -356,7 +356,7 @@ begin
   NewNode(XMLDoc, RootNode, 'LayoutViewerLeft', IntToStr(FrameDrag1.LayoutV.Left));
   NewNode(XMLDoc, RootNode, 'LayoutViewerTop', IntToStr(FrameDrag1.LayoutV.Top));
 
-        // AvroMouse
+  // AvroMouse
   if not ImageToXml(XMLDoc, RootNode, 'AvroMouseNormal', FrameImageAdd1.AvroMouse.Text) then
     Exit;
   if not ImageToXml(XMLDoc, RootNode, 'AvroMouseOver', FrameImageAdd1.AvroMouseOver.Text) then
@@ -368,7 +368,7 @@ begin
   NewNode(XMLDoc, RootNode, 'AvroMouseLeft', IntToStr(FrameDrag1.AvroMouse.Left));
   NewNode(XMLDoc, RootNode, 'AvroMouseTop', IntToStr(FrameDrag1.AvroMouse.Top));
 
-        // Tools
+  // Tools
   if not ImageToXml(XMLDoc, RootNode, 'ToolsNormal', FrameImageAdd1.Tools.Text) then
     Exit;
   if not ImageToXml(XMLDoc, RootNode, 'ToolsOver', FrameImageAdd1.ToolsOver.Text) then
@@ -380,7 +380,7 @@ begin
   NewNode(XMLDoc, RootNode, 'ToolsLeft', IntToStr(FrameDrag1.Tools.Left));
   NewNode(XMLDoc, RootNode, 'ToolsTop', IntToStr(FrameDrag1.Tools.Top));
 
-        // Web
+  // Web
   if not ImageToXml(XMLDoc, RootNode, 'WebNormal', FrameImageAdd1.Web.Text) then
     Exit;
   if not ImageToXml(XMLDoc, RootNode, 'WebOver', FrameImageAdd1.WebOver.Text) then
@@ -392,7 +392,7 @@ begin
   NewNode(XMLDoc, RootNode, 'WebLeft', IntToStr(FrameDrag1.Web.Left));
   NewNode(XMLDoc, RootNode, 'WebTop', IntToStr(FrameDrag1.Web.Top));
 
-        // Help
+  // Help
   if not ImageToXml(XMLDoc, RootNode, 'HelpNormal', FrameImageAdd1.Help.Text) then
     Exit;
   if not ImageToXml(XMLDoc, RootNode, 'HelpOver', FrameImageAdd1.HelpOver.Text) then
@@ -404,7 +404,7 @@ begin
   NewNode(XMLDoc, RootNode, 'HelpLeft', IntToStr(FrameDrag1.Help.Left));
   NewNode(XMLDoc, RootNode, 'HelpTop', IntToStr(FrameDrag1.Help.Top));
 
-        // Exit
+  // Exit
   if not ImageToXml(XMLDoc, RootNode, 'ExitNormal', FrameImageAdd1.Exit.Text) then
     Exit;
   if not ImageToXml(XMLDoc, RootNode, 'ExitOver', FrameImageAdd1.ExitOver.Text) then
@@ -416,7 +416,7 @@ begin
   NewNode(XMLDoc, RootNode, 'ExitLeft', IntToStr(FrameDrag1.Exit.Left));
   NewNode(XMLDoc, RootNode, 'ExitTop', IntToStr(FrameDrag1.Exit.Top));
 
-        // Save file
+  // Save file
   SaveDialog1.FileName := EditSkinName.Text + '.avroskin';
   if SaveDialog1.Execute then
     XMLDoc.SaveToFile(SaveDialog1.FileName);
@@ -436,7 +436,7 @@ begin
   with FrameDrag1 do
     Initialize;
 
-  Index := 1;
+  index := 1;
   GroupBox1.BringToFront;
   Self.Show;
   Application.ProcessMessages;
@@ -446,7 +446,7 @@ end;
 function TfrmSkinCreator.ValidateNext(Val: Integer): Boolean;
 begin
   Result := False;
-  case Index of
+  case index of
     1:
       Result := Validate_1To2_Page;
 
@@ -479,11 +479,11 @@ function TfrmSkinCreator.Validate_2To3_Page: Boolean;
 begin
   Result := False;
 
-        // Validate
+  // Validate
   if FrameImageAdd1.Validate = False then
     System.Exit;
 
-        // Load Images
+  // Load Images
   with FrameImageAdd1 do
     FrameDrag1.SetImages(ImagePath_TopBar.Text, AvroIcon.Text, KMSys.Text, KL.Text, LayoutV.Text, AvroMouse.Text, Tools.Text, Web.Text, Help.Text, Exit.Text);
 
@@ -496,4 +496,3 @@ begin
 end;
 
 end.
-

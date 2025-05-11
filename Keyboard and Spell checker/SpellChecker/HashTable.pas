@@ -30,22 +30,24 @@ unit HashTable;
 interface
 
 uses
-  BanglaChars, classes, uDbase, System.SysUtils, System.Generics.Collections, StrUtils;
+  BanglaChars,
+  classes,
+  uDbase,
+  System.SysUtils,
+  System.Generics.Collections,
+  StrUtils;
 
 function WordPresent(const Wrd: string): Boolean;
 
-
 procedure BuildOneHashTable(var SourceArray: TStringList; var dict: TDictionary<string, Boolean>);
 
-
 function WordPresent_Basic(const Wrd: string): Boolean;
-
 
 implementation
 
 function WordPresent(const Wrd: string): Boolean;
 var
-  iLen, I, Dummy: Integer;
+  iLen, I, Dummy:          Integer;
   SearchingPart, IsSuffix: string;
 begin
   Result := False;
@@ -104,9 +106,9 @@ end;
 
 function WordPresent_Basic(const Wrd: string): Boolean;
 
-  function SearchWord(var Dict: TDictionary<string, Boolean>): Boolean;
+  function SearchWord(var dict: TDictionary<string, Boolean>): Boolean;
   begin
-    Result:= Dict.ContainsKey(Wrd)
+    Result := dict.ContainsKey(Wrd)
   end;
 
 var
@@ -357,8 +359,6 @@ begin
 
 end;
 
-
-
 procedure BuildOneHashTable(var SourceArray: TStringList; var dict: TDictionary<string, Boolean>);
 var
   I, C: Integer;
@@ -371,6 +371,4 @@ begin
     dict.Add(SourceArray[I], True);
 end;
 
-
 end.
-

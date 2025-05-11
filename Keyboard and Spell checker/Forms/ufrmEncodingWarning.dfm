@@ -1,15 +1,19 @@
 object frmEncodingWarning: TfrmEncodingWarning
   Left = 0
   Top = 0
+  Margins.Left = 5
+  Margins.Top = 5
+  Margins.Right = 5
+  Margins.Bottom = 5
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'ANSI is not a recommended option!'
-  ClientHeight = 311
-  ClientWidth = 448
+  ClientHeight = 467
+  ClientWidth = 672
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -17
   Font.Name = 'Tahoma'
   Font.Style = []
   Icon.Data = {
@@ -60,12 +64,17 @@ object frmEncodingWarning: TfrmEncodingWarning
   Position = poDesktopCenter
   OnClose = FormClose
   OnCreate = FormCreate
-  TextHeight = 13
+  PixelsPerInch = 144
+  TextHeight = 21
   object Label2: TLabel
-    Left = 56
-    Top = 55
-    Width = 353
-    Height = 39
+    Left = 84
+    Top = 83
+    Width = 528
+    Height = 63
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 
       'Avro will not be able to convert ANSI to Unicode, if you need th' +
       'at later. You have to use a third party converter, which may or ' +
@@ -73,10 +82,14 @@ object frmEncodingWarning: TfrmEncodingWarning
     WordWrap = True
   end
   object Image1: TImage
-    Left = 25
-    Top = 55
-    Width = 25
-    Height = 25
+    Left = 38
+    Top = 83
+    Width = 37
+    Height = 37
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Picture.Data = {
       055449636F6E0000010001001010000001000800680500001600000028000000
       1000000020000000010008000000000000010000000000000000000000010000
@@ -125,54 +138,74 @@ object frmEncodingWarning: TfrmEncodingWarning
       FFFF0000}
   end
   object Label3: TLabel
-    Left = 56
-    Top = 100
-    Width = 357
-    Height = 26
+    Left = 84
+    Top = 150
+    Width = 513
+    Height = 42
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 
       'Never ever use ANSI in web sites, databases and where you need t' +
       'o sort Bangla text.'
     WordWrap = True
   end
   object Label5: TLabel
-    Left = 56
-    Top = 137
-    Width = 376
-    Height = 13
+    Left = 84
+    Top = 206
+    Width = 467
+    Height = 42
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 
       'This is an outdated technology for writing Bangla, kept in Avro ' +
       'experimentally.'
     WordWrap = True
   end
   object Label6: TLabel
-    Left = 56
-    Top = 169
-    Width = 341
-    Height = 26
+    Left = 84
+    Top = 254
+    Width = 487
+    Height = 42
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 
       'We don'#39't provide any support regarding problems in this mode. If' +
       ' your questions are left unanswered, don'#39't blame us.'
     WordWrap = True
   end
   object Label7: TLabel
-    Left = 276
-    Top = 210
-    Width = 164
-    Height = 16
+    Left = 414
+    Top = 315
+    Width = 169
+    Height = 48
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'YOU HAVE BEEN WARNED!'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -13
+    Font.Height = -20
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
     WordWrap = True
   end
   object Image2: TImage
-    Left = 25
-    Top = 100
-    Width = 25
-    Height = 25
+    Left = 38
+    Top = 150
+    Width = 37
+    Height = 38
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Picture.Data = {
       055449636F6E0000010001001010000001000800680500001600000028000000
       1000000020000000010008000000000000010000000000000000000000010000
@@ -221,10 +254,14 @@ object frmEncodingWarning: TfrmEncodingWarning
       FFFF0000}
   end
   object Image4: TImage
-    Left = 25
-    Top = 137
-    Width = 25
-    Height = 25
+    Left = 38
+    Top = 206
+    Width = 37
+    Height = 37
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Picture.Data = {
       055449636F6E0000010001001010000001000800680500001600000028000000
       1000000020000000010008000000000000010000000000000000000000010000
@@ -273,10 +310,14 @@ object frmEncodingWarning: TfrmEncodingWarning
       FFFF0000}
   end
   object Image5: TImage
-    Left = 25
-    Top = 169
-    Width = 25
-    Height = 25
+    Left = 38
+    Top = 254
+    Width = 37
+    Height = 37
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Picture.Data = {
       055449636F6E0000010001001010000001000800680500001600000028000000
       1000000020000000010008000000000000010000000000000000000000010000
@@ -325,37 +366,49 @@ object frmEncodingWarning: TfrmEncodingWarning
       FFFF0000}
   end
   object Panel1: TPanel
-    Left = -8
-    Top = -8
-    Width = 489
-    Height = 57
+    Left = -12
+    Top = -12
+    Width = 734
+    Height = 86
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Color = clWhite
     ParentBackground = False
     TabOrder = 3
     object Label1: TLabel
-      Left = 16
-      Top = 24
-      Width = 371
-      Height = 19
+      Left = 24
+      Top = 36
+      Width = 545
+      Height = 29
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
       Caption = 'Are you sure you want to type in ANSI mode?'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -16
+      Font.Height = -24
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
     end
   end
   object Button1: TButton
-    Left = 160
-    Top = 242
-    Width = 280
-    Height = 25
+    Left = 240
+    Top = 363
+    Width = 420
+    Height = 38
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Ok, I'#39'm convinced. Lets go back to Unicode'
     Default = True
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
-    Font.Height = -11
+    Font.Height = -17
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
@@ -363,19 +416,27 @@ object frmEncodingWarning: TfrmEncodingWarning
     OnClick = Button1Click
   end
   object Button2: TButton
-    Left = 160
-    Top = 273
-    Width = 280
-    Height = 25
+    Left = 240
+    Top = 410
+    Width = 420
+    Height = 37
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Use ANSI anyway'
     TabOrder = 1
     OnClick = Button2Click
   end
   object CheckBox_ShowWarning: TCheckBox
-    Left = 8
-    Top = 277
-    Width = 133
-    Height = 17
+    Left = 12
+    Top = 416
+    Width = 200
+    Height = 25
+    Margins.Left = 5
+    Margins.Top = 5
+    Margins.Right = 5
+    Margins.Bottom = 5
     Caption = 'Show this warning again'
     Checked = True
     State = cbChecked

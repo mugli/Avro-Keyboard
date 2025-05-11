@@ -31,13 +31,25 @@ unit ufrmSpell;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, Menus, StdCtrls, ComCtrls, clsMemoParser, Vcl.AppEvnts;
+  Windows,
+  Messages,
+  SysUtils,
+  Variants,
+  Classes,
+  Graphics,
+  Controls,
+  Forms,
+  Dialogs,
+  Menus,
+  StdCtrls,
+  ComCtrls,
+  clsMemoParser,
+  Vcl.AppEvnts;
 
 const
-  UNICODE_BOM = Char($FEFF);
+  UNICODE_BOM         = Char($FEFF);
   UNICODE_BOM_SWAPPED = Char($FFFE);
-  UTF8_BOM = AnsiString(#$EF#$BB#$BF);
+  UTF8_BOM            = AnsiString(#$EF#$BB#$BF);
 
 type
   TUnicodeStreamCharSet = (csAnsi, csUnicode, csUnicodeSwapped, csUtf8);
@@ -93,38 +105,38 @@ type
     procedure N5Click(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure AppEventsSettingChange(Sender: TObject; Flag: Integer; const Section: string; var Result: LongInt);
-  private
-    { Private declarations }
+    private
+      { Private declarations }
 
-    // File handling
-    fFileName: string;
-    MemoChanged: Boolean;
-    BOM_Unicode, BOM_UnicodeBE, BOM_UTF8: Boolean;
-    procedure OpenFile(const fFile: string);
-    procedure SaveFile(const fFile: string; bBOM_Unicode, bBOM_UnicodeBE, bBOM_UTF8: Boolean);
-    procedure ShowOpenDialog;
-    procedure ShowSaveDialog;
+      // File handling
+      fFileName:                            string;
+      MemoChanged:                          Boolean;
+      BOM_Unicode, BOM_UnicodeBE, BOM_UTF8: Boolean;
+      procedure OpenFile(const fFile: string);
+      procedure SaveFile(const fFile: string; bBOM_Unicode, bBOM_UnicodeBE, bBOM_UTF8: Boolean);
+      procedure ShowOpenDialog;
+      procedure ShowSaveDialog;
 
-    function AutoDetectCharacterSet(Stream: TStream): TUnicodeStreamCharSet;
-    procedure StrSwapByteOrder(Str: PChar);
-    procedure LoadFromStream_BOM_Return(Stream: TStream; WithBOM: Boolean; var BOM_Unicode, BOM_UnicodeBE, BOM_UTF8: Boolean);
-    procedure SaveToStream_BOM_Specify(Stream: TStream; WithBOM: Boolean; BOM_Unicode, BOM_UnicodeBE, BOM_UTF8: Boolean);
+      function AutoDetectCharacterSet(Stream: TStream): TUnicodeStreamCharSet;
+      procedure StrSwapByteOrder(Str: PChar);
+      procedure LoadFromStream_BOM_Return(Stream: TStream; WithBOM: Boolean; var BOM_Unicode, BOM_UnicodeBE, BOM_UTF8: Boolean);
+      procedure SaveToStream_BOM_Specify(Stream: TStream; WithBOM: Boolean; BOM_Unicode, BOM_UnicodeBE, BOM_UTF8: Boolean);
 
-    procedure HandleThemes;
+      procedure HandleThemes;
 
-    { MemoParser events }
-    procedure MP_WordFound(CurrentWord: string);
-    procedure MP_CompleteParsing;
-    procedure MP_PositionConflict;
-    procedure MP_TotalProgress(CurrentProgress: Integer);
-  public
-    { Public declarations }
-    MP: TMemoParser;
-    CheckingSpell: Boolean;
-    { Procedure ClipboardCopyPaste; }
-    { Procedure ShowMe; }
-  protected
-    procedure CreateParams(var Params: TCreateParams); override;
+      { MemoParser events }
+      procedure MP_WordFound(CurrentWord: string);
+      procedure MP_CompleteParsing;
+      procedure MP_PositionConflict;
+      procedure MP_TotalProgress(CurrentProgress: Integer);
+    public
+      { Public declarations }
+      MP:            TMemoParser;
+      CheckingSpell: Boolean;
+      { Procedure ClipboardCopyPaste; }
+      { Procedure ShowMe; }
+    protected
+      procedure CreateParams(var Params: TCreateParams); override;
   end;
 
 var
@@ -164,18 +176,22 @@ implementation
 {$R *.dfm}
 
 uses
-  KeyboardFunctions, VirtualKeyCode, strutils, uRegistrySettings,
-  uWindowHandlers, WindowsDarkMode;
+  KeyboardFunctions,
+  VirtualKeyCode,
+  strutils,
+  uRegistrySettings,
+  uWindowHandlers,
+  WindowsDarkMode;
 
 const
   Show_Window_in_Taskbar = True;
 
 const
-  SA_Default: Integer = 0;
-  SA_Ignore: Integer = 1;
-  SA_Cancel: Integer = -1;
+  SA_Default: Integer         = 0;
+  SA_Ignore: Integer          = 1;
+  SA_Cancel: Integer          = -1;
   SA_IgnoredByOption: Integer = 2;
-  SA_ReplaceAll: Integer = 3;
+  SA_ReplaceAll: Integer      = 3;
 
 procedure Callback(Wrd: PChar; CWrd: PChar; SAction: Integer); stdcall;
 begin
@@ -198,7 +214,7 @@ end;
 procedure TfrmSpell.MP_WordFound(CurrentWord: string);
 var
   DummySAction: Integer;
-  PT: TPoint;
+  PT:           TPoint;
 begin
   if not Avro_IsWordPresent(PChar(CurrentWord), DummySAction) then
   begin
@@ -371,11 +387,12 @@ procedure TfrmSpell.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 var
   MSG: Integer;
 begin
-  if not ((Length(MEMO.Text) <= 0) and (fFileName = '')) then
+  if not((Length(MEMO.Text) <= 0) and (fFileName = '')) then
   begin
     if (MemoChanged = True) then
     begin
-      MSG := Application.MessageBox('The text in the current file has changed.' + #10 + '' + #10 + 'Do you want to save the changes first?', 'Avro Pad', MB_YESNOCANCEL + MB_ICONQUESTION + MB_DEFBUTTON1 + MB_APPLMODAL);
+      MSG := Application.MessageBox('The text in the current file has changed.' + #10 + '' + #10 + 'Do you want to save the changes first?', 'Avro Pad',
+        MB_YESNOCANCEL + MB_ICONQUESTION + MB_DEFBUTTON1 + MB_APPLMODAL);
       if MSG = ID_YES then
       begin
         Save1Click(nil);
@@ -469,7 +486,8 @@ procedure TfrmSpell.MP_PositionConflict;
 begin
   Avro_HideSpeller;
 
-  Application.MessageBox('Document has been modified above the current spell checking position.' + #10 + '' + #10 + '' + #10 + 'Avro Pad will resume spell checking from the beginning.', 'Avro Pad', MB_OK + MB_ICONEXCLAMATION + MB_DEFBUTTON1 + MB_APPLMODAL);
+  Application.MessageBox('Document has been modified above the current spell checking position.' + #10 + '' + #10 + '' + #10 +
+      'Avro Pad will resume spell checking from the beginning.', 'Avro Pad', MB_OK + MB_ICONEXCLAMATION + MB_DEFBUTTON1 + MB_APPLMODAL);
 
   MP.ResetAll;
   CheckingSpell := False;
@@ -513,7 +531,8 @@ begin
   begin
     if (MemoChanged = True) then
     begin
-      MSG := Application.MessageBox('The text in the current file has changed.' + #10 + '' + #10 + 'Do you want to save the changes first?', 'Avro Pad', MB_YESNOCANCEL + MB_ICONQUESTION + MB_DEFBUTTON1 + MB_APPLMODAL);
+      MSG := Application.MessageBox('The text in the current file has changed.' + #10 + '' + #10 + 'Do you want to save the changes first?', 'Avro Pad',
+        MB_YESNOCANCEL + MB_ICONQUESTION + MB_DEFBUTTON1 + MB_APPLMODAL);
       if MSG = ID_YES then
       begin
         Save1Click(nil);
@@ -558,7 +577,8 @@ begin
   begin
     if (MemoChanged = True) then
     begin
-      MSG := Application.MessageBox('The text in the current file has changed.' + #10 + '' + #10 + 'Do you want to save the changes first?', 'Avro Pad', MB_YESNOCANCEL + MB_ICONQUESTION + MB_DEFBUTTON1 + MB_APPLMODAL);
+      MSG := Application.MessageBox('The text in the current file has changed.' + #10 + '' + #10 + 'Do you want to save the changes first?', 'Avro Pad',
+        MB_YESNOCANCEL + MB_ICONQUESTION + MB_DEFBUTTON1 + MB_APPLMODAL);
       if MSG = ID_YES then
       begin
         Save1Click(nil);
@@ -791,8 +811,8 @@ end;
 function TfrmSpell.AutoDetectCharacterSet(Stream: TStream): TUnicodeStreamCharSet;
 var
   ByteOrderMark: Char;
-  BytesRead: Integer;
-  Utf8Test: array[0..2] of AnsiChar;
+  BytesRead:     Integer;
+  Utf8Test:      array [0 .. 2] of AnsiChar;
 begin
   // Byte Order Mark
   ByteOrderMark := #0;
@@ -824,10 +844,10 @@ end;
 
 procedure TfrmSpell.LoadFromStream_BOM_Return(Stream: TStream; WithBOM: Boolean; var BOM_Unicode, BOM_UnicodeBE, BOM_UTF8: Boolean);
 var
-  DataLeft: Integer;
+  DataLeft:      Integer;
   StreamCharSet: TUnicodeStreamCharSet;
-  SW: string;
-  SA: AnsiString;
+  SW:            string;
+  SA:            AnsiString;
 begin
 
   if WithBOM then
@@ -881,8 +901,8 @@ end;
 
 procedure TfrmSpell.SaveToStream_BOM_Specify(Stream: TStream; WithBOM, BOM_Unicode, BOM_UnicodeBE, BOM_UTF8: Boolean);
 var
-  SW: string;
-  UT: utf8string;
+  SW:  string;
+  UT:  utf8string;
   BOM: Char;
 begin
   if WithBOM then
@@ -936,4 +956,3 @@ begin
 end;
 
 end.
-

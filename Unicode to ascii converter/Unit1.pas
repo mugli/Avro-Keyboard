@@ -61,13 +61,13 @@ type
     procedure Button1Click(Sender: TObject);
     procedure Label_OmicronLabClick(Sender: TObject);
     procedure AppEventsSettingChange(Sender: TObject; Flag: Integer; const Section: string; var Result: LongInt);
-  private
-                { Private declarations }
-    FUniToBijoy: TUnicodeToBijoy2000;
+    private
+      { Private declarations }
+      FUniToBijoy: TUnicodeToBijoy2000;
 
-    procedure HandleThemes;
-  public
-                { Public declarations }
+      procedure HandleThemes;
+    public
+      { Public declarations }
   end;
 
 var
@@ -98,7 +98,7 @@ end;
 
 procedure TForm1.Button1Click(Sender: TObject);
 var
-  i, TotalLines: integer;
+  i, TotalLines: Integer;
 begin
   MEMO1.Enabled := False;
   MEMO2.Enabled := False;
@@ -153,4 +153,3 @@ end;
 { =============================================================================== }
 
 end.
-

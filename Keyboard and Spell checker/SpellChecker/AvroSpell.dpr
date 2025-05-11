@@ -25,7 +25,7 @@
   =============================================================================
 }
 
-Library AvroSpell;
+library AvroSpell;
 
 uses
   SysUtils,
@@ -46,38 +46,37 @@ uses
   uSimilarSort_Spell in 'uSimilarSort_Spell.pas',
   uSpellEditDistanceSearch in 'uSpellEditDistanceSearch.pas',
   uRegistrySettings in 'uRegistrySettings.pas',
-  ufrmAbout in 'ufrmAbout.pas' {frmAbout},
+  ufrmAbout in 'ufrmAbout.pas' {frmAbout} ,
   clsRegistry_XMLSetting in 'clsRegistry_XMLSetting.pas',
   clsFileVersion in '..\Classes\clsFileVersion.pas',
-  ufrmSpellOptions in 'ufrmSpellOptions.pas' {frmSpellOptions},
-  ufrmSpellPopUp in 'ufrmSpellPopUp.pas' {frmSpellPopUp},
+  ufrmSpellOptions in 'ufrmSpellOptions.pas' {frmSpellOptions} ,
+  ufrmSpellPopUp in 'ufrmSpellPopUp.pas' {frmSpellPopUp} ,
   Forms,
   Classes;
 
 {$R *.res}
 
-Var
+var
   Initialized: Boolean;
 
   { =============================================================================== }
 
-Function UnicodeDeNormalize(Const W: String): String;
-Begin
+function UnicodeDeNormalize(const W: string): string;
+begin
   Result := W;
   Result := ReplaceStr(Result, b_B + b_Nukta, b_r);
   Result := ReplaceStr(Result, b_Dd + b_Nukta, b_Rr);
   Result := ReplaceStr(Result, b_Ddh + b_Nukta, b_Rrh);
   Result := ReplaceStr(Result, b_Z + b_Nukta, b_Y);
-End;
+end;
 
 { =============================================================================== }
 
-function CanIgnoreByOption(W: String): Boolean;
+function CanIgnoreByOption(W: string): Boolean;
 var
-  Spell_IgnoreNumbers, Spell_IgnoreAncient, Spell_IgnoreAssamese,
-    Spell_IgnoreSingle: Boolean;
-  theRegex: TRegex;
-  SearchStr: string;
+  Spell_IgnoreNumbers, Spell_IgnoreAncient, Spell_IgnoreAssamese, Spell_IgnoreSingle: Boolean;
+  theRegex:                                                                           TRegex;
+  SearchStr:                                                                          string;
 
 begin
   Result := False;
@@ -98,8 +97,7 @@ begin
 
   if Spell_IgnoreNumbers then
   begin
-    SearchStr := '^.*[' + b_0 + b_1 + b_2 + b_3 + b_4 + b_5 + b_6 + b_7 + b_8 +
-      b_9 + '].*$';
+    SearchStr := '^.*[' + b_0 + b_1 + b_2 + b_3 + b_4 + b_5 + b_6 + b_7 + b_8 + b_9 + '].*$';
     theRegex := TRegex.Create(SearchStr, [roCompiled]);
     // Use roUnicode for UTF-8
     if theRegex.IsMatch(W) then
@@ -122,12 +120,9 @@ begin
 
   if Spell_IgnoreAncient then
   begin
-    SearchStr := '^.*[' + b_Vocalic_L + b_Vocalic_LL + b_Vocalic_RR +
-      b_Vocalic_RR_Kar + b_Vocalic_L_Kar + b_Vocalic_LL_Kar + b_Avagraha +
-      b_LengthMark + b_RupeeMark + b_CurrencyNumerator1 + b_CurrencyNumerator2 +
-      b_CurrencyNumerator3 + b_CurrencyNumerator4 +
-      b_CurrencyNumerator1LessThanDenominator + b_CurrencyDenominator16 +
-      b_CurrencyEsshar + '].*$';
+    SearchStr := '^.*[' + b_Vocalic_L + b_Vocalic_LL + b_Vocalic_RR + b_Vocalic_RR_Kar + b_Vocalic_L_Kar + b_Vocalic_LL_Kar + b_Avagraha + b_LengthMark +
+      b_RupeeMark + b_CurrencyNumerator1 + b_CurrencyNumerator2 + b_CurrencyNumerator3 + b_CurrencyNumerator4 + b_CurrencyNumerator1LessThanDenominator +
+      b_CurrencyDenominator16 + b_CurrencyEsshar + '].*$';
     theRegex := TRegex.Create(SearchStr, [roCompiled]);
     if theRegex.IsMatch(W) then
     begin
@@ -139,52 +134,51 @@ end;
 
 { =============================================================================== }
 
-Function SplitSuggestion(W: String): String;
-Var
-  I, Len: Integer;
-  part1, part2: String;
-Begin
+function SplitSuggestion(W: string): string;
+var
+  I, Len:       Integer;
+  part1, part2: string;
+begin
   Result := '';
   Len := Length(W);
   I := 0;
-  Repeat
+  repeat
     I := I + 1;
     part1 := LeftStr(W, I);
     part2 := MidStr(W, I + 1, Len);
 
-    If (WordPresent(part1) = True) And (WordPresent(part2) = True) Then
-    Begin
+    if (WordPresent(part1) = True) and (WordPresent(part2) = True) then
+    begin
       Result := part1 + ' ' + part2;
       break;
-    End;
+    end;
 
-  Until I > Len;
-End;
+  until I > Len;
+end;
 
 { =============================================================================== }
 { =============================================================================== }
 { =============================================================================== }
 { =============================================================================== }
 
-Procedure Avro_RegisterCallback(mCallback: TCallback); Stdcall;
-Begin
-  Try
+procedure Avro_RegisterCallback(mCallback: TCallback); stdcall;
+begin
+  try
     Callback := mCallback;
-  Except
-    On e: exception Do
-    Begin
-      Application.MessageBox('Error occured on Avro spelling engine!', 'Error!',
-        MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
+  except
+    on e: exception do
+    begin
+      Application.MessageBox('Error occured on Avro spelling engine!', 'Error!', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
 
-    End;
-  End;
-End;
+    end;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure Avro_InitSpell; Stdcall;
-Begin
-  Try
+procedure Avro_InitSpell; stdcall;
+begin
+  try
     LoadWordDatabase;
     LoadSettings;
     InitSpellCustomDict;
@@ -197,30 +191,28 @@ Begin
     frmSpellPopUp := TfrmSpellPopUp.Create(Application);
 
     Initialized := True;
-  Except
-    On e: exception Do
-    Begin
-      Application.MessageBox('Error occured on Avro spelling engine!', 'Error!',
-        MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
+  except
+    on e: exception do
+    begin
+      Application.MessageBox('Error occured on Avro spelling engine!', 'Error!', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
 
-    End;
-  End;
-End;
+    end;
+  end;
+end;
 
 { =============================================================================== }
 
-Function Avro_IsWordPresent(Wrd: PChar; Var SAction: Integer)
-  : LongBool; Stdcall;
-Var
-  mWrd: String;
-Begin
+function Avro_IsWordPresent(Wrd: PChar; var SAction: Integer): LongBool; stdcall;
+var
+  mWrd: string;
+begin
 
   Result := False;
-  Try
-    If Not Initialized Then
-    Begin
+  try
+    if not Initialized then
+    begin
       Exit;
-    End;
+    end;
 
     mWrd := UnicodeDeNormalize(Wrd);
 
@@ -228,217 +220,208 @@ Begin
     // SAction = 1 Ignored word
     // SAction = 2 Ignored by option
 
-    If CanIgnoreByOption(mWrd) = True Then
-    Begin
+    if CanIgnoreByOption(mWrd) = True then
+    begin
       SAction := SA_IgnoredByOption;
       Result := True;
       Exit;
-    End;
+    end;
 
-    If WordPresentInIgnoreDict(mWrd) Then
-    Begin
+    if WordPresentInIgnoreDict(mWrd) then
+    begin
       SAction := SA_Ignore;
       Result := True;
       Exit;
-    End;
+    end;
 
-    If WordPresent(mWrd) Or WordPresentInCustomDict(mWrd) Then
-    Begin
+    if WordPresent(mWrd) or WordPresentInCustomDict(mWrd) then
+    begin
       SAction := SA_Default;
       Result := True;
       Exit;
-    End;
+    end;
 
     Result := False;
-  Except
-    On e: exception Do
-    Begin
-      Application.MessageBox('Error occured on Avro spelling engine!', 'Error!',
-        MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
+  except
+    on e: exception do
+    begin
+      Application.MessageBox('Error occured on Avro spelling engine!', 'Error!', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
 
-    End;
-  End;
-End;
+    end;
+  end;
+end;
 
 { =============================================================================== }
 
-Function Avro_WordPresentInChangeAll(Wrd: PChar): LongBool; Stdcall;
-Var
-  mWrd: String;
-Begin
+function Avro_WordPresentInChangeAll(Wrd: PChar): LongBool; stdcall;
+var
+  mWrd: string;
+begin
   Result := False;
-  Try
+  try
     mWrd := UnicodeDeNormalize(Wrd);
     Result := SpellChangeDict.ContainsKey(mWrd);
-  Except
-    On e: exception Do
-    Begin
-      Application.MessageBox('Error occured on Avro spelling engine!', 'Error!',
-        MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
+  except
+    on e: exception do
+    begin
+      Application.MessageBox('Error occured on Avro spelling engine!', 'Error!', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
 
-    End;
-  End;
-End;
+    end;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure Avro_GetCorrection(Wrd: PChar); Stdcall;
-Var
-  mWrd: String;
-  SplittedWord: String;
-Begin
-  Try
-    If Not Initialized Then
-    Begin
+procedure Avro_GetCorrection(Wrd: PChar); stdcall;
+var
+  mWrd:         string;
+  SplittedWord: string;
+begin
+  try
+    if not Initialized then
+    begin
       Exit;
-    End;
+    end;
 
     mWrd := UnicodeDeNormalize(Wrd);
 
     // SAction = 3 Change All
-    If SpellChangeDict.ContainsKey(mWrd) Then
-    Begin
-      Callback(PChar(mWrd), PChar((SpellChangeDict.Items[mWrd])),
-        SA_ReplaceAll);
+    if SpellChangeDict.ContainsKey(mWrd) then
+    begin
+      Callback(PChar(mWrd), PChar((SpellChangeDict.Items[mWrd])), SA_ReplaceAll);
       Exit;
-    End;
+    end;
 
     PhoneticResult.Clear;
     FuzzyResult.Clear;
     OtherResult.Clear;
 
     // Bisharga to colon
-    If RightStr(mWrd, 1) = b_bisharga Then
-    Begin
-      If WordPresent(LeftStr(mWrd, Length(mWrd) - 1)) Then
+    if RightStr(mWrd, 1) = b_bisharga then
+    begin
+      if WordPresent(LeftStr(mWrd, Length(mWrd) - 1)) then
         OtherResult.Add(LeftStr(mWrd, Length(mWrd) - 1) + ':');
-    End
-    Else
-    Begin
+    end
+    else
+    begin
       // Phonetic errors
       PhoneticSug.BuildSuggestion(mWrd, PhoneticResult);
       // Suggestion from fuzzy search ("Substitution", "Insertion", "Deletion" errors)
       SearchSuggestion(mWrd, FuzzyResult, 1);
-    End;
+    end;
 
     // Splitted suggestion  (Words Joined?)
-    If (PhoneticResult.Count + FuzzyResult.Count) <= 0 Then
-    Begin
+    if (PhoneticResult.Count + FuzzyResult.Count) <= 0 then
+    begin
       SplittedWord := SplitSuggestion(mWrd);
-      If SplittedWord <> '' Then
+      if SplittedWord <> '' then
       begin
         OtherResult.Add(SplittedWord);
         OtherResult.Add(ReplaceStr(SplittedWord, ' ', '-'));
       end;
-    End;
+    end;
 
     // Rest Transposition and OCR errors for next version
     { TODO : transposition and OCR errors }
 
     frmSpellPopUp.Edit_NotFound.Text := mWrd;
     frmSpellPopUp.Show;
-  Except
-    On e: exception Do
-    Begin
-      Application.MessageBox('Error occured on Avro spelling engine!', 'Error!',
-        MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
+  except
+    on e: exception do
+    begin
+      Application.MessageBox('Error occured on Avro spelling engine!', 'Error!', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
 
-    End;
-  End;
-End;
+    end;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure Avro_SetWordPosInScreen(xPoint, yPoint: Integer); Stdcall;
-Begin
-  Try
+procedure Avro_SetWordPosInScreen(xPoint, yPoint: Integer); stdcall;
+begin
+  try
     MoveToOptimumPos(xPoint, yPoint);
-  Except
-    On e: exception Do
-    Begin
-      Application.MessageBox('Error occured on Avro spelling engine!', 'Error!',
-        MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
+  except
+    on e: exception do
+    begin
+      Application.MessageBox('Error occured on Avro spelling engine!', 'Error!', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
 
-    End;
-  End;
-End;
+    end;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure Avro_HideSpeller; Stdcall;
-Begin
-  Try
+procedure Avro_HideSpeller; stdcall;
+begin
+  try
     frmSpellPopUp.Hide;
-  Except
-    On e: exception Do
-    Begin
-      Application.MessageBox('Error occured on Avro spelling engine!', 'Error!',
-        MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
+  except
+    on e: exception do
+    begin
+      Application.MessageBox('Error occured on Avro spelling engine!', 'Error!', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
 
-    End;
-  End;
-End;
+    end;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure Avro_ShowOptions; Stdcall;
-Begin
-  Try
+procedure Avro_ShowOptions; stdcall;
+begin
+  try
     LoadSettings;
     frmSpellOptions := TfrmSpellOptions.Create(Application);
     frmSpellOptions.Show;
-  Except
-    On e: exception Do
-    Begin
-      Application.MessageBox('Error occured on Avro spelling engine!', 'Error!',
-        MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
+  except
+    on e: exception do
+    begin
+      Application.MessageBox('Error occured on Avro spelling engine!', 'Error!', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
 
-    End;
-  End;
-End;
+    end;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure Avro_ShowAbout; Stdcall;
-Begin
-  Try
+procedure Avro_ShowAbout; stdcall;
+begin
+  try
     frmAbout := TfrmAbout.Create(Application);
     frmAbout.Show;
-  Except
-    On e: exception Do
-    Begin
-      Application.MessageBox('Error occured on Avro spelling engine!', 'Error!',
-        MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
+  except
+    on e: exception do
+    begin
+      Application.MessageBox('Error occured on Avro spelling engine!', 'Error!', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
 
-    End;
-  End;
-End;
+    end;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure Avro_ForgetChangeIgnore; Stdcall;
-Begin
-  If Not Initialized Then
+procedure Avro_ForgetChangeIgnore; stdcall;
+begin
+  if not Initialized then
     Exit;
 
-  Try
+  try
     SpellIgnoreDict.Clear;
     SpellChangeDict.Clear;
-  Except
-    On e: exception Do
-    Begin
-      Application.MessageBox('Error occured on Avro spelling engine!', 'Error!',
-        MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
+  except
+    on e: exception do
+    begin
+      Application.MessageBox('Error occured on Avro spelling engine!', 'Error!', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
 
-    End;
-  End;
-End;
+    end;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure Avro_UnloadAll; Stdcall;
-Begin
-  Try
+procedure Avro_UnloadAll; stdcall;
+begin
+  try
     frmSpellPopUp.Close;
 
     SaveSettings;
@@ -453,23 +436,22 @@ Begin
     FreeAndNil(FuzzyResult);
     OtherResult.Clear;
     FreeAndNil(OtherResult);
-  Except
-    On e: exception Do
-    Begin
-      Application.MessageBox('Error occured on Avro spelling engine!', 'Error!',
-        MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
+  except
+    on e: exception do
+    begin
+      Application.MessageBox('Error occured on Avro spelling engine!', 'Error!', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
 
-    End;
-  End;
+    end;
+  end;
   Initialized := False;
-End;
+end;
 
 { =============================================================================== }
 { =============================================================================== }
 { =============================================================================== }
 { =============================================================================== }
 
-Exports
+exports
   Avro_InitSpell,
   Avro_RegisterCallback,
   Avro_IsWordPresent,
@@ -482,6 +464,6 @@ Exports
   Avro_ForgetChangeIgnore,
   Avro_UnloadAll;
 
-Begin
+begin
 
-End.
+end.

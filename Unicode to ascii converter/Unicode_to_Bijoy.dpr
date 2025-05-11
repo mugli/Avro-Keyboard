@@ -29,7 +29,7 @@ program Unicode_to_Bijoy;
 
 uses
   Forms,
-  Unit1 in 'Unit1.pas' {Form1},
+  Unit1 in 'Unit1.pas' {Form1} ,
   clsUnicodeToBijoy2000 in 'clsUnicodeToBijoy2000.pas',
   BanglaChars in '..\Keyboard and Spell checker\Units\BanglaChars.pas',
   uFileFolderHandling in '..\Keyboard and Spell checker\Units\uFileFolderHandling.pas',

@@ -25,220 +25,203 @@
   =============================================================================
 }
 
-Unit clsMemoParser;
+unit clsMemoParser;
 
-Interface
+interface
 
-Type
-        // Event types
-        // --------------------------------------------------------------
-        TTotalProgress = Procedure(FCurrentProgress: Integer) Of Object;
-        TWordFound = Procedure(FCurrentWord: String) Of Object;
-        TCompleteParsing = Procedure Of Object;
-        TPositionConflict = Procedure Of Object;
+type
+  // Event types
+  // --------------------------------------------------------------
+  TTotalProgress    = procedure(FCurrentProgress: Integer) of object;
+  TWordFound        = procedure(FCurrentWord: string) of object;
+  TCompleteParsing  = procedure of object;
+  TPositionConflict = procedure of object;
 
-Type
-        TMemoParser = Class
-        Private
-                CurrentLine: LongInt;
-                LinePos: Integer;
-                SelStart: LongInt;
-                SelLength: LongInt;
-                ValidChars_B: String;
-                FStopPursing: Boolean;
+type
+  TMemoParser = class
+    private
+      CurrentLine:  LongInt;
+      LinePos:      Integer;
+      SelStart:     LongInt;
+      SelLength:    LongInt;
+      ValidChars_B: string;
+      FStopPursing: Boolean;
 
-                // --------------------------------------------------------------
-                // Event types
-                FTotalProgress: TTotalProgress;
-                FWordFound: TWordFound;
-                FCompleteParsing: TCompleteParsing;
-                FPositionComflict: TPositionConflict;
+      // --------------------------------------------------------------
+      // Event types
+      FTotalProgress:    TTotalProgress;
+      FWordFound:        TWordFound;
+      FCompleteParsing:  TCompleteParsing;
+      FPositionComflict: TPositionConflict;
 
-        Public
-                Constructor Create;
-                Procedure BeginPursing;
-                Procedure PausePursing;
-                Procedure SelectWord;
-                Procedure ResetAll;
-                Procedure ReplaceCurrentWord(Const rWord: String;
-                  Const PrevWord: String);
+    public
+      constructor Create;
+      procedure BeginPursing;
+      procedure PausePursing;
+      procedure SelectWord;
+      procedure ResetAll;
+      procedure ReplaceCurrentWord(const rWord: string; const PrevWord: string);
 
-                // event properties
-                Property OnTotalProgress: TTotalProgress Read FTotalProgress
-                  Write FTotalProgress;
-                Property OnWordFound: TWordFound Read FWordFound
-                  Write FWordFound;
-                Property OnCompleteParsing: TCompleteParsing
-                  Read FCompleteParsing Write FCompleteParsing;
-                Property OnPositionConflict: TPositionConflict
-                  Read FPositionComflict Write FPositionComflict;
-        End;
+      // event properties
+      property OnTotalProgress: TTotalProgress read FTotalProgress write FTotalProgress;
+      property OnWordFound: TWordFound read FWordFound write FWordFound;
+      property OnCompleteParsing: TCompleteParsing read FCompleteParsing write FCompleteParsing;
+      property OnPositionConflict: TPositionConflict read FPositionComflict write FPositionComflict;
+  end;
 
-Implementation
+implementation
 
-Uses
-        ufrmSpell,
-        Banglachars,
-        SysUtils,
-        StrUtils,
-        Messages,
-        Windows;
+uses
+  ufrmSpell,
+  Banglachars,
+  SysUtils,
+  StrUtils,
+  Messages,
+  Windows;
 
 { TMemoParser }
 
-Constructor TMemoParser.Create;
-Begin
-        ResetAll;
-        FTotalProgress := Nil;
-        FWordFound := Nil;
-        FCompleteParsing := Nil;
-        ValidChars_B := b_0 + b_1 + b_2 + b_3 + b_4 + b_5 + b_6 + b_7 +
-          b_8 + b_9 +
+constructor TMemoParser.Create;
+begin
+  ResetAll;
+  FTotalProgress := nil;
+  FWordFound := nil;
+  FCompleteParsing := nil;
+  ValidChars_B := b_0 + b_1 + b_2 + b_3 + b_4 + b_5 + b_6 + b_7 + b_8 + b_9 +
 
-          b_A + b_AA + b_AAkar + b_I + b_II + b_IIkar + b_Ikar + b_U + b_Ukar +
-          b_UU + b_UUkar + b_RRI + b_RRIkar + b_E + b_Ekar + b_O + b_OI +
-          b_OIkar + b_Okar + b_OU + b_OUkar +
+    b_A + b_AA + b_AAkar + b_I + b_II + b_IIkar + b_Ikar + b_U + b_Ukar + b_UU + b_UUkar + b_RRI + b_RRIkar + b_E + b_Ekar + b_O + b_OI + b_OIkar + b_Okar +
+    b_OU + b_OUkar +
 
-          b_Anushar + b_B + b_Bh + b_Bisharga + b_C + b_CH + b_Chandra + b_D +
-          b_Dd + b_Ddh + b_Dh + b_G + b_GH + b_H + b_J + b_JH + b_K + b_KH + b_L
-          + b_M + b_N + b_NGA + b_Nn + b_NYA + b_P + b_Ph + b_R + b_Rr + b_Rrh +
-          b_S + b_Sh + b_Ss + b_T + b_Th + b_Tt + b_Tth + b_Y + b_Z + AssamRa +
-          AssamVa + b_Khandatta +
+    b_Anushar + b_B + b_Bh + b_Bisharga + b_C + b_CH + b_Chandra + b_D + b_Dd + b_Ddh + b_Dh + b_G + b_GH + b_H + b_J + b_JH + b_K + b_KH + b_L + b_M + b_N +
+    b_NGA + b_Nn + b_NYA + b_P + b_Ph + b_R + b_Rr + b_Rrh + b_S + b_Sh + b_Ss + b_T + b_Th + b_Tt + b_Tth + b_Y + b_Z + AssamRa + AssamVa + b_Khandatta +
 
-          b_Hasanta + b_Taka + ZWJ + ZWNJ + b_Vocalic_L + b_Vocalic_LL +
-          b_Vocalic_RR + b_Vocalic_RR_Kar + b_Vocalic_L_Kar + b_Vocalic_LL_Kar +
-          b_Nukta + b_Avagraha + b_LengthMark + b_RupeeMark +
-          b_CurrencyNumerator1 + b_CurrencyNumerator2 + b_CurrencyNumerator3 +
-          b_CurrencyNumerator4 + b_CurrencyNumerator1LessThanDenominator +
-          b_CurrencyDenominator16 + b_CurrencyEsshar;
-End;
+    b_Hasanta + b_Taka + ZWJ + ZWNJ + b_Vocalic_L + b_Vocalic_LL + b_Vocalic_RR + b_Vocalic_RR_Kar + b_Vocalic_L_Kar + b_Vocalic_LL_Kar + b_Nukta + b_Avagraha +
+    b_LengthMark + b_RupeeMark + b_CurrencyNumerator1 + b_CurrencyNumerator2 + b_CurrencyNumerator3 + b_CurrencyNumerator4 +
+    b_CurrencyNumerator1LessThanDenominator + b_CurrencyDenominator16 + b_CurrencyEsshar;
+end;
 
-Procedure TMemoParser.PausePursing;
-Begin
-        FStopPursing := True;
-End;
+procedure TMemoParser.PausePursing;
+begin
+  FStopPursing := True;
+end;
 
-Procedure TMemoParser.BeginPursing;
-Var
-        LineText: String;
-        TotalLines: Integer;
-        CurrentWord: String;
-Begin
+procedure TMemoParser.BeginPursing;
+var
+  LineText:    string;
+  TotalLines:  Integer;
+  CurrentWord: string;
+begin
+  CurrentWord := '';
+  FStopPursing := False;
+  TotalLines := frmSpell.MEMO.Lines.Count - 1;
+
+  if CurrentLine > (TotalLines + 1) then
+  begin
+    if Assigned(FPositionComflict) then
+      FPositionComflict;
+    Exit;
+  end;
+
+  while CurrentLine <= TotalLines do
+  begin
+
+    if FStopPursing = True then
+      Exit;
+
+    if Assigned(FTotalProgress) then
+      FTotalProgress(((CurrentLine + 1) * 100) div (TotalLines + 1));
+
+    LineText := frmSpell.MEMO.Lines[CurrentLine];
+
+    while LinePos + 1 <= Length(LineText) do
+    begin
+
+      if FStopPursing = True then
+        Exit;
+
+      inc(LinePos);
+
+      if pos(LineText[LinePos], ValidChars_B) > 0 then
+      begin
+        if CurrentWord = '' then
+          SelStart := LinePos;
+        CurrentWord := CurrentWord + LineText[LinePos];
+      end
+      else
+      begin
+        if CurrentWord <> '' then
+        begin
+          if Assigned(FWordFound) then
+          begin
+            SelLength := Length(CurrentWord);
+            FWordFound(CurrentWord);
+            CurrentWord := '';
+            Exit;
+          end;
+        end;
+      end;
+    end;
+
+    if CurrentWord <> '' then
+    begin
+      if Assigned(FWordFound) then
+      begin
+        SelLength := Length(CurrentWord);
+        FWordFound(CurrentWord);
         CurrentWord := '';
-        FStopPursing := False;
-        TotalLines := frmSpell.MEMO.Lines.Count - 1;
+        Exit;
+      end;
+    end;
 
-        If CurrentLine > (TotalLines + 1) Then
-        Begin
-                If Assigned(FPositionComflict) Then
-                        FPositionComflict;
-                Exit;
-        End;
+    inc(CurrentLine);
+    LinePos := 0;
+  end;
 
-        While CurrentLine <= TotalLines Do
-        Begin
+  if Assigned(FCompleteParsing) then
+    FCompleteParsing;
+end;
 
-                If FStopPursing = True Then
-                        Exit;
+procedure TMemoParser.ReplaceCurrentWord(const rWord: string; const PrevWord: string);
+begin
+  frmSpell.MEMO.SelStart := frmSpell.MEMO.Perform(EM_LINEINDEX, CurrentLine, 0) + SelStart - 1;
+  frmSpell.MEMO.SelLength := SelLength;
 
-                If Assigned(FTotalProgress) Then
-                        FTotalProgress(((CurrentLine + 1) * 100)
-                          Div (TotalLines + 1));
+  if frmSpell.MEMO.SelText <> PrevWord then
+  begin
+    if Assigned(FPositionComflict) then
+      FPositionComflict;
+    Exit;
+  end;
 
-                LineText := frmSpell.MEMO.Lines[CurrentLine];
+  frmSpell.MEMO.SelText := rWord;
 
-                While LinePos + 1 <= Length(LineText) Do
-                Begin
+  if Length(rWord) < SelLength then
+  begin
+    LinePos := LinePos - (SelLength - Length(rWord));
+    SelLength := Length(rWord);
+  end
+  else if Length(rWord) > SelLength then
+  begin
+    LinePos := LinePos + (Length(rWord) - SelLength);
+    SelLength := Length(rWord);
+  end;
 
-                        If FStopPursing = True Then
-                                Exit;
+end;
 
-                        inc(LinePos);
+procedure TMemoParser.ResetAll;
+begin
+  SelStart := 0;
+  SelLength := 0;
+  CurrentLine := 0;
+  LinePos := 0;
+  FStopPursing := False;
+end;
 
-                        If pos(LineText[LinePos], ValidChars_B) > 0 Then
-                        Begin
-                                If CurrentWord = '' Then
-                                        SelStart := LinePos;
-                                CurrentWord := CurrentWord + LineText[LinePos];
-                        End
-                        Else
-                        Begin
-                                If CurrentWord <> '' Then
-                                Begin
-                                        If Assigned(FWordFound) Then
-                                        Begin
-                                        SelLength := Length(CurrentWord);
-                                        FWordFound(CurrentWord);
-                                        CurrentWord := '';
-                                        Exit;
-                                        End;
-                                End;
-                        End;
-                End;
+procedure TMemoParser.SelectWord;
+begin
+  frmSpell.MEMO.SelStart := frmSpell.MEMO.Perform(EM_LINEINDEX, CurrentLine, 0) + SelStart - 1;
+  frmSpell.MEMO.SelLength := SelLength;
+  frmSpell.MEMO.Perform(EM_SCROLLCARET, 0, 0);
+end;
 
-                If CurrentWord <> '' Then
-                Begin
-                        If Assigned(FWordFound) Then
-                        Begin
-                                SelLength := Length(CurrentWord);
-                                FWordFound(CurrentWord);
-                                CurrentWord := '';
-                                Exit;
-                        End;
-                End;
-
-                inc(CurrentLine);
-                LinePos := 0;
-        End;
-
-        If Assigned(FCompleteParsing) Then
-                FCompleteParsing;
-End;
-
-Procedure TMemoParser.ReplaceCurrentWord(Const rWord: String;
-  Const PrevWord: String);
-Begin
-        frmSpell.MEMO.SelStart := frmSpell.MEMO.Perform(EM_LINEINDEX,
-          CurrentLine, 0) + SelStart - 1;
-        frmSpell.MEMO.SelLength := SelLength;
-
-        If frmSpell.MEMO.SelText <> PrevWord Then
-        Begin
-                If Assigned(FPositionComflict) Then
-                        FPositionComflict;
-                Exit;
-        End;
-
-        frmSpell.MEMO.SelText := rWord;
-
-        If Length(rWord) < SelLength Then
-        Begin
-                LinePos := LinePos - (SelLength - Length(rWord));
-                SelLength := Length(rWord);
-        End
-        Else If Length(rWord) > SelLength Then
-        Begin
-                LinePos := LinePos + (Length(rWord) - SelLength);
-                SelLength := Length(rWord);
-        End;
-
-End;
-
-Procedure TMemoParser.ResetAll;
-Begin
-        SelStart := 0;
-        SelLength := 0;
-        CurrentLine := 0;
-        LinePos := 0;
-        FStopPursing := False;
-End;
-
-Procedure TMemoParser.SelectWord;
-Begin
-        frmSpell.MEMO.SelStart := frmSpell.MEMO.Perform(EM_LINEINDEX,
-          CurrentLine, 0) + SelStart - 1;
-        frmSpell.MEMO.SelLength := SelLength;
-        frmSpell.MEMO.Perform(EM_SCROLLCARET, 0, 0);
-End;
-
-End.
+end.

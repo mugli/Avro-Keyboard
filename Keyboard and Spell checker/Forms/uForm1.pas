@@ -31,16 +31,33 @@ unit uForm1;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ImgList, ExtCtrls, Menus, clsLayout, Generics.Collections,
-  StrUtils, clsUpdateInfoDownloader, DateUtils, System.ImageList, Vcl.AppEvnts;
+  Windows,
+  Messages,
+  SysUtils,
+  Variants,
+  Classes,
+  Graphics,
+  Controls,
+  Forms,
+  Dialogs,
+  StdCtrls,
+  ImgList,
+  ExtCtrls,
+  Menus,
+  clsLayout,
+  Generics.Collections,
+  StrUtils,
+  clsUpdateInfoDownloader,
+  DateUtils,
+  System.ImageList,
+  Vcl.AppEvnts;
 
 type
   TMenuItemExtended = class(TMenuItem)
-  private
-    fValue: string;
-  published
-    property Value: string read fValue write fValue;
+    private
+      fValue: string;
+    published
+      property Value: string read fValue write fValue;
   end;
 
 type
@@ -350,52 +367,52 @@ type
     procedure AvroKeyboardonFacebook1Click(Sender: TObject);
     procedure OmicronLabonTwitter1Click(Sender: TObject);
     procedure AppEventsSettingChange(Sender: TObject; Flag: Integer; const Section: string; var Result: LongInt);
-  private
-    { Private declarations }
-    WindowDict: TDictionary<HWND, TWindowRecord>;
-    MyCurrentLayout: string;
-    MyCurrentKeyboardMode: enumMode;
-    LastWindow: HWND;
+    private
+      { Private declarations }
+      WindowDict:            TDictionary<HWND, TWindowRecord>;
+      MyCurrentLayout:       string;
+      MyCurrentKeyboardMode: enumMode;
+      LastWindow:            HWND;
 
-    procedure ChangeTypingStyle(const sStyle: string);
-    function IgnorableWindow(const lngHWND: HWND): Boolean;
+      procedure ChangeTypingStyle(const sStyle: string);
+      function IgnorableWindow(const lngHWND: HWND): Boolean;
 
-    procedure ToggleAutoCorrect;
-    procedure ToggleFixChandra;
-    procedure ToggleNumPadBangla;
-    procedure ToggleOldStyleReph;
-    procedure ToggleVowelFormat;
-    procedure LoadApp;
-    procedure MenuFixedLayoutClick(Sender: TObject);
-    procedure KeyLayout_KeyboardLayoutChanged(CurrentKeyboardLayout: string);
-    procedure KeyLayout_KeyboardModeChanged(CurrentMode: enumMode);
-    procedure ResetAllWindowLocale;
+      procedure ToggleAutoCorrect;
+      procedure ToggleFixChandra;
+      procedure ToggleNumPadBangla;
+      procedure ToggleOldStyleReph;
+      procedure ToggleVowelFormat;
+      procedure LoadApp;
+      procedure MenuFixedLayoutClick(Sender: TObject);
+      procedure KeyLayout_KeyboardLayoutChanged(CurrentKeyboardLayout: string);
+      procedure KeyLayout_KeyboardModeChanged(CurrentMode: enumMode);
+      procedure ResetAllWindowLocale;
 
-    procedure HandleThemes;
+      procedure HandleThemes;
 
-    procedure WMCopyData(var Msg: TWMCopyData); message WM_COPYDATA;
-  public
-    { Public declarations }
-    KeyboardModeChanged: Boolean;
-    KeyLayout: TLayout;
-    Updater: TUpdateCheck;
+      procedure WMCopyData(var Msg: TWMCopyData); message WM_COPYDATA;
+    public
+      { Public declarations }
+      KeyboardModeChanged: Boolean;
+      KeyLayout:           TLayout;
+      Updater:             TUpdateCheck;
 
-    function GetMyCurrentKeyboardMode: enumMode;
-    procedure ExitApp;
-    function GetMyCurrentLayout: string;
-    procedure RefreshSettings;
-    procedure RestoreFromTray;
-    procedure OpenHelpFile(const HelpID: Integer);
-    procedure ShowOnTray;
-    procedure ToggleMode;
-    procedure TopBarDocToTop;
-    function TransferKeyDown(const KeyCode: Integer; var Block: Boolean): string;
-    procedure TransferKeyUp(const KeyCode: Integer; var Block: Boolean);
-    procedure TrimAppMemorySize;
-    procedure Initmenu;
-    procedure ToggleOutputEncoding;
-  protected
-    procedure CreateParams(var Params: TCreateParams); override;
+      function GetMyCurrentKeyboardMode: enumMode;
+      procedure ExitApp;
+      function GetMyCurrentLayout: string;
+      procedure RefreshSettings;
+      procedure RestoreFromTray;
+      procedure OpenHelpFile(const HelpID: Integer);
+      procedure ShowOnTray;
+      procedure ToggleMode;
+      procedure TopBarDocToTop;
+      function TransferKeyDown(const KeyCode: Integer; var Block: Boolean): string;
+      procedure TransferKeyUp(const KeyCode: Integer; var Block: Boolean);
+      procedure TrimAppMemorySize;
+      procedure Initmenu;
+      procedure ToggleOutputEncoding;
+    protected
+      procedure CreateParams(var Params: TCreateParams); override;
   end;
 
 var
@@ -406,11 +423,30 @@ implementation
 {$R *.dfm}
 
 uses
-  uRegistrySettings, uProcessHandler, uAutoCorrect, KeyboardLayoutLoader,
-  uFileFolderHandling, WindowsVersion, uWindowHandlers, uTopBar, uLayoutViewer,
-  ufrmAvroMouse, ufrmOptions, ufrmAboutSkinLayout, ufrmAbout, ufrmAutoCorrect,
-  clsRegistry_XMLSetting, KeyboardHook, uFrmSplash, uLocale, ufrmPrevW, uDBase,
-  SkinLoader, u_VirtualFontInstall, ufrmEncodingWarning, DebugLog,
+  uRegistrySettings,
+  uProcessHandler,
+  uAutoCorrect,
+  KeyboardLayoutLoader,
+  uFileFolderHandling,
+  WindowsVersion,
+  uWindowHandlers,
+  uTopBar,
+  uLayoutViewer,
+  ufrmAvroMouse,
+  ufrmOptions,
+  ufrmAboutSkinLayout,
+  ufrmAbout,
+  ufrmAutoCorrect,
+  clsRegistry_XMLSetting,
+  KeyboardHook,
+  uFrmSplash,
+  uLocale,
+  ufrmPrevW,
+  uDBase,
+  SkinLoader,
+  u_VirtualFontInstall,
+  ufrmEncodingWarning,
+  DebugLog,
   WindowsDarkMode;
 
 { =============================================================================== }
@@ -562,7 +598,6 @@ begin
   TopBarDocToTop;
 end;
 
-
 { =============================================================================== }
 
 procedure TAvroMainForm1.EnableAutoCorrect1Click(Sender: TObject);
@@ -591,10 +626,10 @@ begin
   ResetAllWindowLocale;
   Log('ResetAllWindowLocale');
 
-{$IFDEF PortableOn}
+  {$IFDEF PortableOn}
   RemoveVirtualFont(ExtractFilePath(Application.ExeName) + 'Virtual Font\Siyamrupali.ttf');
   Log('Portable: RemoveVirtualFont');
-{$ENDIF}
+  {$ENDIF}
   SaveSettings;
   Log('SaveSettings');
 
@@ -728,7 +763,7 @@ end;
 
 procedure TAvroMainForm1.IdleTimerTimer(Sender: TObject);
 var
-  liInfo: TLastInputInfo;
+  liInfo:      TLastInputInfo;
   SecondsIdle: DWord;
 begin
   liInfo.cbSize := SizeOf(TLastInputInfo);
@@ -767,10 +802,10 @@ end;
 
 procedure TAvroMainForm1.Initmenu;
 var
-  I, J: Integer;
+  I, J:                            Integer;
   TempMenu1, TempMenu2, TempMenu3: TMenuItemExtended;
-  sCaption: string;
-  ItemFound: Boolean;
+  sCaption:                        string;
+  ItemFound:                       Boolean;
 begin
   for I := KeyboardLayouts.Count - 1 downto 0 do
   begin
@@ -785,7 +820,7 @@ begin
         if Lowercase((Selectkeyboardlayout1.Items[J] as TMenuItemExtended).Value) = Lowercase(sCaption) then
           ItemFound := True;
     end;
-    if not (ItemFound) then
+    if not(ItemFound) then
     begin
       TempMenu1 := TMenuItemExtended.Create(Popup_Tray);
       TempMenu1.Caption := sCaption;
@@ -804,7 +839,7 @@ begin
         if Lowercase((Selectkeyboardlayout1.Items[J] as TMenuItemExtended).Value) = Lowercase(sCaption) then
           ItemFound := True;
     end;
-    if not (ItemFound) then
+    if not(ItemFound) then
     begin
       TempMenu2 := TMenuItemExtended.Create(Popup_Main);
       TempMenu2.Caption := sCaption;
@@ -823,7 +858,7 @@ begin
         if Lowercase((Popup_LayoutList.Items.Items[J] as TMenuItemExtended).Value) = Lowercase(sCaption) then
           ItemFound := True;
     end;
-    if not (ItemFound) then
+    if not(ItemFound) then
     begin
       TempMenu3 := TMenuItemExtended.Create(Popup_LayoutList);
       TempMenu3.Caption := sCaption;
@@ -924,10 +959,10 @@ end;
 
 procedure TAvroMainForm1.KeyLayout_KeyboardModeChanged(CurrentMode: enumMode);
 var
-  hforewnd: Integer;
-  ICN: TIcon;
-  Locale: Cardinal;
-  ParentHwnd: HWND;
+  hforewnd:                                         Integer;
+  ICN:                                              TIcon;
+  Locale:                                           Cardinal;
+  ParentHwnd:                                       HWND;
   WindowRecord, ParenWindowRecord, NewWindowRecord: TWindowRecord;
 begin
   { This is for Top Bar, when Keyboard Mode is changed,
@@ -1131,10 +1166,10 @@ begin
     Tray.Visible := False;
   end;
 
-{$IFDEF PortableOn}
+  {$IFDEF PortableOn}
   InstallVirtualFont(ExtractFilePath(Application.ExeName) + 'Virtual Font\Siyamrupali.ttf');
 
-{$ENDIF}
+  {$ENDIF}
   if AvroUpdateCheck = 'YES' then
     InternetCheck.Enabled := True
   else
@@ -1899,7 +1934,7 @@ end;
 procedure TAvroMainForm1.WindowCheckTimer(Sender: TObject);
 var
   WindoRecord: TWindowRecord;
-  hforewnd: HWND;
+  hforewnd:    HWND;
 begin
 
   hforewnd := GetForegroundWindow;
@@ -1966,7 +2001,7 @@ begin
     Initmenu;
 
     // Send something back
-    Msg.result := 21;
+    Msg.Result := 21;
   end;
 
   if cmd = 'toggle' then
@@ -1974,7 +2009,7 @@ begin
     KeyLayout.ToggleMode;
 
     // Send something back
-    Msg.result := 21;
+    Msg.Result := 21;
   end;
 
   if cmd = 'bn' then
@@ -1982,7 +2017,7 @@ begin
     KeyLayout.BanglaMode;
 
     // Send something back
-    Msg.result := 21;
+    Msg.Result := 21;
   end;
 
   if cmd = 'sys' then
@@ -1990,7 +2025,7 @@ begin
     KeyLayout.SysMode;
 
     // Send something back
-    Msg.result := 21;
+    Msg.Result := 21;
   end;
 
   if cmd = 'minimize' then
@@ -1998,7 +2033,7 @@ begin
     Jumptosystemtray1Click(nil);
 
     // Send something back
-    Msg.result := 21;
+    Msg.Result := 21;
   end;
 
   if cmd = 'restore' then
@@ -2007,7 +2042,7 @@ begin
     Topbar.AlphaBlendValue := 255;
 
     // Send something back
-    Msg.result := 21;
+    Msg.Result := 21;
   end;
 
 end;
@@ -2020,4 +2055,3 @@ end;
 { =============================================================================== }
 
 end.
-

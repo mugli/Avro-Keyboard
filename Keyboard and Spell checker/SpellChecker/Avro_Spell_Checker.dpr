@@ -25,13 +25,13 @@
   =============================================================================
 }
 
-Program Avro_Spell_Checker;
+program Avro_Spell_Checker;
 
 uses
   Forms,
   clsMemoParser in 'clsMemoParser.pas',
   uClipboard in 'uClipboard.pas',
-  ufrmSpell in 'ufrmSpell.pas' {frmSpell},
+  ufrmSpell in 'ufrmSpell.pas' {frmSpell} ,
   BanglaChars in '..\Units\BanglaChars.pas',
   uFileFolderHandling in '..\Units\uFileFolderHandling.pas',
   KeyboardFunctions in '..\Units\KeyboardFunctions.pas',
@@ -47,7 +47,7 @@ uses
 
 {$R *.res}
 
-Begin
+begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   TStyleManager.TrySetStyle('Windows10');
@@ -55,4 +55,4 @@ Begin
   Application.CreateForm(TfrmSpell, frmSpell);
   Application.Run;
 
-End.
+end.

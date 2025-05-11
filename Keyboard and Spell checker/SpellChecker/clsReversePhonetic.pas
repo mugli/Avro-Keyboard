@@ -25,312 +25,310 @@
   =============================================================================
 }
 
-Unit clsReversePhonetic;
+unit clsReversePhonetic;
 
-Interface
+interface
 
-Uses
+uses
   SysUtils,
   StrUtils;
 
-Type
-  TReversePhonetic = Class
-  Private
-    ln: Integer; // Length of Bangla String
-    ipos: Integer; // Position of processing at Bangla string
-    fBanglaText: String;
+type
+  TReversePhonetic = class
+    private
+      ln:          Integer; // Length of Bangla String
+      ipos:        Integer; // Position of processing at Bangla string
+      fBanglaText: string;
 
-    Function WipeInvalidChars(input: String): String;
-    Function NextT: String;
-    Function NextTEx(iLength: Integer; skipstart: Integer = 0): String;
-  Public
-    Function Convert(Const BanglaT: String): String;
-  End;
+      function WipeInvalidChars(input: string): string;
+      function NextT: string;
+      function NextTEx(iLength: Integer; skipstart: Integer = 0): string;
+    public
+      function Convert(const BanglaT: string): string;
+  end;
 
-Implementation
+implementation
 
-Uses
+uses
   BanglaChars;
 
 { TReversePhonetic }
 
-Function TReversePhonetic.Convert(Const BanglaT: String): String;
-Var
+function TReversePhonetic.Convert(const BanglaT: string): string;
+var
   T: Char;
-Begin
+begin
   fBanglaText := WipeInvalidChars(BanglaT);
   ln := Length(fBanglaText);
   Result := '';
 
-  If ln <= 0 Then
+  if ln <= 0 then
     exit;
   ipos := 1;
-  Repeat
+  repeat
     T := BanglaT[ipos];
 
     { Numbers }
-    If T = b_0 Then
-    Begin
+    if T = b_0 then
+    begin
       Result := Result + '0';
       Inc(ipos);
-    End
-    Else If T = b_1 Then
-    Begin
+    end
+    else if T = b_1 then
+    begin
       Result := Result + '1';
       Inc(ipos);
-    End
-    Else If T = b_2 Then
-    Begin
+    end
+    else if T = b_2 then
+    begin
       Result := Result + '2';
       Inc(ipos);
-    End
-    Else If T = b_3 Then
-    Begin
+    end
+    else if T = b_3 then
+    begin
       Result := Result + '3';
       Inc(ipos);
-    End
-    Else If T = b_4 Then
-    Begin
+    end
+    else if T = b_4 then
+    begin
       Result := Result + '4';
       Inc(ipos);
-    End
-    Else If T = b_5 Then
-    Begin
+    end
+    else if T = b_5 then
+    begin
       Result := Result + '5';
       Inc(ipos);
-    End
-    Else If T = b_6 Then
-    Begin
+    end
+    else if T = b_6 then
+    begin
       Result := Result + '6';
       Inc(ipos);
-    End
-    Else If T = b_7 Then
-    Begin
+    end
+    else if T = b_7 then
+    begin
       Result := Result + '7';
       Inc(ipos);
-    End
-    Else If T = b_8 Then
-    Begin
+    end
+    else if T = b_8 then
+    begin
       Result := Result + '8';
       Inc(ipos);
-    End
-    Else If T = b_9 Then
-    Begin
+    end
+    else if T = b_9 then
+    begin
       Result := Result + '9';
       Inc(ipos);
-    End
+    end
 
     { vowels }
-    Else If (T = b_A) Or (T = b_O) Or (T = b_OKar) Then
-    Begin
-      If (T = b_A) And (NextT = b_aakar) Then
-      Begin
+    else if (T = b_A) or (T = b_O) or (T = b_OKar) then
+    begin
+      if (T = b_A) and (NextT = b_aakar) then
+      begin
         Result := Result + 'a';
         ipos := ipos + 2;
-      End
-      Else
-      Begin
+      end
+      else
+      begin
         Result := Result + 'o';
         Inc(ipos);
-      End;
-    End
-    Else If (T = b_I) Or (T = b_II) Or (T = b_IKar) Or (T = b_IIKar) Then
-    Begin
+      end;
+    end
+    else if (T = b_I) or (T = b_II) or (T = b_IKar) or (T = b_IIKar) then
+    begin
       Result := Result + 'i';
       Inc(ipos);
-    End
-    Else If (T = b_u) Or (T = b_uu) Or (T = b_uKar) Or (T = b_uuKar) Then
-    Begin
+    end
+    else if (T = b_u) or (T = b_uu) or (T = b_uKar) or (T = b_uuKar) then
+    begin
       Result := Result + 'u';
       Inc(ipos);
-    End
-    Else If (T = b_rri) Or (T = b_rrikar) Then
-    Begin
+    end
+    else if (T = b_rri) or (T = b_rrikar) then
+    begin
       Result := Result + 'ri';
       Inc(ipos);
-    End
-    Else If (T = b_e) Or (T = b_ekar) Then
-    Begin
+    end
+    else if (T = b_e) or (T = b_ekar) then
+    begin
       Result := Result + 'e';
       Inc(ipos);
-    End
-    Else If (T = b_oi) Or (T = b_oikar) Then
-    Begin
+    end
+    else if (T = b_oi) or (T = b_oikar) then
+    begin
       Result := Result + 'oi';
       Inc(ipos);
-    End
-    Else If (T = b_ou) Or (T = b_oukar) Then
-    Begin
+    end
+    else if (T = b_ou) or (T = b_oukar) then
+    begin
       Result := Result + 'ou';
       Inc(ipos);
-    End
-    Else If (T = b_aa) Or (T = b_aakar) Then
-    Begin
+    end
+    else if (T = b_aa) or (T = b_aakar) then
+    begin
       Result := Result + 'a';
       Inc(ipos);
-    End
+    end
 
     { consonants }
-    Else If T = b_k Then
-    Begin
-      If NextTEx(2) = b_hasanta + b_SS Then
-      Begin
+    else if T = b_k then
+    begin
+      if NextTEx(2) = b_hasanta + b_SS then
+      begin
         Result := Result + 'kh';
         ipos := ipos + 3;
-      End
-      Else
-      Begin
+      end
+      else
+      begin
         Result := Result + 'k';
         Inc(ipos);
-      End;
-    End
-    Else If (T = b_Kh) Then
-    Begin
+      end;
+    end
+    else if (T = b_Kh) then
+    begin
       Result := Result + 'kh';
       Inc(ipos);
-    End
-    Else If (T = b_g) Then
-    Begin
+    end
+    else if (T = b_g) then
+    begin
       Result := Result + 'g';
       Inc(ipos);
-    End
-    Else If (T = b_gh) Then
-    Begin
+    end
+    else if (T = b_gh) then
+    begin
       Result := Result + 'gh';
       Inc(ipos);
-    End
-    Else If (T = b_n) Or (T = b_nn) Or (T = b_nga) Or (T = b_nya) Or
-      (T = b_anushar) Then
-    Begin
+    end
+    else if (T = b_n) or (T = b_nn) or (T = b_nga) or (T = b_nya) or (T = b_anushar) then
+    begin
       Result := Result + 'n';
       Inc(ipos);
-    End
-    Else If (T = b_c) Or (T = b_ch) Then
-    Begin
+    end
+    else if (T = b_c) or (T = b_ch) then
+    begin
       Result := Result + 'c';
       Inc(ipos);
-    End
-    Else If (T = b_j) Or (T = b_z) Then
-    Begin
-      If NextTEx(2) = b_hasanta + b_nya Then
-      Begin
+    end
+    else if (T = b_j) or (T = b_z) then
+    begin
+      if NextTEx(2) = b_hasanta + b_nya then
+      begin
         Result := Result + 'gg';
         ipos := ipos + 3;
-      End
-      Else
-      Begin
+      end
+      else
+      begin
         Result := Result + 'z';
         Inc(ipos);
-      End;
-    End
-    Else If (T = b_jh) Then
-    Begin
+      end;
+    end
+    else if (T = b_jh) then
+    begin
       Result := Result + 'jh';
       Inc(ipos);
-    End
-    Else If (T = b_t) Or (T = b_tt) Or (T = b_khandatta) Then
-    Begin
+    end
+    else if (T = b_t) or (T = b_tt) or (T = b_khandatta) then
+    begin
       Result := Result + 't';
       Inc(ipos);
-    End
-    Else If (T = b_th) Or (T = b_tth) Then
-    Begin
+    end
+    else if (T = b_th) or (T = b_tth) then
+    begin
       Result := Result + 'th';
       Inc(ipos);
-    End
-    Else If (T = b_d) Or (T = b_dd) Then
-    Begin
+    end
+    else if (T = b_d) or (T = b_dd) then
+    begin
       Result := Result + 'd';
       Inc(ipos);
-    End
-    Else If (T = b_dh) Or (T = b_ddh) Then
-    Begin
+    end
+    else if (T = b_dh) or (T = b_ddh) then
+    begin
       Result := Result + 'dh';
       Inc(ipos);
-    End
-    Else If (T = b_p) Then
-    Begin
+    end
+    else if (T = b_p) then
+    begin
       Result := Result + 'p';
       Inc(ipos);
-    End
-    Else If (T = b_ph) Then
-    Begin
+    end
+    else if (T = b_ph) then
+    begin
       Result := Result + 'ph';
       Inc(ipos);
-    End
-    Else If (T = b_b) Then
-    Begin
+    end
+    else if (T = b_b) then
+    begin
       Result := Result + 'b';
       Inc(ipos);
-    End
-    Else If (T = b_bh) Then
-    Begin
+    end
+    else if (T = b_bh) then
+    begin
       Result := Result + 'bh';
       Inc(ipos);
-    End
-    Else If (T = b_m) Then
-    Begin
+    end
+    else if (T = b_m) then
+    begin
       Result := Result + 'm';
       Inc(ipos);
-    End
-    Else If (T = b_r) Or (T = b_rr) Or (T = b_rrh) Then
-    Begin
+    end
+    else if (T = b_r) or (T = b_rr) or (T = b_rrh) then
+    begin
       Result := Result + 'r';
       Inc(ipos);
-    End
-    Else If (T = b_l) Then
-    Begin
+    end
+    else if (T = b_l) then
+    begin
       Result := Result + 'l';
       Inc(ipos);
-    End
-    Else If (T = b_s) Or (T = b_sh) Or (T = b_SS) Then
-    Begin
+    end
+    else if (T = b_s) or (T = b_sh) or (T = b_SS) then
+    begin
       Result := Result + 's';
       Inc(ipos);
-    End
-    Else If (T = b_h) Then
-    Begin
+    end
+    else if (T = b_h) then
+    begin
       Result := Result + 'h';
       Inc(ipos);
-    End
-    Else If (T = b_y) Then
-    Begin
+    end
+    else if (T = b_y) then
+    begin
       Result := Result + 'y';
       Inc(ipos);
-    End
-    Else If (T = b_hasanta) Then
-    Begin
-      If (NextTEx(1, 1) <> b_hasanta) And
-        ((NextT = b_z) Or (NextT = b_m) Or (NextT = b_b)) Then
+    end
+    else if (T = b_hasanta) then
+    begin
+      if (NextTEx(1, 1) <> b_hasanta) and ((NextT = b_z) or (NextT = b_m) or (NextT = b_b)) then
         // B/M/Z-fola
         ipos := ipos + 2
-      Else
+      else
         Inc(ipos);
-    End
-    Else
-    Begin
+    end
+    else
+    begin
       Inc(ipos);
-    End;
+    end;
 
-  Until (ipos > ln);
-End;
+  until (ipos > ln);
+end;
 
-Function TReversePhonetic.NextT: String;
-Begin
+function TReversePhonetic.NextT: string;
+begin
   NextT := MidStr(fBanglaText, ipos + 1, 1);
-End;
+end;
 
-Function TReversePhonetic.NextTEx(iLength, skipstart: Integer): String;
-Begin
-  If iLength < 1 Then
+function TReversePhonetic.NextTEx(iLength, skipstart: Integer): string;
+begin
+  if iLength < 1 then
     iLength := 1;
 
   NextTEx := MidStr(fBanglaText, ipos + skipstart + 1, iLength);
-End;
+end;
 
-Function TReversePhonetic.WipeInvalidChars(input: String): String;
-Begin
+function TReversePhonetic.WipeInvalidChars(input: string): string;
+begin
   Result := input;
-End;
+end;
 
-End.
+end.

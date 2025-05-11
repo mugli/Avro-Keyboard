@@ -28,101 +28,97 @@
 {$INCLUDE ../ProjectDefines.inc}
 { COMPLETE TRANSFERING! }
 
-Unit clsAvroPhonetic;
+unit clsAvroPhonetic;
 
-Interface
+interface
 
-Uses
+uses
   classes,
   sysutils,
   StrUtils,
   clsE2BCharBased;
 
 // Skeleton of Class TAvroPhonetic
-Type
-  TAvroPhonetic = Class
-  Private
-    CharBased: TE2BCharBased;
+type
+  TAvroPhonetic = class
+    private
+      CharBased: TE2BCharBased;
 
-    Procedure SetAutoCorrectEnabled(Const Value: Boolean);
-    Function GetAutoCorrectEnabled: Boolean;
-  Public
-    Constructor Create; // Initializer
-    Destructor Destroy; Override; // Destructor
+      procedure SetAutoCorrectEnabled(const Value: Boolean);
+      function GetAutoCorrectEnabled: Boolean;
+    public
+      constructor Create;           // Initializer
+      destructor Destroy; override; // Destructor
 
-    Function ProcessVKeyDown(Const KeyCode: Integer;
-      Var Block: Boolean): String;
-    Procedure ProcessVKeyUP(Const KeyCode: Integer; Var Block: Boolean);
-    Procedure ResetDeadKey;
-    Procedure SelectCandidate(Const Item: String); // For Avro Phonetic
-    // Published
-    Property AutoCorrectEnabled: Boolean Read GetAutoCorrectEnabled
-      Write SetAutoCorrectEnabled;
-  End;
+      function ProcessVKeyDown(const KeyCode: Integer; var Block: Boolean): string;
+      procedure ProcessVKeyUP(const KeyCode: Integer; var Block: Boolean);
+      procedure ResetDeadKey;
+      procedure SelectCandidate(const Item: string); // For Avro Phonetic
+      // Published
+      property AutoCorrectEnabled: Boolean read GetAutoCorrectEnabled write SetAutoCorrectEnabled;
+  end;
 
-Implementation
+implementation
 
 { TAvroPhonetic }
 { =============================================================================== }
 
-Constructor TAvroPhonetic.Create;
-Begin
-  Inherited;
+constructor TAvroPhonetic.Create;
+begin
+  inherited;
 
   CharBased := TE2BCharBased.Create;
-End;
+end;
 
 { =============================================================================== }
 
-Destructor TAvroPhonetic.Destroy;
-Begin
+destructor TAvroPhonetic.Destroy;
+begin
   FreeAndNil(CharBased);
-  Inherited;
-End;
+  inherited;
+end;
 { =============================================================================== }
 
-Function TAvroPhonetic.GetAutoCorrectEnabled: Boolean;
-Begin
+function TAvroPhonetic.GetAutoCorrectEnabled: Boolean;
+begin
   Result := CharBased.AutoCorrectEnabled;
-End;
+end;
 
 { =============================================================================== }
 
-Function TAvroPhonetic.ProcessVKeyDown(Const KeyCode: Integer;
-  Var Block: Boolean): String;
-Begin
+function TAvroPhonetic.ProcessVKeyDown(const KeyCode: Integer; var Block: Boolean): string;
+begin
   Result := CharBased.ProcessVKeyDown(KeyCode, Block);
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TAvroPhonetic.ProcessVKeyUP(Const KeyCode: Integer;
-  Var Block: Boolean);
-Begin
+procedure TAvroPhonetic.ProcessVKeyUP(const KeyCode: Integer; var Block: Boolean);
+begin
   CharBased.ProcessVKeyUP(KeyCode, Block);
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TAvroPhonetic.ResetDeadKey;
-Begin
+procedure TAvroPhonetic.ResetDeadKey;
+begin
   CharBased.ResetDeadKey;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TAvroPhonetic.SelectCandidate(Const Item: String);
-Begin
+procedure TAvroPhonetic.SelectCandidate(const Item: string);
+begin
   CharBased.SelectCandidate(Item);
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TAvroPhonetic.SetAutoCorrectEnabled(Const Value: Boolean);
-Begin
+procedure TAvroPhonetic.SetAutoCorrectEnabled(const Value: Boolean);
+begin
   CharBased.AutoCorrectEnabled := Value;
-End;
+end;
 
 { =============================================================================== }
 
-End.
+end.

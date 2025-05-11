@@ -26,11 +26,11 @@
 }
 
 {$INCLUDE ../ProjectDefines.inc}
-Unit uFrameImageAdd;
+unit uFrameImageAdd;
 
-Interface
+interface
 
-Uses
+uses
   Windows,
   Messages,
   SysUtils,
@@ -44,8 +44,8 @@ Uses
   ExtCtrls,
   ExtDlgs;
 
-Type
-  TFrameImageAdd = Class(TFrame)
+type
+  TFrameImageAdd = class(TFrame)
     PanelTopBar: TPanel;
     OpenPictureDialog: TOpenPictureDialog;
     Label1: TLabel;
@@ -166,214 +166,197 @@ Type
     Label43: TLabel;
     Preview: TEdit;
     Button_Preview: TButton;
-    Procedure Button_ImagePath_TopBarClick(Sender: TObject);
-    Procedure ImagePath_TopBarClick(Sender: TObject);
-  Private
-    { Private declarations }
-    Procedure FillAll(ImageDir: String);
-  Public
-    { Public declarations }
-    Procedure Initialize;
-    Procedure SetVisibleControls(bKL, bLV, bMouse, bTools, bWeb,
-      bHelp: Boolean);
-    Function Validate: Boolean;
-  End;
+    procedure Button_ImagePath_TopBarClick(Sender: TObject);
+    procedure ImagePath_TopBarClick(Sender: TObject);
+    private
+      { Private declarations }
+      procedure FillAll(ImageDir: string);
+    public
+      { Public declarations }
+      procedure Initialize;
+      procedure SetVisibleControls(bKL, bLV, bMouse, bTools, bWeb, bHelp: Boolean);
+      function Validate: Boolean;
+  end;
 
-Implementation
+implementation
 
 {$R *.dfm}
 
-Uses
+uses
   StrUtils;
 
 { TFrameImageAdd }
 
-Procedure TFrameImageAdd.Button_ImagePath_TopBarClick(Sender: TObject);
-Begin
+procedure TFrameImageAdd.Button_ImagePath_TopBarClick(Sender: TObject);
+begin
   OpenPictureDialog.FileName := '';
-  Try
-    If OpenPictureDialog.Execute(Self.Handle) Then
-    Begin
-      TEdit(FindComponent(MidStr((Sender As TButton).Name, 8,
-        Length((Sender As TButton).Name)))).Text := OpenPictureDialog.FileName;
-      TEdit(FindComponent(MidStr((Sender As TButton).Name, 8,
-        Length((Sender As TButton).Name)))).SelStart :=
-        Length(TEdit(FindComponent(MidStr((Sender As TButton).Name, 8,
-        Length((Sender As TButton).Name)))).Text);
+  try
+    if OpenPictureDialog.Execute(Self.Handle) then
+    begin
+      TEdit(FindComponent(MidStr((Sender as TButton).Name, 8, Length((Sender as TButton).Name)))).Text := OpenPictureDialog.FileName;
+      TEdit(FindComponent(MidStr((Sender as TButton).Name, 8, Length((Sender as TButton).Name)))).SelStart :=
+        Length(TEdit(FindComponent(MidStr((Sender as TButton).Name, 8, Length((Sender as TButton).Name)))).Text);
       FillAll(ExtractFilePath(OpenPictureDialog.FileName));
-    End;
-  Except
-    On E: Exception Do
-    Begin
-      Application.MessageBox(pchar('Error occured!' + #10 + #10 + E.Message),
-        pchar('Skin Designer'), MB_OK + MB_ICONHAND + MB_DEFBUTTON1 +
-        MB_APPLMODAL);
-    End;
-  End;
+    end;
+  except
+    on E: Exception do
+    begin
+      Application.MessageBox(pchar('Error occured!' + #10 + #10 + E.Message), pchar('Skin Designer'), MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
+    end;
+  end;
 
-End;
+end;
 
-Procedure TFrameImageAdd.FillAll(ImageDir: String);
-Var
+procedure TFrameImageAdd.FillAll(ImageDir: string);
+var
   i: integer;
-Begin
+begin
   // Background
-  If FileExists(ImageDir + 'main.bmp') And (ImagePath_TopBar.Text = '') Then
+  if FileExists(ImageDir + 'main.bmp') and (ImagePath_TopBar.Text = '') then
     ImagePath_TopBar.Text := ImageDir + 'main.bmp';
 
   // Avro icon
-  If FileExists(ImageDir + 'AvroIcon.bmp') And (AvroIcon.Text = '') Then
+  if FileExists(ImageDir + 'AvroIcon.bmp') and (AvroIcon.Text = '') then
     AvroIcon.Text := ImageDir + 'AvroIcon.bmp';
-  If FileExists(ImageDir + 'AvroIcon-Over.bmp') And
-    (AvroIconOver.Text = '') Then
+  if FileExists(ImageDir + 'AvroIcon-Over.bmp') and (AvroIconOver.Text = '') then
     AvroIconOver.Text := ImageDir + 'AvroIcon-Over.bmp';
-  If FileExists(ImageDir + 'AvroIcon-Down.bmp') And
-    (AvroIconDown.Text = '') Then
+  if FileExists(ImageDir + 'AvroIcon-Down.bmp') and (AvroIconDown.Text = '') then
     AvroIconDown.Text := ImageDir + 'AvroIcon-Down.bmp';
 
   // Keyboard mode
-  If FileExists(ImageDir + 'Mode-English.bmp') And (KMSys.Text = '') Then
+  if FileExists(ImageDir + 'Mode-English.bmp') and (KMSys.Text = '') then
     KMSys.Text := ImageDir + 'Mode-English.bmp';
-  If FileExists(ImageDir + 'Mode-English-Over.bmp') And
-    (KMSysOver.Text = '') Then
+  if FileExists(ImageDir + 'Mode-English-Over.bmp') and (KMSysOver.Text = '') then
     KMSysOver.Text := ImageDir + 'Mode-English-Over.bmp';
-  If FileExists(ImageDir + 'Mode-English-Down.bmp') And
-    (KMSysDown.Text = '') Then
+  if FileExists(ImageDir + 'Mode-English-Down.bmp') and (KMSysDown.Text = '') then
     KMSysDown.Text := ImageDir + 'Mode-English-Down.bmp';
 
-  If FileExists(ImageDir + 'Mode-Bangla.bmp') And (KMBangla.Text = '') Then
+  if FileExists(ImageDir + 'Mode-Bangla.bmp') and (KMBangla.Text = '') then
     KMBangla.Text := ImageDir + 'Mode-Bangla.bmp';
-  If FileExists(ImageDir + 'Mode-Bangla-Over.bmp') And
-    (KMBanglaOver.Text = '') Then
+  if FileExists(ImageDir + 'Mode-Bangla-Over.bmp') and (KMBanglaOver.Text = '') then
     KMBanglaOver.Text := ImageDir + 'Mode-Bangla-Over.bmp';
-  If FileExists(ImageDir + 'Mode-Bangla-Down.bmp') And
-    (KMBanglaDown.Text = '') Then
+  if FileExists(ImageDir + 'Mode-Bangla-Down.bmp') and (KMBanglaDown.Text = '') then
     KMBanglaDown.Text := ImageDir + 'Mode-Bangla-Down.bmp';
 
   // Keyboard Layoit
-  If PanelKL.Visible Then
-  Begin
-    If FileExists(ImageDir + 'Keyboards.bmp') And (KL.Text = '') Then
+  if PanelKL.Visible then
+  begin
+    if FileExists(ImageDir + 'Keyboards.bmp') and (KL.Text = '') then
       KL.Text := ImageDir + 'Keyboards.bmp';
-    If FileExists(ImageDir + 'Keyboards-Over.bmp') And (KLOver.Text = '') Then
+    if FileExists(ImageDir + 'Keyboards-Over.bmp') and (KLOver.Text = '') then
       KLOver.Text := ImageDir + 'Keyboards-Over.bmp';
-    If FileExists(ImageDir + 'Keyboards-Down.bmp') And (KLDown.Text = '') Then
+    if FileExists(ImageDir + 'Keyboards-Down.bmp') and (KLDown.Text = '') then
       KLDown.Text := ImageDir + 'Keyboards-Down.bmp';
-  End;
+  end;
 
   // Layout viewer
-  If PanelLV.Visible Then
-  Begin
-    If FileExists(ImageDir + 'Layout.bmp') And (LayoutV.Text = '') Then
+  if PanelLV.Visible then
+  begin
+    if FileExists(ImageDir + 'Layout.bmp') and (LayoutV.Text = '') then
       LayoutV.Text := ImageDir + 'Layout.bmp';
-    If FileExists(ImageDir + 'Layout-Over.bmp') And (LayoutVOver.Text = '') Then
+    if FileExists(ImageDir + 'Layout-Over.bmp') and (LayoutVOver.Text = '') then
       LayoutVOver.Text := ImageDir + 'Layout-Over.bmp';
-    If FileExists(ImageDir + 'Layout-Down.bmp') And (LayoutVDown.Text = '') Then
+    if FileExists(ImageDir + 'Layout-Down.bmp') and (LayoutVDown.Text = '') then
       LayoutVDown.Text := ImageDir + 'Layout-Down.bmp';
-  End;
+  end;
 
   // Avro Mouse
-  If PanelMouse.Visible Then
-  Begin
-    If FileExists(ImageDir + 'Mouse.bmp') And (AvroMouse.Text = '') Then
+  if PanelMouse.Visible then
+  begin
+    if FileExists(ImageDir + 'Mouse.bmp') and (AvroMouse.Text = '') then
       AvroMouse.Text := ImageDir + 'Mouse.bmp';
-    If FileExists(ImageDir + 'Mouse-Over.bmp') And
-      (AvroMouseOver.Text = '') Then
+    if FileExists(ImageDir + 'Mouse-Over.bmp') and (AvroMouseOver.Text = '') then
       AvroMouseOver.Text := ImageDir + 'Mouse-Over.bmp';
-    If FileExists(ImageDir + 'Mouse-Down.bmp') And
-      (AvroMouseDown.Text = '') Then
+    if FileExists(ImageDir + 'Mouse-Down.bmp') and (AvroMouseDown.Text = '') then
       AvroMouseDown.Text := ImageDir + 'Mouse-Down.bmp';
-  End;
+  end;
 
   // Tools
-  If PanelTools.Visible Then
-  Begin
-    If FileExists(ImageDir + 'Tools.bmp') And (Tools.Text = '') Then
+  if PanelTools.Visible then
+  begin
+    if FileExists(ImageDir + 'Tools.bmp') and (Tools.Text = '') then
       Tools.Text := ImageDir + 'Tools.bmp';
-    If FileExists(ImageDir + 'Tools-Over.bmp') And (ToolsOver.Text = '') Then
+    if FileExists(ImageDir + 'Tools-Over.bmp') and (ToolsOver.Text = '') then
       ToolsOver.Text := ImageDir + 'Tools-Over.bmp';
-    If FileExists(ImageDir + 'Tools-Down.bmp') And (ToolsDown.Text = '') Then
+    if FileExists(ImageDir + 'Tools-Down.bmp') and (ToolsDown.Text = '') then
       ToolsDown.Text := ImageDir + 'Tools-Down.bmp';
-  End;
+  end;
 
   // Web
-  If PanelWeb.Visible Then
-  Begin
-    If FileExists(ImageDir + 'Web.bmp') And (Web.Text = '') Then
+  if PanelWeb.Visible then
+  begin
+    if FileExists(ImageDir + 'Web.bmp') and (Web.Text = '') then
       Web.Text := ImageDir + 'Web.bmp';
-    If FileExists(ImageDir + 'Web-Over.bmp') And (WebOver.Text = '') Then
+    if FileExists(ImageDir + 'Web-Over.bmp') and (WebOver.Text = '') then
       WebOver.Text := ImageDir + 'Web-Over.bmp';
-    If FileExists(ImageDir + 'Web-Down.bmp') And (WebDown.Text = '') Then
+    if FileExists(ImageDir + 'Web-Down.bmp') and (WebDown.Text = '') then
       WebDown.Text := ImageDir + 'Web-Down.bmp';
-  End;
+  end;
 
   // Help
-  If PanelHelp.Visible Then
-  Begin
-    If FileExists(ImageDir + 'Help.bmp') And (Help.Text = '') Then
+  if PanelHelp.Visible then
+  begin
+    if FileExists(ImageDir + 'Help.bmp') and (Help.Text = '') then
       Help.Text := ImageDir + 'Help.bmp';
-    If FileExists(ImageDir + 'Help-Over.bmp') And (HelpOver.Text = '') Then
+    if FileExists(ImageDir + 'Help-Over.bmp') and (HelpOver.Text = '') then
       HelpOver.Text := ImageDir + 'Help-Over.bmp';
-    If FileExists(ImageDir + 'Help-Down.bmp') And (HelpDown.Text = '') Then
+    if FileExists(ImageDir + 'Help-Down.bmp') and (HelpDown.Text = '') then
       HelpDown.Text := ImageDir + 'Help-Down.bmp';
-  End;
+  end;
 
   // Exit
-  If FileExists(ImageDir + 'Exit.bmp') And (Exit.Text = '') Then
+  if FileExists(ImageDir + 'Exit.bmp') and (Exit.Text = '') then
     Exit.Text := ImageDir + 'Exit.bmp';
-  If FileExists(ImageDir + 'Exit-Over.bmp') And (ExitOver.Text = '') Then
+  if FileExists(ImageDir + 'Exit-Over.bmp') and (ExitOver.Text = '') then
     ExitOver.Text := ImageDir + 'Exit-Over.bmp';
-  If FileExists(ImageDir + 'Exit-Down.bmp') And (ExitDown.Text = '') Then
+  if FileExists(ImageDir + 'Exit-Down.bmp') and (ExitDown.Text = '') then
     ExitDown.Text := ImageDir + 'Exit-Down.bmp';
 
   // Preview
-  If FileExists(ImageDir + 'Preview.bmp') And (Preview.Text = '') Then
+  if FileExists(ImageDir + 'Preview.bmp') and (Preview.Text = '') then
     Preview.Text := ImageDir + 'Preview.bmp';
 
   // Set cursor to the end
-  For i := 0 To ComponentCount - 1 Do
-  Begin
-    If Components[i] Is TEdit Then
-    Begin
-      If (Components[i] As TEdit).Visible Then
-      Begin
-        (Components[i] As TEdit).SelStart :=
-          Length((Components[i] As TEdit).Text)
+  for i := 0 to ComponentCount - 1 do
+  begin
+    if Components[i] is TEdit then
+    begin
+      if (Components[i] as TEdit).Visible then
+      begin
+        (Components[i] as TEdit).SelStart := Length((Components[i] as TEdit).Text)
 
-      End;
-    End;
-  End;
-End;
+      end;
+    end;
+  end;
+end;
 
-Procedure TFrameImageAdd.ImagePath_TopBarClick(Sender: TObject);
-Begin
-  If Trim((Sender As TEdit).Text) = '' Then
-    Button_ImagePath_TopBarClick
-      (TButton(FindComponent('Button_' + (Sender As TEdit).Name)));
-End;
+procedure TFrameImageAdd.ImagePath_TopBarClick(Sender: TObject);
+begin
+  if Trim((Sender as TEdit).Text) = '' then
+    Button_ImagePath_TopBarClick(TButton(FindComponent('Button_' + (Sender as TEdit).Name)));
+end;
 
-Procedure TFrameImageAdd.Initialize;
-Var
+procedure TFrameImageAdd.Initialize;
+var
   i: integer;
-Begin
+begin
   Self.Color := clBtnFace;
-  For i := 0 To ComponentCount - 1 Do
-  Begin
-    If Components[i] Is TPanel Then
-      (Components[i] As TPanel).Color := clBtnFace;
-    If Components[i] Is TLabel Then
-      (Components[i] As TLabel).Transparent := True;
-    If Components[i] Is TEdit Then
-      (Components[i] As TEdit).Text := '';
-  End;
-End;
+  for i := 0 to ComponentCount - 1 do
+  begin
+    if Components[i] is TPanel then
+      (Components[i] as TPanel).Color := clBtnFace;
+    if Components[i] is TLabel then
+      (Components[i] as TLabel).Transparent := True;
+    if Components[i] is TEdit then
+      (Components[i] as TEdit).Text := '';
+  end;
+end;
 
-Procedure TFrameImageAdd.SetVisibleControls(bKL, bLV, bMouse, bTools, bWeb,
-  bHelp: Boolean);
-Var
+procedure TFrameImageAdd.SetVisibleControls(bKL, bLV, bMouse, bTools, bWeb, bHelp: Boolean);
+var
   Gap, CurrentHeight: integer;
 
-Begin
+begin
   // Set Visibility
   PanelKL.Visible := bKL;
   KL.Visible := bKL;
@@ -409,41 +392,41 @@ Begin
   Gap := PanelAvroIcon.Top - PanelTopBar.Top - PanelTopBar.Height;
   CurrentHeight := PanelKM_B.Top + PanelKM_B.Height + Gap;
 
-  If bKL Then
-  Begin
+  if bKL then
+  begin
     PanelKL.Top := CurrentHeight;
     CurrentHeight := CurrentHeight + PanelKL.Height + Gap;
-  End;
+  end;
 
-  If bLV Then
-  Begin
+  if bLV then
+  begin
     PanelLV.Top := CurrentHeight;
     CurrentHeight := CurrentHeight + PanelLV.Height + Gap;
-  End;
+  end;
 
-  If bMouse Then
-  Begin
+  if bMouse then
+  begin
     PanelMouse.Top := CurrentHeight;
     CurrentHeight := CurrentHeight + PanelMouse.Height + Gap;
-  End;
+  end;
 
-  If bTools Then
-  Begin
+  if bTools then
+  begin
     PanelTools.Top := CurrentHeight;
     CurrentHeight := CurrentHeight + PanelTools.Height + Gap;
-  End;
+  end;
 
-  If bWeb Then
-  Begin
+  if bWeb then
+  begin
     PanelWeb.Top := CurrentHeight;
     CurrentHeight := CurrentHeight + PanelWeb.Height + Gap;
-  End;
+  end;
 
-  If bHelp Then
-  Begin
+  if bHelp then
+  begin
     PanelHelp.Top := CurrentHeight;
     CurrentHeight := CurrentHeight + PanelHelp.Height + Gap;
-  End;
+  end;
 
   PanelExit.Top := CurrentHeight;
   CurrentHeight := CurrentHeight + PanelExit.Height + Gap;
@@ -452,33 +435,31 @@ Begin
   CurrentHeight := CurrentHeight + PanelPreview.Height + Gap;
 
   Self.Height := CurrentHeight;
-End;
+end;
 
-Function TFrameImageAdd.Validate: Boolean;
-Var
+function TFrameImageAdd.Validate: Boolean;
+var
   i: integer;
-Begin
+begin
   Result := False;
-  For i := 0 To ComponentCount - 1 Do
-  Begin
-    If Components[i] Is TEdit Then
-    Begin
-      If (Components[i] As TEdit).Visible Then
-      Begin
-        If FileExists(Trim((Components[i] As TEdit).Text)) = False Then
-        Begin
-          Application.MessageBox('All images are required!' + #10 +
-            'Make sure you have entered all image paths or all images do exist.',
-            'Skin Designer', MB_OK + MB_ICONEXCLAMATION + MB_DEFBUTTON1 +
-            MB_APPLMODAL);
-          (Components[i] As TEdit).SetFocus;
-          (Components[i] As TEdit).SelectAll;
+  for i := 0 to ComponentCount - 1 do
+  begin
+    if Components[i] is TEdit then
+    begin
+      if (Components[i] as TEdit).Visible then
+      begin
+        if FileExists(Trim((Components[i] as TEdit).Text)) = False then
+        begin
+          Application.MessageBox('All images are required!' + #10 + 'Make sure you have entered all image paths or all images do exist.', 'Skin Designer',
+            MB_OK + MB_ICONEXCLAMATION + MB_DEFBUTTON1 + MB_APPLMODAL);
+          (Components[i] as TEdit).SetFocus;
+          (Components[i] as TEdit).SelectAll;
           System.Exit;
-        End;
-      End;
-    End;
-  End;
+        end;
+      end;
+    end;
+  end;
   Result := True;
-End;
+end;
 
-End.
+end.

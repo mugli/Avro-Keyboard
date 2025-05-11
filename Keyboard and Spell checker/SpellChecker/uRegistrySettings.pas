@@ -26,11 +26,11 @@
 }
 
 {$INCLUDE ../../ProjectDefines.inc}
-Unit uRegistrySettings;
+unit uRegistrySettings;
 
-Interface
+interface
 
-Uses
+uses
   Classes,
   Sysutils,
   clsRegistry_XMLSetting,
@@ -38,108 +38,107 @@ Uses
   Windows,
   forms;
 
-Var
+var
 
-  AvroPadHeight: String;
-  AvroPadWidth: String;
-  AvroPadTop: String;
-  AvroPadLeft: String;
-  AvroPadState: String;
-  AvroPadFontName: String;
-  AvroPadFontSize: String;
-  AvroPadWrap: String;
+  AvroPadHeight:   string;
+  AvroPadWidth:    string;
+  AvroPadTop:      string;
+  AvroPadLeft:     string;
+  AvroPadState:    string;
+  AvroPadFontName: string;
+  AvroPadFontSize: string;
+  AvroPadWrap:     string;
 
-  LastDirectory: String;
+  LastDirectory: string;
 
   // Spellchecker options
-  IgnoreNumber: String;
-  IgnoreAncient: String;
-  IgnoreAssamese: String;
-  IgnoreSingle: String;
-  FullSuggestion: String;
+  IgnoreNumber:   string;
+  IgnoreAncient:  string;
+  IgnoreAssamese: string;
+  IgnoreSingle:   string;
+  FullSuggestion: string;
 
-Procedure LoadSettings;
-Procedure ValidateSettings;
-Procedure SaveSettings;
+procedure LoadSettings;
+procedure ValidateSettings;
+procedure SaveSettings;
 
-Procedure LoadSettingsFromFile;
-Procedure SaveSettingsInXML;
+procedure LoadSettingsFromFile;
+procedure SaveSettingsInXML;
 
-Procedure LoadSettingsFromRegistry;
-Procedure SaveSettingsInRegistry;
+procedure LoadSettingsFromRegistry;
+procedure SaveSettingsInRegistry;
 
-Implementation
+implementation
 
-Uses
+uses
   uFileFolderHandling;
 
 { =============================================================================== }
 
-Procedure LoadSettings;
-Begin
-{$IFDEF PortableOn}
+procedure LoadSettings;
+begin
+  {$IFDEF PortableOn}
   LoadSettingsFromFile;
-{$ELSE}
+  {$ELSE}
   LoadSettingsFromRegistry;
-{$ENDIF}
+  {$ENDIF}
   ValidateSettings;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure SaveSettings;
-Begin
-{$IFDEF PortableOn}
+procedure SaveSettings;
+begin
+  {$IFDEF PortableOn}
   SaveSettingsInXML;
-{$ELSE}
+  {$ELSE}
   SaveSettingsInRegistry;
-{$ENDIF}
-End;
+  {$ENDIF}
+end;
 
 { =============================================================================== }
 
-Procedure LoadSettingsFromRegistry;
-Var
+procedure LoadSettingsFromRegistry;
+var
   Reg: TMyRegistry;
-Begin
+begin
   Reg := TMyRegistry.create;
   Reg.RootKey := HKEY_CURRENT_USER;
-  If Reg.OpenKey('Software\OmicronLab\Avro Spell Checker', True) = True Then
-  Begin
+  if Reg.OpenKey('Software\OmicronLab\Avro Spell Checker', True) = True then
+  begin
 
-{$IFNDEF SpellCheckerDll}
+    {$IFNDEF SpellCheckerDll}
     AvroPadHeight := Reg.ReadStringDef('AvroPadHeight', '314');
     AvroPadWidth := Reg.ReadStringDef('AvroPadWidth', '507');
     AvroPadTop := Reg.ReadStringDef('AvroPadTop', '50');
     AvroPadLeft := Reg.ReadStringDef('AvroPadLeft', '50');
     AvroPadState := UpperCase(Reg.ReadStringDef('AvroPadState', 'Normal'));
-    AvroPadFontName := UpperCase(Reg.ReadStringDef('AvroPadFontName',
-      'Siyam Rupali'));
+    AvroPadFontName := UpperCase(Reg.ReadStringDef('AvroPadFontName', 'Siyam Rupali'));
     AvroPadFontSize := Reg.ReadStringDef('AvroPadFontSize', '10');
     AvroPadWrap := UpperCase(Reg.ReadStringDef('AvroPadWrap', 'Yes'));
 
     LastDirectory := Reg.ReadStringDef('LastDirectory', GetMyDocumentsFolder);
-{$ELSE}
+    {$ELSE}
     IgnoreNumber := UpperCase(Reg.ReadStringDef('IgnoreNumber', 'Yes'));
     IgnoreAncient := UpperCase(Reg.ReadStringDef('IgnoreAncient', 'Yes'));
     IgnoreAssamese := UpperCase(Reg.ReadStringDef('IgnoreAssamese', 'Yes'));
     IgnoreSingle := UpperCase(Reg.ReadStringDef('IgnoreSingle', 'Yes'));
     FullSuggestion := UpperCase(Reg.ReadStringDef('FullSuggestion', 'No'));
-{$ENDIF}
-  End;
+    {$ENDIF}
+  end;
   Reg.Free;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure LoadSettingsFromFile;
-Var
+procedure LoadSettingsFromFile;
+var
   XML: TXMLSetting;
-Begin
+begin
   XML := TXMLSetting.create;
   XML.LoadXMLData;
 
-{$IFNDEF SpellCheckerDll}
+  {$IFNDEF SpellCheckerDll}
   AvroPadHeight := XML.GetValue('AvroPadHeight', '314');
   AvroPadWidth := XML.GetValue('AvroPadWidth', '507');
   AvroPadTop := XML.GetValue('AvroPadTop', '50');
@@ -150,28 +149,28 @@ Begin
   AvroPadWrap := UpperCase(XML.GetValue('AvroPadWrap', 'Yes'));
 
   LastDirectory := XML.GetValue('LastDirectory', GetMyDocumentsFolder);
-{$ELSE}
+  {$ELSE}
   IgnoreNumber := UpperCase(XML.GetValue('IgnoreNumber', 'Yes'));
   IgnoreAncient := UpperCase(XML.GetValue('IgnoreAncient', 'Yes'));
   IgnoreAssamese := UpperCase(XML.GetValue('IgnoreAssamese', 'Yes'));
   IgnoreSingle := UpperCase(XML.GetValue('IgnoreSingle', 'Yes'));
   FullSuggestion := UpperCase(XML.GetValue('FullSuggestion', 'No'));
-{$ENDIF}
+  {$ENDIF}
   XML.Free;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure SaveSettingsInRegistry;
-Var
+procedure SaveSettingsInRegistry;
+var
   Reg: TMyRegistry;
-Begin
+begin
   Reg := TMyRegistry.create;
   Reg.RootKey := HKEY_CURRENT_USER;
-  If Reg.OpenKey('Software\OmicronLab\Avro Spell Checker', True) = True Then
-  Begin
+  if Reg.OpenKey('Software\OmicronLab\Avro Spell Checker', True) = True then
+  begin
 
-{$IFNDEF SpellCheckerDll}
+    {$IFNDEF SpellCheckerDll}
     Reg.WriteString('AppPath', ExtractFileDir(Application.ExeName));
     Reg.WriteString('AppExeName', ExtractFileName(Application.ExeName));
 
@@ -185,27 +184,27 @@ Begin
     Reg.WriteString('AvroPadWrap', AvroPadWrap);
 
     Reg.WriteString('LastDirectory', LastDirectory);
-{$ELSE}
+    {$ELSE}
     Reg.WriteString('IgnoreNumber', IgnoreNumber);
     Reg.WriteString('IgnoreAncient', IgnoreAncient);
     Reg.WriteString('IgnoreAssamese', IgnoreAssamese);
     Reg.WriteString('IgnoreSingle', IgnoreSingle);
     Reg.WriteString('FullSuggestion', FullSuggestion);
-{$ENDIF}
-  End;
+    {$ENDIF}
+  end;
   Reg.Free;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure SaveSettingsInXML;
-Var
+procedure SaveSettingsInXML;
+var
   XML: TXMLSetting;
-Begin
+begin
   XML := TXMLSetting.create;
   XML.CreateNewXMLData;
 
-{$IFNDEF SpellCheckerDll}
+  {$IFNDEF SpellCheckerDll}
   XML.SetValue('AvroPadHeight', AvroPadHeight);
   XML.SetValue('AvroPadWidth', AvroPadWidth);
   XML.SetValue('AvroPadTop', AvroPadTop);
@@ -216,55 +215,55 @@ Begin
   XML.SetValue('AvroPadWrap', AvroPadWrap);
 
   XML.SetValue('LastDirectory', LastDirectory);
-{$ELSE}
+  {$ELSE}
   XML.SetValue('IgnoreNumber', IgnoreNumber);
   XML.SetValue('IgnoreAncient', IgnoreAncient);
   XML.SetValue('IgnoreAssamese', IgnoreAssamese);
   XML.SetValue('IgnoreSingle', IgnoreSingle);
   XML.SetValue('FullSuggestion', FullSuggestion);
-{$ENDIF}
+  {$ENDIF}
   XML.SaveXMLData;
   XML.Free;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure ValidateSettings;
-Begin
-{$IFNDEF SpellCheckerDll}
-  If Not(strtoint(AvroPadHeight) > 0) Then
+procedure ValidateSettings;
+begin
+  {$IFNDEF SpellCheckerDll}
+  if not(strtoint(AvroPadHeight) > 0) then
     AvroPadHeight := '314';
-  If Not(strtoint(AvroPadWidth) > 0) Then
+  if not(strtoint(AvroPadWidth) > 0) then
     AvroPadWidth := '507';
-  If Not(strtoint(AvroPadTop) > 0) Then
+  if not(strtoint(AvroPadTop) > 0) then
     AvroPadTop := '50';
-  If Not(strtoint(AvroPadLeft) > 0) Then
+  if not(strtoint(AvroPadLeft) > 0) then
     AvroPadLeft := '50';
-  If Not((AvroPadState = 'NORMAL') Or (AvroPadState = 'MAXIMIZED')) Then
+  if not((AvroPadState = 'NORMAL') or (AvroPadState = 'MAXIMIZED')) then
     AvroPadState := 'NORMAL';
 
-  If AvroPadFontName = '' Then
+  if AvroPadFontName = '' then
     AvroPadFontName := 'Siyam Rupali';
-  If Not(strtoint(AvroPadFontSize) > 0) Then
+  if not(strtoint(AvroPadFontSize) > 0) then
     AvroPadFontSize := '10';
-  If Not((AvroPadWrap = 'YES') Or (AvroPadWrap = 'NO')) Then
+  if not((AvroPadWrap = 'YES') or (AvroPadWrap = 'NO')) then
     AvroPadWrap := 'YES';
-  If Not(DirectoryExists(LastDirectory)) Then
+  if not(DirectoryExists(LastDirectory)) then
     LastDirectory := GetMyDocumentsFolder;
-{$ELSE}
-  If Not((IgnoreNumber = 'YES') Or (IgnoreNumber = 'NO')) Then
+  {$ELSE}
+  if not((IgnoreNumber = 'YES') or (IgnoreNumber = 'NO')) then
     IgnoreNumber := 'YES';
-  If Not((IgnoreAncient = 'YES') Or (IgnoreAncient = 'NO')) Then
+  if not((IgnoreAncient = 'YES') or (IgnoreAncient = 'NO')) then
     IgnoreAncient := 'YES';
-  If Not((IgnoreAssamese = 'YES') Or (IgnoreAssamese = 'NO')) Then
+  if not((IgnoreAssamese = 'YES') or (IgnoreAssamese = 'NO')) then
     IgnoreAssamese := 'YES';
-  If Not((IgnoreSingle = 'YES') Or (IgnoreSingle = 'NO')) Then
+  if not((IgnoreSingle = 'YES') or (IgnoreSingle = 'NO')) then
     IgnoreSingle := 'YES';
-  If Not((FullSuggestion = 'YES') Or (FullSuggestion = 'NO')) Then
+  if not((FullSuggestion = 'YES') or (FullSuggestion = 'NO')) then
     FullSuggestion := 'NO';
-{$ENDIF}
-End;
+  {$ENDIF}
+end;
 
 { =============================================================================== }
 
-End.
+end.

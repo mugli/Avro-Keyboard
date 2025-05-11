@@ -25,16 +25,14 @@
   =============================================================================
 }
 
-
 {$INCLUDE ../../ProjectDefines.inc}
-
 { COMPLETE! }
 
-Unit uWindowHandlers;
+unit uWindowHandlers;
 
-Interface
+interface
 
-Uses
+uses
   Windows,
   Sysutils,
   Controls,
@@ -42,232 +40,223 @@ Uses
   Forms,
   Classes;
 
-Procedure TOPMOST(Const xFormHwnd: HWND);
-Procedure NoTOPMOST(Const xFormHwnd: HWND);
-Procedure MoveForm_Ex(Const xFormHwnd: HWND; Const Button: TMouseButton);
-Function IsFormLoaded(Const xFormName: String): Boolean;
-Function IsFormVisible(Const xFormName: String): Boolean;
-Procedure DisableCloseButton(Const xFormHwnd: HWND);
-Function ForceForegroundWindow(HWND: THandle): Boolean;
-Procedure MakeNeverActiveWindow(Const xFormHwnd: HWND);
-Function IsWindowTopMost(hWindow: HWND): Boolean;
-Procedure SetAsMainForm(aForm: TForm);
-Function GetWindowCaption(hWindow: HWND): String;
-Function GetWindowClassName(hWindow: HWND): String;
-Procedure SetElevationRequiredState(aControl: TWinControl; Required: Boolean);
+procedure TOPMOST(const xFormHwnd: HWND);
+procedure NoTOPMOST(const xFormHwnd: HWND);
+procedure MoveForm_Ex(const xFormHwnd: HWND; const Button: TMouseButton);
+function IsFormLoaded(const xFormName: string): Boolean;
+function IsFormVisible(const xFormName: string): Boolean;
+procedure DisableCloseButton(const xFormHwnd: HWND);
+function ForceForegroundWindow(HWND: THandle): Boolean;
+procedure MakeNeverActiveWindow(const xFormHwnd: HWND);
+function IsWindowTopMost(hWindow: HWND): Boolean;
+procedure SetAsMainForm(aForm: TForm);
+function GetWindowCaption(hWindow: HWND): string;
+function GetWindowClassName(hWindow: HWND): string;
+procedure SetElevationRequiredState(aControl: TWinControl; Required: Boolean);
 /// //////////////////////////////////////////////
 // Delphi specific
-Procedure CheckCreateForm(InstanceClass: TComponentClass; Var xForm;
-  Const xFormName: String);
+procedure CheckCreateForm(InstanceClass: TComponentClass; var xForm; const xFormName: string);
 
-Const
-  BCM_FIRST = $1600;
+const
+  BCM_FIRST     = $1600;
   BCM_SETSHIELD = BCM_FIRST + $000C;
 
-Implementation
+implementation
 
 { =============================================================================== }
 
-Procedure SetElevationRequiredState(aControl: TWinControl; Required: Boolean);
-Var
+procedure SetElevationRequiredState(aControl: TWinControl; Required: Boolean);
+var
   lRequired: Integer;
 
-Begin
+begin
 
   lRequired := Integer(Required);
   SendMessage(aControl.Handle, BCM_SETSHIELD, 0, lRequired);
 
-End;
+end;
 
 { =============================================================================== }
 
-Function GetWindowClassName(hWindow: HWND): String;
-Var
-  aName: Array [0 .. 255] Of Char;
-Begin
+function GetWindowClassName(hWindow: HWND): string;
+var
+  aName: array [0 .. 255] of Char;
+begin
   GetClassName(hWindow, aName, 256);
-  Result := String(aName);
-End;
+  Result := string(aName);
+end;
 
 { =============================================================================== }
 
-Function GetWindowCaption(hWindow: HWND): String;
-Var
-  Len: LongInt;
-  Title: String;
-Begin
+function GetWindowCaption(hWindow: HWND): string;
+var
+  Len:   LongInt;
+  Title: string;
+begin
   Result := '';
   Len := GetWindowTextLength(hWindow) + 1;
   SetLength(Title, Len);
   GetWindowText(hWindow, PChar(Title), Len);
   Result := TrimRight(Title);
-End;
+end;
 
 { =============================================================================== }
 
-Procedure SetAsMainForm(aForm: TForm);
-Var
+procedure SetAsMainForm(aForm: TForm);
+var
   P: Pointer;
-Begin
+begin
   P := @Application.Mainform;
   Pointer(P^) := aForm;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure MakeNeverActiveWindow(Const xFormHwnd: HWND);
-Begin
-  SetWindowLong(xFormHwnd, GWL_EXSTYLE, GetWindowLong(xFormHwnd, GWL_EXSTYLE) Or
-    WS_EX_NOACTIVATE);
-End;
+procedure MakeNeverActiveWindow(const xFormHwnd: HWND);
+begin
+  SetWindowLong(xFormHwnd, GWL_EXSTYLE, GetWindowLong(xFormHwnd, GWL_EXSTYLE) or WS_EX_NOACTIVATE);
+end;
 
 { =============================================================================== }
 {$HINTS Off}
 
-Function ForceForegroundWindow(HWND: THandle): Boolean;
-Const
+function ForceForegroundWindow(HWND: THandle): Boolean;
+const
   SPI_GETFOREGROUNDLOCKTIMEOUT = $2000;
   SPI_SETFOREGROUNDLOCKTIMEOUT = $2001;
-Var
+var
   ForegroundThreadID: DWORD;
-  ThisThreadID: DWORD;
-  timeout: DWORD;
-Begin
+  ThisThreadID:       DWORD;
+  timeout:            DWORD;
+begin
   Result := False;
 
   // If IsIconic(hwnd) Then ShowWindow(hwnd, SW_RESTORE);
 
-  If GetForegroundWindow = HWND Then
+  if GetForegroundWindow = HWND then
     Result := True
-  Else
-  Begin
+  else
+  begin
     // Windows 98/2000 doesn't want to foreground a window when some other
     // window has keyboard focus
 
-    If ((Win32Platform = VER_PLATFORM_WIN32_NT) And (Win32MajorVersion > 4)) Or
-      ((Win32Platform = VER_PLATFORM_WIN32_WINDOWS) And
-      ((Win32MajorVersion > 4) Or ((Win32MajorVersion = 4) And
-      (Win32MinorVersion > 0)))) Then
-    Begin
+    if ((Win32Platform = VER_PLATFORM_WIN32_NT) and (Win32MajorVersion > 4)) or
+      ((Win32Platform = VER_PLATFORM_WIN32_WINDOWS) and ((Win32MajorVersion > 4) or ((Win32MajorVersion = 4) and (Win32MinorVersion > 0)))) then
+    begin
 
       Result := False;
-      ForegroundThreadID := GetWindowThreadProcessID(GetForegroundWindow, Nil);
-      ThisThreadID := GetWindowThreadProcessID(HWND, Nil);
-      If AttachThreadInput(ThisThreadID, ForegroundThreadID, True) Then
-      Begin
+      ForegroundThreadID := GetWindowThreadProcessID(GetForegroundWindow, nil);
+      ThisThreadID := GetWindowThreadProcessID(HWND, nil);
+      if AttachThreadInput(ThisThreadID, ForegroundThreadID, True) then
+      begin
         BringWindowToTop(HWND); // IE 5.5 related hack
         SetForegroundWindow(HWND);
         AttachThreadInput(ThisThreadID, ForegroundThreadID, False);
         Result := (GetForegroundWindow = HWND);
-      End;
-      If Not Result Then
-      Begin
+      end;
+      if not Result then
+      begin
         SystemParametersInfo(SPI_GETFOREGROUNDLOCKTIMEOUT, 0, @timeout, 0);
-        SystemParametersInfo(SPI_SETFOREGROUNDLOCKTIMEOUT, 0, TObject(0),
-          SPIF_SENDCHANGE);
+        SystemParametersInfo(SPI_SETFOREGROUNDLOCKTIMEOUT, 0, TObject(0), SPIF_SENDCHANGE);
         BringWindowToTop(HWND); // IE 5.5 related hack
         SetForegroundWindow(HWND);
-        SystemParametersInfo(SPI_SETFOREGROUNDLOCKTIMEOUT, 0, TObject(timeout),
-          SPIF_SENDCHANGE);
-      End;
-    End
-    Else
-    Begin
+        SystemParametersInfo(SPI_SETFOREGROUNDLOCKTIMEOUT, 0, TObject(timeout), SPIF_SENDCHANGE);
+      end;
+    end
+    else
+    begin
       BringWindowToTop(HWND); // IE 5.5 related hack
       SetForegroundWindow(HWND);
-    End;
+    end;
 
     Result := (GetForegroundWindow = HWND);
-  End;
-End;
+  end;
+end;
 {$HINTS On}
 { =============================================================================== }
 {$HINTS Off}
 
-Function IsWindowTopMost(hWindow: HWND): Boolean;
-Begin
+function IsWindowTopMost(hWindow: HWND): Boolean;
+begin
   Result := False;
-  Result := (GetWindowLong(hWindow, GWL_EXSTYLE) And WS_EX_TOPMOST) <> 0
-End;
+  Result := (GetWindowLong(hWindow, GWL_EXSTYLE) and WS_EX_TOPMOST) <> 0
+end;
 {$HINTS On}
 { =============================================================================== }
 
-Procedure DisableCloseButton(Const xFormHwnd: HWND);
-Begin
+procedure DisableCloseButton(const xFormHwnd: HWND);
+begin
   RemoveMenu(GetSystemMenu(xFormHwnd, False), SC_CLOSE, MF_BYCOMMAND);
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TOPMOST(Const xFormHwnd: HWND);
-Begin
-  SetWindowPos(xFormHwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE Or SWP_NOSIZE Or
-    SWP_NOACTIVATE);
-End;
+procedure TOPMOST(const xFormHwnd: HWND);
+begin
+  SetWindowPos(xFormHwnd, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE or SWP_NOSIZE or SWP_NOACTIVATE);
+end;
 
 { =============================================================================== }
 
-Procedure NoTOPMOST(Const xFormHwnd: HWND);
-Begin
-  SetWindowPos(xFormHwnd, HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOMOVE Or
-    SWP_NOSIZE Or SWP_NOACTIVATE);
-End;
+procedure NoTOPMOST(const xFormHwnd: HWND);
+begin
+  SetWindowPos(xFormHwnd, HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOMOVE or SWP_NOSIZE or SWP_NOACTIVATE);
+end;
 
 { =============================================================================== }
 
-Procedure MoveForm_Ex(Const xFormHwnd: HWND; Const Button: TMouseButton);
-Begin
-  If Button = mbLeft Then
-  Begin
+procedure MoveForm_Ex(const xFormHwnd: HWND; const Button: TMouseButton);
+begin
+  if Button = mbLeft then
+  begin
     ReleaseCapture;
     SendMessage(xFormHwnd, WM_NCLBUTTONDOWN, HTCAPTION, 0);
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Function IsFormLoaded(Const xFormName: String): Boolean;
-Var
+function IsFormLoaded(const xFormName: string): Boolean;
+var
   i: Integer;
-Begin
+begin
   Result := False;
-  For i := Screen.FormCount - 1 Downto 0 Do
-    If (LowerCase(Screen.Forms[i].Name) = LowerCase(xFormName)) Then
-    Begin
+  for i := Screen.FormCount - 1 downto 0 do
+    if (LowerCase(Screen.Forms[i].Name) = LowerCase(xFormName)) then
+    begin
       Result := True;
       Break;
-    End;
-End;
+    end;
+end;
 
 { =============================================================================== }
 
-Function IsFormVisible(Const xFormName: String): Boolean;
-Var
+function IsFormVisible(const xFormName: string): Boolean;
+var
   i: Integer;
-Begin
+begin
   Result := False;
-  For i := Screen.FormCount - 1 Downto 0 Do
-    If (LowerCase(Screen.Forms[i].Name) = LowerCase(xFormName)) Then
-    Begin
-      If Screen.Forms[i].Visible = True Then
+  for i := Screen.FormCount - 1 downto 0 do
+    if (LowerCase(Screen.Forms[i].Name) = LowerCase(xFormName)) then
+    begin
+      if Screen.Forms[i].Visible = True then
         Result := True;
       Break;
-    End;
-End;
+    end;
+end;
 
 { =============================================================================== }
 
-Procedure CheckCreateForm(InstanceClass: TComponentClass; Var xForm;
-  Const xFormName: String);
-Begin
-  If Not IsFormLoaded(xFormName) Then
-  Begin
+procedure CheckCreateForm(InstanceClass: TComponentClass; var xForm; const xFormName: string);
+begin
+  if not IsFormLoaded(xFormName) then
+  begin
     Application.CreateForm(InstanceClass, xForm);
 
     // In order to keep Avro keaboard hidden
     // in taskbar
     ShowWindow(Application.Handle, SW_HIDE);
-  End;
-End;
+  end;
+end;
 
-End.
+end.

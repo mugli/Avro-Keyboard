@@ -29,10 +29,10 @@ program LayoutEditor;
 
 uses
   Forms,
-  uFrmMain in 'Forms\uFrmMain.pas' {frmMain},
+  uFrmMain in 'Forms\uFrmMain.pas' {frmMain} ,
   uShapeInterceptor in 'Classes\uShapeInterceptor.pas',
   clsRegistry_XMLSetting in 'Classes\clsRegistry_XMLSetting.pas',
-  uFrmAbout in 'Forms\uFrmAbout.pas' {frmAbout},
+  uFrmAbout in 'Forms\uFrmAbout.pas' {frmAbout} ,
   uRegistrySettings in 'Units\uRegistrySettings.pas',
   clsSkinLayoutConverter in '..\Keyboard and Spell checker\Classes\clsSkinLayoutConverter.pas',
   clsFileVersion in '..\Keyboard and Spell checker\Classes\clsFileVersion.pas',

@@ -26,11 +26,11 @@
 }
 
 {$INCLUDE ../ProjectDefines.inc}
-Unit ufrmOptions;
+unit ufrmOptions;
 
-Interface
+interface
 
-Uses
+uses
   Windows,
   Messages,
   SysUtils,
@@ -45,8 +45,8 @@ Uses
   StdCtrls,
   ComCtrls;
 
-Type
-  TfrmOptions = Class(TForm)
+type
+  TfrmOptions = class(TForm)
     Panel1: TPanel;
     Image1: TImage;
     TopLabel: TLabel;
@@ -146,49 +146,47 @@ Type
     comboFunctionKeys_SpellerLauncher: TComboBox;
     Label20: TLabel;
     LabelGlobalHotkeysLink: TLabel;
-    Procedure FormCreate(Sender: TObject);
-    Procedure CategoryTreeClick(Sender: TObject);
-    Procedure FormClose(Sender: TObject; Var Action: TCloseAction);
-    Procedure CategoryTreeKeyUp(Sender: TObject; Var Key: Word;
-      Shift: TShiftState);
-    Procedure checkTopBarTransparentClick(Sender: TObject);
-    Procedure TrackBar_TransparencyChange(Sender: TObject);
-    Procedure comboSkinChange(Sender: TObject);
-    Procedure CheckShowPrevWindowClick(Sender: TObject);
-    Procedure butEditCustomDictClick(Sender: TObject);
-    Procedure cmdAutoCorrectClick(Sender: TObject);
-    Procedure Button_CancelClick(Sender: TObject);
-    Procedure Button_OKClick(Sender: TObject);
-    Procedure Button_HelpClick(Sender: TObject);
-    Procedure optTypingStyle_ModernClick(Sender: TObject);
-    Procedure ccmdAboutSkinClick(Sender: TObject);
-    Procedure ButtonInstallLocaleClick(Sender: TObject);
-    Procedure CheckAddNewWordsClick(Sender: TObject);
-    Procedure Button_ApplyClick(Sender: TObject);
-    Procedure optOutputANSIMouseUp(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
-    Procedure LabelHideTimerTimer(Sender: TObject);
-    Procedure LabelGlobalHotkeysLinkClick(Sender: TObject);
-  Private
-    { Private declarations }
-    // Procedure SetTabOrder;
-    Procedure LoadSettings;
-    Procedure SaveSettings;
-    Function GetListIndex(List: TStrings; SearchS: String): Integer;
-  Public
-    { Public declarations }
-  Protected
-    Procedure CreateParams(Var Params: TCreateParams); Override;
-  End;
+    procedure FormCreate(Sender: TObject);
+    procedure CategoryTreeClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure CategoryTreeKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure checkTopBarTransparentClick(Sender: TObject);
+    procedure TrackBar_TransparencyChange(Sender: TObject);
+    procedure comboSkinChange(Sender: TObject);
+    procedure CheckShowPrevWindowClick(Sender: TObject);
+    procedure butEditCustomDictClick(Sender: TObject);
+    procedure cmdAutoCorrectClick(Sender: TObject);
+    procedure Button_CancelClick(Sender: TObject);
+    procedure Button_OKClick(Sender: TObject);
+    procedure Button_HelpClick(Sender: TObject);
+    procedure optTypingStyle_ModernClick(Sender: TObject);
+    procedure ccmdAboutSkinClick(Sender: TObject);
+    procedure ButtonInstallLocaleClick(Sender: TObject);
+    procedure CheckAddNewWordsClick(Sender: TObject);
+    procedure Button_ApplyClick(Sender: TObject);
+    procedure optOutputANSIMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure LabelHideTimerTimer(Sender: TObject);
+    procedure LabelGlobalHotkeysLinkClick(Sender: TObject);
+    private
+      { Private declarations }
+      // Procedure SetTabOrder;
+      procedure LoadSettings;
+      procedure SaveSettings;
+      function GetListIndex(List: TStrings; SearchS: string): Integer;
+    public
+      { Public declarations }
+    protected
+      procedure CreateParams(var Params: TCreateParams); override;
+  end;
 
-Var
+var
   frmOptions: TfrmOptions;
 
-Implementation
+implementation
 
 {$R *.dfm}
 
-Uses
+uses
   uRegistrySettings,
   uFileFolderHandling,
   SkinLoader,
@@ -200,7 +198,7 @@ Uses
   u_Admin,
   ufrmEncodingWarning;
 
-Const
+const
   Show_Window_in_Taskbar = True;
 
   { TfrmOptions }
@@ -262,65 +260,64 @@ Const
 
   { =============================================================================== }
 
-Procedure TfrmOptions.butEditCustomDictClick(Sender: TObject);
-Begin
+procedure TfrmOptions.butEditCustomDictClick(Sender: TObject);
+begin
   { TODO : Incomplete }
-  Application.MessageBox('This feature is not yet implemented.',
-    'Avro Keyboard', MB_OK + MB_ICONEXCLAMATION + MB_DEFBUTTON1 + MB_APPLMODAL);
-End;
+  Application.MessageBox('This feature is not yet implemented.', 'Avro Keyboard', MB_OK + MB_ICONEXCLAMATION + MB_DEFBUTTON1 + MB_APPLMODAL);
+end;
 
 { =============================================================================== }
 
-Procedure TfrmOptions.ButtonInstallLocaleClick(Sender: TObject);
-Begin
-  If (IsWinVistaOrLater And IsUAC) Then
+procedure TfrmOptions.ButtonInstallLocaleClick(Sender: TObject);
+begin
+  if (IsWinVistaOrLater and IsUAC) then
     Execute_Something_With_APP_Admin('/LOCALE /V', Application.ExeName)
-  Else
+  else
     InstallLocale;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmOptions.Button_ApplyClick(Sender: TObject);
-Begin
+procedure TfrmOptions.Button_ApplyClick(Sender: TObject);
+begin
   Self.SaveSettings;
   AvroMainForm1.RefreshSettings;
 
   LabelStatus.Font.Color := clGreen;
   LabelStatus.Visible := True;
   LabelHideTimer.Enabled := True;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmOptions.Button_CancelClick(Sender: TObject);
-Begin
+procedure TfrmOptions.Button_CancelClick(Sender: TObject);
+begin
   Self.Close;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmOptions.Button_HelpClick(Sender: TObject);
-Begin
+procedure TfrmOptions.Button_HelpClick(Sender: TObject);
+begin
   AvroMainForm1.OpenHelpFile(25);
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmOptions.Button_OKClick(Sender: TObject);
-Begin
+procedure TfrmOptions.Button_OKClick(Sender: TObject);
+begin
   Self.SaveSettings;
   AvroMainForm1.RefreshSettings;
   Self.Close;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmOptions.CategoryTreeClick(Sender: TObject);
-Begin
-  Case CategoryTree.Selected.Index Of
+procedure TfrmOptions.CategoryTreeClick(Sender: TObject);
+begin
+  case CategoryTree.Selected.Index of
     0:
-      Begin
+      begin
         General_Panel.Visible := True;
 
         // General_Panel.Visible:=False;
@@ -331,9 +328,9 @@ Begin
         AvroMouse_Panel.Visible := False;
         FixedLayout_Panel.Visible := False;
         GlobalOutput_Panel.Visible := False;
-      End;
+      end;
     1:
-      Begin
+      begin
         Interface_Panel.Visible := True;
 
         General_Panel.Visible := False;
@@ -344,9 +341,9 @@ Begin
         AvroMouse_Panel.Visible := False;
         FixedLayout_Panel.Visible := False;
         GlobalOutput_Panel.Visible := False;
-      End;
+      end;
     2:
-      Begin
+      begin
         KeyboardMode_Panel.Visible := True;
 
         General_Panel.Visible := False;
@@ -357,9 +354,9 @@ Begin
         AvroMouse_Panel.Visible := False;
         FixedLayout_Panel.Visible := False;
         GlobalOutput_Panel.Visible := False;
-      End;
+      end;
     3:
-      Begin
+      begin
         Locale_Panel.Visible := True;
 
         General_Panel.Visible := False;
@@ -370,9 +367,9 @@ Begin
         AvroMouse_Panel.Visible := False;
         FixedLayout_Panel.Visible := False;
         GlobalOutput_Panel.Visible := False;
-      End;
+      end;
     4:
-      Begin
+      begin
         AvroPhonetic_Panel.Visible := True;
 
         General_Panel.Visible := False;
@@ -383,9 +380,9 @@ Begin
         AvroMouse_Panel.Visible := False;
         FixedLayout_Panel.Visible := False;
         GlobalOutput_Panel.Visible := False;
-      End;
+      end;
     5:
-      Begin
+      begin
         AvroMouse_Panel.Visible := True;
 
         General_Panel.Visible := False;
@@ -396,9 +393,9 @@ Begin
         // AvroMouse_Panel.Visible:=False;
         FixedLayout_Panel.Visible := False;
         GlobalOutput_Panel.Visible := False;
-      End;
+      end;
     6:
-      Begin
+      begin
         FixedLayout_Panel.Visible := True;
 
         General_Panel.Visible := False;
@@ -409,9 +406,9 @@ Begin
         AvroMouse_Panel.Visible := False;
         // FixedLayout_Panel.Visible:=False;
         GlobalOutput_Panel.Visible := False;
-      End;
+      end;
     7:
-      Begin
+      begin
         GlobalOutput_Panel.Visible := True;
 
         General_Panel.Visible := False;
@@ -422,48 +419,46 @@ Begin
         AvroMouse_Panel.Visible := False;
         FixedLayout_Panel.Visible := False;
         // GlobalOutput_Panel.Visible:=False;
-      End;
-  End;
+      end;
+  end;
 
   TopLabel.Caption := CategoryTree.Selected.Text + ' Settings...';
   // SetTabOrder;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmOptions.CategoryTreeKeyUp(Sender: TObject; Var Key: Word;
-  Shift: TShiftState);
-Begin
-  CategoryTreeClick(Nil);
-End;
+procedure TfrmOptions.CategoryTreeKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  CategoryTreeClick(nil);
+end;
 
 { =============================================================================== }
 
-Procedure TfrmOptions.ccmdAboutSkinClick(Sender: TObject);
-Begin
-  If comboSkin.Items[comboSkin.ItemIndex] = 'None' Then
+procedure TfrmOptions.ccmdAboutSkinClick(Sender: TObject);
+begin
+  if comboSkin.Items[comboSkin.ItemIndex] = 'None' then
     GetSkinDescription('internalskin*')
-  Else
-    GetSkinDescription(GetAvroDataDir + 'Skin\' + comboSkin.Items
-      [comboSkin.ItemIndex] + '.avroskin');
-End;
+  else
+    GetSkinDescription(GetAvroDataDir + 'Skin\' + comboSkin.Items[comboSkin.ItemIndex] + '.avroskin');
+end;
 
 { =============================================================================== }
 
-Procedure TfrmOptions.CheckAddNewWordsClick(Sender: TObject);
-Begin
+procedure TfrmOptions.CheckAddNewWordsClick(Sender: TObject);
+begin
   { TODO : Incomplete }
 
   // Application.MessageBox('This feature is not yet implemented.', 'Avro Keyboard', MB_OK + MB_ICONEXCLAMATION + MB_DEFBUTTON1 + MB_APPLMODAL);
 
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmOptions.CheckShowPrevWindowClick(Sender: TObject);
-Begin
-  If CheckShowPrevWindow.Checked = True Then
-  Begin
+procedure TfrmOptions.CheckShowPrevWindowClick(Sender: TObject);
+begin
+  if CheckShowPrevWindow.Checked = True then
+  begin
     Label_PhoneticTypingMode.Enabled := True;
     optPhoneticMode_Dict.Enabled := True;
     optPhoneticMode_Char.Enabled := True;
@@ -471,9 +466,9 @@ Begin
     CheckRememberCandidate.Enabled := True;
     CheckAddNewWords.Enabled := True;
     CheckTabBrowsing.Enabled := True;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     Label_PhoneticTypingMode.Enabled := False;
     optPhoneticMode_Dict.Enabled := False;
     optPhoneticMode_Char.Enabled := False;
@@ -481,86 +476,85 @@ Begin
     CheckRememberCandidate.Enabled := False;
     CheckAddNewWords.Enabled := False;
     CheckTabBrowsing.Enabled := False;
-  End;
+  end;
 
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmOptions.checkTopBarTransparentClick(Sender: TObject);
-Begin
-  If checkTopBarTransparent.Checked = True Then
-  Begin
+procedure TfrmOptions.checkTopBarTransparentClick(Sender: TObject);
+begin
+  if checkTopBarTransparent.Checked = True then
+  begin
     Captionl_Transparency.Enabled := True;
     TrackBar_Transparency.Enabled := True;
     Label_Transparency.Enabled := True;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     Captionl_Transparency.Enabled := False;
     TrackBar_Transparency.Enabled := False;
     Label_Transparency.Enabled := False;
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmOptions.cmdAutoCorrectClick(Sender: TObject);
-Begin
+procedure TfrmOptions.cmdAutoCorrectClick(Sender: TObject);
+begin
   CheckCreateForm(TfrmAutoCorrect, frmAutoCorrect, 'frmAutoCorrect');
   frmAutoCorrect.Show;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmOptions.comboSkinChange(Sender: TObject);
-Begin
-  Try
+procedure TfrmOptions.comboSkinChange(Sender: TObject);
+begin
+  try
     { Show skin preview for selected skin }
-    If comboSkin.Items[comboSkin.ItemIndex] = 'None' Then
+    if comboSkin.Items[comboSkin.ItemIndex] = 'None' then
       GetSkinPreviewPicture('internalskin*', SkinPreviewPic.Picture)
-    Else
-      GetSkinPreviewPicture(GetAvroDataDir + 'Skin\' + comboSkin.Items
-        [comboSkin.ItemIndex] + '.avroskin', SkinPreviewPic.Picture);
-  Except
-    On E: Exception Do
-    Begin
+    else
+      GetSkinPreviewPicture(GetAvroDataDir + 'Skin\' + comboSkin.Items[comboSkin.ItemIndex] + '.avroskin', SkinPreviewPic.Picture);
+  except
+    on E: Exception do
+    begin
       // Nothing
-    End;
-  End;
-End;
+    end;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmOptions.CreateParams(Var Params: TCreateParams);
-Begin
-  Inherited CreateParams(Params);
-  With Params Do
-  Begin
-    If Show_Window_in_Taskbar Then
-    Begin
-      ExStyle := ExStyle Or WS_EX_APPWINDOW And Not WS_EX_TOOLWINDOW;
+procedure TfrmOptions.CreateParams(var Params: TCreateParams);
+begin
+  inherited CreateParams(Params);
+  with Params do
+  begin
+    if Show_Window_in_Taskbar then
+    begin
+      ExStyle := ExStyle or WS_EX_APPWINDOW and not WS_EX_TOOLWINDOW;
       WndParent := GetDesktopwindow;
-    End
-    Else If Not Show_Window_in_Taskbar Then
-    Begin
-      ExStyle := ExStyle And Not WS_EX_APPWINDOW;
-    End;
-  End;
-End;
+    end
+    else if not Show_Window_in_Taskbar then
+    begin
+      ExStyle := ExStyle and not WS_EX_APPWINDOW;
+    end;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmOptions.FormClose(Sender: TObject; Var Action: TCloseAction);
-Begin
+procedure TfrmOptions.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
   Action := caFree;
-  frmOptions := Nil;
-End;
+  frmOptions := nil;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmOptions.FormCreate(Sender: TObject);
-Begin
+procedure TfrmOptions.FormCreate(Sender: TObject);
+begin
 
   { Arrange Panels }
 
@@ -617,94 +611,94 @@ Begin
 
   // Load Settings
   Self.LoadSettings;
-End;
+end;
 
 { =============================================================================== }
 
-Function TfrmOptions.GetListIndex(List: TStrings; SearchS: String): Integer;
-Var
+function TfrmOptions.GetListIndex(List: TStrings; SearchS: string): Integer;
+var
   I: Integer;
-Begin
+begin
   Result := 0;
 
-  For I := 0 To List.Count - 1 Do
-  Begin
-    If LowerCase(List[I]) = LowerCase(SearchS) Then
-    Begin
+  for I := 0 to List.Count - 1 do
+  begin
+    if LowerCase(List[I]) = LowerCase(SearchS) then
+    begin
       Result := I;
       Break;
-    End;
-  End;
+    end;
+  end;
 
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmOptions.LabelGlobalHotkeysLinkClick(Sender: TObject);
-Begin
+procedure TfrmOptions.LabelGlobalHotkeysLinkClick(Sender: TObject);
+begin
   CategoryTree.Items[2].Selected := True;
-  CategoryTreeClick(Nil);
-End;
+  CategoryTreeClick(nil);
+end;
 
-Procedure TfrmOptions.LabelHideTimerTimer(Sender: TObject);
-Begin
+procedure TfrmOptions.LabelHideTimerTimer(Sender: TObject);
+begin
   LabelStatus.Visible := False;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmOptions.LoadSettings;
-Var
-  Skins: TStringList;
+procedure TfrmOptions.LoadSettings;
+var
+  Skins:    TStringList;
   I, Count: Integer;
-Begin
+begin
   // =========================================================
   // General Settings
-  If StartWithWindows = 'YES' Then
+  if StartWithWindows = 'YES' then
     checkStartUp.Checked := True
-  Else
+  else
     checkStartUp.Checked := False;
 
-  If ShowSplash = 'YES' Then
+  if ShowSplash = 'YES' then
     CheckShowSplash.Checked := True
-  Else
+  else
     CheckShowSplash.Checked := False;
 
-  If DefaultUIMode = 'TOP BAR' Then
+  if DefaultUIMode = 'TOP BAR' then
     optStartupUIMode_TopBar.Checked := True
-  Else If DefaultUIMode = 'ICON' Then
+  else if DefaultUIMode = 'ICON' then
     optStartupUIMode_Tray.Checked := True
-  Else
+  else
     optStartupUIMode_Last.Checked := True;
 
-  If AvroUpdateCheck = 'YES' Then
+  if AvroUpdateCheck = 'YES' then
     CheckUpdate.Checked := True
-  Else
+  else
     CheckUpdate.Checked := False;
 
-  If TopBarXButton = 'MINIMIZE' Then
+  if TopBarXButton = 'MINIMIZE' then
     optTopBarXButton_Minimize.Checked := True
-  Else If TopBarXButton = 'EXIT' Then
+  else if TopBarXButton = 'EXIT' then
     optTopBarXButton_Close.Checked := True
-  Else
+  else
     optTopBarXButton_ShowMenu.Checked := True;
 
   // ===========================================================
   // Interface Settings
-  If TopBarTransparent = 'YES' Then
-  Begin
+  if TopBarTransparent = 'YES' then
+  begin
     checkTopBarTransparent.Checked := True;
     Captionl_Transparency.Enabled := True;
     TrackBar_Transparency.Enabled := True;
     Label_Transparency.Enabled := True;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     checkTopBarTransparent.Checked := False;
     Captionl_Transparency.Enabled := False;
     TrackBar_Transparency.Enabled := False;
     Label_Transparency.Enabled := False;
-  End;
+  end;
 
   TrackBar_Transparency.Position := StrToInt(TopBarTransparencyLevel);
   { Load Skin Names }
@@ -715,110 +709,106 @@ Begin
   comboSkin.Clear;
   comboSkin.Items.Add('None');
 
-  If Count > 0 Then
-  Begin
+  if Count > 0 then
+  begin
 
-    For I := 0 To Count - 1 Do
-    Begin
+    for I := 0 to Count - 1 do
+    begin
       Skins[I] := RemoveExtension(Skins[I]);
-    End;
+    end;
 
-    For I := 0 To Skins.Count - 1 Do
-    Begin
+    for I := 0 to Skins.Count - 1 do
+    begin
       comboSkin.Items.Add(Skins[I]);
-    End;
-  End;
+    end;
+  end;
 
-  If LowerCase(InterfaceSkin) = 'internalskin*' Then
+  if LowerCase(InterfaceSkin) = 'internalskin*' then
     comboSkin.ItemIndex := GetListIndex(comboSkin.Items, 'None')
-  Else
+  else
     comboSkin.ItemIndex := GetListIndex(comboSkin.Items, InterfaceSkin);
 
-  Try
+  try
     { Show skin preview for selected skin }
-    If comboSkin.Items[comboSkin.ItemIndex] = 'None' Then
+    if comboSkin.Items[comboSkin.ItemIndex] = 'None' then
       GetSkinPreviewPicture('internalskin*', SkinPreviewPic.Picture)
-    Else
-      GetSkinPreviewPicture(GetAvroDataDir + 'Skin\' + comboSkin.Items
-        [comboSkin.ItemIndex] + '.avroskin', SkinPreviewPic.Picture);
-  Except
-    On E: Exception Do
-    Begin
+    else
+      GetSkinPreviewPicture(GetAvroDataDir + 'Skin\' + comboSkin.Items[comboSkin.ItemIndex] + '.avroskin', SkinPreviewPic.Picture);
+  except
+    on E: Exception do
+    begin
       // Nothing
-    End;
-  End;
+    end;
+  end;
 
   Skins.Free;
 
   // =======================================================
   // Hotkeys Settings
-  comboFunctionKeys.ItemIndex := GetListIndex(comboFunctionKeys.Items,
-    ModeSwitchKey);
-  comboFunctionKeys_OutputMode.ItemIndex :=
-    GetListIndex(comboFunctionKeys_OutputMode.Items, ToggleOutputModeKey);
-  comboFunctionKeys_SpellerLauncher.ItemIndex :=
-    GetListIndex(comboFunctionKeys_SpellerLauncher.Items, SpellerLauncherKey);
+  comboFunctionKeys.ItemIndex := GetListIndex(comboFunctionKeys.Items, ModeSwitchKey);
+  comboFunctionKeys_OutputMode.ItemIndex := GetListIndex(comboFunctionKeys_OutputMode.Items, ToggleOutputModeKey);
+  comboFunctionKeys_SpellerLauncher.ItemIndex := GetListIndex(comboFunctionKeys_SpellerLauncher.Items, SpellerLauncherKey);
 
   // =========================================================
   // Locale Changing Option
 
-  If ChangeInputLocale = 'YES' Then
-  Begin
+  if ChangeInputLocale = 'YES' then
+  begin
     CheckEnableLocaleChange.Checked := True;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     CheckEnableLocaleChange.Checked := False;
-  End;
+  end;
 
-  If PrefferedLocale = 'BANGLADESH' Then
+  if PrefferedLocale = 'BANGLADESH' then
     optLocaleBD.Checked := True
-  Else If PrefferedLocale = 'INDIA' Then
+  else if PrefferedLocale = 'INDIA' then
     optLocaleIND.Checked := True
-  Else If PrefferedLocale = 'ASSAMESE' Then
+  else if PrefferedLocale = 'ASSAMESE' then
     optLocaleAS.Checked := True;
 
   { For Portable Edition: Required Additional Check }
-  If IsWinVistaOrLater = True Then
-  Begin
-    If (IsBangladeshLocaleInstalled = False) Then
-    Begin
+  if IsWinVistaOrLater = True then
+  begin
+    if (IsBangladeshLocaleInstalled = False) then
+    begin
       optLocaleBD.Enabled := False;
 
-      If (PrefferedLocale = 'BANGLADESH') Then
-      Begin
+      if (PrefferedLocale = 'BANGLADESH') then
+      begin
         PrefferedLocale := 'INDIA';
         optLocaleIND.Checked := True;
-      End;
-    End;
+      end;
+    end;
 
-    If (IsAssameseLocaleInstalled = False) Then
-    Begin
+    if (IsAssameseLocaleInstalled = False) then
+    begin
       optLocaleAS.Enabled := False;
 
-      If (PrefferedLocale = 'ASSAMESE') Then
-      Begin
+      if (PrefferedLocale = 'ASSAMESE') then
+      begin
         PrefferedLocale := 'INDIA';
         optLocaleIND.Checked := True;
-      End;
+      end;
 
-    End;
-  End;
+    end;
+  end;
 
   // =========================================================
   // Avro Phonetic Options
-  If PhoneticAutoCorrect = 'YES' Then
+  if PhoneticAutoCorrect = 'YES' then
     CheckAutoCorrect.Checked := True
-  Else
+  else
     CheckAutoCorrect.Checked := False;
 
-  If ShowPrevWindow = 'YES' Then
+  if ShowPrevWindow = 'YES' then
     CheckShowPrevWindow.Checked := True
-  Else
+  else
     CheckShowPrevWindow.Checked := False;
 
-  If CheckShowPrevWindow.Checked = True Then
-  Begin
+  if CheckShowPrevWindow.Checked = True then
+  begin
     Label_PhoneticTypingMode.Enabled := True;
     optPhoneticMode_Dict.Enabled := True;
     optPhoneticMode_Char.Enabled := True;
@@ -826,9 +816,9 @@ Begin
     CheckRememberCandidate.Enabled := True;
     CheckAddNewWords.Enabled := True;
     CheckTabBrowsing.Enabled := True;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     Label_PhoneticTypingMode.Enabled := False;
     optPhoneticMode_Dict.Enabled := False;
     optPhoneticMode_Char.Enabled := False;
@@ -836,202 +826,200 @@ Begin
     CheckRememberCandidate.Enabled := False;
     CheckAddNewWords.Enabled := False;
     CheckTabBrowsing.Enabled := False;
-  End;
+  end;
 
-  If PhoneticMode = 'DICT' Then
+  if PhoneticMode = 'DICT' then
     optPhoneticMode_Dict.Checked := True
-  Else If PhoneticMode = 'CHAR' Then
+  else if PhoneticMode = 'CHAR' then
     optPhoneticMode_Char.Checked := True
-  Else If PhoneticMode = 'ONLYCHAR' Then
+  else if PhoneticMode = 'ONLYCHAR' then
     optPhoneticMode_OnlyChar.Checked := True
-  Else
+  else
     optPhoneticMode_Char.Checked := True;
 
-  If SaveCandidate = 'YES' Then
+  if SaveCandidate = 'YES' then
     CheckRememberCandidate.Checked := True
-  Else
+  else
     CheckRememberCandidate.Checked := False;
 
-  If AddToPhoneticDict = 'YES' Then
+  if AddToPhoneticDict = 'YES' then
     CheckAddNewWords.Checked := True
-  Else
+  else
     CheckAddNewWords.Checked := False;
 
-  If TabBrowsing = 'YES' Then
+  if TabBrowsing = 'YES' then
     CheckTabBrowsing.Checked := True
-  Else
+  else
     CheckTabBrowsing.Checked := False;
 
-  If PipeToDot = 'YES' Then
+  if PipeToDot = 'YES' then
     CheckPipeToDot.Checked := True
-  Else
+  else
     CheckPipeToDot.Checked := False;
 
-  If EnableJoNukta = 'YES' Then
+  if EnableJoNukta = 'YES' then
     CheckEnableJoNukta.Checked := True
-  Else
+  else
     CheckEnableJoNukta.Checked := False;
 
   // =========================================================
   // Avro Mouse Options
-  If AvroMouseChangeModeLocale = 'YES' Then
+  if AvroMouseChangeModeLocale = 'YES' then
     optAvroMouseKeyboardMode_Change.Checked := True
-  Else
+  else
     optAvroMouseKeyboardMode_NoChange.Checked := True;
 
   // =========================================================
   // Fixed Layout Options
-  If FullOldStyleTyping = 'YES' Then
+  if FullOldStyleTyping = 'YES' then
     optTypingStyle_Old.Checked := True
-  Else
+  else
     optTypingStyle_Modern.Checked := True;
 
-  If optTypingStyle_Modern.Checked = True Then
-  Begin
+  if optTypingStyle_Modern.Checked = True then
+  begin
     chkOldReph.Enabled := True;
     chkVowelFormat.Enabled := True;
     CheckChandraPosition.Enabled := True;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     chkOldReph.Enabled := False;
     chkVowelFormat.Enabled := False;
     CheckChandraPosition.Enabled := False;
-  End;
+  end;
 
-  If OldStyleReph = 'YES' Then
+  if OldStyleReph = 'YES' then
     chkOldReph.Checked := True
-  Else
+  else
     chkOldReph.Checked := False;
 
-  If VowelFormating = 'YES' Then
+  if VowelFormating = 'YES' then
     chkVowelFormat.Checked := True
-  Else
+  else
     chkVowelFormat.Checked := False;
 
-  If AutomaticallyFixChandra = 'YES' Then
+  if AutomaticallyFixChandra = 'YES' then
     CheckChandraPosition.Checked := True
-  Else
+  else
     CheckChandraPosition.Checked := False;
 
-  If NumPadBangla = 'YES' Then
+  if NumPadBangla = 'YES' then
     CheckNumPadBangla.Checked := True
-  Else
+  else
     CheckNumPadBangla.Checked := False;
 
   // Global output settings
-  If OutputIsBijoy = 'NO' Then
-  Begin
+  if OutputIsBijoy = 'NO' then
+  begin
     optOutputUnicode.Checked := True;
     optOutputANSI.Checked := False;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     optOutputANSI.Checked := True;
     optOutputUnicode.Checked := False;
-  End;
+  end;
 
-  If ShowOutputwarning = 'YES' Then
+  if ShowOutputwarning = 'YES' then
     CheckWarningAnsi.Checked := True
-  Else
+  else
     CheckWarningAnsi.Checked := False;
 
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmOptions.optOutputANSIMouseUp(Sender: TObject;
-  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-Begin
-  If ShowOutputwarning <> 'NO' Then
-  Begin
-    CheckCreateForm(TfrmEncodingWarning, frmEncodingWarning,
-      'frmEncodingWarning');
+procedure TfrmOptions.optOutputANSIMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  if ShowOutputwarning <> 'NO' then
+  begin
+    CheckCreateForm(TfrmEncodingWarning, frmEncodingWarning, 'frmEncodingWarning');
     frmEncodingWarning.ShowModal;
 
-    If OutputIsBijoy = 'NO' Then
-    Begin
+    if OutputIsBijoy = 'NO' then
+    begin
       optOutputUnicode.Checked := True;
       optOutputANSI.Checked := False;
-    End
-    Else
-    Begin
+    end
+    else
+    begin
       optOutputANSI.Checked := True;
       optOutputUnicode.Checked := False;
-    End;
+    end;
 
-    If ShowOutputwarning = 'YES' Then
+    if ShowOutputwarning = 'YES' then
       CheckWarningAnsi.Checked := True
-    Else
+    else
       CheckWarningAnsi.Checked := False;
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmOptions.optTypingStyle_ModernClick(Sender: TObject);
-Begin
-  If optTypingStyle_Modern.Checked = True Then
-  Begin
+procedure TfrmOptions.optTypingStyle_ModernClick(Sender: TObject);
+begin
+  if optTypingStyle_Modern.Checked = True then
+  begin
     chkOldReph.Enabled := True;
     chkVowelFormat.Enabled := True;
     CheckChandraPosition.Enabled := True;
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     chkOldReph.Enabled := False;
     chkVowelFormat.Enabled := False;
     CheckChandraPosition.Enabled := False;
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmOptions.SaveSettings;
-Begin
+procedure TfrmOptions.SaveSettings;
+begin
   // =========================================================
   // General Settings
-  If checkStartUp.Checked = True Then
+  if checkStartUp.Checked = True then
     StartWithWindows := 'YES'
-  Else
+  else
     StartWithWindows := 'NO';
 
-  If CheckShowSplash.Checked = True Then
+  if CheckShowSplash.Checked = True then
     ShowSplash := 'YES'
-  Else
+  else
     ShowSplash := 'NO';
 
-  If optStartupUIMode_TopBar.Checked = True Then
+  if optStartupUIMode_TopBar.Checked = True then
     DefaultUIMode := 'TOP BAR'
-  Else If optStartupUIMode_Tray.Checked = True Then
+  else if optStartupUIMode_Tray.Checked = True then
     DefaultUIMode := 'ICON'
-  Else
+  else
     DefaultUIMode := 'LASTUI';
 
-  If CheckUpdate.Checked = True Then
+  if CheckUpdate.Checked = True then
     AvroUpdateCheck := 'YES'
-  Else
+  else
     AvroUpdateCheck := 'NO';
 
-  If optTopBarXButton_Minimize.Checked = True Then
+  if optTopBarXButton_Minimize.Checked = True then
     TopBarXButton := 'MINIMIZE'
-  Else If optTopBarXButton_Close.Checked = True Then
+  else if optTopBarXButton_Close.Checked = True then
     TopBarXButton := 'EXIT'
-  Else
+  else
     TopBarXButton := 'SHOW MENU';
 
   // ===========================================================
   // Interface Settings
-  If checkTopBarTransparent.Checked = True Then
+  if checkTopBarTransparent.Checked = True then
     TopBarTransparent := 'YES'
-  Else
+  else
     TopBarTransparent := 'NO';
 
   TopBarTransparencyLevel := IntToStr(TrackBar_Transparency.Position);
 
-  If comboSkin.Items[comboSkin.ItemIndex] = 'None' Then
+  if comboSkin.Items[comboSkin.ItemIndex] = 'None' then
     InterfaceSkin := 'internalskin*'
-  Else
+  else
     InterfaceSkin := comboSkin.Items[comboSkin.ItemIndex];
 
 
@@ -1039,130 +1027,127 @@ Begin
   // =======================================================
   // Hotkeys Settings
 
-  ModeSwitchKey := uppercase(comboFunctionKeys.Items
-    [comboFunctionKeys.ItemIndex]);
-  ToggleOutputModeKey := uppercase(comboFunctionKeys_OutputMode.Items
-    [comboFunctionKeys_OutputMode.ItemIndex]);
-  SpellerLauncherKey := uppercase(comboFunctionKeys_SpellerLauncher.Items
-    [comboFunctionKeys_SpellerLauncher.ItemIndex]);
+  ModeSwitchKey := uppercase(comboFunctionKeys.Items[comboFunctionKeys.ItemIndex]);
+  ToggleOutputModeKey := uppercase(comboFunctionKeys_OutputMode.Items[comboFunctionKeys_OutputMode.ItemIndex]);
+  SpellerLauncherKey := uppercase(comboFunctionKeys_SpellerLauncher.Items[comboFunctionKeys_SpellerLauncher.ItemIndex]);
 
 
   // =========================================================
   // Locale Changing Option
 
-  If CheckEnableLocaleChange.Checked = True Then
+  if CheckEnableLocaleChange.Checked = True then
     ChangeInputLocale := 'YES'
-  Else
+  else
     ChangeInputLocale := 'NO';
 
-  If optLocaleBD.Checked = True Then
+  if optLocaleBD.Checked = True then
     PrefferedLocale := 'BANGLADESH'
-  Else If optLocaleIND.Checked = True Then
+  else if optLocaleIND.Checked = True then
     PrefferedLocale := 'INDIA'
-  Else If optLocaleAS.Checked = True Then
+  else if optLocaleAS.Checked = True then
     PrefferedLocale := 'ASSAMESE';
 
   // =========================================================
   // Avro Phonetic Options
-  If CheckAutoCorrect.Checked = True Then
+  if CheckAutoCorrect.Checked = True then
     PhoneticAutoCorrect := 'YES'
-  Else
+  else
     PhoneticAutoCorrect := 'NO';
 
-  If CheckShowPrevWindow.Checked = True Then
+  if CheckShowPrevWindow.Checked = True then
     ShowPrevWindow := 'YES'
-  Else
+  else
     ShowPrevWindow := 'NO';
 
-  If optPhoneticMode_Dict.Checked = True Then
+  if optPhoneticMode_Dict.Checked = True then
     PhoneticMode := 'DICT'
-  Else If optPhoneticMode_Char.Checked = True Then
+  else if optPhoneticMode_Char.Checked = True then
     PhoneticMode := 'CHAR'
-  Else If optPhoneticMode_OnlyChar.Checked = True Then
+  else if optPhoneticMode_OnlyChar.Checked = True then
     PhoneticMode := 'ONLYCHAR'
-  Else
+  else
     PhoneticMode := 'CHAR';
 
-  If CheckRememberCandidate.Checked = True Then
+  if CheckRememberCandidate.Checked = True then
     SaveCandidate := 'YES'
-  Else
+  else
     SaveCandidate := 'NO';
 
-  If CheckAddNewWords.Checked = True Then
+  if CheckAddNewWords.Checked = True then
     AddToPhoneticDict := 'YES'
-  Else
+  else
     AddToPhoneticDict := 'NO';
 
-  If CheckTabBrowsing.Checked = True Then
+  if CheckTabBrowsing.Checked = True then
     TabBrowsing := 'YES'
-  Else
+  else
     TabBrowsing := 'NO';
 
-  If CheckPipeToDot.Checked = True Then
+  if CheckPipeToDot.Checked = True then
     PipeToDot := 'YES'
-  Else
+  else
     PipeToDot := 'NO';
 
-  If CheckEnableJoNukta.Checked = True Then
+  if CheckEnableJoNukta.Checked = True then
     EnableJoNukta := 'YES'
-  Else
+  else
     EnableJoNukta := 'NO';
 
   // =========================================================
   // Avro Mouse Options
-  If optAvroMouseKeyboardMode_Change.Checked = True Then
+  if optAvroMouseKeyboardMode_Change.Checked = True then
     AvroMouseChangeModeLocale := 'YES'
-  Else
+  else
     AvroMouseChangeModeLocale := 'NO';
 
   // =========================================================
   // Fixed Layout Options
-  If optTypingStyle_Old.Checked = True Then
+  if optTypingStyle_Old.Checked = True then
     FullOldStyleTyping := 'YES'
-  Else
+  else
     FullOldStyleTyping := 'NO';
 
-  If chkOldReph.Checked = True Then
+  if chkOldReph.Checked = True then
     OldStyleReph := 'YES'
-  Else
+  else
     OldStyleReph := 'NO';
 
-  If chkVowelFormat.Checked = True Then
+  if chkVowelFormat.Checked = True then
     VowelFormating := 'YES'
-  Else
+  else
     VowelFormating := 'NO';
 
-  If CheckChandraPosition.Checked = True Then
+  if CheckChandraPosition.Checked = True then
     AutomaticallyFixChandra := 'YES'
-  Else
+  else
     AutomaticallyFixChandra := 'NO';
 
-  If CheckNumPadBangla.Checked = True Then
+  if CheckNumPadBangla.Checked = True then
     NumPadBangla := 'YES'
-  Else
+  else
     NumPadBangla := 'NO';
 
   // Global output settings
-  If optOutputUnicode.Checked = True Then
+  if optOutputUnicode.Checked = True then
     OutputIsBijoy := 'NO'
-  Else
+  else
     OutputIsBijoy := 'YES';
 
-  If CheckWarningAnsi.Checked = True Then
+  if CheckWarningAnsi.Checked = True then
     ShowOutputwarning := 'YES'
-  Else
+  else
     ShowOutputwarning := 'NO';
 
   uRegistrySettings.SaveSettings;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmOptions.TrackBar_TransparencyChange(Sender: TObject);
-Begin
+procedure TfrmOptions.TrackBar_TransparencyChange(Sender: TObject);
+begin
   Label_Transparency.Caption := IntToStr(TrackBar_Transparency.Position);
-End;
+end;
 
 { =============================================================================== }
 
-End.
+end.

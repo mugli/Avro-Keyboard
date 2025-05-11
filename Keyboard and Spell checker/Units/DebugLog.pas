@@ -26,30 +26,31 @@
 }
 
 {$INCLUDE ../../ProjectDefines.inc}
-Unit DebugLog;
+unit DebugLog;
 
 interface
 
-Uses
-  Windows, System.SysUtils;
+uses
+  Windows,
+  System.SysUtils;
 
-Procedure Log(const Msg: string);overload;
-Procedure Log(const Msg: string; i: LongInt);overload;
+procedure Log(const Msg: string); overload;
+procedure Log(const Msg: string; i: LongInt); overload;
 
 implementation
 
-Procedure Log(const Msg: string);
+procedure Log(const Msg: string);
 begin
-{$IFDEF DebugLog}
+  {$IFDEF DebugLog}
   OutputDebugString(PChar(Msg));
-{$ENDIF}
+  {$ENDIF}
 end;
 
-Procedure Log(const Msg: string; i: LongInt);
+procedure Log(const Msg: string; i: LongInt);
 begin
-{$IFDEF DebugLog}
+  {$IFDEF DebugLog}
   OutputDebugString(PChar(Msg + IntToStr(i)));
-{$ENDIF}
+  {$ENDIF}
 end;
 
 end.

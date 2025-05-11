@@ -25,36 +25,36 @@
   =============================================================================
 }
 
-Unit uCustomDictionary;
+unit uCustomDictionary;
 
-Interface
+interface
 
-Uses
+uses
   Classes,
   Generics.Collections;
 
-Var
+var
   FCustomDictLoaded: Boolean;
-  SpellCustomDict: TStringList;
-  SpellIgnoreDict: TStringList;
-  SpellChangeDict: TDictionary<string, string>;
+  SpellCustomDict:   TStringList;
+  SpellIgnoreDict:   TStringList;
+  SpellChangeDict:   TDictionary<string, string>;
 
-Procedure InitSpellCustomDict;
-Procedure SaveSpellCustomDict;
-Function WordPresentInCustomDict(Const w: String): Boolean;
-Function WordPresentInIgnoreDict(Const w: String): Boolean;
+procedure InitSpellCustomDict;
+procedure SaveSpellCustomDict;
+function WordPresentInCustomDict(const w: string): Boolean;
+function WordPresentInIgnoreDict(const w: string): Boolean;
 
-Implementation
+implementation
 
-Uses
+uses
   uFileFolderHandling,
   SysUtils;
 
-Procedure InitSpellCustomDict;
-Var
+procedure InitSpellCustomDict;
+var
   TempList: TStringList;
-Begin
-  If FCustomDictLoaded Then
+begin
+  if FCustomDictLoaded then
     exit;
 
   TempList := TStringList.Create;
@@ -62,18 +62,17 @@ Begin
   SpellCustomDict := TStringList.Create;
   SpellCustomDict.Sorted := True;
   SpellCustomDict.Duplicates := dupIgnore;
-  Try
+  try
     TempList.Clear;
-    TempList.LoadFromFile(GetAvroDataDir + 'CustomSpellingDictionary.dat',
-      TEncoding.UTF8);
+    TempList.LoadFromFile(GetAvroDataDir + 'CustomSpellingDictionary.dat', TEncoding.UTF8);
     TempList.Delete(0); // Avoid BOM
     SpellCustomDict.Assign(TempList);
-  Except
-    On E: Exception Do
-    Begin
+  except
+    on E: Exception do
+    begin
       // Nothing
-    End;
-  End;
+    end;
+  end;
   TempList.Clear;
   FreeAndNil(TempList);
 
@@ -83,26 +82,24 @@ Begin
 
   SpellChangeDict := TDictionary<string, string>.Create;
   FCustomDictLoaded := True;
-End;
+end;
 
-Procedure SaveSpellCustomDict;
-Var
+procedure SaveSpellCustomDict;
+var
   TempList: TStringList;
-Begin
+begin
   TempList := TStringList.Create;
   TempList.Assign(SpellCustomDict);
   TempList.Sorted := False;
-  TempList.Insert(0,
-    '// Custom Bangla Dictionary for Avro Spell Checker (Do not remove this line)');
-  Try
-    TempList.SaveToFile(GetAvroDataDir + 'CustomSpellingDictionary.dat',
-      TEncoding.UTF8);
-  Except
-    On E: Exception Do
-    Begin
+  TempList.Insert(0, '// Custom Bangla Dictionary for Avro Spell Checker (Do not remove this line)');
+  try
+    TempList.SaveToFile(GetAvroDataDir + 'CustomSpellingDictionary.dat', TEncoding.UTF8);
+  except
+    on E: Exception do
+    begin
       // Nothing
-    End;
-  End;
+    end;
+  end;
   TempList.Clear;
   FreeAndNil(TempList);
 
@@ -116,26 +113,26 @@ Begin
   FreeAndNil(SpellChangeDict);
 
   FCustomDictLoaded := False;
-End;
+end;
 
-Function WordPresentInCustomDict(Const w: String): Boolean;
-Var
+function WordPresentInCustomDict(const w: string): Boolean;
+var
   Dummy: Integer;
-Begin
+begin
   Result := SpellCustomDict.Find(w, Dummy);
-End;
+end;
 
-Function WordPresentInIgnoreDict(Const w: String): Boolean;
-Var
+function WordPresentInIgnoreDict(const w: string): Boolean;
+var
   Dummy: Integer;
-Begin
+begin
   Result := SpellIgnoreDict.Find(w, Dummy);
-End;
+end;
 
 // ------------------------------------------------------------------------------
 
-Initialization
+initialization
 
 FCustomDictLoaded := False;
 
-End.
+end.

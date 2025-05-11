@@ -28,11 +28,11 @@
 {$INCLUDE ../ProjectDefines.inc}
 { COMPLETE TRANSFERING! }
 
-Unit uRegistrySettings;
+unit uRegistrySettings;
 
-Interface
+interface
 
-Uses
+uses
   Classes,
   Sysutils,
   clsRegistry_XMLSetting,
@@ -41,90 +41,90 @@ Uses
   Forms,
   StrUtils;
 
-Const
+const
   NumberOfVisibleHints: Integer = 2;
 
-Var
-  DontShowComplexLNotification: String;
-  DontShowStartupWizard: String;
+var
+  DontShowComplexLNotification: string;
+  DontShowStartupWizard:        string;
 
   // General settings
-  StartWithWindows: String;
-  ShowSplash: String;
-  DefaultUIMode: String;
-  LastUIMode: String;
-  TopBarPosX: String;
-  TopBarXButton: String;
+  StartWithWindows: string;
+  ShowSplash:       string;
+  DefaultUIMode:    string;
+  LastUIMode:       string;
+  TopBarPosX:       string;
+  TopBarXButton:    string;
 
   // Inteface Settings
-  TopBarTransparent: String;
-  TopBarTransparencyLevel: String;
-  InterfaceSkin: String;
-  TrayHintShowTimes: String;
-  TopHintShowTimes: String;
+  TopBarTransparent:       string;
+  TopBarTransparencyLevel: string;
+  InterfaceSkin:           string;
+  TrayHintShowTimes:       string;
+  TopHintShowTimes:        string;
 
   // Webbuddy Options
-  AvroUpdateCheck: String;
+  AvroUpdateCheck:     string;
   AvroUpdateLastCheck: TDateTime;
 
   // Hotkey settings
-  ModeSwitchKey: String;
-  ToggleOutputModeKey: String;
-  SpellerLauncherKey: String;
+  ModeSwitchKey:       string;
+  ToggleOutputModeKey: string;
+  SpellerLauncherKey:  string;
 
   // Avro Mouse Settings
-  AvroMouseChangeModeLocale: String;
-  AvroMousePosX: String;
-  AvroMousePosY: String;
+  AvroMouseChangeModeLocale: string;
+  AvroMousePosX:             string;
+  AvroMousePosY:             string;
 
   // Avro Phonetic Settings
-  PhoneticAutoCorrect: String;
-  ShowPrevWindow: String;
-  FollowCaretByDefault: String;
-  PhoneticMode: String;
-  SaveCandidate: String;
-  AddToPhoneticDict: String;
-  TabBrowsing: String;
-  PipeToDot: String;
-  EnableJoNukta: String;
+  PhoneticAutoCorrect:  string;
+  ShowPrevWindow:       string;
+  FollowCaretByDefault: string;
+  PhoneticMode:         string;
+  SaveCandidate:        string;
+  AddToPhoneticDict:    string;
+  TabBrowsing:          string;
+  PipeToDot:            string;
+  EnableJoNukta:        string;
 
   // Input Locale Settings
-  ChangeInputLocale: String;
-  PrefferedLocale: String;
+  ChangeInputLocale: string;
+  PrefferedLocale:   string;
 
   // Fixed Layout Settings
-  DefaultLayout: String; // NOT A Fixed Layout SETTING!
-  OldStyleReph: String;
-  VowelFormating: String;
-  NumPadBangla: String;
-  FullOldStyleTyping: String;
-  AutomaticallyFixChandra: String;
+  DefaultLayout:           string; // NOT A Fixed Layout SETTING!
+  OldStyleReph:            string;
+  VowelFormating:          string;
+  NumPadBangla:            string;
+  FullOldStyleTyping:      string;
+  AutomaticallyFixChandra: string;
 
   // Keyboard Layout Viewer Settings
-  ShowLayoutOnTop: String;
-  SavePosLayoutViewer: String;
-  LayoutViewerPosX: String;
-  LayoutViewerPosY: String;
-  LayoutViewerSize: String;
+  ShowLayoutOnTop:     string;
+  SavePosLayoutViewer: string;
+  LayoutViewerPosX:    string;
+  LayoutViewerPosY:    string;
+  LayoutViewerSize:    string;
 
   // Global Output settings
-  OutputIsBijoy: String;
-  ShowOutputwarning: String;
+  OutputIsBijoy:     string;
+  ShowOutputwarning: string;
 
-Procedure SaveUISettings;
-Procedure LoadSettings;
-Procedure ValidateSettings;
-Procedure SaveSettings;
+procedure SaveUISettings;
+procedure LoadSettings;
+procedure ValidateSettings;
+procedure SaveSettings;
 
-Procedure LoadSettingsFromFile;
-Procedure SaveSettingsInXML;
+procedure LoadSettingsFromFile;
+procedure SaveSettingsInXML;
 
-Procedure LoadSettingsFromRegistry;
-Procedure SaveSettingsInRegistry;
+procedure LoadSettingsFromRegistry;
+procedure SaveSettingsInRegistry;
 
-Implementation
+implementation
 
-Uses
+uses
   uForm1,
   uTopBar,
   WindowsVersion,
@@ -132,28 +132,26 @@ Uses
 
 { =============================================================================== }
 
-Procedure LoadSettingsFromFile;
-Var
+procedure LoadSettingsFromFile;
+var
   Reg: TMyRegistry;
   XML: TXMLSetting;
-Begin
+begin
   Reg := TMyRegistry.create;
   Reg.RootKey := HKEY_CURRENT_USER;
 
-  If Reg.OpenKey('Control Panel\Desktop', True) = True Then
-  Begin
+  if Reg.OpenKey('Control Panel\Desktop', True) = True then
+  begin
     Reg.WriteInteger('LowLevelHooksTimeout', 5000);
-  End;
+  end;
 
   Reg.Free;
 
   XML := TXMLSetting.create;
   XML.LoadXMLData;
 
-  DontShowComplexLNotification :=
-    UpperCase(XML.GetValue('DontShowComplexLNotification', 'NO'));
-  DontShowStartupWizard :=
-    UpperCase(XML.GetValue('DontShowStartupWizard', 'NO'));
+  DontShowComplexLNotification := UpperCase(XML.GetValue('DontShowComplexLNotification', 'NO'));
+  DontShowStartupWizard := UpperCase(XML.GetValue('DontShowStartupWizard', 'NO'));
 
   // General settings
   StartWithWindows := UpperCase(XML.GetValue('StartWithWindows', 'Yes'));
@@ -181,8 +179,7 @@ Begin
   SpellerLauncherKey := UpperCase(XML.GetValue('SpellerLauncherKey', 'F7'));
 
   // Avro Mouse Settings
-  AvroMouseChangeModeLocale :=
-    UpperCase(XML.GetValue('AvroMouseChangeModeLocale', 'No'));
+  AvroMouseChangeModeLocale := UpperCase(XML.GetValue('AvroMouseChangeModeLocale', 'No'));
   AvroMousePosX := UpperCase(XML.GetValue('AvroMousePosX', '0'));
   AvroMousePosY := UpperCase(XML.GetValue('AvroMousePosY', '0'));
 
@@ -207,8 +204,7 @@ Begin
   VowelFormating := UpperCase(XML.GetValue('VowelFormating', 'Yes'));
   NumPadBangla := UpperCase(XML.GetValue('NumPadBangla', 'Yes'));
   FullOldStyleTyping := UpperCase(XML.GetValue('FullOldStyleTyping', 'No'));
-  AutomaticallyFixChandra :=
-    UpperCase(XML.GetValue('AutomaticallyFixChandra', 'Yes'));
+  AutomaticallyFixChandra := UpperCase(XML.GetValue('AutomaticallyFixChandra', 'Yes'));
 
   // Keyboard Layout Viewer Settings
   DefaultLayout := XML.GetValue('DefaultLayout', 'avrophonetic*');
@@ -224,14 +220,14 @@ Begin
 
   XML.Free;
 
-End;
+end;
 
 { =============================================================================== }
 
-Procedure SaveSettingsInXML;
-Var
+procedure SaveSettingsInXML;
+var
   XML: TXMLSetting;
-Begin
+begin
   XML := TXMLSetting.create;
   XML.CreateNewXMLData;
 
@@ -306,30 +302,28 @@ Begin
   XML.SaveXMLData;
   XML.Free;
 
-End;
+end;
 
 { =============================================================================== }
 
-Procedure LoadSettingsFromRegistry;
-Var
+procedure LoadSettingsFromRegistry;
+var
   Reg: TMyRegistry;
-Begin
+begin
   Reg := TMyRegistry.create;
   Reg.RootKey := HKEY_CURRENT_USER;
 
-  If Reg.OpenKey('Control Panel\Desktop', True) = True Then
-  Begin
+  if Reg.OpenKey('Control Panel\Desktop', True) = True then
+  begin
     Reg.WriteInteger('LowLevelHooksTimeout', 5000);
-  End;
+  end;
   Reg.CloseKey;
 
   Reg.RootKey := HKEY_CURRENT_USER;
-  If Reg.OpenKey('Software\OmicronLab\Avro Keyboard', True) = True Then
-  Begin
-    DontShowComplexLNotification :=
-      UpperCase(Reg.ReadStringDef('DontShowComplexLNotification', 'NO'));
-    DontShowStartupWizard :=
-      UpperCase(Reg.ReadStringDef('DontShowStartupWizard', 'NO'));
+  if Reg.OpenKey('Software\OmicronLab\Avro Keyboard', True) = True then
+  begin
+    DontShowComplexLNotification := UpperCase(Reg.ReadStringDef('DontShowComplexLNotification', 'NO'));
+    DontShowStartupWizard := UpperCase(Reg.ReadStringDef('DontShowStartupWizard', 'NO'));
 
     // General settings
     StartWithWindows := UpperCase(Reg.ReadStringDef('StartWithWindows', 'Yes'));
@@ -338,95 +332,82 @@ Begin
     LastUIMode := UpperCase(Reg.ReadStringDef('LastUIMode', 'Top Bar'));
     TopBarPosX := UpperCase(Reg.ReadStringDef('TopBarPosX', '1000000'));
     TopBarXButton := UpperCase(Reg.ReadStringDef('TopBarXButton', 'Show Menu'));
-    TopBarTransparent :=
-      UpperCase(Reg.ReadStringDef('TopBarTransparent', 'Yes'));
+    TopBarTransparent := UpperCase(Reg.ReadStringDef('TopBarTransparent', 'Yes'));
     AvroUpdateCheck := UpperCase(Reg.ReadStringDef('AvroUpdateCheck', 'Yes'));
     AvroUpdateLastCheck := Reg.ReadDateDef('AvroUpdateLastCheck', Now);
 
     // Inteface Settings
     InterfaceSkin := Reg.ReadStringDef('InterfaceSkin', 'internalskin*');
-    TopBarTransparencyLevel := Reg.ReadStringDef
-      ('TopBarTransparencyLevel', '80');
+    TopBarTransparencyLevel := Reg.ReadStringDef('TopBarTransparencyLevel', '80');
     TopBarTransparent := Reg.ReadStringDef('TopBarTransparent', 'YES');
     TrayHintShowTimes := Reg.ReadStringDef('TrayHintShowTimes', '0');
     TopHintShowTimes := Reg.ReadStringDef('TopHintShowTimes', '0');
 
     // Hotkey settings
     ModeSwitchKey := UpperCase(Reg.ReadStringDef('ModeSwitchKey', 'F12'));
-    ToggleOutputModeKey :=
-      UpperCase(Reg.ReadStringDef('ToggleOutputModeKey', 'F12'));
-    SpellerLauncherKey :=
-      UpperCase(Reg.ReadStringDef('SpellerLauncherKey', 'F7'));
+    ToggleOutputModeKey := UpperCase(Reg.ReadStringDef('ToggleOutputModeKey', 'F12'));
+    SpellerLauncherKey := UpperCase(Reg.ReadStringDef('SpellerLauncherKey', 'F7'));
 
     // Avro Mouse Settings
-    AvroMouseChangeModeLocale :=
-      UpperCase(Reg.ReadStringDef('AvroMouseChangeModeLocale', 'No'));
+    AvroMouseChangeModeLocale := UpperCase(Reg.ReadStringDef('AvroMouseChangeModeLocale', 'No'));
     AvroMousePosX := UpperCase(Reg.ReadStringDef('AvroMousePosX', '0'));
     AvroMousePosY := UpperCase(Reg.ReadStringDef('AvroMousePosY', '0'));
 
     // Avro Phonetic Settings
-    PhoneticAutoCorrect :=
-      UpperCase(Reg.ReadStringDef('PhoneticAutoCorrect', 'Yes'));
+    PhoneticAutoCorrect := UpperCase(Reg.ReadStringDef('PhoneticAutoCorrect', 'Yes'));
     ShowPrevWindow := UpperCase(Reg.ReadStringDef('ShowPrevWindow', 'Yes'));
     FollowCaretByDefault := UpperCase(Reg.ReadStringDef('FollowCaretByDefault', 'Yes'));
     PhoneticMode := UpperCase(Reg.ReadStringDef('PhoneticMode', 'CHAR'));
     SaveCandidate := UpperCase(Reg.ReadStringDef('SaveCandidate', 'YES'));
-    AddToPhoneticDict :=
-      UpperCase(Reg.ReadStringDef('AddToPhoneticDict', 'YES'));
+    AddToPhoneticDict := UpperCase(Reg.ReadStringDef('AddToPhoneticDict', 'YES'));
     TabBrowsing := UpperCase(Reg.ReadStringDef('TabBrowsing', 'YES'));
     PipeToDot := UpperCase(Reg.ReadStringDef('PipeToDot', 'YES'));
     EnableJoNukta := UpperCase(Reg.ReadStringDef('EnableJoNukta', 'NO'));
 
     // Input Locale Settings
-    ChangeInputLocale :=
-      UpperCase(Reg.ReadStringDef('ChangeInputLocale', 'NO'));
+    ChangeInputLocale := UpperCase(Reg.ReadStringDef('ChangeInputLocale', 'NO'));
     PrefferedLocale := UpperCase(Reg.ReadStringDef('PrefferedLocale', 'India'));
 
     // Tools Settings
     OldStyleReph := UpperCase(Reg.ReadStringDef('OldStyleReph', 'Yes'));
     VowelFormating := UpperCase(Reg.ReadStringDef('VowelFormating', 'Yes'));
     NumPadBangla := UpperCase(Reg.ReadStringDef('NumPadBangla', 'Yes'));
-    FullOldStyleTyping :=
-      UpperCase(Reg.ReadStringDef('FullOldStyleTyping', 'No'));
-    AutomaticallyFixChandra :=
-      UpperCase(Reg.ReadStringDef('AutomaticallyFixChandra', 'Yes'));
+    FullOldStyleTyping := UpperCase(Reg.ReadStringDef('FullOldStyleTyping', 'No'));
+    AutomaticallyFixChandra := UpperCase(Reg.ReadStringDef('AutomaticallyFixChandra', 'Yes'));
 
     // Keyboard Layout Viewer Settings
     DefaultLayout := Reg.ReadStringDef('DefaultLayout', 'avrophonetic*');
     ShowLayoutOnTop := UpperCase(Reg.ReadStringDef('ShowLayoutOnTop', 'Yes'));
-    SavePosLayoutViewer :=
-      UpperCase(Reg.ReadStringDef('SavePosLayoutViewer', 'Yes'));
+    SavePosLayoutViewer := UpperCase(Reg.ReadStringDef('SavePosLayoutViewer', 'Yes'));
     LayoutViewerPosX := UpperCase(Reg.ReadStringDef('LayoutViewerPosX', '0'));
     LayoutViewerPosY := UpperCase(Reg.ReadStringDef('LayoutViewerPosY', '0'));
     LayoutViewerSize := UpperCase(Reg.ReadStringDef('LayoutViewerSize', '60%'));
 
     // Global Output settings
     OutputIsBijoy := UpperCase(Reg.ReadStringDef('OutputIsBijoy', 'No'));
-    ShowOutputwarning :=
-      UpperCase(Reg.ReadStringDef('ShowOutputwarning', 'Yes'));
+    ShowOutputwarning := UpperCase(Reg.ReadStringDef('ShowOutputwarning', 'Yes'));
 
-  End;
+  end;
 
   Reg.Free;
 
-End;
+end;
 
 { =============================================================================== }
 
-Procedure SaveSettingsInRegistry;
-Var
+procedure SaveSettingsInRegistry;
+var
   Reg: TMyRegistry;
-Begin
+begin
   Reg := TMyRegistry.create;
   Reg.RootKey := HKEY_CURRENT_USER;
 
-  If Reg.OpenKey('Software\OmicronLab\Avro Keyboard', True) = True Then
-  Begin
+  if Reg.OpenKey('Software\OmicronLab\Avro Keyboard', True) = True then
+  begin
     Reg.WriteString('AppPath', ExtractFileDir(Application.ExeName));
     Reg.WriteString('AppExeName', ExtractFileName(Application.ExeName));
 
-    Reg.WriteString('DontShowComplexLNotification',
-      DontShowComplexLNotification);
+    Reg.WriteString('DontShowComplexLNotification', DontShowComplexLNotification);
     Reg.WriteString('DontShowStartupWizard', DontShowStartupWizard);
 
     // General settings
@@ -493,193 +474,178 @@ Begin
     Reg.WriteString('OutputIsBijoy', OutputIsBijoy);
     Reg.WriteString('ShowOutputwarning', ShowOutputwarning);
 
-  End;
+  end;
 
   Reg.CloseKey;
   Reg.RootKey := HKEY_CURRENT_USER;
 
-  If Reg.OpenKey('Software\Microsoft\Windows\CurrentVersion\Run', True)
-    = True Then
-  Begin
-    If StartWithWindows = 'NO' Then
+  if Reg.OpenKey('Software\Microsoft\Windows\CurrentVersion\Run', True) = True then
+  begin
+    if StartWithWindows = 'NO' then
       Reg.DeleteValue('Avro Keyboard')
-    Else
+    else
       Reg.WriteString('Avro Keyboard', Application.ExeName);
-  End;
+  end;
 
   Reg.Free;
 
-End;
+end;
 
 { =============================================================================== }
 
-Procedure SaveUISettings;
-Begin
-  If IsFormVisible('TopBar') = True Then
-  Begin
+procedure SaveUISettings;
+begin
+  if IsFormVisible('TopBar') = True then
+  begin
     LastUIMode := 'TOP BAR';
     TopBarPosX := IntToStr(TopBar.Left);
-  End
-  Else
-  Begin
+  end
+  else
+  begin
     LastUIMode := 'ICON';
-  End;
+  end;
 
   DefaultLayout := AvroMainForm1.GetMyCurrentLayout;
 
   SaveSettings;
-End;
+end;
 
-Procedure LoadSettings;
-Begin
+procedure LoadSettings;
+begin
 
-{$IFDEF PortableOn}
+  {$IFDEF PortableOn}
   LoadSettingsFromFile;
 
-{$ELSE}
+  {$ELSE}
   LoadSettingsFromRegistry;
 
-{$ENDIF}
+  {$ENDIF}
   ValidateSettings;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure ValidateSettings;
-Begin
+procedure ValidateSettings;
+begin
   // General settings
-  If Not((StartWithWindows = 'YES') Or (StartWithWindows = 'NO')) Then
+  if not((StartWithWindows = 'YES') or (StartWithWindows = 'NO')) then
     StartWithWindows := 'YES';
-  If Not((DefaultUIMode = 'TOP BAR') Or (DefaultUIMode = 'ICON') Or
-    (DefaultUIMode = 'LASTUI')) Then
+  if not((DefaultUIMode = 'TOP BAR') or (DefaultUIMode = 'ICON') or (DefaultUIMode = 'LASTUI')) then
     DefaultUIMode := 'LASTUI';
-  If Not((LastUIMode = 'ICON') Or (LastUIMode = 'TOP BAR')) Then
+  if not((LastUIMode = 'ICON') or (LastUIMode = 'TOP BAR')) then
     LastUIMode := 'TOP BAR';
-  If Not(StrToInt(TopBarPosX) > 0) Then
+  if not(StrToInt(TopBarPosX) > 0) then
     TopBarPosX := '1000000';
-  If Not((TopBarXButton = 'MINIMIZE') Or (TopBarXButton = 'EXIT') Or
-    (TopBarXButton = 'SHOW MENU')) Then
+  if not((TopBarXButton = 'MINIMIZE') or (TopBarXButton = 'EXIT') or (TopBarXButton = 'SHOW MENU')) then
     TopBarXButton := 'SHOW MENU';
-  If Not((TopBarTransparent = 'YES') Or (TopBarTransparent = 'NO')) Then
+  if not((TopBarTransparent = 'YES') or (TopBarTransparent = 'NO')) then
     TopBarTransparent := 'YES';
 
   // Keyboard Mode settings
-  If Not((ModeSwitchKey = 'F1') Or (ModeSwitchKey = 'F2') Or
-    (ModeSwitchKey = 'F3') Or (ModeSwitchKey = 'F4') Or (ModeSwitchKey = 'F5')
-    Or (ModeSwitchKey = 'F6') Or (ModeSwitchKey = 'F7') Or
-    (ModeSwitchKey = 'F8') Or (ModeSwitchKey = 'F9') Or (ModeSwitchKey = 'F10')
-    Or (ModeSwitchKey = 'F11') Or (ModeSwitchKey = 'F12') Or
-    (ModeSwitchKey = 'CTRL+SPACE')) Then
+  if not((ModeSwitchKey = 'F1') or (ModeSwitchKey = 'F2') or (ModeSwitchKey = 'F3') or (ModeSwitchKey = 'F4') or (ModeSwitchKey = 'F5') or
+      (ModeSwitchKey = 'F6') or (ModeSwitchKey = 'F7') or (ModeSwitchKey = 'F8') or (ModeSwitchKey = 'F9') or (ModeSwitchKey = 'F10') or (ModeSwitchKey = 'F11')
+      or (ModeSwitchKey = 'F12') or (ModeSwitchKey = 'CTRL+SPACE')) then
     ModeSwitchKey := 'F12';
-  If Not((ToggleOutputModeKey = 'F1') Or (ToggleOutputModeKey = 'F2') Or
-    (ToggleOutputModeKey = 'F3') Or (ToggleOutputModeKey = 'F4') Or
-    (ToggleOutputModeKey = 'F5') Or (ToggleOutputModeKey = 'F6') Or
-    (ToggleOutputModeKey = 'F7') Or (ToggleOutputModeKey = 'F8') Or
-    (ToggleOutputModeKey = 'F9') Or (ToggleOutputModeKey = 'F10') Or
-    (ToggleOutputModeKey = 'F11') Or (ToggleOutputModeKey = 'F12')) Then
+  if not((ToggleOutputModeKey = 'F1') or (ToggleOutputModeKey = 'F2') or (ToggleOutputModeKey = 'F3') or (ToggleOutputModeKey = 'F4') or
+      (ToggleOutputModeKey = 'F5') or (ToggleOutputModeKey = 'F6') or (ToggleOutputModeKey = 'F7') or (ToggleOutputModeKey = 'F8') or
+      (ToggleOutputModeKey = 'F9') or (ToggleOutputModeKey = 'F10') or (ToggleOutputModeKey = 'F11') or (ToggleOutputModeKey = 'F12')) then
     ToggleOutputModeKey := 'F12';
-  If Not((SpellerLauncherKey = 'F1') Or (SpellerLauncherKey = 'F2') Or
-    (SpellerLauncherKey = 'F3') Or (SpellerLauncherKey = 'F4') Or
-    (SpellerLauncherKey = 'F5') Or (SpellerLauncherKey = 'F6') Or
-    (SpellerLauncherKey = 'F7') Or (SpellerLauncherKey = 'F8') Or
-    (SpellerLauncherKey = 'F9') Or (SpellerLauncherKey = 'F10') Or
-    (SpellerLauncherKey = 'F11') Or (SpellerLauncherKey = 'F12')) Then
+  if not((SpellerLauncherKey = 'F1') or (SpellerLauncherKey = 'F2') or (SpellerLauncherKey = 'F3') or (SpellerLauncherKey = 'F4') or (SpellerLauncherKey = 'F5')
+      or (SpellerLauncherKey = 'F6') or (SpellerLauncherKey = 'F7') or (SpellerLauncherKey = 'F8') or (SpellerLauncherKey = 'F9') or
+      (SpellerLauncherKey = 'F10') or (SpellerLauncherKey = 'F11') or (SpellerLauncherKey = 'F12')) then
     SpellerLauncherKey := 'F12';
 
   // Avro Mouse Settings
-  If Not((AvroMouseChangeModeLocale = 'YES') Or
-    (AvroMouseChangeModeLocale = 'NO')) Then
+  if not((AvroMouseChangeModeLocale = 'YES') or (AvroMouseChangeModeLocale = 'NO')) then
     AvroMouseChangeModeLocale := 'YES';
-  If Not(StrToInt(AvroMousePosX) > 0) Then
+  if not(StrToInt(AvroMousePosX) > 0) then
     AvroMousePosX := '0';
-  If Not(StrToInt(AvroMousePosY) > 0) Then
+  if not(StrToInt(AvroMousePosY) > 0) then
     AvroMousePosY := '0';
 
   // Avro Phonetic Settings
-  If Not((PhoneticAutoCorrect = 'YES') Or (PhoneticAutoCorrect = 'NO')) Then
+  if not((PhoneticAutoCorrect = 'YES') or (PhoneticAutoCorrect = 'NO')) then
     PhoneticAutoCorrect := 'YES';
-  If Not((ShowPrevWindow = 'YES') Or (ShowPrevWindow = 'NO')) Then
+  if not((ShowPrevWindow = 'YES') or (ShowPrevWindow = 'NO')) then
     ShowPrevWindow := 'YES';
-  If Not((FollowCaretByDefault = 'YES') Or (FollowCaretByDefault = 'NO')) Then
+  if not((FollowCaretByDefault = 'YES') or (FollowCaretByDefault = 'NO')) then
     FollowCaretByDefault := 'YES';
-  If Not((TabBrowsing = 'YES') Or (TabBrowsing = 'NO')) Then
+  if not((TabBrowsing = 'YES') or (TabBrowsing = 'NO')) then
     TabBrowsing := 'YES';
-  If Not((PipeToDot = 'YES') Or (PipeToDot = 'NO')) Then
+  if not((PipeToDot = 'YES') or (PipeToDot = 'NO')) then
     PipeToDot := 'YES';
-  If Not((EnableJoNukta = 'YES') Or (EnableJoNukta = 'NO')) Then
+  if not((EnableJoNukta = 'YES') or (EnableJoNukta = 'NO')) then
     EnableJoNukta := 'NO';
 
   // Input Locale Settings
-  If Not((ChangeInputLocale = 'YES') Or (ChangeInputLocale = 'NO')) Then
+  if not((ChangeInputLocale = 'YES') or (ChangeInputLocale = 'NO')) then
     ChangeInputLocale := 'NO';
-  If Not((PrefferedLocale = 'BANGLADESH') Or (PrefferedLocale = 'INDIA') Or
-    (PrefferedLocale = 'ASSAMESE')) Then
+  if not((PrefferedLocale = 'BANGLADESH') or (PrefferedLocale = 'INDIA') or (PrefferedLocale = 'ASSAMESE')) then
     PrefferedLocale := 'INDIA';
 
   // Tools Settings
-  If Not((OldStyleReph = 'YES') Or (OldStyleReph = 'NO')) Then
+  if not((OldStyleReph = 'YES') or (OldStyleReph = 'NO')) then
     OldStyleReph := 'YES';
-  If Not((VowelFormating = 'YES') Or (VowelFormating = 'NO')) Then
+  if not((VowelFormating = 'YES') or (VowelFormating = 'NO')) then
     VowelFormating := 'YES';
-  If Not((NumPadBangla = 'YES') Or (NumPadBangla = 'NO')) Then
+  if not((NumPadBangla = 'YES') or (NumPadBangla = 'NO')) then
     NumPadBangla := 'YES';
-  If Not((FullOldStyleTyping = 'YES') Or (FullOldStyleTyping = 'NO')) Then
+  if not((FullOldStyleTyping = 'YES') or (FullOldStyleTyping = 'NO')) then
     FullOldStyleTyping := 'No';
-  If Not((AutomaticallyFixChandra = 'YES') Or
-    (AutomaticallyFixChandra = 'NO')) Then
+  if not((AutomaticallyFixChandra = 'YES') or (AutomaticallyFixChandra = 'NO')) then
     AutomaticallyFixChandra := 'YES';
 
   // Keyboard Layout Viewer Settings
-  If Not((ShowLayoutOnTop = 'YES') Or (ShowLayoutOnTop = 'NO')) Then
+  if not((ShowLayoutOnTop = 'YES') or (ShowLayoutOnTop = 'NO')) then
     ShowLayoutOnTop := 'YES';
-  If Not((SavePosLayoutViewer = 'YES') Or (SavePosLayoutViewer = 'NO')) Then
+  if not((SavePosLayoutViewer = 'YES') or (SavePosLayoutViewer = 'NO')) then
     SavePosLayoutViewer := 'YES';
-  If Not(StrToInt(LayoutViewerPosX) > 0) Then
+  if not(StrToInt(LayoutViewerPosX) > 0) then
     LayoutViewerPosX := '0';
-  If Not(StrToInt(LayoutViewerPosY) > 0) Then
+  if not(StrToInt(LayoutViewerPosY) > 0) then
     LayoutViewerPosX := '0';
   // If Not ((StrToInt(LayoutViewerSize) > 50) And (RightStr(LayoutViewerSize, 1) = '%')) Then LayoutViewerSize := '60%';
 
   // Global Output settings
-  If Not((OutputIsBijoy = 'YES') Or (OutputIsBijoy = 'NO')) Then
+  if not((OutputIsBijoy = 'YES') or (OutputIsBijoy = 'NO')) then
     OutputIsBijoy := 'NO';
-  If Not((ShowOutputwarning = 'YES') Or (ShowOutputwarning = 'NO')) Then
+  if not((ShowOutputwarning = 'YES') or (ShowOutputwarning = 'NO')) then
     ShowOutputwarning := 'YES';
 
   { Done : Validate locale settings here }
-  If IsWinVistaOrLater = True Then
-  Begin
-    If (IsBangladeshLocaleInstalled = False) Then
-    Begin
-      If (PrefferedLocale = 'BANGLADESH') Then
+  if IsWinVistaOrLater = True then
+  begin
+    if (IsBangladeshLocaleInstalled = False) then
+    begin
+      if (PrefferedLocale = 'BANGLADESH') then
         PrefferedLocale := 'INDIA';
-    End;
+    end;
 
-    If (IsAssameseLocaleInstalled = False) Then
-    Begin
-      If (PrefferedLocale = 'ASSAMESE') Then
-      Begin
+    if (IsAssameseLocaleInstalled = False) then
+    begin
+      if (PrefferedLocale = 'ASSAMESE') then
+      begin
         PrefferedLocale := 'INDIA';
-      End;
+      end;
 
-    End;
-  End;
-End;
+    end;
+  end;
+end;
 
 { =============================================================================== }
 
-Procedure SaveSettings;
-Begin
+procedure SaveSettings;
+begin
 
-{$IFDEF PortableOn}
+  {$IFDEF PortableOn}
   SaveSettingsInXML;
 
-{$ELSE}
+  {$ELSE}
   SaveSettingsInRegistry;
 
-{$ENDIF}
-End;
+  {$ENDIF}
+end;
 
 { =============================================================================== }
 
-End.
+end.

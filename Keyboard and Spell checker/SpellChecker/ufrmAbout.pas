@@ -25,11 +25,11 @@
   =============================================================================
 }
 
-Unit ufrmAbout;
+unit ufrmAbout;
 
-Interface
+interface
 
-Uses
+uses
   Windows,
   Messages,
   SysUtils,
@@ -42,8 +42,8 @@ Uses
   StdCtrls,
   ExtCtrls;
 
-Type
-  TfrmAbout = Class(TForm)
+type
+  TfrmAbout = class(TForm)
     Panel1: TPanel;
     Image1: TImage;
     Label1: TLabel;
@@ -57,22 +57,22 @@ Type
     Label8: TLabel;
     ButtonClose: TButton;
     LabelVersion: TLabel;
-    Procedure FormCreate(Sender: TObject);
-    Procedure Label_OmicronLabClick(Sender: TObject);
-    Procedure FormClose(Sender: TObject; Var Action: TCloseAction);
-    Procedure ButtonCloseClick(Sender: TObject);
-  Private
-    { Private declarations }
-  Public
-    { Public declarations }
-  End;
+    procedure FormCreate(Sender: TObject);
+    procedure Label_OmicronLabClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure ButtonCloseClick(Sender: TObject);
+    private
+      { Private declarations }
+    public
+      { Public declarations }
+  end;
 
-Var
+var
   frmAbout: TfrmAbout;
 
-Implementation
+implementation
 
-Uses
+uses
   uFileFolderHandling,
   clsFileVersion,
   uWindowHandlers;
@@ -80,38 +80,37 @@ Uses
 {$R *.dfm}
 { =============================================================================== }
 
-Procedure TfrmAbout.ButtonCloseClick(Sender: TObject);
-Begin
+procedure TfrmAbout.ButtonCloseClick(Sender: TObject);
+begin
   Self.Close;
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmAbout.FormClose(Sender: TObject; Var Action: TCloseAction);
-Begin
+procedure TfrmAbout.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
   Action := caFree;
-  frmAbout := Nil;
-End;
+  frmAbout := nil;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmAbout.FormCreate(Sender: TObject);
-Var
+procedure TfrmAbout.FormCreate(Sender: TObject);
+var
   Version: TFileVersion;
-Begin
+begin
   Version := TFileVersion.Create();
-  LabelVersion.Caption := Version.AsString{$IFDEF BetaVersion} +
-    ' BETA'{$ENDIF}{$IFDEF PortableOn} + ' (Portable)'{$ENDIF};
+  LabelVersion.Caption := Version.AsString{$IFDEF BetaVersion} + ' BETA'{$ENDIF}{$IFDEF PortableOn} + ' (Portable)'{$ENDIF};
   Version.Free;
   Self.Caption := 'About Avro Spell Checker';
   TOPMOST(Self.Handle);
-End;
+end;
 
 { =============================================================================== }
 
-Procedure TfrmAbout.Label_OmicronLabClick(Sender: TObject);
-Begin
+procedure TfrmAbout.Label_OmicronLabClick(Sender: TObject);
+begin
   Execute_Something('https://www.omicronlab.com');
-End;
+end;
 
-End.
+end.

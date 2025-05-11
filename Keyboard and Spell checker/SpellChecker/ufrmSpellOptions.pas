@@ -25,11 +25,11 @@
   =============================================================================
 }
 
-Unit ufrmSpellOptions;
+unit ufrmSpellOptions;
 
-Interface
+interface
 
-Uses
+uses
   Windows,
   Messages,
   SysUtils,
@@ -41,8 +41,8 @@ Uses
   Dialogs,
   StdCtrls;
 
-Type
-  TfrmSpellOptions = Class(TForm)
+type
+  TfrmSpellOptions = class(TForm)
     CheckIgnoreNumber: TCheckBox;
     CheckIgnoreSingle: TCheckBox;
     CheckBoxFullSuggestion: TCheckBox;
@@ -50,96 +50,96 @@ Type
     CheckIgnoreAssamese: TCheckBox;
     ButtonOk: TButton;
     ButtonCancel: TButton;
-    Procedure ButtonCancelClick(Sender: TObject);
-    Procedure ButtonOkClick(Sender: TObject);
-    Procedure FormClose(Sender: TObject; Var Action: TCloseAction);
-    Procedure FormCreate(Sender: TObject);
-  Private
-    { Private declarations }
-  Public
-    { Public declarations }
-  End;
+    procedure ButtonCancelClick(Sender: TObject);
+    procedure ButtonOkClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormCreate(Sender: TObject);
+    private
+      { Private declarations }
+    public
+      { Public declarations }
+  end;
 
-Var
+var
   frmSpellOptions: TfrmSpellOptions;
 
-Implementation
+implementation
 
-Uses
+uses
   uRegistrySettings,
   uWindowHandlers;
 {$R *.dfm}
 
-Procedure TfrmSpellOptions.ButtonCancelClick(Sender: TObject);
-Begin
+procedure TfrmSpellOptions.ButtonCancelClick(Sender: TObject);
+begin
   Self.Close;
-End;
+end;
 
-Procedure TfrmSpellOptions.ButtonOkClick(Sender: TObject);
-Begin
-  If CheckIgnoreNumber.Checked Then
+procedure TfrmSpellOptions.ButtonOkClick(Sender: TObject);
+begin
+  if CheckIgnoreNumber.Checked then
     IgnoreNumber := 'YES'
-  Else
+  else
     IgnoreNumber := 'NO';
 
-  If CheckIgnoreAncient.Checked Then
+  if CheckIgnoreAncient.Checked then
     IgnoreAncient := 'YES'
-  Else
+  else
     IgnoreAncient := 'NO';
 
-  If CheckIgnoreAssamese.Checked Then
+  if CheckIgnoreAssamese.Checked then
     IgnoreAssamese := 'YES'
-  Else
+  else
     IgnoreAssamese := 'NO';
 
-  If CheckIgnoreSingle.Checked Then
+  if CheckIgnoreSingle.Checked then
     IgnoreSingle := 'YES'
-  Else
+  else
     IgnoreSingle := 'NO';
 
-  If CheckBoxFullSuggestion.Checked Then
+  if CheckBoxFullSuggestion.Checked then
     FullSuggestion := 'YES'
-  Else
+  else
     FullSuggestion := 'NO';
 
   SaveSettings;
   Self.Close;
-End;
+end;
 
-Procedure TfrmSpellOptions.FormClose(Sender: TObject; Var Action: TCloseAction);
-Begin
+procedure TfrmSpellOptions.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
   Action := caFree;
-  frmSpellOptions := Nil;
-End;
+  frmSpellOptions := nil;
+end;
 
-Procedure TfrmSpellOptions.FormCreate(Sender: TObject);
-Begin
-  If IgnoreNumber = 'YES' Then
+procedure TfrmSpellOptions.FormCreate(Sender: TObject);
+begin
+  if IgnoreNumber = 'YES' then
     CheckIgnoreNumber.Checked := True
-  Else
+  else
     CheckIgnoreNumber.Checked := False;
 
-  If IgnoreAncient = 'YES' Then
+  if IgnoreAncient = 'YES' then
     CheckIgnoreAncient.Checked := True
-  Else
+  else
     CheckIgnoreAncient.Checked := False;
 
-  If IgnoreAssamese = 'YES' Then
+  if IgnoreAssamese = 'YES' then
     CheckIgnoreAssamese.Checked := True
-  Else
+  else
     CheckIgnoreAssamese.Checked := False;
 
-  If IgnoreSingle = 'YES' Then
+  if IgnoreSingle = 'YES' then
     CheckIgnoreSingle.Checked := True
-  Else
+  else
     CheckIgnoreSingle.Checked := False;
 
-  If FullSuggestion = 'YES' Then
+  if FullSuggestion = 'YES' then
     CheckBoxFullSuggestion.Checked := True
-  Else
+  else
     CheckBoxFullSuggestion.Checked := False;
 
   TOPMOST(Self.Handle);
-End;
+end;
 
-End.
+end.

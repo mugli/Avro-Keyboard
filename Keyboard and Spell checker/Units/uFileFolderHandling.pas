@@ -25,16 +25,14 @@
   =============================================================================
 }
 
-
 {$INCLUDE ../../ProjectDefines.inc}
-
 { COMPLETE TRANSFERING! }
 
-Unit uFileFolderHandling;
+unit uFileFolderHandling;
 
-Interface
+interface
 
-Uses
+uses
   Windows,
   SysUtils,
   Forms,
@@ -44,432 +42,416 @@ Uses
   Messages,
   classes;
 
-Function GetAvroDataDir(): String;
-Function GetDllFolder: String;
-Function GetDllFullPath: String;
+function GetAvroDataDir(): string;
+function GetDllFolder: string;
+function GetDllFullPath: string;
 
-Function MyCopyFile(Const SourceFile, DestinationFile: String;
-  Overwrite: Boolean = False): Boolean;
-Function MyMoveFile(Const SourceFile, DestinationFile: String;
-  Overwrite: Boolean = False): Boolean;
-Function MyDeleteFile(Const FilePath: String): Boolean;
+function MyCopyFile(const SourceFile, DestinationFile: string; Overwrite: Boolean = False): Boolean;
+function MyMoveFile(const SourceFile, DestinationFile: string; Overwrite: Boolean = False): Boolean;
+function MyDeleteFile(const FilePath: string): Boolean;
 
 { DONE : Check: urls are not opening }
-Procedure Execute_Something(Const xFile: String);
-Procedure Execute_Something_With_APP(Const xFile, xApp: String);
-Procedure Execute_App_And_Wait(xApp: String; Params: String = '');
+procedure Execute_Something(const xFile: string);
+procedure Execute_Something_With_APP(const xFile, xApp: string);
+procedure Execute_App_And_Wait(xApp: string; Params: string = '');
 
 // Vista specific
-Procedure Execute_App_Admin(Const xApp: String);
-Procedure Execute_Something_With_APP_Admin(Const xFile, xApp: String);
-Procedure Execute_App_And_Wait_Admin(xApp: String; Params: String = '');
+procedure Execute_App_Admin(const xApp: string);
+procedure Execute_Something_With_APP_Admin(const xFile, xApp: string);
+procedure Execute_App_And_Wait_Admin(xApp: string; Params: string = '');
 
-Function GetFileList(Const PathWithMask: String;
-  Var ArrList: TStringList): Integer;
-Function RemoveExtension(Const FilePathName: String): String;
+function GetFileList(const PathWithMask: string; var ArrList: TStringList): Integer;
+function RemoveExtension(const FilePathName: string): string;
 
 // Special folders
-Function GetMyDocumentsFolder(): String;
-Function GetCommonDocumentsFolder(): String;
-Function GetMyApplicationData(): String;
-Function GetCommonApplicationData(): String;
-Function GetProgramFiles(): String;
-Function GetWindowsFolder(): String;
+function GetMyDocumentsFolder(): string;
+function GetCommonDocumentsFolder(): string;
+function GetMyApplicationData(): string;
+function GetCommonApplicationData(): string;
+function GetProgramFiles(): string;
+function GetWindowsFolder(): string;
 
-Function DirToPath(Const Dir: String): String;
+function DirToPath(const Dir: string): string;
 
-Implementation
+implementation
 
-Const
+const
   SHGFP_TYPE_CURRENT = 0;
 
   { =============================================================================== }
 
-Function GetDllFullPath: String;
-Var
-  TheFileName: Array [0 .. MAX_PATH] Of char;
-Begin
+function GetDllFullPath: string;
+var
+  TheFileName: array [0 .. MAX_PATH] of char;
+begin
   FillChar(TheFileName, sizeof(TheFileName), #0);
   GetModuleFileName(hInstance, TheFileName, sizeof(TheFileName));
   Result := TheFileName;
-End;
+end;
 
 { =============================================================================== }
 
-Function GetDllFolder: String;
-Var
-  TheFileName: Array [0 .. MAX_PATH] Of char;
-Begin
+function GetDllFolder: string;
+var
+  TheFileName: array [0 .. MAX_PATH] of char;
+begin
   FillChar(TheFileName, sizeof(TheFileName), #0);
   GetModuleFileName(hInstance, TheFileName, sizeof(TheFileName));
   Result := ExtractFilePath(TheFileName);
-End;
+end;
 
 { =============================================================================== }
 
-Function GetAvroDataDir(): String;
-Begin
+function GetAvroDataDir(): string;
+begin
 
-{$IFDEF PortableOn}
-{$IFNDEF SpellCheckerDll}
+  {$IFDEF PortableOn}
+  {$IFNDEF SpellCheckerDll}
   Result := ExtractFilePath(Application.ExeName);
 
-{$ELSE}
+  {$ELSE}
   Result := GetDllFolder;
 
-{$ENDIF}
-{$ELSE}
+  {$ENDIF}
+  {$ELSE}
   Result := GetCommonApplicationData + 'Avro Keyboard\';
 
-{$ENDIF}
-End;
+  {$ENDIF}
+end;
 
 { =============================================================================== }
 
-Function MyCopyFile(Const SourceFile, DestinationFile: String;
-  Overwrite: Boolean = False): Boolean;
-Begin
-  Try
-    Overwrite := Not Overwrite;
-    Result := Windows.CopyFile(Pchar(SourceFile), Pchar(DestinationFile),
-      Overwrite);
-  Except
-    On E: Exception Do
+function MyCopyFile(const SourceFile, DestinationFile: string; Overwrite: Boolean = False): Boolean;
+begin
+  try
+    Overwrite := not Overwrite;
+    Result := Windows.CopyFile(Pchar(SourceFile), Pchar(DestinationFile), Overwrite);
+  except
+    on E: Exception do
       Result := False;
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Function MyMoveFile(Const SourceFile, DestinationFile: String;
-  Overwrite: Boolean = False): Boolean;
-Begin
+function MyMoveFile(const SourceFile, DestinationFile: string; Overwrite: Boolean = False): Boolean;
+begin
   Result := False;
 
-  Try
-    If FileExists(DestinationFile) Then
-    Begin
-      If Overwrite Then
-      Begin
-        If SysUtils.DeleteFile(DestinationFile) Then
+  try
+    if FileExists(DestinationFile) then
+    begin
+      if Overwrite then
+      begin
+        if SysUtils.DeleteFile(DestinationFile) then
           Result := Windows.MoveFile(Pchar(SourceFile), Pchar(DestinationFile));
-      End;
-    End
-    Else
-    Begin
+      end;
+    end
+    else
+    begin
       Result := Windows.MoveFile(Pchar(SourceFile), Pchar(DestinationFile));
-    End;
+    end;
 
-  Except
-    On E: Exception Do
+  except
+    on E: Exception do
       Result := False;
-  End;
-End;
+  end;
+end;
 
 { =============================================================================== }
 
-Function MyDeleteFile(Const FilePath: String): Boolean;
-Begin
+function MyDeleteFile(const FilePath: string): Boolean;
+begin
   Result := SysUtils.DeleteFile(FilePath);
-End;
+end;
 
 { =============================================================================== }
 
-Procedure Execute_Something(Const xFile: String);
-Begin
-  ShellExecute(Application.Handle, 'open', Pchar(xFile), Nil, Nil,
-    SW_SHOWNORMAL);
-End;
+procedure Execute_Something(const xFile: string);
+begin
+  ShellExecute(Application.Handle, 'open', Pchar(xFile), nil, nil, SW_SHOWNORMAL);
+end;
 
 { =============================================================================== }
 
-Procedure Execute_App_And_Wait(xApp: String; Params: String = '');
+procedure Execute_App_And_Wait(xApp: string; Params: string = '');
 
-  Procedure WaitFor(processHandle: THandle);
-  Var
+  procedure WaitFor(processHandle: THandle);
+  var
     Msg: TMsg;
     ret: DWORD;
-  Begin
-    Repeat
+  begin
+    repeat
       ret := MsgWaitForMultipleObjects(1, { 1 handle to wait on }
-        processHandle, { the handle }
-        False, { wake on any event }
-        INFINITE, { wait without timeout }
-        QS_PAINT Or { wake on paint messages }
-        QS_SENDMESSAGE { or messages from other threads }
+        processHandle,                    { the handle }
+        False,                            { wake on any event }
+        INFINITE,                         { wait without timeout }
+        QS_PAINT or                       { wake on paint messages }
+        QS_SENDMESSAGE                    { or messages from other threads }
         );
-      If ret = WAIT_FAILED Then
+      if ret = WAIT_FAILED then
         Exit; { can do little here }
-      If ret = (WAIT_OBJECT_0 + 1) Then
-      Begin
+      if ret = (WAIT_OBJECT_0 + 1) then
+      begin
         { Woke on a message, process paint messages only. Calling
           PeekMessage gets messages send from other threads processed. }
-        While PeekMessage(Msg, 0, WM_PAINT, WM_PAINT, PM_REMOVE) Do
+        while PeekMessage(Msg, 0, WM_PAINT, WM_PAINT, PM_REMOVE) do
           DispatchMessage(Msg);
-      End;
-    Until ret = WAIT_OBJECT_0;
-  End;
+      end;
+    until ret = WAIT_OBJECT_0;
+  end;
 
-Var
+var
   exInfo: TShellExecuteInfo;
-  Ph: DWORD;
-Begin
+  Ph:     DWORD;
+begin
   FillChar(exInfo, sizeof(exInfo), 0);
-  With exInfo Do
-  Begin
+  with exInfo do
+  begin
     cbSize := sizeof(exInfo);
-    fMask := SEE_MASK_NOCLOSEPROCESS Or SEE_MASK_FLAG_DDEWAIT;
+    fMask := SEE_MASK_NOCLOSEPROCESS or SEE_MASK_FLAG_DDEWAIT;
     Wnd := GetActiveWindow();
     exInfo.lpVerb := 'open';
     exInfo.lpParameters := Pchar(Params);
     lpFile := Pchar(xApp);
     nShow := SW_SHOWNORMAL;
-  End;
-  If ShellExecuteEx(@exInfo) Then
+  end;
+  if ShellExecuteEx(@exInfo) then
     Ph := exInfo.HProcess
-  Else
-  Begin
+  else
+  begin
     // ShowMessage(SysErrorMessage(GetLastError));
     Exit;
-  End;
+  end;
   WaitFor(exInfo.HProcess);
   CloseHandle(Ph);
-End;
+end;
 
 { =============================================================================== }
 
-Procedure Execute_Something_With_APP(Const xFile, xApp: String);
-Begin
-  ShellExecute(Application.Handle, 'open', Pchar(xApp), Pchar(xFile), Nil,
-    SW_SHOWNORMAL);
-End;
+procedure Execute_Something_With_APP(const xFile, xApp: string);
+begin
+  ShellExecute(Application.Handle, 'open', Pchar(xApp), Pchar(xFile), nil, SW_SHOWNORMAL);
+end;
 
 { =============================================================================== }
 
-Function GetMyDocumentsFolder(): String;
-Var
-  path: Array [0 .. MAX_PATH] Of char;
-Begin
-  If SUCCEEDED(SHGetFolderPath(0, CSIDL_PERSONAL, 0, SHGFP_TYPE_CURRENT,
-    @path[0])) Then
+function GetMyDocumentsFolder(): string;
+var
+  path: array [0 .. MAX_PATH] of char;
+begin
+  if SUCCEEDED(SHGetFolderPath(0, CSIDL_PERSONAL, 0, SHGFP_TYPE_CURRENT, @path[0])) then
     Result := DirToPath(path)
-  Else
+  else
     Result := '';
-End;
+end;
 
 { =============================================================================== }
 
-Function GetCommonDocumentsFolder(): String;
-Var
-  path: Array [0 .. MAX_PATH] Of char;
-Begin
-  If SUCCEEDED(SHGetFolderPath(0, CSIDL_COMMON_DOCUMENTS, 0, SHGFP_TYPE_CURRENT,
-    @path[0])) Then
+function GetCommonDocumentsFolder(): string;
+var
+  path: array [0 .. MAX_PATH] of char;
+begin
+  if SUCCEEDED(SHGetFolderPath(0, CSIDL_COMMON_DOCUMENTS, 0, SHGFP_TYPE_CURRENT, @path[0])) then
     Result := DirToPath(path)
-  Else
+  else
     Result := '';
-End;
+end;
 
 { =============================================================================== }
 
-Function GetMyApplicationData(): String;
-Var
-  path: Array [0 .. MAX_PATH] Of char;
-Begin
-  If SUCCEEDED(SHGetFolderPath(0, CSIDL_LOCAL_APPDATA, 0, SHGFP_TYPE_CURRENT,
-    @path[0])) Then
+function GetMyApplicationData(): string;
+var
+  path: array [0 .. MAX_PATH] of char;
+begin
+  if SUCCEEDED(SHGetFolderPath(0, CSIDL_LOCAL_APPDATA, 0, SHGFP_TYPE_CURRENT, @path[0])) then
     Result := DirToPath(path)
-  Else
+  else
     Result := '';
-End;
+end;
 
 { =============================================================================== }
 
-Function GetCommonApplicationData(): String;
-Var
-  path: Array [0 .. MAX_PATH] Of char;
-Begin
-  If SUCCEEDED(SHGetFolderPath(0, CSIDL_COMMON_APPDATA, 0, SHGFP_TYPE_CURRENT,
-    @path[0])) Then
+function GetCommonApplicationData(): string;
+var
+  path: array [0 .. MAX_PATH] of char;
+begin
+  if SUCCEEDED(SHGetFolderPath(0, CSIDL_COMMON_APPDATA, 0, SHGFP_TYPE_CURRENT, @path[0])) then
     Result := DirToPath(path)
-  Else
+  else
     Result := '';
-End;
+end;
 
 { =============================================================================== }
 
-Function GetProgramFiles(): String;
-Var
-  path: Array [0 .. MAX_PATH] Of char;
-Begin
-  If SUCCEEDED(SHGetFolderPath(0, CSIDL_PROGRAM_FILES, 0, SHGFP_TYPE_CURRENT,
-    @path[0])) Then
+function GetProgramFiles(): string;
+var
+  path: array [0 .. MAX_PATH] of char;
+begin
+  if SUCCEEDED(SHGetFolderPath(0, CSIDL_PROGRAM_FILES, 0, SHGFP_TYPE_CURRENT, @path[0])) then
     Result := DirToPath(path)
-  Else
+  else
     Result := '';
-End;
+end;
 
 { =============================================================================== }
 
-Function GetWindowsFolder(): String;
-Var
-  path: Array [0 .. MAX_PATH] Of char;
-Begin
-  If SUCCEEDED(SHGetFolderPath(0, CSIDL_WINDOWS, 0, SHGFP_TYPE_CURRENT,
-    @path[0])) Then
+function GetWindowsFolder(): string;
+var
+  path: array [0 .. MAX_PATH] of char;
+begin
+  if SUCCEEDED(SHGetFolderPath(0, CSIDL_WINDOWS, 0, SHGFP_TYPE_CURRENT, @path[0])) then
     Result := DirToPath(path)
-  Else
+  else
     Result := '';
-End;
+end;
 
 { =============================================================================== }
 
-Function DirToPath(Const Dir: String): String;
-Begin
-  If (Dir <> '') And (Dir[Length(Dir)] <> '\') Then
+function DirToPath(const Dir: string): string;
+begin
+  if (Dir <> '') and (Dir[Length(Dir)] <> '\') then
     Result := Dir + '\'
-  Else
+  else
     Result := Dir;
-End;
+end;
 
 { =============================================================================== }
 
 
 // Vista specific
 
-Procedure Execute_App_Admin(Const xApp: String);
-Var
+procedure Execute_App_Admin(const xApp: string);
+var
   exInfo: TShellExecuteInfo;
-Begin
+begin
   FillChar(exInfo, sizeof(exInfo), 0);
-  With exInfo Do
-  Begin
+  with exInfo do
+  begin
     cbSize := sizeof(exInfo);
     Wnd := GetActiveWindow();
     lpVerb := 'runas';
     lpParameters := '';
     lpFile := Pchar(xApp);
     nShow := SW_SHOWNORMAL;
-  End;
+  end;
   ShellExecuteEx(@exInfo);
-End;
+end;
 
 { =============================================================================== }
 
-Procedure Execute_Something_With_APP_Admin(Const xFile, xApp: String);
-Var
+procedure Execute_Something_With_APP_Admin(const xFile, xApp: string);
+var
   exInfo: TShellExecuteInfo;
-Begin
+begin
   FillChar(exInfo, sizeof(exInfo), 0);
-  With exInfo Do
-  Begin
+  with exInfo do
+  begin
     cbSize := sizeof(exInfo);
     Wnd := GetActiveWindow();
     lpVerb := 'runas';
     lpParameters := Pchar(xFile);
     lpFile := Pchar(xApp);
     nShow := SW_SHOWNORMAL;
-  End;
+  end;
   ShellExecuteEx(@exInfo);
-End;
+end;
 
 { =============================================================================== }
 
-Procedure Execute_App_And_Wait_Admin(xApp: String; Params: String = '');
+procedure Execute_App_And_Wait_Admin(xApp: string; Params: string = '');
 
-  Procedure WaitFor(processHandle: THandle);
-  Var
+  procedure WaitFor(processHandle: THandle);
+  var
     Msg: TMsg;
     ret: DWORD;
-  Begin
-    Repeat
+  begin
+    repeat
       ret := MsgWaitForMultipleObjects(1, { 1 handle to wait on }
-        processHandle, { the handle }
-        False, { wake on any event }
-        INFINITE, { wait without timeout }
-        QS_PAINT Or { wake on paint messages }
-        QS_SENDMESSAGE { or messages from other threads }
+        processHandle,                    { the handle }
+        False,                            { wake on any event }
+        INFINITE,                         { wait without timeout }
+        QS_PAINT or                       { wake on paint messages }
+        QS_SENDMESSAGE                    { or messages from other threads }
         );
-      If ret = WAIT_FAILED Then
+      if ret = WAIT_FAILED then
         Exit; { can do little here }
-      If ret = (WAIT_OBJECT_0 + 1) Then
-      Begin
+      if ret = (WAIT_OBJECT_0 + 1) then
+      begin
         { Woke on a message, process paint messages only. Calling
           PeekMessage gets messages send from other threads processed. }
-        While PeekMessage(Msg, 0, WM_PAINT, WM_PAINT, PM_REMOVE) Do
+        while PeekMessage(Msg, 0, WM_PAINT, WM_PAINT, PM_REMOVE) do
           DispatchMessage(Msg);
-      End;
-    Until ret = WAIT_OBJECT_0;
-  End;
+      end;
+    until ret = WAIT_OBJECT_0;
+  end;
 
-Var
+var
   exInfo: TShellExecuteInfo;
-  Ph: DWORD;
-Begin
+  Ph:     DWORD;
+begin
   FillChar(exInfo, sizeof(exInfo), 0);
-  With exInfo Do
-  Begin
+  with exInfo do
+  begin
     cbSize := sizeof(exInfo);
-    fMask := SEE_MASK_NOCLOSEPROCESS Or SEE_MASK_FLAG_DDEWAIT;
+    fMask := SEE_MASK_NOCLOSEPROCESS or SEE_MASK_FLAG_DDEWAIT;
     Wnd := GetActiveWindow();
     lpVerb := 'runas';
     lpParameters := Pchar(Params);
     lpFile := Pchar(xApp);
     nShow := SW_SHOWNORMAL;
-  End;
-  If ShellExecuteEx(@exInfo) Then
+  end;
+  if ShellExecuteEx(@exInfo) then
     Ph := exInfo.HProcess
-  Else
-  Begin
+  else
+  begin
     // ShowMessage(SysErrorMessage(GetLastError));
     Exit;
-  End;
+  end;
   WaitFor(exInfo.HProcess);
   CloseHandle(Ph);
-End;
+end;
 
 { =============================================================================== }
 
-Function GetFileList(Const PathWithMask: String;
-  Var ArrList: TStringList): Integer;
-Var
-  SR: SysUtils.TSearchRec; // file search result
-  FileCount, Success: Integer; // success code for FindXXX routines
-Begin
+function GetFileList(const PathWithMask: string; var ArrList: TStringList): Integer;
+var
+  SR:                 SysUtils.TSearchRec; // file search result
+  FileCount, Success: Integer;             // success code for FindXXX routines
+begin
 
   FileCount := 0;
 
   // Initialise search for matching files
   Success := SysUtils.FindFirst(PathWithMask, SysUtils.faAnyFile, SR);
-  Try
+  try
     // Loop for all files in directory
-    While Success = 0 Do
-    Begin
+    while Success = 0 do
+    begin
       // only add true files or directories to list
-      If (SR.Name <> '.') And (SR.Name <> '..') And
-        (SR.Attr And SysUtils.faDirectory = 0) Then
-      Begin
+      if (SR.Name <> '.') and (SR.Name <> '..') and (SR.Attr and SysUtils.faDirectory = 0) then
+      begin
         FileCount := FileCount + 1;
         ArrList.Add(SR.Name)
-      End;
+      end;
       // get next file
       Success := SysUtils.FindNext(SR);
-    End;
-  Finally
+    end;
+  finally
     // Tidy up
     Result := FileCount;
     SysUtils.FindClose(SR);
-  End;
+  end;
 
-End;
+end;
 
 { =============================================================================== }
 
-Function RemoveExtension(Const FilePathName: String): String;
-Begin
+function RemoveExtension(const FilePathName: string): string;
+begin
   Result := ChangeFileExt(ExtractFileName(FilePathName), '');
-End;
+end;
 
 { =============================================================================== }
 
-End.
+end.

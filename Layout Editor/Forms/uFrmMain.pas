@@ -183,21 +183,21 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure AppEventsSettingChange(Sender: TObject; Flag: Integer; const Section: string; var Result: LongInt);
 
-  private
-    { Private declarations }
-    fDirty: Boolean;
-    fSelected: TShape;
-    fFileName: string;
-    procedure SetSelectedKey(ControlName: string);
-    procedure InitializeKeys;
-    procedure NewLayout;
-    procedure BuildLayout;
-    function NoErrorFound: Boolean;
-    procedure EncodeAndSaveImage(XML: IXMLDocument; NodeName: string; FileName: string);
+    private
+      { Private declarations }
+      fDirty:    Boolean;
+      fSelected: TShape;
+      fFileName: string;
+      procedure SetSelectedKey(ControlName: string);
+      procedure InitializeKeys;
+      procedure NewLayout;
+      procedure BuildLayout;
+      function NoErrorFound: Boolean;
+      procedure EncodeAndSaveImage(XML: IXMLDocument; NodeName: string; FileName: string);
 
-    procedure HandleThemes;
-  public
-    { Public declarations }
+      procedure HandleThemes;
+    public
+      { Public declarations }
   end;
 
 var
@@ -235,14 +235,14 @@ const
   b_8: Char = #$9EE;
   b_9: Char = #$9EF;
 var
-  XML: IXMLDocument;
-  Child: IXMLNode;
-  KeyData: IXMLNode;
-  I: Int64;
-  FStream: TFileStream;
-  SStream: TStringStream;
+  XML:         IXMLDocument;
+  Child:       IXMLNode;
+  KeyData:     IXMLNode;
+  I:           Int64;
+  FStream:     TFileStream;
+  SStream:     TStringStream;
   ImageStream: TMemoryStream;
-  TempStr: string;
+  TempStr:     string;
 begin
   XML := TXMLDocument.Create(nil);
   XML.Active := True;
@@ -357,10 +357,10 @@ end;
 
 procedure TfrmMain.EncodeAndSaveImage(XML: IXMLDocument; NodeName: string; FileName: string);
 var
-  FStream: TFileStream;
-  ImageStream: TMemoryStream;
+  FStream:       TFileStream;
+  ImageStream:   TMemoryStream;
   EncodedString: string;
-  Node: IXMLNode;
+  Node:          IXMLNode;
 begin
   if FileExists(Trim(FileName)) then
   begin
@@ -472,16 +472,16 @@ end;
 
 procedure TfrmMain.butOpenClick(Sender: TObject);
 var
-  XML: IXMLDocument;
-  Node: IXMLNode;
-  I: Int64;
+  XML:                            IXMLDocument;
+  Node:                           IXMLNode;
+  I:                              Int64;
   KeyName, Layer, TrimLeftString: string;
-  tmpShape: TShape;
-  FStream: TFileStream;
-  SStream: TStringStream;
-  DecodedData: TBytes;
-  m_Converter: TSkinLayoutConverter;
-  P: Integer;
+  tmpShape:                       TShape;
+  FStream:                        TFileStream;
+  SStream:                        TStringStream;
+  DecodedData:                    TBytes;
+  m_Converter:                    TSkinLayoutConverter;
+  P:                              Integer;
 begin
   OpenDialog1.InitialDir := LELastDir;
   if OpenDialog1.Execute(Self.Handle) = False then
@@ -504,7 +504,8 @@ begin
       // Check if the layout is a compatible one
       if Trim(VarToStr(XML.DocumentElement.ChildNodes.FindNode('AvroKeyboardVersion').NodeValue)) <> '5' then
       begin
-        Application.MessageBox('This Keyboard Layout is not compatible with the current version of Avro Keyboard.', 'Error loading keyboard layout...', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
+        Application.MessageBox('This Keyboard Layout is not compatible with the current version of Avro Keyboard.', 'Error loading keyboard layout...',
+          MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
         exit;
       end;
       // ----------------------------------------------
@@ -685,157 +686,157 @@ procedure TfrmMain.InitializeKeys;
 var
   I: Integer;
 begin
-{$REGION 'Initializing stuffs'}
+  {$REGION 'Initializing stuffs'}
   with Shape_OEM3 do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := '`';
     CaptionShift := '~';
   end;
 
   with Shape_1 do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := '1';
     CaptionShift := '!';
   end;
 
   with Shape_2 do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := '2';
     CaptionShift := '@';
   end;
 
   with Shape_3 do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := '3';
     CaptionShift := '#';
   end;
 
   with Shape_4 do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := '4';
     CaptionShift := '$';
   end;
 
   with Shape_4 do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := '4';
     CaptionShift := '$';
   end;
 
   with Shape_5 do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := '5';
     CaptionShift := '%';
   end;
 
   with Shape_6 do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := '6';
     CaptionShift := '^';
   end;
 
   with Shape_7 do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := '7';
     CaptionShift := '&';
   end;
 
   with Shape_8 do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := '8';
     CaptionShift := '*';
   end;
 
   with Shape_9 do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := '9';
     CaptionShift := '(';
   end;
 
   with Shape_0 do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := '0';
     CaptionShift := ')';
   end;
 
   with Shape_MINUS do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := '-';
     CaptionShift := '_';
   end;
 
   with Shape_PLUS do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := '=';
     CaptionShift := '+';
   end;
 
   with Shape_OEM4 do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := '[';
     CaptionShift := '{';
   end;
 
   with Shape_OEM6 do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := ']';
     CaptionShift := '}';
   end;
 
   with Shape_OEM5 do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := '\';
     CaptionShift := '|';
   end;
 
   with Shape_COMMA do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := ',';
     CaptionShift := '<';
   end;
 
   with Shape_PERIOD do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := '.';
     CaptionShift := '>';
   end;
 
   with Shape_OEM2 do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := '/';
     CaptionShift := '?';
   end;
 
   with Shape_OEM1 do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := ';';
     CaptionShift := ':';
   end;
 
   with Shape_OEM7 do
   begin
-    KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+    KeyName := UpperCase(MidStr(name, 7, Length(name)));
     CaptionNormal := #39;
     CaptionShift := '"';
   end;
@@ -846,11 +847,11 @@ begin
       if (Components[I] as TShape).KeyName = '' then
         with (Components[I] as TShape) do
         begin
-          KeyName := UpperCase(MidStr(Name, 7, Length(Name)));
+          KeyName := UpperCase(MidStr(name, 7, Length(name)));
           CaptionNormal := LowerCase(KeyName);
           CaptionShift := UpperCase(CaptionNormal);
         end;
-{$ENDREGION}
+  {$ENDREGION}
 end;
 
 { =============================================================================== }
@@ -861,7 +862,8 @@ var
 begin
   if fDirty then
   begin
-    retVal := Application.MessageBox('Save changes to the current keyboard layout?', 'Layout Editor', MB_YESNOCANCEL + +MB_ICONQUESTION + MB_DEFBUTTON1 + MB_APPLMODAL);
+    retVal := Application.MessageBox('Save changes to the current keyboard layout?', 'Layout Editor', MB_YESNOCANCEL + +MB_ICONQUESTION + MB_DEFBUTTON1 +
+        MB_APPLMODAL);
     if retVal = ID_YES then
     begin
       if NoErrorFound = True then
@@ -905,12 +907,14 @@ begin
   end;
   if Trim(txtImageNormalShift.Text) = '' then
   begin
-    Application.MessageBox('Please add bitmap images for Layout Viewer of Avro Keyboard before building keyboard layout.', 'Layout Editor', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
+    Application.MessageBox('Please add bitmap images for Layout Viewer of Avro Keyboard before building keyboard layout.', 'Layout Editor',
+      MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
     exit;
   end;
   if Trim(txtImageAltGrShift.Text) = '' then
   begin
-    Application.MessageBox('Please add bitmap images for Layout Viewer of Avro Keyboard before building keyboard layout.', 'Layout Editor', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
+    Application.MessageBox('Please add bitmap images for Layout Viewer of Avro Keyboard before building keyboard layout.', 'Layout Editor',
+      MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
     exit;
   end;
   Result := True;
@@ -1039,4 +1043,3 @@ end;
 { =============================================================================== }
 
 end.
-
