@@ -4129,4 +4129,9 @@ object frmMain: TfrmMain
     Left = 312
     Top = 256
   end
+  object AppEvents: TApplicationEvents
+    OnSettingChange = AppEventsSettingChange
+    Left = 584
+    Top = 460
+  end
 end

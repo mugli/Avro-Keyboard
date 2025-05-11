@@ -382,7 +382,6 @@ End;
 
 Procedure TTopBar.FormCreate(Sender: TObject);
 Begin
-
   BMP_AppIcon := TBitmap.Create;
   BMP_AppIcon_Over := TBitmap.Create;
   BMP_AppIcon_Down := TBitmap.Create;

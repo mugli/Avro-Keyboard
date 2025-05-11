@@ -31,7 +31,7 @@ uses
   Forms,
   clsMemoParser in 'clsMemoParser.pas',
   uClipboard in 'uClipboard.pas',
-  ufrmSpell in 'ufrmSpell.pas' {frmSpell} ,
+  ufrmSpell in 'ufrmSpell.pas' {frmSpell},
   BanglaChars in '..\Units\BanglaChars.pas',
   uFileFolderHandling in '..\Units\uFileFolderHandling.pas',
   KeyboardFunctions in '..\Units\KeyboardFunctions.pas',
@@ -40,13 +40,17 @@ uses
   uWindowHandlers in '..\Units\uWindowHandlers.pas',
   clsFileVersion in '..\Classes\clsFileVersion.pas',
   clsRegistry_XMLSetting in 'clsRegistry_XMLSetting.pas',
-  WindowsVersion in '..\Units\WindowsVersion.pas';
+  WindowsVersion in '..\Units\WindowsVersion.pas',
+  WindowsDarkMode in '..\Units\WindowsDarkMode.pas',
+  Vcl.Themes,
+  Vcl.Styles;
 
 {$R *.res}
 
 Begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
+  TStyleManager.TrySetStyle('Windows10');
   Application.Title := 'Avro Spell Checker';
   Application.CreateForm(TfrmSpell, frmSpell);
   Application.Run;

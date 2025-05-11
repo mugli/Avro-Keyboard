@@ -79,7 +79,10 @@ uses
   clsAbbreviation in 'Classes\clsAbbreviation.pas',
   clsUnicodeToBijoy2000 in '..\Unicode to ascii converter\clsUnicodeToBijoy2000.pas',
   ufrmEncodingWarning in 'Forms\ufrmEncodingWarning.pas' {frmEncodingWarning},
-  DebugLog in 'Units\DebugLog.pas';
+  DebugLog in 'Units\DebugLog.pas',
+  Vcl.Themes,
+  Vcl.Styles,
+  WindowsDarkMode in 'Units\WindowsDarkMode.pas';
 
 Var
   Mutex: THandle;
@@ -117,6 +120,7 @@ Begin
   Application.Initialize;
 
   // Hide Application from taskbar
+  TStyleManager.TrySetStyle('Windows10');
   Application.Title := 'Launching Avro Keyboard...';
   SetWindowLong(Application.Handle, GWL_EXSTYLE,
     GetWindowLong(Application.Handle, GWL_EXSTYLE) Or WS_EX_TOOLWINDOW);

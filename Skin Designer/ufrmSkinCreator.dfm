@@ -443,327 +443,154 @@ object frmSkinCreator: TfrmSkinCreator
         ExplicitWidth = 377
         ExplicitHeight = 1250
         inherited PanelTopBar: TPanel
-          StyleElements = [seFont, seClient, seBorder]
-          inherited Label1: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
-          inherited Label2: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
           inherited ImagePath_TopBar: TEdit
             Height = 30
-            StyleElements = [seFont, seClient, seBorder]
             ExplicitHeight = 30
           end
         end
         inherited PanelAvroIcon: TPanel
-          StyleElements = [seFont, seClient, seBorder]
-          inherited Label3: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
-          inherited Label4: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
-          inherited Label5: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
-          inherited Label6: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
           inherited AvroIcon: TEdit
             Height = 30
-            StyleElements = [seFont, seClient, seBorder]
             ExplicitHeight = 30
           end
           inherited AvroIconOver: TEdit
             Height = 30
-            StyleElements = [seFont, seClient, seBorder]
             ExplicitHeight = 30
           end
           inherited AvroIconDown: TEdit
             Height = 30
-            StyleElements = [seFont, seClient, seBorder]
             ExplicitHeight = 30
           end
         end
         inherited PanelKM_E: TPanel
-          StyleElements = [seFont, seClient, seBorder]
-          inherited Label7: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
-          inherited Label8: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
-          inherited Label9: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
-          inherited Label10: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
           inherited KMSys: TEdit
             Height = 30
-            StyleElements = [seFont, seClient, seBorder]
             ExplicitHeight = 30
           end
           inherited KMSysOver: TEdit
             Height = 30
-            StyleElements = [seFont, seClient, seBorder]
             ExplicitHeight = 30
           end
           inherited KMSysDown: TEdit
             Height = 30
-            StyleElements = [seFont, seClient, seBorder]
             ExplicitHeight = 30
           end
         end
         inherited PanelKM_B: TPanel
-          StyleElements = [seFont, seClient, seBorder]
-          inherited Label11: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
-          inherited Label12: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
-          inherited Label13: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
-          inherited Label14: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
           inherited KMBangla: TEdit
             Height = 30
-            StyleElements = [seFont, seClient, seBorder]
             ExplicitHeight = 30
           end
           inherited KMBanglaOver: TEdit
             Height = 30
-            StyleElements = [seFont, seClient, seBorder]
             ExplicitHeight = 30
           end
           inherited KMBanglaDown: TEdit
             Height = 30
-            StyleElements = [seFont, seClient, seBorder]
             ExplicitHeight = 30
           end
         end
         inherited PanelKL: TPanel
-          StyleElements = [seFont, seClient, seBorder]
-          inherited Label15: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
-          inherited Label16: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
-          inherited Label17: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
-          inherited Label18: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
           inherited KL: TEdit
             Height = 30
-            StyleElements = [seFont, seClient, seBorder]
             ExplicitHeight = 30
           end
           inherited KLOver: TEdit
             Height = 30
-            StyleElements = [seFont, seClient, seBorder]
             ExplicitHeight = 30
           end
           inherited KLDown: TEdit
             Height = 30
-            StyleElements = [seFont, seClient, seBorder]
             ExplicitHeight = 30
           end
         end
         inherited PanelLV: TPanel
-          StyleElements = [seFont, seClient, seBorder]
-          inherited Label19: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
-          inherited Label20: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
-          inherited Label21: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
-          inherited Label22: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
           inherited LayoutV: TEdit
             Height = 30
-            StyleElements = [seFont, seClient, seBorder]
             ExplicitHeight = 30
           end
           inherited LayoutVOver: TEdit
             Height = 30
-            StyleElements = [seFont, seClient, seBorder]
             ExplicitHeight = 30
           end
           inherited LayoutVDown: TEdit
             Height = 30
-            StyleElements = [seFont, seClient, seBorder]
             ExplicitHeight = 30
           end
         end
         inherited PanelMouse: TPanel
-          StyleElements = [seFont, seClient, seBorder]
-          inherited Label23: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
-          inherited Label24: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
-          inherited Label25: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
-          inherited Label26: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
           inherited AvroMouse: TEdit
             Height = 30
-            StyleElements = [seFont, seClient, seBorder]
             ExplicitHeight = 30
           end
           inherited AvroMouseOver: TEdit
             Height = 30
-            StyleElements = [seFont, seClient, seBorder]
             ExplicitHeight = 30
           end
           inherited AvroMouseDown: TEdit
             Height = 30
-            StyleElements = [seFont, seClient, seBorder]
             ExplicitHeight = 30
           end
         end
         inherited PanelTools: TPanel
-          StyleElements = [seFont, seClient, seBorder]
-          inherited Label27: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
-          inherited Label28: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
-          inherited Label29: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
-          inherited Label30: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
           inherited Tools: TEdit
             Height = 30
-            StyleElements = [seFont, seClient, seBorder]
             ExplicitHeight = 30
           end
           inherited ToolsOver: TEdit
             Height = 30
-            StyleElements = [seFont, seClient, seBorder]
             ExplicitHeight = 30
           end
           inherited ToolsDown: TEdit
             Height = 30
-            StyleElements = [seFont, seClient, seBorder]
             ExplicitHeight = 30
           end
         end
         inherited PanelHelp: TPanel
-          StyleElements = [seFont, seClient, seBorder]
-          inherited Label31: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
-          inherited Label32: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
-          inherited Label33: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
-          inherited Label34: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
           inherited Help: TEdit
             Height = 30
-            StyleElements = [seFont, seClient, seBorder]
             ExplicitHeight = 30
           end
           inherited HelpOver: TEdit
             Height = 30
-            StyleElements = [seFont, seClient, seBorder]
             ExplicitHeight = 30
           end
           inherited HelpDown: TEdit
             Height = 30
-            StyleElements = [seFont, seClient, seBorder]
             ExplicitHeight = 30
           end
         end
         inherited PanelWeb: TPanel
-          StyleElements = [seFont, seClient, seBorder]
-          inherited Label39: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
-          inherited Label40: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
-          inherited Label41: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
-          inherited Label42: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
           inherited Web: TEdit
             Height = 30
-            StyleElements = [seFont, seClient, seBorder]
             ExplicitHeight = 30
           end
           inherited WebOver: TEdit
             Height = 30
-            StyleElements = [seFont, seClient, seBorder]
             ExplicitHeight = 30
           end
           inherited WebDown: TEdit
             Height = 30
-            StyleElements = [seFont, seClient, seBorder]
             ExplicitHeight = 30
           end
         end
         inherited PanelExit: TPanel
-          StyleElements = [seFont, seClient, seBorder]
-          inherited Label35: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
-          inherited Label36: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
-          inherited Label37: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
-          inherited Label38: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
           inherited Exit: TEdit
             Height = 30
-            StyleElements = [seFont, seClient, seBorder]
             ExplicitHeight = 30
           end
           inherited ExitOver: TEdit
             Height = 30
-            StyleElements = [seFont, seClient, seBorder]
             ExplicitHeight = 30
           end
           inherited ExitDown: TEdit
             Height = 30
-            StyleElements = [seFont, seClient, seBorder]
             ExplicitHeight = 30
           end
         end
         inherited PanelPreview: TPanel
-          StyleElements = [seFont, seClient, seBorder]
-          inherited Label43: TLabel
-            StyleElements = [seFont, seClient, seBorder]
-          end
           inherited Preview: TEdit
             Height = 30
-            StyleElements = [seFont, seClient, seBorder]
             ExplicitHeight = 30
           end
         end
@@ -817,23 +644,11 @@ object frmSkinCreator: TfrmSkinCreator
       ExplicitTop = 30
       ExplicitWidth = 455
       ExplicitHeight = 308
-      inherited Label1: TLabel
-        StyleElements = [seFont, seClient, seBorder]
-      end
-      inherited Label2: TLabel
-        StyleElements = [seFont, seClient, seBorder]
-      end
       inherited Label3: TLabel
         Width = 650
         Height = 22
-        StyleElements = [seFont, seClient, seBorder]
         ExplicitWidth = 650
         ExplicitHeight = 22
-      end
-      inherited ScrollBox1: TScrollBox
-        inherited Panel1: TPanel
-          StyleElements = [seFont, seClient, seBorder]
-        end
       end
       inherited UpDown1: TUpDown
         Height = 30
@@ -845,12 +660,10 @@ object frmSkinCreator: TfrmSkinCreator
       end
       inherited XPos: TEdit
         Height = 30
-        StyleElements = [seFont, seClient, seBorder]
         ExplicitHeight = 30
       end
       inherited YPos: TEdit
         Height = 30
-        StyleElements = [seFont, seClient, seBorder]
         ExplicitHeight = 30
       end
     end
@@ -1017,5 +830,10 @@ object frmSkinCreator: TfrmSkinCreator
     Title = 'Save Avro Keyboard Skin'
     Left = 144
     Top = 432
+  end
+  object AppEvents: TApplicationEvents
+    OnSettingChange = AppEventsSettingChange
+    Left = 219
+    Top = 659
   end
 end
