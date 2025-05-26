@@ -38,6 +38,9 @@
 #iOSDevice64/
 #Linux64/
 
+# Inno Setup
+setup.iss
+
 # Delphi compiler-generated binaries (safe to delete)
 *.exe
 *.dll
