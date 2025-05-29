@@ -347,173 +347,6 @@ object frmOptions: TfrmOptions
     VertScrollBar.Tracking = True
     BorderStyle = bsNone
     TabOrder = 5
-    object General_Panel: TPanel
-      Left = 8
-      Top = 3
-      Width = 640
-      Height = 423
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
-      BevelKind = bkTile
-      BevelOuter = bvNone
-      TabOrder = 3
-      object Label3: TLabel
-        Left = 24
-        Top = 294
-        Width = 388
-        Height = 21
-        Margins.Left = 5
-        Margins.Top = 5
-        Margins.Right = 5
-        Margins.Bottom = 5
-        Caption = 'When I click the cross (X) button on Top Bar:'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -17
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-      end
-      object GroupBox1: TGroupBox
-        Left = 20
-        Top = 2
-        Width = 582
-        Height = 241
-        Margins.Left = 5
-        Margins.Top = 5
-        Margins.Right = 5
-        Margins.Bottom = 5
-        Caption = 'Startup options'
-        TabOrder = 0
-        object Label2: TLabel
-          Left = 24
-          Top = 105
-          Width = 322
-          Height = 21
-          Margins.Left = 5
-          Margins.Top = 5
-          Margins.Right = 5
-          Margins.Bottom = 5
-          Caption = 'At stratup, Avro Keyboard will run as:'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -17
-          Font.Name = 'Tahoma'
-          Font.Style = [fsBold]
-          ParentFont = False
-        end
-        object checkStartUp: TCheckBox
-          Left = 24
-          Top = 36
-          Width = 302
-          Height = 26
-          Margins.Left = 5
-          Margins.Top = 5
-          Margins.Right = 5
-          Margins.Bottom = 5
-          Caption = 'Start Avro Keyboard with Windows'
-          TabOrder = 0
-        end
-        object CheckShowSplash: TCheckBox
-          Left = 24
-          Top = 71
-          Width = 302
-          Height = 25
-          Margins.Left = 5
-          Margins.Top = 5
-          Margins.Right = 5
-          Margins.Bottom = 5
-          Caption = 'Show splash screen at startup'
-          TabOrder = 1
-        end
-        object optStartupUIMode_TopBar: TRadioButton
-          Left = 60
-          Top = 134
-          Width = 266
-          Height = 25
-          Margins.Left = 5
-          Margins.Top = 5
-          Margins.Right = 5
-          Margins.Bottom = 5
-          Caption = 'Top Bar (on desktop, as toolbar)'
-          TabOrder = 2
-        end
-        object optStartupUIMode_Tray: TRadioButton
-          Left = 60
-          Top = 168
-          Width = 266
-          Height = 26
-          Margins.Left = 5
-          Margins.Top = 5
-          Margins.Right = 5
-          Margins.Bottom = 5
-          Caption = 'System tray icon'
-          TabOrder = 3
-        end
-        object optStartupUIMode_Last: TRadioButton
-          Left = 60
-          Top = 203
-          Width = 266
-          Height = 25
-          Margins.Left = 5
-          Margins.Top = 5
-          Margins.Right = 5
-          Margins.Bottom = 5
-          Caption = 'UI mode used last time'
-          TabOrder = 4
-        end
-      end
-      object optTopBarXButton_Close: TRadioButton
-        Left = 60
-        Top = 350
-        Width = 386
-        Height = 27
-        Margins.Left = 5
-        Margins.Top = 5
-        Margins.Right = 5
-        Margins.Bottom = 5
-        Caption = 'Close Avro Keyboard'
-        TabOrder = 1
-      end
-      object optTopBarXButton_Minimize: TRadioButton
-        Left = 60
-        Top = 320
-        Width = 386
-        Height = 27
-        Margins.Left = 5
-        Margins.Top = 5
-        Margins.Right = 5
-        Margins.Bottom = 5
-        Caption = 'Minimize Avro Keyboard to the System Tray'
-        TabOrder = 2
-      end
-      object optTopBarXButton_ShowMenu: TRadioButton
-        Left = 60
-        Top = 381
-        Width = 386
-        Height = 27
-        Margins.Left = 5
-        Margins.Top = 5
-        Margins.Right = 5
-        Margins.Bottom = 5
-        Caption = 'Show option for both'
-        TabOrder = 3
-      end
-      object CheckUpdate: TCheckBox
-        Left = 44
-        Top = 255
-        Width = 450
-        Height = 26
-        Margins.Left = 5
-        Margins.Top = 5
-        Margins.Right = 5
-        Margins.Bottom = 5
-        Caption = 'Automatically check for update every week (anonymous)'
-        TabOrder = 4
-      end
-    end
     object AvroMouse_Panel: TPanel
       Left = 2
       Top = 3
@@ -698,16 +531,16 @@ object frmOptions: TfrmOptions
           ParentFont = False
         end
         object comboFunctionKeys: TComboBox
-          Left = 294
-          Top = 32
+          Left = 287
+          Top = 35
           Width = 176
           Height = 29
           Margins.Left = 5
           Margins.Top = 5
           Margins.Right = 5
           Margins.Bottom = 5
+          Style = csDropDownList
           TabOrder = 0
-          Text = 'F1'
           Items.Strings = (
             'F1'
             'F2'
@@ -772,8 +605,8 @@ object frmOptions: TfrmOptions
           Margins.Top = 5
           Margins.Right = 5
           Margins.Bottom = 5
+          Style = csDropDownList
           TabOrder = 0
-          Text = 'F1'
           Items.Strings = (
             'F1'
             'F2'
@@ -837,8 +670,8 @@ object frmOptions: TfrmOptions
           Margins.Top = 5
           Margins.Right = 5
           Margins.Bottom = 5
+          Style = csDropDownList
           TabOrder = 0
-          Text = 'F1'
           Items.Strings = (
             'F1'
             'F2'
@@ -1106,8 +939,8 @@ object frmOptions: TfrmOptions
       end
     end
     object AvroPhonetic_Panel: TPanel
-      Left = 6
-      Top = 3
+      Left = 7
+      Top = 4
       Width = 645
       Height = 798
       Margins.Left = 5
@@ -1567,6 +1400,173 @@ object frmOptions: TfrmOptions
           TabOrder = 2
           OnClick = ccmdAboutSkinClick
         end
+      end
+    end
+    object General_Panel: TPanel
+      Left = 8
+      Top = 3
+      Width = 640
+      Height = 423
+      Margins.Left = 5
+      Margins.Top = 5
+      Margins.Right = 5
+      Margins.Bottom = 5
+      BevelKind = bkTile
+      BevelOuter = bvNone
+      TabOrder = 3
+      object Label3: TLabel
+        Left = 24
+        Top = 294
+        Width = 388
+        Height = 21
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
+        Caption = 'When I click the cross (X) button on Top Bar:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -17
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object GroupBox1: TGroupBox
+        Left = 20
+        Top = 2
+        Width = 582
+        Height = 241
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
+        Caption = 'Startup options'
+        TabOrder = 0
+        object Label2: TLabel
+          Left = 24
+          Top = 105
+          Width = 322
+          Height = 21
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Caption = 'At startup, Avro Keyboard will run as:'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -17
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object checkStartUp: TCheckBox
+          Left = 24
+          Top = 36
+          Width = 302
+          Height = 26
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Caption = 'Start Avro Keyboard with Windows'
+          TabOrder = 0
+        end
+        object CheckShowSplash: TCheckBox
+          Left = 24
+          Top = 71
+          Width = 302
+          Height = 25
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Caption = 'Show splash screen at startup'
+          TabOrder = 1
+        end
+        object optStartupUIMode_TopBar: TRadioButton
+          Left = 60
+          Top = 134
+          Width = 266
+          Height = 25
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Caption = 'Top Bar (on desktop, as toolbar)'
+          TabOrder = 2
+        end
+        object optStartupUIMode_Tray: TRadioButton
+          Left = 60
+          Top = 168
+          Width = 266
+          Height = 26
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Caption = 'System tray icon'
+          TabOrder = 3
+        end
+        object optStartupUIMode_Last: TRadioButton
+          Left = 60
+          Top = 203
+          Width = 266
+          Height = 25
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          Caption = 'UI mode used last time'
+          TabOrder = 4
+        end
+      end
+      object optTopBarXButton_Close: TRadioButton
+        Left = 60
+        Top = 350
+        Width = 386
+        Height = 27
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
+        Caption = 'Close Avro Keyboard'
+        TabOrder = 1
+      end
+      object optTopBarXButton_Minimize: TRadioButton
+        Left = 60
+        Top = 320
+        Width = 386
+        Height = 27
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
+        Caption = 'Minimize Avro Keyboard to the System Tray'
+        TabOrder = 2
+      end
+      object optTopBarXButton_ShowMenu: TRadioButton
+        Left = 60
+        Top = 381
+        Width = 386
+        Height = 27
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
+        Caption = 'Show option for both'
+        TabOrder = 3
+      end
+      object CheckUpdate: TCheckBox
+        Left = 44
+        Top = 255
+        Width = 450
+        Height = 26
+        Margins.Left = 5
+        Margins.Top = 5
+        Margins.Right = 5
+        Margins.Bottom = 5
+        Caption = 'Automatically check for update every week (anonymous)'
+        TabOrder = 4
       end
     end
   end
