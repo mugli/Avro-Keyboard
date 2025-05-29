@@ -30,7 +30,7 @@ uses
   ExtDlgs,
   StrUtils,
   uShapeInterceptor,
-  XMLIntf,
+  Xml.XMLIntf,
   XMLDoc,
   System.NetEncoding,
   System.Generics.Collections,
@@ -174,8 +174,9 @@ type
       procedure NewLayout;
       procedure BuildLayout;
       function NoErrorFound: Boolean;
-      procedure EncodeAndSaveImage(XML: IXMLDocument; NodeName: string; FileName: string);
+      procedure EncodeAndSaveImage(Xml: IXMLDocument; NodeName: string; FileName: string);
 
+      procedure AddCDATA(Node: IXMLNode; const Value: string);
       procedure HandleThemes;
     public
       { Public declarations }
@@ -203,6 +204,15 @@ begin
     HandleThemes;
 end;
 
+procedure TfrmMain.AddCDATA(Node: IXMLNode; const Value: string);
+var
+  CDATASection: IXMLNode;
+begin
+  // Create a CDATA section and append it to the node
+  CDATASection := Node.OwnerDocument.CreateNode(Value, ntCData, '');
+  Node.ChildNodes.Add(CDATASection);
+end;
+
 procedure TfrmMain.BuildLayout;
 const
   b_0: Char = #$9E6;
@@ -216,7 +226,7 @@ const
   b_8: Char = #$9EE;
   b_9: Char = #$9EF;
 var
-  XML:         IXMLDocument;
+  Xml:         IXMLDocument;
   Child:       IXMLNode;
   KeyData:     IXMLNode;
   I:           Int64;
@@ -225,105 +235,106 @@ var
   ImageStream: TMemoryStream;
   TempStr:     string;
 begin
-  XML := TXMLDocument.Create(nil);
-  XML.Active := True;
-  XML.Encoding := 'UTF-8';
+  Xml := TXMLDocument.Create(nil);
+  XML.Options := [doNodeAutoIndent];
+  Xml.Active := True;
+  Xml.Encoding := 'UTF-8';
 
-  XML.DocumentElement := XML.CreateNode('Layout');
+  Xml.DocumentElement := Xml.CreateNode('Layout');
 
-  Child := XML.DocumentElement.AddChild('AvroKeyboardVersion');
+  Child := Xml.DocumentElement.AddChild('AvroKeyboardVersion');
   Child.NodeValue := '5';
 
-  Child := XML.DocumentElement.AddChild('LayoutName');
-  Child.NodeValue := txtLayoutName.Text;
+  Child := Xml.DocumentElement.AddChild('LayoutName');
+  AddCDATA(Child, txtLayoutName.Text);
 
-  Child := XML.DocumentElement.AddChild('LayoutVersion');
-  Child.NodeValue := txtVersion.Text;
+  Child := Xml.DocumentElement.AddChild('LayoutVersion');
+  AddCDATA(Child, txtVersion.Text);
 
-  Child := XML.DocumentElement.AddChild('DeveloperName');
-  Child.NodeValue := txtDeveloper.Text;
+  Child := Xml.DocumentElement.AddChild('DeveloperName');
+  AddCDATA(Child, txtDeveloper.Text);
 
-  Child := XML.DocumentElement.AddChild('DeveloperComment');
-  Child.NodeValue := txtComment.Text;
+  Child := Xml.DocumentElement.AddChild('DeveloperComment');
+  AddCDATA(Child, txtComment.Text);
 
-  EncodeAndSaveImage(XML, 'ImageNormalShift', GetAvroDataDir + 'tmpImage_Normal_Shift.bmp');
+  EncodeAndSaveImage(Xml, 'ImageNormalShift', GetAvroDataDir + 'tmpImage_Normal_Shift.bmp');
   txtImageNormalShift.Text := GetAvroDataDir + 'tmpImage_Normal_Shift.bmp';
 
-  EncodeAndSaveImage(XML, 'ImageAltGrShift', GetAvroDataDir + 'tmpImage_AltGr_Shift.bmp');
+  EncodeAndSaveImage(Xml, 'ImageAltGrShift', GetAvroDataDir + 'tmpImage_AltGr_Shift.bmp');
   txtImageAltGrShift.Text := GetAvroDataDir + 'tmpImage_AltGr_Shift.bmp';
 
-  KeyData := XML.DocumentElement.AddChild('KeyData');
+  KeyData := Xml.DocumentElement.AddChild('KeyData');
 
   for I := 0 to ComponentCount - 1 do
     if Components[I] is TShape then
     begin
       Child := KeyData.AddChild('Key_' + UpperCase((Components[I] as TShape).KeyName) + '_Normal');
-      Child.NodeValue := (Components[I] as TShape).Normal;
+      AddCDATA(Child, (Components[I] as TShape).Normal);
 
       Child := KeyData.AddChild('Key_' + UpperCase((Components[I] as TShape).KeyName) + '_Shift');
-      Child.NodeValue := (Components[I] as TShape).Shift;
+      AddCDATA(Child, (Components[I] as TShape).Shift);
 
       Child := KeyData.AddChild('Key_' + UpperCase((Components[I] as TShape).KeyName) + '_AltGr');
-      Child.NodeValue := (Components[I] as TShape).AltGr;
+      AddCDATA(Child, (Components[I] as TShape).AltGr);
 
       Child := KeyData.AddChild('Key_' + UpperCase((Components[I] as TShape).KeyName) + '_ShiftAltGr');
-      Child.NodeValue := (Components[I] as TShape).ShiftAltGr;
+      AddCDATA(Child, (Components[I] as TShape).ShiftAltGr);
     end;
 
   Child := KeyData.AddChild('Num1');
-  Child.NodeValue := b_1;
+  AddCDATA(Child, b_1);
 
   Child := KeyData.AddChild('Num2');
-  Child.NodeValue := b_2;
+  AddCDATA(Child, b_2);
 
   Child := KeyData.AddChild('Num3');
-  Child.NodeValue := b_3;
+  AddCDATA(Child, b_3);
 
   Child := KeyData.AddChild('Num4');
-  Child.NodeValue := b_4;
+  AddCDATA(Child, b_4);
 
   Child := KeyData.AddChild('Num5');
-  Child.NodeValue := b_5;
+  AddCDATA(Child, b_5);
 
   Child := KeyData.AddChild('Num6');
-  Child.NodeValue := b_6;
+  AddCDATA(Child, b_6);
 
   Child := KeyData.AddChild('Num7');
-  Child.NodeValue := b_7;
+  AddCDATA(Child, b_7);
 
   Child := KeyData.AddChild('Num8');
-  Child.NodeValue := b_8;
+  AddCDATA(Child, b_8);
 
   Child := KeyData.AddChild('Num9');
-  Child.NodeValue := b_9;
+  AddCDATA(Child, b_9);
 
   Child := KeyData.AddChild('Num0');
-  Child.NodeValue := b_0;
+  AddCDATA(Child, b_0);
 
   Child := KeyData.AddChild('NumAdd');
-  Child.NodeValue := '+';
+  AddCDATA(Child, '+');
 
   Child := KeyData.AddChild('NumDecimal');
-  Child.NodeValue := '.';
+  AddCDATA(Child, '.');
 
   Child := KeyData.AddChild('NumDivide');
-  Child.NodeValue := '/';
+  AddCDATA(Child, '/');
 
   Child := KeyData.AddChild('NumMultiply');
-  Child.NodeValue := '*';
+  AddCDATA(Child, '*');
 
   Child := KeyData.AddChild('NumSubtract');
-  Child.NodeValue := '-';
+  AddCDATA(Child, '-');
 
   try
-    XML.SaveToFile(fFileName);
+    Xml.SaveToFile(fFileName);
   except
     on E: Exception do
     begin
       Application.MessageBox(PChar('Error occurred!' + #10 + #10 + E.Message), PChar('Layout Editor'), MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
     end;
   end;
-  XML := nil;
+  Xml := nil;
 
 end;
 
@@ -336,7 +347,7 @@ end;
 
 { =============================================================================== }
 
-procedure TfrmMain.EncodeAndSaveImage(XML: IXMLDocument; NodeName: string; FileName: string);
+procedure TfrmMain.EncodeAndSaveImage(Xml: IXMLDocument; NodeName: string; FileName: string);
 var
   FStream:       TFileStream;
   ImageStream:   TMemoryStream;
@@ -357,7 +368,7 @@ begin
 
       EncodedString := TNetEncoding.Base64.EncodeBytesToString(ImageStream.Memory, ImageStream.Size);
 
-      Node := XML.DocumentElement.AddChild(NodeName);
+      Node := Xml.DocumentElement.AddChild(NodeName);
       Node.NodeValue := EncodedString;
     finally
       FreeAndNil(ImageStream);
@@ -453,7 +464,7 @@ end;
 
 procedure TfrmMain.butOpenClick(Sender: TObject);
 var
-  XML:                            IXMLDocument;
+  Xml:                            IXMLDocument;
   Node:                           IXMLNode;
   I:                              Int64;
   KeyName, Layer, TrimLeftString: string;
@@ -473,17 +484,17 @@ begin
   m_Converter.CheckConvertLayout(OpenDialog1.FileName);
   FreeAndNil(m_Converter);
 
-  XML := TXMLDocument.Create(nil);
-  XML.Active := True;
-  XML.Encoding := 'UTF-8';
+  Xml := TXMLDocument.Create(nil);
+  Xml.Active := True;
+  Xml.Encoding := 'UTF-8';
 
   try
     try
-      XML.LoadFromFile(OpenDialog1.FileName);
+      Xml.LoadFromFile(OpenDialog1.FileName);
 
       // ----------------------------------------------
       // Check if the layout is a compatible one
-      if Trim(VarToStr(XML.DocumentElement.ChildNodes.FindNode('AvroKeyboardVersion').NodeValue)) <> '5' then
+      if Trim(VarToStr(Xml.DocumentElement.ChildNodes.FindNode('AvroKeyboardVersion').NodeValue)) <> '5' then
       begin
         Application.MessageBox('This Keyboard Layout is not compatible with the current version of Avro Keyboard.', 'Error loading keyboard layout...',
           MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
@@ -492,15 +503,15 @@ begin
       // ----------------------------------------------
 
       // Load basic information
-      txtLayoutName.Text := VarToStr(XML.DocumentElement.ChildNodes.FindNode('LayoutName').ChildNodes[0].NodeValue);
-      txtDeveloper.Text := VarToStr(XML.DocumentElement.ChildNodes.FindNode('DeveloperName').ChildNodes[0].NodeValue);
-      txtVersion.Text := VarToStr(XML.DocumentElement.ChildNodes.FindNode('LayoutVersion').ChildNodes[0].NodeValue);
-      txtComment.Text := VarToStr(XML.DocumentElement.ChildNodes.FindNode('DeveloperComment').ChildNodes[0].NodeValue);
+      txtLayoutName.Text := VarToStr(Xml.DocumentElement.ChildNodes.FindNode('LayoutName').ChildNodes[0].NodeValue);
+      txtDeveloper.Text := VarToStr(Xml.DocumentElement.ChildNodes.FindNode('DeveloperName').ChildNodes[0].NodeValue);
+      txtVersion.Text := VarToStr(Xml.DocumentElement.ChildNodes.FindNode('LayoutVersion').ChildNodes[0].NodeValue);
+      txtComment.Text := VarToStr(Xml.DocumentElement.ChildNodes.FindNode('DeveloperComment').ChildNodes[0].NodeValue);
 
       // Extract images
-      if XML.DocumentElement.ChildNodes.FindNode('ImageNormalShift') <> nil then
+      if Xml.DocumentElement.ChildNodes.FindNode('ImageNormalShift') <> nil then
       begin
-        SStream := TStringStream.Create(VarToStr(XML.DocumentElement.ChildNodes.FindNode('ImageNormalShift').NodeValue));
+        SStream := TStringStream.Create(VarToStr(Xml.DocumentElement.ChildNodes.FindNode('ImageNormalShift').NodeValue));
         try
           DecodedData := DecodeBase64(SStream.DataString);
           FStream := TFileStream.Create(GetAvroDataDir + 'tmpImage_Normal_Shift.bmp', fmCreate);
@@ -515,9 +526,9 @@ begin
         end;
       end;
 
-      if XML.DocumentElement.ChildNodes.FindNode('ImageAltGrShift') <> nil then
+      if Xml.DocumentElement.ChildNodes.FindNode('ImageAltGrShift') <> nil then
       begin
-        SStream := TStringStream.Create(VarToStr(XML.DocumentElement.ChildNodes.FindNode('ImageAltGrShift').NodeValue));
+        SStream := TStringStream.Create(VarToStr(Xml.DocumentElement.ChildNodes.FindNode('ImageAltGrShift').NodeValue));
 
         try
           DecodedData := DecodeBase64(SStream.DataString);
@@ -534,7 +545,7 @@ begin
       end;
 
       // Load Keys
-      Node := XML.DocumentElement.ChildNodes.FindNode('KeyData');
+      Node := Xml.DocumentElement.ChildNodes.FindNode('KeyData');
 
       for I := 0 to Node.ChildNodes.Count - 1 do
         if LowerCase(LeftStr(Node.ChildNodes[I].NodeName, 3)) <> 'num' then
@@ -566,13 +577,13 @@ begin
           begin
             // if item has cdata
             if Layer = 'normal' then
-              tmpShape.Normal := VarToStr(Node.ChildNodes[I].ChildNodes[0].NodeValue);
+              tmpShape.Normal := TNetEncoding.HTML.Decode(VarToStr(Node.ChildNodes[I].ChildNodes[0].NodeValue));
             if Layer = 'shift' then
-              tmpShape.Shift := VarToStr(Node.ChildNodes[I].ChildNodes[0].NodeValue);
+              tmpShape.Shift := TNetEncoding.HTML.Decode(VarToStr(Node.ChildNodes[I].ChildNodes[0].NodeValue));
             if Layer = 'altgr' then
-              tmpShape.AltGr := VarToStr(Node.ChildNodes[I].ChildNodes[0].NodeValue);
+              tmpShape.AltGr := TNetEncoding.HTML.Decode(VarToStr(Node.ChildNodes[I].ChildNodes[0].NodeValue));
             if Layer = 'shiftaltgr' then
-              tmpShape.ShiftAltGr := VarToStr(Node.ChildNodes[I].ChildNodes[0].NodeValue);
+              tmpShape.ShiftAltGr := TNetEncoding.HTML.Decode(VarToStr(Node.ChildNodes[I].ChildNodes[0].NodeValue));
           end;
         end;
 
@@ -584,7 +595,7 @@ begin
       end;
     end;
   finally
-    XML := nil;
+    Xml := nil;
 
   end;
 

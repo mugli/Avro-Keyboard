@@ -106,7 +106,6 @@ begin
     KeyboardLayoutPath := GetAvroDataDir + 'Keyboard Layouts\' + KeyboardLayout + '.avrolayout';
 
   ShowLayoutDescription(KeyboardLayoutPath);
-
 end;
 
 /// /////////////////////////////////////////////////////////////////////
