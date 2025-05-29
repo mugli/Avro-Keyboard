@@ -183,10 +183,10 @@ procedure TfrmSkinCreator.ButtonSaveSkinClick(Sender: TObject);
 
   procedure NewCDataNode(var Doc: IXMLDocument; ParentNode: IXMLNode; NodeName, NodeData: string);
   var
-    NewNode: IXMLNode;
+    CDATASection: IXMLNode;
   begin
-    NewNode := ParentNode.AddChild(NodeName);
-    NewNode.NodeValue := NodeData;
+    CDATASection := ParentNode.OwnerDocument.CreateNode(NodeData, ntCData, '');
+    ParentNode.ChildNodes.Add(CDATASection);
   end;
 
   procedure NewNode(var Doc: IXMLDocument; ParentNode: IXMLNode; NodeName, NodeData: string);

@@ -41,6 +41,7 @@ type
       procedure CopyKeyDataNodes;
       function NeedConversion: Boolean;
       procedure CheckCreateXMLObject;
+      procedure AddCDATA(Node: IXmlNode; const Value: string);
     public
       constructor Create; // Initializer
       destructor Destroy; override;
@@ -269,9 +270,8 @@ begin
   OldXML.Encoding := 'UTF-8';
 
   NewXML := TXMLDocument.Create(nil);
+  NewXML.Options := [doNodeAutoIndent];
   NewXML.Active := true;
-  // NewXML.XmlFormat := xfReadable;
-
   NewXML.Encoding := 'UTF-8';
 
   Application.ProcessMessages;
@@ -280,12 +280,12 @@ end;
 { =============================================================================== }
 
 procedure TSkinLayoutConverter.CopyCDataNode(Nodename: UTF8String);
+var
+  CDATASection: IXmlNode;
 begin
   try
     child := NewXML.DocumentElement.AddChild(Nodename);
-    CdataChild := child.AddChild(Nodename);
-    // CdataChild.ElementType := xeCData;
-    CdataChild.NodeValue := OldXML.DocumentElement.ChildNodes.Nodes[0].ChildNodes.FindNode(Nodename).ChildNodes.Nodes[0].NodeValue;
+    AddCDATA(child, OldXML.DocumentElement.ChildNodes.Nodes[0].ChildNodes.FindNode(Nodename).ChildNodes.Nodes[0].NodeValue);
   except
     on E: Exception do
     begin
@@ -413,6 +413,17 @@ end;
 
 { =============================================================================== }
 
+procedure TSkinLayoutConverter.AddCDATA(Node: IXmlNode; const Value: string);
+var
+  CDATASection: IXmlNode;
+begin
+  // Create a CDATA section and append it to the node
+  CDATASection := Node.OwnerDocument.CreateNode(Value, ntCData, '');
+  Node.ChildNodes.Add(CDATASection);
+end;
+
+{ =============================================================================== }
+
 procedure TSkinLayoutConverter.CopyKeyDataNodes;
 var
   I: Integer;
@@ -432,17 +443,13 @@ begin
         begin
           // If item has no cdata
           child := KeyData.AddChild('Key_' + OldNode.ChildNodes.Nodes[I].Nodename);
-          CdataChild := child.AddChild('Key_' + OldNode.ChildNodes.Nodes[I].Nodename);
-          // CdataChild.ElementType := xeCData;
-          CdataChild.NodeValue := '';
+          AddCDATA(child, '');
         end
         else
         begin
           // if item has cdata
           child := KeyData.AddChild('Key_' + OldNode.ChildNodes.Nodes[I].Nodename);
-          CdataChild := child.AddChild('Key_' + OldNode.ChildNodes.Nodes[I].Nodename);
-          // CdataChild.ElementType := xeCData;
-          CdataChild.NodeValue := OldNode.ChildNodes.Nodes[I].ChildNodes.Nodes[0].NodeValue;
+          AddCDATA(child, OldNode.ChildNodes.Nodes[I].ChildNodes.Nodes[0].NodeValue);
         end;
       end
       else
@@ -451,17 +458,13 @@ begin
         begin
           // If item has no cdata
           child := KeyData.AddChild(OldNode.ChildNodes.Nodes[I].Nodename);
-          CdataChild := child.AddChild(OldNode.ChildNodes.Nodes[I].Nodename);
-          // CdataChild.ElementType := xeCData;
-          CdataChild.NodeValue := '';
+          AddCDATA(child, '');
         end
         else
         begin
           // if item has cdata
           child := KeyData.AddChild(OldNode.ChildNodes.Nodes[I].Nodename);
-          CdataChild := child.AddChild(OldNode.ChildNodes.Nodes[I].Nodename);
-          // CdataChild.ElementType := xeCData;
-          CdataChild.NodeValue := OldNode.ChildNodes.Nodes[I].ChildNodes.Nodes[0].NodeValue;
+          AddCDATA(child, OldNode.ChildNodes.Nodes[I].ChildNodes.Nodes[0].NodeValue);
         end;
       end;
     end;

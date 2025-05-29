@@ -28,7 +28,8 @@ uses
   uFileFolderHandling,
   Graphics,
   StrUtils,
-  Generics.Collections;
+  Generics.Collections,
+  system.NetEncoding;
 
 function LoadLayout(const LayoutPath: string): Boolean;
 function Init_KeyboardLayout(const KeyboardLayoutName: string): Boolean;
@@ -50,6 +51,7 @@ uses
   uWindowHandlers,
   ufrmAboutSkinLayout,
   clsSkinLayoutConverter;
+
 { =============================================================================== }
 
 function GetCharForKey(const KeyCode: Integer; const var_IfShift, var_IfTrueShift, var_IfAltGr: Boolean): string;
@@ -333,11 +335,11 @@ end;
 
 function LoadLayout(const LayoutPath: string): Boolean;
 var
-  XML:  IXMLDocument;
-  Node: IXmlNode;
-  I:    Integer;
-
-  m_Converter: TSkinLayoutConverter;
+  XML:                  IXMLDocument;
+  Node:                 IXmlNode;
+  I:                    Integer;
+  RawText, DecodedText: string;
+  m_Converter:          TSkinLayoutConverter;
 begin
   Result := False;
 
@@ -394,8 +396,13 @@ begin
           // If item has no cdata
           KeyData.AddOrSetValue(string(Node.childnodes.nodes[I].nodename), '')
         else
+        begin
           // if item has cdata
-          KeyData.AddOrSetValue(string(Node.childnodes.nodes[I].nodename), VartoStr(Node.childnodes.nodes[I].childnodes.nodes[0].nodevalue));
+          RawText := VarToStr(Node.childnodes.nodes[I].childnodes.nodes[0].nodevalue);
+          DecodedText := TNetEncoding.HTML.Decode(RawText);
+          KeyData.AddOrSetValue(Node.childnodes.nodes[I].nodename, DecodedText);
+        end;
+
         Application.ProcessMessages;
       end;
 
@@ -611,7 +618,6 @@ begin
       end;
     end;
   finally
-    XML.Active := False;
     XML := nil;
 
   end;
