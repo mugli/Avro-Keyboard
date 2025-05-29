@@ -54,7 +54,7 @@ implementation
 
 const
   KEYEVENTF_UNICODE: Integer = $4;
-  SENDKEY_DELAY_MS: Integer  = 2;
+  SENDKEY_DELAY_MS: Integer  = 1;
 
   { =========================================================================== }
 
@@ -328,6 +328,7 @@ begin
   begin
     SendKey_SendInput(VK_Back);
     SendKey_SendInput(VK_NONAME); // Hack: Unused key to try to avoid key buffering issue (deleting too much)
+    Sleep(SENDKEY_DELAY_MS);      // Add a small delay to allow processing
   end;
 
   RevertCtrlStates;
@@ -342,6 +343,7 @@ begin
   for I := 1 to Length(Keytext) do
   begin
     SendKey_Basic(Ord(Keytext[I]));
+    SendKey_SendInput(VK_NONAME); // Hack: Unused key to try to avoid key buffering issue
   end;
 end;
 
@@ -351,7 +353,6 @@ procedure SendKey_SendInput(const bKey: Integer);
 begin
   SendInput_Down(bKey);
   SendInput_UP(bKey);
-  Sleep(SENDKEY_DELAY_MS); // Add a small delay to allow processing
 end;
 
 { =============================================================================== }
@@ -418,7 +419,6 @@ begin
   end;
 
   SendInput(2, KInput[0], SizeOf(KInput[0]));
-  Sleep(SENDKEY_DELAY_MS); // Add a small delay to allow processing
 end;
 
 procedure RevertAltStates;
