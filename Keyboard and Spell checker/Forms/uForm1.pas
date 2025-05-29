@@ -44,7 +44,6 @@ type
 type
   TWindowRecord = record
     Mode: string;
-    Locale: Cardinal;
   end;
 
 type
@@ -367,7 +366,6 @@ type
       procedure MenuFixedLayoutClick(Sender: TObject);
       procedure KeyLayout_KeyboardLayoutChanged(CurrentKeyboardLayout: string);
       procedure KeyLayout_KeyboardModeChanged(CurrentMode: enumMode);
-      procedure ResetAllWindowLocale;
 
       procedure HandleThemes;
 
@@ -421,7 +419,6 @@ uses
   clsRegistry_XMLSetting,
   KeyboardHook,
   uFrmSplash,
-  uLocale,
   ufrmPrevW,
   uDBase,
   SkinLoader,
@@ -603,10 +600,6 @@ end;
 
 procedure TAvroMainForm1.ExitApp;
 begin
-
-  ResetAllWindowLocale;
-  Log('ResetAllWindowLocale');
-
   {$IFDEF PortableOn}
   RemoveVirtualFont(ExtractFilePath(Application.ExeName) + 'Virtual Font\Siyamrupali.ttf');
   Log('Portable: RemoveVirtualFont');
@@ -942,8 +935,6 @@ procedure TAvroMainForm1.KeyLayout_KeyboardModeChanged(CurrentMode: enumMode);
 var
   hforewnd:                                         Integer;
   ICN:                                              TIcon;
-  Locale:                                           Cardinal;
-  ParentHwnd:                                       HWND;
   WindowRecord, ParenWindowRecord, NewWindowRecord: TWindowRecord;
 begin
   { This is for Top Bar, when Keyboard Mode is changed,
@@ -969,44 +960,14 @@ begin
     { This is a new window, so add it in Window collection
       update/add process information }
 
-    { Get locale information
-      The new window may be a messagebox, then if the parent window is in the list,
-      get its recorded locale }
-    ParentHwnd := GetParent(hforewnd);
-
-    if ParentHwnd <> 0 then
-    begin
-      if WindowDict.TryGetValue(ParentHwnd, ParenWindowRecord) then
-      begin
-        Locale := ParenWindowRecord.Locale;
-      end
-      else
-        Locale := GetForeignLocale(hforewnd);
-    end
-    else
-      Locale := GetForeignLocale(hforewnd);
-
     if CurrentMode = bangla then
     begin
-      if (ChangeInputLocale = 'YES') then
-        if OutputIsBijoy <> 'YES' then
-          ChangeLocaleToBangla(hforewnd)
-        else
-          ChangeLocaleToEnglish(hforewnd);
-
-      NewWindowRecord.Locale := Locale;
       NewWindowRecord.Mode := 'B';
       WindowDict.AddOrSetValue(hforewnd, NewWindowRecord);
       MyCurrentKeyboardMode := bangla;
     end
     else if CurrentMode = SysDefault then
     begin
-
-      if WindowDict.ContainsKey(ParentHwnd) then
-        if ChangeInputLocale = 'YES' then
-          ChangeLocalToAny(hforewnd, Locale);
-
-      NewWindowRecord.Locale := Locale;
       NewWindowRecord.Mode := 'S';
       WindowDict.AddOrSetValue(hforewnd, NewWindowRecord);
 
@@ -1018,31 +979,18 @@ begin
     // The window already exist, so update information
     if CurrentMode = bangla then
     begin
-      // sLocale := GetForeignLocale(hforewnd);
-      NewWindowRecord.Locale := WindowRecord.Locale;
       NewWindowRecord.Mode := 'B';
       WindowDict.AddOrSetValue(hforewnd, NewWindowRecord);
 
       MyCurrentKeyboardMode := bangla;
-      if ChangeInputLocale = 'YES' then
-        if OutputIsBijoy <> 'YES' then
-          ChangeLocaleToBangla(hforewnd)
-        else
-          ChangeLocaleToEnglish(hforewnd);
     end
     else if CurrentMode = SysDefault then
     begin
-      NewWindowRecord.Locale := WindowRecord.Locale;
       NewWindowRecord.Mode := 'S';
       WindowDict.AddOrSetValue(hforewnd, NewWindowRecord);
 
       MyCurrentKeyboardMode := SysDefault;
-      if ChangeInputLocale = 'YES' then
-        ChangeLocalToAny(hforewnd, NewWindowRecord.Locale);
 
-      { Experimental!!!!!!!! }
-      { We have changed the locale back in System Language Mode
-        now delete Window Data to record new locale info }
       WindowDict.Remove(hforewnd);
     end;
   end;
@@ -1088,7 +1036,6 @@ procedure TAvroMainForm1.LoadApp;
 var
   tempLastUIMode: string;
 begin
-  InstallLocale;
   Set_Process_Priority(HIGH_PRIORITY_CLASS);
 
   InitDict;
@@ -1277,22 +1224,12 @@ begin
     OutputIsBijoy := 'YES';
 
   RefreshSettings;
-
-  if MyCurrentKeyboardMode = bangla then
-    if ChangeInputLocale = 'YES' then
-      if OutputIsBijoy = 'YES' then
-        ChangeLocaleToEnglish(LastWindow);
 end;
 
 procedure TAvroMainForm1.OutputasUnicodeRecommended1Click(Sender: TObject);
 begin
   OutputIsBijoy := 'NO';
   RefreshSettings;
-
-  if MyCurrentKeyboardMode = bangla then
-    if ChangeInputLocale = 'YES' then
-      if OutputIsBijoy = 'NO' then
-        ChangeLocaleToBangla(LastWindow);
 end;
 
 procedure TAvroMainForm1.Overview1Click(Sender: TObject);
@@ -1635,18 +1572,6 @@ end;
 procedure TAvroMainForm1.HandleThemes;
 begin
   SetAppropriateThemeMode('Windows10 Dark', 'Windows10');
-end;
-
-procedure TAvroMainForm1.ResetAllWindowLocale;
-var
-  I: HWND;
-begin
-  for I in WindowDict.Keys do
-  begin
-    if IsWindow(I) then
-      ChangeLocalToAny(I, WindowDict.Items[I].Locale);
-  end;
-
 end;
 
 procedure TAvroMainForm1.RestoreAvroTopBar1Click(Sender: TObject);

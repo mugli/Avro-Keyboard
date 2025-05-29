@@ -287,22 +287,18 @@ object frmOptions: TfrmOptions
     OnEnter = CategoryTreeClick
     OnKeyUp = CategoryTreeKeyUp
     Items.NodeData = {
-      070800000009540054007200650065004E006F00640065002D00000000000000
+      070600000009540054007200650065004E006F00640065002D00000000000000
       00000000FFFFFFFFFFFFFFFFFFFFFFFF0000000000000000000107470065006E
       006500720061006C000000310000000000000000000000FFFFFFFFFFFFFFFFFF
       FFFFFF000000000000000000010949006E007400650072006600610063006500
       00003B0000000000000000000000FFFFFFFFFFFFFFFFFFFFFFFF000000000000
       000000010E47006C006F00620061006C00200048006F0074006B006500790073
-      0000003D0000000000000000000000FFFFFFFFFFFFFFFFFFFFFFFF0000000000
-      00000000010F4C006F00630061006C0065002F004C0061006E00670075006100
-      670065000000390000000000000000000000FFFFFFFFFFFFFFFFFFFFFFFF0000
-      00000000000000010D4100760072006F002000500068006F006E006500740069
-      0063000000330000000000000000000000FFFFFFFFFFFFFFFFFFFFFFFF000000
-      000000000000010A4100760072006F0020004D006F0075007300650000003900
-      00000000000000000000FFFFFFFFFFFFFFFFFFFFFFFF00000000000000000001
-      0D4600690078006500640020004C00610079006F007500740073000000390000
-      000000000000000000FFFFFFFFFFFFFFFFFFFFFFFF000000000000000000010D
-      47006C006F00620061006C0020006F0075007400700075007400}
+      000000390000000000000000000000FFFFFFFFFFFFFFFFFFFFFFFF0000000000
+      00000000010D4100760072006F002000500068006F006E006500740069006300
+      0000390000000000000000000000FFFFFFFFFFFFFFFFFFFFFFFF000000000000
+      000000010D4600690078006500640020004C00610079006F0075007400730000
+      00390000000000000000000000FFFFFFFFFFFFFFFFFFFFFFFF00000000000000
+      0000010D47006C006F00620061006C0020006F0075007400700075007400}
   end
   object butEditCustomDict: TButton
     Left = 894
@@ -347,55 +343,6 @@ object frmOptions: TfrmOptions
     VertScrollBar.Tracking = True
     BorderStyle = bsNone
     TabOrder = 5
-    object AvroMouse_Panel: TPanel
-      Left = 2
-      Top = 3
-      Width = 646
-      Height = 423
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
-      BevelKind = bkTile
-      BevelOuter = bvNone
-      TabOrder = 5
-      object GroupBox5: TGroupBox
-        Left = 24
-        Top = 29
-        Width = 591
-        Height = 157
-        Margins.Left = 5
-        Margins.Top = 5
-        Margins.Right = 5
-        Margins.Bottom = 5
-        Caption = 'Keyboard Mode and Input Locale changing'
-        TabOrder = 0
-        object optAvroMouseKeyboardMode_NoChange: TRadioButton
-          Left = 24
-          Top = 50
-          Width = 482
-          Height = 25
-          Margins.Left = 5
-          Margins.Top = 5
-          Margins.Right = 5
-          Margins.Bottom = 5
-          Caption = 'Do not change Keyboard Mode when I type with Avro Mouse'
-          TabOrder = 0
-        end
-        object optAvroMouseKeyboardMode_Change: TRadioButton
-          Left = 24
-          Top = 102
-          Width = 482
-          Height = 26
-          Margins.Left = 5
-          Margins.Top = 5
-          Margins.Right = 5
-          Margins.Bottom = 5
-          Caption = 'Change Keyboard Mode to Bangla'
-          TabOrder = 1
-        end
-      end
-    end
     object GlobalOutput_Panel: TPanel
       Left = -3
       Top = 3
@@ -407,7 +354,7 @@ object frmOptions: TfrmOptions
       Margins.Bottom = 5
       BevelKind = bkTile
       BevelOuter = bvNone
-      TabOrder = 7
+      TabOrder = 5
       object Label20: TLabel
         Left = 27
         Top = 290
@@ -688,121 +635,6 @@ object frmOptions: TfrmOptions
         end
       end
     end
-    object Locale_Panel: TPanel
-      Left = 6
-      Top = 3
-      Width = 642
-      Height = 420
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
-      BevelKind = bkTile
-      BevelOuter = bvNone
-      TabOrder = 2
-      object Label8: TLabel
-        Left = 60
-        Top = 188
-        Width = 158
-        Height = 21
-        Margins.Left = 5
-        Margins.Top = 5
-        Margins.Right = 5
-        Margins.Bottom = 5
-        Caption = 'Select Bangla Locale:'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -17
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentFont = False
-      end
-      object Label15: TLabel
-        Left = 36
-        Top = 33
-        Width = 523
-        Height = 63
-        Margins.Left = 5
-        Margins.Top = 5
-        Margins.Right = 5
-        Margins.Bottom = 5
-        Caption = 
-          'Warning: This is a legacy configuration and known to cause probl' +
-          'em with latest editions of Windows. Change this only if you are ' +
-          'sure about your action. '
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBtnText
-        Font.Height = -17
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-        WordWrap = True
-      end
-      object CheckEnableLocaleChange: TCheckBox
-        Left = 24
-        Top = 114
-        Width = 590
-        Height = 65
-        Margins.Left = 5
-        Margins.Top = 5
-        Margins.Right = 5
-        Margins.Bottom = 5
-        Caption = 
-          'Automatically change "Input Locale" (Input Language) with Keyboa' +
-          'rd Mode'
-        TabOrder = 0
-        WordWrap = True
-      end
-      object optLocaleIND: TRadioButton
-        Left = 108
-        Top = 216
-        Width = 254
-        Height = 26
-        Margins.Left = 5
-        Margins.Top = 5
-        Margins.Right = 5
-        Margins.Bottom = 5
-        Caption = 'Bangla (India)'
-        TabOrder = 1
-      end
-      object optLocaleBD: TRadioButton
-        Left = 108
-        Top = 251
-        Width = 254
-        Height = 25
-        Margins.Left = 5
-        Margins.Top = 5
-        Margins.Right = 5
-        Margins.Bottom = 5
-        Caption = 'Bangla (Bangladesh)'
-        TabOrder = 2
-      end
-      object optLocaleAS: TRadioButton
-        Left = 108
-        Top = 285
-        Width = 254
-        Height = 26
-        Margins.Left = 5
-        Margins.Top = 5
-        Margins.Right = 5
-        Margins.Bottom = 5
-        Caption = 'Assamese'
-        TabOrder = 3
-      end
-      object ButtonInstallLocale: TButton
-        Left = 432
-        Top = 329
-        Width = 182
-        Height = 37
-        Margins.Left = 5
-        Margins.Top = 5
-        Margins.Right = 5
-        Margins.Bottom = 5
-        Caption = 'Install Locale'
-        TabOrder = 4
-        OnClick = ButtonInstallLocaleClick
-      end
-    end
     object FixedLayout_Panel: TPanel
       Left = 3
       Top = 0
@@ -949,7 +781,7 @@ object frmOptions: TfrmOptions
       Margins.Bottom = 5
       BevelKind = bkTile
       BevelOuter = bvNone
-      TabOrder = 6
+      TabOrder = 4
       object Label13: TLabel
         Left = 72
         Top = 719
@@ -1247,7 +1079,7 @@ object frmOptions: TfrmOptions
       Margins.Bottom = 5
       BevelKind = bkTile
       BevelOuter = bvNone
-      TabOrder = 4
+      TabOrder = 3
       object Captionl_Transparency: TLabel
         Left = 24
         Top = 62
@@ -1413,7 +1245,7 @@ object frmOptions: TfrmOptions
       Margins.Bottom = 5
       BevelKind = bkTile
       BevelOuter = bvNone
-      TabOrder = 3
+      TabOrder = 2
       object Label3: TLabel
         Left = 24
         Top = 294
