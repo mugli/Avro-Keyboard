@@ -53,4 +53,4 @@ Delphi community edition doesn't come with command line compiler. In order to bu
 
 ## License
 
-Avro Keyboard is licensed under **MOZILLA PUBLIC LICENSE Version 1.1**. You should receive a copy of the license in MPL-1.1.txt file with both binaries and source. An online version of the license can be found at: [https://www.mozilla.org/MPL/](https://www.mozilla.org/MPL/ "https://www.mozilla.org/MPL/")
+Avro Keyboard is licensed under **MOZILLA PUBLIC LICENSE Version 2.0**. You should receive a copy of the license in LICENSE.txt file with both binaries and source. An online version of the license can be found at: [https://www.mozilla.org/en-US/MPL/2.0/](https://www.mozilla.org/en-US/MPL/2.0/ "https://www.mozilla.org/en-US/MPL/2.0/")
