@@ -54,7 +54,6 @@ var
   SpellerLauncherKey:  string;
 
   // Avro Mouse Settings
-  AvroMouseChangeModeLocale: string;
   AvroMousePosX:             string;
   AvroMousePosY:             string;
 
@@ -68,10 +67,6 @@ var
   TabBrowsing:          string;
   PipeToDot:            string;
   EnableJoNukta:        string;
-
-  // Input Locale Settings
-  ChangeInputLocale: string;
-  PrefferedLocale:   string;
 
   // Fixed Layout Settings
   DefaultLayout:           string; // NOT A Fixed Layout SETTING!
@@ -108,8 +103,7 @@ implementation
 uses
   uForm1,
   uTopBar,
-  WindowsVersion,
-  uLocale;
+  WindowsVersion;
 
 { =============================================================================== }
 
@@ -160,7 +154,6 @@ begin
   SpellerLauncherKey := UpperCase(XML.GetValue('SpellerLauncherKey', 'F7'));
 
   // Avro Mouse Settings
-  AvroMouseChangeModeLocale := UpperCase(XML.GetValue('AvroMouseChangeModeLocale', 'No'));
   AvroMousePosX := UpperCase(XML.GetValue('AvroMousePosX', '0'));
   AvroMousePosY := UpperCase(XML.GetValue('AvroMousePosY', '0'));
 
@@ -174,11 +167,6 @@ begin
   TabBrowsing := UpperCase(XML.GetValue('TabBrowsing', 'YES'));
   PipeToDot := UpperCase(XML.GetValue('PipeToDot', 'YES'));
   EnableJoNukta := UpperCase(XML.GetValue('EnableJoNukta', 'NO'));
-
-  // Input Locale Settings
-  ChangeInputLocale := UpperCase(XML.GetValue('ChangeInputLocale', 'NO'));
-  PrefferedLocale := UpperCase(XML.GetValue('PrefferedLocale', 'India'));
-  // PrefferedLocaleEnglish := XML.GetValue('PrefferedLocaleEnglish', 'Locale:00000409');
 
   // Tools Settings
   OldStyleReph := UpperCase(XML.GetValue('OldStyleReph', 'Yes'));
@@ -241,7 +229,6 @@ begin
   XML.SetValue('SpellerLauncherKey', SpellerLauncherKey);
 
   // Avro Mouse Settings
-  XML.SetValue('AvroMouseChangeModeLocale', AvroMouseChangeModeLocale);
   XML.SetValue('AvroMousePosX', AvroMousePosX);
   XML.SetValue('AvroMousePosY', AvroMousePosY);
   // XML.SetValue('AvroMouseSavePos', AvroMouseSavePos);
@@ -256,10 +243,6 @@ begin
   XML.SetValue('TabBrowsing', TabBrowsing);
   XML.SetValue('PipeToDot', PipeToDot);
   XML.SetValue('EnableJoNukta', EnableJoNukta);
-
-  // Input Locale Settings
-  XML.SetValue('ChangeInputLocale', ChangeInputLocale);
-  XML.SetValue('PrefferedLocale', PrefferedLocale);
 
   // Tools Settings
   XML.SetValue('OldStyleReph', OldStyleReph);
@@ -330,7 +313,6 @@ begin
     SpellerLauncherKey := UpperCase(Reg.ReadStringDef('SpellerLauncherKey', 'F7'));
 
     // Avro Mouse Settings
-    AvroMouseChangeModeLocale := UpperCase(Reg.ReadStringDef('AvroMouseChangeModeLocale', 'No'));
     AvroMousePosX := UpperCase(Reg.ReadStringDef('AvroMousePosX', '0'));
     AvroMousePosY := UpperCase(Reg.ReadStringDef('AvroMousePosY', '0'));
 
@@ -344,10 +326,6 @@ begin
     TabBrowsing := UpperCase(Reg.ReadStringDef('TabBrowsing', 'YES'));
     PipeToDot := UpperCase(Reg.ReadStringDef('PipeToDot', 'YES'));
     EnableJoNukta := UpperCase(Reg.ReadStringDef('EnableJoNukta', 'NO'));
-
-    // Input Locale Settings
-    ChangeInputLocale := UpperCase(Reg.ReadStringDef('ChangeInputLocale', 'NO'));
-    PrefferedLocale := UpperCase(Reg.ReadStringDef('PrefferedLocale', 'India'));
 
     // Tools Settings
     OldStyleReph := UpperCase(Reg.ReadStringDef('OldStyleReph', 'Yes'));
@@ -417,7 +395,6 @@ begin
     Reg.WriteString('SpellerLauncherKey', SpellerLauncherKey);
 
     // Avro Mouse Settings
-    Reg.WriteString('AvroMouseChangeModeLocale', AvroMouseChangeModeLocale);
     Reg.WriteString('AvroMousePosX', AvroMousePosX);
     Reg.WriteString('AvroMousePosY', AvroMousePosY);
 
@@ -431,10 +408,6 @@ begin
     Reg.WriteString('TabBrowsing', TabBrowsing);
     Reg.WriteString('PipeToDot', PipeToDot);
     Reg.WriteString('EnableJoNukta', EnableJoNukta);
-
-    // Input Locale Settings
-    Reg.WriteString('ChangeInputLocale', ChangeInputLocale);
-    Reg.WriteString('PrefferedLocale', PrefferedLocale);
 
     // Tools Settings
     Reg.WriteString('OldStyleReph', OldStyleReph);
@@ -537,8 +510,6 @@ begin
     SpellerLauncherKey := 'F12';
 
   // Avro Mouse Settings
-  if not((AvroMouseChangeModeLocale = 'YES') or (AvroMouseChangeModeLocale = 'NO')) then
-    AvroMouseChangeModeLocale := 'YES';
   if not(StrToInt(AvroMousePosX) > 0) then
     AvroMousePosX := '0';
   if not(StrToInt(AvroMousePosY) > 0) then
@@ -557,12 +528,6 @@ begin
     PipeToDot := 'YES';
   if not((EnableJoNukta = 'YES') or (EnableJoNukta = 'NO')) then
     EnableJoNukta := 'NO';
-
-  // Input Locale Settings
-  if not((ChangeInputLocale = 'YES') or (ChangeInputLocale = 'NO')) then
-    ChangeInputLocale := 'NO';
-  if not((PrefferedLocale = 'BANGLADESH') or (PrefferedLocale = 'INDIA') or (PrefferedLocale = 'ASSAMESE')) then
-    PrefferedLocale := 'INDIA';
 
   // Tools Settings
   if not((OldStyleReph = 'YES') or (OldStyleReph = 'NO')) then
@@ -592,25 +557,6 @@ begin
     OutputIsBijoy := 'NO';
   if not((ShowOutputwarning = 'YES') or (ShowOutputwarning = 'NO')) then
     ShowOutputwarning := 'YES';
-
-  { Done : Validate locale settings here }
-  if IsWinVistaOrLater = True then
-  begin
-    if (IsBangladeshLocaleInstalled = False) then
-    begin
-      if (PrefferedLocale = 'BANGLADESH') then
-        PrefferedLocale := 'INDIA';
-    end;
-
-    if (IsAssameseLocaleInstalled = False) then
-    begin
-      if (PrefferedLocale = 'ASSAMESE') then
-      begin
-        PrefferedLocale := 'INDIA';
-      end;
-
-    end;
-  end;
 end;
 
 { =============================================================================== }

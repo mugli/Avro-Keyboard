@@ -19,7 +19,6 @@ uses
   Messages;
 
 function HandleAllCommandLine: Boolean;
-function CheckLocaleParam: Boolean;
 function CheckSkinInstallParam: Boolean;
 function CheckLayoutInstallParam: Boolean;
 function CheckSendCommandParam: Boolean;
@@ -31,7 +30,6 @@ implementation
 
 uses
   uCmdLineHelper,
-  uLocale,
   u_Admin,
   WindowsVersion,
   uFileFolderHandling,
@@ -103,7 +101,7 @@ end;
 function HandleAllCommandLine: Boolean;
 begin
   result := False;
-  if CheckLocaleParam or CheckSkinInstallParam or CheckLayoutInstallParam or CheckSendCommandParam then
+  if CheckSkinInstallParam or CheckLayoutInstallParam or CheckSendCommandParam then
     result := True;
 end;
 
@@ -181,31 +179,5 @@ end;
 
 { =============================================================================== }
 
-function CheckLocaleParam: Boolean;
-begin
-  result := False;
-  if uCmdLineHelper.GetParamCount <= 0 then
-    exit;
-
-  if ParamPresent('LOCALE') then
-  begin
-    result := True;
-    uLocale.InstallLocale;
-
-    if (ParamPresent('V') or ParamPresent('VERBOSE')) then
-    begin
-      if IsAssameseLocaleInstalled and IsBangladeshLocaleInstalled then
-      begin
-        Application.MessageBox('Locale installed successfully!', 'Avro Keyboard', MB_OK + MB_ICONASTERISK + MB_DEFBUTTON1 + MB_APPLMODAL);
-      end
-      else
-      begin
-        Application.MessageBox('Locale installation failed!', 'Avro Keyboard', MB_OK + MB_ICONHAND + MB_DEFBUTTON1 + MB_APPLMODAL);
-      end;
-    end;
-  end;
-end;
-
-{ =============================================================================== }
 
 end.

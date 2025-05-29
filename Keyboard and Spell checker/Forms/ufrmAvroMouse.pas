@@ -337,12 +337,6 @@ end;
 
 procedure TfrmAvroMouse.TypeIt(const tStr: string);
 begin
-  if AvroMouseChangeModeLocale = 'YES' then
-  begin
-    if AvroMainForm1.GetMyCurrentKeyboardMode <> bangla then
-      AvroMainForm1.ToggleMode;
-  end;
-
   SendKey_Char(tStr);
 end;
 

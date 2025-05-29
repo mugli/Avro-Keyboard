@@ -52,13 +52,6 @@ type
     GroupBox4: TGroupBox;
     Label7: TLabel;
     comboFunctionKeys: TComboBox;
-    Locale_Panel: TPanel;
-    Label8: TLabel;
-    CheckEnableLocaleChange: TCheckBox;
-    optLocaleIND: TRadioButton;
-    optLocaleBD: TRadioButton;
-    optLocaleAS: TRadioButton;
-    ButtonInstallLocale: TButton;
     General_Panel: TPanel;
     Label3: TLabel;
     GroupBox1: TGroupBox;
@@ -84,10 +77,6 @@ type
     ScrollBox1: TScrollBox;
     SkinPreviewPic: TImage;
     ccmdAboutSkin: TButton;
-    AvroMouse_Panel: TPanel;
-    GroupBox5: TGroupBox;
-    optAvroMouseKeyboardMode_NoChange: TRadioButton;
-    optAvroMouseKeyboardMode_Change: TRadioButton;
     AvroPhonetic_Panel: TPanel;
     GroupBox3: TGroupBox;
     Label_PhoneticTypingMode: TLabel;
@@ -116,7 +105,6 @@ type
     optOutputANSI: TRadioButton;
     CheckWarningAnsi: TCheckBox;
     LabelHideTimer: TTimer;
-    Label15: TLabel;
     GroupBox8: TGroupBox;
     Label16: TLabel;
     comboFunctionKeys_OutputMode: TComboBox;
@@ -142,7 +130,6 @@ type
     procedure Button_HelpClick(Sender: TObject);
     procedure optTypingStyle_ModernClick(Sender: TObject);
     procedure ccmdAboutSkinClick(Sender: TObject);
-    procedure ButtonInstallLocaleClick(Sender: TObject);
     procedure CheckAddNewWordsClick(Sender: TObject);
     procedure Button_ApplyClick(Sender: TObject);
     procedure optOutputANSIMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
@@ -175,7 +162,6 @@ uses
   ufrmAutoCorrect,
   WindowsVersion,
   uForm1,
-  uLocale,
   u_Admin,
   ufrmEncodingWarning;
 
@@ -249,16 +235,6 @@ end;
 
 { =============================================================================== }
 
-procedure TfrmOptions.ButtonInstallLocaleClick(Sender: TObject);
-begin
-  if (IsWinVistaOrLater and IsUAC) then
-    Execute_Something_With_APP_Admin('/LOCALE /V', Application.ExeName)
-  else
-    InstallLocale;
-end;
-
-{ =============================================================================== }
-
 procedure TfrmOptions.Button_ApplyClick(Sender: TObject);
 begin
   Self.SaveSettings;
@@ -304,9 +280,7 @@ begin
         // General_Panel.Visible:=False;
         Interface_Panel.Visible := False;
         KeyboardMode_Panel.Visible := False;
-        Locale_Panel.Visible := False;
         AvroPhonetic_Panel.Visible := False;
-        AvroMouse_Panel.Visible := False;
         FixedLayout_Panel.Visible := False;
         GlobalOutput_Panel.Visible := False;
       end;
@@ -317,9 +291,7 @@ begin
         General_Panel.Visible := False;
         // Interface_Panel.Visible:=False;
         KeyboardMode_Panel.Visible := False;
-        Locale_Panel.Visible := False;
         AvroPhonetic_Panel.Visible := False;
-        AvroMouse_Panel.Visible := False;
         FixedLayout_Panel.Visible := False;
         GlobalOutput_Panel.Visible := False;
       end;
@@ -330,74 +302,40 @@ begin
         General_Panel.Visible := False;
         Interface_Panel.Visible := False;
         // KeyboardMode_Panel.Visible:=False;
-        Locale_Panel.Visible := False;
         AvroPhonetic_Panel.Visible := False;
-        AvroMouse_Panel.Visible := False;
         FixedLayout_Panel.Visible := False;
         GlobalOutput_Panel.Visible := False;
       end;
     3:
-      begin
-        Locale_Panel.Visible := True;
-
-        General_Panel.Visible := False;
-        Interface_Panel.Visible := False;
-        KeyboardMode_Panel.Visible := False;
-        // Locale_Panel.Visible:=False;
-        AvroPhonetic_Panel.Visible := False;
-        AvroMouse_Panel.Visible := False;
-        FixedLayout_Panel.Visible := False;
-        GlobalOutput_Panel.Visible := False;
-      end;
-    4:
       begin
         AvroPhonetic_Panel.Visible := True;
 
         General_Panel.Visible := False;
         Interface_Panel.Visible := False;
         KeyboardMode_Panel.Visible := False;
-        Locale_Panel.Visible := False;
         // AvroPhonetic_Panel.Visible:=False;
-        AvroMouse_Panel.Visible := False;
         FixedLayout_Panel.Visible := False;
         GlobalOutput_Panel.Visible := False;
       end;
-    5:
-      begin
-        AvroMouse_Panel.Visible := True;
-
-        General_Panel.Visible := False;
-        Interface_Panel.Visible := False;
-        KeyboardMode_Panel.Visible := False;
-        Locale_Panel.Visible := False;
-        AvroPhonetic_Panel.Visible := False;
-        // AvroMouse_Panel.Visible:=False;
-        FixedLayout_Panel.Visible := False;
-        GlobalOutput_Panel.Visible := False;
-      end;
-    6:
+    4:
       begin
         FixedLayout_Panel.Visible := True;
 
         General_Panel.Visible := False;
         Interface_Panel.Visible := False;
         KeyboardMode_Panel.Visible := False;
-        Locale_Panel.Visible := False;
         AvroPhonetic_Panel.Visible := False;
-        AvroMouse_Panel.Visible := False;
         // FixedLayout_Panel.Visible:=False;
         GlobalOutput_Panel.Visible := False;
       end;
-    7:
+    5:
       begin
         GlobalOutput_Panel.Visible := True;
 
         General_Panel.Visible := False;
         Interface_Panel.Visible := False;
         KeyboardMode_Panel.Visible := False;
-        Locale_Panel.Visible := False;
         AvroPhonetic_Panel.Visible := False;
-        AvroMouse_Panel.Visible := False;
         FixedLayout_Panel.Visible := False;
         // GlobalOutput_Panel.Visible:=False;
       end;
@@ -543,52 +481,40 @@ begin
   General_Panel.Visible := True;
   FixedLayout_Panel.Visible := False;
   AvroPhonetic_Panel.Visible := False;
-  Locale_Panel.Visible := False;
   KeyboardMode_Panel.Visible := False;
   General_Panel.Visible := False;
-  AvroMouse_Panel.Visible := False;
   Interface_Panel.Visible := False;
   GlobalOutput_Panel.Visible := False;
 
   Interface_Panel.Top := 0;
-  AvroMouse_Panel.Top := 0;
   General_Panel.Top := 0;
   KeyboardMode_Panel.Top := 0;
-  Locale_Panel.Top := 0;
   AvroPhonetic_Panel.Top := 0;
   FixedLayout_Panel.Top := 0;
   GlobalOutput_Panel.Top := 0;
 
   Interface_Panel.Left := 0;
-  AvroMouse_Panel.Left := 0;
   General_Panel.Left := 0;
   KeyboardMode_Panel.Left := 0;
-  Locale_Panel.Left := 0;
   AvroPhonetic_Panel.Left := 0;
   FixedLayout_Panel.Left := 0;
   GlobalOutput_Panel.Left := 0;
 
   Interface_Panel.Width := Self.Width - CategoryTree.Width - 20;
-  AvroMouse_Panel.Width := Self.Width - CategoryTree.Width - 20;
   General_Panel.Width := Self.Width - CategoryTree.Width - 20;
   KeyboardMode_Panel.Width := Self.Width - CategoryTree.Width - 20;
-  Locale_Panel.Width := Self.Width - CategoryTree.Width - 20;
   AvroPhonetic_Panel.Width := Self.Width - CategoryTree.Width - 20;
   FixedLayout_Panel.Width := Self.Width - CategoryTree.Width - 20;
   GlobalOutput_Panel.Width := Self.Width - CategoryTree.Width - 20;
 
   Interface_Panel.BevelKind := bknone { bkTile };
-  AvroMouse_Panel.BevelKind := bknone { bkTile };
   General_Panel.BevelKind := bknone { bkTile };
   KeyboardMode_Panel.BevelKind := bknone { bkTile };
-  Locale_Panel.BevelKind := bknone { bkTile };
   AvroPhonetic_Panel.BevelKind := bknone { bkTile };
   FixedLayout_Panel.BevelKind := bknone { bkTile };
   GlobalOutput_Panel.BevelKind := bknone;
 
   CategoryTree.Items[0].Selected := True;
-
-  SetElevationRequiredState(ButtonInstallLocale, True);
 
   // Load Settings
   Self.LoadSettings;
@@ -731,52 +657,6 @@ begin
   comboFunctionKeys_SpellerLauncher.ItemIndex := GetListIndex(comboFunctionKeys_SpellerLauncher.Items, SpellerLauncherKey);
 
   // =========================================================
-  // Locale Changing Option
-
-  if ChangeInputLocale = 'YES' then
-  begin
-    CheckEnableLocaleChange.Checked := True;
-  end
-  else
-  begin
-    CheckEnableLocaleChange.Checked := False;
-  end;
-
-  if PrefferedLocale = 'BANGLADESH' then
-    optLocaleBD.Checked := True
-  else if PrefferedLocale = 'INDIA' then
-    optLocaleIND.Checked := True
-  else if PrefferedLocale = 'ASSAMESE' then
-    optLocaleAS.Checked := True;
-
-  { For Portable Edition: Required Additional Check }
-  if IsWinVistaOrLater = True then
-  begin
-    if (IsBangladeshLocaleInstalled = False) then
-    begin
-      optLocaleBD.Enabled := False;
-
-      if (PrefferedLocale = 'BANGLADESH') then
-      begin
-        PrefferedLocale := 'INDIA';
-        optLocaleIND.Checked := True;
-      end;
-    end;
-
-    if (IsAssameseLocaleInstalled = False) then
-    begin
-      optLocaleAS.Enabled := False;
-
-      if (PrefferedLocale = 'ASSAMESE') then
-      begin
-        PrefferedLocale := 'INDIA';
-        optLocaleIND.Checked := True;
-      end;
-
-    end;
-  end;
-
-  // =========================================================
   // Avro Phonetic Options
   if PhoneticAutoCorrect = 'YES' then
     CheckAutoCorrect.Checked := True
@@ -843,12 +723,6 @@ begin
   else
     CheckEnableJoNukta.Checked := False;
 
-  // =========================================================
-  // Avro Mouse Options
-  if AvroMouseChangeModeLocale = 'YES' then
-    optAvroMouseKeyboardMode_Change.Checked := True
-  else
-    optAvroMouseKeyboardMode_NoChange.Checked := True;
 
   // =========================================================
   // Fixed Layout Options
@@ -1012,22 +886,6 @@ begin
   ToggleOutputModeKey := uppercase(comboFunctionKeys_OutputMode.Items[comboFunctionKeys_OutputMode.ItemIndex]);
   SpellerLauncherKey := uppercase(comboFunctionKeys_SpellerLauncher.Items[comboFunctionKeys_SpellerLauncher.ItemIndex]);
 
-
-  // =========================================================
-  // Locale Changing Option
-
-  if CheckEnableLocaleChange.Checked = True then
-    ChangeInputLocale := 'YES'
-  else
-    ChangeInputLocale := 'NO';
-
-  if optLocaleBD.Checked = True then
-    PrefferedLocale := 'BANGLADESH'
-  else if optLocaleIND.Checked = True then
-    PrefferedLocale := 'INDIA'
-  else if optLocaleAS.Checked = True then
-    PrefferedLocale := 'ASSAMESE';
-
   // =========================================================
   // Avro Phonetic Options
   if CheckAutoCorrect.Checked = True then
@@ -1073,13 +931,6 @@ begin
     EnableJoNukta := 'YES'
   else
     EnableJoNukta := 'NO';
-
-  // =========================================================
-  // Avro Mouse Options
-  if optAvroMouseKeyboardMode_Change.Checked = True then
-    AvroMouseChangeModeLocale := 'YES'
-  else
-    AvroMouseChangeModeLocale := 'NO';
 
   // =========================================================
   // Fixed Layout Options
