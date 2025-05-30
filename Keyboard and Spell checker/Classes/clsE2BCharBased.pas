@@ -58,7 +58,7 @@ type
       procedure ParseAndSendNow;
       procedure ProcessEnter(var Block: boolean);
       procedure DoBackspace(var Block: boolean);
-      procedure MyProcessVKeyDown(const KeyCode: Integer; var Block: boolean; const var_IfShift: boolean; const var_IfTrueShift: boolean);
+      procedure MyProcessVKeyDown(const KeyCode: Integer; var Block: boolean; const var_IsLogicalShift: boolean; const var_IsTrueShift: boolean);
       procedure AddStr(const Str: string);
 
       procedure LoadCandidateOptions;
@@ -486,7 +486,7 @@ end;
 
 { =============================================================================== }
 
-procedure TE2BCharBased.MyProcessVKeyDown(const KeyCode: Integer; var Block: boolean; const var_IfShift, var_IfTrueShift: boolean);
+procedure TE2BCharBased.MyProcessVKeyDown(const KeyCode: Integer; var Block: boolean; const var_IsLogicalShift, var_IsTrueShift: boolean);
 begin
   Block := False;
   case KeyCode of
@@ -523,22 +523,22 @@ begin
 
     VK_OEM_1:
       begin // key ;:
-        if var_IfTrueShift = True then
+        if var_IsTrueShift = True then
           AddStr(':');
-        if var_IfTrueShift = False then
+        if var_IsTrueShift = False then
           AddStr(';');
         Block := True;
         exit;
       end;
     VK_OEM_2:
       begin // key /?
-        if var_IfTrueShift = True then
+        if var_IsTrueShift = True then
         begin
           AddStr('?');
           Block := True;
         end;
 
-        if var_IfTrueShift = False then
+        if var_IsTrueShift = False then
         begin
           AddStr('/');
           Block := True;
@@ -548,9 +548,9 @@ begin
 
     VK_OEM_3:
       begin // key `~
-        if var_IfTrueShift = True then
+        if var_IsTrueShift = True then
           AddStr('~');
-        if var_IfTrueShift = False then
+        if var_IsTrueShift = False then
           AddStr('`');
         Block := True;
         exit;
@@ -558,9 +558,9 @@ begin
 
     VK_OEM_4:
       begin // key [{
-        if var_IfTrueShift = True then
+        if var_IsTrueShift = True then
           AddStr('{');
-        if var_IfTrueShift = False then
+        if var_IsTrueShift = False then
           AddStr('[');
         Block := True;
         exit;
@@ -568,68 +568,68 @@ begin
 
     VK_OEM_5:
       begin // key \|
-        if var_IfTrueShift = True then
+        if var_IsTrueShift = True then
         begin
           if PipeToDot = 'YES' then
             AddStr('.`') { New dot! }
           else
             AddStr('|');
         end;
-        if var_IfTrueShift = False then
+        if var_IsTrueShift = False then
           AddStr('\');
         Block := True;
         exit;
       end;
     VK_OEM_6:
       begin // key ]}
-        if var_IfTrueShift = True then
+        if var_IsTrueShift = True then
           AddStr('}');
-        if var_IfTrueShift = False then
+        if var_IsTrueShift = False then
           AddStr(']');
         Block := True;
         exit;
       end;
     VK_OEM_7:
       begin // key '"
-        if var_IfTrueShift = True then
+        if var_IsTrueShift = True then
           AddStr('"');
-        if var_IfTrueShift = False then
+        if var_IsTrueShift = False then
           AddStr(#39);
         Block := True;
         exit;
       end;
     VK_OEM_COMMA:
       begin // key ,<
-        if var_IfTrueShift = True then
+        if var_IsTrueShift = True then
           AddStr('<');
-        if var_IfTrueShift = False then
+        if var_IsTrueShift = False then
           AddStr(',');
         Block := True;
         exit;
       end;
     VK_OEM_MINUS:
       begin // key - underscore
-        if var_IfTrueShift = True then
+        if var_IsTrueShift = True then
           AddStr('_');
-        if var_IfTrueShift = False then
+        if var_IsTrueShift = False then
           AddStr('-');
         Block := True;
         exit;
       end;
     VK_OEM_PERIOD:
       begin // key . >
-        if var_IfTrueShift = True then
+        if var_IsTrueShift = True then
           AddStr('>');
-        if var_IfTrueShift = False then
+        if var_IsTrueShift = False then
           AddStr('.');
         Block := True;
         exit;
       end;
     VK_OEM_PLUS:
       begin // key =+
-        if var_IfTrueShift = True then
+        if var_IsTrueShift = True then
           AddStr('+');
-        if var_IfTrueShift = False then
+        if var_IsTrueShift = False then
           AddStr('=');
         Block := True;
         exit;
@@ -637,90 +637,90 @@ begin
 
     VK_0:
       begin
-        if var_IfTrueShift = True then
+        if var_IsTrueShift = True then
           AddStr(')');
-        if var_IfTrueShift = False then
+        if var_IsTrueShift = False then
           AddStr('0');
         Block := True;
         exit;
       end;
     VK_1:
       begin
-        if var_IfTrueShift = True then
+        if var_IsTrueShift = True then
           AddStr('!');
-        if var_IfTrueShift = False then
+        if var_IsTrueShift = False then
           AddStr('1');
         Block := True;
         exit;
       end;
     VK_2:
       begin
-        if var_IfTrueShift = True then
+        if var_IsTrueShift = True then
           AddStr('@');
-        if var_IfTrueShift = False then
+        if var_IsTrueShift = False then
           AddStr('2');
         Block := True;
         exit;
       end;
     VK_3:
       begin
-        if var_IfTrueShift = True then
+        if var_IsTrueShift = True then
           AddStr('#');
-        if var_IfTrueShift = False then
+        if var_IsTrueShift = False then
           AddStr('3');
         Block := True;
         exit;
       end;
     VK_4:
       begin
-        if var_IfTrueShift = True then
+        if var_IsTrueShift = True then
           AddStr('$');
-        if var_IfTrueShift = False then
+        if var_IsTrueShift = False then
           AddStr('4');
         Block := True;
         exit;
       end;
     VK_5:
       begin
-        if var_IfTrueShift = True then
+        if var_IsTrueShift = True then
           AddStr('%');
-        if var_IfTrueShift = False then
+        if var_IsTrueShift = False then
           AddStr('5');
         Block := True;
         exit;
       end;
     VK_6:
       begin
-        if var_IfTrueShift = True then
+        if var_IsTrueShift = True then
           AddStr('^');
-        if var_IfTrueShift = False then
+        if var_IsTrueShift = False then
           AddStr('6');
         Block := True;
         exit;
       end;
     VK_7:
       begin
-        if var_IfTrueShift = True then
+        if var_IsTrueShift = True then
           AddStr('&');
-        if var_IfTrueShift = False then
+        if var_IsTrueShift = False then
           AddStr('7');
         Block := True;
         exit;
       end;
     VK_8:
       begin
-        if var_IfTrueShift = True then
+        if var_IsTrueShift = True then
           AddStr('*');
-        if var_IfTrueShift = False then
+        if var_IsTrueShift = False then
           AddStr('8');
         Block := True;
         exit;
       end;
     VK_9:
       begin
-        if var_IfTrueShift = True then
+        if var_IsTrueShift = True then
           AddStr('(');
-        if var_IfTrueShift = False then
+        if var_IsTrueShift = False then
           AddStr('9');
         Block := True;
         exit;
@@ -789,234 +789,234 @@ begin
 
     A_Key:
       begin
-        if var_IfShift = True then
+        if var_IsLogicalShift = True then
           AddStr('A');
-        if var_IfShift = False then
+        if var_IsLogicalShift = False then
           AddStr('a');
         Block := True;
         exit;
       end;
     B_Key:
       begin
-        if var_IfShift = True then
+        if var_IsLogicalShift = True then
           AddStr('B');
-        if var_IfShift = False then
+        if var_IsLogicalShift = False then
           AddStr('b');
         Block := True;
         exit;
       end;
     C_Key:
       begin
-        if var_IfShift = True then
+        if var_IsLogicalShift = True then
           AddStr('C');
-        if var_IfShift = False then
+        if var_IsLogicalShift = False then
           AddStr('c');
         Block := True;
         exit;
       end;
     D_Key:
       begin
-        if var_IfShift = True then
+        if var_IsLogicalShift = True then
           AddStr('D');
-        if var_IfShift = False then
+        if var_IsLogicalShift = False then
           AddStr('d');
         Block := True;
         exit;
       end;
     E_Key:
       begin
-        if var_IfShift = True then
+        if var_IsLogicalShift = True then
           AddStr('E');
-        if var_IfShift = False then
+        if var_IsLogicalShift = False then
           AddStr('e');
         Block := True;
         exit;
       end;
     F_Key:
       begin
-        if var_IfShift = True then
+        if var_IsLogicalShift = True then
           AddStr('F');
-        if var_IfShift = False then
+        if var_IsLogicalShift = False then
           AddStr('f');
         Block := True;
         exit;
       end;
     G_Key:
       begin
-        if var_IfShift = True then
+        if var_IsLogicalShift = True then
           AddStr('G');
-        if var_IfShift = False then
+        if var_IsLogicalShift = False then
           AddStr('g');
         Block := True;
         exit;
       end;
     H_Key:
       begin
-        if var_IfShift = True then
+        if var_IsLogicalShift = True then
           AddStr('H');
-        if var_IfShift = False then
+        if var_IsLogicalShift = False then
           AddStr('h');
         Block := True;
         exit;
       end;
     I_Key:
       begin
-        if var_IfShift = True then
+        if var_IsLogicalShift = True then
           AddStr('I');
-        if var_IfShift = False then
+        if var_IsLogicalShift = False then
           AddStr('i');
         Block := True;
         exit;
       end;
     J_Key:
       begin
-        if var_IfShift = True then
+        if var_IsLogicalShift = True then
           AddStr('J');
-        if var_IfShift = False then
+        if var_IsLogicalShift = False then
           AddStr('j');
         Block := True;
         exit;
       end;
     K_Key:
       begin
-        if var_IfShift = True then
+        if var_IsLogicalShift = True then
           AddStr('K');
-        if var_IfShift = False then
+        if var_IsLogicalShift = False then
           AddStr('k');
         Block := True;
         exit;
       end;
     L_Key:
       begin
-        if var_IfShift = True then
+        if var_IsLogicalShift = True then
           AddStr('L');
-        if var_IfShift = False then
+        if var_IsLogicalShift = False then
           AddStr('l');
         Block := True;
         exit;
       end;
     M_Key:
       begin
-        if var_IfShift = True then
+        if var_IsLogicalShift = True then
           AddStr('M');
-        if var_IfShift = False then
+        if var_IsLogicalShift = False then
           AddStr('m');
         Block := True;
         exit;
       end;
     N_Key:
       begin
-        if var_IfShift = True then
+        if var_IsLogicalShift = True then
           AddStr('N');
-        if var_IfShift = False then
+        if var_IsLogicalShift = False then
           AddStr('n');
         Block := True;
         exit;
       end;
     O_Key:
       begin
-        if var_IfShift = True then
+        if var_IsLogicalShift = True then
           AddStr('O');
-        if var_IfShift = False then
+        if var_IsLogicalShift = False then
           AddStr('o');
         Block := True;
         exit;
       end;
     P_Key:
       begin
-        if var_IfShift = True then
+        if var_IsLogicalShift = True then
           AddStr('P');
-        if var_IfShift = False then
+        if var_IsLogicalShift = False then
           AddStr('p');
         Block := True;
         exit;
       end;
     Q_Key:
       begin
-        if var_IfShift = True then
+        if var_IsLogicalShift = True then
           AddStr('Q');
-        if var_IfShift = False then
+        if var_IsLogicalShift = False then
           AddStr('q');
         Block := True;
         exit;
       end;
     R_Key:
       begin
-        if var_IfShift = True then
+        if var_IsLogicalShift = True then
           AddStr('R');
-        if var_IfShift = False then
+        if var_IsLogicalShift = False then
           AddStr('r');
         Block := True;
         exit;
       end;
     S_Key:
       begin
-        if var_IfShift = True then
+        if var_IsLogicalShift = True then
           AddStr('S');
-        if var_IfShift = False then
+        if var_IsLogicalShift = False then
           AddStr('s');
         Block := True;
         exit;
       end;
     T_Key:
       begin
-        if var_IfShift = True then
+        if var_IsLogicalShift = True then
           AddStr('T');
-        if var_IfShift = False then
+        if var_IsLogicalShift = False then
           AddStr('t');
         Block := True;
         exit;
       end;
     U_Key:
       begin
-        if var_IfShift = True then
+        if var_IsLogicalShift = True then
           AddStr('U');
-        if var_IfShift = False then
+        if var_IsLogicalShift = False then
           AddStr('u');
         Block := True;
         exit;
       end;
     V_Key:
       begin
-        if var_IfShift = True then
+        if var_IsLogicalShift = True then
           AddStr('V');
-        if var_IfShift = False then
+        if var_IsLogicalShift = False then
           AddStr('v');
         Block := True;
         exit;
       end;
     W_Key:
       begin
-        if var_IfShift = True then
+        if var_IsLogicalShift = True then
           AddStr('W');
-        if var_IfShift = False then
+        if var_IsLogicalShift = False then
           AddStr('w');
         Block := True;
         exit;
       end;
     X_Key:
       begin
-        if var_IfShift = True then
+        if var_IsLogicalShift = True then
           AddStr('X');
-        if var_IfShift = False then
+        if var_IsLogicalShift = False then
           AddStr('x');
         Block := True;
         exit;
       end;
     Y_Key:
       begin
-        if var_IfShift = True then
+        if var_IsLogicalShift = True then
           AddStr('Y');
-        if var_IfShift = False then
+        if var_IsLogicalShift = False then
           AddStr('y');
         Block := True;
         exit;
       end;
     Z_Key:
       begin
-        if var_IfShift = True then
+        if var_IsLogicalShift = True then
           AddStr('Z');
-        if var_IfShift = False then
+        if var_IsLogicalShift = False then
           AddStr('z');
         Block := True;
         exit;
@@ -1380,7 +1380,8 @@ var
   m_Block: boolean;
 begin
   m_Block := False;
-  if (IfControl = True) or (IfAlter = True) or (IfWinKey = True) then
+
+  if (IsControl = True) or (IsAlter = True) or (IsWinKey = True) then
   begin
     Block := False;
     BlockLast := False;
@@ -1388,7 +1389,7 @@ begin
     exit;
   end;
 
-  if (KeyCode = VK_SHIFT) or (KeyCode = VK_LSHIFT) or (KeyCode = VK_RSHIFT) then
+  if IsIgnorableModifierKey(KeyCode) then
   begin
     Block := False;
     BlockLast := False;
@@ -1447,7 +1448,7 @@ begin
     else
     begin
 
-      MyProcessVKeyDown(KeyCode, m_Block, IfShift, IfTrueShift);
+      MyProcessVKeyDown(KeyCode, m_Block, IsLogicalShift, IsTrueShift);
       ProcessVKeyDown := '';
 
       Block := m_Block;
@@ -1461,8 +1462,7 @@ end;
 
 procedure TE2BCharBased.ProcessVKeyUP(const KeyCode: Integer; var Block: boolean);
 begin
-  if (KeyCode = VK_SHIFT) or (KeyCode = VK_RSHIFT) or (KeyCode = VK_LSHIFT) or (KeyCode = VK_LCONTROL) or (KeyCode = VK_RCONTROL) or (KeyCode = VK_CONTROL) or
-    (KeyCode = VK_MENU) or (KeyCode = VK_LMENU) or (KeyCode = VK_RMENU) or (IfWinKey = True) then
+  if IsIgnorableModifierKey(KeyCode) then
   begin
     Block := False;
     BlockLast := False;
