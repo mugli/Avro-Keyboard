@@ -12,7 +12,7 @@ uses
   Forms,
   clsMemoParser in 'clsMemoParser.pas',
   uClipboard in 'uClipboard.pas',
-  ufrmSpell in 'ufrmSpell.pas' {frmSpell} ,
+  ufrmSpell in 'ufrmSpell.pas' {frmSpell},
   BanglaChars in '..\Units\BanglaChars.pas',
   uFileFolderHandling in '..\Units\uFileFolderHandling.pas',
   KeyboardFunctions in '..\Units\KeyboardFunctions.pas',
@@ -24,7 +24,8 @@ uses
   WindowsVersion in '..\Units\WindowsVersion.pas',
   WindowsDarkMode in '..\Units\WindowsDarkMode.pas',
   Vcl.Themes,
-  Vcl.Styles;
+  Vcl.Styles,
+  DebugLog in '..\Units\DebugLog.pas';
 
 {$R *.res}
 

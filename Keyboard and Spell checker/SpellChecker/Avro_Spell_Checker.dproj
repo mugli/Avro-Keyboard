@@ -151,6 +151,7 @@
         <DCCReference Include="clsRegistry_XMLSetting.pas"/>
         <DCCReference Include="..\Units\WindowsVersion.pas"/>
         <DCCReference Include="..\Units\WindowsDarkMode.pas"/>
+        <DCCReference Include="..\Units\DebugLog.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -181,6 +182,12 @@
                 <Platform value="Win64">True</Platform>
             </Platforms>
             <Deployment Version="4">
+                <DeployFile LocalName="..\..\build\Avro_Spell_Checker.exe" Configuration="Release" Class="ProjectOutput">
+                    <Platform Name="Win64">
+                        <RemoteName>Avro_Spell_Checker.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="Avro_Spell_Checker.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win64">
                         <RemoteName>Avro_Spell_Checker.exe</RemoteName>
