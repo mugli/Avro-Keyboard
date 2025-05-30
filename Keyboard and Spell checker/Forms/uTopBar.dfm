@@ -310,6 +310,7 @@ object TopBar: TTopBar
     Top = 192
   end
   object BalloonHint1: TBalloonHint
+    HideAfter = 5000
     Left = 200
     Top = 184
   end
