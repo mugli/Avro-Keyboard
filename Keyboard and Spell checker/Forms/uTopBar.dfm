@@ -1,19 +1,15 @@
 object TopBar: TTopBar
   Left = 256
   Top = 260
-  Margins.Left = 5
-  Margins.Top = 5
-  Margins.Right = 5
-  Margins.Bottom = 5
   AlphaBlend = True
   BorderIcons = []
   BorderStyle = bsNone
-  ClientHeight = 360
-  ClientWidth = 800
+  ClientHeight = 240
+  ClientWidth = 533
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -17
+  Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
   Icon.Data = {
@@ -63,6 +59,7 @@ object TopBar: TTopBar
     000000000000000000000000000000000000000000000000000000000000}
   KeyPreview = True
   Position = poDesigned
+  Scaled = False
   ScreenSnap = True
   SnapBuffer = 32
   OnClose = FormClose
@@ -70,23 +67,22 @@ object TopBar: TTopBar
   OnHide = FormHide
   OnKeyDown = FormKeyDown
   OnShow = FormShow
-  PixelsPerInch = 144
-  TextHeight = 21
+  TextHeight = 13
   object ImgMain: TImage
-    Left = 36
-    Top = 24
-    Width = 542
-    Height = 62
+    Left = 24
+    Top = 16
+    Width = 361
+    Height = 41
     Margins.Left = 0
     Margins.Top = 0
     Margins.Right = 0
     Margins.Bottom = 0
   end
   object ImgAppIcon: TImage
-    Left = 36
-    Top = 108
-    Width = 50
-    Height = 50
+    Left = 24
+    Top = 72
+    Width = 33
+    Height = 33
     Cursor = crMultiDrag
     Margins.Left = 0
     Margins.Top = 0
@@ -101,10 +97,10 @@ object TopBar: TTopBar
     OnMouseUp = ImgAppIconMouseUp
   end
   object ImgButtonMode: TImage
-    Left = 95
-    Top = 108
-    Width = 49
-    Height = 50
+    Left = 63
+    Top = 72
+    Width = 33
+    Height = 33
     Margins.Left = 0
     Margins.Top = 0
     Margins.Right = 0
@@ -118,10 +114,10 @@ object TopBar: TTopBar
     OnMouseUp = ImgButtonModeMouseUp
   end
   object ImgButtonLayoutDown: TImage
-    Left = 156
-    Top = 108
-    Width = 50
-    Height = 50
+    Left = 104
+    Top = 72
+    Width = 33
+    Height = 33
     Margins.Left = 0
     Margins.Top = 0
     Margins.Right = 0
@@ -135,10 +131,10 @@ object TopBar: TTopBar
     OnMouseUp = ImgButtonLayoutDownMouseUp
   end
   object ImgButtonLayout: TImage
-    Left = 206
-    Top = 108
-    Width = 49
-    Height = 50
+    Left = 137
+    Top = 72
+    Width = 33
+    Height = 33
     Margins.Left = 0
     Margins.Top = 0
     Margins.Right = 0
@@ -152,10 +148,10 @@ object TopBar: TTopBar
     OnMouseUp = ImgButtonLayoutMouseUp
   end
   object ImgButtonMouse: TImage
-    Left = 288
-    Top = 108
-    Width = 50
-    Height = 50
+    Left = 192
+    Top = 72
+    Width = 33
+    Height = 33
     Margins.Left = 0
     Margins.Top = 0
     Margins.Right = 0
@@ -169,10 +165,10 @@ object TopBar: TTopBar
     OnMouseUp = ImgButtonMouseMouseUp
   end
   object ImgButtonTools: TImage
-    Left = 348
-    Top = 108
-    Width = 50
-    Height = 50
+    Left = 232
+    Top = 72
+    Width = 33
+    Height = 33
     Margins.Left = 0
     Margins.Top = 0
     Margins.Right = 0
@@ -186,10 +182,10 @@ object TopBar: TTopBar
     OnMouseUp = ImgButtonToolsMouseUp
   end
   object ImgButtonWWW: TImage
-    Left = 408
-    Top = 108
-    Width = 50
-    Height = 50
+    Left = 272
+    Top = 72
+    Width = 33
+    Height = 33
     Margins.Left = 0
     Margins.Top = 0
     Margins.Right = 0
@@ -203,10 +199,10 @@ object TopBar: TTopBar
     OnMouseUp = ImgButtonWWWMouseUp
   end
   object ImgButtonHelp: TImage
-    Left = 468
-    Top = 108
-    Width = 50
-    Height = 50
+    Left = 312
+    Top = 72
+    Width = 33
+    Height = 33
     Margins.Left = 0
     Margins.Top = 0
     Margins.Right = 0
@@ -220,10 +216,10 @@ object TopBar: TTopBar
     OnMouseUp = ImgButtonHelpMouseUp
   end
   object ImgButtonMinimize: TImage
-    Left = 528
-    Top = 108
-    Width = 50
-    Height = 50
+    Left = 352
+    Top = 72
+    Width = 33
+    Height = 33
     Margins.Left = 0
     Margins.Top = 0
     Margins.Right = 0

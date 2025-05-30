@@ -190,6 +190,7 @@ type
       procedure ButtonMinimize_DrawUpOver;
 
       procedure WMDROPFILES(var msg: TWMDropFiles); message WM_DROPFILES;
+      procedure WMDpiChanged(var Message: TWMDpi); message WM_DPICHANGED;
 
     public
       { Public declarations }
@@ -255,7 +256,28 @@ uses
   uFileFolderHandling,
   uRegistrySettings,
   uWindowHandlers,
-  KeyboardLayoutLoader;
+  KeyboardLayoutLoader,
+  DebugLog;
+
+{ =============================================================================== }
+
+// We are using PerMonitorv2 in the manifest.
+// TopBar uses skin, so scale=false is set,
+// however, windows still automatically scale the form size.
+// This prevents scaling by windows (outside Delphi VCL)
+//
+// In future, the skin rendering should be adjusted with scale. Skin scaling doesn't work now.
+procedure TTopBar.WMDpiChanged(var Message: TWMDpi);
+var
+  NewRect: TRect;
+begin
+  NewRect := message.ScaledRect^;
+
+  // Reposition window without resizing
+  SetWindowPos(Handle, 0, NewRect.Left, NewRect.Top, Width, // Keep current width
+    Height,                                                 // Keep current height
+    SWP_NOZORDER or SWP_NOACTIVATE or SWP_NOSIZE);
+end;
 
 { =============================================================================== }
 

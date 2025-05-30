@@ -1,19 +1,15 @@
 object frmAbout: TfrmAbout
   Left = 0
   Top = 0
-  Margins.Left = 5
-  Margins.Top = 5
-  Margins.Right = 5
-  Margins.Bottom = 5
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'About Avro Spell Checker'
-  ClientHeight = 515
-  ClientWidth = 689
+  ClientHeight = 343
+  ClientWidth = 455
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -17
+  Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
   Icon.Data = {
@@ -53,84 +49,59 @@ object frmAbout: TfrmAbout
     55E9CC5A38B3AE3C1F5E0000000C00000003000000000000000000000000C003
     0000800100000000000000000000000000000000000000000000000000000000
     00000000000000000000000000000000000080000000C0010000E0070000}
-  Position = poDesktopCenter
+  Position = poScreenCenter
   OnClose = FormClose
   OnCreate = FormCreate
-  PixelsPerInch = 144
-  TextHeight = 21
+  TextHeight = 13
   object Label5: TLabel
-    Left = 12
-    Top = 131
-    Width = 450
-    Height = 21
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
+    Left = 8
+    Top = 87
+    Width = 288
+    Height = 13
     Caption = 'This product is licensed under MOZILLA PUBLIC LICENSE 2.0'
   end
   object Label6: TLabel
-    Left = 165
-    Top = 431
-    Width = 91
-    Height = 21
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
+    Left = 110
+    Top = 287
+    Width = 60
+    Height = 13
     Caption = 'Copyright '#169
   end
   object Label_OmicronLab: TLabel
-    Left = 264
-    Top = 431
-    Width = 108
-    Height = 20
+    Left = 176
+    Top = 287
+    Width = 72
+    Height = 13
     Cursor = crHandPoint
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
     Caption = 'OmicronLab.'
     Font.Charset = ANSI_CHARSET
     Font.Color = clBlue
-    Font.Height = -17
+    Font.Height = -11
     Font.Name = 'Verdana'
     Font.Style = [fsUnderline]
     ParentFont = False
     OnClick = Label_OmicronLabClick
   end
   object Label8: TLabel
-    Left = 381
-    Top = 431
-    Width = 150
-    Height = 21
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
+    Left = 254
+    Top = 287
+    Width = 97
+    Height = 13
     Caption = 'All Rights Reserved.'
   end
   object Panel1: TPanel
-    Left = -12
+    Left = -8
     Top = 0
-    Width = 852
-    Height = 122
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
+    Width = 568
+    Height = 81
     Color = clWhite
     ParentBackground = False
     TabOrder = 0
     object Image1: TImage
-      Left = 24
-      Top = 17
-      Width = 86
-      Height = 81
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
+      Left = 16
+      Top = 11
+      Width = 57
+      Height = 54
       Picture.Data = {
         055449636F6E0000010001003030000001002000A82500001600000028000000
         3000000060000000010020000000000080250000000000000000000000000000
@@ -437,79 +408,55 @@ object frmAbout: TfrmAbout
         FFFFB3FF}
     end
     object Label1: TLabel
-      Left = 119
-      Top = 18
-      Width = 191
-      Height = 24
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
+      Left = 79
+      Top = 12
+      Width = 122
+      Height = 16
       Caption = 'Avro Spell Checker'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -20
+      Font.Height = -13
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
     end
     object Label2: TLabel
-      Left = 119
-      Top = 44
-      Width = 387
-      Height = 21
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
+      Left = 79
+      Top = 29
+      Width = 247
+      Height = 13
       Caption = 'Unicode compliant open source Bangla spell checker'
     end
     object Label3: TLabel
-      Left = 119
-      Top = 66
-      Width = 248
-      Height = 21
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
+      Left = 79
+      Top = 44
+      Width = 163
+      Height = 13
       Caption = 'An integral part of Avro Keyboard'
     end
     object Label4: TLabel
-      Left = 119
-      Top = 96
-      Width = 66
-      Height = 21
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
+      Left = 79
+      Top = 64
+      Width = 42
+      Height = 13
       Caption = 'Version: '
     end
     object LabelVersion: TLabel
-      Left = 186
-      Top = 96
-      Width = 94
-      Height = 21
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
+      Left = 124
+      Top = 64
+      Width = 60
+      Height = 13
       Caption = 'LabelVersion'
     end
   end
   object MemoLicense: TMemo
-    Left = 12
-    Top = 159
-    Width = 665
-    Height = 263
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
+    Left = 8
+    Top = 106
+    Width = 443
+    Height = 175
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
-    Font.Height = -17
+    Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = []
     Lines.Strings = (
@@ -1255,14 +1202,10 @@ object frmAbout: TfrmAbout
     WordWrap = False
   end
   object ButtonClose: TButton
-    Left = 264
-    Top = 465
-    Width = 113
-    Height = 38
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
+    Left = 176
+    Top = 310
+    Width = 75
+    Height = 25
     Cancel = True
     Caption = 'Close'
     Default = True

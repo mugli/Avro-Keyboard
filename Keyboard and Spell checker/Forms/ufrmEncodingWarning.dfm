@@ -61,7 +61,7 @@ object frmEncodingWarning: TfrmEncodingWarning
     7575757575757575757575757505050505050505050505050505050505050000
     0000000000000000000000000000000000000000000000000000000000000000
     000000000000000000000000000000000000000000000000000000000000}
-  Position = poDesktopCenter
+  Position = poScreenCenter
   OnClose = FormClose
   OnCreate = FormCreate
   PixelsPerInch = 144
@@ -75,7 +75,7 @@ object frmEncodingWarning: TfrmEncodingWarning
     Margins.Top = 5
     Margins.Right = 5
     Margins.Bottom = 5
-    Caption = 
+    Caption =
       'Avro will not be able to convert ANSI to Unicode, if you need th' +
       'at later. You have to use a third party converter, which may or ' +
       'may not be 100% accurate!'
@@ -146,7 +146,7 @@ object frmEncodingWarning: TfrmEncodingWarning
     Margins.Top = 5
     Margins.Right = 5
     Margins.Bottom = 5
-    Caption = 
+    Caption =
       'Never ever use ANSI in web sites, databases and where you need t' +
       'o sort Bangla text.'
     WordWrap = True
@@ -160,7 +160,7 @@ object frmEncodingWarning: TfrmEncodingWarning
     Margins.Top = 5
     Margins.Right = 5
     Margins.Bottom = 5
-    Caption = 
+    Caption =
       'This is an outdated technology for writing Bangla, kept in Avro ' +
       'experimentally.'
     WordWrap = True
@@ -174,7 +174,7 @@ object frmEncodingWarning: TfrmEncodingWarning
     Margins.Top = 5
     Margins.Right = 5
     Margins.Bottom = 5
-    Caption = 
+    Caption =
       'We don'#39't provide any support regarding problems in this mode. If' +
       ' your questions are left unanswered, don'#39't blame us.'
     WordWrap = True
