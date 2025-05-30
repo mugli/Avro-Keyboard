@@ -1,20 +1,16 @@
 object AvroMainForm1: TAvroMainForm1
   Left = 0
   Top = 0
-  Margins.Left = 5
-  Margins.Top = 5
-  Margins.Right = 5
-  Margins.Bottom = 5
   VertScrollBar.Visible = False
   BorderIcons = []
   BorderStyle = bsNone
   Caption = 'Avro Keyboard'
-  ClientHeight = 438
-  ClientWidth = 737
+  ClientHeight = 292
+  ClientWidth = 491
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -17
+  Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
   Icon.Data = {
@@ -64,13 +60,13 @@ object AvroMainForm1: TAvroMainForm1
     000000000000000000000000000000000000000000000000000000000000}
   KeyPreview = True
   Position = poDesigned
+  Scaled = False
   Visible = True
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
-  PixelsPerInch = 144
-  TextHeight = 21
+  TextHeight = 13
   object Tray: TTrayIcon
     Hint = 'Avro Keyboard'
     BalloonFlags = bfInfo

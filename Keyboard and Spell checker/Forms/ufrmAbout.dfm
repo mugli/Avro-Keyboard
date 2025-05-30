@@ -1,18 +1,14 @@
 object frmAbout: TfrmAbout
   Left = 0
   Top = 0
-  Margins.Left = 5
-  Margins.Top = 5
-  Margins.Right = 5
-  Margins.Bottom = 5
   BorderStyle = bsNone
   Caption = 'About Avro Keyboard...'
-  ClientHeight = 570
-  ClientWidth = 972
+  ClientHeight = 380
+  ClientWidth = 648
   Color = clWhite
   Font.Charset = ANSI_CHARSET
   Font.Color = clWindowText
-  Font.Height = -17
+  Font.Height = -11
   Font.Name = 'Verdana'
   Font.Style = []
   Icon.Data = {
@@ -60,36 +56,26 @@ object frmAbout: TfrmAbout
     7575757575757575757575757505050505050505050505050505050505050000
     0000000000000000000000000000000000000000000000000000000000000000
     000000000000000000000000000000000000000000000000000000000000}
-  Position = poDesktopCenter
+  Position = poScreenCenter
   OnActivate = FormActivate
   OnClose = FormClose
   OnCreate = FormCreate
   OnPaint = FormPaint
   OnShow = FormShow
-  PixelsPerInch = 144
-  TextHeight = 20
+  TextHeight = 13
   object Shape1: TShape
     Left = 0
     Top = 0
-    Width = 938
-    Height = 474
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
+    Width = 625
+    Height = 316
     Brush.Style = bsClear
-    Pen.Width = 2
     Visible = False
   end
   object Image1: TImage
-    Left = 2
-    Top = 2
-    Width = 253
-    Height = 480
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
+    Left = 1
+    Top = 1
+    Width = 169
+    Height = 320
     Picture.Data = {
       07544269746D6170AE5B0200424DAE5B0200000000003600000028000000A400
       00003A0100000100180000000000785B0200120B0000120B0000000000000000
@@ -4924,180 +4910,132 @@ object frmAbout: TfrmAbout
     Stretch = True
   end
   object Label1: TLabel
-    Left = 267
-    Top = 12
-    Width = 239
-    Height = 35
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
+    Left = 178
+    Top = 8
+    Width = 157
+    Height = 23
     Caption = 'Avro Keyboard'
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
-    Font.Height = -29
+    Font.Height = -19
     Font.Name = 'Verdana'
     Font.Style = [fsBold]
     ParentFont = False
   end
   object Label2: TLabel
-    Left = 267
-    Top = 47
-    Width = 71
-    Height = 20
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
+    Left = 178
+    Top = 31
+    Width = 47
+    Height = 13
     Caption = 'Version:'
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
-    Font.Height = -17
+    Font.Height = -11
     Font.Name = 'Verdana'
     Font.Style = []
     ParentFont = False
   end
   object LabelVersion: TLabel
-    Left = 348
-    Top = 47
-    Width = 154
-    Height = 20
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
+    Left = 232
+    Top = 31
+    Width = 101
+    Height = 13
     Caption = '5.0.0.1 (Portable)'
   end
   object Label4: TLabel
-    Left = 266
-    Top = 386
-    Width = 107
-    Height = 20
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
+    Left = 177
+    Top = 257
+    Width = 71
+    Height = 13
     Caption = 'Copyright '#169
   end
   object Label5: TLabel
-    Left = 267
-    Top = 357
-    Width = 259
-    Height = 20
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
+    Left = 178
+    Top = 238
+    Width = 170
+    Height = 13
     Caption = 'This product is licensed under'
   end
   object Label_License: TLabel
-    Left = 531
-    Top = 357
-    Width = 262
-    Height = 20
+    Left = 354
+    Top = 238
+    Width = 174
+    Height = 13
     Cursor = crHandPoint
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
     Caption = 'MOZILLA PUBLIC LICENSE 2.0'
     Font.Charset = ANSI_CHARSET
     Font.Color = clBlue
-    Font.Height = -17
+    Font.Height = -11
     Font.Name = 'Verdana'
     Font.Style = [fsUnderline]
     ParentFont = False
     OnClick = Label_LicenseClick
   end
   object Label8: TLabel
-    Left = 494
-    Top = 386
-    Width = 174
-    Height = 20
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
+    Left = 329
+    Top = 257
+    Width = 115
+    Height = 13
     Caption = 'All Rights Reserved.'
   end
   object Label_OmicronLab: TLabel
-    Left = 377
-    Top = 386
-    Width = 108
-    Height = 20
+    Left = 251
+    Top = 257
+    Width = 72
+    Height = 13
     Cursor = crHandPoint
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
     Caption = 'OmicronLab.'
     Font.Charset = ANSI_CHARSET
     Font.Color = clBlue
-    Font.Height = -17
+    Font.Height = -11
     Font.Name = 'Verdana'
     Font.Style = [fsUnderline]
     ParentFont = False
     OnClick = Label_OmicronLabClick
   end
   object lblText: TLabel
-    Left = 693
-    Top = 483
-    Width = 37
-    Height = 20
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
+    Left = 462
+    Top = 322
+    Width = 24
+    Height = 13
     Caption = 'sdfd'
     Visible = False
   end
   object Label_Update: TLabel
-    Left = 509
-    Top = 47
-    Width = 119
-    Height = 20
+    Left = 339
+    Top = 31
+    Width = 80
+    Height = 13
     Cursor = crHandPoint
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
     Caption = 'Check Update'
     Font.Charset = ANSI_CHARSET
     Font.Color = clBlue
-    Font.Height = -17
+    Font.Height = -11
     Font.Name = 'Verdana'
     Font.Style = [fsUnderline]
     ParentFont = False
     OnClick = Label_UpdateClick
   end
   object pbScrollBox: TImage
-    Left = 265
-    Top = 80
-    Width = 670
-    Height = 268
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
+    Left = 177
+    Top = 53
+    Width = 446
+    Height = 179
     ParentShowHint = False
     ShowHint = False
     OnMouseEnter = pbScrollBoxMouseEnter
     OnMouseLeave = pbScrollBoxMouseLeave
   end
   object LabelViewCredit: TLabel
-    Left = 267
-    Top = 357
-    Width = 99
-    Height = 20
+    Left = 178
+    Top = 238
+    Width = 66
+    Height = 13
     Cursor = crHandPoint
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
     Caption = 'View Credit'
     Font.Charset = ANSI_CHARSET
     Font.Color = clBlue
-    Font.Height = -17
+    Font.Height = -11
     Font.Name = 'Verdana'
     Font.Style = [fsUnderline]
     ParentFont = False
@@ -5105,14 +5043,10 @@ object frmAbout: TfrmAbout
     OnClick = LabelViewCreditClick
   end
   object Image2: TImage
-    Left = 878
-    Top = 12
-    Width = 57
-    Height = 65
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
+    Left = 585
+    Top = 8
+    Width = 38
+    Height = 43
     Picture.Data = {
       055449636F6E0000010001002020000001002000A81000001600000028000000
       2000000040000000010020000000000080100000000000000000000000000000
@@ -5251,28 +5185,20 @@ object frmAbout: TfrmAbout
       00000000}
   end
   object Label3: TLabel
-    Left = 267
-    Top = 434
-    Width = 130
-    Height = 20
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
+    Left = 178
+    Top = 289
+    Width = 87
+    Height = 13
     Caption = 'Data directory:'
   end
   object MemoLicense: TMemo
-    Left = 267
-    Top = 81
-    Width = 659
-    Height = 267
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
+    Left = 178
+    Top = 54
+    Width = 439
+    Height = 178
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
-    Font.Height = -17
+    Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = []
     Lines.Strings = (
@@ -6019,14 +5945,10 @@ object frmAbout: TfrmAbout
     WordWrap = False
   end
   object ButtonClose: TButton
-    Left = 792
-    Top = 423
-    Width = 134
-    Height = 38
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
+    Left = 528
+    Top = 282
+    Width = 89
+    Height = 25
     Cancel = True
     Caption = 'Close'
     Default = True
@@ -6034,14 +5956,10 @@ object frmAbout: TfrmAbout
     OnClick = ButtonCloseClick
   end
   object Credit: TMemo
-    Left = -6
-    Top = 491
-    Width = 501
-    Height = 60
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
+    Left = -4
+    Top = 327
+    Width = 334
+    Height = 40
     Lines.Strings = (
       'People behind this incredible product...'
       ''
@@ -6183,14 +6101,10 @@ object frmAbout: TfrmAbout
     WordWrap = False
   end
   object EditDataDirectory: TEdit
-    Left = 407
-    Top = 429
-    Width = 363
-    Height = 28
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
+    Left = 271
+    Top = 286
+    Width = 242
+    Height = 21
     BevelEdges = []
     BevelInner = bvNone
     BevelOuter = bvNone

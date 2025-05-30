@@ -91,6 +91,7 @@ type
       function ShouldFollowCaret(hforewnd: HWND): Boolean;
       procedure ToggleFollowCaret();
       procedure TurnOffFollowingCaret();
+      procedure RefreshPinIcon();
 
       procedure MoveWindow(X, Y: Integer);
     public
@@ -241,22 +242,7 @@ end;
 { =============================================================================== }
 
 procedure TfrmPrevW.MoveWindow(X, Y: Integer);
-var
-  ScrW, ScrH: Integer;
 begin
-  ScrW := Screen.Width;
-  ScrH := Screen.Height;
-
-  // Check Y pos
-  if Y + self.Height > ScrH then
-    Y := Y - self.Height;
-
-  // Check X pos
-  if X < 0 then
-    X := 0
-  else if X + self.Width > ScrW then
-    X := ScrW - self.Width;
-
   self.Top := Y;
   self.Left := X;
 end;
@@ -330,13 +316,8 @@ end;
 
 { =============================================================================== }
 
-procedure TfrmPrevW.ToggleFollowCaret();
+procedure TfrmPrevW.RefreshPinIcon();
 begin
-  if FollowCaretByDefault = 'YES' then
-    FollowCaretByDefault := 'NO'
-  else
-    FollowCaretByDefault := 'YES';
-
   if FollowCaretByDefault = 'YES' then
     imgPin.Picture := imgPinClose.Picture
   else
@@ -345,10 +326,22 @@ end;
 
 { =============================================================================== }
 
+procedure TfrmPrevW.ToggleFollowCaret();
+begin
+  if FollowCaretByDefault = 'YES' then
+    FollowCaretByDefault := 'NO'
+  else
+    FollowCaretByDefault := 'YES';
+
+  RefreshPinIcon();
+end;
+
+{ =============================================================================== }
+
 procedure TfrmPrevW.TurnOffFollowingCaret();
 begin
   FollowCaretByDefault := 'NO';
-  imgPin.Picture := imgPinOpen.Picture;
+  RefreshPinIcon();
 end;
 
 { =============================================================================== }
@@ -440,7 +433,7 @@ begin
   lblPreview.Caption := '';
 
   MouseDown := False;
-
+  RefreshPinIcon();
   DelayedExecute(200, InitPreviewWindowAtAppStart);
   HidePreview;
 end;
