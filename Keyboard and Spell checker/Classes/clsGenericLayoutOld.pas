@@ -43,9 +43,9 @@ type
       procedure SetLastChar(const wChar: string);
       procedure DeleteLastCharSteps_Ex(StepCount: Integer);
       procedure ResetLastChar;
-      function MyProcessVKeyDown(const KeyCode: Integer; var Block: Boolean; const var_IfShift, var_IfTrueShift, var_IfAltGr: Boolean): string;
-      procedure MyProcessVKeyUP(const KeyCode: Integer; var Block: Boolean; const var_IfShift: Boolean; const var_IfTrueShift: Boolean;
-        const var_IfAltGr: Boolean);
+      function MyProcessVKeyDown(const KeyCode: Integer; var Block: Boolean; const var_IsLogicalShift, var_IsTrueShift, var_IsAltGr: Boolean): string;
+      procedure MyProcessVKeyUP(const KeyCode: Integer; var Block: Boolean; const var_IsLogicalShift: Boolean; const var_IsTrueShift: Boolean;
+        const var_IsAltGr: Boolean);
       procedure ResetAllKarsToInactive;
     public
       constructor Create;           // Initializer
@@ -276,7 +276,7 @@ end;
 {$HINTS ON}
 { =============================================================================== }
 
-function TGenericLayoutOld.MyProcessVKeyDown(const KeyCode: Integer; var Block: Boolean; const var_IfShift, var_IfTrueShift, var_IfAltGr: Boolean): string;
+function TGenericLayoutOld.MyProcessVKeyDown(const KeyCode: Integer; var Block: Boolean; const var_IsLogicalShift, var_IsTrueShift, var_IsAltGr: Boolean): string;
 var
   CharForKey, tmpString, PendingKar: string;
 begin
@@ -290,7 +290,7 @@ begin
   end
   else if AvroMainForm1.GetMyCurrentKeyboardMode = bangla then
   begin
-    CharForKey := GetCharForKey(KeyCode, var_IfShift, var_IfTrueShift, var_IfAltGr);
+    CharForKey := GetCharForKey(KeyCode, var_IsLogicalShift, var_IsTrueShift, var_IsAltGr);
 
     if LastChar = b_Hasanta then
     begin
@@ -696,7 +696,7 @@ end;
 
 { =============================================================================== }
 
-procedure TGenericLayoutOld.MyProcessVKeyUP(const KeyCode: Integer; var Block: Boolean; const var_IfShift, var_IfTrueShift, var_IfAltGr: Boolean);
+procedure TGenericLayoutOld.MyProcessVKeyUP(const KeyCode: Integer; var Block: Boolean; const var_IsLogicalShift, var_IsTrueShift, var_IsAltGr: Boolean);
 var
   CharForKey: string;
 begin
@@ -707,7 +707,7 @@ begin
   end
   else if AvroMainForm1.GetMyCurrentKeyboardMode = bangla then
   begin
-    CharForKey := GetCharForKey(KeyCode, var_IfShift, var_IfTrueShift, var_IfAltGr);
+    CharForKey := GetCharForKey(KeyCode, var_IsLogicalShift, var_IsTrueShift, var_IsAltGr);
 
     if CharForKey = '' then
     begin
@@ -798,21 +798,21 @@ var
 begin
   m_Block := False;
 
-  if (IfWinKey = True) or (IfOnlyCtrlKey = True) or (IfOnlyLeftAltKey = True) then
+  if (IsWinKey = True) or (IsOnlyCtrlKey = True) or (IsOnlyLeftAltKey = True) then
   begin
     Block := False;
     ProcessVKeyDown := '';
     Exit;
   end;
 
-  if IfIgnorableModifierKey(KeyCode) then
+  if IsIgnorableModifierKey(KeyCode) then
   begin
     Block := False;
     ProcessVKeyDown := '';
     Exit;
   end;
 
-  m_Str := MyProcessVKeyDown(KeyCode, m_Block, IfShift, IfTrueShift, IfAltGr);
+  m_Str := MyProcessVKeyDown(KeyCode, m_Block, IsLogicalShift, IsTrueShift, IsAltGr);
   if m_Str <> '' then
   begin
     m_Block := True;
@@ -831,13 +831,13 @@ end;
 
 procedure TGenericLayoutOld.ProcessVKeyUP(const KeyCode: Integer; var Block: Boolean);
 begin
-  if (IfWinKey = True) or (IfOnlyCtrlKey = True) or (IfOnlyLeftAltKey = True) then
+  if (IsWinKey = True) or (IsOnlyCtrlKey = True) or (IsOnlyLeftAltKey = True) then
   begin
     Block := False;
     Exit;
   end;
 
-  if IfIgnorableModifierKey(KeyCode) = True then
+  if IsIgnorableModifierKey(KeyCode) = True then
   begin
     Block := False;
     Exit;
@@ -849,7 +849,7 @@ begin
   // Block = False
   // End If
 
-  MyProcessVKeyUP(KeyCode, Block, IfShift, IfTrueShift, IfAltGr);
+  MyProcessVKeyUP(KeyCode, Block, IsLogicalShift, IsTrueShift, IsAltGr);
 end;
 
 { =============================================================================== }

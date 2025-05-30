@@ -35,7 +35,7 @@ function LoadLayout(const LayoutPath: string): Boolean;
 function Init_KeyboardLayout(const KeyboardLayoutName: string): Boolean;
 procedure Destroy_KeyboardLayoutData;
 procedure Init_KeyboardLayoutData;
-function GetCharForKey(const KeyCode: Integer; const var_IfShift, var_IfTrueShift, var_IfAltGr: Boolean): string;
+function GetCharForKey(const KeyCode: Integer; const var_IsLogicalShift, var_IsTrueShift, var_IsAltGr: Boolean): string;
 procedure ShowLayoutDescription(const LayoutPath: string);
 procedure LoadKeyboardLayoutNames;
 procedure LoadKeyboardLayoutImages(const LayoutPath: string; var Pic_LayoutNormal: TBitmap; var Pic_LayoutAltGr: TBitmap);
@@ -54,7 +54,7 @@ uses
 
 { =============================================================================== }
 
-function GetCharForKey(const KeyCode: Integer; const var_IfShift, var_IfTrueShift, var_IfAltGr: Boolean): string;
+function GetCharForKey(const KeyCode: Integer; const var_IsLogicalShift, var_IsTrueShift, var_IsAltGr: Boolean): string;
 var
   KC_Key: string;
 begin
@@ -204,7 +204,7 @@ begin
   begin
     if NumPadBangla = 'YES' then
     begin
-      if (var_IfShift = False) and (var_IfTrueShift = False) and (var_IfAltGr = False) then
+      if (var_IsLogicalShift = False) and (var_IsTrueShift = False) and (var_IsAltGr = False) then
       begin
         // In Numpad, no modifier is allowed for Bangla Layout
         GetCharForKey := KeyData.Items[KC_Key];
@@ -227,7 +227,7 @@ begin
   if (KC_Key = '1') or (KC_Key = '2') or (KC_Key = '3') or (KC_Key = '4') or (KC_Key = '5') or (KC_Key = '6') or (KC_Key = '7') or (KC_Key = '8') or
     (KC_Key = '9') or (KC_Key = '0') or (Pos('OEM', KC_Key) > 0) then
   begin
-    if (var_IfTrueShift = False) and (var_IfAltGr = False) then
+    if (var_IsTrueShift = False) and (var_IsAltGr = False) then
     begin
       // In OEM Keys, Capslock has no value
       // Normal State
@@ -235,21 +235,21 @@ begin
       GetCharForKey := KeyData.Items[KC_Key];
       Exit;
     end
-    else if (var_IfTrueShift = True) and (var_IfAltGr = False) then
+    else if (var_IsTrueShift = True) and (var_IsAltGr = False) then
     begin
       // True Shift State
       KC_Key := KC_Key + '_Shift';
       GetCharForKey := KeyData.Items[KC_Key];
       Exit;
     end
-    else if (var_IfTrueShift = False) and (var_IfAltGr = True) then
+    else if (var_IsTrueShift = False) and (var_IsAltGr = True) then
     begin
       // AltGr state
       KC_Key := KC_Key + '_AltGr';
       GetCharForKey := KeyData.Items[KC_Key];
       Exit;
     end
-    else if (var_IfTrueShift = True) and (var_IfAltGr = True) then
+    else if (var_IsTrueShift = True) and (var_IsAltGr = True) then
     begin
       // Shift+AltGr state
       KC_Key := KC_Key + '_ShiftAltGr';
@@ -259,33 +259,33 @@ begin
   end;
 
   // Process Alpha Keys
-  if (var_IfShift = False) and (var_IfAltGr = False) then
+  if (var_IsLogicalShift = False) and (var_IsAltGr = False) then
   begin
     // All Normal
     KC_Key := KC_Key + '_Normal';
     GetCharForKey := KeyData.Items[KC_Key];
     Exit;
   end
-  else if (var_IfShift = True) and (var_IfAltGr = False) then
+  else if (var_IsLogicalShift = True) and (var_IsAltGr = False) then
   begin
     // Shift State
     KC_Key := KC_Key + '_Shift';
     GetCharForKey := KeyData.Items[KC_Key];
     Exit;
   end
-  else if (var_IfShift = False) and (var_IfAltGr = True) then
+  else if (var_IsLogicalShift = False) and (var_IsAltGr = True) then
   begin
     // AltGr State
     KC_Key := KC_Key + '_AltGr';
-    // Debug.Print 'KeyName is:' & KC_Key & ' AltGr=' & var_IfAltGr
+    // Debug.Print 'KeyName is:' & KC_Key & ' AltGr=' & var_IsAltGr
     GetCharForKey := KeyData.Items[KC_Key];
     Exit;
   end
-  else if (var_IfShift = True) and (var_IfAltGr = True) then
+  else if (var_IsLogicalShift = True) and (var_IsAltGr = True) then
   begin
     // Shift+AltGr State
     KC_Key := KC_Key + '_ShiftAltGr';
-    // Debug.Print 'KeyName is:' & KC_Key & ' AltGr=' & var_IfAltGr
+    // Debug.Print 'KeyName is:' & KC_Key & ' AltGr=' & var_IsAltGr
     GetCharForKey := KeyData.Items[KC_Key];
     Exit;
   end;

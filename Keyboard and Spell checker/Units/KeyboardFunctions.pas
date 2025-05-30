@@ -15,40 +15,29 @@ uses
   Windows,
   SysUtils;
 
-procedure TurnOffKey(const vkKey: Integer);
 procedure Backspace(KeyRepeat: Integer = 1);
 procedure SendKey_Char(const Keytext: string);
 procedure SendKey_SendInput(const bKey: Integer);
 procedure SendInput_UP(const bKey: Integer);
 procedure SendInput_Down(const bKey: Integer);
 procedure SendKey_Basic(const Unikey: Integer);
-function IfShift: Boolean;
-function IfTrueShift: Boolean;
-function IfOnlyShift: Boolean;
-function IfTrueShift_R: Boolean;
-function IfTrueShift_L: Boolean;
-function IfAltGr: Boolean;
-function IfControl: Boolean;
-function IfAlter: Boolean;
-function IfWinKey: Boolean;
-function IfOnlyLeftAltKey: Boolean;
-function IfOnlyCtrlKey: Boolean;
-function IfIgnorableModifierKey(const KeyCode: Integer): Boolean;
-
-procedure RevertCtrlStates;
-procedure RevertAltStates;
-
-var
-  // Alter states
-  RightAlterKeyDown:   Boolean;
-  LeftAlterKeyDown:    Boolean;
-  GeneralAlterKeyDown: Boolean;
-  // Control states
-  RightCtrlKeyDown:   Boolean;
-  LeftCtrlKeyDown:    Boolean;
-  GeneralCtrlKeyDown: Boolean;
+function IsLogicalShift: Boolean;
+function IsTrueShift: Boolean;
+function IsOnlyShift: Boolean;
+function IsTrueShift_R: Boolean;
+function IsTrueShift_L: Boolean;
+function IsAltGr: Boolean;
+function IsControl: Boolean;
+function IsAlter: Boolean;
+function IsWinKey: Boolean;
+function IsOnlyLeftAltKey: Boolean;
+function IsOnlyCtrlKey: Boolean;
+function IsIgnorableModifierKey(const KeyCode: Integer): Boolean;
 
 implementation
+
+uses
+  DebugLog;
 
 { =============================================================================== }
 
@@ -58,10 +47,18 @@ const
 
   { =========================================================================== }
 
-function IfIgnorableModifierKey(const KeyCode: Integer): Boolean;
+function IsIgnorableModifierKey(const KeyCode: Integer): Boolean;
 begin
   case KeyCode of
-    VK_LWIN, VK_LSHIFT, VK_LCONTROL, VK_LMENU, VK_PACKET, VK_NUMLOCK, VK_CAPITAL, VK_MENU, VK_CONTROL, VK_SHIFT, VK_RWIN, VK_RSHIFT, VK_RMENU, VK_RCONTROL:
+    VK_LWIN, VK_RWIN:
+      Result := True;
+    VK_PACKET, VK_NUMLOCK, VK_CAPITAL:
+      Result := True;
+    VK_LSHIFT, VK_SHIFT, VK_RSHIFT:
+      Result := True;
+    VK_CONTROL, VK_RCONTROL, VK_LCONTROL:
+      Result := True;
+    VK_LMENU, VK_MENU, VK_RMENU:
       Result := True;
     else
       Result := False;
@@ -70,243 +67,103 @@ end;
 
 { =============================================================================== }
 
-{$HINTS Off}
-
-function IfOnlyCtrlKey: Boolean;
+function IsKeyDown(aVKCode: Integer): Boolean;
 begin
-  Result := False;
-  if (IfControl = True) and (RightAlterKeyDown = False) and (GeneralAlterKeyDown = False) and (LeftAlterKeyDown = False) then
-    Result := True
-  else
-    Result := False;
+  Result := (GetAsyncKeyState(aVKCode) and $8000) <> 0;
 end;
-{$HINTS On}
-{$HINTS Off}
 
-function IfOnlyLeftAltKey: Boolean;
-{ Var
-  LAlter                   : Boolean;
-  keyState                 : Integer; }
-begin
-  Result := False;
-  {
-    LAlter := False;
-    keyState := GetKeyState(VK_LMENU);
-    If keyState And 128 = 128 Then LAlter := True;
-
-    If (IfControl = False) And (LAlter = True) Then
-    Result := True
-    Else
-    Result := False;
-  }
-  if (IfControl = False) and (LeftAlterKeyDown = True) then
-    Result := True
-  else
-    Result := False;
-
-end;
-{$HINTS On}
 { =============================================================================== }
 
-{$HINTS Off}
-
-function IfWinKey: Boolean;
+function IsKeyToggledOn(aVKCode: Integer): Boolean;
 var
-  LWin, RWin: Boolean;
-  keyState:   Integer;
+  keyState: SmallInt;
 begin
-  Result := False;
-  LWin := False;
-  RWin := False;
-
-  keyState := GetKeyState(VK_LWIN);
-  if keyState and 128 = 128 then
-    LWin := True;
-  keyState := GetKeyState(VK_RWIN);
-  if keyState and 128 = 128 then
-    RWin := True;
-
-  if (LWin = True) or (RWin = True) then
-    Result := True
-  else
-    Result := False;
+  keyState := GetKeyState(aVKCode);
+  Result := (keyState and $0001) <> 0; // Check the low-order bit for toggle state
 end;
-{$HINTS On}
+
 { =============================================================================== }
 
-{$HINTS Off}
-
-function IfAlter: Boolean;
-{ Var
-  LAlter, RAlter           : Boolean;
-  keyState                 : Integer; }
+function IsOnlyCtrlKey: Boolean;
 begin
-  Result := False;
-  { LAlter := False;
-    RAlter := False;
-
-    keyState := GetKeyState(VK_LMENU);
-    If keyState And 128 = 128 Then LAlter := True;
-    keyState := GetKeyState(VK_RMENU);
-    If keyState And 128 = 128 Then RAlter := True;
-
-    If (LAlter = true) Or (RAlter = true) Then
-    Result := True
-    Else
-    Result := False; }
-
-  if (RightAlterKeyDown = True) or (LeftAlterKeyDown = True) or (GeneralAlterKeyDown = True) then
-    Result := True
-  else
-    Result := False;
+  Result := IsKeyDown(VK_CONTROL) and (not IsKeyDown(VK_MENU));
 end;
-{$HINTS On}
-{ =============================================================================== }
-{$HINTS Off}
 
-function IfControl: Boolean;
+{ =============================================================================== }
+
+function IsOnlyLeftAltKey: Boolean;
+begin
+  Result := (not IsKeyDown(VK_CONTROL)) and IsKeyDown(VK_LMENU);
+end;
+
+{ =============================================================================== }
+
+function IsWinKey: Boolean;
+begin
+  Result := IsKeyDown(VK_LWIN) or IsKeyDown(VK_RWIN);
+end;
+
+{ =============================================================================== }
+
+function IsAlter: Boolean;
+begin
+  Result := IsKeyDown(VK_MENU);
+end;
+
+{ =============================================================================== }
+
+function IsControl: Boolean;
+begin
+  Result := IsKeyDown(VK_CONTROL);
+end;
+
+{ =============================================================================== }
+
+function IsAltGr: Boolean;
+begin
+  Result := (IsKeyDown(VK_LCONTROL) and IsKeyDown(VK_LMENU)) or IsKeyDown(VK_RMENU);
+  Log('IsAltGr: ' + BoolToStr(Result, True));
+end;
+
+{ =============================================================================== }
+
+function IsOnlyShift: Boolean;
+begin
+  Result := IsKeyDown(VK_SHIFT);
+end;
+
+{ =============================================================================== }
+
+function IsTrueShift_L: Boolean;
+begin
+  Result := IsKeyDown(VK_LSHIFT);
+end;
+
+{ =============================================================================== }
+
+function IsTrueShift_R: Boolean;
+begin
+  Result := IsKeyDown(VK_RSHIFT);
+end;
+
+{ =============================================================================== }
+
+function IsTrueShift: Boolean;
+begin
+  Result := IsKeyDown(VK_SHIFT);
+end;
+
+{ =============================================================================== }
+
+function IsLogicalShift: Boolean;
 var
-  LControl, RControl: Boolean;
-  keyState:           Integer;
+  isPhysicalShiftPressed, isCapsToggledActuallyOn: Boolean;
 begin
-  Result := False;
-  LControl := False;
-  RControl := False;
+  isPhysicalShiftPressed := IsTrueShift;
+  isCapsToggledActuallyOn := IsKeyToggledOn(VK_CAPITAL);
 
-  keyState := GetKeyState(VK_LCONTROL);
-  if keyState and 128 = 128 then
-    LControl := True;
-  keyState := GetKeyState(VK_RCONTROL);
-  if keyState and 128 = 128 then
-    RControl := True;
-
-  if (LControl = True) or (RControl = True) then
-    Result := True
-  else
-    Result := False;
-end;
-{$HINTS On}
-{ =============================================================================== }
-{$HINTS Off}
-
-function IfAltGr: Boolean;
-begin
-  Result := False;
-  { If (IfControl = True) And (IfAlter = True) Then
-    Result := True
-    Else If RightAlterKeyDown = True Then
-    Result := True
-    Else
-    Result := False;
-  }
-  if (LeftCtrlKeyDown = True) and (LeftAlterKeyDown = True) then
-    Result := True
-  else if (RightAlterKeyDown = True) then
-    Result := True
-  else
-    Result := False;
-end;
-{$HINTS On}
-{ =============================================================================== }
-{$HINTS Off}
-
-function IfOnlyShift: Boolean;
-var
-  keyState: Integer;
-begin
-  Result := False;
-  keyState := GetKeyState(VK_SHIFT);
-  if keyState and 128 = 128 then
-    Result := True
-  else
-    Result := False;
-end;
-{$HINTS On}
-{ =============================================================================== }
-{$HINTS Off}
-
-function IfTrueShift_L: Boolean;
-var
-  keyState: Integer;
-begin
-  Result := False;
-  keyState := GetKeyState(VK_LSHIFT);
-  if keyState and 128 = 128 then
-    Result := True
-  else
-    Result := False;
-end;
-{$HINTS On}
-{ =============================================================================== }
-{$HINTS Off}
-
-function IfTrueShift_R: Boolean;
-var
-  keyState: Integer;
-begin
-  Result := False;
-  keyState := GetKeyState(VK_RSHIFT);
-  if keyState and 128 = 128 then
-    Result := True
-  else
-    Result := False;
-
-end;
-{$HINTS On}
-{ =============================================================================== }
-{$HINTS Off}
-
-function IfTrueShift: Boolean;
-begin
-  Result := False;
-  if (IfTrueShift_R = True) or (IfTrueShift_L = True) then
-    Result := True
-  else
-    Result := False;
-end;
-{$HINTS On}
-{ =============================================================================== }
-{$HINTS Off}
-
-function IfShift: Boolean;
-var
-  bShift, bCapslock: Boolean;
-  keyState:          Integer;
-begin
-  Result := False;
-  bShift := False;
-  bCapslock := False;
-
-  if (IfTrueShift_R = True) or (IfTrueShift_L = True) then
-    bShift := True
-  else
-    bShift := False;
-
-  keyState := GetKeyState(VK_CAPITAL);
-  if keyState and $01 <> 0 then
-    bCapslock := True
-  else
-    bCapslock := False;
-
-  if (bShift = True) and (bCapslock = True) then
-    Result := False
-  else if (bShift = True) and (bCapslock = False) then
-    Result := True
-  else if (bCapslock = True) and (bShift = False) then
-    Result := True
-  else if (bShift = False) and (bCapslock = False) then
-    Result := False;
-end;
-{$HINTS On}
-{ =============================================================================== }
-
-procedure TurnOffKey(const vkKey: Integer);
-var
-  KBState: TKeyboardState;
-begin
-  GetKeyboardState(KBState);
-  KBState[vkKey] := 0;
-  SetKeyboardState(KBState);
+  // Effective shift state is true if (physical shift is pressed XOR caps lock is on)
+  Result := isPhysicalShiftPressed xor isCapsToggledActuallyOn;
 end;
 
 { =============================================================================== }
@@ -319,19 +176,12 @@ begin
   if KeyRepeat <= 0 then
     KeyRepeat := 1;
 
-  if RightCtrlKeyDown = True then
-    SendInput_UP(VK_RCONTROL);
-  if LeftCtrlKeyDown = True then
-    SendInput_UP(VK_LCONTROL);
-
   for I := 1 to KeyRepeat do
   begin
     SendKey_SendInput(VK_Back);
     SendKey_SendInput(VK_NONAME); // Hack: Unused key to try to avoid key buffering issue (deleting too much)
     Sleep(SENDKEY_DELAY_MS);      // Add a small delay to allow processing
   end;
-
-  RevertCtrlStates;
 end;
 
 { =============================================================================== }
@@ -340,11 +190,14 @@ procedure SendKey_Char(const Keytext: string);
 var
   I: Integer;
 begin
+  Log('SendKey_Char: ' + Keytext);
+
   for I := 1 to Length(Keytext) do
   begin
     SendKey_Basic(Ord(Keytext[I]));
     SendKey_SendInput(VK_NONAME); // Hack: Unused key to try to avoid key buffering issue
   end;
+
 end;
 
 { =============================================================================== }
@@ -420,37 +273,5 @@ begin
 
   SendInput(2, KInput[0], SizeOf(KInput[0]));
 end;
-
-procedure RevertAltStates;
-begin
-  if RightAlterKeyDown = True then
-    SendInput_Down(VK_RMENU);
-  if LeftAlterKeyDown = True then
-    SendInput_Down(VK_LMENU);
-  // If GeneralAlterKeyDown = True Then SendInput_Down(VK_MENU);
-end;
-
-procedure RevertCtrlStates;
-begin
-  if RightCtrlKeyDown = True then
-    SendInput_Down(VK_RCONTROL);
-  if LeftCtrlKeyDown = True then
-    SendInput_Down(VK_LCONTROL);
-  // If GeneralCtrlKeyDown = True Then SendInput_Down(VK_CONTROL);
-end;
-
-
-// ------------------------------------------------------------------------------
-
-initialization
-
-// Alter states
-RightAlterKeyDown := False;
-LeftAlterKeyDown := False;
-GeneralAlterKeyDown := False;
-// Control states
-RightCtrlKeyDown := False;
-LeftCtrlKeyDown := False;
-GeneralCtrlKeyDown := False;
 
 end.
