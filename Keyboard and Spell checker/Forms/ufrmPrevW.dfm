@@ -8,12 +8,12 @@ object frmPrevW: TfrmPrevW
   AlphaBlend = True
   BorderIcons = []
   BorderStyle = bsNone
-  ClientHeight = 452
-  ClientWidth = 404
+  ClientHeight = 301
+  ClientWidth = 269
   Color = clInfoBk
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -17
+  Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
   Icon.Data = {
@@ -64,31 +64,21 @@ object frmPrevW: TfrmPrevW
   Position = poDesigned
   OnClose = FormClose
   OnCreate = FormCreate
-  PixelsPerInch = 144
-  TextHeight = 21
+  TextHeight = 13
   object Shape1: TShape
     Left = 0
     Top = 0
-    Width = 374
-    Height = 416
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
+    Width = 249
+    Height = 277
     Brush.Style = bsClear
     Pen.Style = psDot
-    Pen.Width = 2
   end
   object ImgTitleBar: TImage
-    Left = 12
-    Top = 266
-    Width = 374
-    Height = 36
+    Left = 8
+    Top = 177
+    Width = 249
+    Height = 24
     Cursor = crMultiDrag
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
     Picture.Data = {
       0954474946496D61676547494638396158011700A20000F9FCF97F837FD4D7D4
       BDC1BDDBDFDDE5E9E5FFFFFFEEF2EE21F90400000000002C0000000058011700
@@ -146,20 +136,16 @@ object frmPrevW: TfrmPrevW
     OnMouseUp = ImgTitleBarMouseUp
   end
   object lblCaption: TLabel
-    Left = 234
-    Top = 237
-    Width = 140
-    Height = 20
+    Left = 156
+    Top = 158
+    Width = 93
+    Height = 13
     Cursor = crMultiDrag
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
     Caption = 'Preview Window'
     Color = clInfoBk
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
-    Font.Height = -17
+    Font.Height = -11
     Font.Name = 'Verdana'
     Font.Style = []
     ParentColor = False
@@ -172,8 +158,8 @@ object frmPrevW: TfrmPrevW
     OnMouseLeave = ButtonMouseLeave
   end
   object ImgButtonUp: TImage
-    Left = 48
-    Top = 198
+    Left = 32
+    Top = 132
     Width = 16
     Height = 16
     Margins.Left = 0
@@ -276,8 +262,8 @@ object frmPrevW: TfrmPrevW
     Visible = False
   end
   object ImgButtonOver: TImage
-    Left = 12
-    Top = 198
+    Left = 8
+    Top = 132
     Width = 16
     Height = 16
     Margins.Left = 0
@@ -334,8 +320,8 @@ object frmPrevW: TfrmPrevW
     Visible = False
   end
   object imgPinOpen: TImage
-    Left = 48
-    Top = 240
+    Left = 32
+    Top = 160
     Width = 16
     Height = 16
     Margins.Left = 0
@@ -392,8 +378,8 @@ object frmPrevW: TfrmPrevW
     Visible = False
   end
   object imgPinClose: TImage
-    Left = 12
-    Top = 240
+    Left = 8
+    Top = 160
     Width = 16
     Height = 16
     Margins.Left = 0
@@ -450,25 +436,21 @@ object frmPrevW: TfrmPrevW
     Visible = False
   end
   object lblPreview: TLabel
-    Left = 60
-    Top = 47
-    Width = 437
-    Height = 35
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
+    Left = 40
+    Top = 31
+    Width = 286
+    Height = 23
     Caption = 'lblPreviewILIlqqqasdsdfousdf'
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
-    Font.Height = -29
+    Font.Height = -19
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
   end
   object Button: TImage
-    Left = 275
-    Top = 186
+    Left = 183
+    Top = 124
     Width = 16
     Height = 16
     Margins.Left = 0
@@ -573,8 +555,8 @@ object frmPrevW: TfrmPrevW
     OnMouseUp = ButtonMouseUp
   end
   object imgPin: TImage
-    Left = 299
-    Top = 186
+    Left = 199
+    Top = 124
     Width = 16
     Height = 16
     Margins.Left = 0
@@ -631,21 +613,17 @@ object frmPrevW: TfrmPrevW
     OnClick = imgPinClick
   end
   object List: TListBox
-    Left = 2
-    Top = 83
-    Width = 370
-    Height = 331
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
+    Left = 1
+    Top = 55
+    Width = 247
+    Height = 221
     AutoComplete = False
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
-    Font.Height = -23
+    Font.Height = -15
     Font.Name = 'Siyam Rupali'
     Font.Style = []
-    ItemHeight = 36
+    ItemHeight = 24
     ParentFont = False
     TabOrder = 0
     OnClick = ListClick

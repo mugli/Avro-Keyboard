@@ -242,8 +242,12 @@ end;
 { =============================================================================== }
 
 procedure TfrmPrevW.MoveWindow(X, Y: Integer);
+const
+  // Adds a small 5-pixel gap. Adjust if you want.
+  VerticalOffset = 5;
 begin
-  self.Top := Y;
+  // Position the window above the text cursor by subtracting its own height
+  self.Top := Y - self.Height - VerticalOffset;
   self.Left := X;
 end;
 
