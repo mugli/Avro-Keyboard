@@ -13,7 +13,16 @@ interface
 
 uses
   Windows,
-  SysUtils;
+  SysUtils,
+  Classes;
+
+type
+  TKeyCombo = record
+    BaseKeyCode: Integer;
+    RequireCtrl: Boolean;
+    RequireShift: Boolean;
+    RequireAlt: Boolean;
+  end;
 
 procedure Backspace(KeyRepeat: Integer = 1);
 procedure SendKey_Char(const Keytext: string);
@@ -33,6 +42,9 @@ function IsWinKey: Boolean;
 function IsOnlyLeftAltKey: Boolean;
 function IsOnlyCtrlKey: Boolean;
 function IsIgnorableModifierKey(const KeyCode: Integer): Boolean;
+function ParseKeyCombo(const KeyComboStr: string): TKeyCombo;
+function MatchKeyCombo(const KeyComboStr: string; const PressedKeyCode: Integer;
+  const ImplicitShift: Boolean = False; const ImplicitCtrl: Boolean = False): Boolean;
 
 implementation
 
@@ -272,6 +284,120 @@ begin
   end;
 
   SendInput(2, KInput[0], SizeOf(KInput[0]));
+end;
+
+{ =============================================================================== }
+
+function ParseKeyCombo(const KeyComboStr: string): TKeyCombo;
+var
+  Parts: TStringList;
+  I: Integer;
+  KeyPart: string;
+begin
+  Result.BaseKeyCode := 0;
+  Result.RequireCtrl := False;
+  Result.RequireShift := False;
+  Result.RequireAlt := False;
+
+  Parts := TStringList.Create;
+  try
+    Parts.Delimiter := '+';
+    Parts.DelimitedText := KeyComboStr;
+
+    for I := 0 to Parts.Count - 1 do
+    begin
+      KeyPart := UpperCase(Trim(Parts[I]));
+
+      if KeyPart = 'CTRL' then
+        Result.RequireCtrl := True
+      else if KeyPart = 'SHIFT' then
+        Result.RequireShift := True
+      else if KeyPart = 'ALT' then
+        Result.RequireAlt := True
+      else if KeyPart = 'SPACE' then
+        Result.BaseKeyCode := VK_SPACE
+      else if KeyPart = 'F1' then
+        Result.BaseKeyCode := VK_F1
+      else if KeyPart = 'F2' then
+        Result.BaseKeyCode := VK_F2
+      else if KeyPart = 'F3' then
+        Result.BaseKeyCode := VK_F3
+      else if KeyPart = 'F4' then
+        Result.BaseKeyCode := VK_F4
+      else if KeyPart = 'F5' then
+        Result.BaseKeyCode := VK_F5
+      else if KeyPart = 'F6' then
+        Result.BaseKeyCode := VK_F6
+      else if KeyPart = 'F7' then
+        Result.BaseKeyCode := VK_F7
+      else if KeyPart = 'F8' then
+        Result.BaseKeyCode := VK_F8
+      else if KeyPart = 'F9' then
+        Result.BaseKeyCode := VK_F9
+      else if KeyPart = 'F10' then
+        Result.BaseKeyCode := VK_F10
+      else if KeyPart = 'F11' then
+        Result.BaseKeyCode := VK_F11
+      else if KeyPart = 'F12' then
+        Result.BaseKeyCode := VK_F12
+      else if KeyPart = '1' then
+        Result.BaseKeyCode := $31
+      else if KeyPart = '2' then
+        Result.BaseKeyCode := $32
+      else if KeyPart = '3' then
+        Result.BaseKeyCode := $33
+      else if KeyPart = '4' then
+        Result.BaseKeyCode := $34
+      else if KeyPart = '5' then
+        Result.BaseKeyCode := $35
+      else if KeyPart = '6' then
+        Result.BaseKeyCode := $36
+      else if KeyPart = '7' then
+        Result.BaseKeyCode := $37
+      else if KeyPart = '8' then
+        Result.BaseKeyCode := $38
+      else if KeyPart = '9' then
+        Result.BaseKeyCode := $39
+      else if KeyPart = '0' then
+        Result.BaseKeyCode := $30;
+    end;
+  finally
+    Parts.Free;
+  end;
+end;
+
+function MatchKeyCombo(const KeyComboStr: string; const PressedKeyCode: Integer;
+  const ImplicitShift: Boolean = False; const ImplicitCtrl: Boolean = False): Boolean;
+var
+  Combo: TKeyCombo;
+  CtrlPressed, ShiftPressed, AltPressed: Boolean;
+  RequireShift, RequireCtrl: Boolean;
+begin
+  Result := False;
+
+  Combo := ParseKeyCombo(KeyComboStr);
+
+  if Combo.BaseKeyCode = 0 then
+    Exit;
+
+  if PressedKeyCode <> Combo.BaseKeyCode then
+    Exit;
+
+  CtrlPressed := IsKeyDown(VK_CONTROL) or IsKeyDown(VK_LCONTROL) or IsKeyDown(VK_RCONTROL);
+  ShiftPressed := IsKeyDown(VK_SHIFT) or IsKeyDown(VK_LSHIFT) or IsKeyDown(VK_RSHIFT);
+  AltPressed := IsKeyDown(VK_MENU) or IsKeyDown(VK_LMENU) or IsKeyDown(VK_RMENU);
+
+  RequireShift := Combo.RequireShift or ImplicitShift;
+  RequireCtrl := Combo.RequireCtrl or ImplicitCtrl;
+
+  if RequireShift and not ShiftPressed then
+    Exit;
+  if RequireCtrl and not CtrlPressed then
+    Exit;
+  if Combo.RequireAlt and not AltPressed then
+    Exit;
+
+  Result := True;
 end;
 
 end.

@@ -501,7 +501,21 @@ object frmOptions: TfrmOptions
             'F10'
             'F11'
             'F12'
-            'Ctrl+Space')
+            'Ctrl+Space'
+            'Ctrl+Shift+Space'
+            'Ctrl+Shift+1'
+            'Ctrl+Shift+2'
+            'Ctrl+Shift+3'
+            'Ctrl+Shift+4'
+            'Ctrl+Shift+5'
+            'Ctrl+Shift+6'
+            'Ctrl+Shift+7'
+            'Ctrl+Shift+8'
+            'Ctrl+Shift+9'
+            'Ctrl+Shift+0'
+            'Alt+Shift'
+            'Alt+Space'
+            'Ctrl+Alt+Space')
         end
       end
       object GroupBox8: TGroupBox
@@ -566,7 +580,19 @@ object frmOptions: TfrmOptions
             'F9'
             'F10'
             'F11'
-            'F12')
+            'F12'
+            'Ctrl+Shift+1'
+            'Ctrl+Shift+2'
+            'Ctrl+Shift+3'
+            'Ctrl+Shift+4'
+            'Ctrl+Shift+5'
+            'Ctrl+Shift+6'
+            'Ctrl+Shift+7'
+            'Ctrl+Shift+8'
+            'Ctrl+Shift+9'
+            'Ctrl+Shift+0'
+            'Ctrl+Alt+1'
+            'Ctrl+Alt+2')
         end
       end
       object GroupBox9: TGroupBox
@@ -631,7 +657,22 @@ object frmOptions: TfrmOptions
             'F9'
             'F10'
             'F11'
-            'F12')
+            'F12'
+            'Ctrl+Shift+1'
+            'Ctrl+Shift+2'
+            'Ctrl+Shift+3'
+            'Ctrl+Shift+4'
+            'Ctrl+Shift+5'
+            'Ctrl+Shift+6'
+            'Ctrl+Shift+7'
+            'Ctrl+Shift+8'
+            'Ctrl+Shift+9'
+            'Ctrl+Shift+0'
+            'Ctrl+Alt+1'
+            'Ctrl+Alt+2'
+            'Alt+F1'
+            'Alt+F2'
+            'Alt+F3')
         end
       end
     end

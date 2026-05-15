@@ -498,15 +498,27 @@ begin
   // Keyboard Mode settings
   if not((ModeSwitchKey = 'F1') or (ModeSwitchKey = 'F2') or (ModeSwitchKey = 'F3') or (ModeSwitchKey = 'F4') or (ModeSwitchKey = 'F5') or
       (ModeSwitchKey = 'F6') or (ModeSwitchKey = 'F7') or (ModeSwitchKey = 'F8') or (ModeSwitchKey = 'F9') or (ModeSwitchKey = 'F10') or (ModeSwitchKey = 'F11')
-      or (ModeSwitchKey = 'F12') or (ModeSwitchKey = 'CTRL+SPACE')) then
+      or (ModeSwitchKey = 'F12') or (ModeSwitchKey = 'CTRL+SPACE') or (ModeSwitchKey = 'CTRL+SHIFT+SPACE') or (ModeSwitchKey = 'CTRL+SHIFT+1')
+      or (ModeSwitchKey = 'CTRL+SHIFT+2') or (ModeSwitchKey = 'CTRL+SHIFT+3') or (ModeSwitchKey = 'CTRL+SHIFT+4') or (ModeSwitchKey = 'CTRL+SHIFT+5')
+      or (ModeSwitchKey = 'CTRL+SHIFT+6') or (ModeSwitchKey = 'CTRL+SHIFT+7') or (ModeSwitchKey = 'CTRL+SHIFT+8') or (ModeSwitchKey = 'CTRL+SHIFT+9')
+      or (ModeSwitchKey = 'CTRL+SHIFT+0') or (ModeSwitchKey = 'ALT+SHIFT') or (ModeSwitchKey = 'ALT+SPACE') or (ModeSwitchKey = 'CTRL+ALT+SPACE')) then
     ModeSwitchKey := 'F12';
   if not((ToggleOutputModeKey = 'F1') or (ToggleOutputModeKey = 'F2') or (ToggleOutputModeKey = 'F3') or (ToggleOutputModeKey = 'F4') or
       (ToggleOutputModeKey = 'F5') or (ToggleOutputModeKey = 'F6') or (ToggleOutputModeKey = 'F7') or (ToggleOutputModeKey = 'F8') or
-      (ToggleOutputModeKey = 'F9') or (ToggleOutputModeKey = 'F10') or (ToggleOutputModeKey = 'F11') or (ToggleOutputModeKey = 'F12')) then
+      (ToggleOutputModeKey = 'F9') or (ToggleOutputModeKey = 'F10') or (ToggleOutputModeKey = 'F11') or (ToggleOutputModeKey = 'F12')
+      or (ToggleOutputModeKey = 'CTRL+SHIFT+1') or (ToggleOutputModeKey = 'CTRL+SHIFT+2') or (ToggleOutputModeKey = 'CTRL+SHIFT+3')
+      or (ToggleOutputModeKey = 'CTRL+SHIFT+4') or (ToggleOutputModeKey = 'CTRL+SHIFT+5') or (ToggleOutputModeKey = 'CTRL+SHIFT+6')
+      or (ToggleOutputModeKey = 'CTRL+SHIFT+7') or (ToggleOutputModeKey = 'CTRL+SHIFT+8') or (ToggleOutputModeKey = 'CTRL+SHIFT+9')
+      or (ToggleOutputModeKey = 'CTRL+SHIFT+0') or (ToggleOutputModeKey = 'CTRL+ALT+1') or (ToggleOutputModeKey = 'CTRL+ALT+2')) then
     ToggleOutputModeKey := 'F12';
   if not((SpellerLauncherKey = 'F1') or (SpellerLauncherKey = 'F2') or (SpellerLauncherKey = 'F3') or (SpellerLauncherKey = 'F4') or (SpellerLauncherKey = 'F5')
       or (SpellerLauncherKey = 'F6') or (SpellerLauncherKey = 'F7') or (SpellerLauncherKey = 'F8') or (SpellerLauncherKey = 'F9') or
-      (SpellerLauncherKey = 'F10') or (SpellerLauncherKey = 'F11') or (SpellerLauncherKey = 'F12')) then
+      (SpellerLauncherKey = 'F10') or (SpellerLauncherKey = 'F11') or (SpellerLauncherKey = 'F12')
+      or (SpellerLauncherKey = 'CTRL+SHIFT+1') or (SpellerLauncherKey = 'CTRL+SHIFT+2') or (SpellerLauncherKey = 'CTRL+SHIFT+3')
+      or (SpellerLauncherKey = 'CTRL+SHIFT+4') or (SpellerLauncherKey = 'CTRL+SHIFT+5') or (SpellerLauncherKey = 'CTRL+SHIFT+6')
+      or (SpellerLauncherKey = 'CTRL+SHIFT+7') or (SpellerLauncherKey = 'CTRL+SHIFT+8') or (SpellerLauncherKey = 'CTRL+SHIFT+9')
+      or (SpellerLauncherKey = 'CTRL+SHIFT+0') or (SpellerLauncherKey = 'CTRL+ALT+1') or (SpellerLauncherKey = 'CTRL+ALT+2')
+      or (SpellerLauncherKey = 'ALT+F1') or (SpellerLauncherKey = 'ALT+F2') or (SpellerLauncherKey = 'ALT+F3')) then
     SpellerLauncherKey := 'F12';
 
   // Avro Mouse Settings
